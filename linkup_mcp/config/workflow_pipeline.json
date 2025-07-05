@@ -1,0 +1,59 @@
+﻿{
+    "pipeline_name": "workflow_pipeline",
+    "description": "Pipeline für das Workflow-Management",
+    "version": "1.0.0",
+    "tools": [
+        {
+            "name": "workflow_manager",
+            "module": "linkup_mcp.tools.workflow_manager",
+            "class": "WorkflowManager",
+            "config": {
+                "workflow_types": [
+                    "implementation",
+                    "testing",
+                    "deployment"
+                ],
+                "status_transitions": {
+                    "created": ["running", "paused"],
+                    "running": ["paused", "completed"],
+                    "paused": ["running", "completed"],
+                    "completed": []
+                }
+            }
+        }
+    ],
+    "stages": [
+        {
+            "name": "workflow_setup",
+            "tools": ["workflow_manager"],
+            "config": {
+                "auto_start": true,
+                "validate_transitions": true
+            }
+        },
+        {
+            "name": "workflow_execution",
+            "tools": ["workflow_manager"],
+            "config": {
+                "monitor_progress": true,
+                "handle_errors": true
+            }
+        },
+        {
+            "name": "workflow_completion",
+            "tools": ["workflow_manager"],
+            "config": {
+                "archive_data": true,
+                "generate_report": true
+            }
+        }
+    ],
+    "dependencies": {
+        "python_version": ">=3.9",
+        "packages": [
+            "motor>=3.3.0",
+            "pytest>=7.0.0",
+            "asyncio>=3.4.3"
+        ]
+    }
+}

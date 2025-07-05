@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ info.name }} - {{ config.variables.project_name }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Index</a>
+    </nav>
+    
+    <main>
+        <h1>{{ info.name }}</h1>
+        
+        {% if info.description %}
+        <section class="description">
+            {{ info.description }}
+        </section>
+        {% endif %}
+        
+        {% if info.classes %}
+        <section class="classes">
+            <h2>Klassen</h2>
+            
+            {% for class in info.classes %}
+            <div class="class">
+                <h3>{{ class.name }}</h3>
+                
+                {% if class.description %}
+                <div class="description">
+                    {{ class.description }}
+                </div>
+                {% endif %}
+                
+                {% if class.bases %}
+                <div class="inheritance">
+                    Erbt von: {{ class.bases|join(", ") }}
+                </div>
+                {% endif %}
+                
+                {% if class.methods %}
+                <div class="methods">
+                    <h4>Methoden</h4>
+                    
+                    {% for method in class.methods %}
+                    <div class="method">
+                        <h5>{{ method.name }}</h5>
+                        
+                        {% if method.description %}
+                        <div class="description">
+                            {{ method.description }}
+                        </div>
+                        {% endif %}
+                        
+                        {% if method.parameters %}
+                        <div class="parameters">
+                            <h6>Parameter</h6>
+                            <ul>
+                            {% for param in method.parameters %}
+                                <li>
+                                    <code>{{ param.name }}</code>: {{ param.annotation }}
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        {% if method.returns %}
+                        <div class="returns">
+                            <h6>Rückgabe</h6>
+                            <code>{{ method.returns }}</code>
+                        </div>
+                        {% endif %}
+                        
+                        {% if method.decorators %}
+                        <div class="decorators">
+                            <h6>Decorators</h6>
+                            {{ method.decorators|join(", ") }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% if class.attributes %}
+                <div class="attributes">
+                    <h4>Attribute</h4>
+                    <ul>
+                    {% for attr in class.attributes %}
+                        <li>
+                            <code>{{ attr.name }}</code>: {{ attr.value }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+        
+        {% if info.functions %}
+        <section class="functions">
+            <h2>Funktionen</h2>
+            
+            {% for function in info.functions %}
+            <div class="function">
+                <h3>{{ function.name }}</h3>
+                
+                {% if function.description %}
+                <div class="description">
+                    {{ function.description }}
+                </div>
+                {% endif %}
+                
+                {% if function.parameters %}
+                <div class="parameters">
+                    <h4>Parameter</h4>
+                    <ul>
+                    {% for param in function.parameters %}
+                        <li>
+                            <code>{{ param.name }}</code>: {{ param.annotation }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if function.returns %}
+                <div class="returns">
+                    <h4>Rückgabe</h4>
+                    <code>{{ function.returns }}</code>
+                </div>
+                {% endif %}
+                
+                {% if function.decorators %}
+                <div class="decorators">
+                    <h4>Decorators</h4>
+                    {{ function.decorators|join(", ") }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+        
+        {% if info.variables %}
+        <section class="variables">
+            <h2>Variablen</h2>
+            <ul>
+            {% for var in info.variables %}
+                <li>
+                    <code>{{ var.name }}</code>: {{ var.value }}
+                </li>
+            {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        
+        {% if info.dependencies %}
+        <section class="dependencies">
+            <h2>Abhängigkeiten</h2>
+            <ul>
+            {% for dep in info.dependencies %}
+                <li>{{ dep }}</li>
+            {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </main>
+    
+    <footer>
+        <p>
+            Generiert am {{ now() }} für {{ config.variables.project_name }} 
+            Version {{ config.variables.version }}
+        </p>
+    </footer>
+</body>
+</html> 

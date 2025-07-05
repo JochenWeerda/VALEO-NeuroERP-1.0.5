@@ -1,0 +1,137 @@
+# VALEO-NeuroERP v1.1 Produktionskonfiguration
+
+# Globale Einstellungen
+global:
+  environment: production
+  domain: prod.valero-system.de
+  imageRegistry: registry.valero-system.de
+
+# Ressourcen-Limits
+resources:
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 4
+    memory: 8Gi
+
+# Replicas
+replicaCount: 3
+
+# Ingress-Konfiguration
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: prod.valero-system.de
+      paths:
+        - path: /
+          pathType: Prefix
+
+# Datenbank-Konfiguration
+database:
+  host: db-prod.valero-system.de
+  port: 5432
+  name: valerodb
+  sslMode: require
+
+# Redis-Cache
+redis:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 10Gi
+
+# Monitoring
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+  grafana:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 5Gi
+
+# Backup
+backup:
+  enabled: true
+  schedule: "0 2 * * *"
+  retention: 30d
+
+# Security
+security:
+  networkPolicy:
+    enabled: true
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+
+# Autoscaling
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Logging
+logging:
+  level: info
+  retention: 30d
+
+# Service-Konfiguration
+service:
+  type: ClusterIP
+  port: 80
+
+# Liveness Probe
+livenessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+# Readiness Probe
+readinessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+# Ressourcen-Quotas
+quotas:
+  enabled: true
+  hard:
+    cpu: "12"
+    memory: 24Gi
+    pods: "20"
+
+# Netzwerk-Policies
+networkPolicies:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+
+# Metriken-Sammlung
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+
+# Disaster Recovery
+disasterRecovery:
+  enabled: true
+  backupSchedule: "0 3 * * *"
+  backupRetention: 90d 

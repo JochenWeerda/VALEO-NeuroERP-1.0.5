@@ -1,0 +1,89 @@
+{
+  "name": "artikel-stammdaten",
+  "version": "1.0.0",
+  "description": "Modul zur Verwaltung von Artikelstammdaten im AI-ERP-System",
+  "maintainer": "Produktmanagement-Team",
+  "stability": "stable",
+  "dependencies": [
+    {
+      "module": "core-database",
+      "version": "^2.0.0"
+    },
+    {
+      "module": "auth-service",
+      "version": "^1.5.0"
+    },
+    {
+      "module": "logging-service",
+      "version": "~1.2.3"
+    },
+    {
+      "module": "finance-core",
+      "version": "^1.0.0"
+    },
+    {
+      "module": "einheiten-service",
+      "version": "^1.0.0"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "ArtikelStammdatenAPI",
+      "version": "1.0.0",
+      "schema": "schemas/artikel-stammdaten-api.json",
+      "description": "API für die Verwaltung von Artikelstammdaten"
+    },
+    {
+      "name": "ArtikelSucheAPI",
+      "version": "1.0.0",
+      "schema": "schemas/artikel-suche-api.json",
+      "description": "API für die Suche nach Artikeln"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "entry"
+    },
+    {
+      "path": "src/artikel.js",
+      "role": "module"
+    },
+    {
+      "path": "src/artikelgruppen.js",
+      "role": "module"
+    },
+    {
+      "path": "src/preise.js",
+      "role": "module"
+    },
+    {
+      "path": "src/einheiten.js",
+      "role": "module"
+    },
+    {
+      "path": "src/validators.js",
+      "role": "utility"
+    },
+    {
+      "path": "schemas/artikel-stammdaten-api.json",
+      "role": "schema"
+    },
+    {
+      "path": "schemas/artikel-suche-api.json",
+      "role": "schema"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-06-02",
+      "changes": [
+        "Initiale Version des Artikelstammdaten-Moduls",
+        "Implementierung der ArtikelStammdatenAPI",
+        "Implementierung der ArtikelSucheAPI",
+        "Integration mit dem Finance-Core-Modul für Preisberechnungen"
+      ]
+    }
+  ]
+} 

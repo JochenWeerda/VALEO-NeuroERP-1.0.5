@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: apm-backup
+  namespace: valeo-neuroerp
+spec:
+  schedule: "0 2 * * *"  # Täglich um 2 Uhr
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: apm-multi-agent
+          containers:
+          - name: backup
+            image: valeo-neuroerp/backup-tool:latest
+            env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-credentials
+                  key: uri
+            - name: BACKUP_PATH
+              value: "/backups"
+            - name: BACKUP_RETENTION_DAYS
+              value: "30"
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Memory Bank Backup
+              echo "Starting Memory Bank backup..."
+              tar czf /backups/memory-bank-$(date +%Y%m%d_%H%M%S).tar.gz /app/memory-bank
+              
+              # MongoDB Backup
+              echo "Starting MongoDB backup..."
+              mongodump --uri="$MONGODB_URI" --archive=/backups/mongodb-$(date +%Y%m%d_%H%M%S).gz --gzip
+              
+              # Cleanup alte Backups
+              echo "Cleaning up old backups..."
+              find /backups -type f -mtime +$BACKUP_RETENTION_DAYS -delete
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backups
+            - name: memory-bank
+              mountPath: /app/memory-bank
+              readOnly: true
+          volumes:
+          - name: backup-volume
+            persistentVolumeClaim:
+              claimName: backup-pvc
+          - name: memory-bank
+            persistentVolumeClaim:
+              claimName: memory-bank-pvc
+          restartPolicy: OnFailure 

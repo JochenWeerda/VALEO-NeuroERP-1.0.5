@@ -1,0 +1,282 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: valeo-final-dashboard
+  namespace: erp-system
+  labels:
+    app: valeo-dashboard
+    version: final
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VALEO NeuroERP</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            /* CSS-Stil aus frontend/public/VALEO-final-design/styles/styles.css */
+            :root {
+                --primary-color: #2c3e50;
+                --secondary-color: #3498db;
+                --accent-color: #714B67;
+                --text-color: #333;
+                --border-color: #dee2e6;
+                --background-light: #f8f9fa;
+                --background-main: #f5f5f5;
+                --shadow-color: rgba(0,0,0,0.1);
+                --card-finance: #2ecc71;
+                --card-inventory: #e74c3c;
+                --card-crm: #f39c12;
+                --card-settings: #6c757d;
+            }
+            
+            body {
+                font-family: 'Roboto', 'Noto Sans', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: var(--background-main);
+                color: var(--text-color);
+                position: relative;
+                overflow-x: hidden;
+            }
+            
+            body.sidebar-open {
+                overflow: hidden;
+            }
+            
+            * {
+                box-sizing: border-box;
+            }
+            
+            /* Header Styles */
+            header {
+                background-color: #fff;
+                border-bottom: 1px solid var(--border-color);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 16px;
+                height: 60px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                box-shadow: 0 2px 4px var(--shadow-color);
+            }
+            
+            /* Hier den Rest des CSS einfügen... */
+        </style>
+    </head>
+    <body>
+        <!-- Inhalt aus frontend/public/VALEO-final-design/index.html -->
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <h1>VALEO - Die NeuroERP</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="global-search" placeholder="Global suchen...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name">Max Mustermann</span>
+                    <span class="user-status">Angemeldet seit 09:15 Uhr</span>
+                </div>
+                <div class="header-icons">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="chat-icon" id="open-sidebar">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Rest des HTML-Inhalts... -->
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // JavaScript-Code für Interaktionen
+                const sidebarChat = document.getElementById('sidebar-chat');
+                const openSidebarBtn = document.getElementById('open-sidebar');
+                const closeSidebarBtn = document.getElementById('close-sidebar');
+                
+                // Chat-Sidebar öffnen
+                openSidebarBtn.addEventListener('click', function() {
+                    sidebarChat.classList.add('open');
+                    document.body.classList.add('sidebar-open');
+                });
+                
+                // Chat-Sidebar schließen
+                closeSidebarBtn.addEventListener('click', function() {
+                    sidebarChat.classList.remove('open');
+                    document.body.classList.remove('sidebar-open');
+                });
+                
+                // Tab-Wechsel in der Chat-Sidebar
+                const tabButtons = document.querySelectorAll('.sidebar-tab');
+                const tabContents = document.querySelectorAll('.tab-content');
+                
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Aktive Klasse von allen Tabs entfernen
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.remove('active'));
+                        
+                        // Aktive Klasse zum geklickten Tab hinzufügen
+                        button.classList.add('active');
+                        
+                        // Entsprechenden Tab-Inhalt anzeigen
+                        const targetId = button.getAttribute('data-target');
+                        document.getElementById(targetId).classList.add('active');
+                    });
+                });
+            });
+        </script>
+    </body>
+    </html>
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valeo-final-dashboard
+  namespace: erp-system
+  labels:
+    app: valeo-dashboard
+    version: final
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: valeo-dashboard
+      version: final
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: valeo-dashboard
+        version: final
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      volumes:
+      - name: html-volume
+        configMap:
+          name: valeo-final-dashboard
+      - name: nginx-config
+        configMap:
+          name: valeo-nginx-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: valeo-nginx-config
+  namespace: erp-system
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+        root /usr/share/nginx/html;
+        index index.html;
+        
+        location / {
+            try_files $uri $uri/ /index.html;
+            add_header Cache-Control "no-store, no-cache, must-revalidate";
+        }
+        
+        location /api/ {
+            proxy_pass http://api-gateway:80/api/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+        
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+    }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valeo-final-dashboard
+  namespace: erp-system
+  labels:
+    app: valeo-dashboard
+    version: final
+spec:
+  selector:
+    app: valeo-dashboard
+    version: final
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: valeo-dashboard-ingress
+  namespace: erp-system
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: valeo-erp.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: valeo-final-dashboard
+            port:
+              number: 80 

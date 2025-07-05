@@ -1,0 +1,97 @@
+{
+  "name": "belege-service",
+  "version": "1.0.0",
+  "description": "Microservice für die Verwaltung von Belegen (Angebote, Aufträge, Lieferscheine, Rechnungen, etc.)",
+  "maintainer": "ERP-Team",
+  "interfaces": [
+    {
+      "name": "Belege API",
+      "version": "1.0.0",
+      "description": "REST-API für Belegverwaltung",
+      "type": "REST",
+      "schema": "schemas/belege-api.json"
+    }
+  ],
+  "dependencies": [
+    {
+      "module": "core-database",
+      "version": "^1.0.0",
+      "required": true
+    },
+    {
+      "module": "auth-service",
+      "version": "^1.0.0",
+      "required": true
+    },
+    {
+      "module": "logging-service",
+      "version": "^1.0.0",
+      "required": true
+    },
+    {
+      "module": "artikel-stammdaten",
+      "version": "^1.0.0",
+      "required": true
+    },
+    {
+      "module": "einheiten-service",
+      "version": "^1.0.0",
+      "required": true
+    },
+    {
+      "module": "finance-core",
+      "version": "^1.0.0",
+      "required": true
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "main"
+    },
+    {
+      "path": "src/models/angebot.js",
+      "role": "module"
+    },
+    {
+      "path": "src/models/auftrag.js",
+      "role": "module"
+    },
+    {
+      "path": "src/models/lieferschein.js",
+      "role": "module"
+    },
+    {
+      "path": "src/models/rechnung.js",
+      "role": "module"
+    },
+    {
+      "path": "src/models/bestellung.js",
+      "role": "module"
+    },
+    {
+      "path": "src/models/eingangslieferschein.js",
+      "role": "module"
+    },
+    {
+      "path": "src/services/belegService.js",
+      "role": "service"
+    },
+    {
+      "path": "src/api/belegeApi.js",
+      "role": "api"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-06-15",
+      "changes": [
+        "Initiale Version des Belege-Service-Moduls",
+        "Implementierung der Belegarten: Angebot, Auftrag, Lieferschein, Rechnung, Bestellung, Eingangslieferschein",
+        "REST-API für Belegverwaltung",
+        "Integration mit anderen Microservices"
+      ]
+    }
+  ]
+} 

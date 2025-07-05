@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALEO NeuroERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <!-- Sidebar für Chat -->
+    <div class="sidebar-chat" id="sidebar-chat">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-comments"></i> Chat</h3>
+            <div class="close-sidebar" id="close-sidebar">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        
+        <div class="sidebar-tabs">
+            <button class="sidebar-tab active" data-target="intern">Intern</button>
+            <button class="sidebar-tab" data-target="kunden">Kunden</button>
+            <button class="sidebar-tab" data-target="ki">KI-Assistent</button>
+        </div>
+        
+        <!-- Interner Chat -->
+        <div class="sidebar-content active" id="intern">
+            <div class="chat-messages">
+                <div class="chat-day-divider">Heute</div>
+                <div class="chat-message">
+                    <div class="chat-avatar">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iIzI5QjZGNiIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDE2di0zYzAtMy4zLTIuNy02LTYtcy02IDIuNy02IDZ2M2MtMS43IDAtMyAxLjMtMyAzdjhjMCAxLjcgMS4zIDMgMyAzaDEyYzEuNyAwIDMtMS4zIDMtM3YtOGMwLTEuNy0xLjMtMyAtMy0zem0tNSAxMWgtMmwtMS0xVjIwaC00di03YzAtMS4xLjktMiAyLTJoNmMxLjEgMCAyIC45IDIgMnY3aC00djZsLTEgMXoiLz48L3N2Zz4=" alt="Benutzer">
+                    </div>
+                    <div class="message-bubble">
+                        <div class="message-header">
+                            <span class="message-sender">Max Mustermann</span>
+                            <span class="message-time">10:42</span>
+                        </div>
+                        <div class="message-text">
+                            Hallo Team, hat jemand den Statusbericht für die Inventur?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="chat-avatar">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iI0ZGOTE1MSIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDE2di0zYzAtMy4zLTIuNy02LTYtcy02IDIuNy02IDZ2M2MtMS43IDAtMyAxLjMtMyAzdjhjMCAxLjcgMS4zIDMgMyAzaDEyYzEuNyAwIDMtMS4zIDMtM3YtOGMwLTEuNy0xLjMtMyAtMy0zem0tNSAxMWgtMmwtMS0xVjIwaC00di03YzAtMS4xLjktMiAyLTJoNmMxLjEgMCAyIC45IDIgMnY3aC00djZsLTEgMXoiLz48L3N2Zz4=" alt="Benutzer">
+                    </div>
+                    <div class="message-bubble">
+                        <div class="message-header">
+                            <span class="message-sender">Anna Schmidt</span>
+                            <span class="message-time">10:45</span>
+                        </div>
+                        <div class="message-text">
+                            Ja, ich habe ihn gerade fertiggestellt. Schaue bitte in den Shared-Ordner.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" placeholder="Nachricht eingeben...">
+                <button class="chat-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Kunden Chat -->
+        <div class="sidebar-content" id="kunden">
+            <div class="chat-messages">
+                <div class="chat-day-divider">Heute</div>
+                <div class="chat-message">
+                    <div class="chat-avatar customer">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iIzRDQUY1MCIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDE2di0zYzAtMy4zLTIuNy02LTYtcy02IDIuNy02IDZ2M2MtMS43IDAtMyAxLjMtMyAzdjhjMCAxLjcgMS4zIDMgMyAzaDEyYzEuNyAwIDMtMS4zIDMtM3YtOGMwLTEuNy0xLjMtMyAtMy0zem0tNSAxMWgtMmwtMS0xVjIwaC00di03YzAtMS4xLjktMiAyLTJoNmMxLjEgMCAyIC45IDIgMnY3aC00djZsLTEgMXoiLz48L3N2Zz4=" alt="Kunde">
+                    </div>
+                    <div class="message-bubble customer">
+                        <div class="message-header">
+                            <span class="message-sender">Firma ABC GmbH</span>
+                            <span class="message-time">09:32</span>
+                        </div>
+                        <div class="message-text">
+                            Guten Morgen, wie ist der Status unserer Bestellung #12345?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="chat-avatar">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iI0ZGOTE1MSIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDE2di0zYzAtMy4zLTIuNy02LTYtcy02IDIuNy02IDZ2M2MtMS43IDAtMyAxLjMtMyAzdjhjMCAxLjcgMS4zIDMgMyAzaDEyYzEuNyAwIDMtMS4zIDMtM3YtOGMwLTEuNy0xLjMtMyAtMy0zem0tNSAxMWgtMmwtMS0xVjIwaC00di03YzAtMS4xLjktMiAyLTJoNmMxLjEgMCAyIC45IDIgMnY3aC00djZsLTEgMXoiLz48L3N2Zz4=" alt="Benutzer">
+                    </div>
+                    <div class="message-bubble">
+                        <div class="message-header">
+                            <span class="message-sender">Support Team</span>
+                            <span class="message-time">09:35</span>
+                        </div>
+                        <div class="message-text">
+                            Guten Morgen! Ihre Bestellung #12345 wurde gestern versandt. Die Trackingnummer lautet TRK78901234.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" placeholder="Nachricht eingeben...">
+                <button class="chat-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- KI Chat -->
+        <div class="sidebar-content" id="ki">
+            <div class="chat-messages">
+                <div class="chat-day-divider">Heute</div>
+                <div class="chat-message">
+                    <div class="chat-avatar ai">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-bubble ai">
+                        <div class="message-header">
+                            <span class="message-sender">VALEO AI</span>
+                            <span class="message-time">10:00</span>
+                        </div>
+                        <div class="message-text">
+                            Hallo! Wie kann ich Ihnen heute helfen?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="chat-avatar user">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-bubble user">
+                        <div class="message-header">
+                            <span class="message-sender">Sie</span>
+                            <span class="message-time">10:01</span>
+                        </div>
+                        <div class="message-text">
+                            Erstelle einen Bericht über die Verkaufszahlen der letzten Woche.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="chat-avatar ai">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-bubble ai">
+                        <div class="message-header">
+                            <span class="message-sender">VALEO AI</span>
+                            <span class="message-time">10:01</span>
+                        </div>
+                        <div class="message-text">
+                            Ich erstelle einen Bericht über die Verkaufszahlen der letzten Woche. Möchten Sie eine Aufschlüsselung nach Produktkategorien oder Kundengruppen?
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" placeholder="Fragen Sie die KI...">
+                <button class="chat-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <header>
+        <div class="logo">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iIzcxNEI2NyIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTExLjI3OCAyMy4yMTRsLjUzMi01LjUzNWMuMTUyLTEuNTQ5IDEuNDktMi42OTMgMy4wNDctMi42OTNoNi4yODhjMS41NTcgMCAyLjg5NSAxLjE0NCAzLjA0NyAyLjY5M2wuNTMyIDUuNTM1Yy4wNjUgMi4wMDItMS41MzggMy42NTgtMy41NDUgMy42NThoLTYuMzU2Yy0yLjAwOCAwLTMuNjEtMS42NTYtMy41NDUtMy42NTh6TTkgMTEuODg0YzAtLjQ5LjQtLjg4Ny44OTUtLjg4N2gxNi4yMWMuNDk1IDAgLjg5NS4zOTcuODk1Ljg4N3YuMjI5YzAgLjQ5LS40Ljg4Ny0uODk1Ljg4N2gtMTYuMjFjLS40OTUgMC0uODk1LS4zOTctLjg5NS0uODg3di0uMjI5eiIvPjwvc3ZnPg==" alt="VALEO Logo">
+            <h1>VALEO NeuroERP</h1>
+        </div>
+        
+        <!-- Globale Suche im Header -->
+        <div class="header-search">
+            <input type="text" placeholder="Globale Suche (Artikel, Kunden, Belege, ...)" class="header-search-input">
+            <button class="header-search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        
+        <div class="header-icons">
+            <div class="header-icon" id="notifications-toggle" title="Benachrichtigungen">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            
+            <div class="header-icon" id="sidebar-toggle" title="Chat öffnen">
+                <i class="fas fa-comments"></i>
+                <span class="badge">5</span>
+            </div>
+            
+            <div class="user-profile" id="user-profile">
+                <div class="user-avatar">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iIzI5QjZGNiIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDE2di0zYzAtMy4zLTIuNy02LTYtcy02IDIuNy02IDZ2M2MtMS43IDAtMyAxLjMtMyAzdjhjMCAxLjcgMS4zIDMgMyAzaDEyYzEuNyAwIDMtMS4zIDMtM3YtOGMwLTEuNy0xLjMtMyAtMy0zem0tNSAxMWgtMmwtMS0xVjIwaC00di03YzAtMS4xLjktMiAyLTJoNmMxLjEgMCAyIC45IDIgMnY3aC00djZsLTEgMXoiLz48L3N2Zz4=" alt="Benutzer">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Max Mustermann</div>
+                    <div class="user-status">Angemeldet seit 08:45</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Benutzer-Dropdown -->
+    <div class="user-dropdown" id="user-dropdown">
+        <div class="user-dropdown-header">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iIzI5QjZGNiIgZD0iTTE4IDM2QzggMzYgMCAyOCAwIDE4UzggMCAxOCAwczE4IDggMTggMTgtOCA4LTE4IDh6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI0IDE2di0zYzAtMy4zLTIuNy02LTYtcy02IDIuNy02IDZ2M2MtMS43IDAtMyAxLjMtMyAzdjhjMCAxLjcgMS4zIDMgMyAzaDEyYzEuNyAwIDMtMS4zIDMtM3YtOGMwLTEuNy0xLjMtMyAtMy0zem0tNSAxMWgtMmwtMS0xVjIwaC00di03YzAtMS4xLjktMiAyLTJoNmMxLjEgMCAyIC45IDIgMnY3aC00djZsLTEgMXoiLz48L3N2Zz4=" alt="Benutzer" class="user-dropdown-avatar">
+            <div>
+                <div class="user-dropdown-name">Max Mustermann</div>
+                <div class="user-dropdown-email">max.mustermann@valeo-erp.com</div>
+            </div>
+        </div>
+        <ul class="user-dropdown-menu">
+            <li><i class="fas fa-user-cog"></i> Profil</li>
+            <li><i class="fas fa-cog"></i> Einstellungen</li>
+            <li><i class="fas fa-palette"></i> Erscheinungsbild</li>
+            <li class="divider"></li>
+            <li><i class="fas fa-sign-out-alt"></i> Abmelden</li>
+        </ul>
+    </div>
+    
+    <!-- Benachrichtigungen-Dropdown -->
+    <div class="notifications-dropdown" id="notifications-dropdown">
+        <div class="notifications-header">
+            <h3>Benachrichtigungen</h3>
+            <span class="mark-all-read">Alle als gelesen markieren</span>
+        </div>
+        <ul class="notifications-list">
+            <li class="notification unread">
+                <div class="notification-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Neue Rechnung #12345</div>
+                    <div class="notification-text">Eine neue Rechnung wurde erstellt.</div>
+                    <div class="notification-time">Vor 5 Minuten</div>
+                </div>
+            </li>
+            <li class="notification unread">
+                <div class="notification-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Niedriger Lagerbestand</div>
+                    <div class="notification-text">Artikel "XYZ-123" hat einen niedrigen Lagerbestand.</div>
+                    <div class="notification-time">Vor 20 Minuten</div>
+                </div>
+            </li>
+            <li class="notification unread">
+                <div class="notification-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Neue Kundenanfrage</div>
+                    <div class="notification-text">Firma ABC hat eine neue Anfrage gesendet.</div>
+                    <div class="notification-time">Vor 1 Stunde</div>
+                </div>
+            </li>
+            <li class="notification">
+                <div class="notification-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Lieferung unterwegs</div>
+                    <div class="notification-text">Lieferung #78901 ist unterwegs zum Kunden.</div>
+                    <div class="notification-time">Vor 3 Stunden</div>
+                </div>
+            </li>
+        </ul>
+        <div class="notifications-footer">
+            <a href="/notifications">Alle Benachrichtigungen ansehen</a>
+        </div>
+    </div>
+    
+    <!-- Search Container (alte Version, kann entfernt werden) -->
+    <div class="search-container" id="search-container" style="display: none;">
+        <form class="search-form">
+            <input type="text" class="search-input" placeholder="Globale Suche... (Artikel, Kunden, Belege, etc.)">
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    
+    <div class="main-content">
+        <div class="menu">
+            <a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="/finance"><i class="fas fa-chart-line"></i> Finanzen</a>
+            <a href="/inventory"><i class="fas fa-warehouse"></i> Lager</a>
+            <a href="/crm"><i class="fas fa-user-tie"></i> Kunden</a>
+            <a href="/analytics"><i class="fas fa-chart-bar"></i> Analysen</a>
+            <a href="/settings"><i class="fas fa-cog"></i> Einstellungen</a>
+        </div>
+        
+        <div class="status">
+            <h3><i class="fas fa-heartbeat"></i> System-Status</h3>
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-name">Frontend</div>
+                    <div class="status-metric">Latenz: 12ms</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-name">API-Gateway</div>
+                    <div class="status-metric">Latenz: 28ms</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot yellow"></div>
+                    <div class="status-name">Datenbank</div>
+                    <div class="status-metric">CPU: 78%</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-name">Auth-Service</div>
+                    <div class="status-metric">RAM: 42%</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot red"></div>
+                    <div class="status-name">Theme-Service</div>
+                    <div class="status-metric">Nicht erreichbar</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Belegfolgen-Übersicht -->
+        <div class="belegfolgen-container">
+            <h2 class="section-title"><i class="fas fa-file-invoice"></i> Belegfolgen im Überblick</h2>
+            
+            <!-- Tabs für ein- und ausgehende Belegfolgen -->
+            <div class="belegfolgen-tabs">
+                <button class="belegfolgen-tab active" data-target="ausgehend">Ausgehend (Verkauf)</button>
+                <button class="belegfolgen-tab" data-target="eingehend">Eingehend (Einkauf)</button>
+            </div>
+            
+            <!-- Ausgehende Belegfolge (Verkauf) -->
+            <div class="belegfolgen-content" id="ausgehend">
+                <div class="belegfolge-flow">
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h4>Angebot</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">42</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">18</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h4>Auftrag</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">28</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h4>Lieferschein</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">15</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h4>Rechnung</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">23</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">7</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Eingehende Belegfolge (Einkauf) -->
+            <div class="belegfolgen-content" id="eingehend" style="display: none;">
+                <div class="belegfolge-flow">
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon blue">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h4>Anfrage</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">16</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon blue">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h4>Bestellung</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">22</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">9</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon blue">
+                            <i class="fas fa-dolly-flatbed"></i>
+                        </div>
+                        <h4>Wareneingang</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">13</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">6</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div class="belegfolge-item">
+                        <div class="belegfolge-icon blue">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <h4>Eingangsrechnung</h4>
+                        <div class="belegfolge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">18</div>
+                                <div class="stat-label">Offen</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">4</div>
+                                <div class="stat-label">Heute</div>
+                            </div>
+                        </div>
+                        <div class="belegfolge-actions">
+                            <button class="btn btn-small"><i class="fas fa-plus"></i> Neu</button>
+                            <button class="btn btn-small btn-secondary"><i class="fas fa-list"></i> Liste</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title"><i class="fas fa-th-large"></i> Hauptfunktionen</h2>
+        <div class="dashboard">
+            <div class="card finance">
+                <h2><i class="fas fa-chart-line"></i> Finanzen</h2>
+                <p>Verwalten Sie Ihre Finanzen mit KI-gestützten Prognosen und automatisierter Buchhaltung.</p>
+                <div class="card-actions">
+                    <button class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</button>
+                    <button class="btn btn-primary"><i class="fas fa-arrow-right"></i> Öffnen</button>
+                </div>
+            </div>
+            <div class="card inventory">
+                <h2><i class="fas fa-warehouse"></i> Lagerverwaltung</h2>
+                <p>Optimieren Sie Ihre Lagerbestände und Lieferketten mit intelligenten Prognosen.</p>
+                <div class="card-actions">
+                    <button class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</button>
+                    <button class="btn btn-primary"><i class="fas fa-arrow-right"></i> Öffnen</button>
+                </div>
+            </div>
+            <div class="card crm">
+                <h2><i class="fas fa-user-tie"></i> Kundenverwaltung</h2>
+                <p>Verbessern Sie Kundenbeziehungen durch personalisierte Interaktionen und Analysen.</p>
+                <div class="card-actions">
+                    <button class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</button>
+                    <button class="btn btn-primary"><i class="fas fa-arrow-right"></i> Öffnen</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-chart-bar"></i> Analysen</h2>
+                <p>Gewinnen Sie tiefe Einblicke in Ihre Geschäftsprozesse mit KI-gestützten Analysen.</p>
+                <div class="card-actions">
+                    <button class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</button>
+                    <button class="btn btn-primary"><i class="fas fa-arrow-right"></i> Öffnen</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-file-invoice"></i> Belegfolge Module</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h4 class="module-title">Angebote</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Angebote erstellen und verwalten</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Versionen und Varianten</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Conversion zu Aufträgen</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h4 class="module-title">Aufträge</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Auftragserfassung und -verwaltung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Statusverfolgung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Integration mit Lager</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h4 class="module-title">Lieferscheine</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Lieferscheinerstellung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Teillieferungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Sendungsverfolgung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h4 class="module-title">Rechnungen</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Rechnungserstellung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Abschlagsrechnungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Zahlungsverfolgung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-shopping-cart"></i> Einkaufs-Belegfolge Module</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h4 class="module-title">Anfragen</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Anfragen an Lieferanten erstellen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Angebotsvergleich</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Automatische Preisoptimierung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h4 class="module-title">Bestellungen</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Bestellungen generieren</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Lieferanten-Konditionen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Bestellbestätigung verwalten</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-dolly-flatbed"></i>
+                        </div>
+                        <h4 class="module-title">Wareneingänge</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Wareneingang erfassen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Qualitätskontrolle</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Teillieferungen verwalten</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <h4 class="module-title">Eingangsrechnungen</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Rechnungsprüfung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">OCR-basierte Erfassung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Zahlungsabwicklung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-database"></i> Stammdaten Module</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <h4 class="module-title">Artikel</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Artikelstammdaten</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Varianten und Stücklisten</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Preiskalkulation</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4 class="module-title">Partner</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Kunden- und Lieferantendaten</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Ansprechpartner</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Konditionen und Verträge</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-finance">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h4 class="module-title">CPD-Konten</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Kontenstruktur</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Kostenstellenzuordnung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Buchungsregeln</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <h4 class="module-title">Lager</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Lagerorte und -plätze</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Bestandsführung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Lagerbewegungen</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chargen und QS Module -->
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-vial"></i> Chargen- und Qualitätsmanagement</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-quality">
+                            <i class="fas fa-barcode"></i>
+                        </div>
+                        <h4 class="module-title">Chargenverwaltung</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Chargenerfassung und -verwaltung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Rückverfolgbarkeit</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Chargenberichte</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-quality">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h4 class="module-title">Qualitätssicherung</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">QS-Prüfverfahren</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Chargenbezogene Qualitätsprüfung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Qualitätsberichte</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-quality">
+                            <i class="fas fa-wheat-awn"></i>
+                        </div>
+                        <h4 class="module-title">QS Futtermittel</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Futtermittelanalysen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Nährstoffanalysen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Exportfunktion</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-quality">
+                            <i class="fas fa-book-medical"></i>
+                        </div>
+                        <h4 class="module-title">QS-Handbuch</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Dokumentenverwaltung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Standardarbeitsanweisungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Audit-Management</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventur und Waagen Module -->
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-balance-scale"></i> Inventur und Messtechnik</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h4 class="module-title">Inventur</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Inventurplanung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Zähllisten</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Bestandsbewertung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-cash-register"></i>
+                        </div>
+                        <h4 class="module-title">TSE-Integration</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Technische Sicherheitseinrichtung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Fiskalisierung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">DSFinV-K Export</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <h4 class="module-title">Waagen</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Waagen-Status</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Messungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Eichung und Kalibrierung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-tablet-alt"></i>
+                        </div>
+                        <h4 class="module-title">Mobile Erfassung</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Scanner-Integration</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Mobile Chargenerfassung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Warenein-/ausgang mobil</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notfall- und Anomaliemanagement Module -->
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-exclamation-triangle"></i> Notfall- und Anomaliemanagement</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-emergency">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h4 class="module-title">Notfallmanagement</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Notfallpläne</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Alarmsystem</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Eskalationsmanagement</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-emergency">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4 class="module-title">Anomalieerkennung</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">KI-basierte Detektion</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Modellanpassung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Automatische Alarme</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-emergency">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h4 class="module-title">Benachrichtigungen</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Benachrichtigungszentrum</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Chargenbenachrichtigungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">E-Mail und Push-Nachrichten</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-emergency">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h4 class="module-title">KI-Assistent</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Natürlichsprachliche Steuerung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Datenanalyse und -visualisierung</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Prognosen und Empfehlungen</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ladenkasse und E-Commerce Module -->
+        <div class="modules-container">
+            <h3 class="module-category-title"><i class="fas fa-shopping-basket"></i> Kassensysteme und E-Commerce</h3>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-pos">
+                            <i class="fas fa-cash-register"></i>
+                        </div>
+                        <h4 class="module-title">Ladenkasse</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Kassenterminal</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Kassenabschluss</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Kassenbericht</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-pos">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h4 class="module-title">Zahlungsarten</h4>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Bargeld und Kartenzahlungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Mobile Payment</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Zahlungsterminale</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-ecommerce">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h4 class="module-title">E-Commerce</h4>
+                        <span class="module-badge">Geplant</span>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Onlineshop-Integration</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Marketplace-Anbindungen</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Auftragsmanagement</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon icon-ecommerce">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h4 class="module-title">Shop-Synchronisation</h4>
+                        <span class="module-badge">Geplant</span>
+                    </div>
+                    <div class="module-content">
+                        <ul class="module-features">
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Produktdaten-Synchronisation</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Bestandssynchronisation</span>
+                            </li>
+                            <li class="module-feature">
+                                <i class="fas fa-check feature-icon"></i>
+                                <span class="feature-text">Preissynchonisation</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chat Assistant -->
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            <div class="chat-title">
+                <div class="chat-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h4 class="chat-name">VALEO Assistent</h4>
+            </div>
+            <div class="chat-actions">
+                <button class="chat-action" title="Audio-Modus">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="chat-action" title="Minimieren">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button class="chat-action" id="chat-close" title="Schließen">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="chat-body">
+            <div class="chat-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">Hallo! Ich bin VALEO, Ihr KI-Assistent. Wie kann ich Ihnen heute helfen?</p>
+                    <p class="message-time">10:32</p>
+                </div>
+            </div>
+            <div class="chat-message user">
+                <div class="message-avatar user">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">Wie kann ich neue Artikel anlegen?</p>
+                    <p class="message-time">10:33</p>
+                </div>
+            </div>
+            <div class="chat-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">Um einen neuen Artikel anzulegen, gehen Sie zum Stammdaten-Modul und wählen Sie dort "Artikel". Klicken Sie dann auf "Neu" und füllen Sie das Formular aus. Ich kann Ihnen bei der Kategorisierung helfen.</p>
+                    <p class="message-time">10:33</p>
+                </div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" class="chat-input" placeholder="Nachricht eingeben...">
+            <button class="chat-voice-btn" title="Spracheingabe">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="chat-send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 VALEO NeuroERP - Intelligente Unternehmenslösungen auf Kubernetes</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar Toggle
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarChat = document.getElementById('sidebar-chat');
+            const closeSidebar = document.getElementById('close-sidebar');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebarChat.classList.toggle('active');
+                document.body.classList.toggle('sidebar-open');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebarChat.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
+            });
+            
+            // Sidebar Tabs
+            const sidebarTabs = document.querySelectorAll('.sidebar-tab');
+            
+            sidebarTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    sidebarTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all content sections
+                    const contents = document.querySelectorAll('.sidebar-content');
+                    contents.forEach(content => content.classList.remove('active'));
+                    
+                    // Show selected content
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // User Profile Dropdown
+            const userProfile = document.getElementById('user-profile');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('active');
+                notificationsDropdown.classList.remove('active');
+            });
+            
+            // Notifications Dropdown
+            const notificationsToggle = document.getElementById('notifications-toggle');
+            const notificationsDropdown = document.getElementById('notifications-dropdown');
+            
+            notificationsToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationsDropdown.classList.toggle('active');
+                userDropdown.classList.remove('active');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                userDropdown.classList.remove('active');
+                notificationsDropdown.classList.remove('active');
+            });
+            
+            // Alte Funktionen beibehalten
+            // Search toggle (alt)
+            const searchToggle = document.getElementById('search-toggle');
+            const searchContainer = document.getElementById('search-container');
+            
+            searchToggle.addEventListener('click', function() {
+                searchContainer.classList.toggle('active');
+            });
+            
+            // Chat toggle (alt)
+            const chatToggle = document.getElementById('chat-toggle');
+            const chatContainer = document.getElementById('chat-container');
+            const chatClose = document.getElementById('chat-close');
+            
+            chatToggle.addEventListener('click', function() {
+                chatContainer.classList.toggle('active');
+            });
+            
+            chatClose.addEventListener('click', function() {
+                chatContainer.classList.remove('active');
+            });
+            
+            // Health status toggle
+            const healthToggle = document.getElementById('health-toggle');
+            const healthStatus = document.querySelector('.status');
+            
+            healthToggle.addEventListener('click', function() {
+                healthStatus.style.display = healthStatus.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Belegfolgen-Tabs
+            const belegfolgenTabs = document.querySelectorAll('.belegfolgen-tab');
+            
+            belegfolgenTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Alle Tabs deaktivieren
+                    belegfolgenTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Diesen Tab aktivieren
+                    this.classList.add('active');
+                    
+                    // Alle Inhalte ausblenden
+                    document.querySelectorAll('.belegfolgen-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Entsprechenden Inhalt einblenden
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

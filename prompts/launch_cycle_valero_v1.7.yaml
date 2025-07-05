@@ -1,0 +1,142 @@
+# 📁 Datei: prompts/launch_cycle_valero_v1.7.yaml
+# 🚀 GENXAIS Prompt zur Initialisierung des Multi-Pipeline-Zyklus für VALERO-NeuroERP (v1.7)
+
+name: Launch GENXAIS Cycle – VALERO v1.7
+type: multi-agent-cycle
+versioning:
+  previous_version: v1.6
+  current_version: v1.7
+trigger: launch_cycle.py
+mode: full-automation
+
+phases:
+  - name: VAN
+    tasks:
+      - Review der v1.6 Ergebnisse und Performance-Metriken
+      - Analyse der offenen TODOs aus der Memory Bank
+      - Identifikation von Performance-Bottlenecks im Compliance-System
+      - Planung der 7 Pipelines mit Fokus auf Performance-Optimierung und Sicherheit
+
+  - name: PLAN
+    tasks:
+      - Ressourcenplanung und Priorisierung basierend auf TODOs
+      - Entwicklung einer Skalierungsstrategie für 10k+ Nutzer
+      - Optimierung der Microservices-Architektur
+      - Erstellung von Service-Boundaries und API-Gateway-Konzept
+
+  - name: CREATE
+    tasks:
+      - Implementierung des Error-Handling-Systems
+      - Entwicklung des Real-time Notification Systems
+      - Integration des User-Service mit SSO
+      - Erweiterung der Compliance-Engine für DSGVO
+
+  - name: IMPLEMENTATION
+    tasks:
+      - Performance-Optimierung des Compliance-Systems
+      - Implementierung der Fehlerbehandlung bei API-Aufrufen
+      - Implementierung des Dashboard-Personalisierungssystems
+      - Deployment der erweiterten Sicherheitsfunktionen
+
+  - name: REFLEKTION
+    tasks:
+      - Umfassende Bewertung in 7 Key-Bereichen (P1–P7)
+      - Vergleich mit v1.6 Metriken und Zielen
+      - "v1.7_final_review.md erstellen"
+      - Vorbereitung des Übergangs zu v1.8
+
+orchestrator: LangGraph+
+memory: MCP++
+graph_knowledge: Graphiti++
+database: MongoDB
+ui: Streamlit+
+monitoring:
+  grafana: enhanced+
+  prometheus: enhanced+
+  dashboards:
+    - pipeline_status
+    - phase_progress
+    - decision_paths
+    - resource_usage
+    - security_metrics
+    - performance_metrics
+    - compliance_metrics
+
+pipelines:
+  - id: pipeline_performance
+    name: Performance-Optimierung
+    agents: [PerformanceAgent, CachingAgent, LoadTestAgent, MonitoringAgent]
+    goals:
+      - Bottleneck-Analyse des Compliance-Systems durchführen
+      - Caching-Strategie für API-Aufrufe entwickeln
+      - Load-Testing mit 10k+ simulierten Nutzern
+      - "Export nach performance_report_v1.7.md"
+
+  - id: pipeline_security
+    name: Sicherheit & Compliance
+    agents: [SecurityAgent, ComplianceAgent, AuditAgent, PenetrationTestAgent]
+    goals:
+      - Sicherheitsaudit der API-Endpunkte durchführen
+      - OWASP Top 10 Check implementieren
+      - Auth-Flow-Analyse und Optimierung
+      - "Export nach security_report_v1.7.md"
+
+  - id: pipeline_error_handling
+    name: Fehlerbehandlung & Robustheit
+    agents: [ErrorHandlingAgent, RetryAgent, LoggingAgent, ResilienceAgent]
+    goals:
+      - Global Error Handler implementieren
+      - Retry-Mechanismen für API-Aufrufe entwickeln
+      - Logging-Enhancement für bessere Fehleranalyse
+      - "Export nach error_handling_report_v1.7.md"
+
+  - id: pipeline_user_service
+    name: User-Service & SSO
+    agents: [AuthAgent, UserManagementAgent, PermissionAgent, SSOAgent]
+    goals:
+      - OAuth2-Flow implementieren
+      - User-Management-API entwickeln
+      - Permission-System optimieren
+      - "Export nach user_service_report_v1.7.md"
+
+  - id: pipeline_notification
+    name: Echtzeit-Benachrichtigungen
+    agents: [NotificationAgent, WebSocketAgent, MessageQueueAgent, ClientSideAgent]
+    goals:
+      - WebSocket-Integration für Echtzeit-Updates
+      - Message-Queue-Setup für zuverlässige Zustellung
+      - Client-Side-Handler für Benachrichtigungen
+      - "Export nach notification_system_report_v1.7.md"
+
+  - id: pipeline_dashboard
+    name: Dashboard & Personalisierung
+    agents: [DashboardAgent, UIAgent, PersonalizationAgent, AnalyticsAgent]
+    goals:
+      - Anpassbare Dashboard-Ansicht entwickeln
+      - Analytics Dashboard erweitern
+      - Benutzereinstellungen-Management
+      - "Export nach dashboard_report_v1.7.md"
+
+  - id: pipeline_integration
+    name: Integration & Übergabe
+    agents: [IntegrationAgent, E2ETestAgent, RegressionTestAgent, DocumentationAgent]
+    goals:
+      - System-Integration-Tests durchführen
+      - E2E-Tests für kritische Workflows
+      - Regression-Tests für bestehende Funktionalität
+      - Vorbereitung der Übergabe an v1.8
+
+output_documents:
+  - performance_report_v1.7.md
+  - security_report_v1.7.md
+  - error_handling_report_v1.7.md
+  - user_service_report_v1.7.md
+  - notification_system_report_v1.7.md
+  - dashboard_report_v1.7.md
+  - v1.7_final_review.md
+
+post_actions:
+  - update system_state to "ready_for_VAN_v1.8"
+  - generate streamlit_dashboard_presentation
+  - archive artifacts to MongoDB
+  - prepare next_cycle_context for v1.8 

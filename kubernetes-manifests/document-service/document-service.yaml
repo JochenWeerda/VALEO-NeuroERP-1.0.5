@@ -1,0 +1,270 @@
+# Kubernetes-Manifest für den Dokumentenmanagement-Service
+# StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: document-service
+  namespace: erp-system
+  labels:
+    app: document-service
+    component: storage
+spec:
+  serviceName: "document-service"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: document-service
+  template:
+    metadata:
+      labels:
+        app: document-service
+        component: storage
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: document-service
+        image: ghcr.io/organization/erp-document-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8070
+          name: http
+        env:
+        - name: STORAGE_PATH
+          value: "/data/documents"
+        - name: DB_HOST
+          value: "document-db"
+        - name: MAX_UPLOAD_SIZE
+          value: "50MB"
+        - name: AUTH_SERVICE_URL
+          value: "http://auth-service:8080"
+        resources:
+          requests:
+            cpu: 300m
+            memory: 512Mi
+          limits:
+            cpu: 800m
+            memory: 1Gi
+        volumeMounts:
+        - name: document-storage
+          mountPath: /data/documents
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8070
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8070
+          initialDelaySeconds: 40
+          periodSeconds: 30
+        securityContext:
+          runAsUser: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+  volumeClaimTemplates:
+  - metadata:
+      name: document-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 50Gi
+---
+# Headless Service für StatefulSet
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-service
+  namespace: erp-system
+  labels:
+    app: document-service
+    component: storage
+spec:
+  ports:
+  - port: 8070
+    name: http
+    targetPort: 8070
+  clusterIP: None
+  selector:
+    app: document-service
+---
+# Service für externe Kommunikation
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-service-lb
+  namespace: erp-system
+  labels:
+    app: document-service
+    component: storage
+spec:
+  ports:
+  - port: 8070
+    name: http
+    targetPort: 8070
+  selector:
+    app: document-service
+  type: ClusterIP
+---
+# Backup CronJob für Dokumente
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: document-backup
+  namespace: erp-system
+spec:
+  schedule: "0 1 * * *"  # Jeden Tag um 1 Uhr morgens
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              DATE=$(date +%Y%m%d)
+              kubectl exec document-service-0 -n erp-system -- tar -czf /tmp/documents-backup-$DATE.tar.gz /data/documents
+              kubectl cp erp-system/document-service-0:/tmp/documents-backup-$DATE.tar.gz /backups/documents-backup-$DATE.tar.gz
+              kubectl exec document-service-0 -n erp-system -- rm /tmp/documents-backup-$DATE.tar.gz
+              # Alte Backups löschen (älter als 30 Tage)
+              find /backups -name "documents-backup-*.tar.gz" -mtime +30 -delete
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backups
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-volume
+            persistentVolumeClaim:
+              claimName: document-backup-pvc
+---
+# PersistentVolumeClaim für Backups
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: document-backup-pvc
+  namespace: erp-system
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: standard
+---
+# HorizontalPodAutoscaler für Document-Service
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: document-service-hpa
+  namespace: erp-system
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: document-service
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 75
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 120
+---
+# NetworkPolicy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: document-service-network-policy
+  namespace: erp-system
+spec:
+  podSelector:
+    matchLabels:
+      app: document-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-server
+    ports:
+    - protocol: TCP
+      port: 8070
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8070
+  - from:
+    - podSelector:
+        matchLabels:
+          app: reporting-service
+    ports:
+    - protocol: TCP
+      port: 8070
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: auth-service
+    ports:
+    - protocol: TCP
+      port: 8080
+  - to:
+    - podSelector:
+        matchLabels:
+          app: notification-service
+    ports:
+    - protocol: TCP
+      port: 8085
+  - to:
+    - podSelector:
+        matchLabels:
+          app: document-db
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53 

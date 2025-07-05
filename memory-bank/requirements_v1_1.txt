@@ -1,0 +1,178 @@
+# Anforderungen: VALERO-NeuroERP v1.1
+
+## 1. Erweiterung der BI-Funktionen
+
+### 1.1 Excel-Export für komplexe Tabellenstrukturen
+- REQ-BI-101: Unterstützung für mehrstufige Tabellenhierarchien im Excel-Export
+- REQ-BI-102: Korrekte Formatierung von Zahlen, Datumsangaben und Währungen im Export
+- REQ-BI-103: Beibehaltung von Styling-Elementen (Farben, Schriftarten, Rahmen) im Export
+- REQ-BI-104: Unterstützung für Pivot-Tabellen im Export
+- REQ-BI-105: Optimierte Performance bei großen Datenmengen (>10.000 Zeilen)
+
+### 1.2 Custom Report Builder
+- REQ-BI-201: Drag-and-Drop-Interface für die Erstellung benutzerdefinierter Berichte
+- REQ-BI-202: Unterstützung für verschiedene Datenquellen (SQL, NoSQL, API)
+- REQ-BI-203: Filterung und Sortierung von Daten in Echtzeit
+- REQ-BI-204: Speichern und Teilen von benutzerdefinierten Berichten
+- REQ-BI-205: Versionierung von Berichtsvorlagen
+- REQ-BI-206: Scheduling von regelmäßigen Berichtsausführungen und -versand
+
+### 1.3 Erweiterte Dashboard-Funktionalitäten
+- REQ-BI-301: Neue Widget-Typen (Heatmaps, Treemaps, Sankey-Diagramme)
+- REQ-BI-302: Interaktive Drill-Down-Funktionalität in Diagrammen
+- REQ-BI-303: Optimierte Darstellung auf mobilen Geräten, insbesondere iOS
+- REQ-BI-304: Verbesserte Ladezeiten für Dashboards mit vielen Widgets
+- REQ-BI-305: Echtzeit-Aktualisierung von Dashboard-Daten
+- REQ-BI-306: Personalisierbare Dashboard-Layouts für verschiedene Benutzerrollen
+
+### 1.4 KI-gestützte Analysen
+- REQ-BI-401: Integration fortschrittlicher Prognosemodelle für Umsatz- und Bestandsvorhersagen
+- REQ-BI-402: Anomalieerkennung in Finanzdaten und Transaktionen
+- REQ-BI-403: Automatische Generierung von Insights und Handlungsempfehlungen
+- REQ-BI-404: Natural Language Queries für Datenabfragen
+- REQ-BI-405: Automatisierte Berichtserstellung mit KI-generierten Interpretationen
+
+## 2. Optimierte Nutzerverwaltung mit Rollen & Rechten
+
+### 2.1 Feingranulares Berechtigungskonzept
+- REQ-NV-101: Definition von Berechtigungen auf Funktions-, Daten- und Feldebene
+- REQ-NV-102: Hierarchische Berechtigungsstruktur mit Vererbung
+- REQ-NV-103: Kontextabhängige Berechtigungen (z.B. basierend auf Abteilung, Standort, Kundengruppe)
+- REQ-NV-104: Temporäre Berechtigungsvergabe mit automatischem Ablauf
+- REQ-NV-105: Delegationsmechanismus für Berechtigungen (z.B. bei Urlaub/Krankheit)
+
+### 2.2 Benutzergruppen und Rollen-Management
+- REQ-NV-201: Erstellung und Verwaltung von Benutzergruppen
+- REQ-NV-202: Vordefinierte Rollen-Templates für typische Unternehmensrollen
+- REQ-NV-203: Mehrfachzuordnung von Benutzern zu Rollen und Gruppen
+- REQ-NV-204: Rollenbasierte Startseiten und Navigationsmenüs
+- REQ-NV-205: Automatische Rollenzuweisung basierend auf organisatorischen Attributen
+
+### 2.3 Authentifizierung und Sicherheit
+- REQ-NV-301: Single Sign-On (SSO) Integration mit gängigen Identitätsanbietern
+- REQ-NV-302: Multi-Faktor-Authentifizierung mit verschiedenen Optionen
+- REQ-NV-303: Passwort-Richtlinien gemäß aktuellen Sicherheitsstandards
+- REQ-NV-304: Umfassendes Audit-Logging für sicherheitsrelevante Aktionen
+- REQ-NV-305: Automatische Sperrung bei verdächtigen Anmeldeaktivitäten
+
+### 2.4 Benutzerverwaltung
+- REQ-NV-401: Self-Service-Portal für Benutzer (Passwort-Reset, Profilverwaltung)
+- REQ-NV-402: Automatisierte Onboarding- und Offboarding-Prozesse
+- REQ-NV-403: Bulk-Import und -Export von Benutzerdaten
+- REQ-NV-404: Benutzeraktivitätsberichte und -analysen
+- REQ-NV-405: Integration mit HR-Systemen für automatische Benutzerverwaltung
+
+## 3. Mobile Kassenlösung
+
+### 3.1 Native mobile App
+- REQ-MK-101: Entwicklung nativer Apps für iOS und Android
+- REQ-MK-102: Optimierte Benutzeroberfläche für Touchscreens
+- REQ-MK-103: Offline-Funktionalität mit automatischer Synchronisation
+- REQ-MK-104: Push-Benachrichtigungen für wichtige Ereignisse
+- REQ-MK-105: Biometrische Authentifizierung (Fingerabdruck, Gesichtserkennung)
+
+### 3.2 Kassenfunktionalität
+- REQ-MK-201: Schnelle Artikelerfassung via Barcode/QR-Code-Scanner
+- REQ-MK-202: Integration mit mobilen Zahlungsterminals
+- REQ-MK-203: Unterstützung für verschiedene Zahlungsmethoden
+- REQ-MK-204: Rabatt- und Gutscheinverwaltung
+- REQ-MK-205: Kundenidentifikation und Kundenkartenprogramme
+- REQ-MK-206: TSE-konforme Belegausgabe (elektronisch und gedruckt)
+
+### 3.3 Erweiterte Funktionen
+- REQ-MK-301: Mobile Inventurerfassung
+- REQ-MK-302: Bestandsabfragen in Echtzeit
+- REQ-MK-303: Filialübergreifende Artikelsuche
+- REQ-MK-304: Integrierte Mitarbeiterzeiterfassung
+- REQ-MK-305: KI-gestützte Betrugserkennung für mobile Transaktionen
+- REQ-MK-306: Augmented Reality für Produktinformationen und -platzierung
+
+## 4. API-Gateway für Drittanbieteranbindung
+
+### 4.1 API-Management
+- REQ-API-101: Erweiterung des API-Gateways für externe Zugriffe
+- REQ-API-102: Implementierung von API-Schlüsselverwaltung
+- REQ-API-103: Rate-Limiting und Quota-Management
+- REQ-API-104: Versionierung der APIs für Abwärtskompatibilität
+- REQ-API-105: API-Monitoring und -Logging
+
+### 4.2 Entwicklerportal
+- REQ-API-201: Self-Service-Portal für Entwickler
+- REQ-API-202: Interaktive API-Dokumentation mit Swagger/OpenAPI
+- REQ-API-203: Sandbox-Umgebung für Tests
+- REQ-API-204: Code-Beispiele in verschiedenen Programmiersprachen
+- REQ-API-205: Forum für Entwickler und Knowledge Base
+
+### 4.3 Integration und Erweiterbarkeit
+- REQ-API-301: Webhook-Funktionalität für Ereignisbenachrichtigungen
+- REQ-API-302: OAuth2-basierte Authentifizierung für Drittanbieter
+- REQ-API-303: GraphQL-Schnittstelle zusätzlich zu REST
+- REQ-API-304: Batch-Verarbeitung für Massenoperationen
+- REQ-API-305: Erweiterbare Plugin-Architektur für benutzerdefinierte Integrationen
+
+### 4.4 Analytics und Reporting
+- REQ-API-401: Detaillierte Nutzungsstatistiken für APIs
+- REQ-API-402: Anomalieerkennung bei API-Aufrufen
+- REQ-API-403: Leistungsüberwachung und -optimierung
+- REQ-API-404: Benutzerdefinierte Berichte zur API-Nutzung
+- REQ-API-405: Abrechnung und Fakturierung für API-Nutzung
+
+## 5. Performance-Optimierung
+
+### 5.1 Caching-Strategien
+- REQ-PO-101: Implementierung eines verteilten Caching-Systems
+- REQ-PO-102: Mehrschichtiges Caching (Client, API, Datenbank)
+- REQ-PO-103: Cache-Invalidierung und -Aktualisierung
+- REQ-PO-104: Konfigurierbare Cache-Lebensdauer pro Datentyp
+- REQ-PO-105: Monitoring und Analyse der Cache-Effizienz
+
+### 5.2 Datenbankoptimierung
+- REQ-PO-201: Optimierung der Datenbankindizes
+- REQ-PO-202: Query-Optimierung für komplexe BI-Abfragen
+- REQ-PO-203: Implementierung von Connection Pooling
+- REQ-PO-204: Partitionierung großer Tabellen
+- REQ-PO-205: Datenbank-Failover-Zeit von 3,5s auf unter 2s reduzieren
+
+### 5.3 Frontend-Performance
+- REQ-PO-301: Lazy Loading für selten genutzte Komponenten
+- REQ-PO-302: Code-Splitting und Bundle-Optimierung
+- REQ-PO-303: Optimierung von Bildern und Assets
+- REQ-PO-304: Implementierung von Service Workers für schnelleres Laden
+- REQ-PO-305: Progressive Web App (PWA) Funktionalitäten
+
+### 5.4 Skalierung und Infrastruktur
+- REQ-PO-401: Auto-Scaling basierend auf Nutzungsmustern
+- REQ-PO-402: Optimierung der API-Antwortzeiten durch Parallelisierung
+- REQ-PO-403: Lastverteilung und Traffic-Management
+- REQ-PO-404: Ressourcenoptimierung in Kubernetes
+- REQ-PO-405: Monitoring und automatische Alarmierung bei Performance-Problemen
+
+## 6. Nicht-funktionale Anforderungen
+
+### 6.1 Sicherheit
+- REQ-NF-101: Regelmäßige Sicherheitsaudits und Penetrationstests
+- REQ-NF-102: Verschlüsselung aller sensiblen Daten in Ruhe und bei Übertragung
+- REQ-NF-103: Implementierung von OWASP Top 10 Schutzmaßnahmen
+- REQ-NF-104: Automatisierte Sicherheitstests in der CI/CD-Pipeline
+- REQ-NF-105: Compliance mit DSGVO und branchenspezifischen Vorschriften
+
+### 6.2 Wartbarkeit
+- REQ-NF-201: Refactoring des Legacy-Codes in minimal_server.py
+- REQ-NF-202: Vereinheitlichung der Frontend-Komponentenstruktur
+- REQ-NF-203: Erhöhung der Testabdeckung auf mindestens 80%
+- REQ-NF-204: Automatisierung des Rollback-Prozesses
+- REQ-NF-205: Vervollständigung der technischen Dokumentation
+
+### 6.3 Verfügbarkeit und Zuverlässigkeit
+- REQ-NF-301: Systemverfügbarkeit von 99,95% (außerhalb geplanter Wartungsfenster)
+- REQ-NF-302: Implementierung von Circuit Breaker für externe Abhängigkeiten
+- REQ-NF-303: Automatische Wiederherstellung nach Ausfällen
+- REQ-NF-304: Regelmäßige Disaster-Recovery-Tests
+- REQ-NF-305: Implementierung von Chaos Engineering für Resilienz-Tests
+
+### 6.4 Skalierbarkeit
+- REQ-NF-401: Unterstützung für mindestens 1.000 gleichzeitige Benutzer
+- REQ-NF-402: Verarbeitung von mindestens 100 Transaktionen pro Sekunde
+- REQ-NF-403: Lineare Skalierung mit zunehmender Last
+- REQ-NF-404: Effiziente Ressourcennutzung unter Last
+- REQ-NF-405: Unterstützung für geografisch verteilte Deployments 

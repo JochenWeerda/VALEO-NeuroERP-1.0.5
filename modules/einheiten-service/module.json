@@ -1,0 +1,54 @@
+{
+  "name": "einheiten-service",
+  "version": "1.0.0",
+  "description": "Dienst zur Verwaltung von Maßeinheiten im AI-ERP-System",
+  "maintainer": "Stammdaten-Team",
+  "stability": "stable",
+  "dependencies": [
+    {
+      "module": "core-database",
+      "version": "^2.0.0"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "EinheitenAPI",
+      "version": "1.0.0",
+      "schema": "schemas/einheiten-api.json",
+      "description": "API für Maßeinheiten und Umrechnungen"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "entry"
+    },
+    {
+      "path": "src/einheiten.js",
+      "role": "module"
+    },
+    {
+      "path": "src/umrechnung.js",
+      "role": "module"
+    },
+    {
+      "path": "src/validators.js",
+      "role": "utility"
+    },
+    {
+      "path": "schemas/einheiten-api.json",
+      "role": "schema"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-03-10",
+      "changes": [
+        "Initiale Version des Einheiten-Dienstes",
+        "Unterstützung für Standard-Maßeinheiten",
+        "Implementierung von Umrechnungsfunktionen"
+      ]
+    }
+  ]
+} 

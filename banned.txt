@@ -1,0 +1,3 @@
+# Diese Datei enthält Platzhalter für API-Keys, die aus der Git-Historie entfernt wurden
+OPENAI_API_KEY_PLACEHOLDER
+LINKUP_API_KEY_PLACEHOLDER 

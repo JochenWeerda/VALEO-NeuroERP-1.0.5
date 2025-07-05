@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#4a7c59" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta
+      name="description"
+      content="AI-gesteuertes ERP-System für den Landhandel"
+    />
+    <base href="/" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Material Icons einbinden -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <title>Folkerts ERP</title>
+    <style>
+      /* Fallback-Stil, falls React nicht lädt */
+      :root {
+        --folkerts-green: #4a7c59;
+        --folkerts-light-green: #6ba378;
+        --folkerts-dark-green: #305a3a;
+        --folkerts-accent: #f9a03f;
+        --folkerts-light: #f5f5f5;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: var(--folkerts-light);
+      }
+      
+      #root {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      .fallback-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--folkerts-light);
+        color: #333;
+        text-align: center;
+      }
+      
+      .fallback-content {
+        max-width: 800px;
+        padding: 40px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      
+      .fallback-content h1 {
+        color: var(--folkerts-green);
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>Sie müssen JavaScript aktivieren, um diese App zu nutzen.</noscript>
+    
+    <!-- Fallback-Inhalt, falls React nicht lädt -->
+    <div class="fallback-container">
+      <div class="fallback-content">
+        <h1>Folkerts Landhandel ERP-System</h1>
+        <p>Die Anwendung wird geladen. Falls diese Nachricht weiterhin angezeigt wird, überprüfen Sie bitte die Konsole auf Fehler.</p>
+      </div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script type="module" src="/src/index.jsx"></script>
+    
+    <script>
+      // Einfacher Test für JavaScript-Ausführung
+      console.log('index.html Script wurde ausgeführt');
+      
+      // iOS-Safari Optimierungen
+      // Verhindert unerwünschtes Zoomen auf iOS
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+      
+      // Hilfsfunktion zur Fehlerbehebung auf iOS
+      function checkIOSDisplay() {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          console.log('iOS-Gerät erkannt - Überprüfe Darstellung');
+          document.body.style.minHeight = '100vh';
+          document.getElementById('root').style.minHeight = '100vh';
+        }
+      }
+      
+      // Prüfen, ob das Fallback-Element vorhanden ist
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM vollständig geladen');
+        checkIOSDisplay();
+        
+        // Verstecke Fallback-Element nach 1 Sekunde, falls React erfolgreich geladen hat
+        setTimeout(function() {
+          const rootElement = document.getElementById('root');
+          const fallbackContainer = document.querySelector('.fallback-container');
+          
+          if (rootElement && rootElement.children.length > 0 && fallbackContainer) {
+            console.log('React hat erfolgreich gerendert, verstecke Fallback');
+            fallbackContainer.style.display = 'none';
+          } else {
+            console.log('React hat nicht gerendert, zeige Fallback');
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html> 

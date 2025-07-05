@@ -1,0 +1,231 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "title": "Service Health Overview",
+      "type": "row",
+      "panels": [
+        {
+          "title": "Service Status",
+          "type": "stat",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "up{job=~\"valeo-neuroerp-.*\"}",
+              "legendFormat": "{{job}}"
+            }
+          ]
+        },
+        {
+          "title": "Response Time (95th Percentile)",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+              "legendFormat": "{{service}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "API Gateway Metrics",
+      "type": "row",
+      "panels": [
+        {
+          "title": "Request Rate",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "rate(http_requests_total[5m])",
+              "legendFormat": "{{status}}"
+            }
+          ]
+        },
+        {
+          "title": "Error Rate",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "rate(http_requests_total{status=~\"5..\"}[5m]) / rate(http_requests_total[5m])",
+              "legendFormat": "{{service}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Database & Cache",
+      "type": "row",
+      "panels": [
+        {
+          "title": "Database Replication Lag",
+          "type": "gauge",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "pg_replication_lag_seconds",
+              "legendFormat": "Replication Lag"
+            }
+          ]
+        },
+        {
+          "title": "Redis Cache Usage",
+          "type": "gauge",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "redis_memory_used_bytes / redis_memory_max_bytes * 100",
+              "legendFormat": "Memory Usage %"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Excel Export Service",
+      "type": "row",
+      "panels": [
+        {
+          "title": "Queue Size",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "excel_export_queue_size",
+              "legendFormat": "Queue Size"
+            }
+          ]
+        },
+        {
+          "title": "Processing Time",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "rate(excel_export_processing_duration_seconds_sum[5m]) / rate(excel_export_processing_duration_seconds_count[5m])",
+              "legendFormat": "Avg Processing Time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Auth Service",
+      "type": "row",
+      "panels": [
+        {
+          "title": "Authentication Rate",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "rate(auth_attempts_total[5m])",
+              "legendFormat": "Auth Attempts"
+            }
+          ]
+        },
+        {
+          "title": "Token Validation Time",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "rate(token_validation_duration_seconds_sum[5m]) / rate(token_validation_duration_seconds_count[5m])",
+              "legendFormat": "Avg Validation Time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Resource Usage",
+      "type": "row",
+      "panels": [
+        {
+          "title": "CPU Usage",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "sum(rate(container_cpu_usage_seconds_total{container=~\"valeo-neuroerp-.*\"}[5m])) by (container)",
+              "legendFormat": "{{container}}"
+            }
+          ]
+        },
+        {
+          "title": "Memory Usage",
+          "type": "graph",
+          "datasource": "Prometheus",
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{container=~\"valeo-neuroerp-.*\"}) by (container)",
+              "legendFormat": "{{container}}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": ["valeo-neuroerp"],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "Prometheus",
+        "definition": "label_values(up{job=~\"valeo-neuroerp-.*\"}, job)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Service",
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": "label_values(up{job=~\"valeo-neuroerp-.*\"}, job)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "VALEO-NeuroERP Dashboard",
+  "uid": "valeo-neuroerp-main",
+  "version": 1
+} 

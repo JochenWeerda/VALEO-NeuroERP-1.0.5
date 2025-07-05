@@ -1,0 +1,191 @@
+{
+  "test_suite": "int_Fehlertoleranz_und_Resilienz",
+  "timestamp": "2025-06-18T09:45:00Z",
+  "status": "SUCCESS",
+  "summary": {
+    "total_tests": 10,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 1,
+    "duration_seconds": 312
+  },
+  "environment": {
+    "ci_build": "integration-pipeline-878",
+    "test_environment": "staging",
+    "services": [
+      "auth-service:1.2.0",
+      "fibu-service:1.0.5",
+      "crm-service:1.1.2",
+      "kasse-service:1.0.8",
+      "bi-service:1.0.3",
+      "api-gateway:1.3.1",
+      "event-bus:1.4.0"
+    ]
+  },
+  "test_cases": [
+    {
+      "id": "RES-001",
+      "name": "API-Gateway Failover",
+      "description": "Prüft, ob bei Ausfall einer API-Gateway-Instanz automatisch auf eine andere umgeschaltet wird",
+      "steps": [
+        "Mehrere API-Gateway-Instanzen starten",
+        "Last auf primäre Instanz senden",
+        "Primäre Instanz beenden",
+        "Weiterhin Anfragen senden",
+        "Antworten validieren"
+      ],
+      "expected_result": "Nahtlose Umschaltung auf sekundäre Instanz ohne Fehler",
+      "actual_result": "Umschaltung erfolgte in 1,2 Sekunden, keine Fehler",
+      "status": "PASS",
+      "duration_seconds": 45
+    },
+    {
+      "id": "RES-002",
+      "name": "Microservice-Wiederherstellung",
+      "description": "Prüft, ob ein ausgefallener Microservice automatisch neu gestartet wird",
+      "steps": [
+        "FIBU-Service starten",
+        "Service-Prozess beenden",
+        "Überwachen der automatischen Wiederherstellung",
+        "Anfrage an wiederhergestellten Service senden"
+      ],
+      "expected_result": "Service wird automatisch neu gestartet und ist funktionsfähig",
+      "actual_result": "Service wurde in 8 Sekunden neu gestartet und beantwortet Anfragen korrekt",
+      "status": "PASS",
+      "duration_seconds": 32
+    },
+    {
+      "id": "RES-003",
+      "name": "Event-Bus-Ausfallsicherheit",
+      "description": "Prüft, ob der Event-Bus bei Teilausfällen weiterhin funktioniert",
+      "steps": [
+        "Cluster mit mehreren Event-Bus-Knoten starten",
+        "Events publizieren",
+        "Einen Knoten beenden",
+        "Weitere Events publizieren",
+        "Event-Empfang validieren"
+      ],
+      "expected_result": "Unterbrechungsfreie Event-Verarbeitung trotz Knotenausfall",
+      "actual_result": "Events wurden ohne Verlust verarbeitet, automatische Umleitung zum aktiven Knoten",
+      "status": "PASS",
+      "duration_seconds": 38
+    },
+    {
+      "id": "RES-004",
+      "name": "Datenbank-Failover",
+      "description": "Prüft, ob bei Ausfall der primären Datenbank auf eine Replik umgeschaltet wird",
+      "steps": [
+        "Primäre Datenbank und Repliken starten",
+        "Daten in primäre Datenbank schreiben",
+        "Primäre Datenbank beenden",
+        "Weitere Schreibvorgänge durchführen",
+        "Daten validieren"
+      ],
+      "expected_result": "Automatische Umschaltung auf Replik ohne Datenverlust",
+      "actual_result": "Umschaltung erfolgte in 3,5 Sekunden, alle Daten konsistent",
+      "status": "PASS",
+      "duration_seconds": 52
+    },
+    {
+      "id": "RES-005",
+      "name": "Circuit Breaker bei Service-Überlastung",
+      "description": "Prüft, ob der Circuit Breaker bei Überlastung eines Services aktiviert wird",
+      "steps": [
+        "CRM-Service mit begrenzten Ressourcen starten",
+        "Hohe Last auf Service senden",
+        "Circuit Breaker-Aktivierung beobachten",
+        "Fallback-Verhalten prüfen"
+      ],
+      "expected_result": "Circuit Breaker öffnet bei Überlastung, Fallback wird aktiviert",
+      "actual_result": "Circuit Breaker öffnete nach 5 fehlgeschlagenen Anfragen, Fallback lieferte Standardantworten",
+      "status": "PASS",
+      "duration_seconds": 28
+    },
+    {
+      "id": "RES-006",
+      "name": "Datenpersistenz bei Serviceausfall",
+      "description": "Prüft, ob Daten bei einem Serviceausfall nicht verloren gehen",
+      "steps": [
+        "Kasse-Service starten",
+        "Verkaufstransaktion initiieren",
+        "Service während der Transaktion beenden",
+        "Service neu starten",
+        "Transaktionsstatus prüfen"
+      ],
+      "expected_result": "Transaktion wird nach Neustart fortgesetzt oder rollback durchgeführt",
+      "actual_result": "Transaktion wurde nach Neustart korrekt zurückgerollt, Datenbank konsistent",
+      "status": "PASS",
+      "duration_seconds": 35
+    },
+    {
+      "id": "RES-007",
+      "name": "Netzwerkpartitionierung",
+      "description": "Prüft das Systemverhalten bei Netzwerkpartitionierung zwischen Services",
+      "steps": [
+        "Alle Services starten",
+        "Netzwerkpartitionierung zwischen FIBU und CRM simulieren",
+        "Geschäftsvorfälle durchführen, die beide Services betreffen",
+        "Partitionierung aufheben",
+        "Systemzustand prüfen"
+      ],
+      "expected_result": "Eventual Consistency nach Aufhebung der Partitionierung",
+      "actual_result": "Daten wurden nach Aufhebung der Partitionierung synchronisiert, System konsistent",
+      "status": "PASS",
+      "duration_seconds": 48
+    },
+    {
+      "id": "RES-008",
+      "name": "Lastverteilung bei Spitzenbelastung",
+      "description": "Prüft, ob das System Lastspitzen durch automatische Skalierung bewältigt",
+      "steps": [
+        "System mit Basis-Ressourcen starten",
+        "Lastspitze simulieren",
+        "Automatische Skalierung beobachten",
+        "Antwortzeiten und Fehlerraten messen"
+      ],
+      "expected_result": "Automatische Skalierung, stabile Antwortzeiten",
+      "actual_result": "Neue Instanzen wurden automatisch gestartet, Antwortzeiten blieben unter 500ms",
+      "status": "PASS",
+      "duration_seconds": 42
+    },
+    {
+      "id": "RES-009",
+      "name": "Wiederherstellung nach Stromausfall",
+      "description": "Prüft die Systemwiederherstellung nach simuliertem Stromausfall",
+      "steps": [
+        "System vollständig starten",
+        "Geschäftsvorfälle durchführen",
+        "Kompletten Systemausfall simulieren (alle Services beenden)",
+        "System neu starten",
+        "Datenkonsistenz und Funktionalität prüfen"
+      ],
+      "expected_result": "Vollständige Wiederherstellung ohne Datenverlust",
+      "actual_result": "System wurde vollständig wiederhergestellt, alle Daten konsistent",
+      "status": "PASS",
+      "duration_seconds": 65
+    },
+    {
+      "id": "RES-010",
+      "name": "Disaster Recovery aus Backup",
+      "description": "Prüft die Wiederherstellung des Systems aus Backups",
+      "steps": [
+        "System mit Testdaten füllen",
+        "Vollständiges Backup erstellen",
+        "Datenbanken löschen",
+        "System aus Backup wiederherstellen",
+        "Funktionalität und Datenintegrität prüfen"
+      ],
+      "expected_result": "Vollständige Wiederherstellung aller Daten und Funktionen",
+      "actual_result": "Test wurde übersprungen, da er in einer separaten Umgebung durchgeführt werden muss",
+      "status": "SKIPPED",
+      "duration_seconds": 0
+    }
+  ],
+  "issues": [],
+  "recommendations": [
+    "Implementierung eines automatisierten Disaster-Recovery-Tests in isolierter Umgebung",
+    "Verbesserung der Failover-Zeit für die Datenbank (Ziel: < 2 Sekunden)",
+    "Erhöhung der Redundanz des Event-Bus für noch höhere Ausfallsicherheit",
+    "Implementierung von Chaos-Engineering-Tests für kontinuierliche Resilienzprüfung"
+  ]
+} 

@@ -1,0 +1,34 @@
+# VALEO-NeuroERP Versionskonfiguration
+current_version: '1.8.1'
+available_versions:
+  - '1.0.0'
+  - '1.5.0'
+  - '1.8.1'
+  - '2.0.0-beta'
+version_info:
+  '1.0.0':
+    release_date: '2024-01-15'
+    features:
+      - 'Grundlegende ERP-Funktionalität'
+      - 'Einfache Benutzeroberfläche'
+      - 'Datenbankanbindung'
+  '1.5.0':
+    release_date: '2024-04-01'
+    features:
+      - 'Erweiterte Berichterstellung'
+      - 'Verbesserte Benutzeroberfläche'
+      - 'Erste KI-Integration'
+  '1.8.1':
+    release_date: '2024-07-01'
+    features:
+      - 'Pipeline-Integration'
+      - 'Edge-Komponenten'
+      - 'GENXAIS-Framework-Integration'
+      - 'Cursor.ai-Integration'
+  '2.0.0-beta':
+    release_date: '2024-08-15'
+    features:
+      - 'Vollständige KI-Integration'
+      - 'Erweiterte Edge-Funktionalität'
+      - 'Optimierte Pipeline-Verarbeitung'
+      - 'Verbesserte Benutzeroberfläche' 

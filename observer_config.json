@@ -1,0 +1,18 @@
+{
+  "server_url": "http://localhost:8000",
+  "check_interval": 60,
+  "max_history_size": 1000,
+  "data_dir": "observer_data",
+  "alert_thresholds": {
+    "cpu_usage_percent": 85.0,
+    "memory_usage_percent": 90.0,
+    "average_response_time_ms": 1000.0,
+    "error_rate_percent": 10.0
+  },
+  "enable_optimizer": false,
+  "optimizer_config": "optimizer_config.json",
+  "chart_generation_interval": 3600,
+  "enable_auto_restart": true,
+  "health_check_failures_threshold": 3,
+  "restart_scripts_dir": "restart_scripts"
+}

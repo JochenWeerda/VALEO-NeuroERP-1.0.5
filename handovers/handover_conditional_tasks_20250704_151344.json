@@ -1,0 +1,36 @@
+{
+  "task_id": "conditional_tasks",
+  "from_agent": "system",
+  "to_agent": "Developer",
+  "timestamp": "2025-07-04 15:13:44.562733",
+  "artifacts": {
+    "result": {
+      "status": "success",
+      "condition_config": {
+        "operators": [
+          "equals",
+          "not_equals",
+          "greater_than",
+          "less_than",
+          "contains",
+          "regex"
+        ],
+        "action_types": [
+          "skip",
+          "execute",
+          "retry",
+          "notify"
+        ],
+        "context_variables": [
+          "system_state",
+          "user_input",
+          "external_data"
+        ]
+      }
+    }
+  },
+  "status": "completed",
+  "notes": "Initial handover for task conditional_tasks",
+  "requirements": [],
+  "dependencies": []
+}

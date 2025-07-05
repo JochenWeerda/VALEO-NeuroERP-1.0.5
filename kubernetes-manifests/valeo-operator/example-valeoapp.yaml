@@ -1,0 +1,46 @@
+apiVersion: valeo.neuroerp.com/v1
+kind: ValeoApp
+metadata:
+  name: erp-backend
+  namespace: valeo-system
+spec:
+  size: 3
+  image: valeo-neuroerp/backend
+  version: "1.8.0"
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  modules:
+    - finance
+    - inventory
+    - reporting
+    - document-management
+  database:
+    type: postgres
+    version: "13.5"
+    size: 10Gi
+---
+apiVersion: valeo.neuroerp.com/v1
+kind: ValeoApp
+metadata:
+  name: erp-frontend
+  namespace: valeo-system
+spec:
+  size: 2
+  image: valeo-neuroerp/frontend
+  version: "1.8.0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  modules:
+    - dashboard
+    - finance-ui
+    - inventory-ui 

@@ -1,0 +1,125 @@
+# 📁 Datei: prompts/launch_cycle_valero_v1.6.yaml
+# 🚀 GENXAIS Prompt zur Initialisierung des Multi-Pipeline-Zyklus für VALERO-NeuroERP (v1.6)
+
+name: Launch GENXAIS Cycle – VALERO v1.6
+type: multi-agent-cycle
+versioning:
+  previous_version: v1.5
+  current_version: v1.6
+trigger: launch_cycle.py
+mode: full-automation
+
+phases:
+  - name: VAN
+    tasks:
+      - Review der v1.5 Ergebnisse und Metriken
+      - Analyse der Graphiti Decision Paths
+      - Identifikation von Optimierungspotentialen
+      - Planung der 6 Pipelines mit erweitertem Fokus auf DevSecOps
+
+  - name: PLAN
+    tasks:
+      - Ressourcenplanung und Priorisierung
+      - Definition von Pipeline-übergreifenden Abhängigkeiten
+      - Erstellung von Prompt-Templates für CREATE
+      - Vorbereitung der Übergabe an CREATE-Phase
+
+  - name: CREATE
+    tasks:
+      - Codegenerierung mit Fokus auf Sicherheit und Performance
+      - Parallele Ausführung der 6 Pipelines via LangGraph
+      - Automatisiertes Artefakt-Tracking
+      - Erstellung von Pipeline-Snapshots und Checkpoints
+
+  - name: IMPLEMENTATION
+    tasks:
+      - End-to-End Integration aller Komponenten
+      - Automatisiertes Deployment auf Staging und Test
+      - Monitoring-Setup mit erweiterten Dashboards
+      - Generierung von Performance-Reports
+
+  - name: REFLEKTION
+    tasks:
+      - Umfassende Bewertung in 6 Key-Bereichen (P1–P6)
+      - Vergleich mit v1.5 Metriken und Zielen
+      - "v1.6_final_review.md erstellen"
+      - Vorbereitung des Übergangs zu v1.7
+
+orchestrator: LangGraph
+memory: MCP+
+graph_knowledge: Graphiti+
+database: MongoDB
+ui: Streamlit
+monitoring:
+  grafana: enhanced
+  prometheus: enhanced
+  dashboards:
+    - pipeline_status
+    - phase_progress
+    - decision_paths
+    - resource_usage
+    - security_metrics
+    - performance_metrics
+
+pipelines:
+  - id: pipeline_arch
+    name: Architektur & Infrastruktur
+    agents: [ArchitekturAgent, InfraScanAgent, ChangeLogAgent, ScalabilityAgent]
+    goals:
+      - Optimierung der Microservice-Architektur für Skalierbarkeit
+      - Integration von Service Mesh und API Gateway
+      - "Dokumentation im architektur_v1.6.md"
+
+  - id: pipeline_graphiti
+    name: Knowledge Graph & Decision Paths
+    agents: [GraphitiAgent, RetrospektiveAgent, MemoryAgent, KnowledgeIntegrationAgent]
+    goals:
+      - Erweiterung des Graphiti-Wissensgraphen mit v1.5 Erkenntnissen
+      - Integration von Feedback-Loops in Decision Paths
+      - "Export als decision_map_v1.6.graphml"
+
+  - id: pipeline_devops
+    name: DevOps & Monitoring
+    agents: [DeployAgent, HelmValidator, MonitoringAgent, AlertAgent, AutoscalingAgent]
+    goals:
+      - Helm-Charts für alle Komponenten mit Autoscaling
+      - Erweiterte Prometheus/Grafana Dashboards
+      - Implementierung von Chaos Engineering Tests
+
+  - id: pipeline_qa
+    name: QA & Testing
+    agents: [TestAgent, CodeCoverAgent, SnapshotAgent, SecurityAgent, PerformanceAgent]
+    goals:
+      - Erweiterung der Testabdeckung auf 90%
+      - Automatisierte Security-Scans und Vulnerability Management
+      - "Export nach qa_report_v1.6.md"
+
+  - id: pipeline_security
+    name: Security & Compliance
+    agents: [SecurityAgent, ComplianceAgent, AuditAgent, VulnerabilityAgent]
+    goals:
+      - Implementierung von Zero-Trust-Architektur
+      - Automatisierte Compliance-Checks für DSGVO und ISO27001
+      - "Export nach security_report_v1.6.md"
+
+  - id: pipeline_integration
+    name: Integration & Übergabe
+    agents: [IntegrationAgent, ArchivAgent, PräsentationsAgent, NextCycleAgent, MetricsAgent]
+    goals:
+      - Integration aller Pipeline-Ergebnisse
+      - Erstellung der Präsentation für Stakeholder
+      - Vorbereitung der Übergabe an v1.7
+
+output_documents:
+  - architektur_v1.6.md
+  - decision_map_v1.6.graphml
+  - qa_report_v1.6.md
+  - security_report_v1.6.md
+  - monitoring_setup_v1.6.yaml
+  - v1.6_final_review.md
+
+post_actions:
+  - update system_state to "ready_for_VAN_v1.7"
+  - generate streamlit_dashboard_presentation
+  - archive artifacts to MongoDB
+  - prepare next_cycle_context for v1.7 

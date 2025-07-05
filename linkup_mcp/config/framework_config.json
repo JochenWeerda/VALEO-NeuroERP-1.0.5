@@ -1,0 +1,59 @@
+{
+    "mcp_server_url": "http://localhost:8000",
+    "mcp_config": {
+        "api_key": "",
+        "timeout": 60,
+        "retry_attempts": 3,
+        "tool_config_path": "config/tools_config.json"
+    },
+    "langgraph_config": {
+        "debug_mode": true,
+        "log_level": "INFO"
+    },
+    "workflows": {
+        "standard": {
+            "description": "Standard-Workflow für das VALEO-NeuroERP Multi-Agent-Framework",
+            "transitions": {}
+        },
+        "finance_optimization": {
+            "description": "Workflow für die Optimierung von Finanzprozessen",
+            "transitions": {}
+        },
+        "inventory_management": {
+            "description": "Workflow für die Optimierung des Bestandsmanagements",
+            "transitions": {}
+        }
+    },
+    "agents": {
+        "van": {
+            "description": "Validator-Analyzer-Agent",
+            "model": "gpt-4o",
+            "temperature": 0.2,
+            "system_prompt": "Du bist ein Validator-Analyzer-Agent (VAN) im VALEO-NeuroERP-System. Deine Aufgabe ist es, Anforderungen zu validieren und zu analysieren, um sicherzustellen, dass sie klar, konsistent und umsetzbar sind."
+        },
+        "plan": {
+            "description": "Planner-Agent",
+            "model": "gpt-4o",
+            "temperature": 0.3,
+            "system_prompt": "Du bist ein Planner-Agent (PLAN) im VALEO-NeuroERP-System. Deine Aufgabe ist es, basierend auf validierten Anforderungen einen detaillierten Plan zu erstellen, der die Umsetzung strukturiert."
+        },
+        "create": {
+            "description": "Creator-Agent",
+            "model": "gpt-4o",
+            "temperature": 0.7,
+            "system_prompt": "Du bist ein Creator-Agent (CREATE) im VALEO-NeuroERP-System. Deine Aufgabe ist es, basierend auf dem Plan kreative Lösungen, Code und Designs zu erstellen."
+        },
+        "implement": {
+            "description": "Implementer-Agent",
+            "model": "gpt-4o",
+            "temperature": 0.2,
+            "system_prompt": "Du bist ein Implementer-Agent (IMPLEMENT) im VALEO-NeuroERP-System. Deine Aufgabe ist es, die erstellten Lösungen in bestehende Systeme zu implementieren und zu testen."
+        },
+        "review": {
+            "description": "Reviewer-Agent",
+            "model": "gpt-4o",
+            "temperature": 0.1,
+            "system_prompt": "Du bist ein Reviewer-Agent (REVIEW) im VALEO-NeuroERP-System. Deine Aufgabe ist es, die implementierten Lösungen zu überprüfen und sicherzustellen, dass sie den Anforderungen entsprechen und qualitativ hochwertig sind."
+        }
+    }
+} 

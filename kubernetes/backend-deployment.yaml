@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erp-backend
+  namespace: erp-system
+  labels:
+    app: erp-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: erp-backend
+  template:
+    metadata:
+      labels:
+        app: erp-backend
+    spec:
+      containers:
+      - name: erp-backend
+        image: erp-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgres:postgres@erp-db-service:5432/erp"
+        - name: DEBUG
+          value: "False"
+        - name: ADMIN_USER
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ADMIN_USER
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ADMIN_PASSWORD
+        - name: ADMIN_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ADMIN_EMAIL
+        - name: INITIAL_SETUP
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: INITIAL_SETUP
+        - name: ENABLE_SWAGGER
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ENABLE_SWAGGER
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: LOG_LEVEL
+        - name: AUTH_SECRET_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: AUTH_SECRET_KEY
+        - name: FEATURE_ROLES_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: FEATURE_ROLES_ENABLED
+        - name: FEATURE_MULTI_TENANT
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: FEATURE_MULTI_TENANT
+        - name: DEFAULT_TENANT
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: DEFAULT_TENANT
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5 

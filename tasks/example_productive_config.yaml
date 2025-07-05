@@ -1,0 +1,464 @@
+title: "Produktiver GENXAIS v2.0 Zyklus"
+version: "2.0"
+description: "Konfiguration für einen produktiven GENXAIS-Zyklus mit echten Code-Generierungsaufgaben"
+
+# Phasen des Zyklus
+phases:
+  - "VAN"
+  - "PLAN"
+  - "CREATE"
+  - "IMPLEMENTATION"
+  - "REFLEKTION"
+
+# Integrationen
+use_langgraph: true
+use_rag: true
+
+langgraph_config:
+  workflow_name: "GENXAIS-Cycle-v2"
+  enable_checkpoints: true
+  save_state: true
+
+rag_config:
+  api_endpoint: "http://localhost:8000/api/v1/query"
+  api_token: "valeo_rag_api_token_2025"
+  collection: "valeo_neuroerp"
+
+# Pipelines und Aufgaben
+pipelines:
+  - name: "LangGraph-Integration"
+    description: "Verbessert die LangGraph-Integration für das VALEO-NeuroERP"
+    tasks:
+      - name: "LangGraph-Controller erstellen"
+        type: "code_generation"
+        description: "Erstellt einen verbesserten LangGraph-Controller"
+        target_file: "linkup_mcp/langgraph_controller.py"
+        code: |
+          # -*- coding: utf-8 -*-
+          """
+          Verbesserter LangGraph-Controller für VALEO-NeuroERP.
+          Dieser Controller stellt eine robuste Integration mit LangGraph her.
+          """
+          
+          import asyncio
+          import logging
+          from typing import Dict, Any, List, Optional
+          from datetime import datetime
+          
+          logger = logging.getLogger("langgraph_controller")
+          
+          class LangGraphController:
+              """Controller für die LangGraph-Integration"""
+              
+              def __init__(self, config: Optional[Dict[str, Any]] = None):
+                  """Initialisiert den LangGraph-Controller"""
+                  self.config = config or {}
+                  self.workflow_name = self.config.get("workflow_name", "default_workflow")
+                  self.enable_checkpoints = self.config.get("enable_checkpoints", True)
+                  self.save_state = self.config.get("save_state", True)
+                  self.current_phase = None
+                  self.phase_states = {}
+                  
+              async def start_phase(self, phase: str) -> Dict[str, Any]:
+                  """Startet eine neue Phase im LangGraph-Workflow"""
+                  logger.info(f"Starte LangGraph-Phase: {phase}")
+                  self.current_phase = phase
+                  self.phase_states[phase] = {
+                      "start_time": datetime.now().isoformat(),
+                      "status": "active",
+                      "checkpoints": []
+                  }
+                  
+                  # Hier würde die tatsächliche LangGraph-Integration stattfinden
+                  
+                  return {
+                      "phase": phase,
+                      "status": "started",
+                      "timestamp": datetime.now().isoformat()
+                  }
+              
+              async def create_checkpoint(self, name: str, data: Dict[str, Any]) -> Dict[str, Any]:
+                  """Erstellt einen Checkpoint im aktuellen Workflow"""
+                  if not self.current_phase or not self.enable_checkpoints:
+                      return {"status": "error", "message": "Keine aktive Phase oder Checkpoints deaktiviert"}
+                  
+                  checkpoint = {
+                      "name": name,
+                      "timestamp": datetime.now().isoformat(),
+                      "data": data
+                  }
+                  
+                  self.phase_states[self.current_phase]["checkpoints"].append(checkpoint)
+                  
+                  return {
+                      "status": "success",
+                      "checkpoint": name,
+                      "timestamp": checkpoint["timestamp"]
+                  }
+              
+              async def complete_phase(self, phase: Optional[str] = None) -> Dict[str, Any]:
+                  """Schließt die aktuelle oder angegebene Phase ab"""
+                  target_phase = phase or self.current_phase
+                  
+                  if not target_phase or target_phase not in self.phase_states:
+                      return {"status": "error", "message": "Phase nicht gefunden"}
+                  
+                  self.phase_states[target_phase]["status"] = "completed"
+                  self.phase_states[target_phase]["end_time"] = datetime.now().isoformat()
+                  
+                  if target_phase == self.current_phase:
+                      self.current_phase = None
+                  
+                  return {
+                      "phase": target_phase,
+                      "status": "completed",
+                      "timestamp": datetime.now().isoformat()
+                  }
+              
+              async def get_phase_state(self, phase: str) -> Dict[str, Any]:
+                  """Ruft den Zustand einer Phase ab"""
+                  if phase not in self.phase_states:
+                      return {"status": "error", "message": "Phase nicht gefunden"}
+                  
+                  return self.phase_states[phase]
+              
+              async def save_workflow_state(self) -> Dict[str, Any]:
+                  """Speichert den aktuellen Workflow-Zustand"""
+                  if not self.save_state:
+                      return {"status": "skipped", "message": "Zustandsspeicherung deaktiviert"}
+                  
+                  # Hier würde die tatsächliche Zustandsspeicherung stattfinden
+                  
+                  return {
+                      "status": "success",
+                      "workflow": self.workflow_name,
+                      "timestamp": datetime.now().isoformat()
+                  }
+
+      - name: "LangGraph-Integration-Test erstellen"
+        type: "code_generation"
+        description: "Erstellt einen Test für die LangGraph-Integration"
+        target_file: "tests/test_langgraph_integration.py"
+        code: |
+          # -*- coding: utf-8 -*-
+          """
+          Tests für die verbesserte LangGraph-Integration.
+          """
+          
+          import pytest
+          import asyncio
+          from linkup_mcp.langgraph_controller import LangGraphController
+          
+          @pytest.mark.asyncio
+          async def test_langgraph_controller_initialization():
+              """Test für die Initialisierung des LangGraph-Controllers"""
+              config = {
+                  "workflow_name": "test_workflow",
+                  "enable_checkpoints": True,
+                  "save_state": True
+              }
+              
+              controller = LangGraphController(config)
+              
+              assert controller.workflow_name == "test_workflow"
+              assert controller.enable_checkpoints == True
+              assert controller.save_state == True
+              assert controller.current_phase is None
+              assert controller.phase_states == {}
+          
+          @pytest.mark.asyncio
+          async def test_langgraph_phase_lifecycle():
+              """Test für den Lebenszyklus einer LangGraph-Phase"""
+              controller = LangGraphController()
+              
+              # Phase starten
+              start_result = await controller.start_phase("TEST_PHASE")
+              assert start_result["status"] == "started"
+              assert start_result["phase"] == "TEST_PHASE"
+              assert controller.current_phase == "TEST_PHASE"
+              
+              # Checkpoint erstellen
+              checkpoint_result = await controller.create_checkpoint("test_checkpoint", {"test_data": 123})
+              assert checkpoint_result["status"] == "success"
+              assert checkpoint_result["checkpoint"] == "test_checkpoint"
+              
+              # Phase abschließen
+              complete_result = await controller.complete_phase()
+              assert complete_result["status"] == "completed"
+              assert complete_result["phase"] == "TEST_PHASE"
+              assert controller.current_phase is None
+              
+              # Phasenzustand abrufen
+              phase_state = await controller.get_phase_state("TEST_PHASE")
+              assert phase_state["status"] == "completed"
+              assert len(phase_state["checkpoints"]) == 1
+              assert phase_state["checkpoints"][0]["name"] == "test_checkpoint"
+              assert phase_state["checkpoints"][0]["data"]["test_data"] == 123
+
+  - name: "RAG-Integration"
+    description: "Verbessert die RAG-Integration für das VALEO-NeuroERP"
+    tasks:
+      - name: "RAG-Client erstellen"
+        type: "code_generation"
+        description: "Erstellt einen verbesserten RAG-Client"
+        target_file: "linkup_mcp/rag_client.py"
+        code: |
+          # -*- coding: utf-8 -*-
+          """
+          Verbesserter RAG-Client für VALEO-NeuroERP.
+          Dieser Client stellt eine robuste Integration mit dem RAG-System her.
+          """
+          
+          import aiohttp
+          import logging
+          from typing import Dict, Any, List, Optional, Union
+          
+          logger = logging.getLogger("rag_client")
+          
+          class RAGClient:
+              """Client für die RAG-Integration"""
+              
+              def __init__(self, config: Optional[Dict[str, Any]] = None):
+                  """Initialisiert den RAG-Client"""
+                  self.config = config or {}
+                  self.api_endpoint = self.config.get("api_endpoint", "http://localhost:8000/api/v1/query")
+                  self.api_token = self.config.get("api_token", "")
+                  self.collection = self.config.get("collection", "default")
+                  self.session = None
+                  
+              async def initialize(self) -> None:
+                  """Initialisiert die HTTP-Session"""
+                  self.session = aiohttp.ClientSession(
+                      headers={
+                          "Authorization": f"Bearer {self.api_token}",
+                          "Content-Type": "application/json"
+                      }
+                  )
+                  logger.info(f"RAG-Client initialisiert für Endpoint: {self.api_endpoint}")
+              
+              async def query(self, query_text: str, top_k: int = 5) -> Dict[str, Any]:
+                  """Führt eine Abfrage an das RAG-System durch"""
+                  if not self.session:
+                      await self.initialize()
+                  
+                  try:
+                      payload = {
+                          "query": query_text,
+                          "collection": self.collection,
+                          "top_k": top_k
+                      }
+                      
+                      async with self.session.post(self.api_endpoint, json=payload) as response:
+                          if response.status == 200:
+                              result = await response.json()
+                              return {
+                                  "status": "success",
+                                  "results": result.get("results", []),
+                                  "metadata": result.get("metadata", {})
+                              }
+                          else:
+                              error_text = await response.text()
+                              logger.error(f"RAG-Abfrage fehlgeschlagen: {error_text}")
+                              return {
+                                  "status": "error",
+                                  "message": f"HTTP-Fehler: {response.status}",
+                                  "details": error_text
+                              }
+                  except Exception as e:
+                      logger.error(f"Fehler bei der RAG-Abfrage: {e}")
+                      return {
+                          "status": "error",
+                          "message": str(e)
+                      }
+              
+              async def close(self) -> None:
+                  """Schließt die HTTP-Session"""
+                  if self.session:
+                      await self.session.close()
+                      self.session = None
+                      logger.info("RAG-Client-Session geschlossen")
+
+      - name: "RAG-Integration-Test erstellen"
+        type: "code_generation"
+        description: "Erstellt einen Test für die RAG-Integration"
+        target_file: "tests/test_rag_integration.py"
+        code: |
+          # -*- coding: utf-8 -*-
+          """
+          Tests für die verbesserte RAG-Integration.
+          """
+          
+          import pytest
+          import asyncio
+          from unittest.mock import patch, MagicMock
+          from linkup_mcp.rag_client import RAGClient
+          
+          @pytest.mark.asyncio
+          async def test_rag_client_initialization():
+              """Test für die Initialisierung des RAG-Clients"""
+              config = {
+                  "api_endpoint": "http://test-endpoint/api/v1/query",
+                  "api_token": "test_token",
+                  "collection": "test_collection"
+              }
+              
+              client = RAGClient(config)
+              
+              assert client.api_endpoint == "http://test-endpoint/api/v1/query"
+              assert client.api_token == "test_token"
+              assert client.collection == "test_collection"
+              assert client.session is None
+              
+              # Test initialize
+              with patch("aiohttp.ClientSession") as mock_session:
+                  await client.initialize()
+                  mock_session.assert_called_once()
+                  assert client.session is not None
+          
+          @pytest.mark.asyncio
+          async def test_rag_query():
+              """Test für die RAG-Abfrage"""
+              client = RAGClient({
+                  "api_endpoint": "http://test-endpoint/api/v1/query",
+                  "api_token": "test_token",
+                  "collection": "test_collection"
+              })
+              
+              # Mock für die Session und Response
+              mock_response = MagicMock()
+              mock_response.status = 200
+              mock_response.json = MagicMock(return_value={
+                  "results": [
+                      {"text": "Test Result 1", "score": 0.95},
+                      {"text": "Test Result 2", "score": 0.85}
+                  ],
+                  "metadata": {"query_time_ms": 42}
+              })
+              
+              mock_session = MagicMock()
+              mock_session.post = MagicMock(return_value=mock_response)
+              mock_session.__aenter__ = MagicMock(return_value=mock_response)
+              mock_session.__aexit__ = MagicMock(return_value=None)
+              
+              # Setze die Mock-Session
+              client.session = mock_session
+              
+              # Führe die Abfrage durch
+              result = await client.query("test query", top_k=2)
+              
+              # Überprüfe das Ergebnis
+              assert result["status"] == "success"
+              assert len(result["results"]) == 2
+              assert result["results"][0]["text"] == "Test Result 1"
+              assert result["results"][0]["score"] == 0.95
+              assert result["metadata"]["query_time_ms"] == 42
+
+  - name: "Dashboard-Integration"
+    description: "Verbessert das Dashboard für das VALEO-NeuroERP"
+    tasks:
+      - name: "Dashboard-Konfiguration erstellen"
+        type: "file_creation"
+        description: "Erstellt eine Konfigurationsdatei für das Dashboard"
+        target_file: "config/dashboard_config.json"
+        content: |
+          {
+            "title": "VALEO-NeuroERP Dashboard",
+            "version": "2.0",
+            "theme": {
+              "primary_color": "#3498db",
+              "secondary_color": "#2ecc71",
+              "background_color": "#f5f5f5",
+              "text_color": "#333333"
+            },
+            "modules": [
+              {
+                "name": "phase_tracker",
+                "title": "Phasen-Tracker",
+                "enabled": true,
+                "order": 1
+              },
+              {
+                "name": "pipeline_monitor",
+                "title": "Pipeline-Monitor",
+                "enabled": true,
+                "order": 2
+              },
+              {
+                "name": "artifact_viewer",
+                "title": "Artefakt-Viewer",
+                "enabled": true,
+                "order": 3
+              },
+              {
+                "name": "langgraph_visualizer",
+                "title": "LangGraph-Visualisierer",
+                "enabled": true,
+                "order": 4
+              },
+              {
+                "name": "rag_explorer",
+                "title": "RAG-Explorer",
+                "enabled": true,
+                "order": 5
+              }
+            ],
+            "refresh_interval": 5,
+            "enable_notifications": true,
+            "notification_levels": ["info", "warning", "error"]
+          }
+
+      - name: "Dashboard-Dokumentation erstellen"
+        type: "documentation"
+        description: "Erstellt eine Dokumentation für das Dashboard"
+        target_file: "dashboard_documentation.md"
+        content: |
+          # VALEO-NeuroERP Dashboard Dokumentation
+          
+          ## Übersicht
+          
+          Das VALEO-NeuroERP Dashboard bietet eine umfassende Übersicht über den aktuellen Status des GENXAIS-Zyklus. Es zeigt den Fortschritt der verschiedenen Phasen, den Status der Pipelines und die erstellten Artefakte an.
+          
+          ## Module
+          
+          ### Phasen-Tracker
+          
+          Der Phasen-Tracker zeigt den aktuellen Status und Fortschritt der verschiedenen Phasen des GENXAIS-Zyklus an. Jede Phase wird mit ihrem Status (Ausstehend, Aktiv, Abgeschlossen) und einem Fortschrittsbalken dargestellt.
+          
+          ### Pipeline-Monitor
+          
+          Der Pipeline-Monitor zeigt den Status und Fortschritt der verschiedenen Pipelines an. Für jede Pipeline werden die folgenden Informationen angezeigt:
+          
+          - Name der Pipeline
+          - Status (Initialisierung, Aktiv, Abgeschlossen)
+          - Fortschritt in Prozent
+          - Laufzeit
+          - Letzte ausgeführte Aufgabe
+          
+          ### Artefakt-Viewer
+          
+          Der Artefakt-Viewer zeigt die im Rahmen des GENXAIS-Zyklus erstellten Artefakte an. Für jedes Artefakt werden die folgenden Informationen angezeigt:
+          
+          - Name des Artefakts
+          - Status (Ausstehend, Abgeschlossen)
+          - Letztes Update
+          - Link zum Artefakt (falls vorhanden)
+          
+          ### LangGraph-Visualisierer
+          
+          Der LangGraph-Visualisierer zeigt eine grafische Darstellung des LangGraph-Workflows an. Er zeigt die verschiedenen Knoten und Kanten des Workflows sowie deren Status an.
+          
+          ### RAG-Explorer
+          
+          Der RAG-Explorer ermöglicht die Interaktion mit dem RAG-System. Er bietet die Möglichkeit, Abfragen an das RAG-System zu stellen und die Ergebnisse anzuzeigen.
+          
+          ## Konfiguration
+          
+          Die Konfiguration des Dashboards erfolgt über die Datei `config/dashboard_config.json`. Hier können verschiedene Aspekte des Dashboards angepasst werden, wie z.B. das Farbschema, die aktivierten Module und das Aktualisierungsintervall.
+
+# Ausgabedokumente
+artifacts:
+  track:
+    - "langgraph_integration_report.md"
+    - "rag_integration_report.md"
+    - "dashboard_documentation.md"
+    - "final_review.md"

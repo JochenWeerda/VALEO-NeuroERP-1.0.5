@@ -1,0 +1,58 @@
+{
+  "resources": [
+    {
+      "name": "PostgreSQL-Datenbank",
+      "type": "Database",
+      "description": "Relationale Datenbank f\u00fcr persistente Speicherung",
+      "quantity": 1,
+      "configuration": {
+        "version": "14.0",
+        "memory": "4GB",
+        "storage": "100GB"
+      }
+    },
+    {
+      "name": "MongoDB-Datenbank",
+      "type": "Database",
+      "description": "NoSQL-Datenbank f\u00fcr flexible Dokumentenspeicherung",
+      "quantity": 1,
+      "configuration": {
+        "version": "5.0",
+        "memory": "4GB",
+        "storage": "50GB"
+      }
+    },
+    {
+      "name": "Redis-Cache",
+      "type": "Cache",
+      "description": "In-Memory-Cache f\u00fcr schnellen Datenzugriff",
+      "quantity": 1,
+      "configuration": {
+        "version": "6.2",
+        "memory": "2GB"
+      }
+    },
+    {
+      "name": "API-Server",
+      "type": "Server",
+      "description": "Server f\u00fcr die API-Bereitstellung",
+      "quantity": 2,
+      "configuration": {
+        "cpu": "4 Cores",
+        "memory": "8GB",
+        "os": "Linux"
+      }
+    },
+    {
+      "name": "Frontend-Server",
+      "type": "Server",
+      "description": "Server f\u00fcr die Bereitstellung der Benutzeroberfl\u00e4che",
+      "quantity": 2,
+      "configuration": {
+        "cpu": "2 Cores",
+        "memory": "4GB",
+        "os": "Linux"
+      }
+    }
+  ]
+}

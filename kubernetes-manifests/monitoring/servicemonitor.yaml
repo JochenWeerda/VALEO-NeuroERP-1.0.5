@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: apm-monitor
+  namespace: valeo-neuroerp
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: apm-multi-agent
+  namespaceSelector:
+    matchNames:
+      - valeo-neuroerp
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+    scheme: http
+    scrapeTimeout: 25s
+    metricRelabelings:
+    - sourceLabels: [__name__]
+      regex: 'apm_.*'
+      action: keep 

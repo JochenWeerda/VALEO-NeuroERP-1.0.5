@@ -1,0 +1,369 @@
+{
+  "test_suite": "int_Synchronisation_von_Geschäftsvorfällen",
+  "timestamp": "2025-06-23T10:15:22Z",
+  "status": "SUCCESS",
+  "test_cases": [
+    {
+      "id": "INT-101",
+      "name": "Rechnungserstellung und Zahlungseingang",
+      "description": "Prüft die vollständige Synchronisation eines Geschäftsvorfalls von Rechnungserstellung bis Zahlungseingang",
+      "modules": ["fibu-service", "crm-service"],
+      "setup": {
+        "description": "Initialisierung der Testumgebung mit Testdaten",
+        "status": "COMPLETED"
+      },
+      "execution": {
+        "steps": [
+          {
+            "description": "Erstellung einer Rechnung in FIBU",
+            "status": "PASSED",
+            "duration_ms": 387
+          },
+          {
+            "description": "Zuordnung zu einem Kunden",
+            "status": "PASSED",
+            "duration_ms": 145
+          },
+          {
+            "description": "Freigabe und Versand der Rechnung",
+            "status": "PASSED",
+            "duration_ms": 256
+          },
+          {
+            "description": "Erfassung eines Zahlungseingangs",
+            "status": "PASSED",
+            "duration_ms": 312
+          },
+          {
+            "description": "Zuordnung der Zahlung zur Rechnung",
+            "status": "PASSED",
+            "duration_ms": 278
+          },
+          {
+            "description": "Warten auf Event-Verarbeitung",
+            "status": "PASSED",
+            "duration_ms": 1345
+          }
+        ],
+        "status": "PASSED",
+        "duration_ms": 2723
+      },
+      "validation": {
+        "checks": [
+          {
+            "description": "Prüfung des offenen Postens in FIBU",
+            "expected": "Offener Posten als ausgeglichen markiert",
+            "actual": "Offener Posten als ausgeglichen markiert",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Kundenhistorie im CRM",
+            "expected": "Rechnung und Zahlung in Kundenhistorie vorhanden",
+            "actual": "Rechnung und Zahlung in Kundenhistorie vorhanden",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Buchungssätze in FIBU",
+            "expected": "Korrekte Buchungssätze für Rechnung und Zahlung",
+            "actual": "Korrekte Buchungssätze für Rechnung und Zahlung",
+            "status": "PASSED"
+          }
+        ],
+        "status": "PASSED"
+      },
+      "status": "PASSED",
+      "duration_ms": 3245
+    },
+    {
+      "id": "INT-102",
+      "name": "Verkaufsprozess mit Rabatt",
+      "description": "Prüft die Synchronisation eines Verkaufsvorgangs mit Rabatt über alle Module hinweg",
+      "modules": ["kasse-service", "crm-service", "fibu-service", "bi-service"],
+      "setup": {
+        "description": "Initialisierung der Testumgebung mit Testdaten",
+        "status": "COMPLETED"
+      },
+      "execution": {
+        "steps": [
+          {
+            "description": "Kundenidentifikation im Kassensystem",
+            "status": "PASSED",
+            "duration_ms": 234
+          },
+          {
+            "description": "Erfassung von Artikeln",
+            "status": "PASSED",
+            "duration_ms": 345
+          },
+          {
+            "description": "Gewährung eines Rabatts",
+            "status": "PASSED",
+            "duration_ms": 156
+          },
+          {
+            "description": "Abschluss des Verkaufs",
+            "status": "PASSED",
+            "duration_ms": 423
+          },
+          {
+            "description": "Warten auf Event-Verarbeitung",
+            "status": "PASSED",
+            "duration_ms": 1567
+          }
+        ],
+        "status": "PASSED",
+        "duration_ms": 2725
+      },
+      "validation": {
+        "checks": [
+          {
+            "description": "Prüfung der Buchung in FIBU",
+            "expected": "Buchungssatz mit korrektem Rabattbetrag",
+            "actual": "Buchungssatz mit korrektem Rabattbetrag",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Kundenhistorie im CRM",
+            "expected": "Verkauf mit Rabattinformation in Kundenhistorie",
+            "actual": "Verkauf mit Rabattinformation in Kundenhistorie",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung des BI-Dashboards",
+            "expected": "Verkauf in Umsatzstatistik mit Rabattinformation",
+            "actual": "Verkauf in Umsatzstatistik mit Rabattinformation",
+            "status": "PASSED"
+          }
+        ],
+        "status": "PASSED"
+      },
+      "status": "PASSED",
+      "duration_ms": 3456
+    },
+    {
+      "id": "INT-103",
+      "name": "Stornierung einer Rechnung",
+      "description": "Prüft die Synchronisation bei Stornierung einer Rechnung",
+      "modules": ["fibu-service", "crm-service", "bi-service"],
+      "setup": {
+        "description": "Initialisierung der Testumgebung mit bestehender Rechnung",
+        "status": "COMPLETED"
+      },
+      "execution": {
+        "steps": [
+          {
+            "description": "Auswahl einer bestehenden Rechnung",
+            "status": "PASSED",
+            "duration_ms": 187
+          },
+          {
+            "description": "Durchführung der Stornierung",
+            "status": "PASSED",
+            "duration_ms": 456
+          },
+          {
+            "description": "Erfassung eines Stornierungsgrundes",
+            "status": "PASSED",
+            "duration_ms": 123
+          },
+          {
+            "description": "Bestätigung der Stornierung",
+            "status": "PASSED",
+            "duration_ms": 234
+          },
+          {
+            "description": "Warten auf Event-Verarbeitung",
+            "status": "PASSED",
+            "duration_ms": 1234
+          }
+        ],
+        "status": "PASSED",
+        "duration_ms": 2234
+      },
+      "validation": {
+        "checks": [
+          {
+            "description": "Prüfung der Stornobuchung in FIBU",
+            "expected": "Korrekte Stornobuchung mit Referenz zur Originalrechnung",
+            "actual": "Korrekte Stornobuchung mit Referenz zur Originalrechnung",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Kundenhistorie im CRM",
+            "expected": "Stornierung in Kundenhistorie mit Grund",
+            "actual": "Stornierung in Kundenhistorie mit Grund",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der BI-Berichte",
+            "expected": "Stornierung in Umsatzberichten korrekt berücksichtigt",
+            "actual": "Stornierung in Umsatzberichten korrekt berücksichtigt",
+            "status": "PASSED"
+          }
+        ],
+        "status": "PASSED"
+      },
+      "status": "PASSED",
+      "duration_ms": 2845
+    },
+    {
+      "id": "INT-104",
+      "name": "Periodenabschluss",
+      "description": "Prüft die Synchronisation beim Periodenabschluss in der Finanzbuchhaltung",
+      "modules": ["fibu-service", "bi-service"],
+      "setup": {
+        "description": "Initialisierung der Testumgebung mit Testdaten für eine Periode",
+        "status": "COMPLETED"
+      },
+      "execution": {
+        "steps": [
+          {
+            "description": "Vorbereitung des Periodenabschlusses",
+            "status": "PASSED",
+            "duration_ms": 567
+          },
+          {
+            "description": "Durchführung des Periodenabschlusses",
+            "status": "PASSED",
+            "duration_ms": 1234
+          },
+          {
+            "description": "Erstellung der Abschlussberichte",
+            "status": "PASSED",
+            "duration_ms": 876
+          },
+          {
+            "description": "Eröffnung der neuen Periode",
+            "status": "PASSED",
+            "duration_ms": 456
+          },
+          {
+            "description": "Warten auf Event-Verarbeitung",
+            "status": "PASSED",
+            "duration_ms": 1567
+          }
+        ],
+        "status": "PASSED",
+        "duration_ms": 4700
+      },
+      "validation": {
+        "checks": [
+          {
+            "description": "Prüfung der Abschlussbuchungen in FIBU",
+            "expected": "Korrekte Abschlussbuchungen vorhanden",
+            "actual": "Korrekte Abschlussbuchungen vorhanden",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Eröffnungsbuchungen in FIBU",
+            "expected": "Korrekte Eröffnungsbuchungen in neuer Periode",
+            "actual": "Korrekte Eröffnungsbuchungen in neuer Periode",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der BI-Berichte",
+            "expected": "Abschlussberichte korrekt generiert",
+            "actual": "Abschlussberichte korrekt generiert",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Periodensperre",
+            "expected": "Alte Periode gesperrt für Buchungen",
+            "actual": "Alte Periode gesperrt für Buchungen",
+            "status": "PASSED"
+          }
+        ],
+        "status": "PASSED"
+      },
+      "status": "PASSED",
+      "duration_ms": 5234
+    },
+    {
+      "id": "INT-105",
+      "name": "Konsistenz bei gleichzeitigen Änderungen",
+      "description": "Prüft die Konsistenz bei gleichzeitigen Änderungen in verschiedenen Modulen",
+      "modules": ["crm-service", "fibu-service", "kasse-service"],
+      "setup": {
+        "description": "Initialisierung der Testumgebung mit Testdaten",
+        "status": "COMPLETED"
+      },
+      "execution": {
+        "steps": [
+          {
+            "description": "Gleichzeitige Änderung der Kundenadresse im CRM",
+            "status": "PASSED",
+            "duration_ms": 234
+          },
+          {
+            "description": "Gleichzeitige Erfassung einer Zahlung in FIBU",
+            "status": "PASSED",
+            "duration_ms": 345
+          },
+          {
+            "description": "Gleichzeitige Erfassung eines Verkaufs im Kassensystem",
+            "status": "PASSED",
+            "duration_ms": 456
+          },
+          {
+            "description": "Warten auf Event-Verarbeitung",
+            "status": "PASSED",
+            "duration_ms": 2345
+          }
+        ],
+        "status": "PASSED",
+        "duration_ms": 3380
+      },
+      "validation": {
+        "checks": [
+          {
+            "description": "Prüfung der Kundenadresse in allen Modulen",
+            "expected": "Konsistente Kundenadresse in allen Modulen",
+            "actual": "Konsistente Kundenadresse in allen Modulen",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Zahlung in FIBU und CRM",
+            "expected": "Zahlung korrekt in FIBU und CRM vorhanden",
+            "actual": "Zahlung korrekt in FIBU und CRM vorhanden",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung des Verkaufs in Kasse, FIBU und CRM",
+            "expected": "Verkauf korrekt in allen Modulen vorhanden",
+            "actual": "Verkauf korrekt in allen Modulen vorhanden",
+            "status": "PASSED"
+          },
+          {
+            "description": "Prüfung der Ereignisreihenfolge",
+            "expected": "Korrekte Reihenfolge der Ereignisse in allen Modulen",
+            "actual": "Korrekte Reihenfolge der Ereignisse in allen Modulen",
+            "status": "PASSED"
+          }
+        ],
+        "status": "PASSED"
+      },
+      "status": "PASSED",
+      "duration_ms": 4123
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 18903,
+    "success_rate": 100
+  },
+  "environment": {
+    "name": "integration-test",
+    "services": {
+      "api-gateway": "1.2.0",
+      "auth-service": "1.1.5",
+      "event-bus": "1.3.2",
+      "fibu-service": "1.0.0",
+      "crm-service": "1.0.0",
+      "kasse-service": "1.0.0",
+      "bi-service": "1.0.0"
+    }
+  }
+} 

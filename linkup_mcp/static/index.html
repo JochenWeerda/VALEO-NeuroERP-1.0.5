@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALEO-NeuroERP Multi-Agent-System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-blue-600 text-white shadow-lg">
+            <div class="container mx-auto px-6 py-3">
+                <div class="flex items-center justify-between">
+                    <div class="text-xl font-bold">
+                        VALEO-NeuroERP
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-blue-200">Dashboard</a>
+                        <a href="#" class="hover:text-blue-200">Workflows</a>
+                        <a href="#" class="hover:text-blue-200">Tests</a>
+                        <a href="#" class="hover:text-blue-200">System</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-6 py-8">
+            <!-- System Status -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">System Status</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-600 text-sm font-medium">Aktive Agenten</h3>
+                        <p class="text-3xl font-bold" id="activeAgents">-</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-600 text-sm font-medium">Aktive Workflows</h3>
+                        <p class="text-3xl font-bold" id="activeWorkflows">-</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-600 text-sm font-medium">Test Coverage</h3>
+                        <p class="text-3xl font-bold" id="testCoverage">-</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-600 text-sm font-medium">System Health</h3>
+                        <p class="text-3xl font-bold" id="systemHealth">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow Management -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Workflow Management</h2>
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6">
+                        <form id="workflowForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Workflow ID</label>
+                                <input type="text" id="workflowId" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Code Pfad</label>
+                                <input type="text" id="codePath" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            </div>
+                            <div class="flex space-x-4">
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                                    Workflow Erstellen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Activity Chart -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-bold mb-4">System Aktivität</h3>
+                    <canvas id="activityChart"></canvas>
+                </div>
+                <!-- Test Results -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-bold mb-4">Test Ergebnisse</h3>
+                    <canvas id="testChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WebSocket Verbindung
+        const ws = new WebSocket(`ws://${window.location.host}/ws`);
+        
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            updateDashboard(data);
+        };
+
+        // Dashboard Aktualisierung
+        function updateDashboard(data) {
+            document.getElementById("activeAgents").textContent = data.active_agents;
+            document.getElementById("activeWorkflows").textContent = data.active_workflows;
+            document.getElementById("systemHealth").textContent = data.system_healthy ? "Gesund" : "Probleme";
+            
+            // Aktualisiere Charts
+            updateActivityChart(data);
+            updateTestChart(data);
+        }
+
+        // Activity Chart
+        const activityCtx = document.getElementById("activityChart").getContext("2d");
+        const activityChart = new Chart(activityCtx, {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "System Aktivität",
+                    data: [],
+                    borderColor: "rgb(59, 130, 246)",
+                    tension: 0.1
+                }]
+            }
+        });
+
+        // Test Chart
+        const testCtx = document.getElementById("testChart").getContext("2d");
+        const testChart = new Chart(testCtx, {
+            type: "doughnut",
+            data: {
+                labels: ["Erfolgreich", "Fehlgeschlagen"],
+                datasets: [{
+                    data: [0, 0],
+                    backgroundColor: ["#10B981", "#EF4444"]
+                }]
+            }
+        });
+
+        // Formular Handler
+        document.getElementById("workflowForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const workflowId = document.getElementById("workflowId").value;
+            const codePath = document.getElementById("codePath").value;
+            
+            try {
+                const response = await fetch("/api/workflows", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        workflow_id: workflowId,
+                        implementation_data: {
+                            code_path: codePath
+                        }
+                    })
+                });
+                
+                const result = await response.json();
+                console.log("Workflow created:", result);
+                
+                // Reset form
+                e.target.reset();
+                
+            } catch (error) {
+                console.error("Error creating workflow:", error);
+            }
+        });
+
+        // Chart Aktualisierung
+        function updateActivityChart(data) {
+            const timestamp = new Date().toLocaleTimeString();
+            
+            activityChart.data.labels.push(timestamp);
+            activityChart.data.datasets[0].data.push(data.active_agents + data.active_workflows);
+            
+            if (activityChart.data.labels.length > 10) {
+                activityChart.data.labels.shift();
+                activityChart.data.datasets[0].data.shift();
+            }
+            
+            activityChart.update();
+        }
+
+        function updateTestChart(data) {
+            if (data.test_metrics) {
+                testChart.data.datasets[0].data = [
+                    data.test_metrics.passed,
+                    data.test_metrics.failed
+                ];
+                testChart.update();
+            }
+        }
+
+        // Initial System Status
+        fetch("/api/system/health")
+            .then(response => response.json())
+            .then(data => updateDashboard(data))
+            .catch(error => console.error("Error fetching system health:", error));
+    </script>
+</body>
+</html>

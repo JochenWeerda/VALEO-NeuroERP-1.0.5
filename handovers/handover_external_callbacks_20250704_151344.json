@@ -1,0 +1,32 @@
+{
+  "task_id": "external_callbacks",
+  "from_agent": "system",
+  "to_agent": "Developer",
+  "timestamp": "2025-07-04 15:13:44.565953",
+  "artifacts": {
+    "result": {
+      "status": "success",
+      "callback_config": {
+        "protocols": [
+          "http",
+          "https",
+          "websocket"
+        ],
+        "retry_policy": {
+          "max_retries": 3,
+          "backoff_factor": 2.0,
+          "max_delay": 300
+        },
+        "security": {
+          "authentication": true,
+          "encryption": true,
+          "rate_limiting": true
+        }
+      }
+    }
+  },
+  "status": "completed",
+  "notes": "Initial handover for task external_callbacks",
+  "requirements": [],
+  "dependencies": []
+}

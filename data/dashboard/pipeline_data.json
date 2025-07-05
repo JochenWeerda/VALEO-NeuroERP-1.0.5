@@ -1,0 +1,37 @@
+{
+  "pipelines": [
+    "Hauptpipeline",
+    "UI-Pipeline",
+    "Integration-Pipeline",
+    "Workflow-Pipeline",
+    "Monitoring-Pipeline"
+  ],
+  "status": {
+    "Hauptpipeline": {
+      "status": "Aktiv",
+      "progress": 79.6,
+      "runtime": "1h 56m"
+    },
+    "UI-Pipeline": {
+      "status": "Aktiv",
+      "progress": 72.5,
+      "runtime": "3h 38m"
+    },
+    "Integration-Pipeline": {
+      "status": "Aktiv",
+      "progress": 73.5,
+      "runtime": "3h 34m"
+    },
+    "Workflow-Pipeline": {
+      "status": "Aktiv",
+      "progress": 72.3,
+      "runtime": "3h 32m"
+    },
+    "Monitoring-Pipeline": {
+      "status": "Aktiv",
+      "progress": 78.0,
+      "runtime": "4h 51m"
+    }
+  },
+  "last_updated": "2025-07-02T22:30:54.347297"
+}

@@ -1,0 +1,59 @@
+﻿{
+    "pipeline_name": "testing_pipeline",
+    "description": "Pipeline für das Testmanagement",
+    "version": "1.0.0",
+    "tools": [
+        {
+            "name": "testing_tool",
+            "module": "linkup_mcp.tools.testing_tool",
+            "class": "TestingTool",
+            "config": {
+                "test_types": [
+                    "unit",
+                    "integration",
+                    "system"
+                ],
+                "coverage_threshold": 80,
+                "report_formats": [
+                    "html",
+                    "json"
+                ]
+            }
+        }
+    ],
+    "stages": [
+        {
+            "name": "test_preparation",
+            "tools": ["testing_tool"],
+            "config": {
+                "setup_environment": true,
+                "clean_previous": true
+            }
+        },
+        {
+            "name": "test_execution",
+            "tools": ["testing_tool"],
+            "config": {
+                "parallel_execution": true,
+                "fail_fast": true
+            }
+        },
+        {
+            "name": "result_analysis",
+            "tools": ["testing_tool"],
+            "config": {
+                "generate_reports": true,
+                "store_history": true
+            }
+        }
+    ],
+    "dependencies": {
+        "python_version": ">=3.9",
+        "packages": [
+            "motor>=3.3.0",
+            "pytest>=7.0.0",
+            "coverage>=7.0.0",
+            "pytest-asyncio>=0.20.0"
+        ]
+    }
+}

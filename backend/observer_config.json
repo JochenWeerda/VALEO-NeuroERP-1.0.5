@@ -1,0 +1,40 @@
+{
+    "services": {
+        "backend": {
+            "name": "Backend Core Service",
+            "url": "http://localhost:8003/health",
+            "process_name": "python",
+            "process_args": "minimal_server.py",
+            "threshold_cpu": 80,
+            "threshold_memory": 80,
+            "threshold_response": 1.0
+        },
+        "theme_service": {
+            "name": "Theme Microservice",
+            "url": "http://localhost:5001/health",
+            "process_name": "node",
+            "process_args": "theme_service.js",
+            "threshold_cpu": 70,
+            "threshold_memory": 70,
+            "threshold_response": 0.5
+        },
+        "api_gateway": {
+            "name": "API Gateway",
+            "url": "http://localhost:8000/health",
+            "process_name": "node",
+            "process_args": "gateway.js",
+            "threshold_cpu": 75,
+            "threshold_memory": 75,
+            "threshold_response": 0.3
+        }
+    },
+    "monitoring_interval": 5,
+    "max_metrics_per_service": 1000,
+    "alert_notifications": true,
+    "performance_optimizations": {
+        "enabled": true,
+        "auto_scaling_recommendations": true,
+        "resource_usage_alerts": true,
+        "bottleneck_detection": true
+    }
+} 

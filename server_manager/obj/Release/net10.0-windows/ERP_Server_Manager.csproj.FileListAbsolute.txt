@@ -1,0 +1,5 @@
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Release\net10.0-windows\ERP_Server_Manager.GeneratedMSBuildEditorConfig.editorconfig
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Release\net10.0-windows\ERP_Server_Manager.AssemblyInfoInputs.cache
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Release\net10.0-windows\ERP_Server_Manager.AssemblyInfo.cs
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Release\net10.0-windows\ERP_Server_Manager.csproj.CoreCompileInputs.cache
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Release\net10.0-windows\ERP_Server_Manager.sourcelink.json

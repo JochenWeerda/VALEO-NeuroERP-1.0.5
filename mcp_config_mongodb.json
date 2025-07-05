@@ -1,0 +1,121 @@
+{
+  "name": "valeo-neuroerp-mcp",
+  "transport": "http",
+  "host": "localhost",
+  "port": 8001,
+  "tools": [
+    {
+      "name": "web_search",
+      "description": "Searches the web for information using Linkup API and stores results in MongoDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "The user ID for tracking search history"
+          },
+          "search_type": {
+            "type": "string",
+            "description": "The search type (sourcedAnswer or search)",
+            "enum": ["sourcedAnswer", "search"]
+          },
+          "language": {
+            "type": "string",
+            "description": "The language for the search"
+          },
+          "region": {
+            "type": "string",
+            "description": "The region for the search"
+          },
+          "time_period": {
+            "type": "string",
+            "description": "The time period for the search",
+            "enum": ["day", "week", "month", "year"]
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "rag_query",
+      "description": "Queries local documents using RAG (Retrieval-Augmented Generation) and stores results in MongoDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "The question to ask about the documents"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "The user ID for tracking RAG query history"
+          }
+        },
+        "required": ["question"]
+      }
+    },
+    {
+      "name": "get_search_history",
+      "description": "Retrieves search history from MongoDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "The user ID to filter search history (optional)"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The maximum number of history items to return",
+            "default": 10
+          }
+        }
+      }
+    },
+    {
+      "name": "get_rag_history",
+      "description": "Retrieves RAG query history from MongoDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "The user ID to filter RAG query history (optional)"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The maximum number of history items to return",
+            "default": 10
+          }
+        }
+      }
+    },
+    {
+      "name": "get_document_history",
+      "description": "Retrieves document processing history from MongoDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "The user ID to filter document processing history (optional)"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status to filter document processing history (optional)",
+            "enum": ["success", "error"]
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The maximum number of history items to return",
+            "default": 10
+          }
+        }
+      }
+    }
+  ]
+} 

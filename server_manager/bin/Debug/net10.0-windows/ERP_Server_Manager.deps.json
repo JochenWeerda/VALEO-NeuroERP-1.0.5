@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "ERP_Server_Manager/1.0.0": {
+        "runtime": {
+          "ERP_Server_Manager.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ERP_Server_Manager/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

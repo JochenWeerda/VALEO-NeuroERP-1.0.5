@@ -1,0 +1,36 @@
+{
+  "name": "valeo-neuroerp-mcp",
+  "transport": "http",
+  "host": "localhost",
+  "port": 8001,
+  "tools": [
+    {
+      "name": "web_search",
+      "description": "Searches the web for information using Linkup API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "rag_query",
+      "description": "Queries local documents using RAG (Retrieval-Augmented Generation)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "The question to ask about the documents"
+          }
+        },
+        "required": ["question"]
+      }
+    }
+  ]
+} 

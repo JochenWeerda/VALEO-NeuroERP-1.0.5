@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Authorization API",
+  "description": "Schema für die Autorisierungs-API",
+  "type": "object",
+  "definitions": {
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "resource": { "type": "string" },
+        "action": { 
+          "type": "string",
+          "enum": ["create", "read", "update", "delete", "execute", "all"]
+        }
+      },
+      "required": ["name", "resource", "action"]
+    },
+    "Role": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "permissions": { 
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["name", "permissions"]
+    },
+    "UserPermissions": {
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "roles": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Role" }
+        },
+        "permissions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Permission" }
+        }
+      },
+      "required": ["userId"]
+    }
+  },
+  "paths": {
+    "/permissions": {
+      "get": {
+        "description": "Ruft alle Berechtigungen ab",
+        "parameters": {
+          "resource": { "type": "string" },
+          "action": { "type": "string" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Permission" }
+        }
+      },
+      "post": {
+        "description": "Erstellt eine neue Berechtigung",
+        "parameters": {
+          "permission": { "$ref": "#/definitions/Permission" }
+        },
+        "returns": { "$ref": "#/definitions/Permission" }
+      }
+    },
+    "/roles": {
+      "get": {
+        "description": "Ruft alle Rollen ab",
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Role" }
+        }
+      },
+      "post": {
+        "description": "Erstellt eine neue Rolle",
+        "parameters": {
+          "role": { "$ref": "#/definitions/Role" }
+        },
+        "returns": { "$ref": "#/definitions/Role" }
+      }
+    },
+    "/users/{userId}/permissions": {
+      "get": {
+        "description": "Ruft die Berechtigungen eines Benutzers ab",
+        "parameters": {
+          "userId": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/UserPermissions" }
+      }
+    },
+    "/authorize": {
+      "post": {
+        "description": "Prüft, ob ein Benutzer eine bestimmte Aktion ausführen darf",
+        "parameters": {
+          "userId": { "type": "string" },
+          "resource": { "type": "string" },
+          "action": { "type": "string" }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "authorized": { "type": "boolean" },
+            "reason": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+} 

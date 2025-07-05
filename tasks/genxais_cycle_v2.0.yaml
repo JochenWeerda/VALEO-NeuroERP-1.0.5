@@ -1,0 +1,264 @@
+# 📁 Datei: tasks/genxais_cycle_v2.0.yaml
+# Produktiver GENXAIS-Zyklus v2.0 – VALEO-NeuroERP für Landhandel
+
+name: GENXAIS Cycle v2.0 – VALEO-NeuroERP für Landhandel
+version: 2.0
+type: multi-phase-cycle
+phases: [VAN, PLAN, CREATE, IMPLEMENTATION, REFLEKTION]
+trigger: manual
+cron_schedule: "0 4 * * *" # täglicher Start um 4 Uhr morgens
+
+agent: langgraph-mas
+
+context:
+  db: MongoDB
+  orchestrator: LangGraph
+  memory: MCP
+  graph_engine: Graphiti
+  ui: Streamlit
+  frontend: React
+  backend: FastAPI
+
+config:
+  monitoring:
+    enabled: true
+    streamlit_dashboard: true
+    grafana_enabled: true
+    ports:
+      streamlit: 8502
+      grafana: 3000
+      prometheus: 9090
+  
+  streamlit_ui:
+    title: "GENXAIS v2.0 VALEO-NeuroERP für Landhandel"
+    components:
+      - name: "Phasenstatus"
+        description: "Zeigt aktuellen Status jeder Phase (VAN bis REFLEKTION)"
+        type: "status_indicator"
+        refresh_rate: 60
+      - name: "Pipelines (7)"
+        description: "Visualisiert Fortschritt, Laufzeit und Agentenstatus pro Pipeline"
+        type: "progress_tracker"
+        refresh_rate: 30
+      - name: "Graphiti-Pfade"
+        description: "Live-Darstellung der Entscheidungspfade aus Graphiti"
+        type: "network_graph"
+        refresh_rate: 120
+      - name: "KI-Modell-Performance"
+        description: "Metriken für KI-Modelle in Echtzeit"
+        type: "metrics_dashboard"
+        refresh_rate: 60
+      - name: "Landhandel-Module"
+        description: "Status und Entwicklungsfortschritt der Landhandel-Module"
+        type: "module_status"
+        refresh_rate: 300
+      - name: "Fehler-Tracking"
+        description: "Anzeige offener Issues aus IssueTrackerAgent"
+        type: "issue_table"
+        refresh_rate: 300
+      - name: "Versionstracking"
+        description: "Vergleich von v1.9 → v2.0"
+        type: "version_comparison"
+        refresh_rate: 600
+    scripts:
+      startup: "scripts/streamlit_startup.ps1"
+      init_dashboard: "scripts/init_dashboard.py"
+      refresh_data: "scripts/refresh_dashboard_data.py"
+
+pipeline:
+  type: multi-agent
+  mode: intelligent-parallel
+  pipelines: 7
+
+pipelines:
+  - name: "API-Pipeline"
+    agents: ["APIAgent", "ValidatorAgent", "GraphitiAgent"]
+    goals: ["API-Endpunkte für Landhandel-Module erweitern", "OpenAPI-Spezifikation aktualisieren"]
+    tasks:
+      - name: "Landhandel-API-Endpunkte erstellen"
+        type: "code_generation"
+        details: "Entwickle REST-API-Endpunkte für Bestandsverwaltung, Saisonplanung und Lieferkettenoptimierung"
+        status: "pending"
+      - name: "KI-Endpunkte für Preisgestaltung"
+        type: "code_generation"
+        details: "Implementiere API-Endpunkte für KI-gestützte Preisgestaltung basierend auf Marktdaten"
+        status: "pending"
+      - name: "API-Dokumentation aktualisieren"
+        type: "documentation"
+        details: "Aktualisiere die OpenAPI-Spezifikation für alle neuen Endpunkte"
+        status: "pending"
+  
+  - name: "Frontend-Pipeline"
+    agents: ["UIAgent", "ReactAgent", "GraphitiAgent"]
+    goals: ["UI-Komponenten für Landhandel entwickeln", "Mobile Benutzeroberfläche verbessern"]
+    tasks:
+      - name: "Bestandsverwaltungs-Dashboard"
+        type: "code_generation"
+        details: "Entwickle ein interaktives Dashboard für die Bestandsverwaltung von Saatgut, Düngemittel und Pflanzenschutzmittel"
+        status: "pending"
+      - name: "Saisonale Planungsansicht"
+        type: "code_generation"
+        details: "Erstelle eine visuelle Planungsansicht für saisonale Geschäftsprozesse"
+        status: "pending"
+      - name: "Mobile Optimierung"
+        type: "code_generation"
+        details: "Optimiere alle UI-Komponenten für mobile Endgeräte"
+        status: "pending"
+  
+  - name: "Backend-Pipeline"
+    agents: ["BackendAgent", "DatabaseAgent", "AIAgent", "GraphitiAgent"]
+    goals: ["KI-Modelle integrieren", "Datenbankoptimierung für Landhandel-Daten"]
+    tasks:
+      - name: "KI-Modell für Preisgestaltung"
+        type: "code_generation"
+        details: "Implementiere ein KI-Modell zur Preisgestaltung basierend auf Marktdaten"
+        status: "pending"
+      - name: "Automatisierte Buchungsvorschläge"
+        type: "code_generation"
+        details: "Entwickle einen Algorithmus für automatisierte Buchungsvorschläge in der FIBU"
+        status: "pending"
+      - name: "Datenmodell für Landhandel"
+        type: "code_generation"
+        details: "Erweitere das Datenmodell für landwirtschaftliche Produkte und saisonale Geschäftszyklen"
+        status: "pending"
+      - name: "Redis-Caching optimieren"
+        type: "code_generation"
+        details: "Optimiere die Redis-Caching-Strategie für verbesserte Performance"
+        status: "pending"
+  
+  - name: "Dokumentations-Pipeline"
+    agents: ["DocAgent", "MarkdownAgent", "GraphitiAgent"]
+    goals: ["Dokumentation für Landhandel-Module erstellen", "Benutzerhandbuch aktualisieren"]
+    tasks:
+      - name: "Landhandel-Modul-Dokumentation"
+        type: "documentation"
+        details: "Erstelle umfassende Dokumentation für alle Landhandel-Module"
+        status: "pending"
+      - name: "KI-Funktionen dokumentieren"
+        type: "documentation"
+        details: "Dokumentiere alle KI-Funktionen und deren Verwendung"
+        status: "pending"
+      - name: "Benutzerhandbuch aktualisieren"
+        type: "documentation"
+        details: "Aktualisiere das Benutzerhandbuch mit allen neuen Funktionen"
+        status: "pending"
+  
+  - name: "Test-Pipeline"
+    agents: ["TestAgent", "QAAgent", "GraphitiAgent"]
+    goals: ["E2E-Tests für Landhandel-Prozesse implementieren", "Testabdeckung auf 90% erhöhen"]
+    tasks:
+      - name: "E2E-Tests für Bestandsverwaltung"
+        type: "code_generation"
+        details: "Implementiere E2E-Tests für die Bestandsverwaltung von landwirtschaftlichen Produkten"
+        status: "pending"
+      - name: "KI-Modell-Tests"
+        type: "code_generation"
+        details: "Entwickle Tests für KI-Modelle zur Preisgestaltung und Buchungsvorschläge"
+        status: "pending"
+      - name: "Performance-Tests"
+        type: "code_generation"
+        details: "Implementiere Performance-Tests für kritische Geschäftsprozesse"
+        status: "pending"
+      - name: "Testautomatisierung erweitern"
+        type: "code_generation"
+        details: "Erweitere die Testautomatisierung für kontinuierliche Integration"
+        status: "pending"
+  
+  - name: "DevOps-Pipeline"
+    agents: ["DevOpsAgent", "KubernetesAgent", "GraphitiAgent"]
+    goals: ["Deployment-Prozesse verbessern", "Monitoring für Landhandel-spezifische Metriken"]
+    tasks:
+      - name: "Kubernetes-Manifeste aktualisieren"
+        type: "file_creation"
+        details: "Aktualisiere Kubernetes-Manifeste für neue Module und Dienste"
+        status: "pending"
+      - name: "Monitoring für KI-Modelle"
+        type: "code_generation"
+        details: "Implementiere Monitoring für KI-Modell-Performance"
+        status: "pending"
+      - name: "Skalierbarkeit verbessern"
+        type: "code_generation"
+        details: "Optimiere die Skalierbarkeit für saisonale Lastspitzen"
+        status: "pending"
+  
+  - name: "Sicherheits-Pipeline"
+    agents: ["SecurityAgent", "AuditAgent", "GraphitiAgent"]
+    goals: ["Branchenspezifische Sicherheitsstandards implementieren", "Datenschutz für Kundendaten verbessern"]
+    tasks:
+      - name: "Compliance-Prüfung"
+        type: "analysis"
+        details: "Überprüfe die Einhaltung landwirtschaftlicher Vorschriften und Standards"
+        status: "pending"
+      - name: "Datenschutz-Audit"
+        type: "analysis"
+        details: "Führe ein Datenschutz-Audit für Kundendaten durch"
+        status: "pending"
+      - name: "Zugriffskontrollen optimieren"
+        type: "code_generation"
+        details: "Optimiere Zugriffskontrollen für verschiedene Benutzerrollen"
+        status: "pending"
+      - name: "Regelmäßige Sicherheitsüberprüfungen"
+        type: "process_implementation"
+        details: "Implementiere einen Prozess für regelmäßige Sicherheitsüberprüfungen"
+        status: "pending"
+
+agents:
+  - PlannerAgent
+  - ConfigAgent
+  - ValidatorAgent
+  - ReviewAgent
+  - GraphNavigator (Graphiti)
+  - APIAgent
+  - UIAgent
+  - BackendAgent
+  - DocAgent
+  - TestAgent
+  - DevOpsAgent
+  - SecurityAgent
+  - ReactAgent
+  - DatabaseAgent
+  - MarkdownAgent
+  - QAAgent
+  - KubernetesAgent
+  - AuditAgent
+  - AIAgent
+  - ReflectionAgent
+  - MemoryAgent
+
+goals:
+  - Vollständige Integration aller Landhandel-Module
+  - Integration von KI-Funktionen für Preisgestaltung, FIBU und CRM
+  - Optimierung für mobile Endgeräte
+  - Erhöhung der Testabdeckung auf 90%
+  - Einhaltung branchenspezifischer Sicherheitsstandards
+
+artifacts:
+  track:
+    - landhandel_module_documentation.md
+    - ai_integration_overview.md
+    - mobile_ui_improvements.md
+    - test_coverage_report.md
+    - security_compliance_report.md
+    - api_documentation.md
+    - frontend_components.md
+    - backend_optimization.md
+    - deployment_guide.md
+    - handover_document.md
+    - reflection_report.md
+
+versioning:
+  current_version: 2.0
+  previous_version: 1.9
+  version_function: increment_version()
+
+graphiti_config:
+  activate: true
+  enable_fallback_paths: true
+  link_memory_to_graph: true
+  visualize_decisions: true
+  output: graphiti_trace_v2.md
+
+completion:
+  - Archive all artifacts
+  - Generate final review
+  - Prepare migration plan for v2.1 

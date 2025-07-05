@@ -1,0 +1,101 @@
+{{ markdown.headers.module }} {{ info.name }}
+
+{% if info.description %}
+{{ info.description }}
+{% endif %}
+
+{% if info.classes %}
+{{ markdown.headers.section }} Klassen
+
+{% for class in info.classes %}
+{{ markdown.headers.class }} {{ class.name }}
+
+{% if class.description %}
+{{ class.description }}
+{% endif %}
+
+{% if class.bases %}
+Erbt von: {{ class.bases|join(", ") }}
+{% endif %}
+
+{% if class.methods %}
+**Methoden:**
+
+{% for method in class.methods %}
+{{ markdown.headers.function }} {{ method.name }}
+
+{% if method.description %}
+{{ method.description }}
+{% endif %}
+
+{% if method.parameters %}
+**Parameter:**
+{% for param in method.parameters %}
+- `{{ param.name }}`: {{ param.annotation }}
+{% endfor %}
+{% endif %}
+
+{% if method.returns %}
+**Rückgabe:** `{{ method.returns }}`
+{% endif %}
+
+{% if method.decorators %}
+**Decorators:** {{ method.decorators|join(", ") }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if class.attributes %}
+**Attribute:**
+{% for attr in class.attributes %}
+- `{{ attr.name }}`: {{ attr.value }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if info.functions %}
+{{ markdown.headers.section }} Funktionen
+
+{% for function in info.functions %}
+{{ markdown.headers.function }} {{ function.name }}
+
+{% if function.description %}
+{{ function.description }}
+{% endif %}
+
+{% if function.parameters %}
+**Parameter:**
+{% for param in function.parameters %}
+- `{{ param.name }}`: {{ param.annotation }}
+{% endfor %}
+{% endif %}
+
+{% if function.returns %}
+**Rückgabe:** `{{ function.returns }}`
+{% endif %}
+
+{% if function.decorators %}
+**Decorators:** {{ function.decorators|join(", ") }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if info.variables %}
+{{ markdown.headers.section }} Variablen
+
+{% for var in info.variables %}
+- `{{ var.name }}`: {{ var.value }}
+{% endfor %}
+{% endif %}
+
+{% if info.dependencies %}
+{{ markdown.headers.section }} Abhängigkeiten
+
+{% for dep in info.dependencies %}
+- {{ dep }}
+{% endfor %}
+{% endif %} 

@@ -1,0 +1,257 @@
+# Kubernetes-Manifest für den Authentifizierungsservice
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: erp-system
+  labels:
+    app: auth-service
+    component: security
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+        component: security
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+      containers:
+      - name: auth-service
+        image: ghcr.io/organization/erp-auth-service:latest
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: auth-config
+              key: db_host
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: auth-secrets
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: auth-secrets
+              key: db_password
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth-secrets
+              key: jwt_secret
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: auth-config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+      volumes:
+      - name: auth-config-volume
+        configMap:
+          name: auth-config
+      - name: tmp
+        emptyDir: {}
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: erp-system
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+  type: ClusterIP
+---
+# ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+  namespace: erp-system
+data:
+  db_host: "auth-db.erp-system.svc.cluster.local"
+  config.json: |
+    {
+      "session_timeout": 3600,
+      "max_login_attempts": 5,
+      "password_policy": {
+        "min_length": 10,
+        "require_special_chars": true,
+        "require_numbers": true
+      }
+    }
+---
+# Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-secrets
+  namespace: erp-system
+type: Opaque
+data:
+  db_user: YWRtaW4=  # admin
+  db_password: c2VjdXJlX3Bhc3N3b3JkXzEyMw==  # secure_password_123
+  jwt_secret: dmVyeV9zZWN1cmVfc2VjcmV0X2tleV9mb3Jfand0X3Rva2Vucw==  # very_secure_secret_key_for_jwt_tokens
+---
+# HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: auth-service-hpa
+  namespace: erp-system
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: auth-service
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Pods
+    pods:
+      metric:
+        name: authentication_operations_per_second
+      target:
+        type: AverageValue
+        averageValue: 150
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 30  # Schnellere Skalierung nach oben
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 60
+      - type: Pods
+        value: 3
+        periodSeconds: 60
+      selectPolicy: Max
+    scaleDown:
+      stabilizationWindowSeconds: 600  # Längere Stabilisierung für Abwärtsskalierung
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 300
+      - type: Pods
+        value: 1
+        periodSeconds: 300
+      selectPolicy: Min
+---
+# NetworkPolicy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auth-service-network-policy
+  namespace: erp-system
+spec:
+  podSelector:
+    matchLabels:
+      app: auth-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: ui
+    - podSelector:
+        matchLabels:
+          app: frontend
+    - podSelector:
+        matchLabels:
+          app: api-server
+    - podSelector:
+        matchLabels:
+          app: document-service
+    - podSelector:
+        matchLabels:
+          app: reporting-service
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: api-server
+    ports:
+    - protocol: TCP
+      port: 8003
+  - to:
+    - podSelector:
+        matchLabels:
+          app: notification-service
+    ports:
+    - protocol: TCP
+      port: 8085
+  - to:
+    - podSelector:
+        matchLabels:
+          app: auth-db
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53 

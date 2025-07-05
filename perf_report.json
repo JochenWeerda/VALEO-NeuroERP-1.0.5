@@ -1,0 +1,16 @@
+{
+  "raw_results": [],
+  "analysis": {},
+  "timestamp": 1748636740.2904637,
+  "config": {
+    "host": "http://localhost:8000",
+    "iterations": 3,
+    "modules": [
+      "articles",
+      "charges",
+      "system"
+    ],
+    "parallel": false,
+    "db_focus": false
+  }
+}

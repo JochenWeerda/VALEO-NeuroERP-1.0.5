@@ -1,0 +1,149 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alerting-rules
+  namespace: erp-system
+data:
+  alerting_rules.yml: |
+    groups:
+    - name: service-alerts
+      rules:
+      # Service-Verfügbarkeit
+      - alert: ServiceDown
+        expr: up{job=~".*-service"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.job }} ist ausgefallen"
+          description: "Der Service {{ $labels.job }} ist seit mehr als 1 Minute nicht erreichbar."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/service-down"
+          
+      # Hohe CPU-Auslastung
+      - alert: HighCpuUsage
+        expr: sum(rate(container_cpu_usage_seconds_total{container!="POD", pod=~".*-service.*"}[5m])) by (pod) / sum(container_spec_cpu_quota{container!="POD", pod=~".*-service.*"} / 100000) by (pod) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe CPU-Auslastung in {{ $labels.pod }}"
+          description: "Der Pod {{ $labels.pod }} hat eine CPU-Auslastung von mehr als 85% für mehr als 5 Minuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/high-cpu-usage"
+          
+      # Hohe Speicherauslastung
+      - alert: HighMemoryUsage
+        expr: sum(container_memory_usage_bytes{container!="POD", pod=~".*-service.*"}) by (pod) / sum(container_spec_memory_limit_bytes{container!="POD", pod=~".*-service.*"}) by (pod) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe Speicherauslastung in {{ $labels.pod }}"
+          description: "Der Pod {{ $labels.pod }} hat eine Speicherauslastung von mehr als 85% für mehr als 5 Minuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/high-memory-usage"
+
+    - name: api-alerts
+      rules:
+      # Langsame API-Antworten
+      - alert: SlowApiResponses
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job=~".*-service"}[5m])) by (le, job, endpoint)) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Langsame API-Antworten in {{ $labels.job }} für {{ $labels.endpoint }}"
+          description: "Die 95. Perzentil-Antwortzeit für {{ $labels.endpoint }} im Service {{ $labels.job }} ist höher als 2 Sekunden für mehr als 5 Minuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/slow-api-responses"
+          
+      # Hohe Fehlerrate
+      - alert: HighErrorRate
+        expr: sum(rate(http_requests_total{job=~".*-service", status=~"5.."}[5m])) by (job) / sum(rate(http_requests_total{job=~".*-service"}[5m])) by (job) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Hohe Fehlerrate in {{ $labels.job }}"
+          description: "Der Service {{ $labels.job }} hat eine Fehlerrate von mehr als 5% für mehr als 2 Minuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/high-error-rate"
+          
+      # Anstieg der Anfragerate
+      - alert: RequestRateSpike
+        expr: sum(rate(http_requests_total{job=~".*-service"}[5m])) by (job) > sum(rate(http_requests_total{job=~".*-service"}[1h] offset 1h)) by (job) * 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Plötzlicher Anstieg der Anfragerate für {{ $labels.job }}"
+          description: "Der Service {{ $labels.job }} verzeichnet einen Anstieg der Anfragerate um mehr als 100% im Vergleich zur letzten Stunde."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/request-rate-spike"
+
+    - name: report-alerts
+      rules:
+      # Fehler bei der Berichtsgenerierung
+      - alert: ReportGenerationErrors
+        expr: sum(increase(report_generation_total{job="reporting-service", status="error"}[15m])) > 3
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Fehler bei der Berichtsgenerierung"
+          description: "Es sind mehr als 3 Fehler bei der Berichtsgenerierung in den letzten 15 Minuten aufgetreten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/report-generation-errors"
+          
+      # Langsame Berichtsgenerierung
+      - alert: SlowReportGeneration
+        expr: histogram_quantile(0.95, sum(rate(report_generation_duration_seconds_bucket{job="reporting-service"}[10m])) by (le, report_type)) > 30
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Langsame Berichtsgenerierung für {{ $labels.report_type }}"
+          description: "Die 95. Perzentil-Generierungszeit für Berichte vom Typ {{ $labels.report_type }} ist höher als 30 Sekunden für mehr als 10 Minuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/slow-report-generation"
+
+    - name: auth-alerts
+      rules:
+      # Erhöhte Anzahl fehlgeschlagener Anmeldeversuche
+      - alert: HighLoginFailureRate
+        expr: sum(increase(auth_login_attempts_total{job="auth-service", status="failed"}[15m])) / sum(increase(auth_login_attempts_total{job="auth-service"}[15m])) > 0.3
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe Rate fehlgeschlagener Anmeldungen"
+          description: "Die Rate fehlgeschlagener Anmeldeversuche ist höher als 30% für mehr als 10 Minuten. Dies könnte auf einen Brute-Force-Angriff hindeuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/high-login-failure-rate"
+          
+      # Ungewöhnliche Anzahl von Token-Validierungen
+      - alert: UnusualTokenValidationRate
+        expr: sum(rate(auth_token_validations_total{job="auth-service"}[10m])) > sum(rate(auth_token_validations_total{job="auth-service"}[1h] offset 1h)) * 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Ungewöhnliche Rate von Token-Validierungen"
+          description: "Die Rate der Token-Validierungen ist mehr als 3-mal höher als der Durchschnitt der letzten Stunde. Dies könnte auf ungewöhnliche API-Nutzung oder einen Angriff hindeuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/unusual-token-validation-rate"
+
+    - name: database-alerts
+      rules:
+      # Langsame Datenbankabfragen
+      - alert: SlowDatabaseQueries
+        expr: histogram_quantile(0.95, sum(rate(db_query_duration_seconds_bucket{job=~".*-service"}[5m])) by (le, job, query_type)) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Langsame Datenbankabfragen vom Typ {{ $labels.query_type }} in {{ $labels.job }}"
+          description: "Die 95. Perzentil-Ausführungszeit für Datenbankabfragen vom Typ {{ $labels.query_type }} im Service {{ $labels.job }} ist höher als 1 Sekunde für mehr als 5 Minuten."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/slow-database-queries"
+          
+      # Hohe Datenbankabfragerate
+      - alert: HighDatabaseQueryRate
+        expr: sum(rate(db_query_total{job=~".*-service"}[5m])) by (job) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe Datenbankabfragerate in {{ $labels.job }}"
+          description: "Der Service {{ $labels.job }} führt mehr als 100 Datenbankabfragen pro Sekunde für mehr als 5 Minuten aus."
+          runbook_url: "https://erp-wiki.example.com/observability/runbooks/high-database-query-rate" 

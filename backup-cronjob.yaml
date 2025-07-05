@@ -1,0 +1,181 @@
+# Kubernetes CronJob für automatisiertes Redis-Backup
+# Dieses Manifest definiert einen Job, der stündlich Redis-Daten sichert
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: redis-backup
+  namespace: erp-system
+  labels:
+    app: redis-backup
+    component: backup
+spec:
+  schedule: "0 * * * *"  # Stündlich ausführen
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: redis-backup
+            component: backup
+        spec:
+          containers:
+          - name: redis-backup
+            image: redis:7.0-alpine
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Sicherstellen, dass das Zielverzeichnis existiert
+              mkdir -p /backups/redis
+              
+              # Zeitstempel für Backup-Dateiname
+              TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+              
+              # BGSAVE-Befehl an Redis senden
+              redis-cli -h redis BGSAVE
+              
+              # Warten, bis der BGSAVE-Prozess abgeschlossen ist
+              while [ "$(redis-cli -h redis INFO | grep rdb_bgsave_in_progress | cut -d':' -f2 | tr -d '\r\n')" != "0" ]; do
+                echo "Warte auf Abschluss des BGSAVE-Prozesses..."
+                sleep 5
+              done
+              
+              # RDB-Datei vom Redis-Container kopieren
+              echo "Kopiere dump.rdb nach /backups/redis/redis-$TIMESTAMP.rdb"
+              redis-cli -h redis --rdb /backups/redis/redis-$TIMESTAMP.rdb
+              
+              # Datei in den S3-Bucket hochladen
+              echo "Lade Backup in den S3-Bucket hoch"
+              aws s3 cp /backups/redis/redis-$TIMESTAMP.rdb s3://erp-backups/redis/hourly/redis-$TIMESTAMP.rdb
+              
+              # Altes lokales Backup löschen, um Speicherplatz zu sparen
+              find /backups/redis -name "redis-*.rdb" -type f -mtime +1 -delete
+              
+              # Erfolgsmeldung
+              echo "Redis-Backup abgeschlossen: redis-$TIMESTAMP.rdb"
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backup-credentials
+                  key: aws-access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backup-credentials
+                  key: aws-secret-access-key
+            - name: AWS_DEFAULT_REGION
+              value: "eu-central-1"
+            volumeMounts:
+            - name: backup-storage
+              mountPath: /backups
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: backup-storage-pvc
+---
+# PersistentVolumeClaim für Backup-Speicher
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backup-storage-pvc
+  namespace: erp-system
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard
+---
+# Secret für AWS-Zugangsdaten
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backup-credentials
+  namespace: erp-system
+type: Opaque
+data:
+  aws-access-key-id: <base64-encoded-access-key>
+  aws-secret-access-key: <base64-encoded-secret-key>
+---
+# CronJob für die Rotation der Backups
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cleanup
+  namespace: erp-system
+  labels:
+    app: backup-cleanup
+    component: backup
+spec:
+  schedule: "0 3 * * *"  # Täglich um 3 Uhr morgens
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: backup-cleanup
+            component: backup
+        spec:
+          containers:
+          - name: backup-cleanup
+            image: amazon/aws-cli:2.9.19
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Lösche stündliche Backups älter als 7 Tage
+              echo "Bereinige stündliche Backups älter als 7 Tage..."
+              aws s3 ls s3://erp-backups/redis/hourly/ --recursive | 
+                awk '{if($1 < strftime("%Y-%m-%d", systime()-7*86400)) print $4}' | 
+                xargs -I {} aws s3 rm s3://erp-backups/redis/hourly/{} || true
+              
+              # Behalte ein tägliches Backup für 30 Tage
+              # Kopiere das letzte stündliche Backup des Tages in den täglichen Ordner
+              LAST_HOURLY=$(aws s3 ls s3://erp-backups/redis/hourly/ | grep $(date +%Y%m%d) | sort | tail -1 | awk '{print $4}')
+              if [ ! -z "$LAST_HOURLY" ]; then
+                echo "Kopiere $LAST_HOURLY in den täglichen Backup-Ordner..."
+                aws s3 cp s3://erp-backups/redis/hourly/$LAST_HOURLY s3://erp-backups/redis/daily/$(date +%Y%m%d)-daily.rdb
+              fi
+              
+              # Lösche tägliche Backups älter als 30 Tage
+              echo "Bereinige tägliche Backups älter als 30 Tage..."
+              aws s3 ls s3://erp-backups/redis/daily/ --recursive | 
+                awk '{if($1 < strftime("%Y-%m-%d", systime()-30*86400)) print $4}' | 
+                xargs -I {} aws s3 rm s3://erp-backups/redis/daily/{} || true
+              
+              # Am ersten Tag des Monats, kopiere das tägliche Backup in den monatlichen Ordner
+              if [ $(date +%d) = "01" ]; then
+                DAILY_BACKUP="$(date +%Y%m%d)-daily.rdb"
+                echo "Erstelle monatliches Backup: $(date +%Y%m)-monthly.rdb..."
+                aws s3 cp s3://erp-backups/redis/daily/$DAILY_BACKUP s3://erp-backups/redis/monthly/$(date +%Y%m)-monthly.rdb
+              fi
+              
+              # Behalte monatliche Backups für ein Jahr
+              echo "Bereinige monatliche Backups älter als 12 Monate..."
+              aws s3 ls s3://erp-backups/redis/monthly/ --recursive | 
+                awk '{if($1 < strftime("%Y-%m-%d", systime()-365*86400)) print $4}' | 
+                xargs -I {} aws s3 rm s3://erp-backups/redis/monthly/{} || true
+              
+              echo "Backup-Bereinigung abgeschlossen."
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backup-credentials
+                  key: aws-access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backup-credentials
+                  key: aws-secret-access-key
+            - name: AWS_DEFAULT_REGION
+              value: "eu-central-1"
+          restartPolicy: OnFailure 

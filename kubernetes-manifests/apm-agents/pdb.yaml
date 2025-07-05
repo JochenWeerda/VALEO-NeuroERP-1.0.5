@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: apm-multi-agent-pdb
+  namespace: valeo-neuroerp
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: apm-multi-agent 

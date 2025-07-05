@@ -1,0 +1,143 @@
+global:
+  environment: production
+  imageRegistry: registry.valeo-neuroerp.com
+  imagePullSecrets:
+    - name: registry-secret
+
+excelExportService:
+  enabled: true
+  image:
+    repository: excel-export-service
+    tag: 1.1
+  replicas: 3
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+cacheManager:
+  enabled: true
+  image:
+    repository: cache-manager
+    tag: 1.1
+  replicas: 2
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  config:
+    memoryCacheSize: 1024
+    prefetchThreshold: 0.8
+
+apiGateway:
+  enabled: true
+  image:
+    repository: api-gateway
+    tag: 1.1
+  replicas: 3
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  config:
+    rateLimitRequests: 1000
+    rateLimitWindow: 60
+  ingress:
+    enabled: true
+    host: api.valeo-neuroerp.com
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+failoverMonitor:
+  enabled: true
+  image:
+    repository: failover-monitor
+    tag: 1.1
+  replicas: 2
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "400m"
+  config:
+    failoverThreshold: 2
+    checkInterval: 1
+
+authService:
+  enabled: true
+  image:
+    repository: auth-service
+    tag: 1.1
+  replicas: 3
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  config:
+    tokenExpiry: 3600
+
+redis:
+  architecture: replication
+  auth:
+    enabled: true
+  master:
+    persistence:
+      size: 10Gi
+  replica:
+    replicaCount: 2
+    persistence:
+      size: 10Gi
+
+postgresql:
+  architecture: replication
+  auth:
+    database: valeo_neuroerp
+  primary:
+    persistence:
+      size: 50Gi
+  readReplicas:
+    replicaCount: 2
+    persistence:
+      size: 50Gi
+
+prometheus:
+  enabled: true
+  alertmanager:
+    enabled: true
+  pushgateway:
+    enabled: true
+  server:
+    persistentVolume:
+      size: 50Gi
+
+grafana:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 10Gi
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: default
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards 

@@ -1,0 +1,77 @@
+# GENXAIS Initialisierungs-Prompt – Zyklus v1.8.1 für VALERO – Die NeuroERP
+
+name: Launch GENXAIS Cycle – VALERO v1.8.1
+type: multi-agent-cycle
+versioning:
+  previous_version: v1.8
+  current_version: v1.8.1
+trigger: launch_cycle.py
+mode: full-automation
+
+phases:
+  - VAN
+
+goals:
+  - Validierung des Offline-Betriebs und der Synchronisation unter realen Netzbedingungen
+  - Analyse des Konfliktpotenzials und der Datenintegrität bei parallelen Edge-Zugriffen
+  - Planung der Refactoring-Maßnahmen für Edge-Queue & Cache-Optimierung
+  - Definition von Metriken zur automatisierten Fehlererkennung & Selbstheilung
+  - Vorbereitung zur Integration eines zentralen Mutation-Aggregators
+
+pipelines:
+  - id: edge_validation
+    name: Edge-Betrieb Validierung
+    entrypoint: pipelines/edge_validation_pipeline.py
+    goals:
+      - Offline-Betrieb unter verschiedenen Netzwerkbedingungen testen
+      - Synchronisationsverhalten bei Netzwerkunterbrechungen analysieren
+      - Datenkonsistenz nach Synchronisation validieren
+
+  - id: conflict_analysis
+    name: Konfliktanalyse & Datenintegrität
+    entrypoint: pipelines/conflict_analysis_pipeline.py
+    goals:
+      - Konfliktszenarien bei parallelen Edge-Zugriffen identifizieren
+      - Konfliktlösungsstrategien bewerten und optimieren
+      - Datenintegrität bei konkurrierenden Änderungen sicherstellen
+
+  - id: edge_refactoring
+    name: Edge-Queue & Cache-Optimierung
+    entrypoint: pipelines/edge_refactoring_pipeline.py
+    goals:
+      - Performance-Analyse der Edge-Queue durchführen
+      - Cache-Strategien für GraphQL optimieren
+      - Refactoring-Maßnahmen für verbesserte Effizienz planen
+
+  - id: metrics_definition
+    name: Fehlererkennung & Selbstheilung
+    entrypoint: pipelines/metrics_definition_pipeline.py
+    goals:
+      - Metriken zur automatisierten Fehlererkennung definieren
+      - Selbstheilungsmechanismen für Edge-Knoten konzipieren
+      - Monitoring-Framework für verteilte Edge-Systeme entwerfen
+
+  - id: mutation_aggregator
+    name: Zentraler Mutation-Aggregator
+    entrypoint: pipelines/mutation_aggregator_pipeline.py
+    goals:
+      - Anforderungen für zentralen Mutation-Aggregator definieren
+      - Architektur für effiziente Mutation-Aggregation entwerfen
+      - Integration mit bestehendem Edge-System planen
+
+monitoring:
+  streamlit: true
+  grafana: enabled
+  graphiti: enabled
+
+outputs:
+  - van_analysis_v1.8.1.md
+  - edge_validation_report.md
+  - conflict_resolution_strategy.md
+  - metrics_framework.md
+  - mutation_aggregator_design.md
+
+notes:
+  - Die VAN-Phase konzentriert sich auf die Analyse und Validierung der Edge-Integration
+  - Nach erfolgreicher VAN-Phase wird automatisch in die PLAN-Phase übergegangen
+  - Besonderer Fokus liegt auf der Robustheit des Offline-Betriebs und der Datenintegrität 

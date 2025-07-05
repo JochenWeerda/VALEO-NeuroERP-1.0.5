@@ -1,0 +1,52 @@
+# GENXAIS-Tasks f�r VALEO-NeuroERP
+# Diese Datei enth�lt die aktuellen Tasks f�r den GENXAIS-Zyklus
+
+version: "1.0"
+timestamp: "2024-07-01T16:30:00"
+phase: "IMPLEMENT"
+
+tasks:
+  - name: "Streamlit-App verbessern"
+    description: "Verbessere die Streamlit-App mit besserer Fehlerbehandlung und MCP-Integration"
+    priority: "hoch"
+    status: "in_progress"
+    assigned_to: "AI-Team"
+    tags:
+      - "frontend"
+      - "streamlit"
+      - "mcp"
+    
+  - name: "Cursor.ai-Integration optimieren"
+    description: "Optimiere die Integration mit Cursor.ai �ber das MCP-Protokoll"
+    priority: "hoch"
+    status: "in_progress"
+    assigned_to: "AI-Team"
+    tags:
+      - "cursor"
+      - "mcp"
+      - "integration"
+
+  - name: "LangGraph-Workflow implementieren"
+    description: "Implementiere einen LangGraph-Workflow f�r die Steuerung des GENXAIS-Zyklus"
+    priority: "mittel"
+    status: "todo"
+    assigned_to: "AI-Team"
+    tags:
+      - "langgraph"
+      - "workflow"
+      - "genxais"
+
+next_steps:
+  - "Implementiere die LangGraph-Integration"
+  - "Verbessere die Fehlerbehandlung in der Streamlit-App"
+  - "Optimiere die Cursor.ai-Integration"
+
+dependencies:
+  - name: "streamlit"
+    version: ">=1.22.0"
+  - name: "langchain"
+    version: ">=0.1.0"
+  - name: "langgraph"
+    version: ">=0.0.10"
+  - name: "pyyaml"
+    version: ">=6.0"

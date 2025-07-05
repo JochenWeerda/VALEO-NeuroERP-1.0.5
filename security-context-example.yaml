@@ -1,0 +1,143 @@
+# Beispiel für einen sicheren Pod mit optimierten SecurityContext-Einstellungen
+# Diese Datei zeigt Best Practices für Container-Sicherheit in Kubernetes
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-api-pod
+  namespace: erp-system
+  labels:
+    app: api-server
+    component: backend
+spec:
+  # Pod-Level SecurityContext
+  securityContext:
+    # Verhindern, dass Prozesse im Container ihre Berechtigungen erhöhen können
+    runAsNonRoot: true
+    # Festlegen der Benutzer- und Gruppen-ID für alle Container im Pod
+    runAsUser: 10001
+    runAsGroup: 10001
+    # Festlegen der FSGroup für Dateiberechtigungen
+    fsGroup: 10001
+    # Verhindern, dass Prozesse im Container neue Capabilities hinzufügen können
+    seccompProfile:
+      type: RuntimeDefault
+  
+  containers:
+  - name: api-server
+    image: ghcr.io/organization/erp-api:latest
+    imagePullPolicy: Always
+    
+    # Container-Level SecurityContext
+    securityContext:
+      # Container als nicht-Root-Benutzer ausführen
+      allowPrivilegeEscalation: false
+      # Alle Capabilities entfernen und nur benötigte hinzufügen
+      capabilities:
+        drop:
+          - ALL
+        add:
+          - NET_BIND_SERVICE  # Nur wenn benötigt, z.B. für Ports < 1024
+      # Read-only Root-Dateisystem
+      readOnlyRootFilesystem: true
+      # SELinux-Kontext setzen (falls verwendet)
+      seLinuxOptions:
+        level: "s0:c123,c456"
+    
+    ports:
+    - containerPort: 8003
+      name: http
+    
+    # Ressourcenlimits festlegen
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+    
+    # Liveness- und Readiness-Probes
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8003
+        scheme: HTTP
+      initialDelaySeconds: 30
+      periodSeconds: 30
+      timeoutSeconds: 5
+      failureThreshold: 3
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 8003
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+    
+    # Sichere Umgebungsvariablen - keine Secrets direkt im Pod-Manifest
+    env:
+    - name: LOG_LEVEL
+      value: "info"
+    - name: REDIS_HOST
+      value: "redis"
+    # Secrets als Umgebungsvariablen
+    - name: API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: api-credentials
+          key: api-key
+    
+    # Sichere Volume-Mounts
+    volumeMounts:
+    - name: logs
+      mountPath: /app/logs
+    - name: tmp
+      mountPath: /tmp
+    - name: config
+      mountPath: /app/config
+      readOnly: true  # Konfiguration sollte nur lesbar sein
+    - name: secrets
+      mountPath: /app/secrets
+      readOnly: true  # Secrets sollten nur lesbar sein
+  
+  # Init-Container mit sicherem Kontext
+  initContainers:
+  - name: init-permissions
+    image: busybox:1.35
+    command: ['sh', '-c', 'chown -R 10001:10001 /app/logs && chmod 700 /app/logs']
+    securityContext:
+      runAsUser: 0  # Temporär Root für Berechtigungsänderungen
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+        add:
+          - CHOWN  # Benötigt für chown-Befehl
+    volumeMounts:
+    - name: logs
+      mountPath: /app/logs
+  
+  # Volumes definieren
+  volumes:
+  - name: logs
+    persistentVolumeClaim:
+      claimName: api-logs-pvc
+  - name: tmp
+    emptyDir: {}
+  - name: config
+    configMap:
+      name: api-config
+  - name: secrets
+    secret:
+      secretName: api-credentials
+  
+  # Automatisches Löschen des Pods bei Beendigung
+  restartPolicy: Always
+  
+  # Service-Account mit minimalen Berechtigungen
+  serviceAccountName: api-restricted-sa
+  automountServiceAccountToken: false  # Deaktivieren, wenn nicht benötigt 

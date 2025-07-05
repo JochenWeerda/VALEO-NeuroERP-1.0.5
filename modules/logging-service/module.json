@@ -1,0 +1,74 @@
+{
+  "name": "logging-service",
+  "version": "1.2.3",
+  "description": "Protokollierungs- und Überwachungsdienst für das AI-ERP-System",
+  "maintainer": "Infrastruktur-Team",
+  "stability": "stable",
+  "dependencies": [],
+  "interfaces": [
+    {
+      "name": "LoggingAPI",
+      "version": "1.2.0",
+      "schema": "schemas/logging-api.json",
+      "description": "API für Protokollierung von Ereignissen"
+    },
+    {
+      "name": "MonitoringAPI",
+      "version": "1.0.0",
+      "schema": "schemas/monitoring-api.json",
+      "description": "API für Systemüberwachung"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "entry"
+    },
+    {
+      "path": "src/logger.js",
+      "role": "module"
+    },
+    {
+      "path": "src/monitoring.js",
+      "role": "module"
+    },
+    {
+      "path": "src/formatters.js",
+      "role": "utility"
+    },
+    {
+      "path": "schemas/logging-api.json",
+      "role": "schema"
+    },
+    {
+      "path": "schemas/monitoring-api.json",
+      "role": "schema"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.2.3",
+      "date": "2025-05-15",
+      "changes": [
+        "Bugfixes in Formatierungsfunktionen",
+        "Verbesserte Fehlerbehandlung",
+        "Kleinere Leistungsoptimierungen"
+      ]
+    },
+    {
+      "version": "1.2.0",
+      "date": "2025-04-10",
+      "changes": [
+        "Einführung von strukturiertem Logging",
+        "Unterstützung für Log-Rotation"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2025-01-20",
+      "changes": [
+        "Initiale Version des Logging-Dienstes"
+      ]
+    }
+  ]
+} 

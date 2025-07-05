@@ -1,0 +1,17 @@
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\config.ini
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\README.txt
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\ERP_Server_Manager.exe
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\ERP_Server_Manager.deps.json
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\ERP_Server_Manager.runtimeconfig.json
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\ERP_Server_Manager.dll
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\bin\Debug\net10.0-windows\ERP_Server_Manager.pdb
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.GeneratedMSBuildEditorConfig.editorconfig
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.AssemblyInfoInputs.cache
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.AssemblyInfo.cs
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.csproj.CoreCompileInputs.cache
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.sourcelink.json
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.dll
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\refint\ERP_Server_Manager.dll
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.pdb
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ERP_Server_Manager.genruntimeconfig.cache
+C:\AI_driven_ERP\AI_driven_ERP\server_manager\obj\Debug\net10.0-windows\ref\ERP_Server_Manager.dll

@@ -1,0 +1,317 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: valeoperps.erp.valeo.ai
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.9.2
+spec:
+  group: erp.valeo.ai
+  names:
+    kind: ValeoERP
+    listKind: ValeoERPList
+    plural: valeoperps
+    singular: valeoerp
+    shortNames:
+      - verp
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          description: ValeoERP ist die Hauptressource für die Verwaltung von VALEO-NeuroERP-Instanzen
+          type: object
+          required:
+            - spec
+          properties:
+            apiVersion:
+              description: 'APIVersion definiert die versionierte Schema dieser Darstellung eines Objekts. Server sollten die erkannte APIVersion in die Speicherversion konvertieren. Mehr Info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+              type: string
+            kind:
+              description: 'Kind ist eine Zeichenkette, die den REST-Ressourcentyp dieses Objekts darstellt. Server können die erkannte Kind-Wert verwenden, um die Speicherversion zu bestimmen. Mehr Info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: ValeoERPSpec definiert den gewünschten Zustand einer VALEO-NeuroERP-Instanz
+              type: object
+              required:
+                - version
+              properties:
+                version:
+                  description: Version der VALEO-NeuroERP-Instanz
+                  type: string
+                  pattern: '^[0-9]+\.[0-9]+(\.[0-9]+)?$'
+                replicas:
+                  description: Anzahl der Replikate für die Hauptkomponenten
+                  type: integer
+                  minimum: 1
+                  default: 1
+                components:
+                  description: Liste der zu installierenden Komponenten
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                    properties:
+                      name:
+                        description: Name der Komponente
+                        type: string
+                        enum:
+                          - backend
+                          - frontend
+                          - cache
+                          - database
+                          - document-service
+                          - reporting
+                          - notification
+                          - auth
+                          - api-gateway
+                          - monitoring
+                          - warenwirtschaft
+                          - finance
+                          - edge-compute
+                      version:
+                        description: Version der Komponente
+                        type: string
+                        pattern: '^[0-9]+\.[0-9]+(\.[0-9]+)?$'
+                      replicas:
+                        description: Anzahl der Replikate für diese Komponente
+                        type: integer
+                        minimum: 0
+                        default: 1
+                      resources:
+                        description: Ressourcenanforderungen und -limits für diese Komponente
+                        type: object
+                        properties:
+                          limits:
+                            type: object
+                            properties:
+                              cpu:
+                                type: string
+                                pattern: '^([0-9]+m|[0-9]+(\.[0-9]+)?)$'
+                              memory:
+                                type: string
+                                pattern: '^([0-9]+[KMGT]i?|[0-9]+(\.[0-9]+)?[KMGT]i?)$'
+                          requests:
+                            type: object
+                            properties:
+                              cpu:
+                                type: string
+                                pattern: '^([0-9]+m|[0-9]+(\.[0-9]+)?)$'
+                              memory:
+                                type: string
+                                pattern: '^([0-9]+[KMGT]i?|[0-9]+(\.[0-9]+)?[KMGT]i?)$'
+                      config:
+                        description: Komponentenspezifische Konfiguration
+                        type: object
+                        x-kubernetes-preserve-unknown-fields: true
+                monitoring:
+                  description: Monitoring-Konfiguration
+                  type: object
+                  properties:
+                    enabled:
+                      description: Monitoring aktivieren
+                      type: boolean
+                      default: true
+                    prometheus:
+                      description: Prometheus-Integration aktivieren
+                      type: boolean
+                      default: true
+                    grafana:
+                      description: Grafana-Integration aktivieren
+                      type: boolean
+                      default: true
+                    alerting:
+                      description: Alerting-Konfiguration
+                      type: object
+                      properties:
+                        enabled:
+                          description: Alerting aktivieren
+                          type: boolean
+                          default: true
+                        receivers:
+                          description: Alert-Empfänger
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                description: Name des Empfängers
+                                type: string
+                              email:
+                                description: E-Mail-Adresse
+                                type: string
+                                pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+                backup:
+                  description: Backup-Konfiguration
+                  type: object
+                  properties:
+                    enabled:
+                      description: Backups aktivieren
+                      type: boolean
+                      default: true
+                    schedule:
+                      description: Backup-Zeitplan (Cron-Format)
+                      type: string
+                      default: "0 2 * * *"
+                    retention:
+                      description: Anzahl der aufzubewahrenden Backups
+                      type: integer
+                      minimum: 1
+                      default: 7
+                    storage:
+                      description: Speicherort für Backups
+                      type: object
+                      properties:
+                        type:
+                          description: Speichertyp
+                          type: string
+                          enum:
+                            - s3
+                            - gcs
+                            - azure
+                            - pvc
+                        config:
+                          description: Speicherkonfiguration
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
+                serviceMesh:
+                  description: Service Mesh Konfiguration
+                  type: object
+                  properties:
+                    enabled:
+                      description: Service Mesh aktivieren
+                      type: boolean
+                      default: false
+                    type:
+                      description: Service Mesh Typ
+                      type: string
+                      enum:
+                        - istio
+                        - linkerd
+                    config:
+                      description: Service Mesh Konfiguration
+                      type: object
+                      x-kubernetes-preserve-unknown-fields: true
+                ai:
+                  description: KI-Funktionen Konfiguration
+                  type: object
+                  properties:
+                    anomalyDetection:
+                      description: Anomalieerkennung aktivieren
+                      type: boolean
+                      default: true
+                    autoScaling:
+                      description: Automatische Skalierung basierend auf KI-Vorhersagen
+                      type: boolean
+                      default: false
+                    predictionModels:
+                      description: Zu verwendende Vorhersagemodelle
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - inventory
+                          - demand
+                          - performance
+                          - security
+            status:
+              description: ValeoERPStatus definiert den beobachteten Zustand einer VALEO-NeuroERP-Instanz
+              type: object
+              properties:
+                phase:
+                  description: Aktuelle Phase der Instanz
+                  type: string
+                  enum:
+                    - Pending
+                    - Deploying
+                    - Running
+                    - Updating
+                    - Failed
+                    - Terminating
+                conditions:
+                  description: Bedingungen für diese Instanz
+                  type: array
+                  items:
+                    description: Condition enthält Details über den aktuellen Zustand einer Instanz
+                    type: object
+                    required:
+                      - status
+                      - type
+                    properties:
+                      lastTransitionTime:
+                        description: Letzter Zeitpunkt, an dem sich der Status der Bedingung geändert hat
+                        type: string
+                        format: date-time
+                      message:
+                        description: Menschenlesbare Nachricht, die Details über den Übergang gibt
+                        type: string
+                      reason:
+                        description: Maschinenlesbare, UpperCamelCase Grund für den aktuellen Status
+                        type: string
+                      status:
+                        description: Status ist der Status der Bedingung, kann "True", "False" oder "Unknown" sein
+                        type: string
+                        enum:
+                          - "True"
+                          - "False"
+                          - Unknown
+                      type:
+                        description: Typ der Bedingung
+                        type: string
+                        enum:
+                          - Available
+                          - Progressing
+                          - Degraded
+                componentStatuses:
+                  description: Status der einzelnen Komponenten
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        description: Name der Komponente
+                        type: string
+                      version:
+                        description: Version der Komponente
+                        type: string
+                      availableReplicas:
+                        description: Anzahl der verfügbaren Replikate
+                        type: integer
+                      desiredReplicas:
+                        description: Anzahl der gewünschten Replikate
+                        type: integer
+                      status:
+                        description: Status der Komponente
+                        type: string
+                        enum:
+                          - Pending
+                          - Running
+                          - Failed
+                          - Updating
+                      message:
+                        description: Statusmeldung
+                        type: string
+                lastBackup:
+                  description: Zeitpunkt des letzten erfolgreichen Backups
+                  type: string
+                  format: date-time
+                observedGeneration:
+                  description: Die zuletzt beobachtete Generation
+                  type: integer
+                  format: int64
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: Version
+          type: string
+          jsonPath: .spec.version
+        - name: Status
+          type: string
+          jsonPath: .status.phase
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp 

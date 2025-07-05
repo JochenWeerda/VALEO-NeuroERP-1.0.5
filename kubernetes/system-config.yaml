@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: erp-system-config
+  namespace: erp-system
+data:
+  ADMIN_USER: "sys"
+  ADMIN_PASSWORD: "ErpAdmin@2024!"
+  ADMIN_EMAIL: "admin@erp-system.local"
+  INITIAL_SETUP: "true"
+  ENABLE_SWAGGER: "true"
+  LOG_LEVEL: "INFO"
+  AUTH_SECRET_KEY: "83d83jd93jd93jd83jdj38dj38dj383d83dj83jd"
+  FEATURE_ROLES_ENABLED: "true"
+  FEATURE_MULTI_TENANT: "true"
+  DEFAULT_TENANT: "hauptmandant" 

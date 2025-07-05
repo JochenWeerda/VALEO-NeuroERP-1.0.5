@@ -1,0 +1,145 @@
+version: '3.8'
+
+services:
+  finance-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: finance-microservice:latest
+    container_name: finance-service
+    restart: unless-stopped
+    depends_on:
+      - finance-db
+      - finance-redis
+    ports:
+      - "8005:8000"
+    environment:
+      - DATABASE_URL=postgresql://financeuser:financepassword@finance-db:5432/financedb
+      - REDIS_URL=redis://finance-redis:6379/0
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - LOCAL_LLM_URL=${LOCAL_LLM_URL:-http://local-llm:8080/v1}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - OBSERVER_SERVICE_URL=${OBSERVER_SERVICE_URL:-http://observer-service:8010/register}
+      - MAX_WORKERS=${MAX_WORKERS:-4}
+      - CACHE_TTL=${CACHE_TTL:-3600}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - finance-network
+      - erp-network  # Externes Netzwerk für die Kommunikation mit anderen Microservices
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  finance-db:
+    image: postgres:15-alpine
+    container_name: finance-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=financeuser
+      - POSTGRES_PASSWORD=financepassword
+      - POSTGRES_DB=financedb
+    volumes:
+      - finance-db-data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5435:5432"  # Vermeidet Konflikte mit anderen Postgres-Instanzen
+    networks:
+      - finance-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U financeuser -d financedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  finance-redis:
+    image: redis:7-alpine
+    container_name: finance-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-finance_redis_password}
+    volumes:
+      - finance-redis-data:/data
+    ports:
+      - "6380:6379"  # Vermeidet Konflikte mit anderen Redis-Instanzen
+    networks:
+      - finance-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-finance_redis_password}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Optionaler lokaler LLM-Server (z.B. llama.cpp-Server)
+  # Wird nur gestartet, wenn LOCAL_LLM_ENABLED=true ist
+  local-llm:
+    image: ghcr.io/ggerganov/llama.cpp:server
+    container_name: finance-local-llm
+    restart: unless-stopped
+    profiles:
+      - local-llm
+    volumes:
+      - ./models:/models
+    environment:
+      - MODEL=/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+      - CONTEXT_SIZE=4096
+      - THREADS=${LLM_THREADS:-4}
+    ports:
+      - "8080:8080"
+    networks:
+      - finance-network
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # PgAdmin für Datenbankmanagement (nur für Entwicklungsumgebung)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: finance-pgadmin
+    profiles:
+      - dev-tools
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - finance-network
+
+  # Redis Commander für Redis-Management (nur für Entwicklungsumgebung)
+  redis-commander:
+    image: rediscommander/redis-commander
+    container_name: finance-redis-commander
+    profiles:
+      - dev-tools
+    environment:
+      - REDIS_HOSTS=finance-redis:finance-redis:6379:0:${REDIS_PASSWORD:-finance_redis_password}
+    ports:
+      - "8081:8081"
+    networks:
+      - finance-network
+
+volumes:
+  finance-db-data:
+  finance-redis-data:
+  pgadmin-data:
+
+networks:
+  finance-network:
+    driver: bridge
+  erp-network:
+    external: true  # Muss vor dem Start erstellt werden oder bereits existieren 

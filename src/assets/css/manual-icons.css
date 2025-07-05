@@ -1,0 +1,49 @@
+/* Manuelle Icon-Darstellung als Fallback, falls Material Icons nicht geladen werden */
+
+.manual-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Farben für manuelle Icons */
+.manual-icon.landwirtschaft { background-color: #e8f5e9; color: #7CB342; }
+.manual-icon.pflanze { background-color: #f1f8e9; color: #8BC34A; }
+.manual-icon.finanzen { background-color: #ffebee; color: #F44336; }
+.manual-icon.lager { background-color: #fff3e0; color: #FF9800; }
+.manual-icon.einkauf { background-color: #e8eaf6; color: #3F51B5; }
+.manual-icon.verkauf { background-color: #e3f2fd; color: #2196F3; }
+.manual-icon.personal { background-color: #f3e5f5; color: #9C27B0; }
+.manual-icon.fertigung { background-color: #efebe9; color: #795548; }
+.manual-icon.verwaltung { background-color: #eceff1; color: #607D8B; }
+.manual-icon.kalender { background-color: #fbe9e7; color: #FF5722; }
+.manual-icon.dokumente { background-color: #e0f2f1; color: #009688; }
+.manual-icon.einstellungen { background-color: #fafafa; color: #9E9E9E; }
+.manual-icon.partner { background-color: #fce4ec; color: #E91E63; }
+.manual-icon.artikel { background-color: #f9fbe7; color: #CDDC39; }
+.manual-icon.analytics { background-color: #fff8e1; color: #FFC107; }
+
+/* Icon-Container Stil */
+.orb-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Material Icons Stil */
+.material-icons {
+  font-size: inherit;
+} 

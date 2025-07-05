@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: valeo-neuroerp
+data:
+  redis-host: "redis-master.valeo-neuroerp.svc.cluster.local"
+  redis-port: "6379"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: valeo-neuroerp
+data:
+  primary-host: "postgres-primary.valeo-neuroerp.svc.cluster.local"
+  replica-host: "postgres-replica.valeo-neuroerp.svc.cluster.local"
+  database: "valeo_neuroerp"
+  port: "5432" 

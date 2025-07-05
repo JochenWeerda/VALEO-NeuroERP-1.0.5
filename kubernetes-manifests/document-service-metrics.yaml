@@ -1,0 +1,195 @@
+# Kubernetes-Manifest für Document-Service-Metrikkonfiguration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-service-metrics-config
+  namespace: erp-system
+data:
+  metrics.yml: |
+    # Metrikkonfiguration für Document-Service
+    metrics:
+      # Histogramm für Dokumenten-Upload-Zeiten (in Sekunden)
+      document_upload_duration_seconds:
+        type: histogram
+        description: "Dauer für Document-Upload-Operationen"
+        buckets: [0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 30, 60]
+        labels:
+          - document_type
+          - user_role
+          - source
+      
+      # Histogramm für Dokumenten-Download-Zeiten (in Sekunden)
+      document_download_duration_seconds:
+        type: histogram
+        description: "Dauer für Document-Download-Operationen"
+        buckets: [0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 30, 60]
+        labels:
+          - document_type
+          - user_role
+      
+      # Zähler für Dokumentenoperationen
+      document_operations_total:
+        type: counter
+        description: "Gesamtzahl der Dokumentenoperationen"
+        labels:
+          - operation
+          - document_type
+          - status
+      
+      # Gauge für die Speichernutzung
+      document_storage_bytes_total:
+        type: gauge
+        description: "Gesamtspeicherverbrauch für Dokumente"
+        labels:
+          - document_type
+          - department
+      
+      # Zähler für Fehler
+      document_errors_total:
+        type: counter
+        description: "Anzahl der Fehler bei Dokumentenoperationen"
+        labels:
+          - type
+          - operation
+          - error_code
+      
+      # Zähler für API-Aufrufe
+      http_requests_total:
+        type: counter
+        description: "Anzahl der HTTP-Anfragen"
+        labels:
+          - method
+          - endpoint
+          - status
+      
+      # Histogramm für HTTP-Anfrage-Dauer
+      http_request_duration_seconds:
+        type: histogram
+        description: "Dauer der HTTP-Anfragen"
+        buckets: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10]
+        labels:
+          - method
+          - endpoint
+          - status
+      
+      # Gauge für aktive Sitzungen
+      active_sessions:
+        type: gauge
+        description: "Anzahl der aktiven Sitzungen"
+        labels:
+          - user_role
+          - department
+  
+  instrumentation.js: |
+    // Beispiel für Instrumentierungscode für NodeJS
+    const { Counter, Gauge, Histogram } = require('prom-client');
+    
+    // Upload-Dauer-Histogramm
+    const documentUploadDuration = new Histogram({
+      name: 'document_upload_duration_seconds',
+      help: 'Dauer für Document-Upload-Operationen',
+      labelNames: ['document_type', 'user_role', 'source'],
+      buckets: [0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 30, 60]
+    });
+    
+    // Download-Dauer-Histogramm
+    const documentDownloadDuration = new Histogram({
+      name: 'document_download_duration_seconds',
+      help: 'Dauer für Document-Download-Operationen',
+      labelNames: ['document_type', 'user_role'],
+      buckets: [0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 30, 60]
+    });
+    
+    // Operationszähler
+    const documentOperations = new Counter({
+      name: 'document_operations_total',
+      help: 'Gesamtzahl der Dokumentenoperationen',
+      labelNames: ['operation', 'document_type', 'status']
+    });
+    
+    // Speichernutzung
+    const documentStorage = new Gauge({
+      name: 'document_storage_bytes_total',
+      help: 'Gesamtspeicherverbrauch für Dokumente',
+      labelNames: ['document_type', 'department']
+    });
+    
+    // Fehlerzähler
+    const documentErrors = new Counter({
+      name: 'document_errors_total',
+      help: 'Anzahl der Fehler bei Dokumentenoperationen',
+      labelNames: ['type', 'operation', 'error_code']
+    });
+    
+    // Middleware für Express zur Messung von HTTP-Anfragen
+    function metricsMiddleware(req, res, next) {
+      const startTime = process.hrtime();
+      
+      res.on('finish', () => {
+        const [seconds, nanoseconds] = process.hrtime(startTime);
+        const duration = seconds + nanoseconds / 1e9;
+        
+        httpRequestDuration.observe(
+          { method: req.method, endpoint: req.path, status: res.statusCode },
+          duration
+        );
+        
+        httpRequests.inc({
+          method: req.method,
+          endpoint: req.path,
+          status: res.statusCode
+        });
+      });
+      
+      next();
+    }
+    
+    // Beispielfunktion für das Messen des Uploads
+    function measureDocumentUpload(docType, userRole, source, callback) {
+      const end = documentUploadDuration.startTimer({ 
+        document_type: docType, 
+        user_role: userRole,
+        source: source
+      });
+      
+      try {
+        // Tatsächliche Upload-Logik
+        const result = callback();
+        
+        // Zähler erhöhen
+        documentOperations.inc({
+          operation: 'upload',
+          document_type: docType,
+          status: 'success'
+        });
+        
+        end(); // Timer beenden
+        return result;
+      } catch (error) {
+        // Fehler zählen
+        documentErrors.inc({
+          type: error.name,
+          operation: 'upload',
+          error_code: error.code || 'unknown'
+        });
+        
+        documentOperations.inc({
+          operation: 'upload',
+          document_type: docType,
+          status: 'error'
+        });
+        
+        end(); // Timer beenden
+        throw error;
+      }
+    }
+    
+    module.exports = {
+      documentUploadDuration,
+      documentDownloadDuration,
+      documentOperations,
+      documentStorage,
+      documentErrors,
+      metricsMiddleware,
+      measureDocumentUpload
+    }; 

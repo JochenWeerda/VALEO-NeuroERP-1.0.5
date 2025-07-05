@@ -1,0 +1,52 @@
+{
+  "name": "core-database",
+  "version": "2.0.0",
+  "description": "Kernmodul für Datenbankzugriff im AI-ERP-System",
+  "maintainer": "Datenbank-Team",
+  "stability": "stable",
+  "dependencies": [],
+  "interfaces": [
+    {
+      "name": "DatabaseAPI",
+      "version": "2.0.0",
+      "schema": "schemas/database-api.json",
+      "description": "API für Datenbankzugriff"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "entry"
+    },
+    {
+      "path": "src/database.js",
+      "role": "module"
+    },
+    {
+      "path": "src/connection.js",
+      "role": "module"
+    },
+    {
+      "path": "schemas/database-api.json",
+      "role": "schema"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "2025-05-29",
+      "changes": [
+        "Komplette Überarbeitung der Datenbankschnittstelle",
+        "Unterstützung für NoSQL und SQL-Datenbanken",
+        "Verbesserte Transaktionsunterstützung"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2025-01-15",
+      "changes": [
+        "Initiale Version des Datenbank-Kernmoduls"
+      ]
+    }
+  ]
+} 

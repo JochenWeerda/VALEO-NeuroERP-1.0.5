@@ -1,0 +1,13 @@
+{
+  "version": "v1.8.1",
+  "current_phase": "VAN",
+  "phases": [
+    {
+      "name": "VAN",
+      "status": "completed",
+      "progress": 100,
+      "tasks": []
+    }
+  ],
+  "last_updated": "2025-07-04T09:28:13.674435"
+}

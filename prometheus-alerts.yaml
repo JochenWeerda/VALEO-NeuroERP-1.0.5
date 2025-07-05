@@ -1,0 +1,183 @@
+# Prometheus Alerting-Regeln für das ERP-System
+# Diese Datei definiert Warnungsregeln für das Prometheus-Monitoring-System
+
+groups:
+- name: erp_system_alerts
+  rules:
+  # API-Server Warnungen
+  - alert: APIServerDown
+    expr: absent(up{job="api_server"} == 1)
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "API-Server ist nicht erreichbar"
+      description: "Der API-Server ist seit mehr als 1 Minute nicht erreichbar"
+      runbook_url: "https://wiki.example.com/runbooks/api-server-down"
+
+  - alert: HighErrorRate
+    expr: sum(rate(http_requests_total{status_code=~"5.."}[5m])) / sum(rate(http_requests_total[5m])) > 0.05
+    for: 5m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe Fehlerrate erkannt"
+      description: "Die API-Fehlerrate überschreitet 5% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/high-error-rate"
+
+  - alert: SlowAPIResponse
+    expr: http_request_duration_seconds{quantile="0.95"} > 0.5
+    for: 5m
+    labels:
+      severity: high
+    annotations:
+      summary: "Langsame API-Antworten erkannt"
+      description: "Die 95%-Antwortzeit ist höher als 500ms (aktuell: {{ $value | humanizeDuration }})"
+      runbook_url: "https://wiki.example.com/runbooks/slow-api-response"
+      
+  # System-Warnungen
+  - alert: HighCPUUsage
+    expr: avg(node_cpu_utilization) > 80
+    for: 10m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe CPU-Auslastung"
+      description: "Die durchschnittliche CPU-Auslastung liegt über 80% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/high-cpu-usage"
+
+  - alert: HighMemoryUsage
+    expr: avg(node_memory_utilization) > 85
+    for: 5m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe Speicherauslastung"
+      description: "Die durchschnittliche Speicherauslastung liegt über 85% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/high-memory-usage"
+
+  - alert: HighDiskUsage
+    expr: avg(node_disk_utilization) > 85
+    for: 10m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe Festplattennutzung"
+      description: "Die durchschnittliche Festplattennutzung liegt über 85% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/high-disk-usage"
+
+  # Redis-Warnungen
+  - alert: RedisDown
+    expr: absent(up{job="redis_exporter"} == 1)
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Redis ist nicht erreichbar"
+      description: "Redis ist seit mehr als 1 Minute nicht erreichbar"
+      runbook_url: "https://wiki.example.com/runbooks/redis-down"
+
+  - alert: RedisHighMemoryUsage
+    expr: redis_memory_used_bytes / redis_memory_max_bytes * 100 > 80
+    for: 5m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe Redis-Speichernutzung"
+      description: "Die Redis-Speichernutzung liegt über 80% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/redis-memory-usage"
+
+  - alert: RedisHighConnectionCount
+    expr: redis_connected_clients > 100
+    for: 5m
+    labels:
+      severity: medium
+    annotations:
+      summary: "Viele Redis-Verbindungen"
+      description: "Die Anzahl der Redis-Verbindungen ist hoch (aktuell: {{ $value }})"
+      runbook_url: "https://wiki.example.com/runbooks/redis-connections"
+
+  # Celery-Warnungen
+  - alert: CeleryWorkerDown
+    expr: absent(up{job="celery"} == 1)
+    for: 1m
+    labels:
+      severity: high
+    annotations:
+      summary: "Celery-Worker ist nicht erreichbar"
+      description: "Der Celery-Worker ist seit mehr als 1 Minute nicht erreichbar"
+      runbook_url: "https://wiki.example.com/runbooks/celery-worker-down"
+
+  - alert: CeleryHighFailureRate
+    expr: sum(rate(celery_tasks_total{status="failed"}[10m])) / sum(rate(celery_tasks_total[10m])) > 0.05
+    for: 10m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe Celery-Fehlerrate"
+      description: "Die Celery-Task-Fehlerrate überschreitet 5% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/celery-failure-rate"
+
+  - alert: CeleryLongQueue
+    expr: celery_tasks_queued > 1000
+    for: 15m
+    labels:
+      severity: medium
+    annotations:
+      summary: "Lange Celery-Warteschlange"
+      description: "Die Celery-Warteschlange hat mehr als 1000 Tasks (aktuell: {{ $value }})"
+      runbook_url: "https://wiki.example.com/runbooks/celery-queue-length"
+
+  # Geschäftsspezifische Warnungen
+  - alert: LowOrderRate
+    expr: rate(erp_orders_created_total[1h]) < predict_linear(erp_orders_created_total[12h], 3600)
+    for: 1h
+    labels:
+      severity: medium
+    annotations:
+      summary: "Niedrige Auftragsrate"
+      description: "Die Auftragsrate ist niedriger als erwartet (aktuell: {{ $value | humanizePercentage }} unter dem Durchschnitt)"
+      runbook_url: "https://wiki.example.com/runbooks/business-metrics"
+
+  - alert: HighBillingErrors
+    expr: sum(rate(erp_billing_errors_total[30m])) / sum(rate(erp_billing_total[30m])) > 0.01
+    for: 30m
+    labels:
+      severity: high
+    annotations:
+      summary: "Hohe Abrechnungsfehlerrate"
+      description: "Die Abrechnungsfehlerrate überschreitet 1% (aktuell: {{ $value | humanizePercentage }})"
+      runbook_url: "https://wiki.example.com/runbooks/billing-errors"
+
+- name: resource_alerts
+  rules:
+  # Ressourcen-Trends
+  - alert: CPUUsageIncreasing
+    expr: predict_linear(node_cpu_utilization[1h], 3600 * 6) > 90
+    for: 15m
+    labels:
+      severity: medium
+    annotations:
+      summary: "CPU-Auslastung steigt"
+      description: "Die CPU-Auslastung wird voraussichtlich in 6 Stunden 90% überschreiten"
+      runbook_url: "https://wiki.example.com/runbooks/resource-trending"
+
+  - alert: MemoryUsageIncreasing
+    expr: predict_linear(node_memory_utilization[1h], 3600 * 6) > 90
+    for: 15m
+    labels:
+      severity: medium
+    annotations:
+      summary: "Speicherauslastung steigt"
+      description: "Die Speicherauslastung wird voraussichtlich in 6 Stunden 90% überschreiten"
+      runbook_url: "https://wiki.example.com/runbooks/resource-trending"
+
+  - alert: DiskUsageIncreasing
+    expr: predict_linear(node_disk_utilization[1d], 3600 * 24) > 90
+    for: 1h
+    labels:
+      severity: medium
+    annotations:
+      summary: "Festplattennutzung steigt"
+      description: "Die Festplattennutzung wird voraussichtlich in 24 Stunden 90% überschreiten"
+      runbook_url: "https://wiki.example.com/runbooks/resource-trending" 

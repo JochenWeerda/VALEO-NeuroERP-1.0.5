@@ -1,0 +1,159 @@
+{
+  "version": "v1.7",
+  "name": "GENXAIS Decision Map v1.7",
+  "dot_source": "\n        digraph G {\n            rankdir=LR;\n            node [shape=box, style=\"rounded,filled\", fillcolor=lightblue];\n            \n            // Phasen\n            van [label=\"VAN Phase\", fillcolor=lightgreen];\n            plan [label=\"PLAN Phase\"];\n            create [label=\"CREATE Phase\"];\n            impl [label=\"IMPLEMENTATION Phase\"];\n            refl [label=\"REFLEKTION Phase\"];\n            \n            // Entscheidungspunkte\n            d1 [label=\"Issues Analyse\", shape=diamond];\n            d2 [label=\"Artefakt Validierung\", shape=diamond];\n            d3 [label=\"Pipeline Planung\", shape=diamond];\n            d4 [label=\"Ressourcen Zuweisung\", shape=diamond];\n            d5 [label=\"Codegenerierung\", shape=diamond];\n            d6 [label=\"Integration\", shape=diamond];\n            d7 [label=\"Deployment\", shape=diamond];\n            d8 [label=\"Abschlussbewertung\", shape=diamond];\n            \n            // Kanten\n            van -> d1;\n            d1 -> d2 [label=\"Issues analysiert\"];\n            d2 -> d3 [label=\"Artefakte validiert\"];\n            d3 -> plan [label=\"Pipelines geplant\"];\n            plan -> d4;\n            d4 -> create [label=\"Ressourcen zugewiesen\"];\n            create -> d5;\n            d5 -> impl [label=\"Code generiert\"];\n            impl -> d6;\n            d6 -> d7 [label=\"Integration abgeschlossen\"];\n            d7 -> refl [label=\"Deployment erfolgreich\"];\n            refl -> d8;\n            d8 -> \"v1.8\" [label=\"Zyklus abgeschlossen\"];\n            \n            // Aktuelle Position\n            van [fillcolor=lightgreen];\n            d1 [fillcolor=gold];\n        }\n        ",
+  "nodes": [
+    {
+      "id": "van",
+      "label": "VAN Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "plan",
+      "label": "PLAN Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "create",
+      "label": "CREATE Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "impl",
+      "label": "IMPLEMENTATION Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "refl",
+      "label": "REFLEKTION Phase",
+      "type": "phase",
+      "status": "active"
+    },
+    {
+      "id": "d1",
+      "label": "Issues Analyse",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d2",
+      "label": "Artefakt Validierung",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d3",
+      "label": "Pipeline Planung",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d4",
+      "label": "Ressourcen Zuweisung",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d5",
+      "label": "Codegenerierung",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d6",
+      "label": "Integration",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d7",
+      "label": "Deployment",
+      "type": "decision",
+      "status": "completed"
+    },
+    {
+      "id": "d8",
+      "label": "Abschlussbewertung",
+      "type": "decision",
+      "status": "active"
+    },
+    {
+      "id": "v1.8",
+      "label": "v1.8",
+      "type": "exit",
+      "status": "pending"
+    }
+  ],
+  "edges": [
+    {
+      "source": "van",
+      "target": "d1",
+      "label": ""
+    },
+    {
+      "source": "d1",
+      "target": "d2",
+      "label": "Issues analysiert"
+    },
+    {
+      "source": "d2",
+      "target": "d3",
+      "label": "Artefakte validiert"
+    },
+    {
+      "source": "d3",
+      "target": "plan",
+      "label": "Pipelines geplant"
+    },
+    {
+      "source": "plan",
+      "target": "d4",
+      "label": ""
+    },
+    {
+      "source": "d4",
+      "target": "create",
+      "label": "Ressourcen zugewiesen"
+    },
+    {
+      "source": "create",
+      "target": "d5",
+      "label": ""
+    },
+    {
+      "source": "d5",
+      "target": "impl",
+      "label": "Code generiert"
+    },
+    {
+      "source": "impl",
+      "target": "d6",
+      "label": ""
+    },
+    {
+      "source": "d6",
+      "target": "d7",
+      "label": "Integration abgeschlossen"
+    },
+    {
+      "source": "d7",
+      "target": "refl",
+      "label": "Deployment erfolgreich"
+    },
+    {
+      "source": "refl",
+      "target": "d8",
+      "label": ""
+    },
+    {
+      "source": "d8",
+      "target": "v1.8",
+      "label": "Zyklus abgeschlossen"
+    }
+  ],
+  "last_updated": "2025-07-01T10:18:17.948616"
+}

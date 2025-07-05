@@ -1,0 +1,78 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: erp-backend-init
+  namespace: erp-system
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: erp-backend-init
+        image: erp-backend:latest
+        imagePullPolicy: Never
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            echo "Initializing ERP system..."
+            python -c "
+            import os
+            import sys
+            sys.path.append('/app')
+            from backend.core.init_system import initialize_system
+            from backend.models.user import UserRole, create_user
+            from backend.models.tenant import create_tenant
+
+            # Konfiguration aus Umgebungsvariablen lesen
+            admin_user = os.environ.get('ADMIN_USER', 'sys')
+            admin_password = os.environ.get('ADMIN_PASSWORD', 'ErpAdmin@2024!')
+            admin_email = os.environ.get('ADMIN_EMAIL', 'admin@erp-system.local')
+            default_tenant = os.environ.get('DEFAULT_TENANT', 'hauptmandant')
+            
+            print('Initialisiere System...')
+            initialize_system()
+            
+            print('Erstelle Hauptmandant...')
+            tenant = create_tenant(
+                name=default_tenant,
+                description='Hauptmandant des ERP-Systems',
+                is_active=True
+            )
+            
+            print('Erstelle Admin-Benutzer...')
+            user = create_user(
+                username=admin_user,
+                email=admin_email,
+                password=admin_password,
+                role=UserRole.ADMIN,
+                tenant_id=tenant.id,
+                is_active=True
+            )
+            
+            print('System-Initialisierung abgeschlossen!')
+            "
+            echo "Initialization completed."
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgres:postgres@erp-db-service:5432/erp"
+        - name: ADMIN_USER
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ADMIN_USER
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ADMIN_PASSWORD
+        - name: ADMIN_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: ADMIN_EMAIL
+        - name: DEFAULT_TENANT
+          valueFrom:
+            configMapKeyRef:
+              name: erp-system-config
+              key: DEFAULT_TENANT
+      restartPolicy: OnFailure 

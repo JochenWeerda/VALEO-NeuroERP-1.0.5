@@ -1,0 +1,206 @@
+{
+  "test_suite": "int_Zentraler_Auth-Service",
+  "timestamp": "2025-06-17T14:30:00Z",
+  "status": "SUCCESS",
+  "summary": {
+    "total_tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 187
+  },
+  "environment": {
+    "ci_build": "integration-pipeline-876",
+    "test_environment": "staging",
+    "services": [
+      "auth-service:1.2.0",
+      "fibu-service:1.0.5",
+      "crm-service:1.1.2",
+      "kasse-service:1.0.8",
+      "bi-service:1.0.3",
+      "api-gateway:1.3.1"
+    ]
+  },
+  "test_cases": [
+    {
+      "id": "AUTH-001",
+      "name": "Benutzerauthentifizierung über API-Gateway",
+      "description": "Prüft, ob ein Benutzer sich über das API-Gateway authentifizieren und ein gültiges JWT-Token erhalten kann",
+      "steps": [
+        "API-Gateway starten",
+        "Auth-Service starten",
+        "Benutzeranmeldedaten senden",
+        "JWT-Token empfangen und validieren"
+      ],
+      "expected_result": "Gültiges JWT-Token mit korrekten Claims",
+      "actual_result": "JWT-Token enthält korrekte Claims und ist gültig",
+      "status": "PASS",
+      "duration_seconds": 12
+    },
+    {
+      "id": "AUTH-002",
+      "name": "Rollenbasierte Zugriffssteuerung für FIBU-Service",
+      "description": "Prüft, ob ein Benutzer mit FIBU-Rolle auf FIBU-Endpunkte zugreifen kann",
+      "steps": [
+        "Benutzer mit FIBU-Rolle authentifizieren",
+        "Token an FIBU-Service-Endpunkt senden",
+        "Antwort validieren"
+      ],
+      "expected_result": "Erfolgreicher Zugriff auf FIBU-Endpunkt",
+      "actual_result": "Zugriff gewährt, Status 200 OK",
+      "status": "PASS",
+      "duration_seconds": 15
+    },
+    {
+      "id": "AUTH-003",
+      "name": "Zugriffssteuerung bei fehlenden Berechtigungen",
+      "description": "Prüft, ob ein Benutzer ohne CRM-Rolle keinen Zugriff auf CRM-Endpunkte erhält",
+      "steps": [
+        "Benutzer ohne CRM-Rolle authentifizieren",
+        "Token an CRM-Service-Endpunkt senden",
+        "Antwort validieren"
+      ],
+      "expected_result": "Zugriff verweigert mit Status 403 Forbidden",
+      "actual_result": "Zugriff verweigert, Status 403 Forbidden",
+      "status": "PASS",
+      "duration_seconds": 14
+    },
+    {
+      "id": "AUTH-004",
+      "name": "Single Sign-On zwischen Modulen",
+      "description": "Prüft, ob ein Benutzer sich nur einmal anmelden muss, um auf mehrere Module zuzugreifen",
+      "steps": [
+        "Benutzer mit mehreren Rollen authentifizieren",
+        "Token für Zugriff auf FIBU-Service verwenden",
+        "Dasselbe Token für Zugriff auf CRM-Service verwenden"
+      ],
+      "expected_result": "Erfolgreicher Zugriff auf beide Services mit demselben Token",
+      "actual_result": "Zugriff auf beide Services erfolgreich",
+      "status": "PASS",
+      "duration_seconds": 18
+    },
+    {
+      "id": "AUTH-005",
+      "name": "Token-Ablauf und Erneuerung",
+      "description": "Prüft, ob abgelaufene Tokens korrekt abgelehnt werden und ein Refresh-Token verwendet werden kann",
+      "steps": [
+        "Benutzer authentifizieren",
+        "Token-Ablauf simulieren",
+        "Zugriff mit abgelaufenem Token versuchen",
+        "Refresh-Token verwenden, um neues Token zu erhalten",
+        "Zugriff mit neuem Token versuchen"
+      ],
+      "expected_result": "Abgelaufenes Token wird abgelehnt, neues Token funktioniert",
+      "actual_result": "Abgelaufenes Token: Status 401, neues Token: Status 200",
+      "status": "PASS",
+      "duration_seconds": 22
+    },
+    {
+      "id": "AUTH-006",
+      "name": "Zwei-Faktor-Authentifizierung",
+      "description": "Prüft, ob die Zwei-Faktor-Authentifizierung für kritische Operationen funktioniert",
+      "steps": [
+        "Benutzer mit Basis-Token authentifizieren",
+        "Kritische Operation ohne 2FA versuchen",
+        "2FA-Code anfordern und eingeben",
+        "Kritische Operation mit 2FA-Token versuchen"
+      ],
+      "expected_result": "Ohne 2FA wird Zugriff verweigert, mit 2FA wird Zugriff gewährt",
+      "actual_result": "Ohne 2FA: Status 403, mit 2FA: Status 200",
+      "status": "PASS",
+      "duration_seconds": 25
+    },
+    {
+      "id": "AUTH-007",
+      "name": "Benutzerregistrierung und -verwaltung",
+      "description": "Prüft, ob neue Benutzer registriert und verwaltet werden können",
+      "steps": [
+        "Neuen Benutzer registrieren",
+        "Benutzerdetails abrufen",
+        "Benutzerrolle ändern",
+        "Benutzer deaktivieren"
+      ],
+      "expected_result": "Benutzer wird korrekt erstellt, aktualisiert und deaktiviert",
+      "actual_result": "Alle Operationen erfolgreich mit korrekten Status-Codes",
+      "status": "PASS",
+      "duration_seconds": 19
+    },
+    {
+      "id": "AUTH-008",
+      "name": "Integration mit Kassensystem",
+      "description": "Prüft, ob Kassierer sich am Kassensystem mit zentraler Authentifizierung anmelden können",
+      "steps": [
+        "Kassierer-Benutzer authentifizieren",
+        "Token an Kassensystem-Login-Endpunkt senden",
+        "Kassensitzung starten"
+      ],
+      "expected_result": "Erfolgreiche Anmeldung am Kassensystem",
+      "actual_result": "Anmeldung erfolgreich, Kassensitzung gestartet",
+      "status": "PASS",
+      "duration_seconds": 16
+    },
+    {
+      "id": "AUTH-009",
+      "name": "Audit-Trail für Authentifizierungsvorgänge",
+      "description": "Prüft, ob alle Authentifizierungsvorgänge protokolliert werden",
+      "steps": [
+        "Mehrere Anmeldeversuche durchführen (erfolgreich und fehlgeschlagen)",
+        "Audit-Log abrufen",
+        "Einträge validieren"
+      ],
+      "expected_result": "Alle Authentifizierungsvorgänge sind im Audit-Log vorhanden",
+      "actual_result": "Alle Vorgänge wurden korrekt protokolliert",
+      "status": "PASS",
+      "duration_seconds": 14
+    },
+    {
+      "id": "AUTH-010",
+      "name": "Integration mit BI-Dashboards",
+      "description": "Prüft, ob BI-Dashboards die Benutzerberechtigungen korrekt berücksichtigen",
+      "steps": [
+        "Benutzer mit eingeschränkten Rechten authentifizieren",
+        "BI-Dashboard-Daten abrufen",
+        "Sichtbare Daten validieren"
+      ],
+      "expected_result": "Nur autorisierte Daten werden angezeigt",
+      "actual_result": "Datenfilterung basierend auf Benutzerrechten korrekt",
+      "status": "PASS",
+      "duration_seconds": 17
+    },
+    {
+      "id": "AUTH-011",
+      "name": "Passwort-Richtlinien und -Zurücksetzung",
+      "description": "Prüft, ob Passwort-Richtlinien durchgesetzt werden und Passwörter zurückgesetzt werden können",
+      "steps": [
+        "Passwort-Änderung mit schwachem Passwort versuchen",
+        "Passwort-Änderung mit starkem Passwort versuchen",
+        "Passwort-Zurücksetzung anfordern",
+        "Zurücksetzungslink verwenden"
+      ],
+      "expected_result": "Schwaches Passwort wird abgelehnt, Zurücksetzung funktioniert",
+      "actual_result": "Schwaches Passwort: Status 400, Zurücksetzung erfolgreich",
+      "status": "PASS",
+      "duration_seconds": 21
+    },
+    {
+      "id": "AUTH-012",
+      "name": "API-Schlüssel für Service-zu-Service-Kommunikation",
+      "description": "Prüft, ob Services miteinander über API-Schlüssel kommunizieren können",
+      "steps": [
+        "API-Schlüssel für Service-Kommunikation generieren",
+        "FIBU-Service mit API-Schlüssel auf CRM-Service zugreifen lassen",
+        "Antwort validieren"
+      ],
+      "expected_result": "Erfolgreiche Service-zu-Service-Kommunikation",
+      "actual_result": "Kommunikation erfolgreich, Daten korrekt übertragen",
+      "status": "PASS",
+      "duration_seconds": 14
+    }
+  ],
+  "issues": [],
+  "recommendations": [
+    "Implementierung von Rate-Limiting für fehlgeschlagene Anmeldeversuche",
+    "Erweiterung der Audit-Logs um zusätzliche Metadaten (Geräte-Informationen, IP-Adressen)",
+    "Optimierung der Token-Validierungsperformance für hohe Lastszenarien"
+  ]
+} 

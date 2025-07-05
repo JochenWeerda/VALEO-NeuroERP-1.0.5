@@ -1,0 +1,87 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: apm-alerts
+  namespace: valeo-neuroerp
+spec:
+  groups:
+  - name: apm.rules
+    rules:
+    # Systemzustand
+    - alert: APMSystemDown
+      expr: up{job="apm-multi-agent"} == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "APM System ist nicht erreichbar"
+        description: "Das APM-System ist seit 5 Minuten nicht erreichbar."
+
+    # Memory Bank Metriken
+    - alert: MemoryBankHighUsage
+      expr: apm_memory_bank_usage_bytes / apm_memory_bank_total_bytes * 100 > 85
+      for: 15m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Memory Bank Speichernutzung hoch"
+        description: "Die Memory Bank Nutzung liegt über 85% ({{ $value }}%)."
+
+    # MongoDB Metriken
+    - alert: MongoDBHighLatency
+      expr: rate(mongodb_op_latency_seconds_sum[5m]) / rate(mongodb_op_latency_seconds_count[5m]) > 0.1
+      for: 10m
+      labels:
+        severity: warning
+      annotations:
+        summary: "MongoDB Latenz erhöht"
+        description: "Die durchschnittliche MongoDB Operationslatenz ist höher als 100ms."
+
+    # Agent-Performance
+    - alert: AgentHighCPUUsage
+      expr: rate(process_cpu_seconds_total{job="apm-multi-agent"}[5m]) * 100 > 80
+      for: 15m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Agent CPU-Auslastung hoch"
+        description: "Die CPU-Auslastung des Agenten liegt über 80% ({{ $value }}%)."
+
+    - alert: AgentHighMemoryUsage
+      expr: process_resident_memory_bytes{job="apm-multi-agent"} / container_memory_working_set_bytes * 100 > 85
+      for: 15m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Agent Speichernutzung hoch"
+        description: "Die Speichernutzung des Agenten liegt über 85% ({{ $value }}%)."
+
+    # Workflow-Metriken
+    - alert: WorkflowProcessingDelay
+      expr: rate(apm_workflow_processing_duration_seconds_sum[5m]) / rate(apm_workflow_processing_duration_seconds_count[5m]) > 30
+      for: 10m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Workflow-Verarbeitung verzögert"
+        description: "Die durchschnittliche Workflow-Verarbeitungszeit liegt über 30 Sekunden."
+
+    # Error-Monitoring
+    - alert: HighErrorRate
+      expr: rate(apm_error_total[5m]) > 0.1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Erhöhte Fehlerrate"
+        description: "Die Fehlerrate liegt über 10% in den letzten 5 Minuten."
+
+    # Backup-Monitoring
+    - alert: BackupFailure
+      expr: time() - apm_last_successful_backup_timestamp_seconds > 86400
+      for: 1h
+      labels:
+        severity: critical
+      annotations:
+        summary: "Backup fehlgeschlagen"
+        description: "Es wurde seit mehr als 24 Stunden kein erfolgreiches Backup durchgeführt." 

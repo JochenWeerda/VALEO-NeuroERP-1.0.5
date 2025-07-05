@@ -1,0 +1,72 @@
+{
+    "python": {
+        "current_version": "3.11.0",
+        "check_cmd": "python --version",
+        "update_url": "https://www.python.org/downloads/",
+        "regex": "Python (\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "3.11.9"
+    },
+    "pip": {
+        "current_version": "25.1.1",
+        "check_cmd": "pip --version",
+        "update_cmd": "python -m pip install --upgrade pip",
+        "regex": "pip (\\d+\\.\\d+(\\.\\d+)?)",
+        "latest_version": "25.1.1"
+    },
+    "fastapi": {
+        "current_version": "0.104.1",
+        "check_cmd": "pip show fastapi",
+        "update_cmd": "pip install --upgrade fastapi",
+        "regex": "Version: (\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "0.115.12"
+    },
+    "uvicorn": {
+        "current_version": "0.24.0",
+        "check_cmd": "pip show uvicorn",
+        "update_cmd": "pip install --upgrade uvicorn",
+        "regex": "Version: (\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "0.34.2"
+    },
+    "sqlalchemy": {
+        "current_version": "2.0.23",
+        "check_cmd": "pip show sqlalchemy",
+        "update_cmd": "pip install --upgrade sqlalchemy",
+        "regex": "Version: (\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "2.0.41"
+    },
+    "pydantic": {
+        "current_version": "1.10.13",
+        "check_cmd": "pip show pydantic",
+        "update_cmd": "pip install --upgrade pydantic",
+        "regex": "Version: (\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "2.11.5"
+    },
+    "git": {
+        "current_version": "2.49.0",
+        "check_cmd": "git --version",
+        "update_url": "https://git-scm.com/downloads",
+        "regex": "git version (\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "2.49.0"
+    },
+    "git-lfs": {
+        "current_version": "3.6.1",
+        "check_cmd": "git lfs version",
+        "update_url": "https://git-lfs.github.com/",
+        "regex": "git-lfs\\/(\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "3.6.1"
+    },
+    "nodejs": {
+        "current_version": "23.11.0",
+        "check_cmd": "node --version",
+        "update_url": "https://nodejs.org/en/download/",
+        "regex": "v(\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "22.16.0"
+    },
+    "npm": {
+        "current_version": "10.9.2",
+        "check_cmd": "npm --version",
+        "update_cmd": "npm install -g npm@latest",
+        "regex": "(\\d+\\.\\d+\\.\\d+)",
+        "latest_version": "10.9.2"
+    }
+}

@@ -1,0 +1,17 @@
+# {{ config.variables.project_name }} Dokumentation
+
+Version: {{ config.variables.version }}
+
+## Module
+
+{% for module in modules %}
+- [{{ module.name }}]({{ module.path }})
+{% endfor %}
+
+## Abhängigkeitsgraph
+
+![Dependency Graph](dependency_graph.png)
+
+## Metriken
+
+Die aktuellen Metriken sind in der Datei `dependency_metrics.json` gespeichert. 

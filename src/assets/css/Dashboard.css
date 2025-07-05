@@ -1,0 +1,206 @@
+/* Dashboard.css - Styling für das ORB-FMS Dashboard */
+
+/* Hauptcontainer */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f2f2f2;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Header-Bereich */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.orb {
+  color: #f44336;
+  margin-right: 2px;
+}
+
+.fms {
+  color: #4caf50;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  margin-right: 15px;
+}
+
+/* Hauptinhalt */
+.dashboard-content {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f7fa;
+  position: relative;
+}
+
+.dashboard-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
+/* Grid für Module */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.module-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.module-item.active {
+  background-color: #fffde7;
+  box-shadow: 0 0 0 2px #ffc107;
+}
+
+.module-name {
+  margin-top: 0.75rem;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Modulinhalt */
+.module-content {
+  flex: 1;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.module-content h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+/* Platzhalter-Inhalt */
+.placeholder-content {
+  margin-top: 1.5rem;
+}
+
+.placeholder-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.placeholder-header {
+  display: flex;
+  background-color: #f5f5f5;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.placeholder-row {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.placeholder-row:hover {
+  background-color: #f9f9f9;
+}
+
+.placeholder-cell {
+  flex: 1;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.action-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.action-button:hover {
+  background-color: #388e3c;
+}
+
+.action-button:last-child {
+  background-color: #f44336;
+}
+
+.action-button:last-child:hover {
+  background-color: #d32f2f;
+}
+
+/* Footer */
+.dashboard-footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Styling für die Icons */
+.orb-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.material-icons {
+  font-size: inherit;
+} 

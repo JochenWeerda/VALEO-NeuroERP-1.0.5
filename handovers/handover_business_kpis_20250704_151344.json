@@ -1,0 +1,36 @@
+{
+  "task_id": "business_kpis",
+  "from_agent": "system",
+  "to_agent": "Architect",
+  "timestamp": "2025-07-04 15:13:44.545149",
+  "artifacts": {
+    "result": {
+      "status": "success",
+      "kpi_config": {
+        "metrics": [
+          {
+            "name": "transaction_success_rate",
+            "type": "gauge",
+            "description": "Success rate of transactions"
+          },
+          {
+            "name": "average_response_time",
+            "type": "histogram",
+            "description": "Average response time"
+          },
+          {
+            "name": "active_users",
+            "type": "gauge",
+            "description": "Number of active users"
+          }
+        ],
+        "update_interval": 300,
+        "retention_period": "30d"
+      }
+    }
+  },
+  "status": "completed",
+  "notes": "Initial handover for task business_kpis",
+  "requirements": [],
+  "dependencies": []
+}

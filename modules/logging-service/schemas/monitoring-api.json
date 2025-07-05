@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Monitoring API",
+  "description": "Schema für die Monitoring-API",
+  "type": "object",
+  "definitions": {
+    "Metric": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "number" },
+        "unit": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "tags": { 
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "required": ["name", "value", "timestamp"]
+    },
+    "HealthStatus": {
+      "type": "object",
+      "properties": {
+        "component": { "type": "string" },
+        "status": { 
+          "type": "string",
+          "enum": ["healthy", "degraded", "unhealthy"]
+        },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "status": { 
+                "type": "string",
+                "enum": ["pass", "warn", "fail"]
+              },
+              "message": { "type": "string" }
+            },
+            "required": ["name", "status"]
+          }
+        }
+      },
+      "required": ["component", "status", "timestamp"]
+    },
+    "Alert": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "severity": { 
+          "type": "string",
+          "enum": ["info", "warning", "error", "critical"]
+        },
+        "message": { "type": "string" },
+        "component": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["name", "severity", "message", "timestamp"]
+    }
+  },
+  "paths": {
+    "/metrics": {
+      "post": {
+        "description": "Sendet eine Metrik an das Monitoring-System",
+        "parameters": {
+          "metric": { "$ref": "#/definitions/Metric" }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" },
+            "id": { "type": "string" }
+          }
+        }
+      },
+      "get": {
+        "description": "Ruft Metriken ab",
+        "parameters": {
+          "name": { "type": "string" },
+          "from": { "type": "string", "format": "date-time" },
+          "to": { "type": "string", "format": "date-time" },
+          "tags": { "type": "object" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Metric" }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Ruft den Gesundheitsstatus ab",
+        "parameters": {
+          "component": { "type": "string" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/HealthStatus" }
+        }
+      }
+    },
+    "/alerts": {
+      "get": {
+        "description": "Ruft Alarmmeldungen ab",
+        "parameters": {
+          "active": { "type": "boolean" },
+          "severity": { "type": "string" },
+          "component": { "type": "string" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Alert" }
+        }
+      }
+    }
+  }
+} 

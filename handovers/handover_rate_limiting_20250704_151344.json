@@ -1,0 +1,29 @@
+{
+  "task_id": "rate_limiting",
+  "from_agent": "system",
+  "to_agent": "Security",
+  "timestamp": "2025-07-04 15:13:44.548146",
+  "artifacts": {
+    "result": {
+      "status": "success",
+      "rate_limit_config": {
+        "global_limits": {
+          "requests_per_second": 1000,
+          "burst_size": 50
+        },
+        "per_ip_limits": {
+          "requests_per_minute": 60,
+          "burst_size": 10
+        },
+        "per_user_limits": {
+          "requests_per_hour": 1000,
+          "burst_size": 20
+        }
+      }
+    }
+  },
+  "status": "completed",
+  "notes": "Initial handover for task rate_limiting",
+  "requirements": [],
+  "dependencies": []
+}

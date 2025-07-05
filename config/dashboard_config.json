@@ -1,0 +1,45 @@
+{
+  "title": "VALEO-NeuroERP Dashboard",
+  "version": "2.0",
+  "theme": {
+    "primary_color": "#3498db",
+    "secondary_color": "#2ecc71",
+    "background_color": "#f5f5f5",
+    "text_color": "#333333"
+  },
+  "modules": [
+    {
+      "name": "phase_tracker",
+      "title": "Phasen-Tracker",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "name": "pipeline_monitor",
+      "title": "Pipeline-Monitor",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "name": "artifact_viewer",
+      "title": "Artefakt-Viewer",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "name": "langgraph_visualizer",
+      "title": "LangGraph-Visualisierer",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "name": "rag_explorer",
+      "title": "RAG-Explorer",
+      "enabled": true,
+      "order": 5
+    }
+  ],
+  "refresh_interval": 5,
+  "enable_notifications": true,
+  "notification_levels": ["info", "warning", "error"]
+}

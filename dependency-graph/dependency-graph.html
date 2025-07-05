@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP-System AbhÃ¤ngigkeitsgraph</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .mermaid { margin: 30px auto; }
+        h1, h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>ERP-System AbhÃ¤ngigkeitsgraph</h1>
+    <p>Generiert am 2025-05-29 20:10</p>
+    
+    <div class="mermaid">
+flowchart TD
+    %% Module und ihre AbhÃ¤ngigkeiten
+    einheiten-service["einheiten-service v1.0.0"]
+    style einheiten-service fill:#59b259
+    core-database["core-database v2.0.0"]
+    style core-database fill:#59b259
+    auth-service["auth-service v1.5.0"]
+    style auth-service fill:#59b259
+    artikel-stammdaten["artikel-stammdaten v1.0.0"]
+    style artikel-stammdaten fill:#59b259
+    logging-service["logging-service v1.2.3"]
+    style logging-service fill:#59b259
+    finance-core["finance-core v1.0.0"]
+    style finance-core fill:#59b259
+    %% AbhÃ¤ngigkeiten
+    einheiten-service -->|"uses v^2.0.0"| core-database
+    auth-service -->|"uses v^2.0.0"| core-database
+    artikel-stammdaten -->|"uses v^2.0.0"| core-database
+    artikel-stammdaten -->|"uses v^1.5.0"| auth-service
+    artikel-stammdaten -->|"uses v~1.2.3"| logging-service
+    artikel-stammdaten -->|"uses v^1.0.0"| finance-core
+    artikel-stammdaten -->|"uses v^1.0.0"| einheiten-service
+    finance-core -->|"uses v^2.0.0"| core-database
+    finance-core -->|"uses v^1.5.0"| auth-service
+    finance-core -->|"uses v~1.2.3"| logging-service
+    %% Legende
+    subgraph Legende
+        stable[Stabil] 
+        style stable fill:#59b259
+        experimental[Experimentell]
+        style experimental fill:#e0b74b
+        deprecated[Veraltet]
+        style deprecated fill:#c24848
+        unspecified[Nicht spezifiziert]
+        style unspecified fill:#4b89e0
+        optDep[Optionale AbhÃ¤ngigkeit]
+        reqDep[Erforderliche AbhÃ¤ngigkeit]
+        optDep -.- reqDep
+        reqDep --> optDep
+    end
+    </div>
+
+    <h2>Modulinformationen</h2>
+    <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+            <th>Modul</th>
+            <th>Version</th>
+            <th>Beschreibung</th>
+            <th>StabilitÃ¤t</th>
+            <th>AbhÃ¤ngigkeiten</th>
+        </tr>        <tr>
+            <td>einheiten-service</td>
+            <td>1.0.0</td>
+            <td>Dienst zur Verwaltung von MaÃŸeinheiten im AI-ERP-System</td>
+            <td>stable</td>
+            <td>core-database (v^2.0.0)</td>
+        </tr>        <tr>
+            <td>core-database</td>
+            <td>2.0.0</td>
+            <td>Kernmodul fÃ¼r Datenbankzugriff im AI-ERP-System</td>
+            <td>stable</td>
+            <td>Keine</td>
+        </tr>        <tr>
+            <td>auth-service</td>
+            <td>1.5.0</td>
+            <td>Authentifizierungs- und Autorisierungsdienst fÃ¼r das AI-ERP-System</td>
+            <td>stable</td>
+            <td>core-database (v^2.0.0)</td>
+        </tr>        <tr>
+            <td>artikel-stammdaten</td>
+            <td>1.0.0</td>
+            <td>Modul zur Verwaltung von Artikelstammdaten im AI-ERP-System</td>
+            <td>stable</td>
+            <td>core-database (v^2.0.0)<br>auth-service (v^1.5.0)<br>logging-service (v~1.2.3)<br>finance-core (v^1.0.0)<br>einheiten-service (v^1.0.0)</td>
+        </tr>        <tr>
+            <td>logging-service</td>
+            <td>1.2.3</td>
+            <td>Protokollierungs- und Ãœberwachungsdienst fÃ¼r das AI-ERP-System</td>
+            <td>stable</td>
+            <td>Keine</td>
+        </tr>        <tr>
+            <td>finance-core</td>
+            <td>1.0.0</td>
+            <td>Kernmodul fÃ¼r FinanzfunktionalitÃ¤ten im AI-ERP-System</td>
+            <td>stable</td>
+            <td>core-database (v^2.0.0)<br>auth-service (v^1.5.0)<br>logging-service (v~1.2.3)</td>
+        </tr>    </table>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

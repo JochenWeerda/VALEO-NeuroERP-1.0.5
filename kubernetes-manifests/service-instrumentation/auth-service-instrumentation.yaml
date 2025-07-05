@@ -1,0 +1,168 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: erp-system
+spec:
+  template:
+    metadata:
+      annotations:
+        # Prometheus-Annotationen für Metrik-Scraping
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8050"
+        prometheus.io/path: "/metrics"
+        # Jaeger-Annotationen für Tracing
+        jaeger.erp-system.svc.cluster.local/inject: "true"
+        jaeger.erp-system.svc.cluster.local/service-name: "auth-service"
+    spec:
+      containers:
+      - name: auth-service
+        env:
+        # Umgebungsvariablen für Metriken
+        - name: ENABLE_METRICS
+          value: "true"
+        - name: METRICS_PATH
+          value: "/metrics"
+        - name: METRICS_PORT
+          value: "8050"
+        # Umgebungsvariablen für Jaeger Tracing
+        - name: JAEGER_AGENT_HOST
+          value: "erp-jaeger-agent.erp-system.svc.cluster.local"
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
+        - name: JAEGER_SAMPLER_TYPE
+          value: "const"
+        - name: JAEGER_SAMPLER_PARAM
+          value: "1"
+        - name: JAEGER_SERVICE_NAME
+          value: "auth-service"
+        - name: ENABLE_TRACING
+          value: "true"
+        # Umgebungsvariablen für strukturiertes Logging
+        - name: LOG_LEVEL
+          value: "info"
+        - name: LOG_FORMAT
+          value: "json"
+        - name: ELASTICSEARCH_HOST
+          value: "elasticsearch.erp-system.svc.cluster.local:9200"
+        - name: USE_ELASTICSEARCH
+          value: "true"
+        volumeMounts:
+        # Volume für Metriken-Konfiguration
+        - name: metrics-config
+          mountPath: /app/config/metrics
+          readOnly: true
+        # Volume für Tracing-Konfiguration
+        - name: tracing-config
+          mountPath: /app/config/tracing
+          readOnly: true
+        # Health Probes für Kubernetes
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8050
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8050
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 2
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8050
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 20
+      volumes:
+      # ConfigMap für Metriken
+      - name: metrics-config
+        configMap:
+          name: auth-service-metrics-config
+      # ConfigMap für Tracing
+      - name: tracing-config
+        configMap:
+          name: auth-service-tracing-config
+---
+# ConfigMap für Metriken-Konfiguration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-service-metrics-config
+  namespace: erp-system
+data:
+  metrics.yml: |
+    # Metriken-Konfiguration für Auth-Service
+    metrics:
+      enabled: true
+      endpoint: /metrics
+      port: 8050
+      collectors:
+        - type: counter
+          name: auth_login_attempts_total
+          help: "Gesamtzahl der Anmeldeversuche"
+          labels:
+            - status
+            - method
+        - type: counter
+          name: auth_token_validations_total
+          help: "Gesamtzahl der Token-Validierungen"
+          labels:
+            - status
+            - token_type
+        - type: histogram
+          name: auth_request_duration_seconds
+          help: "Anfrage-Dauer in Sekunden"
+          labels:
+            - endpoint
+            - method
+          buckets: [0.01, 0.05, 0.1, 0.5, 1, 2.5, 5, 10]
+        - type: gauge
+          name: auth_active_sessions
+          help: "Anzahl der aktiven Sitzungen"
+          labels:
+            - user_role
+---
+# ConfigMap für Tracing-Konfiguration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-service-tracing-config
+  namespace: erp-system
+data:
+  tracing.yml: |
+    # Tracing-Konfiguration für Auth-Service
+    tracing:
+      enabled: true
+      service_name: auth-service
+      jaeger:
+        agent_host: erp-jaeger-agent.erp-system.svc.cluster.local
+        agent_port: 6831
+        sampler_type: const
+        sampler_param: 1
+      # Operation-Tags für bessere Kategorisierung der Traces
+      operation_tags:
+        - key: auth_method
+          tag_as: auth.method
+        - key: user_id
+          tag_as: user.id
+        - key: tenant_id
+          tag_as: tenant.id
+      # Optionen für detaillierte Tracing-Spans
+      span_options:
+        include_request_headers:
+          - content-type
+          - authorization
+          - x-request-id
+        include_response_headers:
+          - content-type
+          - content-length
+        include_payload: false
+        include_metadata: true 

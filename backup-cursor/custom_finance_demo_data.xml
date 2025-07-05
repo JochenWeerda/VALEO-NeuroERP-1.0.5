@@ -1,0 +1,11 @@
+<!-- Backup der Demo-Daten für das custom_finance-Modul -->
+<odoo>
+  <record id="demo_custom_finance_entry_1" model="custom.finance.entry">
+    <field name="name">Testbuchung 1</field>
+    <field name="amount">100.0</field>
+    <field name="date">2024-01-01</field>
+    <field name="account">1200</field>
+    <field name="partner">Musterkunde</field>
+    <field name="note">Beispielbuchung</field>
+  </record>
+</odoo> 

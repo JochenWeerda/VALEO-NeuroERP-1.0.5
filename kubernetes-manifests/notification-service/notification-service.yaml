@@ -1,0 +1,244 @@
+# Kubernetes-Manifest für den Notification-Service
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: erp-system
+  labels:
+    app: notification-service
+    component: messaging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        component: messaging
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+      containers:
+      - name: notification-service
+        image: ghcr.io/organization/erp-notification-service:latest
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 8085
+          name: http
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: SMTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: notification-config
+              key: smtp_host
+        - name: SMTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: notification-config
+              key: smtp_port
+        - name: SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: smtp_user
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: smtp_password
+        - name: FCM_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: fcm_api_key
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: notification-templates
+          mountPath: /app/templates
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8085
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8085
+          initialDelaySeconds: 30
+          periodSeconds: 30
+      volumes:
+      - name: notification-templates
+        configMap:
+          name: notification-templates
+      - name: tmp
+        emptyDir: {}
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: erp-system
+spec:
+  selector:
+    app: notification-service
+  ports:
+  - port: 8085
+    targetPort: 8085
+    name: http
+  type: ClusterIP
+---
+# ConfigMap für Konfiguration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-config
+  namespace: erp-system
+data:
+  smtp_host: "smtp.example.com"
+  smtp_port: "587"
+  retry_attempts: "3"
+  retry_delay: "5"
+---
+# ConfigMap für Benachrichtigungsvorlagen
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-templates
+  namespace: erp-system
+data:
+  email-order-confirmation.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Bestellbestätigung</title></head>
+    <body>
+      <h1>Bestellbestätigung</h1>
+      <p>Vielen Dank für Ihre Bestellung, {{customer_name}}!</p>
+      <p>Bestellnummer: {{order_number}}</p>
+      <!-- Weitere Template-Inhalte -->
+    </body>
+    </html>
+  email-password-reset.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Passwort zurücksetzen</title></head>
+    <body>
+      <h1>Passwort zurücksetzen</h1>
+      <p>Hallo {{username}},</p>
+      <p>Bitte klicken Sie auf den folgenden Link, um Ihr Passwort zurückzusetzen:</p>
+      <p><a href="{{reset_link}}">Passwort zurücksetzen</a></p>
+      <!-- Weitere Template-Inhalte -->
+    </body>
+    </html>
+---
+# Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: notification-secrets
+  namespace: erp-system
+type: Opaque
+data:
+  smtp_user: bm90aWZpY2F0aW9uQGV4YW1wbGUuY29t  # notification@example.com
+  smtp_password: c2VjdXJlX3Bhc3N3b3JkXzEyMw==  # secure_password_123
+  fcm_api_key: ZmNtLWFwaS1rZXktZXhhbXBsZS0xMjM0NTY3ODkw  # fcm-api-key-example-1234567890
+---
+# HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: notification-service-hpa
+  namespace: erp-system
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: notification-service
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+---
+# NetworkPolicy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: notification-service-network-policy
+  namespace: erp-system
+spec:
+  podSelector:
+    matchLabels:
+      app: notification-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-server
+    - podSelector:
+        matchLabels:
+          app: auth-service
+    ports:
+    - protocol: TCP
+      port: 8085
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 587  # SMTP
+    - protocol: TCP
+      port: 443  # HTTPS für FCM
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53 

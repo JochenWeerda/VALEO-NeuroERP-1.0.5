@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: failover-monitor
+  namespace: valeo-neuroerp
+  labels:
+    app: failover-monitor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: failover-monitor
+  template:
+    metadata:
+      labels:
+        app: failover-monitor
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: failover-monitor
+        image: valeo-neuroerp/failover-monitor:1.1
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_PRIMARY_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: primary-host
+        - name: DB_REPLICA_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: replica-host
+        - name: FAILOVER_THRESHOLD
+          value: "2"
+        - name: CHECK_INTERVAL
+          value: "1"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "400m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: failover-monitor
+  namespace: valeo-neuroerp
+spec:
+  selector:
+    app: failover-monitor
+  ports:
+  - port: 80
+    targetPort: 8000
+  type: ClusterIP 

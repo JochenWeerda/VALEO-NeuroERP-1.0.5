@@ -1,0 +1,33 @@
+{
+  "phases": [
+    "VAN",
+    "PLAN",
+    "CREATE",
+    "IMPLEMENTATION",
+    "REFLEKTION"
+  ],
+  "current_phase": "REFLEKTION",
+  "status": {
+    "VAN": {
+      "status": "Abgeschlossen",
+      "progress": 100
+    },
+    "PLAN": {
+      "status": "Abgeschlossen",
+      "progress": 100
+    },
+    "CREATE": {
+      "status": "Abgeschlossen",
+      "progress": 100
+    },
+    "IMPLEMENTATION": {
+      "status": "Abgeschlossen",
+      "progress": 100
+    },
+    "REFLEKTION": {
+      "status": "Aktiv",
+      "progress": 100
+    }
+  },
+  "last_updated": "2025-07-02T22:30:54.331013"
+}

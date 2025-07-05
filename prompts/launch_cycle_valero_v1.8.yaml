@@ -1,0 +1,75 @@
+# 📁 Datei: prompts/launch_cycle_valero_v1.8.yaml
+# GENXAIS Initialisierungs-Prompt – Zyklus v1.8 für VALERO – Die NeuroERP
+
+name: Launch GENXAIS Cycle – VALERO v1.8
+type: multi-agent-cycle
+versioning:
+  previous_version: v1.7
+  current_version: v1.8
+trigger: launch_cycle.py
+mode: full-automation
+
+phases:
+  - VAN
+
+goals:
+  - Weiterentwicklung der Kubernetes-Integration
+  - Aufbau der KI-gestützten Anomalieerkennung
+  - Implementierung einer stabilen GraphQL-API
+  - Edge-Computing-Funktionalität vorbereiten
+  - Fehleranalyse & Datendefinitionen im Warenwirtschaftsmodul abschließen
+
+pipelines:
+  - id: arch_microservice
+    name: "Architektur & Microservice Design"
+    entrypoint: pipelines/arch_microservice_pipeline.py
+    goals:
+      - Helm Charts aktualisieren
+      - Istio/Linkerd Integration finalisieren
+      - Operator für VALEO-NeuroERP entwickeln
+
+  - id: anomaly_detection
+    name: "KI-gestützte Anomalieerkennung"
+    entrypoint: pipelines/anomaly_pipeline.py
+    goals:
+      - ML-Pipeline für Anomalien trainieren
+      - Reaktive Mechanismen bei Fehlern implementieren
+      - Feedback Loop einbauen
+
+  - id: graphql_api
+    name: "GraphQL API & Caching"
+    entrypoint: pipelines/graphql_pipeline.py
+    goals:
+      - Resolver für REST-Endpunkte erstellen
+      - Caching-Strategien optimieren
+      - Subscriptions & API Gateway erweitern
+
+  - id: edge_compute
+    name: "Edge Computing Funktionen"
+    entrypoint: pipelines/edge_pipeline.py
+    goals:
+      - Edge-Knoten definieren
+      - Synchronisation mit Cloud
+      - Offline-Edge-Betrieb ermöglichen
+
+  - id: warenwirtschaft_sdk
+    name: "Warenwirtschaftsmodul: Abschluss & Refactoring"
+    entrypoint: pipelines/parallel_warenwirtschaft_pipeline.py
+    goals:
+      - memory-bank Log-Fehler analysieren
+      - SDK finalisieren & dokumentieren
+      - Datenmodellierung vervollständigen
+
+monitoring:
+  streamlit: true
+  grafana: enabled
+  graphiti: enabled
+
+outputs:
+  - retrospective_v1.8.md
+  - presentation_v1.8.pdf
+  - improvement_backlog_v1.9.md
+
+notes:
+  - Der gesamte Zyklus wird automatisch nach REFLEKTION v1.8 abgeschlossen.
+  - Die Version v1.9 wird mit einem dynamischen VAN-Prompt vorbereitet. 

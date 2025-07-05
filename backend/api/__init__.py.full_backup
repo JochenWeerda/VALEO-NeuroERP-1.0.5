@@ -1,0 +1,85 @@
+"""
+API-Modul-Initialisierung für das modulare ERP-System.
+Dieses Modul definiert Router und API-Endpunkte für verschiedene Funktionsbereiche.
+"""
+
+from fastapi import APIRouter
+
+# Haupt-Router für alle API-Endpunkte
+api_router = APIRouter()
+
+# Router für Partner-Management (Kunden, Lieferanten)
+try:
+    try:
+    from .partner_api import router as partner_router
+except ImportError as e:
+    print(f"Partner-API konnte nicht importiert werden: {e}")
+except ImportError as e:
+    print(f"Partner-API konnte nicht importiert werden: {e}")
+
+# Router für Notfallmanagement
+try:
+    from .emergency_api import router as emergency_router
+except ImportError as e:
+    print(f"Emergency-API konnte nicht importiert werden: {e}")
+
+# Router für Anomalieerkennung
+try:
+    from .anomaly_api import router as anomaly_router
+except ImportError as e:
+    print(f"Anomaly-API konnte nicht importiert werden: {e}")
+
+# Prüfen, ob notifications_api existiert
+try:
+    from .notifications_api import router as notifications_router
+except ImportError as e:
+    print(f"Notifications-API konnte nicht importiert werden: {e}")
+
+# Router für Inventarmanagement
+try:
+    from .inventory_api import router as inventory_router
+except ImportError as e:
+    print(f"Inventory-API konnte nicht importiert werden: {e}")
+
+# Router für Artikelmanagement
+try:
+    from .articles_api import router as articles_router
+except ImportError as e:
+    print(f"Articles-API konnte nicht importiert werden: {e}")
+
+# Router für Chargenverwaltung
+try:
+    from .chargen_api import router as chargen_router
+except ImportError as e:
+    print(f"Chargen-API konnte nicht importiert werden: {e}")
+
+# Router für QS-Futtermittel
+try:
+    from .qs_api import router as qs_router
+except ImportError as e:
+    print(f"QS-API konnte nicht importiert werden: {e}")
+
+# Router für System-API
+try:
+    from .system_api import router as system_router
+except ImportError as e:
+    print(f"System-API konnte nicht importiert werden: {e}")
+
+# Neue Router für Batch-Operationen und Performance-Monitoring
+try:
+    from .batch_api import router as batch_router
+    print("Batch-API erfolgreich registriert")
+except ImportError as e:
+    print(f"Batch-API konnte nicht importiert werden: {e}")
+
+try:
+    from .performance_api import router as performance_router
+    print("Performance-API erfolgreich registriert")
+except ImportError as e:
+    print(f"Performance-API konnte nicht importiert werden: {e}")
+
+# Status-API für Health-Checks und Monitoring
+@api_router.get("/status", tags=["System"])
+async def status():
+    """Grundlegender Statusendpunkt für Health-Checks"""
+    return {"status": "online"} 

@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Einheiten API",
+  "description": "Schema für die Einheiten-API",
+  "type": "object",
+  "definitions": {
+    "Einheit": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "kurzname": { "type": "string" },
+        "symbol": { "type": "string" },
+        "typ": { 
+          "type": "string",
+          "enum": ["Länge", "Masse", "Volumen", "Zeit", "Stückzahl", "Andere"]
+        },
+        "basiseinheit": { "type": "boolean" }
+      },
+      "required": ["name", "symbol", "typ"]
+    },
+    "Umrechnung": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vonEinheitId": { "type": "string" },
+        "nachEinheitId": { "type": "string" },
+        "faktor": { "type": "number" },
+        "offset": { "type": "number", "default": 0 }
+      },
+      "required": ["vonEinheitId", "nachEinheitId", "faktor"]
+    }
+  },
+  "paths": {
+    "/einheiten": {
+      "get": {
+        "description": "Ruft alle Einheiten ab",
+        "parameters": {
+          "typ": { "type": "string" },
+          "nurBasiseinheiten": { "type": "boolean" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Einheit" }
+        }
+      },
+      "post": {
+        "description": "Erstellt eine neue Einheit",
+        "parameters": {
+          "einheit": { "$ref": "#/definitions/Einheit" }
+        },
+        "returns": { "$ref": "#/definitions/Einheit" }
+      }
+    },
+    "/umrechnungen": {
+      "get": {
+        "description": "Ruft Umrechnungsfaktoren ab",
+        "parameters": {
+          "vonEinheitId": { "type": "string" },
+          "nachEinheitId": { "type": "string" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Umrechnung" }
+        }
+      },
+      "post": {
+        "description": "Erstellt einen neuen Umrechnungsfaktor",
+        "parameters": {
+          "umrechnung": { "$ref": "#/definitions/Umrechnung" }
+        },
+        "returns": { "$ref": "#/definitions/Umrechnung" }
+      }
+    },
+    "/convert": {
+      "post": {
+        "description": "Rechnet einen Wert von einer Einheit in eine andere um",
+        "parameters": {
+          "wert": { "type": "number" },
+          "vonEinheitId": { "type": "string" },
+          "nachEinheitId": { "type": "string" }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "ergebnis": { "type": "number" },
+            "einheit": { "$ref": "#/definitions/Einheit" }
+          }
+        }
+      }
+    }
+  }
+} 

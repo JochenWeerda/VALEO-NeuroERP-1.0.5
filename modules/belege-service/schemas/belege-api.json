@@ -1,0 +1,610 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Belege API",
+  "description": "Schema für die Belege-API",
+  "type": "object",
+  "definitions": {
+    "Position": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "artikelId": { "type": "string" },
+        "artikelBezeichnung": { "type": "string" },
+        "artikelBeschreibung": { "type": "string" },
+        "menge": { "type": "number" },
+        "einheit": { "type": "string" },
+        "einzelpreis": { "type": "number" },
+        "mwstSatz": { "type": "number" },
+        "rabatt": { "type": "number", "default": 0 },
+        "gesamtpreis": { "type": "number" }
+      },
+      "required": ["artikelId", "artikelBezeichnung", "menge", "einheit", "einzelpreis", "mwstSatz"]
+    },
+    
+    "Angebot": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nummer": { "type": "string" },
+        "kundenId": { "type": "string" },
+        "kundenAnsprechpartner": { "type": "string" },
+        "betreff": { "type": "string" },
+        "erstellDatum": { "type": "string", "format": "date-time" },
+        "gueltigBis": { "type": "string", "format": "date-time" },
+        "waehrung": { "type": "string", "default": "EUR" },
+        "gesamtbetrag": { "type": "number" },
+        "mwstBetrag": { "type": "number" },
+        "rabatt": { "type": "number", "default": 0 },
+        "status": { 
+          "type": "string",
+          "enum": ["entwurf", "gesendet", "akzeptiert", "abgelehnt", "abgelaufen"]
+        },
+        "zahlungsbedingungen": { "type": "string" },
+        "lieferbedingungen": { "type": "string" },
+        "positionen": { 
+          "type": "array", 
+          "items": { "$ref": "#/definitions/Position" }
+        },
+        "kundenAffinitaet": { "type": "integer" },
+        "optimiertePreise": { "type": "boolean" },
+        "preisOptimierungsBasis": { "type": "string" },
+        "vorgeschlageneAlternativen": { 
+          "type": "array", 
+          "items": { "type": "string" }
+        },
+        "saisonaleAnpassung": { "type": "boolean" },
+        "marktpreisVergleich": { "type": "number" }
+      },
+      "required": ["kundenId", "betreff", "erstellDatum", "gueltigBis", "status", "positionen"]
+    },
+    
+    "Auftrag": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nummer": { "type": "string" },
+        "angebotId": { "type": "string" },
+        "kundenId": { "type": "string" },
+        "kundenBestellnummer": { "type": "string" },
+        "erstellDatum": { "type": "string", "format": "date-time" },
+        "lieferdatum": { "type": "string", "format": "date-time" },
+        "status": { 
+          "type": "string",
+          "enum": ["entwurf", "bestaetigt", "in_bearbeitung", "teilweise_geliefert", "geliefert", "abgeschlossen", "storniert"]
+        },
+        "prioritaet": { 
+          "type": "string",
+          "enum": ["niedrig", "normal", "hoch", "kritisch"]
+        },
+        "gesamtbetrag": { "type": "number" },
+        "mwstBetrag": { "type": "number" },
+        "rabatt": { "type": "number", "default": 0 },
+        "zahlungsbedingungen": { "type": "string" },
+        "lieferbedingungen": { "type": "string" },
+        "lieferadresse": { "type": "string" },
+        "rechnungsadresse": { "type": "string" },
+        "positionen": { 
+          "type": "array", 
+          "items": { 
+            "allOf": [
+              { "$ref": "#/definitions/Position" },
+              { 
+                "properties": {
+                  "lieferStatus": { "type": "string" },
+                  "bereitsGelieferteMenge": { "type": "number", "default": 0 }
+                }
+              }
+            ]
+          }
+        },
+        "lieferterminPrognose": { "type": "integer" },
+        "lagerbestandsOptimierung": { "type": "string" },
+        "produktionsplanungId": { "type": "string" },
+        "ressourcenKonflikte": { 
+          "type": "array", 
+          "items": { "type": "string" }
+        },
+        "automatischePrioritaetssetzung": { "type": "string" },
+        "umsatzPrognose": { "type": "number" }
+      },
+      "required": ["kundenId", "erstellDatum", "status", "prioritaet", "positionen"]
+    },
+    
+    "Lieferschein": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nummer": { "type": "string" },
+        "auftragId": { "type": "string" },
+        "kundenId": { "type": "string" },
+        "erstellDatum": { "type": "string", "format": "date-time" },
+        "lieferdatum": { "type": "string", "format": "date-time" },
+        "status": { 
+          "type": "string",
+          "enum": ["entwurf", "verpackt", "versandt", "zugestellt", "storniert"]
+        },
+        "versandart": { "type": "string" },
+        "trackingNummer": { "type": "string" },
+        "spediteur": { "type": "string" },
+        "lieferadresse": { "type": "string" },
+        "gewicht": { "type": "number" },
+        "volumen": { "type": "number" },
+        "anzahlPackstuecke": { "type": "integer" },
+        "positionen": { 
+          "type": "array", 
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "auftragsPositionsId": { "type": "string" },
+              "artikelId": { "type": "string" },
+              "artikelBezeichnung": { "type": "string" },
+              "menge": { "type": "number" },
+              "einheit": { "type": "string" },
+              "chargenNummer": { "type": "string" },
+              "serienNummer": { "type": "string" },
+              "lagerortId": { "type": "string" },
+              "bemerkung": { "type": "string" }
+            },
+            "required": ["auftragsPositionsId", "artikelId", "artikelBezeichnung", "menge", "einheit", "lagerortId"]
+          }
+        },
+        "optimierteVerpackung": { "type": "string" },
+        "routenOptimierung": { "type": "string" },
+        "zeitfensterPrognose": { "type": "string" },
+        "kommissionierungsReihenfolge": { 
+          "type": "array", 
+          "items": { "type": "string" }
+        },
+        "automatischeDokumentenErstellung": { "type": "boolean" },
+        "qualitaetssicherungsHinweise": { "type": "string" }
+      },
+      "required": ["auftragId", "kundenId", "erstellDatum", "lieferdatum", "status", "positionen"]
+    },
+    
+    "Rechnung": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nummer": { "type": "string" },
+        "auftragId": { "type": "string" },
+        "lieferscheinId": { "type": "string" },
+        "kundenId": { "type": "string" },
+        "erstellDatum": { "type": "string", "format": "date-time" },
+        "faelligkeitsdatum": { "type": "string", "format": "date-time" },
+        "status": { 
+          "type": "string",
+          "enum": ["entwurf", "gesendet", "teilweise_bezahlt", "bezahlt", "überfällig", "storniert"]
+        },
+        "zahlungsbedingungen": { "type": "string" },
+        "zahlungsart": { "type": "string" },
+        "waehrung": { "type": "string", "default": "EUR" },
+        "gesamtbetrag": { "type": "number" },
+        "mwstBetrag": { "type": "number" },
+        "rabatt": { "type": "number", "default": 0 },
+        "bereitsGezahlt": { "type": "number", "default": 0 },
+        "rechnungsadresse": { "type": "string" },
+        "iban": { "type": "string" },
+        "bic": { "type": "string" },
+        "verwendungszweck": { "type": "string" },
+        "positionen": { 
+          "type": "array", 
+          "items": {
+            "allOf": [
+              { "$ref": "#/definitions/Position" },
+              { 
+                "properties": {
+                  "lieferscheinPositionsId": { "type": "string" },
+                  "kostenstelle": { "type": "string" }
+                }
+              }
+            ]
+          }
+        },
+        "zahlungsprognoseDatum": { "type": "string", "format": "date-time" },
+        "zahlungsausfallRisiko": { "type": "integer" },
+        "empfohleneZahlungserinnerung": { "type": "string", "format": "date-time" },
+        "umsatzsteuerKategorisierung": { "type": "string" },
+        "buchhaltungskontoVorschlag": { "type": "string" },
+        "cashflowPrognoseImpact": { "type": "number" }
+      },
+      "required": ["auftragId", "kundenId", "erstellDatum", "faelligkeitsdatum", "status", "positionen"]
+    },
+    
+    "Bestellung": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nummer": { "type": "string" },
+        "lieferantenId": { "type": "string" },
+        "lieferantenAnsprechpartner": { "type": "string" },
+        "erstellDatum": { "type": "string", "format": "date-time" },
+        "lieferdatum": { "type": "string", "format": "date-time" },
+        "status": { 
+          "type": "string",
+          "enum": ["entwurf", "angefragt", "bestaetigt", "teilweise_geliefert", "geliefert", "storniert"]
+        },
+        "waehrung": { "type": "string", "default": "EUR" },
+        "gesamtbetrag": { "type": "number" },
+        "mwstBetrag": { "type": "number" },
+        "rabatt": { "type": "number", "default": 0 },
+        "zahlungsbedingungen": { "type": "string" },
+        "lieferbedingungen": { "type": "string" },
+        "lieferadresse": { "type": "string" },
+        "bestellerId": { "type": "string" },
+        "freigegeben": { "type": "boolean", "default": false },
+        "freigegebenVon": { "type": "string" },
+        "freigabeDatum": { "type": "string", "format": "date-time" },
+        "positionen": { 
+          "type": "array", 
+          "items": {
+            "allOf": [
+              { "$ref": "#/definitions/Position" },
+              { 
+                "properties": {
+                  "artikelNummer": { "type": "string" },
+                  "liefertermin": { "type": "string", "format": "date-time" },
+                  "bereitsGelieferteMenge": { "type": "number", "default": 0 },
+                  "kostenstelle": { "type": "string" }
+                }
+              }
+            ]
+          }
+        },
+        "bedarfsermittlungBasis": { "type": "string" },
+        "preisvergleichsAnalyse": { "type": "string" },
+        "alternativeLieferanten": { 
+          "type": "array", 
+          "items": { "type": "string" }
+        },
+        "bestellzeitpunktOptimierung": { "type": "string" },
+        "mengenOptimierungsFaktor": { "type": "number" },
+        "lieferantenBewertungScore": { "type": "integer" },
+        "nachhaltigkeitsScore": { "type": "integer" }
+      },
+      "required": ["lieferantenId", "erstellDatum", "status", "bestellerId", "positionen"]
+    },
+    
+    "Eingangslieferschein": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nummer": { "type": "string" },
+        "bestellungId": { "type": "string" },
+        "lieferantenId": { "type": "string" },
+        "lieferantenLieferscheinNummer": { "type": "string" },
+        "eingangsdatum": { "type": "string", "format": "date-time" },
+        "status": { 
+          "type": "string",
+          "enum": ["entwurf", "erfasst", "geprüft", "eingelagert", "zurückgewiesen"]
+        },
+        "annahmeort": { "type": "string" },
+        "angenommenVon": { "type": "string" },
+        "frachtkosten": { "type": "number" },
+        "bemerkungen": { "type": "string" },
+        "positionen": { 
+          "type": "array", 
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "bestellPositionsId": { "type": "string" },
+              "artikelId": { "type": "string" },
+              "artikelBezeichnung": { "type": "string" },
+              "bestellteMenge": { "type": "number" },
+              "gelieferteMenge": { "type": "number" },
+              "einheit": { "type": "string" },
+              "chargenNummer": { "type": "string" },
+              "serienNummer": { "type": "string" },
+              "mhd": { "type": "string", "format": "date-time" },
+              "lagerortId": { "type": "string" },
+              "qualitaetsStatus": { 
+                "type": "string",
+                "enum": ["nicht_geprüft", "akzeptiert", "eingeschränkt", "abgelehnt"]
+              },
+              "abweichungsgrund": { "type": "string" }
+            },
+            "required": ["bestellPositionsId", "artikelId", "artikelBezeichnung", "bestellteMenge", "gelieferteMenge", "einheit", "lagerortId"]
+          }
+        },
+        "automatischeQualitaetsbewertung": { "type": "integer" },
+        "lieferantenPerformanceScore": { "type": "integer" },
+        "optimaleEinlagerungsVorschlaege": { 
+          "type": "array", 
+          "items": { "type": "string" }
+        },
+        "abweichungsanalyseErgebnis": { "type": "string" },
+        "reklamationsWahrscheinlichkeit": { "type": "integer" },
+        "automatischeBuchungsvorschlaege": { "type": "string" }
+      },
+      "required": ["bestellungId", "lieferantenId", "eingangsdatum", "status", "positionen"]
+    }
+  },
+  "paths": {
+    "/angebote": {
+      "get": {
+        "description": "Gibt alle Angebote zurück",
+        "parameters": {
+          "kundenId": { "type": "string" },
+          "status": { "type": "string" },
+          "datumVon": { "type": "string", "format": "date-time" },
+          "datumBis": { "type": "string", "format": "date-time" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Angebot" }
+        }
+      },
+      "post": {
+        "description": "Erstellt ein neues Angebot",
+        "parameters": {
+          "angebot": { "$ref": "#/definitions/Angebot" }
+        },
+        "returns": { "$ref": "#/definitions/Angebot" }
+      }
+    },
+    "/angebote/{id}": {
+      "get": {
+        "description": "Gibt ein spezifisches Angebot zurück",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Angebot" }
+      },
+      "put": {
+        "description": "Aktualisiert ein Angebot",
+        "parameters": {
+          "id": { "type": "string" },
+          "angebot": { "$ref": "#/definitions/Angebot" }
+        },
+        "returns": { "$ref": "#/definitions/Angebot" }
+      },
+      "delete": {
+        "description": "Löscht ein Angebot",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "type": "boolean" }
+      }
+    },
+    "/auftraege": {
+      "get": {
+        "description": "Gibt alle Aufträge zurück",
+        "parameters": {
+          "kundenId": { "type": "string" },
+          "status": { "type": "string" },
+          "datumVon": { "type": "string", "format": "date-time" },
+          "datumBis": { "type": "string", "format": "date-time" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Auftrag" }
+        }
+      },
+      "post": {
+        "description": "Erstellt einen neuen Auftrag",
+        "parameters": {
+          "auftrag": { "$ref": "#/definitions/Auftrag" }
+        },
+        "returns": { "$ref": "#/definitions/Auftrag" }
+      }
+    },
+    "/auftraege/{id}": {
+      "get": {
+        "description": "Gibt einen spezifischen Auftrag zurück",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Auftrag" }
+      },
+      "put": {
+        "description": "Aktualisiert einen Auftrag",
+        "parameters": {
+          "id": { "type": "string" },
+          "auftrag": { "$ref": "#/definitions/Auftrag" }
+        },
+        "returns": { "$ref": "#/definitions/Auftrag" }
+      }
+    },
+    "/lieferscheine": {
+      "get": {
+        "description": "Gibt alle Lieferscheine zurück",
+        "parameters": {
+          "kundenId": { "type": "string" },
+          "auftragId": { "type": "string" },
+          "status": { "type": "string" },
+          "datumVon": { "type": "string", "format": "date-time" },
+          "datumBis": { "type": "string", "format": "date-time" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Lieferschein" }
+        }
+      },
+      "post": {
+        "description": "Erstellt einen neuen Lieferschein",
+        "parameters": {
+          "lieferschein": { "$ref": "#/definitions/Lieferschein" }
+        },
+        "returns": { "$ref": "#/definitions/Lieferschein" }
+      }
+    },
+    "/lieferscheine/{id}": {
+      "get": {
+        "description": "Gibt einen spezifischen Lieferschein zurück",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Lieferschein" }
+      },
+      "put": {
+        "description": "Aktualisiert einen Lieferschein",
+        "parameters": {
+          "id": { "type": "string" },
+          "lieferschein": { "$ref": "#/definitions/Lieferschein" }
+        },
+        "returns": { "$ref": "#/definitions/Lieferschein" }
+      }
+    },
+    "/rechnungen": {
+      "get": {
+        "description": "Gibt alle Rechnungen zurück",
+        "parameters": {
+          "kundenId": { "type": "string" },
+          "auftragId": { "type": "string" },
+          "status": { "type": "string" },
+          "datumVon": { "type": "string", "format": "date-time" },
+          "datumBis": { "type": "string", "format": "date-time" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Rechnung" }
+        }
+      },
+      "post": {
+        "description": "Erstellt eine neue Rechnung",
+        "parameters": {
+          "rechnung": { "$ref": "#/definitions/Rechnung" }
+        },
+        "returns": { "$ref": "#/definitions/Rechnung" }
+      }
+    },
+    "/rechnungen/{id}": {
+      "get": {
+        "description": "Gibt eine spezifische Rechnung zurück",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Rechnung" }
+      },
+      "put": {
+        "description": "Aktualisiert eine Rechnung",
+        "parameters": {
+          "id": { "type": "string" },
+          "rechnung": { "$ref": "#/definitions/Rechnung" }
+        },
+        "returns": { "$ref": "#/definitions/Rechnung" }
+      }
+    },
+    "/bestellungen": {
+      "get": {
+        "description": "Gibt alle Bestellungen zurück",
+        "parameters": {
+          "lieferantenId": { "type": "string" },
+          "status": { "type": "string" },
+          "datumVon": { "type": "string", "format": "date-time" },
+          "datumBis": { "type": "string", "format": "date-time" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Bestellung" }
+        }
+      },
+      "post": {
+        "description": "Erstellt eine neue Bestellung",
+        "parameters": {
+          "bestellung": { "$ref": "#/definitions/Bestellung" }
+        },
+        "returns": { "$ref": "#/definitions/Bestellung" }
+      }
+    },
+    "/bestellungen/{id}": {
+      "get": {
+        "description": "Gibt eine spezifische Bestellung zurück",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Bestellung" }
+      },
+      "put": {
+        "description": "Aktualisiert eine Bestellung",
+        "parameters": {
+          "id": { "type": "string" },
+          "bestellung": { "$ref": "#/definitions/Bestellung" }
+        },
+        "returns": { "$ref": "#/definitions/Bestellung" }
+      }
+    },
+    "/eingangslieferscheine": {
+      "get": {
+        "description": "Gibt alle Eingangslieferscheine zurück",
+        "parameters": {
+          "lieferantenId": { "type": "string" },
+          "bestellungId": { "type": "string" },
+          "status": { "type": "string" },
+          "datumVon": { "type": "string", "format": "date-time" },
+          "datumBis": { "type": "string", "format": "date-time" }
+        },
+        "returns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Eingangslieferschein" }
+        }
+      },
+      "post": {
+        "description": "Erstellt einen neuen Eingangslieferschein",
+        "parameters": {
+          "eingangslieferschein": { "$ref": "#/definitions/Eingangslieferschein" }
+        },
+        "returns": { "$ref": "#/definitions/Eingangslieferschein" }
+      }
+    },
+    "/eingangslieferscheine/{id}": {
+      "get": {
+        "description": "Gibt einen spezifischen Eingangslieferschein zurück",
+        "parameters": {
+          "id": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Eingangslieferschein" }
+      },
+      "put": {
+        "description": "Aktualisiert einen Eingangslieferschein",
+        "parameters": {
+          "id": { "type": "string" },
+          "eingangslieferschein": { "$ref": "#/definitions/Eingangslieferschein" }
+        },
+        "returns": { "$ref": "#/definitions/Eingangslieferschein" }
+      }
+    },
+    "/belege/kette/{belegId}": {
+      "get": {
+        "description": "Gibt die vollständige Belegkette zu einem Beleg zurück",
+        "parameters": {
+          "belegId": { "type": "string" },
+          "belegTyp": { 
+            "type": "string",
+            "enum": ["angebot", "auftrag", "lieferschein", "rechnung", "bestellung", "eingangslieferschein"]
+          }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "angebote": { 
+              "type": "array", 
+              "items": { "$ref": "#/definitions/Angebot" }
+            },
+            "auftraege": { 
+              "type": "array", 
+              "items": { "$ref": "#/definitions/Auftrag" }
+            },
+            "lieferscheine": { 
+              "type": "array", 
+              "items": { "$ref": "#/definitions/Lieferschein" }
+            },
+            "rechnungen": { 
+              "type": "array", 
+              "items": { "$ref": "#/definitions/Rechnung" }
+            },
+            "bestellungen": { 
+              "type": "array", 
+              "items": { "$ref": "#/definitions/Bestellung" }
+            },
+            "eingangslieferscheine": { 
+              "type": "array", 
+              "items": { "$ref": "#/definitions/Eingangslieferschein" }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

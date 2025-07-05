@@ -1,0 +1,142 @@
+{
+    "name": "Edge-Metriken Definition",
+    "timestamp": "2025-07-01T20:30:00Z",
+    "overall_status": "warning",
+    "summary": {
+        "total_tests": 4,
+        "passed_tests": 3,
+        "warning_tests": 1,
+        "failed_tests": 0,
+        "success_rate": "75.0%"
+    },
+    "results": [
+        {
+            "test": "key_metrics_identification",
+            "description": "Identifikation von Schlüsselmetriken für Edge-Komponenten",
+            "status": "passed",
+            "details": {
+                "identified_metrics": [
+                    "Synchronisationslatenz",
+                    "Datenintegrität",
+                    "Netzwerkauslastung",
+                    "Batterieverbrauch",
+                    "Speichernutzung",
+                    "Offline-Verfügbarkeit",
+                    "Konfliktrate"
+                ],
+                "metric_categories": {
+                    "performance": 3,
+                    "reliability": 2,
+                    "resource_usage": 2
+                }
+            }
+        },
+        {
+            "test": "metric_thresholds",
+            "description": "Definition von Schwellenwerten für Metriken",
+            "status": "passed",
+            "details": {
+                "defined_thresholds": {
+                    "sync_latency": {
+                        "good": "< 500ms",
+                        "acceptable": "< 2s",
+                        "critical": "> 5s"
+                    },
+                    "data_integrity": {
+                        "good": "100%",
+                        "acceptable": "> 99.9%",
+                        "critical": "< 99.5%"
+                    },
+                    "network_usage": {
+                        "good": "< 10MB/h",
+                        "acceptable": "< 50MB/h",
+                        "critical": "> 100MB/h"
+                    },
+                    "battery_usage": {
+                        "good": "< 2%/h",
+                        "acceptable": "< 5%/h",
+                        "critical": "> 10%/h"
+                    },
+                    "memory_usage": {
+                        "good": "< 100MB",
+                        "acceptable": "< 250MB",
+                        "critical": "> 500MB"
+                    },
+                    "offline_availability": {
+                        "good": "> 24h",
+                        "acceptable": "> 8h",
+                        "critical": "< 4h"
+                    },
+                    "conflict_rate": {
+                        "good": "< 0.1%",
+                        "acceptable": "< 1%",
+                        "critical": "> 5%"
+                    }
+                }
+            }
+        },
+        {
+            "test": "metric_collection",
+            "description": "Implementierung der Metrikerfassung",
+            "status": "warning",
+            "details": {
+                "implemented_metrics": [
+                    "sync_latency",
+                    "data_integrity",
+                    "network_usage",
+                    "memory_usage",
+                    "conflict_rate"
+                ],
+                "pending_metrics": [
+                    "battery_usage",
+                    "offline_availability"
+                ],
+                "collection_methods": {
+                    "sync_latency": "direct measurement",
+                    "data_integrity": "checksum comparison",
+                    "network_usage": "traffic monitoring",
+                    "memory_usage": "runtime profiling",
+                    "conflict_rate": "log analysis"
+                }
+            }
+        },
+        {
+            "test": "metric_validation",
+            "description": "Validierung der implementierten Metriken",
+            "status": "passed",
+            "details": {
+                "validation_results": {
+                    "sync_latency": {
+                        "accuracy": "high",
+                        "reliability": "high",
+                        "overhead": "low"
+                    },
+                    "data_integrity": {
+                        "accuracy": "high",
+                        "reliability": "high",
+                        "overhead": "medium"
+                    },
+                    "network_usage": {
+                        "accuracy": "medium",
+                        "reliability": "high",
+                        "overhead": "low"
+                    },
+                    "memory_usage": {
+                        "accuracy": "high",
+                        "reliability": "high",
+                        "overhead": "low"
+                    },
+                    "conflict_rate": {
+                        "accuracy": "medium",
+                        "reliability": "medium",
+                        "overhead": "low"
+                    }
+                }
+            }
+        }
+    ],
+    "recommendations": [
+        "Implementiere die ausstehenden Metriken für Batterieverbrauch und Offline-Verfügbarkeit",
+        "Verbessere die Genauigkeit der Netzwerknutzungs- und Konfliktratenmessung"
+    ]
+}

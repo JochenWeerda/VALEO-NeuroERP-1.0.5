@@ -1,0 +1,195 @@
+# Kubernetes-Manifest für Prometheus-Konfiguration
+# ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: erp-system
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+      scrape_timeout: 10s
+
+    # Alertmanager Konfiguration
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets: ['alertmanager:9093']
+
+    # Regeldateien laden
+    rule_files:
+      - "/etc/prometheus/rules/*.yml"
+
+    # Scrape-Konfigurationen
+    scrape_configs:
+      # Kubernetes-Services mit automatischer Erkennung
+      - job_name: 'kubernetes-services'
+        kubernetes_sd_configs:
+        - role: service
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_annotation_prometheus_io_scrape]
+          action: keep
+          regex: erp-system;true
+        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+          action: replace
+          target_label: __address__
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+        - source_labels: [__meta_kubernetes_service_name]
+          action: replace
+          target_label: job
+        - action: labelmap
+          regex: __meta_kubernetes_service_label_(.+)
+
+      # Kubernetes-Pods mit automatischer Erkennung
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+        - role: pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: erp-system;true
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          target_label: __address__
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+        - source_labels: [__meta_kubernetes_pod_container_name]
+          action: replace
+          target_label: container_name
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: replace
+          target_label: pod_name
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(.+)
+
+      # Kubernetes-Nodes mit automatischer Erkennung
+      - job_name: 'kubernetes-nodes'
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+        - role: node
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        - source_labels: [__meta_kubernetes_node_name]
+          action: replace
+          target_label: kubernetes_node
+
+      # Spezifische Jobs für die ERP-Services
+      - job_name: 'erp-frontend'
+        static_configs:
+        - targets: ['frontend:80']
+        metrics_path: /metrics
+
+      - job_name: 'erp-api-server'
+        static_configs:
+        - targets: ['api-server:8003']
+        metrics_path: /metrics
+
+      - job_name: 'erp-auth-service'
+        static_configs:
+        - targets: ['auth-service:8080']
+        metrics_path: /metrics
+
+      - job_name: 'erp-document-service'
+        static_configs:
+        - targets: ['document-service:8070']
+        metrics_path: /metrics
+
+      - job_name: 'erp-reporting-service'
+        static_configs:
+        - targets: ['reporting-service:8090']
+        metrics_path: /metrics
+
+      - job_name: 'erp-notification-service'
+        static_configs:
+        - targets: ['notification-service:8085']
+        metrics_path: /metrics
+
+  recording_rules.yml: |
+    groups:
+    - name: erp_recording_rules
+      rules:
+      # API-Server Leistungskennzahlen
+      - record: api_server:request_duration_seconds:avg
+        expr: avg(rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])) by (service, endpoint)
+      
+      # Auth-Service Leistungskennzahlen
+      - record: auth_service:login_duration_seconds:avg
+        expr: avg(rate(auth_login_duration_seconds_sum[5m]) / rate(auth_login_duration_seconds_count[5m]))
+      
+      # Document-Service Leistungskennzahlen
+      - record: document_service:upload_duration_seconds:avg
+        expr: avg(rate(document_upload_duration_seconds_sum[5m]) / rate(document_upload_duration_seconds_count[5m]))
+      
+      # Allgemeine Service-Gesundheit
+      - record: service:up:ratio
+        expr: avg_over_time(up[30m]) by (job)
+
+  alert_rules.yml: |
+    groups:
+    - name: erp_alerts
+      rules:
+      # Service ist offline
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.job }} ist ausgefallen"
+          description: "Der Service {{ $labels.job }} ist seit mindestens 1 Minute nicht mehr erreichbar."
+      
+      # Hohe Fehlerrate
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe Fehlerrate für {{ $labels.job }}"
+          description: "Der Service {{ $labels.job }} hat eine Fehlerrate von über 5% in den letzten 5 Minuten."
+      
+      # Langsame Antwortzeiten
+      - alert: SlowResponseTime
+        expr: rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m]) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Langsame Antwortzeiten für {{ $labels.job }}"
+          description: "Der Service {{ $labels.job }} hat durchschnittliche Antwortzeiten von über 500ms in den letzten 5 Minuten."
+      
+      # Hohe CPU-Auslastung
+      - alert: HighCpuUsage
+        expr: sum(rate(container_cpu_usage_seconds_total{namespace="erp-system"}[3m])) by (pod) / sum(container_spec_cpu_quota{namespace="erp-system"} / container_spec_cpu_period{namespace="erp-system"}) by (pod) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe CPU-Auslastung für {{ $labels.pod }}"
+          description: "Der Pod {{ $labels.pod }} hat eine CPU-Auslastung von über 80% in den letzten 5 Minuten."
+      
+      # Hohe Memory-Auslastung
+      - alert: HighMemoryUsage
+        expr: container_memory_usage_bytes{namespace="erp-system"} / container_spec_memory_limit_bytes{namespace="erp-system"} > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe Memory-Auslastung für {{ $labels.pod }}"
+          description: "Der Pod {{ $labels.pod }} hat eine Memory-Auslastung von über 80% in den letzten 5 Minuten." 

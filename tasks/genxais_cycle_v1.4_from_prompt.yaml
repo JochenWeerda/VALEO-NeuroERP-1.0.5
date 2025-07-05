@@ -1,0 +1,75 @@
+name: "GENXAIS Cycle v1.4 \u2013 Full Automation"
+version: '1.4'
+type: multi-phase-cycle
+phases:
+- VAN
+- PLAN
+- CREATE
+- IMPLEMENTATION
+- REFLEKTION
+trigger: launch_cycle.py
+cron_schedule: 0 5 * * *
+agent: langgraph-mas
+context:
+  orchestrator: LangGraph
+  memory: MCP
+  graph_knowledge: Graphiti
+  database: MongoDB
+  ui: Streamlit
+config:
+  monitoring:
+    enabled: true
+    streamlit_dashboard: true
+    grafana_enabled: true
+    prometheus_enabled: true
+    ports:
+      streamlit: 8501
+      grafana: 3000
+      prometheus: 9090
+pipeline:
+  type: multi-agent
+  mode: intelligent-parallel
+  pipelines: 5
+agents:
+- HelmValidator
+- ArchitekturAgent
+- RetrospektiveAgent
+- ReviewAgent
+- ArchivAgent
+- ChangeLogAgent
+- InfraScanAgent
+- SnapshotAgent
+- MonitoringAgent
+- "Pr\xE4sentationsAgent"
+- TestAgent
+- CodeCoverAgent
+- DeployAgent
+- GraphNavigator (Graphiti)
+goals:
+- "Erkennen neuer Architektur\xE4nderungen"
+- Anpassen der Microservice-Struktur
+- Dokumentation im `architektur_snapshot.md`
+- Erweiterung des bestehenden Graphiti-Wissensgraphen
+- Verlinkung mit aktuellen Artefakten und Memory-Bank-Inhalten
+artifacts:
+  track:
+  - architektur_snapshot.md
+  - graphiti_v1.4_snapshot.graphml
+  - testsuite_snapshot.md
+  - changelog_v1.4.md
+  - v1.4_final_review.md
+versioning:
+  current_version: '1.3'
+  next_version: '1.4'
+  version_function: increment_version()
+graphiti_config:
+  activate: true
+  enable_fallback_paths: true
+  link_memory_to_graph: true
+  visualize_decisions: true
+  output: graphiti_trace.md
+completion:
+- update system_state to "ready_for_VAN_v1.5"
+- send summary to streamlit_dashboard
+- prepare next version context in MongoDB
+- launch suggest_next_cycle: VAN for GENXAIS_v1.5

@@ -1,0 +1,111 @@
+groups:
+- name: valeo_neuroerp_alerts
+  rules:
+  # Service Health
+  - alert: ServiceDown
+    expr: up{job=~"valeo-neuroerp-.*"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service {{ $labels.job }} is down"
+      description: "Service {{ $labels.job }} has been down for more than 1 minute"
+
+  # API Response Time
+  - alert: HighResponseTime
+    expr: http_request_duration_seconds{quantile="0.95"} > 0.5
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High response time for {{ $labels.service }}"
+      description: "95th percentile of response time is above 500ms for {{ $labels.service }}"
+
+  # Error Rate
+  - alert: HighErrorRate
+    expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High error rate for {{ $labels.service }}"
+      description: "Error rate is above 5% for {{ $labels.service }}"
+
+  # Database Failover
+  - alert: DatabaseFailoverInitiated
+    expr: db_failover_initiated > 0
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Database failover initiated"
+      description: "Database failover has been initiated. Check replication status."
+
+  # Redis Cache
+  - alert: RedisCacheHighMemory
+    expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Redis cache memory usage high"
+      description: "Redis cache is using more than 80% of available memory"
+
+  # Excel Export Queue
+  - alert: ExcelExportQueueBacklog
+    expr: excel_export_queue_size > 100
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Excel export queue backlog"
+      description: "Excel export queue has more than 100 pending jobs for over 10 minutes"
+
+  # Auth Service
+  - alert: HighAuthFailureRate
+    expr: rate(auth_failures_total[5m]) / rate(auth_attempts_total[5m]) > 0.1
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High authentication failure rate"
+      description: "Authentication failure rate is above 10%"
+
+  # Resource Usage
+  - alert: HighCPUUsage
+    expr: container_cpu_usage_seconds_total{container=~"valeo-neuroerp-.*"} > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High CPU usage for {{ $labels.container }}"
+      description: "Container {{ $labels.container }} is using more than 80% CPU"
+
+  - alert: HighMemoryUsage
+    expr: container_memory_usage_bytes{container=~"valeo-neuroerp-.*"} / container_spec_memory_limit_bytes > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High memory usage for {{ $labels.container }}"
+      description: "Container {{ $labels.container }} is using more than 80% memory"
+
+  # API Gateway
+  - alert: HighRateLimiting
+    expr: rate(api_rate_limit_exceeded_total[5m]) > 10
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High rate limiting occurrences"
+      description: "Rate limiting is being triggered frequently"
+
+  # Cache Manager
+  - alert: LowCacheHitRate
+    expr: rate(cache_hits_total[5m]) / rate(cache_requests_total[5m]) < 0.7
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Low cache hit rate"
+      description: "Cache hit rate is below 70% for the last 10 minutes" 

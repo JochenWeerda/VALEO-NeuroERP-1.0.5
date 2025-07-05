@@ -1,0 +1,110 @@
+# 📁 Datei: tasks/genxais_cycle_v1_3.yaml
+# Automatisierter GENXAIS-Zyklus v1.3 – Start im VAN-Modus (Multi-Pipeline-Betrieb mit Graphiti)
+
+name: GENXAIS Cycle v1.3 – Full Automation
+version: 1.3
+type: multi-phase-cycle
+phases: [VAN, PLAN, CREATE, IMPLEMENTATION, REFLEKTION]
+trigger: cron
+cron_schedule: "0 4 * * *" # täglicher Start um 4 Uhr morgens
+
+agent: langgraph-mas
+
+context:
+  db: MongoDB
+  orchestrator: LangGraph
+  memory: MCP
+  graph_engine: Graphiti
+  ui: Streamlit
+
+config:
+  monitoring:
+    enabled: true
+    streamlit_dashboard: true
+    grafana_enabled: true
+    ports:
+      streamlit: 8501
+      grafana: 3000
+      prometheus: 9090
+  
+  streamlit_ui:
+    title: "GENXAIS v1.3 Dashboard"
+    components:
+      - name: "Phasenstatus"
+        description: "Zeigt aktuellen Status jeder Phase (VAN bis REFLEKTION)"
+        type: "status_indicator"
+        refresh_rate: 60
+      - name: "Pipelines (5)"
+        description: "Visualisiert Fortschritt, Laufzeit und Agentenstatus pro Pipeline"
+        type: "progress_tracker"
+        refresh_rate: 30
+      - name: "Graphiti-Pfade"
+        description: "Live-Darstellung der Entscheidungspfade aus Graphiti"
+        type: "network_graph"
+        refresh_rate: 120
+      - name: "Fehler-Tracking"
+        description: "Anzeige offener Issues aus IssueTrackerAgent"
+        type: "issue_table"
+        refresh_rate: 300
+      - name: "Versionstracking"
+        description: "Vergleich von v1.2 → v1.3 und Vorabinfo zu v1.4"
+        type: "version_comparison"
+        refresh_rate: 600
+      - name: "Artefaktübersicht"
+        description: "Download-Links für alle .md, .zip, .yaml Artefakte"
+        type: "file_manager"
+        refresh_rate: 300
+      - name: "Automatische Archivierung"
+        description: "Zeigt Archivstatus nach jedem Phasenabschluss"
+        type: "archive_status"
+        refresh_rate: 600
+    scripts:
+      startup: "scripts/streamlit_startup.ps1"
+      init_dashboard: "scripts/init_dashboard.py"
+      refresh_data: "scripts/refresh_dashboard_data.py"
+
+pipeline:
+  type: multi-agent
+  mode: intelligent-parallel
+  pipelines: 5
+
+agents:
+  - PlannerAgent
+  - ConfigAgent
+  - ValidatorAgent
+  - ReviewAgent
+  - GraphNavigator (Graphiti)
+
+goals:
+  - Automatisierter Übergang durch alle Phasen bis REFLEKTION
+  - Kontinuierliche Kontextvernetzung durch Graphiti
+  - Automatische Erkennung & Einbeziehung technischer Schulden aus Memory Bank
+  - Artefakt-Tracking in MongoDB und Dokumentengenerierung für jede Phase
+  - Integration von Retrospektiv-Ergebnissen aus v1.2
+
+artifacts:
+  track:
+    - review_summary.md
+    - plan_overview.md
+    - create_snapshot.md
+    - implementation_review.md
+    - v1.3_final_review.md
+
+versioning:
+  current_version: 1.2
+  next_version: 1.3
+  version_function: increment_version()
+
+graphiti_config:
+  activate: true
+  enable_fallback_paths: true
+  link_memory_to_graph: true
+  visualize_decisions: true
+  output: graphiti_trace.md
+
+completion:
+  - Archive all artifacts
+  - Generate final review
+  - Update Streamlit UI
+  - Trigger retrospective memory sync
+  - Set new cycle suggestion: "suggest_next_cycle: VAN for GENXAIS_v1.4" 

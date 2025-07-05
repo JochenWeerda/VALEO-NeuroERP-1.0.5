@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERP Dashboard</title>
+  <style>
+    :root {
+      --border-radius: 12px;
+      --text-color: #555;
+      --heading-color: #333;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --spacing: 1.5rem;
+      --grid-gap: 1.2rem;
+      --tile-size: 100px;
+      --crm-color: #4361ee;
+      --erp-color: #3a0ca3;
+      --fibu-color: #7209b7;
+      --status-online: #22c55e;
+      --status-offline: #ef4444;
+      --status-warning: #f59e0b;
+      --section-title-color: #6b7280;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #eef2ff 0%, #fefce8 100%);
+      color: var(--text-color);
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    h1 {
+      color: var(--heading-color);
+      margin-bottom: 0.5rem;
+      font-size: 2.2rem;
+    }
+    
+    h2 {
+      margin: 0 0 1rem;
+      padding: 0.8rem 1rem;
+      border-radius: var(--border-radius);
+      font-size: 1.5rem;
+      color: white;
+    }
+    
+    h3 {
+      font-size: 1.1rem;
+      color: var(--section-title-color);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .crm h2 {
+      background-color: var(--crm-color);
+    }
+    
+    .erp h2 {
+      background-color: var(--erp-color);
+    }
+    
+    .fibu h2 {
+      background-color: var(--fibu-color);
+    }
+    
+    main {
+      flex: 1;
+    }
+    
+    .dashboard-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    
+    .column {
+      flex: 1;
+      min-width: 300px;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+    
+    .section-container {
+      margin-bottom: 2rem;
+    }
+    
+    .app-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--grid-gap);
+      justify-content: flex-start;
+    }
+    
+    .app-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .app {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      width: var(--tile-size);
+      height: var(--tile-size);
+    }
+    
+    .crm .app {
+      border-top: 4px solid var(--crm-color);
+    }
+    
+    .erp .app {
+      border-top: 4px solid var(--erp-color);
+    }
+    
+    .fibu .app {
+      border-top: 4px solid var(--fibu-color);
+    }
+    
+    .app:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .app-icon {
+      font-size: 2.2rem;
+    }
+    
+    .app-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 0.8rem;
+      text-align: center;
+      max-width: var(--tile-size);
+      line-height: 1.2;
+    }
+    
+    .stammdaten-badge {
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      background-color: #f97316;
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    
+    .app-container {
+      position: relative;
+    }
+    
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .server-status {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
+    
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    
+    .status-online {
+      background-color: var(--status-online);
+    }
+    
+    .status-offline {
+      background-color: var(--status-offline);
+    }
+    
+    .status-warning {
+      background-color: var(--status-warning);
+    }
+    
+    .copyright {
+      font-size: 0.8rem;
+      color: #999;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 1200px) {
+      :root {
+        --tile-size: 90px;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      :root {
+        --tile-size: 85px;
+      }
+      
+      .app-grid {
+        gap: 1rem;
+      }
+      
+      .dashboard-container {
+        flex-direction: column;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .server-status {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      :root {
+        --tile-size: 80px;
+      }
+      
+      body {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.3rem;
+      }
+      
+      .app-grid {
+        gap: 0.8rem;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      :root {
+        --tile-size: 70px;
+      }
+      
+      .app-icon {
+        font-size: 1.8rem;
+      }
+    }
+    
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ERP Dashboard</h1>
+    <p>Folkerts Landhandel</p>
+  </header>
+  
+  <main>
+    <div class="dashboard-container">
+      <!-- CRM Spalte -->
+      <div class="column crm">
+        <h2>CRM</h2>
+        
+        <!-- Management -->
+        <section class="section-container">
+          <h3>Management</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('BI-Dashboard wird geöffnet')">
+                <div class="app-icon">📊</div>
+              </div>
+              <div class="app-title">BI-Dashboard</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Aufgaben wird geöffnet')">
+                <div class="app-icon">📝</div>
+              </div>
+              <div class="app-title">Aufgaben</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Kalender wird geöffnet')">
+                <div class="app-icon">📅</div>
+              </div>
+              <div class="app-title">Kalender</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Dokumente wird geöffnet')">
+                <div class="app-icon">📁</div>
+              </div>
+              <div class="app-title">Dokumente</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Newsletter wird geöffnet')">
+                <div class="app-icon">✉️</div>
+              </div>
+              <div class="app-title">Newsletter</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Personal -->
+        <section class="section-container">
+          <h3>Personal</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app-container">
+                <div class="app" onclick="alert('Mitarbeiter wird geöffnet')">
+                  <div class="app-icon">👥</div>
+                </div>
+                <div class="stammdaten-badge">S</div>
+              </div>
+              <div class="app-title">Mitarbeiter</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Arbeitszeiten wird geöffnet')">
+                <div class="app-icon">⏱️</div>
+              </div>
+              <div class="app-title">Arbeitszeiten</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Urlaubsverwaltung wird geöffnet')">
+                <div class="app-icon">🏖️</div>
+              </div>
+              <div class="app-title">Urlaubs­verwaltung</div>
+            </div>
+          </div>
+        </section>
+          
+        <!-- Vertrieb -->
+        <section class="section-container">
+          <h3>Vertrieb</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app-container">
+                <div class="app" onclick="alert('Kundenverwaltung wird geöffnet')">
+                  <div class="app-icon">👤</div>
+                </div>
+                <div class="stammdaten-badge">S</div>
+              </div>
+              <div class="app-title">Kunden­verwaltung</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Angebote wird geöffnet')">
+                <div class="app-icon">📄</div>
+              </div>
+              <div class="app-title">Angebote</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Aufträge wird geöffnet')">
+                <div class="app-icon">🛒</div>
+              </div>
+              <div class="app-title">Aufträge</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Cross-Selling wird geöffnet')">
+                <div class="app-icon">➕</div>
+              </div>
+              <div class="app-title">Cross-Selling</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Telefonnotizen wird geöffnet')">
+                <div class="app-icon">☎️</div>
+              </div>
+              <div class="app-title">Telefon­notizen</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Außendienstberichte wird geöffnet')">
+                <div class="app-icon">🧾</div>
+              </div>
+              <div class="app-title">Außendienst­berichte</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Tourenplanung wird geöffnet')">
+                <div class="app-icon">🗺️</div>
+              </div>
+              <div class="app-title">Touren­planung</div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- ERP Spalte -->
+      <div class="column erp">
+        <h2>ERP</h2>
+        
+        <!-- Stammdaten -->
+        <section class="section-container">
+          <h3>Stammdaten</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Artikelstammdaten wird geöffnet')">
+                <div class="app-icon">📦</div>
+              </div>
+              <div class="app-title">Artikel­stammdaten</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app-container">
+                <div class="app" onclick="alert('Fremdware wird geöffnet')">
+                  <div class="app-icon">📦</div>
+                </div>
+                <div class="stammdaten-badge">S</div>
+              </div>
+              <div class="app-title">Fremdware</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Health Status wird geöffnet')">
+                <div class="app-icon">🩺</div>
+              </div>
+              <div class="app-title">Health Status</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Belegfolge eingehend -->
+        <section class="section-container">
+          <h3>Belegfolge eingehend</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Bestellanforderung wird geöffnet')">
+                <div class="app-icon">📋</div>
+              </div>
+              <div class="app-title">Bestell­anforderung</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Bestellungen wird geöffnet')">
+                <div class="app-icon">📝</div>
+              </div>
+              <div class="app-title">Bestellungen</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Wareneingang wird geöffnet')">
+                <div class="app-icon">📥</div>
+              </div>
+              <div class="app-title">Waren­eingang</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Eingangsrechnungen wird geöffnet')">
+                <div class="app-icon">🧾</div>
+              </div>
+              <div class="app-title">Eingangs­rechnungen</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Belegfolge ausgehend -->
+        <section class="section-container">
+          <h3>Belegfolge ausgehend</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Angebote wird geöffnet')">
+                <div class="app-icon">📄</div>
+              </div>
+              <div class="app-title">Angebote</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Aufträge wird geöffnet')">
+                <div class="app-icon">🛒</div>
+              </div>
+              <div class="app-title">Aufträge</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Lieferschein wird geöffnet')">
+                <div class="app-icon">🚚</div>
+              </div>
+              <div class="app-title">Liefer­schein</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Ausgangsrechnungen wird geöffnet')">
+                <div class="app-icon">📤</div>
+              </div>
+              <div class="app-title">Ausgangs­rechnungen</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Einkauf & Logistik -->
+        <section class="section-container">
+          <h3>Einkauf & Logistik</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app-container">
+                <div class="app" onclick="alert('Lieferanten wird geöffnet')">
+                  <div class="app-icon">🚚</div>
+                </div>
+                <div class="stammdaten-badge">S</div>
+              </div>
+              <div class="app-title">Lieferanten</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Lagerbestand wird geöffnet')">
+                <div class="app-icon">📊</div>
+              </div>
+              <div class="app-title">Lager­bestand</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Kommissionierung wird geöffnet')">
+                <div class="app-icon">📑</div>
+              </div>
+              <div class="app-title">Kommis­sionierung</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Ladelisten wird geöffnet')">
+                <div class="app-icon">📋</div>
+              </div>
+              <div class="app-title">Ladelisten</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Verpackungseinheiten wird geöffnet')">
+                <div class="app-icon">🎁</div>
+              </div>
+              <div class="app-title">Verpackungs­einheiten</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Frachtabrechnung wird geöffnet')">
+                <div class="app-icon">💸</div>
+              </div>
+              <div class="app-title">Fracht­abrechnung</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Landwirtschaft -->
+        <section class="section-container">
+          <h3>Landwirtschaft</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Rückverfolgbarkeit wird geöffnet')">
+                <div class="app-icon">🔍</div>
+              </div>
+              <div class="app-title">Rückverfolg­barkeit</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('QS-Dokumentation wird geöffnet')">
+                <div class="app-icon">📚</div>
+              </div>
+              <div class="app-title">QS-Dokumen­tation</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Produktsicherheit wird geöffnet')">
+                <div class="app-icon">🛡️</div>
+              </div>
+              <div class="app-title">Produkt­sicherheit</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Bio-Zertifikate wird geöffnet')">
+                <div class="app-icon">✅</div>
+              </div>
+              <div class="app-title">Bio-Zertifikate</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('THG-Erfassung wird geöffnet')">
+                <div class="app-icon">🌱</div>
+              </div>
+              <div class="app-title">THG-Erfassung</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Pflanzenschutz wird geöffnet')">
+                <div class="app-icon">🧪</div>
+              </div>
+              <div class="app-title">Pflanzen­schutz</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Düngemittelverwaltung wird geöffnet')">
+                <div class="app-icon">🌾</div>
+              </div>
+              <div class="app-title">Düngemittel­verwaltung</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Kontrakte wird geöffnet')">
+                <div class="app-icon">📃</div>
+              </div>
+              <div class="app-title">Kontrakte</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('CO₂ Bilanz wird geöffnet')">
+                <div class="app-icon">🌍</div>
+              </div>
+              <div class="app-title">CO₂-Bilanz</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Nährstoffbilanz wird geöffnet')">
+                <div class="app-icon">🧪</div>
+              </div>
+              <div class="app-title">Nährstoff­bilanz</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Hardware & Schnittstellen -->
+        <section class="section-container">
+          <h3>Hardware & Schnittstellen</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Waagenintegration wird geöffnet')">
+                <div class="app-icon">⚖️</div>
+              </div>
+              <div class="app-title">Waagen­integration</div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- FIBU Spalte -->
+      <div class="column fibu">
+        <h2>FIBU</h2>
+        
+        <!-- Rechnungswesen -->
+        <section class="section-container">
+          <h3>Rechnungswesen</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Rechnungen wird geöffnet')">
+                <div class="app-icon">🧾</div>
+              </div>
+              <div class="app-title">Rechnungen</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Zahlungen wird geöffnet')">
+                <div class="app-icon">💳</div>
+              </div>
+              <div class="app-title">Zahlungen</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Mahnwesen wird geöffnet')">
+                <div class="app-icon">⚠️</div>
+              </div>
+              <div class="app-title">Mahnwesen</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Kassenbuch wird geöffnet')">
+                <div class="app-icon">📘</div>
+              </div>
+              <div class="app-title">Kassenbuch</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Kostenstellen wird geöffnet')">
+                <div class="app-icon">🏷️</div>
+              </div>
+              <div class="app-title">Kostenstellen</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Lohnexport wird geöffnet')">
+                <div class="app-icon">📤</div>
+              </div>
+              <div class="app-title">Lohnexport</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Schnittstellen -->
+        <section class="section-container">
+          <h3>Verkaufssysteme & Schnittstellen</h3>
+          <div class="app-grid">
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Ladenkasse wird geöffnet')">
+                <div class="app-icon">🛍️</div>
+              </div>
+              <div class="app-title">Ladenkasse</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('Shop-Anbindung wird geöffnet')">
+                <div class="app-icon">🛒</div>
+              </div>
+              <div class="app-title">Shop-Anbindung</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('TSE-Modul wird geöffnet')">
+                <div class="app-icon">🔐</div>
+              </div>
+              <div class="app-title">TSE-Modul</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('ELSTER-Modul wird geöffnet')">
+                <div class="app-icon">📤</div>
+              </div>
+              <div class="app-title">ELSTER-Modul</div>
+            </div>
+            
+            <div class="app-wrapper">
+              <div class="app" onclick="alert('DATEV-Export wird geöffnet')">
+                <div class="app-icon">🔄</div>
+              </div>
+              <div class="app-title">DATEV-Export</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="footer-content">
+      <div class="server-status">
+        <div class="status-item">
+          <div class="status-indicator status-online"></div>
+          <span>Backend API: Online</span>
+        </div>
+        <div class="status-item">
+          <div class="status-indicator status-online"></div>
+          <span>Finance-Service: Online</span>
+        </div>
+        <div class="status-item">
+          <div class="status-indicator status-warning"></div>
+          <span>Beleg-Service: Wartung</span>
+        </div>
+        <div class="status-item">
+          <div class="status-indicator status-offline"></div>
+          <span>Observer-Service: Offline</span>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2025 Folkerts Landhandel ERP-System
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Health-Status-Überprüfung simulieren
+    document.addEventListener('DOMContentLoaded', function() {
+      const healthStatusApp = document.querySelector('.app-icon').parentElement.parentElement.querySelector('.app-title').textContent === 'Health Status' 
+        ? document.querySelector('.app-icon').parentElement
+        : null;
+      
+      if (healthStatusApp) {
+        healthStatusApp.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const statusText = `
+          Server-Status:
+          - Backend API: Online (Port 8000)
+          - Finance-Service: Online (Port 8007)
+          - Beleg-Service: Wartungsmodus (Port 8005)
+          - Observer-Service: Offline (Port 8006)
+          
+          Speicherauslastung: 42%
+          CPU-Auslastung: 23%
+          Letztes Backup: Heute, 03:00 Uhr
+          `;
+          alert(statusText);
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

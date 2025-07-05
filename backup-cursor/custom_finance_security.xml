@@ -1,0 +1,6 @@
+<!-- Backup der security.xml für das custom_finance-Modul -->
+<odoo>
+  <data noupdate="1">
+    <!-- Hier können Gruppen und Regeln definiert werden -->
+  </data>
+</odoo> 

@@ -1,0 +1,5882 @@
+[
+  {
+    "system": {
+      "timestamp": "2025-07-04T12:34:59.325791",
+      "cpu": {
+        "total": 25.0,
+        "per_core": {
+          "cpu_core_0": 100.0,
+          "cpu_core_1": 0.0,
+          "cpu_core_2": 100.0,
+          "cpu_core_3": 0.0,
+          "cpu_core_4": 0.0,
+          "cpu_core_5": 100.0,
+          "cpu_core_6": 0.0,
+          "cpu_core_7": 0.0,
+          "cpu_core_8": 100.0,
+          "cpu_core_9": 0.0,
+          "cpu_core_10": 0.0,
+          "cpu_core_11": 0.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2141175808,
+        "percent": 87.3,
+        "process": 0.22034621465153065
+      },
+      "disk": {
+        "read_bytes": 43181414912,
+        "write_bytes": 115336240128,
+        "read_count": 1408566,
+        "write_count": 10532333
+      },
+      "network": {
+        "bytes_sent": 300169693,
+        "bytes_recv": 1075781592,
+        "packets_sent": 1508937,
+        "packets_recv": 1226185
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T12:40:04.007118",
+      "cpu": {
+        "total": 25.5,
+        "per_core": {
+          "cpu_core_0": 39.8,
+          "cpu_core_1": 21.0,
+          "cpu_core_2": 42.7,
+          "cpu_core_3": 13.1,
+          "cpu_core_4": 27.9,
+          "cpu_core_5": 22.0,
+          "cpu_core_6": 20.5,
+          "cpu_core_7": 20.0,
+          "cpu_core_8": 24.6,
+          "cpu_core_9": 23.1,
+          "cpu_core_10": 25.4,
+          "cpu_core_11": 25.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2202431488,
+        "percent": 87.0,
+        "process": 0.2462907133256673
+      },
+      "disk": {
+        "read_bytes": 43221456896,
+        "write_bytes": 115647179776,
+        "read_count": 1409686,
+        "write_count": 10560731
+      },
+      "network": {
+        "bytes_sent": 302200383,
+        "bytes_recv": 1076679093,
+        "packets_sent": 1513775,
+        "packets_recv": 1230992
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T12:45:08.658894",
+      "cpu": {
+        "total": 20.8,
+        "per_core": {
+          "cpu_core_0": 41.0,
+          "cpu_core_1": 11.5,
+          "cpu_core_2": 33.7,
+          "cpu_core_3": 15.2,
+          "cpu_core_4": 22.7,
+          "cpu_core_5": 19.6,
+          "cpu_core_6": 18.0,
+          "cpu_core_7": 16.8,
+          "cpu_core_8": 24.5,
+          "cpu_core_9": 14.1,
+          "cpu_core_10": 14.7,
+          "cpu_core_11": 16.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2588803072,
+        "percent": 84.7,
+        "process": 0.24716442890309379
+      },
+      "disk": {
+        "read_bytes": 43342001664,
+        "write_bytes": 115980426240,
+        "read_count": 1411980,
+        "write_count": 10595916
+      },
+      "network": {
+        "bytes_sent": 303888312,
+        "bytes_recv": 1077547396,
+        "packets_sent": 1518897,
+        "packets_recv": 1235689
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T12:50:13.324137",
+      "cpu": {
+        "total": 25.4,
+        "per_core": {
+          "cpu_core_0": 34.6,
+          "cpu_core_1": 17.2,
+          "cpu_core_2": 35.3,
+          "cpu_core_3": 12.0,
+          "cpu_core_4": 25.9,
+          "cpu_core_5": 25.7,
+          "cpu_core_6": 26.6,
+          "cpu_core_7": 25.5,
+          "cpu_core_8": 28.5,
+          "cpu_core_9": 26.2,
+          "cpu_core_10": 24.4,
+          "cpu_core_11": 22.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2686181376,
+        "percent": 84.1,
+        "process": 0.24359675696193564
+      },
+      "disk": {
+        "read_bytes": 43349930496,
+        "write_bytes": 116308251648,
+        "read_count": 1412265,
+        "write_count": 10624403
+      },
+      "network": {
+        "bytes_sent": 305047262,
+        "bytes_recv": 1078345385,
+        "packets_sent": 1523517,
+        "packets_recv": 1239878
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T12:55:17.958377",
+      "cpu": {
+        "total": 26.9,
+        "per_core": {
+          "cpu_core_0": 45.7,
+          "cpu_core_1": 16.5,
+          "cpu_core_2": 39.5,
+          "cpu_core_3": 19.2,
+          "cpu_core_4": 28.5,
+          "cpu_core_5": 21.0,
+          "cpu_core_6": 20.8,
+          "cpu_core_7": 23.1,
+          "cpu_core_8": 28.8,
+          "cpu_core_9": 27.3,
+          "cpu_core_10": 26.7,
+          "cpu_core_11": 25.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2224361472,
+        "percent": 86.8,
+        "process": 0.24362102683908637
+      },
+      "disk": {
+        "read_bytes": 43467239424,
+        "write_bytes": 116656919552,
+        "read_count": 1420401,
+        "write_count": 10660493
+      },
+      "network": {
+        "bytes_sent": 307422422,
+        "bytes_recv": 1079317787,
+        "packets_sent": 1528761,
+        "packets_recv": 1244934
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:00:22.593429",
+      "cpu": {
+        "total": 23.6,
+        "per_core": {
+          "cpu_core_0": 40.5,
+          "cpu_core_1": 21.1,
+          "cpu_core_2": 41.7,
+          "cpu_core_3": 16.2,
+          "cpu_core_4": 24.9,
+          "cpu_core_5": 18.2,
+          "cpu_core_6": 18.2,
+          "cpu_core_7": 18.5,
+          "cpu_core_8": 22.8,
+          "cpu_core_9": 20.1,
+          "cpu_core_10": 21.0,
+          "cpu_core_11": 19.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2226028544,
+        "percent": 86.8,
+        "process": 0.24362102683908637
+      },
+      "disk": {
+        "read_bytes": 43482303488,
+        "write_bytes": 117013959680,
+        "read_count": 1420769,
+        "write_count": 10696234
+      },
+      "network": {
+        "bytes_sent": 310760846,
+        "bytes_recv": 1080469553,
+        "packets_sent": 1534698,
+        "packets_recv": 1251152
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:05:27.244469",
+      "cpu": {
+        "total": 18.2,
+        "per_core": {
+          "cpu_core_0": 36.6,
+          "cpu_core_1": 12.4,
+          "cpu_core_2": 31.7,
+          "cpu_core_3": 15.2,
+          "cpu_core_4": 20.9,
+          "cpu_core_5": 13.7,
+          "cpu_core_6": 14.0,
+          "cpu_core_7": 13.4,
+          "cpu_core_8": 23.0,
+          "cpu_core_9": 12.5,
+          "cpu_core_10": 11.6,
+          "cpu_core_11": 13.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1981960192,
+        "percent": 88.3,
+        "process": 0.24362102683908637
+      },
+      "disk": {
+        "read_bytes": 43539016192,
+        "write_bytes": 117340304384,
+        "read_count": 1422195,
+        "write_count": 10732628
+      },
+      "network": {
+        "bytes_sent": 312472451,
+        "bytes_recv": 1081343584,
+        "packets_sent": 1539751,
+        "packets_recv": 1255896
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:10:31.867614",
+      "cpu": {
+        "total": 19.1,
+        "per_core": {
+          "cpu_core_0": 34.5,
+          "cpu_core_1": 17.3,
+          "cpu_core_2": 33.9,
+          "cpu_core_3": 12.5,
+          "cpu_core_4": 18.2,
+          "cpu_core_5": 15.8,
+          "cpu_core_6": 17.9,
+          "cpu_core_7": 15.7,
+          "cpu_core_8": 24.0,
+          "cpu_core_9": 13.1,
+          "cpu_core_10": 12.7,
+          "cpu_core_11": 13.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2073989120,
+        "percent": 87.7,
+        "process": 0.24362102683908637
+      },
+      "disk": {
+        "read_bytes": 43555470336,
+        "write_bytes": 117726192640,
+        "read_count": 1422588,
+        "write_count": 10771079
+      },
+      "network": {
+        "bytes_sent": 314482521,
+        "bytes_recv": 1082236621,
+        "packets_sent": 1544758,
+        "packets_recv": 1260864
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:15:36.508136",
+      "cpu": {
+        "total": 19.8,
+        "per_core": {
+          "cpu_core_0": 40.7,
+          "cpu_core_1": 17.0,
+          "cpu_core_2": 37.3,
+          "cpu_core_3": 15.4,
+          "cpu_core_4": 22.1,
+          "cpu_core_5": 13.4,
+          "cpu_core_6": 12.6,
+          "cpu_core_7": 13.7,
+          "cpu_core_8": 21.3,
+          "cpu_core_9": 15.5,
+          "cpu_core_10": 13.4,
+          "cpu_core_11": 13.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1985368064,
+        "percent": 88.2,
+        "process": 0.20704632197292744
+      },
+      "disk": {
+        "read_bytes": 43557948416,
+        "write_bytes": 118096405504,
+        "read_count": 1422671,
+        "write_count": 10810644
+      },
+      "network": {
+        "bytes_sent": 316878573,
+        "bytes_recv": 1083161407,
+        "packets_sent": 1549879,
+        "packets_recv": 1266207
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:20:41.161032",
+      "cpu": {
+        "total": 26.0,
+        "per_core": {
+          "cpu_core_0": 50.7,
+          "cpu_core_1": 20.4,
+          "cpu_core_2": 48.1,
+          "cpu_core_3": 21.4,
+          "cpu_core_4": 25.5,
+          "cpu_core_5": 20.1,
+          "cpu_core_6": 19.5,
+          "cpu_core_7": 18.8,
+          "cpu_core_8": 22.1,
+          "cpu_core_9": 20.8,
+          "cpu_core_10": 22.1,
+          "cpu_core_11": 21.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1769422848,
+        "percent": 89.5,
+        "process": 0.19479003401180583
+      },
+      "disk": {
+        "read_bytes": 43590678528,
+        "write_bytes": 118443353088,
+        "read_count": 1423514,
+        "write_count": 10851732
+      },
+      "network": {
+        "bytes_sent": 319815306,
+        "bytes_recv": 1084404800,
+        "packets_sent": 1555499,
+        "packets_recv": 1272032
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:25:45.808986",
+      "cpu": {
+        "total": 28.1,
+        "per_core": {
+          "cpu_core_0": 51.5,
+          "cpu_core_1": 26.2,
+          "cpu_core_2": 53.2,
+          "cpu_core_3": 21.6,
+          "cpu_core_4": 24.7,
+          "cpu_core_5": 23.0,
+          "cpu_core_6": 22.4,
+          "cpu_core_7": 22.2,
+          "cpu_core_8": 27.1,
+          "cpu_core_9": 22.9,
+          "cpu_core_10": 21.6,
+          "cpu_core_11": 20.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1790402560,
+        "percent": 89.4,
+        "process": 0.18806727804105203
+      },
+      "disk": {
+        "read_bytes": 43600160256,
+        "write_bytes": 118846997504,
+        "read_count": 1423794,
+        "write_count": 10896785
+      },
+      "network": {
+        "bytes_sent": 322987917,
+        "bytes_recv": 1085703536,
+        "packets_sent": 1560154,
+        "packets_recv": 1278222
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:30:50.458112",
+      "cpu": {
+        "total": 31.9,
+        "per_core": {
+          "cpu_core_0": 57.7,
+          "cpu_core_1": 26.3,
+          "cpu_core_2": 53.5,
+          "cpu_core_3": 29.2,
+          "cpu_core_4": 26.8,
+          "cpu_core_5": 24.6,
+          "cpu_core_6": 26.7,
+          "cpu_core_7": 27.6,
+          "cpu_core_8": 30.8,
+          "cpu_core_9": 26.8,
+          "cpu_core_10": 26.1,
+          "cpu_core_11": 26.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2348924928,
+        "percent": 86.1,
+        "process": 0.1603753482120624
+      },
+      "disk": {
+        "read_bytes": 43610454528,
+        "write_bytes": 119298245632,
+        "read_count": 1424090,
+        "write_count": 10947214
+      },
+      "network": {
+        "bytes_sent": 326615753,
+        "bytes_recv": 1087156808,
+        "packets_sent": 1566378,
+        "packets_recv": 1284824
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:35:55.128307",
+      "cpu": {
+        "total": 33.3,
+        "per_core": {
+          "cpu_core_0": 59.5,
+          "cpu_core_1": 31.5,
+          "cpu_core_2": 64.7,
+          "cpu_core_3": 24.7,
+          "cpu_core_4": 30.3,
+          "cpu_core_5": 25.8,
+          "cpu_core_6": 24.9,
+          "cpu_core_7": 24.5,
+          "cpu_core_8": 28.8,
+          "cpu_core_9": 28.2,
+          "cpu_core_10": 28.1,
+          "cpu_core_11": 27.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2209906688,
+        "percent": 86.9,
+        "process": 0.1603753482120624
+      },
+      "disk": {
+        "read_bytes": 43615258624,
+        "write_bytes": 119716897792,
+        "read_count": 1424214,
+        "write_count": 10996119
+      },
+      "network": {
+        "bytes_sent": 331059871,
+        "bytes_recv": 1088451129,
+        "packets_sent": 1572768,
+        "packets_recv": 1291568
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:40:59.783732",
+      "cpu": {
+        "total": 39.0,
+        "per_core": {
+          "cpu_core_0": 69.7,
+          "cpu_core_1": 30.6,
+          "cpu_core_2": 62.2,
+          "cpu_core_3": 36.0,
+          "cpu_core_4": 34.4,
+          "cpu_core_5": 32.4,
+          "cpu_core_6": 32.6,
+          "cpu_core_7": 32.2,
+          "cpu_core_8": 35.2,
+          "cpu_core_9": 32.7,
+          "cpu_core_10": 33.5,
+          "cpu_core_11": 36.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1992077312,
+        "percent": 88.2,
+        "process": 0.15445349818728288
+      },
+      "disk": {
+        "read_bytes": 43636693504,
+        "write_bytes": 120231552000,
+        "read_count": 1425069,
+        "write_count": 11052294
+      },
+      "network": {
+        "bytes_sent": 335948153,
+        "bytes_recv": 1089874502,
+        "packets_sent": 1579469,
+        "packets_recv": 1299009
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:46:04.435049",
+      "cpu": {
+        "total": 32.5,
+        "per_core": {
+          "cpu_core_0": 54.1,
+          "cpu_core_1": 28.8,
+          "cpu_core_2": 54.3,
+          "cpu_core_3": 26.6,
+          "cpu_core_4": 27.8,
+          "cpu_core_5": 26.6,
+          "cpu_core_6": 27.6,
+          "cpu_core_7": 27.9,
+          "cpu_core_8": 32.0,
+          "cpu_core_9": 28.4,
+          "cpu_core_10": 27.2,
+          "cpu_core_11": 27.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2344677376,
+        "percent": 86.1,
+        "process": 0.15450203794158435
+      },
+      "disk": {
+        "read_bytes": 43640509440,
+        "write_bytes": 120729076736,
+        "read_count": 1425180,
+        "write_count": 11115994
+      },
+      "network": {
+        "bytes_sent": 339841337,
+        "bytes_recv": 1091043241,
+        "packets_sent": 1585369,
+        "packets_recv": 1305599
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:51:09.079642",
+      "cpu": {
+        "total": 31.8,
+        "per_core": {
+          "cpu_core_0": 39.8,
+          "cpu_core_1": 19.0,
+          "cpu_core_2": 36.5,
+          "cpu_core_3": 19.3,
+          "cpu_core_4": 32.1,
+          "cpu_core_5": 30.3,
+          "cpu_core_6": 30.9,
+          "cpu_core_7": 31.0,
+          "cpu_core_8": 39.6,
+          "cpu_core_9": 34.7,
+          "cpu_core_10": 34.1,
+          "cpu_core_11": 34.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1868374016,
+        "percent": 88.9,
+        "process": 0.15775420147978295
+      },
+      "disk": {
+        "read_bytes": 43648720896,
+        "write_bytes": 121319173632,
+        "read_count": 1425408,
+        "write_count": 11184813
+      },
+      "network": {
+        "bytes_sent": 342967159,
+        "bytes_recv": 1092360373,
+        "packets_sent": 1590755,
+        "packets_recv": 1311348
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T13:56:13.682611",
+      "cpu": {
+        "total": 33.7,
+        "per_core": {
+          "cpu_core_0": 57.9,
+          "cpu_core_1": 32.8,
+          "cpu_core_2": 60.4,
+          "cpu_core_3": 26.6,
+          "cpu_core_4": 29.7,
+          "cpu_core_5": 26.9,
+          "cpu_core_6": 27.2,
+          "cpu_core_7": 26.8,
+          "cpu_core_8": 29.8,
+          "cpu_core_9": 28.5,
+          "cpu_core_10": 28.0,
+          "cpu_core_11": 29.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1666760704,
+        "percent": 90.1,
+        "process": 0.1495267131256835
+      },
+      "disk": {
+        "read_bytes": 43667031040,
+        "write_bytes": 121905769984,
+        "read_count": 1426058,
+        "write_count": 11256145
+      },
+      "network": {
+        "bytes_sent": 346752386,
+        "bytes_recv": 1093452840,
+        "packets_sent": 1596314,
+        "packets_recv": 1317393
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:01:18.315156",
+      "cpu": {
+        "total": 23.2,
+        "per_core": {
+          "cpu_core_0": 35.5,
+          "cpu_core_1": 12.0,
+          "cpu_core_2": 29.2,
+          "cpu_core_3": 16.0,
+          "cpu_core_4": 28.1,
+          "cpu_core_5": 20.8,
+          "cpu_core_6": 21.4,
+          "cpu_core_7": 20.7,
+          "cpu_core_8": 29.2,
+          "cpu_core_9": 21.7,
+          "cpu_core_10": 20.4,
+          "cpu_core_11": 22.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2071674880,
+        "percent": 87.7,
+        "process": 0.14787636147943348
+      },
+      "disk": {
+        "read_bytes": 43701638656,
+        "write_bytes": 122574382592,
+        "read_count": 1427769,
+        "write_count": 11329587
+      },
+      "network": {
+        "bytes_sent": 349845299,
+        "bytes_recv": 1094494632,
+        "packets_sent": 1601678,
+        "packets_recv": 1322977
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:06:22.960770",
+      "cpu": {
+        "total": 14.5,
+        "per_core": {
+          "cpu_core_0": 25.4,
+          "cpu_core_1": 11.5,
+          "cpu_core_2": 24.8,
+          "cpu_core_3": 7.4,
+          "cpu_core_4": 16.8,
+          "cpu_core_5": 11.9,
+          "cpu_core_6": 12.3,
+          "cpu_core_7": 10.8,
+          "cpu_core_8": 21.4,
+          "cpu_core_9": 10.8,
+          "cpu_core_10": 10.5,
+          "cpu_core_11": 10.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1830539264,
+        "percent": 89.2,
+        "process": 0.147827821725132
+      },
+      "disk": {
+        "read_bytes": 43705488896,
+        "write_bytes": 123159459328,
+        "read_count": 1427849,
+        "write_count": 11403078
+      },
+      "network": {
+        "bytes_sent": 350710304,
+        "bytes_recv": 1095129830,
+        "packets_sent": 1605679,
+        "packets_recv": 1326343
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:11:27.606102",
+      "cpu": {
+        "total": 17.9,
+        "per_core": {
+          "cpu_core_0": 37.8,
+          "cpu_core_1": 11.4,
+          "cpu_core_2": 30.5,
+          "cpu_core_3": 14.6,
+          "cpu_core_4": 21.6,
+          "cpu_core_5": 12.2,
+          "cpu_core_6": 10.6,
+          "cpu_core_7": 12.8,
+          "cpu_core_8": 21.5,
+          "cpu_core_9": 14.2,
+          "cpu_core_10": 13.6,
+          "cpu_core_11": 12.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1693782016,
+        "percent": 90.0,
+        "process": 0.147827821725132
+      },
+      "disk": {
+        "read_bytes": 43706680832,
+        "write_bytes": 123750569472,
+        "read_count": 1427883,
+        "write_count": 11474719
+      },
+      "network": {
+        "bytes_sent": 351971271,
+        "bytes_recv": 1095947142,
+        "packets_sent": 1610375,
+        "packets_recv": 1330783
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:16:32.263149",
+      "cpu": {
+        "total": 24.9,
+        "per_core": {
+          "cpu_core_0": 44.8,
+          "cpu_core_1": 23.7,
+          "cpu_core_2": 43.8,
+          "cpu_core_3": 19.6,
+          "cpu_core_4": 25.3,
+          "cpu_core_5": 20.4,
+          "cpu_core_6": 19.3,
+          "cpu_core_7": 17.7,
+          "cpu_core_8": 22.8,
+          "cpu_core_9": 17.9,
+          "cpu_core_10": 21.2,
+          "cpu_core_11": 22.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1504542720,
+        "percent": 91.1,
+        "process": 0.14273114752347746
+      },
+      "disk": {
+        "read_bytes": 44023767552,
+        "write_bytes": 124353041920,
+        "read_count": 1429307,
+        "write_count": 11549846
+      },
+      "network": {
+        "bytes_sent": 354697583,
+        "bytes_recv": 1097052306,
+        "packets_sent": 1615446,
+        "packets_recv": 1335934
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:21:38.999874",
+      "cpu": {
+        "total": 26.0,
+        "per_core": {
+          "cpu_core_0": 49.0,
+          "cpu_core_1": 21.6,
+          "cpu_core_2": 43.7,
+          "cpu_core_3": 22.4,
+          "cpu_core_4": 24.8,
+          "cpu_core_5": 22.2,
+          "cpu_core_6": 21.1,
+          "cpu_core_7": 20.5,
+          "cpu_core_8": 27.8,
+          "cpu_core_9": 18.8,
+          "cpu_core_10": 18.5,
+          "cpu_core_11": 20.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1355915264,
+        "percent": 92.0,
+        "process": 0.14588623155307312
+      },
+      "disk": {
+        "read_bytes": 44083628032,
+        "write_bytes": 125014382080,
+        "read_count": 1433089,
+        "write_count": 11628065
+      },
+      "network": {
+        "bytes_sent": 357304078,
+        "bytes_recv": 1098009349,
+        "packets_sent": 1620920,
+        "packets_recv": 1341373
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:26:43.633572",
+      "cpu": {
+        "total": 33.7,
+        "per_core": {
+          "cpu_core_0": 59.7,
+          "cpu_core_1": 27.5,
+          "cpu_core_2": 56.6,
+          "cpu_core_3": 29.2,
+          "cpu_core_4": 28.8,
+          "cpu_core_5": 25.7,
+          "cpu_core_6": 27.7,
+          "cpu_core_7": 29.5,
+          "cpu_core_8": 30.2,
+          "cpu_core_9": 30.0,
+          "cpu_core_10": 29.2,
+          "cpu_core_11": 29.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 866967552,
+        "percent": 94.9,
+        "process": 0.1454736436415106
+      },
+      "disk": {
+        "read_bytes": 44119739392,
+        "write_bytes": 125606196736,
+        "read_count": 1435823,
+        "write_count": 11706280
+      },
+      "network": {
+        "bytes_sent": 362188589,
+        "bytes_recv": 1098970868,
+        "packets_sent": 1626237,
+        "packets_recv": 1347306
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:31:48.280954",
+      "cpu": {
+        "total": 36.4,
+        "per_core": {
+          "cpu_core_0": 63.7,
+          "cpu_core_1": 33.4,
+          "cpu_core_2": 65.4,
+          "cpu_core_3": 30.9,
+          "cpu_core_4": 32.4,
+          "cpu_core_5": 29.1,
+          "cpu_core_6": 28.7,
+          "cpu_core_7": 27.7,
+          "cpu_core_8": 31.2,
+          "cpu_core_9": 30.9,
+          "cpu_core_10": 30.9,
+          "cpu_core_11": 31.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 861958144,
+        "percent": 94.9,
+        "process": 0.14598331106167609
+      },
+      "disk": {
+        "read_bytes": 44134060544,
+        "write_bytes": 126251703808,
+        "read_count": 1436563,
+        "write_count": 11788711
+      },
+      "network": {
+        "bytes_sent": 370049692,
+        "bytes_recv": 1100442444,
+        "packets_sent": 1633457,
+        "packets_recv": 1355886
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:36:52.920083",
+      "cpu": {
+        "total": 24.7,
+        "per_core": {
+          "cpu_core_0": 57.1,
+          "cpu_core_1": 21.1,
+          "cpu_core_2": 53.5,
+          "cpu_core_3": 24.4,
+          "cpu_core_4": 19.9,
+          "cpu_core_5": 15.9,
+          "cpu_core_6": 16.6,
+          "cpu_core_7": 16.1,
+          "cpu_core_8": 20.9,
+          "cpu_core_9": 16.6,
+          "cpu_core_10": 16.2,
+          "cpu_core_11": 17.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1100546048,
+        "percent": 93.5,
+        "process": 0.1517595418235512
+      },
+      "disk": {
+        "read_bytes": 44149709312,
+        "write_bytes": 126874099200,
+        "read_count": 1437138,
+        "write_count": 11872520
+      },
+      "network": {
+        "bytes_sent": 372938646,
+        "bytes_recv": 1101239220,
+        "packets_sent": 1638015,
+        "packets_recv": 1360523
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:41:57.506990",
+      "cpu": {
+        "total": 14.5,
+        "per_core": {
+          "cpu_core_0": 28.8,
+          "cpu_core_1": 13.8,
+          "cpu_core_2": 31.1,
+          "cpu_core_3": 8.7,
+          "cpu_core_4": 17.9,
+          "cpu_core_5": 11.2,
+          "cpu_core_6": 9.5,
+          "cpu_core_7": 8.9,
+          "cpu_core_8": 18.7,
+          "cpu_core_9": 9.0,
+          "cpu_core_10": 8.1,
+          "cpu_core_11": 7.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1796329472,
+        "percent": 89.4,
+        "process": 0.15124987440338575
+      },
+      "disk": {
+        "read_bytes": 44185890816,
+        "write_bytes": 127474691584,
+        "read_count": 1438427,
+        "write_count": 11955775
+      },
+      "network": {
+        "bytes_sent": 374218676,
+        "bytes_recv": 1101848092,
+        "packets_sent": 1641772,
+        "packets_recv": 1363886
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:47:02.116027",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 28.1,
+          "cpu_core_1": 8.1,
+          "cpu_core_2": 21.8,
+          "cpu_core_3": 10.6,
+          "cpu_core_4": 15.5,
+          "cpu_core_5": 7.4,
+          "cpu_core_6": 10.0,
+          "cpu_core_7": 11.1,
+          "cpu_core_8": 20.4,
+          "cpu_core_9": 8.9,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 7.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1689108480,
+        "percent": 90.0,
+        "process": 0.15139549366629015
+      },
+      "disk": {
+        "read_bytes": 44189684736,
+        "write_bytes": 128072826368,
+        "read_count": 1438553,
+        "write_count": 12038612
+      },
+      "network": {
+        "bytes_sent": 374873862,
+        "bytes_recv": 1102294813,
+        "packets_sent": 1644888,
+        "packets_recv": 1366295
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:52:06.782689",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 25.3,
+          "cpu_core_1": 11.4,
+          "cpu_core_2": 24.6,
+          "cpu_core_3": 6.5,
+          "cpu_core_4": 18.9,
+          "cpu_core_5": 7.2,
+          "cpu_core_6": 6.8,
+          "cpu_core_7": 6.7,
+          "cpu_core_8": 15.9,
+          "cpu_core_9": 11.8,
+          "cpu_core_10": 10.9,
+          "cpu_core_11": 9.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1710284800,
+        "percent": 89.9,
+        "process": 0.15139549366629015
+      },
+      "disk": {
+        "read_bytes": 44195055104,
+        "write_bytes": 128667078144,
+        "read_count": 1438674,
+        "write_count": 12121360
+      },
+      "network": {
+        "bytes_sent": 375599921,
+        "bytes_recv": 1102839799,
+        "packets_sent": 1648247,
+        "packets_recv": 1369123
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T14:57:11.409706",
+      "cpu": {
+        "total": 13.4,
+        "per_core": {
+          "cpu_core_0": 30.3,
+          "cpu_core_1": 8.3,
+          "cpu_core_2": 23.7,
+          "cpu_core_3": 10.8,
+          "cpu_core_4": 19.5,
+          "cpu_core_5": 8.8,
+          "cpu_core_6": 7.7,
+          "cpu_core_7": 7.1,
+          "cpu_core_8": 17.0,
+          "cpu_core_9": 7.5,
+          "cpu_core_10": 8.1,
+          "cpu_core_11": 11.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1626365952,
+        "percent": 90.4,
+        "process": 0.1515411129291946
+      },
+      "disk": {
+        "read_bytes": 44197377024,
+        "write_bytes": 129259511296,
+        "read_count": 1438813,
+        "write_count": 12203699
+      },
+      "network": {
+        "bytes_sent": 376291461,
+        "bytes_recv": 1103309607,
+        "packets_sent": 1651515,
+        "packets_recv": 1371777
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:02:16.043139",
+      "cpu": {
+        "total": 14.8,
+        "per_core": {
+          "cpu_core_0": 32.4,
+          "cpu_core_1": 13.1,
+          "cpu_core_2": 31.5,
+          "cpu_core_3": 10.1,
+          "cpu_core_4": 14.6,
+          "cpu_core_5": 10.9,
+          "cpu_core_6": 11.1,
+          "cpu_core_7": 9.7,
+          "cpu_core_8": 19.3,
+          "cpu_core_9": 9.1,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 7.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1507209216,
+        "percent": 91.1,
+        "process": 0.15173527194640046
+      },
+      "disk": {
+        "read_bytes": 44222793728,
+        "write_bytes": 129892097536,
+        "read_count": 1439387,
+        "write_count": 12289289
+      },
+      "network": {
+        "bytes_sent": 377801947,
+        "bytes_recv": 1104007067,
+        "packets_sent": 1655661,
+        "packets_recv": 1375633
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:07:20.632831",
+      "cpu": {
+        "total": 31.1,
+        "per_core": {
+          "cpu_core_0": 61.2,
+          "cpu_core_1": 24.7,
+          "cpu_core_2": 56.9,
+          "cpu_core_3": 27.9,
+          "cpu_core_4": 27.3,
+          "cpu_core_5": 22.0,
+          "cpu_core_6": 22.7,
+          "cpu_core_7": 24.7,
+          "cpu_core_8": 28.1,
+          "cpu_core_9": 25.9,
+          "cpu_core_10": 25.8,
+          "cpu_core_11": 25.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1440473088,
+        "percent": 91.5,
+        "process": 0.15171100206924973
+      },
+      "disk": {
+        "read_bytes": 44245690880,
+        "write_bytes": 130540740096,
+        "read_count": 1440321,
+        "write_count": 12377989
+      },
+      "network": {
+        "bytes_sent": 382013131,
+        "bytes_recv": 1104928203,
+        "packets_sent": 1660934,
+        "packets_recv": 1381253
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:12:25.298739",
+      "cpu": {
+        "total": 33.8,
+        "per_core": {
+          "cpu_core_0": 59.2,
+          "cpu_core_1": 32.1,
+          "cpu_core_2": 62.8,
+          "cpu_core_3": 26.6,
+          "cpu_core_4": 29.5,
+          "cpu_core_5": 27.4,
+          "cpu_core_6": 26.5,
+          "cpu_core_7": 26.0,
+          "cpu_core_8": 28.5,
+          "cpu_core_9": 27.0,
+          "cpu_core_10": 29.7,
+          "cpu_core_11": 29.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1468104704,
+        "percent": 91.3,
+        "process": 0.15158965268349606
+      },
+      "disk": {
+        "read_bytes": 44271513088,
+        "write_bytes": 131207110144,
+        "read_count": 1441238,
+        "write_count": 12467424
+      },
+      "network": {
+        "bytes_sent": 387832720,
+        "bytes_recv": 1106570867,
+        "packets_sent": 1666583,
+        "packets_recv": 1388043
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:17:29.912086",
+      "cpu": {
+        "total": 24.0,
+        "per_core": {
+          "cpu_core_0": 51.9,
+          "cpu_core_1": 19.1,
+          "cpu_core_2": 44.6,
+          "cpu_core_3": 23.6,
+          "cpu_core_4": 24.1,
+          "cpu_core_5": 15.8,
+          "cpu_core_6": 16.2,
+          "cpu_core_7": 16.3,
+          "cpu_core_8": 22.7,
+          "cpu_core_9": 17.9,
+          "cpu_core_10": 17.4,
+          "cpu_core_11": 18.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1554329600,
+        "percent": 90.8,
+        "process": 0.1453280243786062
+      },
+      "disk": {
+        "read_bytes": 44276349440,
+        "write_bytes": 131862818304,
+        "read_count": 1441430,
+        "write_count": 12556528
+      },
+      "network": {
+        "bytes_sent": 391412766,
+        "bytes_recv": 1107397122,
+        "packets_sent": 1671552,
+        "packets_recv": 1393289
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:22:34.550032",
+      "cpu": {
+        "total": 19.2,
+        "per_core": {
+          "cpu_core_0": 38.7,
+          "cpu_core_1": 18.2,
+          "cpu_core_2": 41.1,
+          "cpu_core_3": 12.9,
+          "cpu_core_4": 17.4,
+          "cpu_core_5": 12.8,
+          "cpu_core_6": 14.1,
+          "cpu_core_7": 15.0,
+          "cpu_core_8": 22.2,
+          "cpu_core_9": 13.0,
+          "cpu_core_10": 11.7,
+          "cpu_core_11": 12.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1572249600,
+        "percent": 90.7,
+        "process": 0.1453280243786062
+      },
+      "disk": {
+        "read_bytes": 44370526720,
+        "write_bytes": 132548165120,
+        "read_count": 1443280,
+        "write_count": 12646373
+      },
+      "network": {
+        "bytes_sent": 393797929,
+        "bytes_recv": 1108161903,
+        "packets_sent": 1676031,
+        "packets_recv": 1397996
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:27:39.210899",
+      "cpu": {
+        "total": 25.1,
+        "per_core": {
+          "cpu_core_0": 46.5,
+          "cpu_core_1": 21.9,
+          "cpu_core_2": 44.9,
+          "cpu_core_3": 20.0,
+          "cpu_core_4": 26.1,
+          "cpu_core_5": 16.9,
+          "cpu_core_6": 16.8,
+          "cpu_core_7": 18.6,
+          "cpu_core_8": 23.6,
+          "cpu_core_9": 22.4,
+          "cpu_core_10": 21.7,
+          "cpu_core_11": 21.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1571459072,
+        "percent": 90.7,
+        "process": 0.14520667499285253
+      },
+      "disk": {
+        "read_bytes": 44384721408,
+        "write_bytes": 133350616576,
+        "read_count": 1443972,
+        "write_count": 12756980
+      },
+      "network": {
+        "bytes_sent": 396264908,
+        "bytes_recv": 1108860427,
+        "packets_sent": 1680303,
+        "packets_recv": 1402066
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:32:43.851867",
+      "cpu": {
+        "total": 27.3,
+        "per_core": {
+          "cpu_core_0": 50.6,
+          "cpu_core_1": 23.9,
+          "cpu_core_2": 45.1,
+          "cpu_core_3": 26.9,
+          "cpu_core_4": 26.3,
+          "cpu_core_5": 19.5,
+          "cpu_core_6": 16.8,
+          "cpu_core_7": 17.1,
+          "cpu_core_8": 25.9,
+          "cpu_core_9": 22.7,
+          "cpu_core_10": 25.0,
+          "cpu_core_11": 26.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1444122624,
+        "percent": 91.4,
+        "process": 0.1449154364670437
+      },
+      "disk": {
+        "read_bytes": 44436518912,
+        "write_bytes": 134052798464,
+        "read_count": 1445629,
+        "write_count": 12850573
+      },
+      "network": {
+        "bytes_sent": 398947367,
+        "bytes_recv": 1109748598,
+        "packets_sent": 1685088,
+        "packets_recv": 1406678
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:37:48.503378",
+      "cpu": {
+        "total": 26.6,
+        "per_core": {
+          "cpu_core_0": 51.2,
+          "cpu_core_1": 26.9,
+          "cpu_core_2": 52.5,
+          "cpu_core_3": 21.8,
+          "cpu_core_4": 24.7,
+          "cpu_core_5": 21.7,
+          "cpu_core_6": 19.0,
+          "cpu_core_7": 18.4,
+          "cpu_core_8": 25.7,
+          "cpu_core_9": 18.6,
+          "cpu_core_10": 18.6,
+          "cpu_core_11": 19.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1412071424,
+        "percent": 91.6,
+        "process": 0.1511527948947828
+      },
+      "disk": {
+        "read_bytes": 44443796480,
+        "write_bytes": 134746771456,
+        "read_count": 1445915,
+        "write_count": 12946385
+      },
+      "network": {
+        "bytes_sent": 403275965,
+        "bytes_recv": 1110650701,
+        "packets_sent": 1690176,
+        "packets_recv": 1412211
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:42:53.145391",
+      "cpu": {
+        "total": 24.8,
+        "per_core": {
+          "cpu_core_0": 53.6,
+          "cpu_core_1": 17.6,
+          "cpu_core_2": 45.6,
+          "cpu_core_3": 22.9,
+          "cpu_core_4": 24.1,
+          "cpu_core_5": 14.9,
+          "cpu_core_6": 16.5,
+          "cpu_core_7": 19.2,
+          "cpu_core_8": 24.4,
+          "cpu_core_9": 20.7,
+          "cpu_core_10": 19.8,
+          "cpu_core_11": 17.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1412620288,
+        "percent": 91.6,
+        "process": 0.15105571538617985
+      },
+      "disk": {
+        "read_bytes": 44448354816,
+        "write_bytes": 135446079488,
+        "read_count": 1446052,
+        "write_count": 13043426
+      },
+      "network": {
+        "bytes_sent": 406158523,
+        "bytes_recv": 1111403403,
+        "packets_sent": 1694462,
+        "packets_recv": 1416698
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:47:57.795880",
+      "cpu": {
+        "total": 38.8,
+        "per_core": {
+          "cpu_core_0": 66.3,
+          "cpu_core_1": 34.1,
+          "cpu_core_2": 65.7,
+          "cpu_core_3": 33.5,
+          "cpu_core_4": 34.9,
+          "cpu_core_5": 29.7,
+          "cpu_core_6": 30.5,
+          "cpu_core_7": 30.7,
+          "cpu_core_8": 34.6,
+          "cpu_core_9": 33.3,
+          "cpu_core_10": 35.1,
+          "cpu_core_11": 36.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1057538048,
+        "percent": 93.7,
+        "process": 0.11489359843158346
+      },
+      "disk": {
+        "read_bytes": 44762365952,
+        "write_bytes": 136418977792,
+        "read_count": 1511490,
+        "write_count": 13181295
+      },
+      "network": {
+        "bytes_sent": 413276881,
+        "bytes_recv": 1112500357,
+        "packets_sent": 1700281,
+        "packets_recv": 1423938
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:53:02.418348",
+      "cpu": {
+        "total": 28.8,
+        "per_core": {
+          "cpu_core_0": 59.9,
+          "cpu_core_1": 19.4,
+          "cpu_core_2": 50.7,
+          "cpu_core_3": 25.9,
+          "cpu_core_4": 28.4,
+          "cpu_core_5": 24.2,
+          "cpu_core_6": 22.3,
+          "cpu_core_7": 20.5,
+          "cpu_core_8": 27.2,
+          "cpu_core_9": 20.2,
+          "cpu_core_10": 21.7,
+          "cpu_core_11": 24.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1138954240,
+        "percent": 93.3,
+        "process": 0.11503921769448787
+      },
+      "disk": {
+        "read_bytes": 45170971648,
+        "write_bytes": 137239423488,
+        "read_count": 1537874,
+        "write_count": 13295153
+      },
+      "network": {
+        "bytes_sent": 413895553,
+        "bytes_recv": 1113034258,
+        "packets_sent": 1703532,
+        "packets_recv": 1426686
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T15:58:07.057315",
+      "cpu": {
+        "total": 31.0,
+        "per_core": {
+          "cpu_core_0": 36.4,
+          "cpu_core_1": 21.8,
+          "cpu_core_2": 40.0,
+          "cpu_core_3": 13.3,
+          "cpu_core_4": 30.6,
+          "cpu_core_5": 32.7,
+          "cpu_core_6": 32.5,
+          "cpu_core_7": 31.7,
+          "cpu_core_8": 35.1,
+          "cpu_core_9": 33.7,
+          "cpu_core_10": 32.6,
+          "cpu_core_11": 31.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1388212224,
+        "percent": 91.8,
+        "process": 0.11506348757163862
+      },
+      "disk": {
+        "read_bytes": 45381430784,
+        "write_bytes": 138008359424,
+        "read_count": 1550937,
+        "write_count": 13398516
+      },
+      "network": {
+        "bytes_sent": 414378738,
+        "bytes_recv": 1113381363,
+        "packets_sent": 1706346,
+        "packets_recv": 1428881
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:03:11.694816",
+      "cpu": {
+        "total": 30.6,
+        "per_core": {
+          "cpu_core_0": 36.8,
+          "cpu_core_1": 17.3,
+          "cpu_core_2": 29.4,
+          "cpu_core_3": 17.8,
+          "cpu_core_4": 35.1,
+          "cpu_core_5": 29.1,
+          "cpu_core_6": 28.6,
+          "cpu_core_7": 30.7,
+          "cpu_core_8": 38.0,
+          "cpu_core_9": 36.4,
+          "cpu_core_10": 35.2,
+          "cpu_core_11": 32.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1356636160,
+        "percent": 92.0,
+        "process": 0.11523337671169376
+      },
+      "disk": {
+        "read_bytes": 45401867264,
+        "write_bytes": 138769306112,
+        "read_count": 1551380,
+        "write_count": 13502721
+      },
+      "network": {
+        "bytes_sent": 415434663,
+        "bytes_recv": 1113921834,
+        "packets_sent": 1709575,
+        "packets_recv": 1431813
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:08:16.322665",
+      "cpu": {
+        "total": 43.2,
+        "per_core": {
+          "cpu_core_0": 41.2,
+          "cpu_core_1": 30.2,
+          "cpu_core_2": 42.9,
+          "cpu_core_3": 25.8,
+          "cpu_core_4": 43.4,
+          "cpu_core_5": 43.2,
+          "cpu_core_6": 42.6,
+          "cpu_core_7": 42.3,
+          "cpu_core_8": 49.4,
+          "cpu_core_9": 49.0,
+          "cpu_core_10": 56.5,
+          "cpu_core_11": 51.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1224503296,
+        "percent": 92.7,
+        "process": 0.11530618634314597
+      },
+      "disk": {
+        "read_bytes": 45437425152,
+        "write_bytes": 139553976832,
+        "read_count": 1552133,
+        "write_count": 13610532
+      },
+      "network": {
+        "bytes_sent": 420355791,
+        "bytes_recv": 1114704481,
+        "packets_sent": 1714335,
+        "packets_recv": 1437258
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:13:20.975312",
+      "cpu": {
+        "total": 41.3,
+        "per_core": {
+          "cpu_core_0": 37.5,
+          "cpu_core_1": 20.3,
+          "cpu_core_2": 33.8,
+          "cpu_core_3": 23.0,
+          "cpu_core_4": 41.6,
+          "cpu_core_5": 40.3,
+          "cpu_core_6": 40.7,
+          "cpu_core_7": 40.8,
+          "cpu_core_8": 51.3,
+          "cpu_core_9": 49.5,
+          "cpu_core_10": 59.3,
+          "cpu_core_11": 58.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1096740864,
+        "percent": 93.5,
+        "process": 0.11535472609744744
+      },
+      "disk": {
+        "read_bytes": 45445543936,
+        "write_bytes": 140317536768,
+        "read_count": 1552477,
+        "write_count": 13714851
+      },
+      "network": {
+        "bytes_sent": 422227958,
+        "bytes_recv": 1115239906,
+        "packets_sent": 1717877,
+        "packets_recv": 1440680
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:18:25.621206",
+      "cpu": {
+        "total": 33.9,
+        "per_core": {
+          "cpu_core_0": 33.3,
+          "cpu_core_1": 18.0,
+          "cpu_core_2": 33.8,
+          "cpu_core_3": 13.9,
+          "cpu_core_4": 32.6,
+          "cpu_core_5": 34.1,
+          "cpu_core_6": 35.4,
+          "cpu_core_7": 33.4,
+          "cpu_core_8": 43.3,
+          "cpu_core_9": 41.5,
+          "cpu_core_10": 45.5,
+          "cpu_core_11": 42.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1026584576,
+        "percent": 93.9,
+        "process": 0.11554888511465333
+      },
+      "disk": {
+        "read_bytes": 45462358528,
+        "write_bytes": 141083066880,
+        "read_count": 1552964,
+        "write_count": 13820075
+      },
+      "network": {
+        "bytes_sent": 422766294,
+        "bytes_recv": 1115648976,
+        "packets_sent": 1720855,
+        "packets_recv": 1442927
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:23:30.270330",
+      "cpu": {
+        "total": 30.5,
+        "per_core": {
+          "cpu_core_0": 35.2,
+          "cpu_core_1": 14.7,
+          "cpu_core_2": 34.2,
+          "cpu_core_3": 15.3,
+          "cpu_core_4": 35.2,
+          "cpu_core_5": 28.9,
+          "cpu_core_6": 28.0,
+          "cpu_core_7": 28.8,
+          "cpu_core_8": 38.0,
+          "cpu_core_9": 37.2,
+          "cpu_core_10": 36.4,
+          "cpu_core_11": 33.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1003868160,
+        "percent": 94.1,
+        "process": 0.09795322418036984
+      },
+      "disk": {
+        "read_bytes": 45470972928,
+        "write_bytes": 141842870784,
+        "read_count": 1553339,
+        "write_count": 13925654
+      },
+      "network": {
+        "bytes_sent": 423195462,
+        "bytes_recv": 1116028955,
+        "packets_sent": 1723477,
+        "packets_recv": 1445117
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:28:34.917328",
+      "cpu": {
+        "total": 29.2,
+        "per_core": {
+          "cpu_core_0": 36.0,
+          "cpu_core_1": 19.9,
+          "cpu_core_2": 37.9,
+          "cpu_core_3": 16.5,
+          "cpu_core_4": 33.6,
+          "cpu_core_5": 27.1,
+          "cpu_core_6": 26.1,
+          "cpu_core_7": 24.1,
+          "cpu_core_8": 30.9,
+          "cpu_core_9": 31.0,
+          "cpu_core_10": 33.2,
+          "cpu_core_11": 33.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1519521792,
+        "percent": 91.0,
+        "process": 0.09795322418036984
+      },
+      "disk": {
+        "read_bytes": 45587905536,
+        "write_bytes": 142620688896,
+        "read_count": 1558030,
+        "write_count": 14031976
+      },
+      "network": {
+        "bytes_sent": 428199430,
+        "bytes_recv": 1116786914,
+        "packets_sent": 1727760,
+        "packets_recv": 1450522
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:33:39.564464",
+      "cpu": {
+        "total": 14.8,
+        "per_core": {
+          "cpu_core_0": 27.1,
+          "cpu_core_1": 9.9,
+          "cpu_core_2": 23.1,
+          "cpu_core_3": 10.3,
+          "cpu_core_4": 19.9,
+          "cpu_core_5": 12.1,
+          "cpu_core_6": 11.5,
+          "cpu_core_7": 10.4,
+          "cpu_core_8": 19.8,
+          "cpu_core_9": 11.7,
+          "cpu_core_10": 10.2,
+          "cpu_core_11": 11.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1271148544,
+        "percent": 92.5,
+        "process": 0.09928806742366032
+      },
+      "disk": {
+        "read_bytes": 45982944768,
+        "write_bytes": 143517804032,
+        "read_count": 1582872,
+        "write_count": 14148818
+      },
+      "network": {
+        "bytes_sent": 428730949,
+        "bytes_recv": 1117255943,
+        "packets_sent": 1730425,
+        "packets_recv": 1452944
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:38:44.230659",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 26.1,
+          "cpu_core_1": 9.1,
+          "cpu_core_2": 23.2,
+          "cpu_core_3": 8.6,
+          "cpu_core_4": 14.5,
+          "cpu_core_5": 8.3,
+          "cpu_core_6": 10.5,
+          "cpu_core_7": 11.0,
+          "cpu_core_8": 19.3,
+          "cpu_core_9": 9.2,
+          "cpu_core_10": 8.2,
+          "cpu_core_11": 7.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1286946816,
+        "percent": 92.4,
+        "process": 0.10139954673577434
+      },
+      "disk": {
+        "read_bytes": 46012613120,
+        "write_bytes": 144262264320,
+        "read_count": 1583988,
+        "write_count": 14255267
+      },
+      "network": {
+        "bytes_sent": 429178274,
+        "bytes_recv": 1117628872,
+        "packets_sent": 1732844,
+        "packets_recv": 1455073
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:43:48.888614",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 25.2,
+          "cpu_core_1": 9.8,
+          "cpu_core_2": 24.3,
+          "cpu_core_3": 7.2,
+          "cpu_core_4": 18.1,
+          "cpu_core_5": 7.6,
+          "cpu_core_6": 7.3,
+          "cpu_core_7": 7.5,
+          "cpu_core_8": 18.1,
+          "cpu_core_9": 11.9,
+          "cpu_core_10": 9.9,
+          "cpu_core_11": 8.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1356234752,
+        "percent": 92.0,
+        "process": 0.10139954673577434
+      },
+      "disk": {
+        "read_bytes": 46018028032,
+        "write_bytes": 145015035392,
+        "read_count": 1584201,
+        "write_count": 14362596
+      },
+      "network": {
+        "bytes_sent": 429707016,
+        "bytes_recv": 1118020098,
+        "packets_sent": 1735798,
+        "packets_recv": 1457467
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:48:53.557137",
+      "cpu": {
+        "total": 13.3,
+        "per_core": {
+          "cpu_core_0": 26.5,
+          "cpu_core_1": 8.5,
+          "cpu_core_2": 22.0,
+          "cpu_core_3": 9.7,
+          "cpu_core_4": 17.8,
+          "cpu_core_5": 9.8,
+          "cpu_core_6": 8.7,
+          "cpu_core_7": 8.0,
+          "cpu_core_8": 15.7,
+          "cpu_core_9": 8.5,
+          "cpu_core_10": 11.2,
+          "cpu_core_11": 12.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1333620736,
+        "percent": 92.1,
+        "process": 0.10147235636722654
+      },
+      "disk": {
+        "read_bytes": 46021645312,
+        "write_bytes": 145764693504,
+        "read_count": 1584286,
+        "write_count": 14468784
+      },
+      "network": {
+        "bytes_sent": 430247540,
+        "bytes_recv": 1118426806,
+        "packets_sent": 1738802,
+        "packets_recv": 1459807
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:53:58.224385",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 23.2,
+          "cpu_core_1": 10.7,
+          "cpu_core_2": 25.2,
+          "cpu_core_3": 6.5,
+          "cpu_core_4": 17.5,
+          "cpu_core_5": 12.1,
+          "cpu_core_6": 9.7,
+          "cpu_core_7": 7.9,
+          "cpu_core_8": 19.4,
+          "cpu_core_9": 8.6,
+          "cpu_core_10": 7.3,
+          "cpu_core_11": 7.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1330876416,
+        "percent": 92.1,
+        "process": 0.10147235636722654
+      },
+      "disk": {
+        "read_bytes": 46023896576,
+        "write_bytes": 146508633600,
+        "read_count": 1584366,
+        "write_count": 14574480
+      },
+      "network": {
+        "bytes_sent": 430704097,
+        "bytes_recv": 1118792577,
+        "packets_sent": 1741568,
+        "packets_recv": 1462004
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T16:59:02.870017",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 26.5,
+          "cpu_core_1": 6.9,
+          "cpu_core_2": 22.2,
+          "cpu_core_3": 9.7,
+          "cpu_core_4": 15.5,
+          "cpu_core_5": 7.4,
+          "cpu_core_6": 9.7,
+          "cpu_core_7": 11.6,
+          "cpu_core_8": 21.0,
+          "cpu_core_9": 10.2,
+          "cpu_core_10": 8.2,
+          "cpu_core_11": 7.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1382141952,
+        "percent": 91.8,
+        "process": 0.10152089612152802
+      },
+      "disk": {
+        "read_bytes": 46055354368,
+        "write_bytes": 147274071552,
+        "read_count": 1585131,
+        "write_count": 14681363
+      },
+      "network": {
+        "bytes_sent": 431211481,
+        "bytes_recv": 1119175602,
+        "packets_sent": 1744419,
+        "packets_recv": 1464247
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:04:07.498985",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 23.9,
+          "cpu_core_1": 10.9,
+          "cpu_core_2": 24.7,
+          "cpu_core_3": 7.3,
+          "cpu_core_4": 19.4,
+          "cpu_core_5": 8.2,
+          "cpu_core_6": 7.4,
+          "cpu_core_7": 6.9,
+          "cpu_core_8": 16.7,
+          "cpu_core_9": 11.9,
+          "cpu_core_10": 11.0,
+          "cpu_core_11": 9.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1222430720,
+        "percent": 92.8,
+        "process": 0.10152089612152802
+      },
+      "disk": {
+        "read_bytes": 46145719296,
+        "write_bytes": 148060626432,
+        "read_count": 1587416,
+        "write_count": 14794152
+      },
+      "network": {
+        "bytes_sent": 431803051,
+        "bytes_recv": 1119709866,
+        "packets_sent": 1747583,
+        "packets_recv": 1466915
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:09:12.131074",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 27.3,
+          "cpu_core_1": 7.4,
+          "cpu_core_2": 21.4,
+          "cpu_core_3": 9.6,
+          "cpu_core_4": 19.0,
+          "cpu_core_5": 9.1,
+          "cpu_core_6": 7.8,
+          "cpu_core_7": 7.3,
+          "cpu_core_8": 17.6,
+          "cpu_core_9": 8.4,
+          "cpu_core_10": 8.9,
+          "cpu_core_11": 11.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1186603008,
+        "percent": 93.0,
+        "process": 0.10154516599867876
+      },
+      "disk": {
+        "read_bytes": 46158354944,
+        "write_bytes": 148806016512,
+        "read_count": 1587759,
+        "write_count": 14900643
+      },
+      "network": {
+        "bytes_sent": 432268974,
+        "bytes_recv": 1120063907,
+        "packets_sent": 1750381,
+        "packets_recv": 1468999
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:14:16.729788",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 23.0,
+          "cpu_core_1": 10.7,
+          "cpu_core_2": 24.2,
+          "cpu_core_3": 6.7,
+          "cpu_core_4": 15.7,
+          "cpu_core_5": 11.4,
+          "cpu_core_6": 12.1,
+          "cpu_core_7": 9.4,
+          "cpu_core_8": 20.6,
+          "cpu_core_9": 8.8,
+          "cpu_core_10": 7.7,
+          "cpu_core_11": 7.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1244770304,
+        "percent": 92.6,
+        "process": 0.10161797563013096
+      },
+      "disk": {
+        "read_bytes": 46162157568,
+        "write_bytes": 149553327616,
+        "read_count": 1587935,
+        "write_count": 15007421
+      },
+      "network": {
+        "bytes_sent": 432780880,
+        "bytes_recv": 1120517433,
+        "packets_sent": 1753357,
+        "packets_recv": 1471557
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:19:21.362890",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 26.4,
+          "cpu_core_1": 7.4,
+          "cpu_core_2": 21.6,
+          "cpu_core_3": 10.0,
+          "cpu_core_4": 17.8,
+          "cpu_core_5": 7.4,
+          "cpu_core_6": 7.6,
+          "cpu_core_7": 10.0,
+          "cpu_core_8": 20.4,
+          "cpu_core_9": 9.8,
+          "cpu_core_10": 8.4,
+          "cpu_core_11": 7.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1255596032,
+        "percent": 92.6,
+        "process": 0.10176359489303538
+      },
+      "disk": {
+        "read_bytes": 46166348288,
+        "write_bytes": 150299381248,
+        "read_count": 1588070,
+        "write_count": 15114198
+      },
+      "network": {
+        "bytes_sent": 433245443,
+        "bytes_recv": 1120873957,
+        "packets_sent": 1756122,
+        "packets_recv": 1473750
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:24:26.014859",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 24.1,
+          "cpu_core_1": 10.0,
+          "cpu_core_2": 24.6,
+          "cpu_core_3": 7.2,
+          "cpu_core_4": 18.4,
+          "cpu_core_5": 9.0,
+          "cpu_core_6": 7.1,
+          "cpu_core_7": 6.9,
+          "cpu_core_8": 15.0,
+          "cpu_core_9": 12.1,
+          "cpu_core_10": 12.4,
+          "cpu_core_11": 10.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1257119744,
+        "percent": 92.6,
+        "process": 0.10176359489303538
+      },
+      "disk": {
+        "read_bytes": 46175273472,
+        "write_bytes": 151090302464,
+        "read_count": 1588335,
+        "write_count": 15225679
+      },
+      "network": {
+        "bytes_sent": 433714886,
+        "bytes_recv": 1121284678,
+        "packets_sent": 1758996,
+        "packets_recv": 1476128
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:29:30.642521",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 25.7,
+          "cpu_core_1": 8.7,
+          "cpu_core_2": 22.2,
+          "cpu_core_3": 9.2,
+          "cpu_core_4": 19.2,
+          "cpu_core_5": 9.9,
+          "cpu_core_6": 8.1,
+          "cpu_core_7": 7.1,
+          "cpu_core_8": 18.4,
+          "cpu_core_9": 8.2,
+          "cpu_core_10": 7.6,
+          "cpu_core_11": 10.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1299546112,
+        "percent": 92.3,
+        "process": 0.10176359489303538
+      },
+      "disk": {
+        "read_bytes": 46183815680,
+        "write_bytes": 151857716736,
+        "read_count": 1588604,
+        "write_count": 15332361
+      },
+      "network": {
+        "bytes_sent": 434173081,
+        "bytes_recv": 1121626011,
+        "packets_sent": 1761773,
+        "packets_recv": 1478258
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:34:35.299703",
+      "cpu": {
+        "total": 12.6,
+        "per_core": {
+          "cpu_core_0": 24.7,
+          "cpu_core_1": 9.8,
+          "cpu_core_2": 23.5,
+          "cpu_core_3": 7.8,
+          "cpu_core_4": 13.3,
+          "cpu_core_5": 9.3,
+          "cpu_core_6": 10.7,
+          "cpu_core_7": 9.6,
+          "cpu_core_8": 19.0,
+          "cpu_core_9": 8.6,
+          "cpu_core_10": 7.2,
+          "cpu_core_11": 6.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1288957952,
+        "percent": 92.4,
+        "process": 0.10178786477018612
+      },
+      "disk": {
+        "read_bytes": 46187089408,
+        "write_bytes": 152606981632,
+        "read_count": 1588737,
+        "write_count": 15438839
+      },
+      "network": {
+        "bytes_sent": 434771415,
+        "bytes_recv": 1122111619,
+        "packets_sent": 1764854,
+        "packets_recv": 1480839
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:39:39.963855",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 25.8,
+          "cpu_core_1": 9.1,
+          "cpu_core_2": 23.4,
+          "cpu_core_3": 8.2,
+          "cpu_core_4": 17.8,
+          "cpu_core_5": 7.8,
+          "cpu_core_6": 7.2,
+          "cpu_core_7": 9.2,
+          "cpu_core_8": 18.3,
+          "cpu_core_9": 11.5,
+          "cpu_core_10": 8.4,
+          "cpu_core_11": 8.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1243541504,
+        "percent": 92.6,
+        "process": 0.10263731047046186
+      },
+      "disk": {
+        "read_bytes": 46199918080,
+        "write_bytes": 153355279872,
+        "read_count": 1589225,
+        "write_count": 15545802
+      },
+      "network": {
+        "bytes_sent": 435298459,
+        "bytes_recv": 1122548557,
+        "packets_sent": 1767752,
+        "packets_recv": 1483128
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:44:44.604078",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 25.8,
+          "cpu_core_1": 9.1,
+          "cpu_core_2": 22.8,
+          "cpu_core_3": 9.3,
+          "cpu_core_4": 18.4,
+          "cpu_core_5": 9.2,
+          "cpu_core_6": 8.2,
+          "cpu_core_7": 7.4,
+          "cpu_core_8": 15.1,
+          "cpu_core_9": 9.3,
+          "cpu_core_10": 11.5,
+          "cpu_core_11": 11.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1288957952,
+        "percent": 92.4,
+        "process": 0.10229753219035155
+      },
+      "disk": {
+        "read_bytes": 46203764224,
+        "write_bytes": 154107223552,
+        "read_count": 1589351,
+        "write_count": 15653225
+      },
+      "network": {
+        "bytes_sent": 435846622,
+        "bytes_recv": 1122998773,
+        "packets_sent": 1770797,
+        "packets_recv": 1485564
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:49:49.250708",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 24.6,
+          "cpu_core_1": 9.8,
+          "cpu_core_2": 24.5,
+          "cpu_core_3": 7.4,
+          "cpu_core_4": 17.6,
+          "cpu_core_5": 12.2,
+          "cpu_core_6": 9.3,
+          "cpu_core_7": 7.7,
+          "cpu_core_8": 19.1,
+          "cpu_core_9": 8.1,
+          "cpu_core_10": 7.2,
+          "cpu_core_11": 7.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1323220992,
+        "percent": 92.2,
+        "process": 0.10229753219035155
+      },
+      "disk": {
+        "read_bytes": 46279079936,
+        "write_bytes": 154870296064,
+        "read_count": 1593599,
+        "write_count": 15763321
+      },
+      "network": {
+        "bytes_sent": 436393941,
+        "bytes_recv": 1123401263,
+        "packets_sent": 1773666,
+        "packets_recv": 1487852
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:54:53.905839",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 27.3,
+          "cpu_core_1": 7.8,
+          "cpu_core_2": 23.1,
+          "cpu_core_3": 10.0,
+          "cpu_core_4": 15.0,
+          "cpu_core_5": 7.4,
+          "cpu_core_6": 10.2,
+          "cpu_core_7": 11.3,
+          "cpu_core_8": 19.9,
+          "cpu_core_9": 9.7,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 7.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1229565952,
+        "percent": 92.7,
+        "process": 0.10237034182180377
+      },
+      "disk": {
+        "read_bytes": 46279945216,
+        "write_bytes": 155621117440,
+        "read_count": 1593640,
+        "write_count": 15869973
+      },
+      "network": {
+        "bytes_sent": 436888350,
+        "bytes_recv": 1123765209,
+        "packets_sent": 1776503,
+        "packets_recv": 1490034
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T17:59:58.564963",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 23.9,
+          "cpu_core_1": 10.3,
+          "cpu_core_2": 24.6,
+          "cpu_core_3": 7.1,
+          "cpu_core_4": 18.8,
+          "cpu_core_5": 7.5,
+          "cpu_core_6": 7.3,
+          "cpu_core_7": 7.3,
+          "cpu_core_8": 17.9,
+          "cpu_core_9": 13.7,
+          "cpu_core_10": 10.4,
+          "cpu_core_11": 8.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1317261312,
+        "percent": 92.2,
+        "process": 0.10237034182180377
+      },
+      "disk": {
+        "read_bytes": 46281017856,
+        "write_bytes": 156390479360,
+        "read_count": 1593675,
+        "write_count": 15975937
+      },
+      "network": {
+        "bytes_sent": 437420800,
+        "bytes_recv": 1124196876,
+        "packets_sent": 1779493,
+        "packets_recv": 1492386
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:05:03.199003",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 27.1,
+          "cpu_core_1": 7.1,
+          "cpu_core_2": 23.1,
+          "cpu_core_3": 9.2,
+          "cpu_core_4": 18.7,
+          "cpu_core_5": 8.7,
+          "cpu_core_6": 7.6,
+          "cpu_core_7": 7.4,
+          "cpu_core_8": 16.2,
+          "cpu_core_9": 7.9,
+          "cpu_core_10": 10.1,
+          "cpu_core_11": 11.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1298731008,
+        "percent": 92.3,
+        "process": 0.10244315145325597
+      },
+      "disk": {
+        "read_bytes": 46282535424,
+        "write_bytes": 157145142784,
+        "read_count": 1593714,
+        "write_count": 16083624
+      },
+      "network": {
+        "bytes_sent": 437910250,
+        "bytes_recv": 1124548869,
+        "packets_sent": 1782293,
+        "packets_recv": 1494574
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:10:07.857868",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 24.0,
+          "cpu_core_1": 10.7,
+          "cpu_core_2": 25.8,
+          "cpu_core_3": 6.4,
+          "cpu_core_4": 16.0,
+          "cpu_core_5": 12.2,
+          "cpu_core_6": 10.1,
+          "cpu_core_7": 8.7,
+          "cpu_core_8": 19.2,
+          "cpu_core_9": 8.1,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 6.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1289048064,
+        "percent": 92.4,
+        "process": 0.1010354985785133
+      },
+      "disk": {
+        "read_bytes": 46289814016,
+        "write_bytes": 157894657536,
+        "read_count": 1593866,
+        "write_count": 16189625
+      },
+      "network": {
+        "bytes_sent": 438466716,
+        "bytes_recv": 1124970003,
+        "packets_sent": 1785223,
+        "packets_recv": 1496894
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:15:12.516141",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 26.5,
+          "cpu_core_1": 7.9,
+          "cpu_core_2": 21.6,
+          "cpu_core_3": 10.0,
+          "cpu_core_4": 16.7,
+          "cpu_core_5": 6.8,
+          "cpu_core_6": 8.6,
+          "cpu_core_7": 11.5,
+          "cpu_core_8": 20.1,
+          "cpu_core_9": 9.4,
+          "cpu_core_10": 8.5,
+          "cpu_core_11": 7.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1292365824,
+        "percent": 92.3,
+        "process": 0.10149662624437729
+      },
+      "disk": {
+        "read_bytes": 46305388544,
+        "write_bytes": 158640961024,
+        "read_count": 1594180,
+        "write_count": 16295774
+      },
+      "network": {
+        "bytes_sent": 438931842,
+        "bytes_recv": 1125334881,
+        "packets_sent": 1788047,
+        "packets_recv": 1499074
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:20:17.141734",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 24.1,
+          "cpu_core_1": 10.9,
+          "cpu_core_2": 24.4,
+          "cpu_core_3": 7.0,
+          "cpu_core_4": 19.2,
+          "cpu_core_5": 8.6,
+          "cpu_core_6": 7.6,
+          "cpu_core_7": 7.1,
+          "cpu_core_8": 16.5,
+          "cpu_core_9": 11.6,
+          "cpu_core_10": 11.2,
+          "cpu_core_11": 9.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1060720640,
+        "percent": 93.7,
+        "process": 0.10149662624437729
+      },
+      "disk": {
+        "read_bytes": 46443133952,
+        "write_bytes": 159679034880,
+        "read_count": 1597964,
+        "write_count": 16406229
+      },
+      "network": {
+        "bytes_sent": 442858572,
+        "bytes_recv": 1129285205,
+        "packets_sent": 1792173,
+        "packets_recv": 1502969
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:25:21.778063",
+      "cpu": {
+        "total": 13.3,
+        "per_core": {
+          "cpu_core_0": 27.3,
+          "cpu_core_1": 7.9,
+          "cpu_core_2": 22.1,
+          "cpu_core_3": 10.2,
+          "cpu_core_4": 20.3,
+          "cpu_core_5": 9.2,
+          "cpu_core_6": 8.0,
+          "cpu_core_7": 7.7,
+          "cpu_core_8": 18.5,
+          "cpu_core_9": 8.2,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 11.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1060446208,
+        "percent": 93.7,
+        "process": 0.10156943587582949
+      },
+      "disk": {
+        "read_bytes": 46519523840,
+        "write_bytes": 160436442624,
+        "read_count": 1599778,
+        "write_count": 16512365
+      },
+      "network": {
+        "bytes_sent": 443756819,
+        "bytes_recv": 1130599742,
+        "packets_sent": 1796545,
+        "packets_recv": 1506719
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:30:26.432658",
+      "cpu": {
+        "total": 12.7,
+        "per_core": {
+          "cpu_core_0": 23.8,
+          "cpu_core_1": 10.9,
+          "cpu_core_2": 24.3,
+          "cpu_core_3": 7.3,
+          "cpu_core_4": 13.6,
+          "cpu_core_5": 10.6,
+          "cpu_core_6": 11.7,
+          "cpu_core_7": 8.4,
+          "cpu_core_8": 19.8,
+          "cpu_core_9": 8.1,
+          "cpu_core_10": 7.0,
+          "cpu_core_11": 6.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1098350592,
+        "percent": 93.5,
+        "process": 0.10120538771856845
+      },
+      "disk": {
+        "read_bytes": 46524740096,
+        "write_bytes": 161200868864,
+        "read_count": 1599992,
+        "write_count": 16617910
+      },
+      "network": {
+        "bytes_sent": 444298450,
+        "bytes_recv": 1131090762,
+        "packets_sent": 1799491,
+        "packets_recv": 1509139
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:35:31.072772",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 25.9,
+          "cpu_core_1": 8.2,
+          "cpu_core_2": 22.7,
+          "cpu_core_3": 9.2,
+          "cpu_core_4": 17.6,
+          "cpu_core_5": 8.0,
+          "cpu_core_6": 7.9,
+          "cpu_core_7": 10.9,
+          "cpu_core_8": 20.8,
+          "cpu_core_9": 10.5,
+          "cpu_core_10": 8.2,
+          "cpu_core_11": 7.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1092931584,
+        "percent": 93.5,
+        "process": 0.10122965759571918
+      },
+      "disk": {
+        "read_bytes": 46526567424,
+        "write_bytes": 161947237888,
+        "read_count": 1600047,
+        "write_count": 16724688
+      },
+      "network": {
+        "bytes_sent": 444774531,
+        "bytes_recv": 1131417751,
+        "packets_sent": 1802315,
+        "packets_recv": 1511301
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:40:35.736183",
+      "cpu": {
+        "total": 12.8,
+        "per_core": {
+          "cpu_core_0": 24.1,
+          "cpu_core_1": 9.8,
+          "cpu_core_2": 23.6,
+          "cpu_core_3": 8.1,
+          "cpu_core_4": 18.8,
+          "cpu_core_5": 7.7,
+          "cpu_core_6": 7.3,
+          "cpu_core_7": 6.3,
+          "cpu_core_8": 14.8,
+          "cpu_core_9": 10.4,
+          "cpu_core_10": 11.9,
+          "cpu_core_11": 10.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1074159616,
+        "percent": 93.6,
+        "process": 0.1042876621167119
+      },
+      "disk": {
+        "read_bytes": 46539101696,
+        "write_bytes": 162696883712,
+        "read_count": 1600543,
+        "write_count": 16830871
+      },
+      "network": {
+        "bytes_sent": 445290955,
+        "bytes_recv": 1131866280,
+        "packets_sent": 1805180,
+        "packets_recv": 1513667
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:45:40.375951",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 25.1,
+          "cpu_core_1": 9.3,
+          "cpu_core_2": 23.1,
+          "cpu_core_3": 8.8,
+          "cpu_core_4": 19.2,
+          "cpu_core_5": 10.7,
+          "cpu_core_6": 8.6,
+          "cpu_core_7": 7.7,
+          "cpu_core_8": 19.2,
+          "cpu_core_9": 7.8,
+          "cpu_core_10": 7.5,
+          "cpu_core_11": 9.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1077944320,
+        "percent": 93.6,
+        "process": 0.10443328137961631
+      },
+      "disk": {
+        "read_bytes": 46539654656,
+        "write_bytes": 163447139840,
+        "read_count": 1600562,
+        "write_count": 16936887
+      },
+      "network": {
+        "bytes_sent": 445820162,
+        "bytes_recv": 1132256395,
+        "packets_sent": 1808140,
+        "packets_recv": 1515919
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:50:45.035832",
+      "cpu": {
+        "total": 12.8,
+        "per_core": {
+          "cpu_core_0": 25.4,
+          "cpu_core_1": 8.5,
+          "cpu_core_2": 22.5,
+          "cpu_core_3": 8.7,
+          "cpu_core_4": 14.5,
+          "cpu_core_5": 8.5,
+          "cpu_core_6": 10.3,
+          "cpu_core_7": 10.6,
+          "cpu_core_8": 19.1,
+          "cpu_core_9": 9.4,
+          "cpu_core_10": 8.1,
+          "cpu_core_11": 7.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1073565696,
+        "percent": 93.6,
+        "process": 0.10443328137961631
+      },
+      "disk": {
+        "read_bytes": 46540416512,
+        "write_bytes": 164193459712,
+        "read_count": 1600583,
+        "write_count": 17043054
+      },
+      "network": {
+        "bytes_sent": 446309471,
+        "bytes_recv": 1132740667,
+        "packets_sent": 1810902,
+        "packets_recv": 1518352
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T18:55:49.675027",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 23.6,
+          "cpu_core_1": 10.9,
+          "cpu_core_2": 23.9,
+          "cpu_core_3": 7.7,
+          "cpu_core_4": 18.2,
+          "cpu_core_5": 7.6,
+          "cpu_core_6": 7.3,
+          "cpu_core_7": 7.8,
+          "cpu_core_8": 18.6,
+          "cpu_core_9": 12.5,
+          "cpu_core_10": 9.7,
+          "cpu_core_11": 8.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 923090944,
+        "percent": 94.5,
+        "process": 0.10443328137961631
+      },
+      "disk": {
+        "read_bytes": 46541262336,
+        "write_bytes": 164940051968,
+        "read_count": 1600617,
+        "write_count": 17148957
+      },
+      "network": {
+        "bytes_sent": 446747390,
+        "bytes_recv": 1133211389,
+        "packets_sent": 1813627,
+        "packets_recv": 1520902
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:00:54.311530",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 26.4,
+          "cpu_core_1": 7.6,
+          "cpu_core_2": 21.4,
+          "cpu_core_3": 9.4,
+          "cpu_core_4": 18.6,
+          "cpu_core_5": 9.2,
+          "cpu_core_6": 8.3,
+          "cpu_core_7": 7.9,
+          "cpu_core_8": 15.7,
+          "cpu_core_9": 8.9,
+          "cpu_core_10": 11.5,
+          "cpu_core_11": 12.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1036292096,
+        "percent": 93.9,
+        "process": 0.10406923322235527
+      },
+      "disk": {
+        "read_bytes": 46569645568,
+        "write_bytes": 165713229312,
+        "read_count": 1601770,
+        "write_count": 17255737
+      },
+      "network": {
+        "bytes_sent": 447391314,
+        "bytes_recv": 1133757647,
+        "packets_sent": 1816794,
+        "packets_recv": 1523528
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:05:58.946158",
+      "cpu": {
+        "total": 12.8,
+        "per_core": {
+          "cpu_core_0": 23.6,
+          "cpu_core_1": 10.6,
+          "cpu_core_2": 25.0,
+          "cpu_core_3": 6.7,
+          "cpu_core_4": 17.2,
+          "cpu_core_5": 11.6,
+          "cpu_core_6": 9.3,
+          "cpu_core_7": 7.9,
+          "cpu_core_8": 18.2,
+          "cpu_core_9": 8.1,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 7.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 987492352,
+        "percent": 94.1,
+        "process": 0.104093503099506
+      },
+      "disk": {
+        "read_bytes": 46570636800,
+        "write_bytes": 166462965248,
+        "read_count": 1601796,
+        "write_count": 17363096
+      },
+      "network": {
+        "bytes_sent": 447833711,
+        "bytes_recv": 1134168777,
+        "packets_sent": 1819505,
+        "packets_recv": 1525870
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:11:03.567331",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 26.9,
+          "cpu_core_1": 7.9,
+          "cpu_core_2": 22.0,
+          "cpu_core_3": 9.4,
+          "cpu_core_4": 14.6,
+          "cpu_core_5": 7.8,
+          "cpu_core_6": 10.7,
+          "cpu_core_7": 11.6,
+          "cpu_core_8": 19.8,
+          "cpu_core_9": 10.0,
+          "cpu_core_10": 8.7,
+          "cpu_core_11": 7.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1279819776,
+        "percent": 92.4,
+        "process": 0.104093503099506
+      },
+      "disk": {
+        "read_bytes": 46578316800,
+        "write_bytes": 167219234304,
+        "read_count": 1602025,
+        "write_count": 17470425
+      },
+      "network": {
+        "bytes_sent": 448335835,
+        "bytes_recv": 1134591074,
+        "packets_sent": 1822373,
+        "packets_recv": 1528127
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:16:08.216245",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 24.0,
+          "cpu_core_1": 10.5,
+          "cpu_core_2": 24.6,
+          "cpu_core_3": 6.5,
+          "cpu_core_4": 19.3,
+          "cpu_core_5": 8.3,
+          "cpu_core_6": 6.9,
+          "cpu_core_7": 6.7,
+          "cpu_core_8": 16.7,
+          "cpu_core_9": 12.7,
+          "cpu_core_10": 11.0,
+          "cpu_core_11": 9.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 981762048,
+        "percent": 94.2,
+        "process": 0.10414204285380747
+      },
+      "disk": {
+        "read_bytes": 46579017216,
+        "write_bytes": 167965681152,
+        "read_count": 1602053,
+        "write_count": 17576951
+      },
+      "network": {
+        "bytes_sent": 448790426,
+        "bytes_recv": 1134951912,
+        "packets_sent": 1825185,
+        "packets_recv": 1530307
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:21:12.868737",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 28.0,
+          "cpu_core_1": 7.3,
+          "cpu_core_2": 22.3,
+          "cpu_core_3": 9.6,
+          "cpu_core_4": 18.7,
+          "cpu_core_5": 9.3,
+          "cpu_core_6": 8.0,
+          "cpu_core_7": 7.0,
+          "cpu_core_8": 16.4,
+          "cpu_core_9": 7.5,
+          "cpu_core_10": 9.0,
+          "cpu_core_11": 11.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1024438272,
+        "percent": 93.9,
+        "process": 0.10414204285380747
+      },
+      "disk": {
+        "read_bytes": 46581831680,
+        "write_bytes": 168747546112,
+        "read_count": 1602148,
+        "write_count": 17684456
+      },
+      "network": {
+        "bytes_sent": 449285547,
+        "bytes_recv": 1135371985,
+        "packets_sent": 1828032,
+        "packets_recv": 1532523
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:26:17.530152",
+      "cpu": {
+        "total": 12.6,
+        "per_core": {
+          "cpu_core_0": 23.6,
+          "cpu_core_1": 10.8,
+          "cpu_core_2": 24.9,
+          "cpu_core_3": 6.3,
+          "cpu_core_4": 14.1,
+          "cpu_core_5": 10.5,
+          "cpu_core_6": 11.4,
+          "cpu_core_7": 8.3,
+          "cpu_core_8": 19.0,
+          "cpu_core_9": 7.9,
+          "cpu_core_10": 7.5,
+          "cpu_core_11": 6.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1275498496,
+        "percent": 92.4,
+        "process": 0.10414204285380747
+      },
+      "disk": {
+        "read_bytes": 46582880768,
+        "write_bytes": 169495827968,
+        "read_count": 1602182,
+        "write_count": 17791302
+      },
+      "network": {
+        "bytes_sent": 449724047,
+        "bytes_recv": 1135707218,
+        "packets_sent": 1830781,
+        "packets_recv": 1534586
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:31:22.194002",
+      "cpu": {
+        "total": 12.8,
+        "per_core": {
+          "cpu_core_0": 27.5,
+          "cpu_core_1": 7.5,
+          "cpu_core_2": 21.8,
+          "cpu_core_3": 9.9,
+          "cpu_core_4": 17.0,
+          "cpu_core_5": 7.0,
+          "cpu_core_6": 7.2,
+          "cpu_core_7": 10.1,
+          "cpu_core_8": 20.2,
+          "cpu_core_9": 9.5,
+          "cpu_core_10": 8.1,
+          "cpu_core_11": 7.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1009496064,
+        "percent": 94.0,
+        "process": 0.10419058260810894
+      },
+      "disk": {
+        "read_bytes": 46584486912,
+        "write_bytes": 170260628992,
+        "read_count": 1602226,
+        "write_count": 17897312
+      },
+      "network": {
+        "bytes_sent": 450334170,
+        "bytes_recv": 1136215408,
+        "packets_sent": 1833921,
+        "packets_recv": 1537195
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:36:26.836848",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 24.0,
+          "cpu_core_1": 11.1,
+          "cpu_core_2": 24.1,
+          "cpu_core_3": 7.1,
+          "cpu_core_4": 19.1,
+          "cpu_core_5": 8.4,
+          "cpu_core_6": 7.5,
+          "cpu_core_7": 7.6,
+          "cpu_core_8": 15.8,
+          "cpu_core_9": 11.4,
+          "cpu_core_10": 12.4,
+          "cpu_core_11": 9.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 937267200,
+        "percent": 94.4,
+        "process": 0.10419058260810894
+      },
+      "disk": {
+        "read_bytes": 46594140672,
+        "write_bytes": 171009369600,
+        "read_count": 1602556,
+        "write_count": 18004073
+      },
+      "network": {
+        "bytes_sent": 450883807,
+        "bytes_recv": 1136629764,
+        "packets_sent": 1836907,
+        "packets_recv": 1539566
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:41:31.483904",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 26.0,
+          "cpu_core_1": 8.4,
+          "cpu_core_2": 21.9,
+          "cpu_core_3": 9.7,
+          "cpu_core_4": 20.0,
+          "cpu_core_5": 9.8,
+          "cpu_core_6": 8.4,
+          "cpu_core_7": 7.2,
+          "cpu_core_8": 19.2,
+          "cpu_core_9": 7.8,
+          "cpu_core_10": 7.3,
+          "cpu_core_11": 10.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1195638784,
+        "percent": 92.9,
+        "process": 0.10506429818553545
+      },
+      "disk": {
+        "read_bytes": 46618285568,
+        "write_bytes": 171759552512,
+        "read_count": 1603572,
+        "write_count": 18111246
+      },
+      "network": {
+        "bytes_sent": 451459431,
+        "bytes_recv": 1137145861,
+        "packets_sent": 1839994,
+        "packets_recv": 1542020
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:46:36.188995",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 25.9,
+          "cpu_core_1": 9.8,
+          "cpu_core_2": 23.9,
+          "cpu_core_3": 8.2,
+          "cpu_core_4": 13.8,
+          "cpu_core_5": 9.8,
+          "cpu_core_6": 11.1,
+          "cpu_core_7": 9.4,
+          "cpu_core_8": 18.8,
+          "cpu_core_9": 8.5,
+          "cpu_core_10": 7.7,
+          "cpu_core_11": 7.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 954400768,
+        "percent": 94.3,
+        "process": 0.1780923585320996
+      },
+      "disk": {
+        "read_bytes": 46618589184,
+        "write_bytes": 172508645376,
+        "read_count": 1603584,
+        "write_count": 18218157
+      },
+      "network": {
+        "bytes_sent": 451959582,
+        "bytes_recv": 1137519118,
+        "packets_sent": 1842831,
+        "packets_recv": 1544190
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:51:40.801421",
+      "cpu": {
+        "total": 12.7,
+        "per_core": {
+          "cpu_core_0": 25.3,
+          "cpu_core_1": 9.4,
+          "cpu_core_2": 22.3,
+          "cpu_core_3": 8.3,
+          "cpu_core_4": 17.8,
+          "cpu_core_5": 7.4,
+          "cpu_core_6": 6.7,
+          "cpu_core_7": 7.8,
+          "cpu_core_8": 19.5,
+          "cpu_core_9": 11.0,
+          "cpu_core_10": 8.3,
+          "cpu_core_11": 7.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 950861824,
+        "percent": 94.4,
+        "process": 0.17811662840925033
+      },
+      "disk": {
+        "read_bytes": 46619011072,
+        "write_bytes": 173255120896,
+        "read_count": 1603599,
+        "write_count": 18325079
+      },
+      "network": {
+        "bytes_sent": 452451670,
+        "bytes_recv": 1137915248,
+        "packets_sent": 1845693,
+        "packets_recv": 1546443
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T19:56:45.447641",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 25.9,
+          "cpu_core_1": 8.8,
+          "cpu_core_2": 22.0,
+          "cpu_core_3": 9.1,
+          "cpu_core_4": 19.7,
+          "cpu_core_5": 8.5,
+          "cpu_core_6": 6.9,
+          "cpu_core_7": 7.1,
+          "cpu_core_8": 15.1,
+          "cpu_core_9": 9.1,
+          "cpu_core_10": 11.7,
+          "cpu_core_11": 12.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1110466560,
+        "percent": 93.4,
+        "process": 0.1780923585320996
+      },
+      "disk": {
+        "read_bytes": 46619444224,
+        "write_bytes": 174018240512,
+        "read_count": 1603626,
+        "write_count": 18434446
+      },
+      "network": {
+        "bytes_sent": 452944758,
+        "bytes_recv": 1138248644,
+        "packets_sent": 1848450,
+        "packets_recv": 1548513
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:01:50.093653",
+      "cpu": {
+        "total": 13.2,
+        "per_core": {
+          "cpu_core_0": 24.9,
+          "cpu_core_1": 10.7,
+          "cpu_core_2": 24.9,
+          "cpu_core_3": 7.6,
+          "cpu_core_4": 17.4,
+          "cpu_core_5": 11.5,
+          "cpu_core_6": 9.1,
+          "cpu_core_7": 8.9,
+          "cpu_core_8": 19.2,
+          "cpu_core_9": 8.2,
+          "cpu_core_10": 7.3,
+          "cpu_core_11": 7.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 894861312,
+        "percent": 94.7,
+        "process": 0.17285006506754064
+      },
+      "disk": {
+        "read_bytes": 46621115392,
+        "write_bytes": 174794100736,
+        "read_count": 1603684,
+        "write_count": 18542925
+      },
+      "network": {
+        "bytes_sent": 453562962,
+        "bytes_recv": 1138785225,
+        "packets_sent": 1851638,
+        "packets_recv": 1551160
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:06:54.738150",
+      "cpu": {
+        "total": 12.8,
+        "per_core": {
+          "cpu_core_0": 26.1,
+          "cpu_core_1": 8.0,
+          "cpu_core_2": 22.1,
+          "cpu_core_3": 9.9,
+          "cpu_core_4": 15.0,
+          "cpu_core_5": 7.3,
+          "cpu_core_6": 10.1,
+          "cpu_core_7": 11.6,
+          "cpu_core_8": 18.9,
+          "cpu_core_9": 8.9,
+          "cpu_core_10": 8.1,
+          "cpu_core_11": 7.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 923963392,
+        "percent": 94.5,
+        "process": 0.17644200688584954
+      },
+      "disk": {
+        "read_bytes": 46621811712,
+        "write_bytes": 175559888896,
+        "read_count": 1603709,
+        "write_count": 18652655
+      },
+      "network": {
+        "bytes_sent": 454001174,
+        "bytes_recv": 1139117591,
+        "packets_sent": 1854321,
+        "packets_recv": 1553256
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:11:59.371902",
+      "cpu": {
+        "total": 12.7,
+        "per_core": {
+          "cpu_core_0": 23.8,
+          "cpu_core_1": 10.1,
+          "cpu_core_2": 25.3,
+          "cpu_core_3": 6.4,
+          "cpu_core_4": 17.4,
+          "cpu_core_5": 7.8,
+          "cpu_core_6": 6.9,
+          "cpu_core_7": 6.6,
+          "cpu_core_8": 17.4,
+          "cpu_core_9": 12.0,
+          "cpu_core_10": 9.9,
+          "cpu_core_11": 8.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1104089088,
+        "percent": 93.5,
+        "process": 0.17644200688584954
+      },
+      "disk": {
+        "read_bytes": 46622313984,
+        "write_bytes": 176328138752,
+        "read_count": 1603727,
+        "write_count": 18762170
+      },
+      "network": {
+        "bytes_sent": 454477450,
+        "bytes_recv": 1139521182,
+        "packets_sent": 1857113,
+        "packets_recv": 1555462
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:17:03.994078",
+      "cpu": {
+        "total": 12.6,
+        "per_core": {
+          "cpu_core_0": 27.0,
+          "cpu_core_1": 6.8,
+          "cpu_core_2": 22.0,
+          "cpu_core_3": 9.5,
+          "cpu_core_4": 17.9,
+          "cpu_core_5": 8.6,
+          "cpu_core_6": 7.5,
+          "cpu_core_7": 7.3,
+          "cpu_core_8": 16.0,
+          "cpu_core_9": 7.6,
+          "cpu_core_10": 10.0,
+          "cpu_core_11": 10.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 840036352,
+        "percent": 95.0,
+        "process": 0.17644200688584954
+      },
+      "disk": {
+        "read_bytes": 46626443264,
+        "write_bytes": 177078169600,
+        "read_count": 1603826,
+        "write_count": 18869457
+      },
+      "network": {
+        "bytes_sent": 454959226,
+        "bytes_recv": 1139913298,
+        "packets_sent": 1860001,
+        "packets_recv": 1557657
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:22:08.628771",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 25.0,
+          "cpu_core_1": 10.6,
+          "cpu_core_2": 25.6,
+          "cpu_core_3": 6.7,
+          "cpu_core_4": 15.8,
+          "cpu_core_5": 11.4,
+          "cpu_core_6": 9.6,
+          "cpu_core_7": 7.8,
+          "cpu_core_8": 18.2,
+          "cpu_core_9": 8.6,
+          "cpu_core_10": 8.3,
+          "cpu_core_11": 7.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 857128960,
+        "percent": 94.9,
+        "process": 0.17277725543608843
+      },
+      "disk": {
+        "read_bytes": 46644592640,
+        "write_bytes": 177895456768,
+        "read_count": 1604322,
+        "write_count": 18981777
+      },
+      "network": {
+        "bytes_sent": 455471679,
+        "bytes_recv": 1140424780,
+        "packets_sent": 1862812,
+        "packets_recv": 1560297
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:27:13.284139",
+      "cpu": {
+        "total": 12.8,
+        "per_core": {
+          "cpu_core_0": 26.8,
+          "cpu_core_1": 7.2,
+          "cpu_core_2": 21.3,
+          "cpu_core_3": 9.0,
+          "cpu_core_4": 15.9,
+          "cpu_core_5": 7.0,
+          "cpu_core_6": 8.7,
+          "cpu_core_7": 11.2,
+          "cpu_core_8": 20.0,
+          "cpu_core_9": 10.0,
+          "cpu_core_10": 8.2,
+          "cpu_core_11": 7.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1143205888,
+        "percent": 93.2,
+        "process": 0.17583525995708116
+      },
+      "disk": {
+        "read_bytes": 46645150208,
+        "write_bytes": 178660825088,
+        "read_count": 1604343,
+        "write_count": 19090800
+      },
+      "network": {
+        "bytes_sent": 455907938,
+        "bytes_recv": 1140734432,
+        "packets_sent": 1865533,
+        "packets_recv": 1562346
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:32:17.939093",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 23.9,
+          "cpu_core_1": 10.7,
+          "cpu_core_2": 24.8,
+          "cpu_core_3": 6.8,
+          "cpu_core_4": 18.3,
+          "cpu_core_5": 8.7,
+          "cpu_core_6": 7.7,
+          "cpu_core_7": 7.1,
+          "cpu_core_8": 15.4,
+          "cpu_core_9": 11.6,
+          "cpu_core_10": 12.0,
+          "cpu_core_11": 9.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 999673856,
+        "percent": 94.1,
+        "process": 0.17238893740167668
+      },
+      "disk": {
+        "read_bytes": 46650024448,
+        "write_bytes": 179437680640,
+        "read_count": 1604437,
+        "write_count": 19198295
+      },
+      "network": {
+        "bytes_sent": 456474677,
+        "bytes_recv": 1141238123,
+        "packets_sent": 1868225,
+        "packets_recv": 1564881
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:37:22.601636",
+      "cpu": {
+        "total": 12.7,
+        "per_core": {
+          "cpu_core_0": 27.2,
+          "cpu_core_1": 7.5,
+          "cpu_core_2": 22.4,
+          "cpu_core_3": 9.8,
+          "cpu_core_4": 18.3,
+          "cpu_core_5": 9.1,
+          "cpu_core_6": 8.3,
+          "cpu_core_7": 7.2,
+          "cpu_core_8": 16.7,
+          "cpu_core_9": 7.5,
+          "cpu_core_10": 7.4,
+          "cpu_core_11": 10.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 974815232,
+        "percent": 94.2,
+        "process": 0.17576245032562895
+      },
+      "disk": {
+        "read_bytes": 46663739392,
+        "write_bytes": 180183951360,
+        "read_count": 1604875,
+        "write_count": 19304852
+      },
+      "network": {
+        "bytes_sent": 456827242,
+        "bytes_recv": 1141592061,
+        "packets_sent": 1870121,
+        "packets_recv": 1567029
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:42:27.245437",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 24.3,
+          "cpu_core_1": 10.3,
+          "cpu_core_2": 24.6,
+          "cpu_core_3": 7.0,
+          "cpu_core_4": 14.3,
+          "cpu_core_5": 10.8,
+          "cpu_core_6": 10.9,
+          "cpu_core_7": 9.0,
+          "cpu_core_8": 20.0,
+          "cpu_core_9": 9.1,
+          "cpu_core_10": 7.7,
+          "cpu_core_11": 8.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1081085952,
+        "percent": 93.6,
+        "process": 0.1792573126353349
+      },
+      "disk": {
+        "read_bytes": 46664626176,
+        "write_bytes": 180934887424,
+        "read_count": 1604910,
+        "write_count": 19410937
+      },
+      "network": {
+        "bytes_sent": 457384583,
+        "bytes_recv": 1142170123,
+        "packets_sent": 1873136,
+        "packets_recv": 1570034
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:47:31.889236",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 25.9,
+          "cpu_core_1": 8.7,
+          "cpu_core_2": 22.3,
+          "cpu_core_3": 9.4,
+          "cpu_core_4": 17.9,
+          "cpu_core_5": 7.5,
+          "cpu_core_6": 7.4,
+          "cpu_core_7": 9.7,
+          "cpu_core_8": 19.4,
+          "cpu_core_9": 10.4,
+          "cpu_core_10": 8.4,
+          "cpu_core_11": 7.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 967901184,
+        "percent": 94.3,
+        "process": 0.1792573126353349
+      },
+      "disk": {
+        "read_bytes": 46665285632,
+        "write_bytes": 181679257600,
+        "read_count": 1604942,
+        "write_count": 19516546
+      },
+      "network": {
+        "bytes_sent": 457823882,
+        "bytes_recv": 1142506714,
+        "packets_sent": 1875874,
+        "packets_recv": 1572286
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:52:36.540039",
+      "cpu": {
+        "total": 12.9,
+        "per_core": {
+          "cpu_core_0": 24.4,
+          "cpu_core_1": 10.1,
+          "cpu_core_2": 23.7,
+          "cpu_core_3": 8.6,
+          "cpu_core_4": 18.2,
+          "cpu_core_5": 8.4,
+          "cpu_core_6": 7.4,
+          "cpu_core_7": 7.4,
+          "cpu_core_8": 15.4,
+          "cpu_core_9": 9.4,
+          "cpu_core_10": 11.0,
+          "cpu_core_11": 10.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 969961472,
+        "percent": 94.3,
+        "process": 0.1792573126353349
+      },
+      "disk": {
+        "read_bytes": 46665986560,
+        "write_bytes": 182424381440,
+        "read_count": 1604968,
+        "write_count": 19621868
+      },
+      "network": {
+        "bytes_sent": 458371931,
+        "bytes_recv": 1142945029,
+        "packets_sent": 1878704,
+        "packets_recv": 1574652
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T20:57:41.200842",
+      "cpu": {
+        "total": 13.0,
+        "per_core": {
+          "cpu_core_0": 25.5,
+          "cpu_core_1": 9.6,
+          "cpu_core_2": 23.3,
+          "cpu_core_3": 8.2,
+          "cpu_core_4": 18.2,
+          "cpu_core_5": 10.9,
+          "cpu_core_6": 8.1,
+          "cpu_core_7": 7.6,
+          "cpu_core_8": 18.3,
+          "cpu_core_9": 8.9,
+          "cpu_core_10": 8.0,
+          "cpu_core_11": 9.4
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1102819328,
+        "percent": 93.5,
+        "process": 0.17928158251248563
+      },
+      "disk": {
+        "read_bytes": 46670305792,
+        "write_bytes": 183170744320,
+        "read_count": 1605079,
+        "write_count": 19727780
+      },
+      "network": {
+        "bytes_sent": 458814843,
+        "bytes_recv": 1143297489,
+        "packets_sent": 1881453,
+        "packets_recv": 1576746
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:02:45.852008",
+      "cpu": {
+        "total": 12.7,
+        "per_core": {
+          "cpu_core_0": 25.9,
+          "cpu_core_1": 8.6,
+          "cpu_core_2": 22.6,
+          "cpu_core_3": 9.6,
+          "cpu_core_4": 14.7,
+          "cpu_core_5": 8.2,
+          "cpu_core_6": 9.9,
+          "cpu_core_7": 10.3,
+          "cpu_core_8": 20.2,
+          "cpu_core_9": 8.3,
+          "cpu_core_10": 7.1,
+          "cpu_core_11": 6.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 972423168,
+        "percent": 94.2,
+        "process": 0.17886899460092312
+      },
+      "disk": {
+        "read_bytes": 46992829440,
+        "write_bytes": 183949619200,
+        "read_count": 1606219,
+        "write_count": 19835232
+      },
+      "network": {
+        "bytes_sent": 459429268,
+        "bytes_recv": 1143839370,
+        "packets_sent": 1884654,
+        "packets_recv": 1579410
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:07:50.504869",
+      "cpu": {
+        "total": 13.1,
+        "per_core": {
+          "cpu_core_0": 25.3,
+          "cpu_core_1": 11.4,
+          "cpu_core_2": 25.2,
+          "cpu_core_3": 7.6,
+          "cpu_core_4": 18.4,
+          "cpu_core_5": 7.7,
+          "cpu_core_6": 6.8,
+          "cpu_core_7": 7.3,
+          "cpu_core_8": 17.8,
+          "cpu_core_9": 11.5,
+          "cpu_core_10": 8.9,
+          "cpu_core_11": 8.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 922107904,
+        "percent": 94.5,
+        "process": 0.17886899460092312
+      },
+      "disk": {
+        "read_bytes": 47133714944,
+        "write_bytes": 184703418368,
+        "read_count": 1609050,
+        "write_count": 19942101
+      },
+      "network": {
+        "bytes_sent": 459923580,
+        "bytes_recv": 1144360598,
+        "packets_sent": 1887611,
+        "packets_recv": 1582119
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:12:55.162023",
+      "cpu": {
+        "total": 27.9,
+        "per_core": {
+          "cpu_core_0": 55.1,
+          "cpu_core_1": 20.2,
+          "cpu_core_2": 45.0,
+          "cpu_core_3": 26.7,
+          "cpu_core_4": 27.0,
+          "cpu_core_5": 22.5,
+          "cpu_core_6": 22.1,
+          "cpu_core_7": 20.9,
+          "cpu_core_8": 27.8,
+          "cpu_core_9": 19.4,
+          "cpu_core_10": 21.9,
+          "cpu_core_11": 24.7
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 766001152,
+        "percent": 95.5,
+        "process": 0.17886899460092312
+      },
+      "disk": {
+        "read_bytes": 47247710720,
+        "write_bytes": 185548443648,
+        "read_count": 1620069,
+        "write_count": 20057462
+      },
+      "network": {
+        "bytes_sent": 464235330,
+        "bytes_recv": 1145196687,
+        "packets_sent": 1892212,
+        "packets_recv": 1587438
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:17:59.773485",
+      "cpu": {
+        "total": 30.3,
+        "per_core": {
+          "cpu_core_0": 58.6,
+          "cpu_core_1": 30.5,
+          "cpu_core_2": 65.0,
+          "cpu_core_3": 23.2,
+          "cpu_core_4": 24.5,
+          "cpu_core_5": 22.5,
+          "cpu_core_6": 23.4,
+          "cpu_core_7": 22.7,
+          "cpu_core_8": 27.7,
+          "cpu_core_9": 22.5,
+          "cpu_core_10": 21.4,
+          "cpu_core_11": 20.5
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 817786880,
+        "percent": 95.2,
+        "process": 0.17879618496947092
+      },
+      "disk": {
+        "read_bytes": 47278953984,
+        "write_bytes": 186353639424,
+        "read_count": 1621660,
+        "write_count": 20168545
+      },
+      "network": {
+        "bytes_sent": 470352103,
+        "bytes_recv": 1146057800,
+        "packets_sent": 1897724,
+        "packets_recv": 1594044
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:23:04.353698",
+      "cpu": {
+        "total": 25.8,
+        "per_core": {
+          "cpu_core_0": 46.0,
+          "cpu_core_1": 12.9,
+          "cpu_core_2": 37.9,
+          "cpu_core_3": 18.8,
+          "cpu_core_4": 28.1,
+          "cpu_core_5": 21.8,
+          "cpu_core_6": 22.2,
+          "cpu_core_7": 23.8,
+          "cpu_core_8": 31.9,
+          "cpu_core_9": 22.3,
+          "cpu_core_10": 21.5,
+          "cpu_core_11": 21.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2566709248,
+        "percent": 84.8,
+        "process": 0.09785614467176688
+      },
+      "disk": {
+        "read_bytes": 49027403776,
+        "write_bytes": 189072160256,
+        "read_count": 1665927,
+        "write_count": 20310188
+      },
+      "network": {
+        "bytes_sent": 474017589,
+        "bytes_recv": 1149890706,
+        "packets_sent": 1903382,
+        "packets_recv": 1600444
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:28:08.945386",
+      "cpu": {
+        "total": 14.9,
+        "per_core": {
+          "cpu_core_0": 31.6,
+          "cpu_core_1": 13.6,
+          "cpu_core_2": 32.7,
+          "cpu_core_3": 7.9,
+          "cpu_core_4": 18.7,
+          "cpu_core_5": 9.1,
+          "cpu_core_6": 8.5,
+          "cpu_core_7": 8.3,
+          "cpu_core_8": 16.8,
+          "cpu_core_9": 11.5,
+          "cpu_core_10": 10.8,
+          "cpu_core_11": 9.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2864734208,
+        "percent": 83.0,
+        "process": 0.0742900939584024
+      },
+      "disk": {
+        "read_bytes": 49042561024,
+        "write_bytes": 189858733568,
+        "read_count": 1666541,
+        "write_count": 20421060
+      },
+      "network": {
+        "bytes_sent": 474488960,
+        "bytes_recv": 1150269155,
+        "packets_sent": 1906261,
+        "packets_recv": 1602789
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:33:13.595496",
+      "cpu": {
+        "total": 15.1,
+        "per_core": {
+          "cpu_core_0": 36.2,
+          "cpu_core_1": 9.7,
+          "cpu_core_2": 30.2,
+          "cpu_core_3": 11.2,
+          "cpu_core_4": 18.2,
+          "cpu_core_5": 9.3,
+          "cpu_core_6": 9.3,
+          "cpu_core_7": 8.8,
+          "cpu_core_8": 17.1,
+          "cpu_core_9": 9.4,
+          "cpu_core_10": 9.7,
+          "cpu_core_11": 10.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2977095680,
+        "percent": 82.4,
+        "process": 0.07462987223851271
+      },
+      "disk": {
+        "read_bytes": 49089106944,
+        "write_bytes": 190697730048,
+        "read_count": 1667204,
+        "write_count": 20532854
+      },
+      "network": {
+        "bytes_sent": 475694605,
+        "bytes_recv": 1150913105,
+        "packets_sent": 1909706,
+        "packets_recv": 1606391
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:38:18.244691",
+      "cpu": {
+        "total": 13.3,
+        "per_core": {
+          "cpu_core_0": 27.8,
+          "cpu_core_1": 11.2,
+          "cpu_core_2": 29.0,
+          "cpu_core_3": 7.0,
+          "cpu_core_4": 14.7,
+          "cpu_core_5": 10.1,
+          "cpu_core_6": 10.2,
+          "cpu_core_7": 8.4,
+          "cpu_core_8": 18.8,
+          "cpu_core_9": 7.9,
+          "cpu_core_10": 7.2,
+          "cpu_core_11": 7.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 3066253312,
+        "percent": 81.8,
+        "process": 0.07487257101002007
+      },
+      "disk": {
+        "read_bytes": 49098135552,
+        "write_bytes": 191498567680,
+        "read_count": 1667506,
+        "write_count": 20644838
+      },
+      "network": {
+        "bytes_sent": 476192166,
+        "bytes_recv": 1151394707,
+        "packets_sent": 1912551,
+        "packets_recv": 1609340
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:43:22.919935",
+      "cpu": {
+        "total": 31.5,
+        "per_core": {
+          "cpu_core_0": 49.1,
+          "cpu_core_1": 20.0,
+          "cpu_core_2": 43.3,
+          "cpu_core_3": 23.5,
+          "cpu_core_4": 32.7,
+          "cpu_core_5": 28.1,
+          "cpu_core_6": 27.3,
+          "cpu_core_7": 29.3,
+          "cpu_core_8": 34.0,
+          "cpu_core_9": 31.1,
+          "cpu_core_10": 29.5,
+          "cpu_core_11": 29.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2366902272,
+        "percent": 86.0,
+        "process": 0.08744436737410122
+      },
+      "disk": {
+        "read_bytes": 49300137472,
+        "write_bytes": 192471543808,
+        "read_count": 1675021,
+        "write_count": 20780731
+      },
+      "network": {
+        "bytes_sent": 479056210,
+        "bytes_recv": 1153992457,
+        "packets_sent": 1918141,
+        "packets_recv": 1615653
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:48:27.562926",
+      "cpu": {
+        "total": 27.8,
+        "per_core": {
+          "cpu_core_0": 46.3,
+          "cpu_core_1": 29.9,
+          "cpu_core_2": 56.8,
+          "cpu_core_3": 19.4,
+          "cpu_core_4": 25.4,
+          "cpu_core_5": 20.7,
+          "cpu_core_6": 21.7,
+          "cpu_core_7": 21.9,
+          "cpu_core_8": 25.2,
+          "cpu_core_9": 23.0,
+          "cpu_core_10": 22.1,
+          "cpu_core_11": 21.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2282627072,
+        "percent": 86.5,
+        "process": 0.08742009749695048
+      },
+      "disk": {
+        "read_bytes": 49312750080,
+        "write_bytes": 193320706048,
+        "read_count": 1675403,
+        "write_count": 20898327
+      },
+      "network": {
+        "bytes_sent": 482571934,
+        "bytes_recv": 1154787723,
+        "packets_sent": 1922809,
+        "packets_recv": 1620918
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:53:32.178061",
+      "cpu": {
+        "total": 35.3,
+        "per_core": {
+          "cpu_core_0": 62.7,
+          "cpu_core_1": 31.0,
+          "cpu_core_2": 59.7,
+          "cpu_core_3": 33.1,
+          "cpu_core_4": 31.8,
+          "cpu_core_5": 28.4,
+          "cpu_core_6": 27.7,
+          "cpu_core_7": 27.4,
+          "cpu_core_8": 31.3,
+          "cpu_core_9": 29.1,
+          "cpu_core_10": 29.7,
+          "cpu_core_11": 31.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1981251584,
+        "percent": 88.3,
+        "process": 0.08725020835689533
+      },
+      "disk": {
+        "read_bytes": 49620729856,
+        "write_bytes": 194308349952,
+        "read_count": 1683800,
+        "write_count": 21035906
+      },
+      "network": {
+        "bytes_sent": 488669232,
+        "bytes_recv": 1155902054,
+        "packets_sent": 1928233,
+        "packets_recv": 1628166
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T21:58:36.794248",
+      "cpu": {
+        "total": 26.1,
+        "per_core": {
+          "cpu_core_0": 51.8,
+          "cpu_core_1": 25.5,
+          "cpu_core_2": 53.9,
+          "cpu_core_3": 21.9,
+          "cpu_core_4": 19.9,
+          "cpu_core_5": 18.5,
+          "cpu_core_6": 20.6,
+          "cpu_core_7": 20.1,
+          "cpu_core_8": 26.0,
+          "cpu_core_9": 18.8,
+          "cpu_core_10": 17.8,
+          "cpu_core_11": 18.0
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2110648320,
+        "percent": 87.5,
+        "process": 0.08727447823404608
+      },
+      "disk": {
+        "read_bytes": 49675757056,
+        "write_bytes": 195325370368,
+        "read_count": 1686415,
+        "write_count": 21177519
+      },
+      "network": {
+        "bytes_sent": 493694240,
+        "bytes_recv": 1156663882,
+        "packets_sent": 1932991,
+        "packets_recv": 1633978
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:03:41.465906",
+      "cpu": {
+        "total": 36.2,
+        "per_core": {
+          "cpu_core_0": 59.4,
+          "cpu_core_1": 33.2,
+          "cpu_core_2": 59.5,
+          "cpu_core_3": 31.8,
+          "cpu_core_4": 31.7,
+          "cpu_core_5": 29.2,
+          "cpu_core_6": 28.8,
+          "cpu_core_7": 30.0,
+          "cpu_core_8": 33.9,
+          "cpu_core_9": 32.3,
+          "cpu_core_10": 32.0,
+          "cpu_core_11": 31.8
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1438928896,
+        "percent": 91.5,
+        "process": 0.08742009749695048
+      },
+      "disk": {
+        "read_bytes": 49798555136,
+        "write_bytes": 196423086080,
+        "read_count": 1690885,
+        "write_count": 21303035
+      },
+      "network": {
+        "bytes_sent": 501052815,
+        "bytes_recv": 1215056437,
+        "packets_sent": 1946534,
+        "packets_recv": 1651028
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:08:46.099604",
+      "cpu": {
+        "total": 51.7,
+        "per_core": {
+          "cpu_core_0": 50.3,
+          "cpu_core_1": 33.7,
+          "cpu_core_2": 45.8,
+          "cpu_core_3": 33.9,
+          "cpu_core_4": 52.7,
+          "cpu_core_5": 54.8,
+          "cpu_core_6": 53.4,
+          "cpu_core_7": 52.5,
+          "cpu_core_8": 59.8,
+          "cpu_core_9": 59.4,
+          "cpu_core_10": 61.0,
+          "cpu_core_11": 62.6
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1690877952,
+        "percent": 90.0,
+        "process": 0.07543077818448699
+      },
+      "disk": {
+        "read_bytes": 50125427712,
+        "write_bytes": 199696271872,
+        "read_count": 1702641,
+        "write_count": 21455416
+      },
+      "network": {
+        "bytes_sent": 504472874,
+        "bytes_recv": 1435282571,
+        "packets_sent": 1988104,
+        "packets_recv": 1701521
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:13:50.776663",
+      "cpu": {
+        "total": 34.4,
+        "per_core": {
+          "cpu_core_0": 52.7,
+          "cpu_core_1": 26.5,
+          "cpu_core_2": 49.9,
+          "cpu_core_3": 27.7,
+          "cpu_core_4": 33.9,
+          "cpu_core_5": 31.9,
+          "cpu_core_6": 30.4,
+          "cpu_core_7": 29.8,
+          "cpu_core_8": 35.5,
+          "cpu_core_9": 29.4,
+          "cpu_core_10": 31.1,
+          "cpu_core_11": 33.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1724452864,
+        "percent": 89.8,
+        "process": 0.07547931793878845
+      },
+      "disk": {
+        "read_bytes": 50398078464,
+        "write_bytes": 200897661440,
+        "read_count": 1714669,
+        "write_count": 21588835
+      },
+      "network": {
+        "bytes_sent": 506421727,
+        "bytes_recv": 1454104411,
+        "packets_sent": 1994607,
+        "packets_recv": 1709023
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:18:55.426348",
+      "cpu": {
+        "total": 15.4,
+        "per_core": {
+          "cpu_core_0": 33.2,
+          "cpu_core_1": 10.1,
+          "cpu_core_2": 28.8,
+          "cpu_core_3": 12.5,
+          "cpu_core_4": 18.3,
+          "cpu_core_5": 8.1,
+          "cpu_core_6": 9.6,
+          "cpu_core_7": 12.1,
+          "cpu_core_8": 20.2,
+          "cpu_core_9": 11.7,
+          "cpu_core_10": 10.0,
+          "cpu_core_11": 9.1
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 1895579648,
+        "percent": 88.8,
+        "process": 0.07518807941297963
+      },
+      "disk": {
+        "read_bytes": 50531734528,
+        "write_bytes": 201760104960,
+        "read_count": 1720161,
+        "write_count": 21707835
+      },
+      "network": {
+        "bytes_sent": 507629523,
+        "bytes_recv": 1454726454,
+        "packets_sent": 1998212,
+        "packets_recv": 1712449
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:24:00.054926",
+      "cpu": {
+        "total": 16.4,
+        "per_core": {
+          "cpu_core_0": 28.9,
+          "cpu_core_1": 15.3,
+          "cpu_core_2": 30.2,
+          "cpu_core_3": 9.0,
+          "cpu_core_4": 20.1,
+          "cpu_core_5": 12.2,
+          "cpu_core_6": 11.6,
+          "cpu_core_7": 10.3,
+          "cpu_core_8": 20.3,
+          "cpu_core_9": 14.1,
+          "cpu_core_10": 12.5,
+          "cpu_core_11": 11.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2441625600,
+        "percent": 85.5,
+        "process": 0.07504246015007522
+      },
+      "disk": {
+        "read_bytes": 51614470656,
+        "write_bytes": 202272699392,
+        "read_count": 1742805,
+        "write_count": 21764047
+      },
+      "network": {
+        "bytes_sent": 509516876,
+        "bytes_recv": 1460846378,
+        "packets_sent": 2005114,
+        "packets_recv": 1721238
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:29:04.734266",
+      "cpu": {
+        "total": 10.9,
+        "per_core": {
+          "cpu_core_0": 26.9,
+          "cpu_core_1": 6.5,
+          "cpu_core_2": 20.6,
+          "cpu_core_3": 9.1,
+          "cpu_core_4": 15.3,
+          "cpu_core_5": 6.2,
+          "cpu_core_6": 5.8,
+          "cpu_core_7": 5.2,
+          "cpu_core_8": 12.0,
+          "cpu_core_9": 5.4,
+          "cpu_core_10": 7.9,
+          "cpu_core_11": 9.2
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2468237312,
+        "percent": 85.4,
+        "process": 0.07492111076432154
+      },
+      "disk": {
+        "read_bytes": 51818035712,
+        "write_bytes": 202452468736,
+        "read_count": 1748053,
+        "write_count": 21771492
+      },
+      "network": {
+        "bytes_sent": 510732041,
+        "bytes_recv": 1476390487,
+        "packets_sent": 2012452,
+        "packets_recv": 1735048
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:34:09.369244",
+      "cpu": {
+        "total": 12.6,
+        "per_core": {
+          "cpu_core_0": 25.2,
+          "cpu_core_1": 10.6,
+          "cpu_core_2": 25.9,
+          "cpu_core_3": 7.3,
+          "cpu_core_4": 15.4,
+          "cpu_core_5": 9.4,
+          "cpu_core_6": 8.7,
+          "cpu_core_7": 8.1,
+          "cpu_core_8": 17.7,
+          "cpu_core_9": 7.9,
+          "cpu_core_10": 7.3,
+          "cpu_core_11": 6.9
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2483048448,
+        "percent": 85.3,
+        "process": 0.07475122162426638
+      },
+      "disk": {
+        "read_bytes": 51873172480,
+        "write_bytes": 202590139392,
+        "read_count": 1750092,
+        "write_count": 21777111
+      },
+      "network": {
+        "bytes_sent": 511714779,
+        "bytes_recv": 1479352835,
+        "packets_sent": 2017762,
+        "packets_recv": 1740940
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  {
+    "system": {
+      "timestamp": "2025-07-04T22:39:13.986290",
+      "cpu": {
+        "total": 14.5,
+        "per_core": {
+          "cpu_core_0": 31.1,
+          "cpu_core_1": 8.3,
+          "cpu_core_2": 23.1,
+          "cpu_core_3": 10.8,
+          "cpu_core_4": 16.3,
+          "cpu_core_5": 10.8,
+          "cpu_core_6": 10.9,
+          "cpu_core_7": 11.1,
+          "cpu_core_8": 18.6,
+          "cpu_core_9": 10.9,
+          "cpu_core_10": 10.7,
+          "cpu_core_11": 10.3
+        },
+        "process": 0.0
+      },
+      "memory": {
+        "total": 16876888064,
+        "available": 2634067968,
+        "percent": 84.4,
+        "process": 0.07475122162426638
+      },
+      "disk": {
+        "read_bytes": 51961052672,
+        "write_bytes": 202744788480,
+        "read_count": 1752484,
+        "write_count": 21783061
+      },
+      "network": {
+        "bytes_sent": 512638968,
+        "bytes_recv": 1484520781,
+        "packets_sent": 2023097,
+        "packets_recv": 1748412
+      }
+    },
+    "health": {
+      "status": 0,
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "healthy": false
+    },
+    "queue": {
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  }
+]

@@ -1,0 +1,66 @@
+name: "GENXAIS Cycle v1.8.2 \u2013 Full Automation"
+version: 1.8.2
+type: multi-phase-cycle
+phases:
+- VAN
+- PLAN
+- CREATE
+- IMPLEMENTATION
+- REFLEKTION
+trigger: cron
+cron_schedule: 0 5 * * *
+agent: langgraph-mas
+context: {}
+config:
+  monitoring:
+    enabled: true
+    streamlit_dashboard: true
+    grafana_enabled: true
+    prometheus_enabled: false
+    ports:
+      streamlit: 8501
+      grafana: 3000
+      prometheus: 9090
+pipeline:
+  type: multi-agent
+  mode: intelligent-parallel
+  pipelines: 5
+agents:
+- APIAgent
+- UIDesignAgent
+- AlertingAgent
+- ArchitectAgent
+- LangGraphAgent
+- WorkflowAgent
+- IntegrationAgent
+- MonitoringAgent
+- FrontendAgent
+- GraphNavigator (Graphiti)
+goals:
+- "Architektur-Update f\xFCr Edge-Integration"
+- Streamlit-App verbessern
+- Cursor.ai-Integration optimieren
+- LangGraph-Workflow implementieren
+- "\xDCberwachung der Edge-Integration"
+artifacts:
+  track:
+  - edge_integration_architecture.md
+  - streamlit_app_improvements.md
+  - cursor_integration_report.md
+  - langgraph_workflow_documentation.md
+  - v1.8.2_final_review.md
+versioning:
+  current_version: 1.8.1
+  next_version: 1.8.2
+  version_function: increment_version()
+graphiti_config:
+  activate: true
+  enable_fallback_paths: true
+  link_memory_to_graph: true
+  visualize_decisions: true
+  output: graphiti_trace.md
+completion:
+- Erstelle Zusammenfassung der Ergebnisse
+- Aktualisiere Memory Bank
+- Generiere Handover-Dokument
+- Aktualisiere Version auf 1.8.2

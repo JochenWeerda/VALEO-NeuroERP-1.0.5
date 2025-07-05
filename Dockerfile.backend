@@ -1,0 +1,46 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# System-Abhängigkeiten installieren
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# requirements.txt erstellen
+RUN echo "fastapi>=0.95.0,<0.96.0\n\
+uvicorn>=0.21.1,<0.22.0\n\
+sqlalchemy>=2.0.0,<3.0.0\n\
+psycopg2>=2.9.5,<2.10.0\n\
+pydantic>=1.10.7,<2.0.0\n\
+python-multipart>=0.0.6,<0.1.0\n\
+python-jose>=3.3.0,<3.4.0\n\
+passlib>=1.7.4,<1.8.0\n\
+bcrypt>=4.0.1,<4.1.0\n\
+python-dotenv>=1.0.0,<1.1.0\n\
+jinja2>=3.1.2,<3.2.0\n\
+aiofiles>=23.1.0,<23.2.0\n\
+pyyaml>=6.0,<6.1\n\
+requests>=2.28.2,<2.29.0\n\
+celery>=5.2.7,<5.3.0\n\
+redis>=4.5.4,<4.6.0" > requirements.txt
+
+# Abhängigkeiten installieren
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Erstelle die Backend-Verzeichnisstruktur
+RUN mkdir -p /app/backend/core /app/backend/models /app/backend/api /app/backend/utils /app/backend/schemas
+
+# Kopiere die Dateien in das Container-Image
+COPY backend/ /app/backend/
+
+# Port exponieren
+EXPOSE 8000
+
+# Health-Check-Endpunkt
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost:8000/api/health || exit 1
+
+# Startbefehl
+CMD ["uvicorn", "backend.modular_server:app", "--host", "0.0.0.0", "--port", "8000"] 

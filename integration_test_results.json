@@ -1,0 +1,113 @@
+{
+  "connections": {
+    "database": {
+      "status": "error",
+      "error": "postgresql://localhost:5432/test"
+    },
+    "redis": {
+      "status": "error",
+      "error": "redis://localhost:6379/0"
+    },
+    "api": {
+      "status": "error",
+      "error": "Cannot connect to host localhost:8001 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    },
+    "events": {
+      "status": "error",
+      "error": "Cannot connect to host localhost:8002 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    },
+    "notifications": {
+      "status": "error",
+      "error": "Cannot connect to host localhost:8003 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]"
+    }
+  },
+  "api": {
+    "/health": {
+      "method": "GET",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "success": false
+    },
+    "/api/v1/queue/status": {
+      "method": "GET",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "success": false
+    },
+    "/api/v1/sync/status": {
+      "method": "GET",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "success": false
+    },
+    "/api/v1/events": {
+      "method": "POST",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "success": false
+    },
+    "/api/v1/users": {
+      "method": "GET",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "success": false
+    },
+    "/api/v1/notifications": {
+      "method": "POST",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "success": false
+    }
+  },
+  "database": {
+    "status": "error",
+    "error": "connection to server at \"localhost\" (::1), port 5432 failed: fe_sendauth: no password supplied\n"
+  },
+  "redis": {
+    "status": "connected",
+    "write_test": "success",
+    "read_test": "success",
+    "data_match": true
+  },
+  "events": {
+    "total_events": 3,
+    "successful_events": 0,
+    "results": [
+      {
+        "event_type": "user_created",
+        "error": "Cannot connect to host localhost:8002 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+        "success": false
+      },
+      {
+        "event_type": "notification_sent",
+        "error": "Cannot connect to host localhost:8002 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+        "success": false
+      },
+      {
+        "event_type": "system_event",
+        "error": "Cannot connect to host localhost:8002 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+        "success": false
+      }
+    ]
+  },
+  "notifications": {
+    "total_notifications": 3,
+    "successful_notifications": 0,
+    "results": [
+      {
+        "notification_type": "email",
+        "error": "Cannot connect to host localhost:8003 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+        "success": false
+      },
+      {
+        "notification_type": "sms",
+        "error": "Cannot connect to host localhost:8003 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+        "success": false
+      },
+      {
+        "notification_type": "push",
+        "error": "Cannot connect to host localhost:8003 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+        "success": false
+      }
+    ]
+  },
+  "summary": {
+    "duration": 37.960114,
+    "total_tests": 23,
+    "successful_tests": 0
+  }
+}

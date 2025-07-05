@@ -1,0 +1,29 @@
+# VALEO-NeuroERP Multi-Agent-Framework Abhängigkeiten
+
+# Grundlegende Abhängigkeiten
+aiohttp>=3.8.5
+asyncio>=3.4.3
+pydantic>=2.4.0
+typing-extensions>=4.7.0
+
+# LangGraph-Integration
+langgraph>=0.0.16
+langchain>=0.0.267
+
+# MCP-Integration
+mcp>=0.0.7
+
+# Logging und Konfiguration
+python-json-logger>=2.0.7
+
+# Datenverarbeitung
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Datenbankintegration (optional)
+pymongo>=4.5.0
+motor>=3.2.0
+
+# Für Entwicklung und Tests
+pytest>=7.4.0
+pytest-asyncio>=0.21.1

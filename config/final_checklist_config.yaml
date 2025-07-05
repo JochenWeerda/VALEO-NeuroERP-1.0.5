@@ -1,0 +1,78 @@
+project_name: VALEO-NeuroERP
+version: '1.0'
+categories:
+- name: "Funktionale Vollst\xE4ndigkeit"
+  weight: 30
+  items:
+  - name: "Backend-API vollst\xE4ndig"
+    weight: 10
+    status: in_progress
+  - name: "Frontend-Komponenten vollst\xE4ndig"
+    weight: 10
+    status: pending
+  - name: "Datenmodelle vollst\xE4ndig"
+    weight: 5
+    status: pending
+  - name: Business-Logik implementiert
+    weight: 5
+    status: pending
+- name: "Qualit\xE4tssicherung"
+  weight: 25
+  items:
+  - name: Unit-Tests implementiert
+    weight: 5
+    status: pending
+  - name: Integrationstests implementiert
+    weight: 5
+    status: pending
+  - name: End-to-End-Tests implementiert
+    weight: 5
+    status: pending
+  - name: "Performance-Tests durchgef\xFChrt"
+    weight: 5
+    status: pending
+  - name: "Sicherheitstests durchgef\xFChrt"
+    weight: 5
+    status: pending
+- name: Dokumentation
+  weight: 20
+  items:
+  - name: API-Dokumentation
+    weight: 5
+    status: pending
+  - name: Benutzerhandbuch
+    weight: 5
+    status: pending
+  - name: Entwicklerdokumentation
+    weight: 5
+    status: pending
+  - name: Installationsanleitung
+    weight: 5
+    status: pending
+- name: Deployment
+  weight: 15
+  items:
+  - name: Docker-Container konfiguriert
+    weight: 5
+    status: pending
+  - name: Kubernetes-Manifeste erstellt
+    weight: 5
+    status: pending
+  - name: CI/CD-Pipeline eingerichtet
+    weight: 5
+    status: pending
+- name: Projektabschluss
+  weight: 10
+  items:
+  - name: "Benutzerakzeptanztests durchgef\xFChrt"
+    weight: 3
+    status: pending
+  - name: Schulungsmaterialien erstellt
+    weight: 3
+    status: pending
+  - name: "Projektdokumentation \xFCbergeben"
+    weight: 2
+    status: pending
+  - name: Abschlussbericht erstellt
+    weight: 2
+    status: pending

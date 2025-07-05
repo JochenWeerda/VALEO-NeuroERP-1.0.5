@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: apm-multi-agent
+  namespace: valeo-neuroerp
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: apm-multi-agent-role
+  namespace: valeo-neuroerp
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "watch", "create", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: apm-multi-agent-rolebinding
+  namespace: valeo-neuroerp
+subjects:
+- kind: ServiceAccount
+  name: apm-multi-agent
+  namespace: valeo-neuroerp
+roleRef:
+  kind: Role
+  name: apm-multi-agent-role
+  apiGroup: rbac.authorization.k8s.io 

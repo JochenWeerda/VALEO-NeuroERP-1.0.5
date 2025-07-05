@@ -1,0 +1,13 @@
+{
+  "project_id": "valeo_warenwirtschaft_v2",
+  "description": "Moderne Warenwirtschaft mit AI-Integration",
+  "target_modules": [
+    "artikel_stammdaten",
+    "bestandsführung",
+    "ai_ml_integration",
+    "mobile_analytics"
+  ],
+  "apm_enabled": true,
+  "rag_enabled": true,
+  "fallback_mode": true
+}

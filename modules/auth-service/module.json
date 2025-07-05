@@ -1,0 +1,71 @@
+{
+  "name": "auth-service",
+  "version": "1.5.0",
+  "description": "Authentifizierungs- und Autorisierungsdienst für das AI-ERP-System",
+  "maintainer": "Sicherheitsteam",
+  "stability": "stable",
+  "dependencies": [
+    {
+      "module": "core-database",
+      "version": "^2.0.0"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "AuthenticationAPI",
+      "version": "1.5.0",
+      "schema": "schemas/authentication-api.json",
+      "description": "API für Benutzerauthentifizierung"
+    },
+    {
+      "name": "AuthorizationAPI",
+      "version": "1.2.0",
+      "schema": "schemas/authorization-api.json",
+      "description": "API für Benutzerberechtigungen"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "entry"
+    },
+    {
+      "path": "src/authentication.js",
+      "role": "module"
+    },
+    {
+      "path": "src/authorization.js",
+      "role": "module"
+    },
+    {
+      "path": "src/tokens.js",
+      "role": "module"
+    },
+    {
+      "path": "schemas/authentication-api.json",
+      "role": "schema"
+    },
+    {
+      "path": "schemas/authorization-api.json",
+      "role": "schema"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.5.0",
+      "date": "2025-05-10",
+      "changes": [
+        "Verbesserte Token-Verwaltung",
+        "Unterstützung für OAuth2-Protokoll",
+        "Erweiterte Sicherheitsfeatures"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2025-01-15",
+      "changes": [
+        "Initiale Version des Authentifizierungsdienstes"
+      ]
+    }
+  ]
+} 

@@ -1,0 +1,56 @@
+﻿{
+    "pipeline_name": "agent_communication_pipeline",
+    "description": "Pipeline für die Agent-Kommunikation",
+    "version": "1.0.0",
+    "tools": [
+        {
+            "name": "agent_communicator",
+            "module": "linkup_mcp.tools.agent_communicator",
+            "class": "AgentCommunicator",
+            "config": {
+                "message_types": [
+                    "command",
+                    "status",
+                    "data",
+                    "error"
+                ],
+                "broadcast_enabled": true,
+                "heartbeat_interval": 30
+            }
+        }
+    ],
+    "stages": [
+        {
+            "name": "agent_registration",
+            "tools": ["agent_communicator"],
+            "config": {
+                "validate_capabilities": true,
+                "auto_discovery": true
+            }
+        },
+        {
+            "name": "message_handling",
+            "tools": ["agent_communicator"],
+            "config": {
+                "async_processing": true,
+                "retry_failed": true
+            }
+        },
+        {
+            "name": "status_monitoring",
+            "tools": ["agent_communicator"],
+            "config": {
+                "monitor_health": true,
+                "alert_on_failure": true
+            }
+        }
+    ],
+    "dependencies": {
+        "python_version": ">=3.9",
+        "packages": [
+            "motor>=3.3.0",
+            "pytest>=7.0.0",
+            "asyncio>=3.4.3"
+        ]
+    }
+}

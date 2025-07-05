@@ -1,0 +1,100 @@
+{
+    "name": "Edge-Mutation Aggregator",
+    "timestamp": "2025-07-01T20:45:00Z",
+    "overall_status": "warning",
+    "summary": {
+        "total_tests": 4,
+        "passed_tests": 3,
+        "warning_tests": 1,
+        "failed_tests": 0,
+        "success_rate": "75.0%"
+    },
+    "results": [
+        {
+            "test": "mutation_collection",
+            "description": "Sammlung von Mutationen von Edge-Geräten",
+            "status": "passed",
+            "details": {
+                "collected_mutations": 1248,
+                "edge_devices": 17,
+                "collection_period": "24h",
+                "mutation_types": {
+                    "create": 423,
+                    "update": 782,
+                    "delete": 43
+                },
+                "affected_entities": {
+                    "inventory": 512,
+                    "orders": 347,
+                    "customers": 189,
+                    "pricing": 200
+                }
+            }
+        },
+        {
+            "test": "mutation_patterns",
+            "description": "Analyse von Mustern in den Mutationen",
+            "status": "passed",
+            "details": {
+                "identified_patterns": [
+                    "Sequentielle Updates auf denselben Entitäten",
+                    "Batch-Updates zu Tagesanfang und -ende",
+                    "Hohe Update-Rate für Lagerbestände",
+                    "Geringe Delete-Rate"
+                ],
+                "hotspot_entities": [
+                    "inventory_stock",
+                    "order_status",
+                    "price_adjustments"
+                ],
+                "temporal_patterns": {
+                    "peak_times": [
+                        "08:00-10:00",
+                        "16:00-18:00"
+                    ],
+                    "low_activity": [
+                        "00:00-06:00"
+                    ]
+                }
+            }
+        },
+        {
+            "test": "aggregation_strategy",
+            "description": "Optimierung der Strategie zur Aggregation von Mutationen",
+            "status": "warning",
+            "details": {
+                "selected_strategy": "entity-based batching with temporal windows",
+                "batch_size": 50,
+                "temporal_window": "15min",
+                "priority_entities": [
+                    "inventory_stock",
+                    "order_status"
+                ],
+                "optimization_issues": [
+                    "Suboptimale Aggregation für Preisänderungen",
+                    "Potenzielle Verzögerungen bei niedrigpriorisierten Entitäten"
+                ]
+            }
+        },
+        {
+            "test": "aggregation_validation",
+            "description": "Validierung der Aggregation von Mutationen",
+            "status": "passed",
+            "details": {
+                "validation_metrics": {
+                    "throughput": "1200 mutations/min",
+                    "latency": "avg 120ms",
+                    "conflict_rate": "0.3%",
+                    "data_loss": "0%"
+                },
+                "performance_improvement": "65% compared to baseline",
+                "resource_usage_reduction": "48% CPU, 35% memory",
+                "network_traffic_reduction": "72%"
+            }
+        }
+    ],
+    "recommendations": [
+        "Entwickle eine spezielle Aggregationsstrategie für Preisänderungen",
+        "Implementiere ein dynamisches Priorisierungssystem für Entitäten"
+    ]
+}

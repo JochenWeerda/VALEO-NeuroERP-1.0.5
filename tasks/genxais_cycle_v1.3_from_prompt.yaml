@@ -1,0 +1,229 @@
+# 📁 Datei: tasks/genxais_cycle_v1.3_from_prompt.yaml
+# Automatisierter GENXAIS-Zyklus v1.3 – Start im VAN-Modus (Multi-Pipeline-Betrieb mit 7 Pipelines)
+
+name: GENXAIS Cycle v1.3 – Multi-Pipeline (7)
+version: 1.3
+type: multi-phase-cycle
+phases: [VAN, PLAN, CREATE, IMPLEMENTATION, REFLEKTION]
+trigger: manual
+cron_schedule: "0 4 * * *" # täglicher Start um 4 Uhr morgens
+
+agent: langgraph-mas
+
+context:
+  db: MongoDB
+  orchestrator: LangGraph
+  memory: MCP
+  graph_engine: Graphiti
+  ui: Streamlit
+
+config:
+  monitoring:
+    enabled: true
+    streamlit_dashboard: true
+    grafana_enabled: true
+    ports:
+      streamlit: 8502
+      grafana: 3000
+      prometheus: 9090
+  
+  streamlit_ui:
+    title: "GENXAIS v1.3 Multi-Pipeline Dashboard"
+    components:
+      - name: "Phasenstatus"
+        description: "Zeigt aktuellen Status jeder Phase (VAN bis REFLEKTION)"
+        type: "status_indicator"
+        refresh_rate: 60
+      - name: "Pipelines (7)"
+        description: "Visualisiert Fortschritt, Laufzeit und Agentenstatus pro Pipeline"
+        type: "progress_tracker"
+        refresh_rate: 30
+      - name: "Graphiti-Pfade"
+        description: "Live-Darstellung der Entscheidungspfade aus Graphiti"
+        type: "network_graph"
+        refresh_rate: 120
+      - name: "Fehler-Tracking"
+        description: "Anzeige offener Issues aus IssueTrackerAgent"
+        type: "issue_table"
+        refresh_rate: 300
+      - name: "Versionstracking"
+        description: "Vergleich von v1.2 → v1.3 und Vorabinfo zu v1.4"
+        type: "version_comparison"
+        refresh_rate: 600
+      - name: "Artefaktübersicht"
+        description: "Download-Links für alle .md, .zip, .yaml Artefakte"
+        type: "file_manager"
+        refresh_rate: 300
+      - name: "Automatische Archivierung"
+        description: "Zeigt Archivstatus nach jedem Phasenabschluss"
+        type: "archive_status"
+        refresh_rate: 600
+    scripts:
+      startup: "scripts/streamlit_startup.ps1"
+      init_dashboard: "scripts/init_dashboard.py"
+      refresh_data: "scripts/refresh_dashboard_data.py"
+
+pipeline:
+  type: multi-agent
+  mode: intelligent-parallel
+  pipelines: 7
+
+pipelines:
+  - name: "API-Pipeline"
+    agents: ["APIAgent", "ValidatorAgent", "GraphitiAgent"]
+    goals: ["API-Endpunkte optimieren", "OpenAPI-Spezifikation erstellen"]
+    tasks:
+      - name: "API-Dokumentation aktualisieren"
+        type: "documentation"
+        details: "Aktualisiere die API-Dokumentation basierend auf den neuesten Endpunkten"
+      - name: "Endpunkte auf Konsistenz prüfen"
+        type: "analysis"
+        details: "Überprüfe alle API-Endpunkte auf konsistente Namensgebung und Struktur"
+      - name: "Authentifizierung verbessern"
+        type: "code_generation"
+        details: "Verbessere die OAuth2-Implementierung für bessere Sicherheit"
+  
+  - name: "Frontend-Pipeline"
+    agents: ["UIAgent", "ReactAgent", "GraphitiAgent"]
+    goals: ["UI-Komponenten fertigstellen", "Dashboard optimieren"]
+    tasks:
+      - name: "Responsive Design verbessern"
+        type: "code_generation"
+        details: "Verbessere das responsive Design für mobile Geräte"
+      - name: "Komponentenbibliothek erweitern"
+        type: "code_generation"
+        details: "Erweitere die React-Komponentenbibliothek um wiederverwendbare Elemente"
+      - name: "Zugänglichkeit erhöhen"
+        type: "code_generation"
+        details: "Implementiere ARIA-Attribute für bessere Barrierefreiheit"
+  
+  - name: "Backend-Pipeline"
+    agents: ["BackendAgent", "DatabaseAgent", "GraphitiAgent"]
+    goals: ["Datenbankoptimierung", "Caching-Strategie implementieren"]
+    tasks:
+      - name: "Indizes optimieren"
+        type: "command"
+        details: "Erstelle und optimiere Datenbankindizes für bessere Performance"
+      - name: "Query-Performance verbessern"
+        type: "code_generation"
+        details: "Optimiere SQL-Abfragen für schnellere Ausführung"
+      - name: "Redis-Cache integrieren"
+        type: "code_generation"
+        details: "Integriere Redis als Caching-Lösung für häufig abgefragte Daten"
+  
+  - name: "Dokumentations-Pipeline"
+    agents: ["DocAgent", "MarkdownAgent", "GraphitiAgent"]
+    goals: ["Technische Dokumentation vervollständigen", "Benutzerhandbuch erstellen"]
+    tasks:
+      - name: "API-Referenz aktualisieren"
+        type: "documentation"
+        details: "Aktualisiere die API-Referenzdokumentation mit neuen Endpunkten"
+      - name: "Installationsanleitung verbessern"
+        type: "documentation"
+        details: "Verbessere die Installationsanleitung mit detaillierten Schritten"
+      - name: "Beispiele hinzufügen"
+        type: "documentation"
+        details: "Füge Codebeispiele für häufige Anwendungsfälle hinzu"
+  
+  - name: "Test-Pipeline"
+    agents: ["TestAgent", "QAAgent", "GraphitiAgent"]
+    goals: ["Testabdeckung erhöhen", "E2E-Tests implementieren"]
+    tasks:
+      - name: "Unit-Tests schreiben"
+        type: "code_generation"
+        details: "Schreibe Unit-Tests für kritische Komponenten"
+      - name: "Integration-Tests erweitern"
+        type: "code_generation"
+        details: "Erweitere Integration-Tests für API-Endpunkte"
+      - name: "CI-Pipeline verbessern"
+        type: "file_creation"
+        details: "Verbessere die CI-Pipeline-Konfiguration für schnellere Tests"
+  
+  - name: "DevOps-Pipeline"
+    agents: ["DevOpsAgent", "KubernetesAgent", "GraphitiAgent"]
+    goals: ["Kubernetes-Manifeste optimieren", "Monitoring verbessern"]
+    tasks:
+      - name: "Helm-Charts aktualisieren"
+        type: "file_creation"
+        details: "Aktualisiere Helm-Charts für bessere Kubernetes-Deployment"
+      - name: "Prometheus-Integration verbessern"
+        type: "code_generation"
+        details: "Verbessere die Prometheus-Integration für besseres Monitoring"
+      - name: "Autoscaling konfigurieren"
+        type: "file_creation"
+        details: "Konfiguriere Kubernetes Horizontal Pod Autoscaler"
+  
+  - name: "Sicherheits-Pipeline"
+    agents: ["SecurityAgent", "AuditAgent", "GraphitiAgent"]
+    goals: ["Sicherheitsaudits durchführen", "Compliance sicherstellen"]
+    tasks:
+      - name: "Dependency-Scanning"
+        type: "analysis"
+        details: "Scanne Abhängigkeiten auf bekannte Sicherheitslücken"
+      - name: "OWASP-Checks implementieren"
+        type: "code_generation"
+        details: "Implementiere OWASP Top 10 Sicherheitsüberprüfungen"
+      - name: "Zugriffskontrollen überprüfen"
+        type: "analysis"
+        details: "Überprüfe Zugriffskontrollen auf Sicherheitslücken"
+
+agents:
+  - PlannerAgent
+  - ConfigAgent
+  - ValidatorAgent
+  - ReviewAgent
+  - GraphNavigator (Graphiti)
+  - APIAgent
+  - UIAgent
+  - BackendAgent
+  - DocAgent
+  - TestAgent
+  - DevOpsAgent
+  - SecurityAgent
+  - ReactAgent
+  - DatabaseAgent
+  - MarkdownAgent
+  - QAAgent
+  - KubernetesAgent
+  - AuditAgent
+
+goals:
+  - Automatisierter Übergang durch alle Phasen bis REFLEKTION
+  - Kontinuierliche Kontextvernetzung durch Graphiti
+  - Automatische Erkennung & Einbeziehung technischer Schulden aus Memory Bank
+  - Artefakt-Tracking in MongoDB und Dokumentengenerierung für jede Phase
+  - Integration von Retrospektiv-Ergebnissen aus v1.2
+
+artifacts:
+  track:
+    - review_summary.md
+    - plan_overview.md
+    - create_snapshot.md
+    - implementation_review.md
+    - v1.3_final_review.md
+    - api_documentation.md
+    - frontend_components.md
+    - backend_optimization.md
+    - test_coverage_report.md
+    - security_audit.md
+    - deployment_guide.md
+    - handover_document.md
+
+versioning:
+  current_version: 1.2
+  next_version: 1.3
+  version_function: increment_version()
+
+graphiti_config:
+  activate: true
+  enable_fallback_paths: true
+  link_memory_to_graph: true
+  visualize_decisions: true
+  output: graphiti_trace.md
+
+completion:
+  - Archive all artifacts
+  - Generate final review
+  - Update Streamlit UI
+  - Trigger retrospective memory sync
+  - Set new cycle suggestion: "suggest_next_cycle: VAN for GENXAIS_v1.4"

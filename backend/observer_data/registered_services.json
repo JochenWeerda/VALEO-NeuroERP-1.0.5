@@ -1,0 +1,39 @@
+[
+  {
+    "service_name": "finance-service",
+    "service_type": "microservice",
+    "version": "0.2.0",
+    "host": "DESKTOP-P2FLPUS",
+    "port": 8007,
+    "health_endpoint": "/health",
+    "metrics_endpoint": "/metrics",
+    "api_endpoints": [
+      "/accounts",
+      "/transactions",
+      "/documents",
+      "/reports/balance-sheet",
+      "/reports/income-statement",
+      "/llm/suggest-account",
+      "/llm/analyze-transaction",
+      "/health"
+    ],
+    "capabilities": {
+      "accounting": true,
+      "reporting": true,
+      "llm_integration": true,
+      "document_processing": true
+    },
+    "dependencies": {
+      "database": "postgresql",
+      "cache": "redis",
+      "llm_provider": "openai"
+    },
+    "monitoring": {
+      "log_level": "info",
+      "metrics_enabled": true,
+      "tracing_enabled": true
+    },
+    "registered_at": "2025-05-27T06:27:31.691435",
+    "last_heartbeat": "2025-05-27T06:27:31.691435"
+  }
+]

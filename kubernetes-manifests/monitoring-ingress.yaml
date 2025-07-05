@@ -1,0 +1,52 @@
+# Kubernetes-Manifest für Monitoring-Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring-ingress
+  namespace: erp-system
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: "Monitoring Authentication Required"
+spec:
+  rules:
+  - host: monitoring.erp.example.com
+    http:
+      paths:
+      - path: /prometheus
+        pathType: Prefix
+        backend:
+          service:
+            name: prometheus
+            port:
+              number: 9090
+      - path: /grafana
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+      - path: /alertmanager
+        pathType: Prefix
+        backend:
+          service:
+            name: alertmanager
+            port:
+              number: 9093
+  tls:
+  - hosts:
+    - monitoring.erp.example.com
+    secretName: monitoring-tls-secret
+---
+# Secret für Basic Auth
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monitoring-basic-auth
+  namespace: erp-system
+type: Opaque
+data:
+  auth: YWRtaW46JGFwcjEkU2JJdTRrSUwkTE0yQzZzSXNRSzA0UDBua25RVlJmMAo= # admin:admin in htpasswd format 

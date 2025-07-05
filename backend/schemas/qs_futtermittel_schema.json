@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QS-Futtermittel Schema",
+  "description": "Schema für die QS-konforme Chargenverwaltung in der Futtermittelherstellung gemäß QS-Leitfaden (01.01.2025)",
+  "type": "object",
+  "definitions": {
+    "QSFuttermittelCharge": {
+      "type": "object",
+      "required": ["charge_id", "produktbezeichnung", "herstellungsdatum", "qs_status"],
+      "properties": {
+        "id": { "type": "integer" },
+        "charge_id": { "type": "integer" },
+        "produktbezeichnung": { "type": "string", "maxLength": 255 },
+        "herstellungsdatum": { "type": "string", "format": "date-time" },
+        "mindesthaltbarkeitsdatum": { "type": "string", "format": "date-time" },
+        "qs_status": { 
+          "type": "string",
+          "enum": ["gesperrt", "freigegeben", "unter_vorbehalt", "in_pruefung", "rueckruf"]
+        },
+        "mischzeit": { "type": "integer" },
+        "mahlzeit": { "type": "integer" },
+        "mischtemperatur": { "type": "number" },
+        "feuchtigkeit": { "type": "number" },
+        "bediener_id": { "type": "integer" },
+        "qualitaetsverantwortlicher_id": { "type": "integer" },
+        "kunde_id": { "type": "integer" },
+        "ist_spuelcharge": { "type": "boolean" },
+        "nach_kritischem_material": { "type": "boolean" },
+        "qs_freigabe_datum": { "type": "string", "format": "date-time" },
+        "qs_freigabe_durch_id": { "type": "integer" },
+        "qs_kennzeichnung_vollstaendig": { "type": "boolean" },
+        "qs_dokumentation_vollstaendig": { "type": "boolean" },
+        "monitoringpflicht": { "type": "boolean" },
+        "monitoringintervall_tage": { "type": "integer" },
+        "haccp_ccp_temperatur": { "type": "boolean" },
+        "haccp_ccp_magnetabscheider": { "type": "boolean" },
+        "haccp_ccp_siebung": { "type": "boolean" },
+        "ccp_messwerte": {
+          "type": "object",
+          "properties": {
+            "temperatur": { "type": "number" },
+            "magnetabscheider_geprueft": { "type": "boolean" },
+            "siebung_geprueft": { "type": "boolean" },
+            "andere_messungen": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "vorgaenger_chargen": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "erstellt_am": { "type": "string", "format": "date-time" },
+        "geaendert_am": { "type": "string", "format": "date-time" },
+        "rohstoffe": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/QSRohstoff" }
+        },
+        "monitoring": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/QSMonitoring" }
+        },
+        "ereignisse": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/QSEreignis" }
+        }
+      }
+    },
+    "QSRohstoff": {
+      "type": "object",
+      "required": ["charge_id", "rohstoff_charge_id", "rohstoff_typ", "menge", "einheit_id", "kontaminationsrisiko"],
+      "properties": {
+        "id": { "type": "integer" },
+        "charge_id": { "type": "integer" },
+        "rohstoff_charge_id": { "type": "integer" },
+        "rohstoff_typ": { 
+          "type": "string", 
+          "enum": ["getreide", "extraktionsschrot", "mineralfutter", "futterharnstoff", "konservierungsmittel", "oel_fett", "sonstiges"]
+        },
+        "menge": { "type": "number" },
+        "einheit_id": { "type": "integer" },
+        "anteil": { "type": "number" },
+        "lieferant_id": { "type": "integer" },
+        "lieferant_chargen_nr": { "type": "string", "maxLength": 100 },
+        "kontaminationsrisiko": {
+          "type": "string",
+          "enum": ["niedrig", "mittel", "hoch"]
+        },
+        "qs_zertifiziert": { "type": "boolean" },
+        "zertifikat_nr": { "type": "string", "maxLength": 100 },
+        "mischposition": { "type": "integer" },
+        "erstellt_am": { "type": "string", "format": "date-time" }
+      }
+    },
+    "QSMonitoring": {
+      "type": "object",
+      "required": ["charge_id", "proben_id", "status", "probentyp"],
+      "properties": {
+        "id": { "type": "integer" },
+        "charge_id": { "type": "integer" },
+        "proben_id": { "type": "string", "maxLength": 100 },
+        "status": { 
+          "type": "string",
+          "enum": ["geplant", "entnommen", "labor_gesendet", "ergebnis_ausstehend", "ergebnis_positiv", "ergebnis_negativ", "abgeschlossen"]
+        },
+        "probentyp": { "type": "string", "maxLength": 100 },
+        "entnahme_datum": { "type": "string", "format": "date-time" },
+        "entnommen_durch_id": { "type": "integer" },
+        "labor_id": { "type": "integer" },
+        "labor_eingang_datum": { "type": "string", "format": "date-time" },
+        "ergebnis_datum": { "type": "string", "format": "date-time" },
+        "ergebnis_werte": {
+          "type": "object",
+          "properties": {
+            "messwerte": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "parameter": { "type": "string" },
+                  "wert": { "type": "number" },
+                  "einheit": { "type": "string" },
+                  "grenzwert": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "grenzwert_eingehalten": { "type": "boolean" },
+        "bemerkung": { "type": "string" },
+        "erstellt_am": { "type": "string", "format": "date-time" },
+        "geaendert_am": { "type": "string", "format": "date-time" }
+      }
+    },
+    "QSEreignis": {
+      "type": "object",
+      "required": ["charge_id", "ereignis_typ", "titel", "prioritaet", "ereignis_datum"],
+      "properties": {
+        "id": { "type": "integer" },
+        "charge_id": { "type": "integer" },
+        "ereignis_typ": { 
+          "type": "string",
+          "enum": ["abweichung", "reklamation", "rueckruf", "sperrung", "freigabe", "probe", "audit", "sonstiges"]
+        },
+        "titel": { "type": "string", "maxLength": 255 },
+        "beschreibung": { "type": "string" },
+        "prioritaet": { 
+          "type": "string",
+          "enum": ["niedrig", "mittel", "hoch", "kritisch"]
+        },
+        "ereignis_datum": { "type": "string", "format": "date-time" },
+        "faellig_bis": { "type": "string", "format": "date-time" },
+        "abgeschlossen_am": { "type": "string", "format": "date-time" },
+        "ist_abgeschlossen": { "type": "boolean" },
+        "ist_bearbeitet": { "type": "boolean" },
+        "erstellt_von_id": { "type": "integer" },
+        "zugewiesen_an_id": { "type": "integer" },
+        "abgeschlossen_von_id": { "type": "integer" },
+        "massnahmen": { "type": "string" },
+        "nachfolgemassnahmen": { "type": "string" },
+        "erstellt_am": { "type": "string", "format": "date-time" },
+        "geaendert_am": { "type": "string", "format": "date-time" },
+        "benachrichtigungen": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/QSBenachrichtigung" }
+        }
+      }
+    },
+    "QSBenachrichtigung": {
+      "type": "object",
+      "required": ["ereignis_id", "betreff", "inhalt"],
+      "properties": {
+        "id": { "type": "integer" },
+        "ereignis_id": { "type": "integer" },
+        "empfaenger_id": { "type": "integer" },
+        "empfaenger_email": { "type": "string", "format": "email", "maxLength": 255 },
+        "betreff": { "type": "string", "maxLength": 255 },
+        "inhalt": { "type": "string" },
+        "gesendet": { "type": "boolean" },
+        "gesendet_am": { "type": "string", "format": "date-time" },
+        "gelesen": { "type": "boolean" },
+        "gelesen_am": { "type": "string", "format": "date-time" },
+        "erstellt_am": { "type": "string", "format": "date-time" }
+      }
+    },
+    "QSDokument": {
+      "type": "object",
+      "required": ["titel", "dokument_typ", "dateiname"],
+      "properties": {
+        "id": { "type": "integer" },
+        "charge_id": { "type": "integer" },
+        "ereignis_id": { "type": "integer" },
+        "monitoring_id": { "type": "integer" },
+        "titel": { "type": "string", "maxLength": 255 },
+        "beschreibung": { "type": "string" },
+        "dokument_typ": { "type": "string", "maxLength": 100 },
+        "dateiname": { "type": "string", "maxLength": 255 },
+        "dateipfad": { "type": "string", "maxLength": 1024 },
+        "mime_type": { "type": "string", "maxLength": 100 },
+        "erstellt_am": { "type": "string", "format": "date-time" },
+        "erstellt_von_id": { "type": "integer" }
+      }
+    }
+  },
+  "properties": {
+    "qs_futtermittel_charge": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/QSFuttermittelCharge" }
+    },
+    "qs_rohstoff": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/QSRohstoff" }
+    },
+    "qs_monitoring": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/QSMonitoring" }
+    },
+    "qs_ereignis": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/QSEreignis" }
+    },
+    "qs_benachrichtigung": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/QSBenachrichtigung" }
+    },
+    "qs_dokument": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/QSDokument" }
+    }
+  }
+} 

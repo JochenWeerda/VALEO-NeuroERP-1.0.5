@@ -1,0 +1,9 @@
+﻿# Transaktionsverarbeitung - Optimierung für hohe Transaktionsvolumen
+
+## Komponenten-Beschreibung
+
+Die Komponente zur Transaktionsverarbeitung ist ein zentraler Bestandteil des VALEO-NeuroERP-Systems und verarbeitet Transaktionen, Lagerbuchungen und Audit-Logs.
+
+## Empfohlener Ansatz
+
+Nach sorgfältiger Analyse wird der 'Chunked Processing mit Savepoints'-Ansatz für die Implementierung der Transaktionsverarbeitung mit hohem Volumen empfohlen.

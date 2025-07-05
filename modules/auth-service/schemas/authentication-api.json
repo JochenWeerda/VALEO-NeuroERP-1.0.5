@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Authentication API",
+  "description": "Schema für die Authentifizierungs-API",
+  "type": "object",
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "active": { "type": "boolean" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "username"]
+    },
+    "Credentials": {
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "rememberMe": { "type": "boolean" }
+      },
+      "required": ["username", "password"]
+    },
+    "Token": {
+      "type": "object",
+      "properties": {
+        "accessToken": { "type": "string" },
+        "refreshToken": { "type": "string" },
+        "expiresIn": { "type": "integer" },
+        "tokenType": { "type": "string", "default": "Bearer" }
+      },
+      "required": ["accessToken", "expiresIn"]
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "description": "Authentifiziert einen Benutzer und gibt ein Token zurück",
+        "parameters": {
+          "credentials": { "$ref": "#/definitions/Credentials" }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "token": { "$ref": "#/definitions/Token" },
+            "user": { "$ref": "#/definitions/User" }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "description": "Meldet einen Benutzer ab",
+        "parameters": {
+          "token": { "type": "string" }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "/refresh": {
+      "post": {
+        "description": "Erneuert ein abgelaufenes Access-Token",
+        "parameters": {
+          "refreshToken": { "type": "string" }
+        },
+        "returns": { "$ref": "#/definitions/Token" }
+      }
+    },
+    "/validate": {
+      "post": {
+        "description": "Validiert ein Token",
+        "parameters": {
+          "token": { "type": "string" }
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "valid": { "type": "boolean" },
+            "user": { "$ref": "#/definitions/User" }
+          }
+        }
+      }
+    }
+  }
+} 

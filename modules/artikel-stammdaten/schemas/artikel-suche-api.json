@@ -1,0 +1,455 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Artikel Suche API",
+  "description": "Schema für die Artikelsuche-API des ERP-Systems",
+  "type": "object",
+  "definitions": {
+    "ArtikelSucheFilter": {
+      "type": "object",
+      "properties": {
+        "suchbegriff": {
+          "type": "string",
+          "description": "Allgemeiner Suchbegriff (sucht in Artikelnummer, Bezeichnung, Beschreibung, EAN)"
+        },
+        "artikelNr": {
+          "type": "string",
+          "description": "Suche nach Artikelnummer (exakt oder Teil)"
+        },
+        "bezeichnung": {
+          "type": "string",
+          "description": "Suche in der Artikelbezeichnung"
+        },
+        "artikelGruppen": {
+          "type": "array",
+          "description": "Suche in bestimmten Artikelgruppen",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "array",
+          "description": "Filtere nach Status",
+          "items": {
+            "type": "string",
+            "enum": ["aktiv", "auslaufend", "inaktiv", "gelöscht"]
+          }
+        },
+        "ean": {
+          "type": "string",
+          "description": "Suche nach EAN/GTIN Code"
+        },
+        "lieferantenArtikelNr": {
+          "type": "string",
+          "description": "Suche nach Artikelnummer eines Lieferanten"
+        },
+        "lieferantenId": {
+          "type": "string",
+          "description": "Filtere nach Lieferant"
+        },
+        "preisVon": {
+          "type": "number",
+          "description": "Mindestpreis (Verkaufspreis)",
+          "minimum": 0
+        },
+        "preisBis": {
+          "type": "number",
+          "description": "Maximalpreis (Verkaufspreis)",
+          "minimum": 0
+        },
+        "nurLagernd": {
+          "type": "boolean",
+          "description": "Nur Artikel mit Lagerbestand > 0",
+          "default": false
+        },
+        "attribute": {
+          "type": "object",
+          "description": "Suche nach benutzerdefinierten Attributen",
+          "additionalProperties": true
+        }
+      }
+    },
+    "ArtikelSucheErgebnis": {
+      "type": "object",
+      "required": ["artikelNr", "bezeichnung", "status"],
+      "properties": {
+        "artikelNr": {
+          "type": "string",
+          "description": "Artikelnummer"
+        },
+        "bezeichnung": {
+          "type": "string",
+          "description": "Bezeichnung des Artikels"
+        },
+        "beschreibung": {
+          "type": "string",
+          "description": "Kurzbeschreibung"
+        },
+        "artikelGruppe": {
+          "type": "string",
+          "description": "Zugehörige Artikelgruppe"
+        },
+        "artikelGruppeName": {
+          "type": "string",
+          "description": "Name der Artikelgruppe"
+        },
+        "einheit": {
+          "type": "string",
+          "description": "Basiseinheit"
+        },
+        "verkaufspreis": {
+          "type": "number",
+          "description": "Aktueller Verkaufspreis"
+        },
+        "waehrung": {
+          "type": "string",
+          "description": "Währung des Preises"
+        },
+        "bestand": {
+          "type": "number",
+          "description": "Aktueller Bestand"
+        },
+        "eanCodes": {
+          "type": "array",
+          "description": "EAN/GTIN Codes",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Status des Artikels",
+          "enum": ["aktiv", "auslaufend", "inaktiv", "gelöscht"]
+        },
+        "hervorgehoben": {
+          "type": "boolean",
+          "description": "Artikel ist besonders hervorgehoben in Suchergebnissen",
+          "default": false
+        },
+        "relevanz": {
+          "type": "number",
+          "description": "Relevanz-Score für die Suchanfrage (höher = relevanter)",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    }
+  },
+  "paths": {
+    "/suche": {
+      "post": {
+        "description": "Durchsucht die Artikelstammdaten nach bestimmten Kriterien",
+        "request": {
+          "type": "object",
+          "properties": {
+            "filter": {
+              "$ref": "#/definitions/ArtikelSucheFilter"
+            },
+            "page": {
+              "type": "integer",
+              "description": "Seitennummer für die Paginierung",
+              "minimum": 1,
+              "default": 1
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Anzahl der Ergebnisse pro Seite",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "sortierung": {
+              "type": "object",
+              "properties": {
+                "feld": {
+                  "type": "string",
+                  "description": "Feld nach dem sortiert werden soll",
+                  "enum": ["artikelNr", "bezeichnung", "verkaufspreis", "bestand", "relevanz"]
+                },
+                "richtung": {
+                  "type": "string",
+                  "description": "Sortierrichtung",
+                  "enum": ["aufsteigend", "absteigend"],
+                  "default": "aufsteigend"
+                }
+              },
+              "default": {
+                "feld": "relevanz",
+                "richtung": "absteigend"
+              }
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["ergebnisse", "pagination"],
+          "properties": {
+            "ergebnisse": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ArtikelSucheErgebnis"
+              }
+            },
+            "pagination": {
+              "type": "object",
+              "required": ["total", "page", "limit", "pages"],
+              "properties": {
+                "total": {
+                  "type": "integer",
+                  "description": "Gesamtanzahl der Ergebnisse"
+                },
+                "page": {
+                  "type": "integer",
+                  "description": "Aktuelle Seitennummer"
+                },
+                "limit": {
+                  "type": "integer",
+                  "description": "Anzahl der Ergebnisse pro Seite"
+                },
+                "pages": {
+                  "type": "integer",
+                  "description": "Gesamtanzahl der Seiten"
+                }
+              }
+            },
+            "filter": {
+              "$ref": "#/definitions/ArtikelSucheFilter",
+              "description": "Angewendete Filter"
+            },
+            "dauer": {
+              "type": "number",
+              "description": "Dauer der Suchanfrage in Millisekunden"
+            }
+          }
+        }
+      }
+    },
+    "/suche/vorschlaege": {
+      "get": {
+        "description": "Liefert Suchvorschläge basierend auf einem Teilbegriff",
+        "parameters": {
+          "type": "object",
+          "required": ["suchbegriff"],
+          "properties": {
+            "suchbegriff": {
+              "type": "string",
+              "description": "Teilbegriff für die Suchvorschläge",
+              "minLength": 2
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Maximale Anzahl von Vorschlägen",
+              "minimum": 1,
+              "maximum": 20,
+              "default": 10
+            },
+            "kategorien": {
+              "type": "array",
+              "description": "Kategorien von Vorschlägen",
+              "items": {
+                "type": "string",
+                "enum": ["artikelNr", "bezeichnung", "ean", "artikelGruppe"]
+              },
+              "default": ["artikelNr", "bezeichnung"]
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["vorschlaege"],
+          "properties": {
+            "vorschlaege": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["text", "kategorie"],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Vorschlagstext"
+                  },
+                  "kategorie": {
+                    "type": "string",
+                    "description": "Kategorie des Vorschlags",
+                    "enum": ["artikelNr", "bezeichnung", "ean", "artikelGruppe"]
+                  },
+                  "artikelNr": {
+                    "type": "string",
+                    "description": "Artikelnummer (falls verfügbar)"
+                  },
+                  "zusatzInfo": {
+                    "type": "string",
+                    "description": "Zusätzliche Information"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suche/erweitert": {
+      "post": {
+        "description": "Erweiterte Suche mit komplexen Filterkriterien und Aggregationen",
+        "request": {
+          "type": "object",
+          "properties": {
+            "filter": {
+              "$ref": "#/definitions/ArtikelSucheFilter"
+            },
+            "page": {
+              "type": "integer",
+              "description": "Seitennummer für die Paginierung",
+              "minimum": 1,
+              "default": 1
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Anzahl der Ergebnisse pro Seite",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "aggregationen": {
+              "type": "array",
+              "description": "Gewünschte Aggregationen",
+              "items": {
+                "type": "string",
+                "enum": ["artikelGruppe", "status", "lieferant", "preisRange"]
+              }
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["ergebnisse", "pagination"],
+          "properties": {
+            "ergebnisse": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ArtikelSucheErgebnis"
+              }
+            },
+            "pagination": {
+              "type": "object",
+              "required": ["total", "page", "limit", "pages"],
+              "properties": {
+                "total": {
+                  "type": "integer",
+                  "description": "Gesamtanzahl der Ergebnisse"
+                },
+                "page": {
+                  "type": "integer",
+                  "description": "Aktuelle Seitennummer"
+                },
+                "limit": {
+                  "type": "integer",
+                  "description": "Anzahl der Ergebnisse pro Seite"
+                },
+                "pages": {
+                  "type": "integer",
+                  "description": "Gesamtanzahl der Seiten"
+                }
+              }
+            },
+            "aggregationen": {
+              "type": "object",
+              "description": "Aggregierte Daten",
+              "properties": {
+                "artikelGruppe": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "ID der Artikelgruppe"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name der Artikelgruppe"
+                      },
+                      "anzahl": {
+                        "type": "integer",
+                        "description": "Anzahl der Artikel in dieser Gruppe"
+                      }
+                    }
+                  }
+                },
+                "status": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "description": "Artikelstatus"
+                      },
+                      "anzahl": {
+                        "type": "integer",
+                        "description": "Anzahl der Artikel mit diesem Status"
+                      }
+                    }
+                  }
+                },
+                "lieferant": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "ID des Lieferanten"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name des Lieferanten"
+                      },
+                      "anzahl": {
+                        "type": "integer",
+                        "description": "Anzahl der Artikel von diesem Lieferanten"
+                      }
+                    }
+                  }
+                },
+                "preisRange": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "number",
+                      "description": "Niedrigster Preis"
+                    },
+                    "max": {
+                      "type": "number",
+                      "description": "Höchster Preis"
+                    },
+                    "bereiche": {
+                      "type": "array",
+                      "description": "Preisbereiche",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "von": {
+                            "type": "number",
+                            "description": "Untergrenze des Preisbereichs"
+                          },
+                          "bis": {
+                            "type": "number",
+                            "description": "Obergrenze des Preisbereichs"
+                          },
+                          "anzahl": {
+                            "type": "integer",
+                            "description": "Anzahl der Artikel in diesem Preisbereich"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

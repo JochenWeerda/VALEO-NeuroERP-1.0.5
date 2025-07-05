@@ -1,0 +1,7 @@
+{
+  "host": "localhost",
+  "port": 6379,
+  "db": 0,
+  "prefix": "landhandel:",
+  "ttl": 3600
+}

@@ -1,0 +1,114 @@
+# 📁 Datei: prompts/launch_cycle_valero_v1.5.yaml
+# 🚀 GENXAIS Prompt zur Initialisierung des Multi-Pipeline-Zyklus für VALERO-NeuroERP (v1.5)
+
+name: Launch GENXAIS Cycle – VALERO v1.5
+type: multi-agent-cycle
+versioning:
+  previous_version: v1.4
+  current_version: v1.5
+trigger: launch_cycle.py
+mode: full-automation
+
+phases:
+  - name: VAN
+    tasks:
+      - Analyse offener Issues aus v1.4
+      - Validierung der übergebenen Artefakte
+      - Ableitung neuer Ziele und Agentenziele
+      - Planung der 5 Pipelines auf Basis von memory_bank_log.txt und Graphiti
+
+  - name: PLAN
+    tasks:
+      - Pipeline-Ressourcen und Reihenfolge festlegen
+      - Zielzustände für jede Pipeline definieren
+      - Prompt-Templates für CREATE vorbereiten
+      - Übergabe an CREATE vorbereiten und dokumentieren
+
+  - name: CREATE
+    tasks:
+      - Codegenerierung (Architektur, UI, DevOps, Content, Dokumentation)
+      - Parallelisierung der 5 Pipelines via LangGraph
+      - Artefakt-Tracking für alle Deliverables
+      - Snapshots je Pipeline erzeugen (create_snapshot.md)
+
+  - name: IMPLEMENTATION
+    tasks:
+      - Integrationstest aller Komponenten (Helm, Prometheus, Trainingsmodule etc.)
+      - Deployment auf Staging
+      - Monitoring-Setup überprüfen
+      - Automatisierte Reports und Dashboards generieren
+
+  - name: REFLEKTION
+    tasks:
+      - Präsentation und Bewertung in 5 Key-Bereichen (P1–P5)
+      - Rückblick: Feature-Delivery, CI/CD, Qualität, UX, Zusammenarbeit
+      - "v1.5_final_review.md erstellen"
+      - Automatischer Übergang zur v1.6 vorbereiten
+
+orchestrator: LangGraph
+memory: MCP
+graph_knowledge: Graphiti
+database: MongoDB
+ui: Streamlit
+monitoring:
+  grafana: enabled
+  prometheus: enabled
+  dashboards:
+    - pipeline_status
+    - phase_progress
+    - decision_paths
+    - resource_usage
+
+pipelines:
+  - id: pipeline_arch
+    name: Architektur & Infrastruktur
+    agents: [ArchitekturAgent, InfraScanAgent, ChangeLogAgent]
+    goals:
+      - Optimierung der Microservice-Architektur
+      - Integration neuer Kubernetes-Features
+      - "Dokumentation im architektur_v1.5.md"
+
+  - id: pipeline_graphiti
+    name: Knowledge Graph & Decision Paths
+    agents: [GraphitiAgent, RetrospektiveAgent, MemoryAgent]
+    goals:
+      - Erweiterung des Graphiti-Wissensgraphen mit v1.4 Erkenntnissen
+      - Implementierung von Decision Paths für alle Phasen
+      - "Export als decision_map_v1.5.graphml"
+
+  - id: pipeline_devops
+    name: DevOps & Monitoring
+    agents: [DeployAgent, HelmValidator, MonitoringAgent, AlertAgent]
+    goals:
+      - Helm-Charts für alle Komponenten aktualisieren
+      - Prometheus/Grafana Dashboard-Templates erstellen
+      - Automatisierte Alerts für kritische Metriken einrichten
+
+  - id: pipeline_qa
+    name: QA & Testing
+    agents: [TestAgent, CodeCoverAgent, SnapshotAgent, SecurityAgent]
+    goals:
+      - Erweiterung der Testabdeckung auf 85%
+      - Security-Scans für alle Komponenten
+      - "Export nach qa_report_v1.5.md"
+
+  - id: pipeline_integration
+    name: Integration & Übergabe
+    agents: [IntegrationAgent, ArchivAgent, PräsentationsAgent, NextCycleAgent]
+    goals:
+      - Integration aller Pipeline-Ergebnisse
+      - Erstellung der Präsentation für Streamlit
+      - Vorbereitung der Übergabe an v1.6
+
+output_documents:
+  - architektur_v1.5.md
+  - decision_map_v1.5.graphml
+  - qa_report_v1.5.md
+  - monitoring_setup_v1.5.yaml
+  - v1.5_final_review.md
+
+post_actions:
+  - update system_state to "ready_for_VAN_v1.6"
+  - generate streamlit_dashboard_presentation
+  - archive artifacts to MongoDB
+  - prepare next_cycle_context for v1.6 

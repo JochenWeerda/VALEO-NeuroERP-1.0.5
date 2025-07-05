@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ config.variables.project_name }} Dokumentation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="#modules">Module</a>
+        <a href="#graph">Abhängigkeitsgraph</a>
+        <a href="#metrics">Metriken</a>
+    </nav>
+    
+    <main>
+        <h1>{{ config.variables.project_name }} Dokumentation</h1>
+        
+        <section class="version">
+            <p>Version: {{ config.variables.version }}</p>
+        </section>
+        
+        <section id="modules" class="modules">
+            <h2>Module</h2>
+            <ul>
+            {% for module in modules %}
+                <li>
+                    <a href="{{ module.path }}">{{ module.name }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </section>
+        
+        <section id="graph" class="graph">
+            <h2>Abhängigkeitsgraph</h2>
+            <img src="dependency_graph.png" alt="Dependency Graph">
+        </section>
+        
+        <section id="metrics" class="metrics">
+            <h2>Metriken</h2>
+            <p>
+                Die aktuellen Metriken sind in der Datei 
+                <code>dependency_metrics.json</code> gespeichert.
+            </p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>
+            Generiert am {{ now() }} für {{ config.variables.project_name }} 
+            Version {{ config.variables.version }}
+        </p>
+    </footer>
+</body>
+</html> 

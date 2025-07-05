@@ -1,0 +1,143 @@
+{
+  "project_name": "VALEO-NeuroERP",
+  "version": "1.0",
+  "timestamp": "2025-07-02T22:16:12.167674",
+  "overall_progress": 0.0,
+  "categories": [
+    {
+      "name": "Funktionale Vollst\u00e4ndigkeit",
+      "weight": 30,
+      "progress": 0.0,
+      "items": [
+        {
+          "name": "Backend-API vollst\u00e4ndig",
+          "weight": 10,
+          "status": "in_progress"
+        },
+        {
+          "name": "Frontend-Komponenten vollst\u00e4ndig",
+          "weight": 10,
+          "status": "pending"
+        },
+        {
+          "name": "Datenmodelle vollst\u00e4ndig",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Business-Logik implementiert",
+          "weight": 5,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Qualit\u00e4tssicherung",
+      "weight": 25,
+      "progress": 0.0,
+      "items": [
+        {
+          "name": "Unit-Tests implementiert",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Integrationstests implementiert",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "End-to-End-Tests implementiert",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Performance-Tests durchgef\u00fchrt",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Sicherheitstests durchgef\u00fchrt",
+          "weight": 5,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Dokumentation",
+      "weight": 20,
+      "progress": 0.0,
+      "items": [
+        {
+          "name": "API-Dokumentation",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Benutzerhandbuch",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Entwicklerdokumentation",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Installationsanleitung",
+          "weight": 5,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Deployment",
+      "weight": 15,
+      "progress": 0.0,
+      "items": [
+        {
+          "name": "Docker-Container konfiguriert",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "Kubernetes-Manifeste erstellt",
+          "weight": 5,
+          "status": "pending"
+        },
+        {
+          "name": "CI/CD-Pipeline eingerichtet",
+          "weight": 5,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Projektabschluss",
+      "weight": 10,
+      "progress": 0.0,
+      "items": [
+        {
+          "name": "Benutzerakzeptanztests durchgef\u00fchrt",
+          "weight": 3,
+          "status": "pending"
+        },
+        {
+          "name": "Schulungsmaterialien erstellt",
+          "weight": 3,
+          "status": "pending"
+        },
+        {
+          "name": "Projektdokumentation \u00fcbergeben",
+          "weight": 2,
+          "status": "pending"
+        },
+        {
+          "name": "Abschlussbericht erstellt",
+          "weight": 2,
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}

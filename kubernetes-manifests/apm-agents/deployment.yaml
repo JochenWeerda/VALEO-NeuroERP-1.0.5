@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apm-multi-agent
+  namespace: valeo-neuroerp
+  labels:
+    app: apm-multi-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apm-multi-agent
+  template:
+    metadata:
+      labels:
+        app: apm-multi-agent
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: apm-controller
+        image: valeo-neuroerp/apm-controller:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-credentials
+              key: uri
+        - name: APM_MODE
+          value: "multi-agent"
+        - name: LOG_LEVEL
+          value: "INFO"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+        - name: memory-bank
+          mountPath: /app/memory-bank
+      volumes:
+      - name: config-volume
+        configMap:
+          name: apm-config
+      - name: memory-bank
+        persistentVolumeClaim:
+          claimName: memory-bank-pvc 

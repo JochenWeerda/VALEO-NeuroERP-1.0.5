@@ -1,0 +1,43 @@
+﻿# VALEO NeuroERP - Warenwirtschafts-SDK
+# =====================================
+# Sofort einsetzbare Befehle für die nächste Entwicklungsrunde
+
+# 1. HAUPTBEFEHL - Vollständiges Warenwirtschafts-SDK starten
+python warenwirtschaft_sdk.py
+
+# 2. SPEZIFISCHE BEFEHLE für verschiedene Anwendungsfälle:
+
+# Komplette Warenwirtschafts-Pipeline starten
+python warenwirtschaft_sdk.py start
+
+# Einzelne Module entwickeln
+python warenwirtschaft_sdk.py module artikel_stammdaten
+python warenwirtschaft_sdk.py module bestandsführung  
+python warenwirtschaft_sdk.py module beschaffung
+
+# Kontinuierliche Token-Optimierung
+python warenwirtschaft_sdk.py optimize
+
+# Performance-Monitoring
+python warenwirtschaft_sdk.py monitor
+
+# 3. ENTWICKLUNGSRUNDEN-BEFEHLE:
+
+# Runde 1: Core Artikel-Management (4 Wochen)
+python warenwirtschaft_sdk.py module artikel_stammdaten
+
+# Runde 2: Bestandsführung & IoT (4 Wochen)  
+python warenwirtschaft_sdk.py module bestandsführung
+
+# Runde 3: AI/ML Integration (4 Wochen)
+python warenwirtschaft_sdk.py module beschaffung
+
+# Runde 4: Mobile App & Analytics (4 Wochen)
+python warenwirtschaft_sdk.py module analytics_engine
+
+# 4. ALLGEMEINE TOKEN-OPTIMIERUNG (für alle Projekte):
+python demo_token_optimization.py
+
+# 5. SCHNELLSTART - SOFORT AUSFÜHREN:
+# Dieser Befehl startet die komplette Warenwirtschafts-Entwicklung:
+python warenwirtschaft_sdk.py start

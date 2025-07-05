@@ -1,0 +1,497 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Artikelstammdaten API",
+  "description": "Schema für die Artikelstammdaten-API des ERP-Systems",
+  "type": "object",
+  "definitions": {
+    "Artikel": {
+      "type": "object",
+      "required": ["artikelNr", "bezeichnung", "artikelGruppe", "einheit", "preise", "status"],
+      "properties": {
+        "artikelNr": {
+          "type": "string",
+          "description": "Eindeutige Artikelnummer",
+          "pattern": "^[A-Z0-9]{4,10}$"
+        },
+        "bezeichnung": {
+          "type": "string",
+          "description": "Bezeichnung des Artikels",
+          "minLength": 3,
+          "maxLength": 100
+        },
+        "beschreibung": {
+          "type": "string",
+          "description": "Ausführliche Beschreibung des Artikels",
+          "maxLength": 1000
+        },
+        "artikelGruppe": {
+          "type": "string",
+          "description": "Zugehörige Artikelgruppe"
+        },
+        "einheit": {
+          "type": "string",
+          "description": "Basiseinheit des Artikels (z.B. STK, KG, L)",
+          "pattern": "^[A-Z]{1,5}$"
+        },
+        "zusatzEinheiten": {
+          "type": "array",
+          "description": "Zusätzliche Einheiten mit Umrechnungsfaktoren",
+          "items": {
+            "type": "object",
+            "required": ["einheit", "umrechnungsFaktor"],
+            "properties": {
+              "einheit": {
+                "type": "string",
+                "description": "Zusätzliche Einheit",
+                "pattern": "^[A-Z]{1,5}$"
+              },
+              "umrechnungsFaktor": {
+                "type": "number",
+                "description": "Umrechnungsfaktor zur Basiseinheit",
+                "exclusiveMinimum": 0
+              }
+            }
+          }
+        },
+        "preise": {
+          "type": "object",
+          "required": ["verkaufspreis"],
+          "properties": {
+            "einkaufspreis": {
+              "type": "number",
+              "description": "Aktueller Einkaufspreis",
+              "minimum": 0
+            },
+            "verkaufspreis": {
+              "type": "number",
+              "description": "Aktueller Verkaufspreis",
+              "minimum": 0
+            },
+            "uvrPreis": {
+              "type": "number",
+              "description": "Unverbindlicher Richtpreis",
+              "minimum": 0
+            },
+            "waehrung": {
+              "type": "string",
+              "description": "Währung (ISO-Code)",
+              "pattern": "^[A-Z]{3}$",
+              "default": "EUR"
+            },
+            "preisListen": {
+              "type": "array",
+              "description": "Zuordnung zu Preislisten",
+              "items": {
+                "type": "object",
+                "required": ["preisListenId", "preis"],
+                "properties": {
+                  "preisListenId": {
+                    "type": "string",
+                    "description": "ID der Preisliste"
+                  },
+                  "preis": {
+                    "type": "number",
+                    "description": "Preis in dieser Preisliste",
+                    "minimum": 0
+                  },
+                  "gueltigAb": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Gültigkeit ab Datum"
+                  },
+                  "gueltigBis": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Gültigkeit bis Datum"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "bestand": {
+          "type": "object",
+          "properties": {
+            "aktuell": {
+              "type": "number",
+              "description": "Aktueller Bestand"
+            },
+            "bestellt": {
+              "type": "number",
+              "description": "Bestellter Bestand"
+            },
+            "reserviert": {
+              "type": "number",
+              "description": "Reservierter Bestand"
+            },
+            "mindestBestand": {
+              "type": "number",
+              "description": "Mindestbestand",
+              "minimum": 0
+            },
+            "maximalBestand": {
+              "type": "number",
+              "description": "Maximalbestand",
+              "minimum": 0
+            }
+          }
+        },
+        "lieferanten": {
+          "type": "array",
+          "description": "Zugeordnete Lieferanten",
+          "items": {
+            "type": "object",
+            "required": ["lieferantenId", "lieferantenArtikelNr"],
+            "properties": {
+              "lieferantenId": {
+                "type": "string",
+                "description": "ID des Lieferanten"
+              },
+              "lieferantenArtikelNr": {
+                "type": "string",
+                "description": "Artikelnummer des Lieferanten"
+              },
+              "prioritaet": {
+                "type": "integer",
+                "description": "Priorität des Lieferanten (1=höchste)",
+                "minimum": 1
+              },
+              "mindestBestellmenge": {
+                "type": "number",
+                "description": "Mindestbestellmenge bei diesem Lieferanten",
+                "minimum": 0
+              },
+              "lieferzeit": {
+                "type": "integer",
+                "description": "Typische Lieferzeit in Tagen",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "attribute": {
+          "type": "object",
+          "description": "Benutzerdefinierte Attribute",
+          "additionalProperties": true
+        },
+        "eanCodes": {
+          "type": "array",
+          "description": "EAN/GTIN Codes des Artikels",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9]{8,14}$"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Status des Artikels",
+          "enum": ["aktiv", "auslaufend", "inaktiv", "gelöscht"]
+        },
+        "erstelltAm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Datum der Erstellung"
+        },
+        "geaendertAm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Datum der letzten Änderung"
+        }
+      }
+    },
+    "ArtikelGruppe": {
+      "type": "object",
+      "required": ["id", "bezeichnung"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Eindeutige ID der Artikelgruppe"
+        },
+        "bezeichnung": {
+          "type": "string",
+          "description": "Bezeichnung der Artikelgruppe"
+        },
+        "beschreibung": {
+          "type": "string",
+          "description": "Beschreibung der Artikelgruppe"
+        },
+        "uebergeordneteGruppe": {
+          "type": "string",
+          "description": "ID der übergeordneten Artikelgruppe"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/artikel": {
+      "get": {
+        "description": "Liste aller Artikel abrufen",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "page": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "description": "Seitennummer für die Paginierung"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "description": "Anzahl der Ergebnisse pro Seite"
+            },
+            "artikelGruppe": {
+              "type": "string",
+              "description": "Filtern nach Artikelgruppe"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["aktiv", "auslaufend", "inaktiv", "gelöscht"],
+              "description": "Filtern nach Status"
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["data", "pagination"],
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Artikel"
+              }
+            },
+            "pagination": {
+              "type": "object",
+              "required": ["total", "page", "limit", "pages"],
+              "properties": {
+                "total": {
+                  "type": "integer",
+                  "description": "Gesamtanzahl der Ergebnisse"
+                },
+                "page": {
+                  "type": "integer",
+                  "description": "Aktuelle Seitennummer"
+                },
+                "limit": {
+                  "type": "integer",
+                  "description": "Anzahl der Ergebnisse pro Seite"
+                },
+                "pages": {
+                  "type": "integer",
+                  "description": "Gesamtanzahl der Seiten"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Neuen Artikel erstellen",
+        "request": {
+          "$ref": "#/definitions/Artikel"
+        },
+        "response": {
+          "$ref": "#/definitions/Artikel"
+        }
+      }
+    },
+    "/artikel/{artikelNr}": {
+      "get": {
+        "description": "Details eines bestimmten Artikels abrufen",
+        "parameters": {
+          "type": "object",
+          "required": ["artikelNr"],
+          "properties": {
+            "artikelNr": {
+              "type": "string",
+              "description": "Artikelnummer"
+            }
+          }
+        },
+        "response": {
+          "$ref": "#/definitions/Artikel"
+        }
+      },
+      "put": {
+        "description": "Artikel aktualisieren",
+        "parameters": {
+          "type": "object",
+          "required": ["artikelNr"],
+          "properties": {
+            "artikelNr": {
+              "type": "string",
+              "description": "Artikelnummer"
+            }
+          }
+        },
+        "request": {
+          "$ref": "#/definitions/Artikel"
+        },
+        "response": {
+          "$ref": "#/definitions/Artikel"
+        }
+      },
+      "patch": {
+        "description": "Artikel teilweise aktualisieren",
+        "parameters": {
+          "type": "object",
+          "required": ["artikelNr"],
+          "properties": {
+            "artikelNr": {
+              "type": "string",
+              "description": "Artikelnummer"
+            }
+          }
+        },
+        "request": {
+          "type": "object",
+          "properties": {
+            "bezeichnung": {
+              "type": "string",
+              "description": "Bezeichnung des Artikels"
+            },
+            "beschreibung": {
+              "type": "string",
+              "description": "Ausführliche Beschreibung des Artikels"
+            },
+            "artikelGruppe": {
+              "type": "string",
+              "description": "Zugehörige Artikelgruppe"
+            },
+            "preise": {
+              "type": "object",
+              "properties": {
+                "verkaufspreis": {
+                  "type": "number",
+                  "description": "Aktueller Verkaufspreis"
+                }
+              }
+            },
+            "status": {
+              "type": "string",
+              "enum": ["aktiv", "auslaufend", "inaktiv", "gelöscht"],
+              "description": "Status des Artikels"
+            }
+          }
+        },
+        "response": {
+          "$ref": "#/definitions/Artikel"
+        }
+      },
+      "delete": {
+        "description": "Artikel löschen (Status auf 'gelöscht' setzen)",
+        "parameters": {
+          "type": "object",
+          "required": ["artikelNr"],
+          "properties": {
+            "artikelNr": {
+              "type": "string",
+              "description": "Artikelnummer"
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["success", "message"],
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "description": "Erfolg der Operation"
+            },
+            "message": {
+              "type": "string",
+              "description": "Statusmeldung"
+            }
+          }
+        }
+      }
+    },
+    "/artikelgruppen": {
+      "get": {
+        "description": "Liste aller Artikelgruppen abrufen",
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArtikelGruppe"
+          }
+        }
+      },
+      "post": {
+        "description": "Neue Artikelgruppe erstellen",
+        "request": {
+          "$ref": "#/definitions/ArtikelGruppe"
+        },
+        "response": {
+          "$ref": "#/definitions/ArtikelGruppe"
+        }
+      }
+    },
+    "/artikelgruppen/{id}": {
+      "get": {
+        "description": "Details einer bestimmten Artikelgruppe abrufen",
+        "parameters": {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "ID der Artikelgruppe"
+            }
+          }
+        },
+        "response": {
+          "$ref": "#/definitions/ArtikelGruppe"
+        }
+      },
+      "put": {
+        "description": "Artikelgruppe aktualisieren",
+        "parameters": {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "ID der Artikelgruppe"
+            }
+          }
+        },
+        "request": {
+          "$ref": "#/definitions/ArtikelGruppe"
+        },
+        "response": {
+          "$ref": "#/definitions/ArtikelGruppe"
+        }
+      },
+      "delete": {
+        "description": "Artikelgruppe löschen",
+        "parameters": {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "ID der Artikelgruppe"
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["success", "message"],
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "description": "Erfolg der Operation"
+            },
+            "message": {
+              "type": "string",
+              "description": "Statusmeldung"
+            }
+          }
+        }
+      }
+    }
+  }
+} 

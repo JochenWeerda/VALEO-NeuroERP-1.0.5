@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apm-multi-agent
+  namespace: valeo-neuroerp
+  labels:
+    app: apm-multi-agent
+spec:
+  selector:
+    app: apm-multi-agent
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http
+  type: ClusterIP 

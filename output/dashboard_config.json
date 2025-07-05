@@ -1,0 +1,15 @@
+{
+  "version": "v2.0",
+  "phase": "VAN",
+  "load_components": [
+    "handover",
+    "memorybank",
+    "rag",
+    "todos",
+    "artefacts",
+    "landhandel",
+    "ai_models"
+  ],
+  "start_time": "2025-07-03T13:35:43.432769",
+  "title": "GENXAIS v2.0 VALEO-NeuroERP f\u00fcr Landhandel"
+}

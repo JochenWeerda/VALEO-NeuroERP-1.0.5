@@ -1,0 +1,85 @@
+{
+  "nodes": [
+    {
+      "id": "start",
+      "label": "Start",
+      "type": "entry",
+      "status": "completed"
+    },
+    {
+      "id": "van_phase",
+      "label": "VAN Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "plan_phase",
+      "label": "PLAN Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "create_phase",
+      "label": "CREATE Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "implementation_phase",
+      "label": "IMPLEMENTATION Phase",
+      "type": "phase",
+      "status": "completed"
+    },
+    {
+      "id": "reflection_phase",
+      "label": "REFLECTION Phase",
+      "type": "phase",
+      "status": "active"
+    },
+    {
+      "id": "end",
+      "label": "End",
+      "type": "exit",
+      "status": "pending"
+    }
+  ],
+  "edges": [
+    {
+      "source": "start",
+      "target": "van_phase",
+      "label": "Start Cycle"
+    },
+    {
+      "source": "van_phase",
+      "target": "plan_phase",
+      "label": "VAN Complete"
+    },
+    {
+      "source": "plan_phase",
+      "target": "create_phase",
+      "label": "PLAN Complete"
+    },
+    {
+      "source": "create_phase",
+      "target": "implementation_phase",
+      "label": "CREATE Complete"
+    },
+    {
+      "source": "implementation_phase",
+      "target": "reflection_phase",
+      "label": "IMPLEMENTATION Complete"
+    },
+    {
+      "source": "reflection_phase",
+      "target": "end",
+      "label": "REFLECTION Complete"
+    }
+  ],
+  "config": {
+    "activate": true,
+    "enable_fallback_paths": true,
+    "link_memory_to_graph": true,
+    "visualize_decisions": true
+  },
+  "last_updated": "2025-07-02T20:38:25.082974"
+}

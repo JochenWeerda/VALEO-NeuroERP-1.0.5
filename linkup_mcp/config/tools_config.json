@@ -1,0 +1,84 @@
+{
+    "file_read": {
+        "description": "Liest den Inhalt einer Datei",
+        "allowed_agents": ["van", "plan", "create", "implement", "review"]
+    },
+    "file_write": {
+        "description": "Schreibt Inhalt in eine Datei",
+        "allowed_agents": ["van", "plan", "create", "implement", "review"]
+    },
+    "search": {
+        "description": "Sucht nach Informationen",
+        "allowed_agents": ["van", "plan", "create", "implement", "review"]
+    },
+    "code_analysis": {
+        "description": "Analysiert Code auf Qualität und Probleme",
+        "allowed_agents": ["van", "review"],
+        "parameters": {
+            "code": "string",
+            "language": "string",
+            "analysis_type": "string"
+        }
+    },
+    "database_query": {
+        "description": "Führt Datenbankabfragen aus",
+        "allowed_agents": ["van", "plan", "implement"],
+        "parameters": {
+            "query": "string",
+            "database": "string"
+        }
+    },
+    "erp_module_info": {
+        "description": "Liefert Informationen über ERP-Module",
+        "allowed_agents": ["van", "plan", "create", "implement"],
+        "parameters": {
+            "module_name": "string",
+            "info_type": "string"
+        }
+    },
+    "process_analyzer": {
+        "description": "Analysiert Geschäftsprozesse auf Optimierungspotenziale",
+        "allowed_agents": ["van", "plan"],
+        "parameters": {
+            "process_name": "string",
+            "process_data": "string",
+            "metrics": "array"
+        }
+    },
+    "code_generator": {
+        "description": "Generiert Code basierend auf Spezifikationen",
+        "allowed_agents": ["create"],
+        "parameters": {
+            "specification": "string",
+            "language": "string",
+            "framework": "string"
+        }
+    },
+    "test_runner": {
+        "description": "Führt Tests für implementierte Funktionalitäten aus",
+        "allowed_agents": ["implement", "review"],
+        "parameters": {
+            "test_type": "string",
+            "target": "string",
+            "parameters": "object"
+        }
+    },
+    "documentation_generator": {
+        "description": "Generiert Dokumentation für Code oder Prozesse",
+        "allowed_agents": ["create", "implement"],
+        "parameters": {
+            "source": "string",
+            "format": "string",
+            "output_path": "string"
+        }
+    },
+    "performance_analyzer": {
+        "description": "Analysiert die Leistung von Code oder Systemen",
+        "allowed_agents": ["review"],
+        "parameters": {
+            "target": "string",
+            "metrics": "array",
+            "duration": "number"
+        }
+    }
+} 

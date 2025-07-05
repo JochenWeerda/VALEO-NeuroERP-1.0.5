@@ -1,0 +1,87 @@
+# APM-ERP Integration Konfiguration
+integration:
+  # ERP-System Verbindung
+  erp:
+    base_url: "http://erp-service:8080"
+    timeout_seconds: 30
+    retry:
+      max_attempts: 3
+      backoff_factor: 2
+
+  # API-Endpunkte
+  endpoints:
+    inventory:
+      path: "/api/v1/inventory"
+      method: "POST"
+      required_fields:
+        - "product_id"
+        - "quantity"
+        - "warehouse_id"
+    
+    transactions:
+      path: "/api/v1/transactions"
+      method: "POST"
+      required_fields:
+        - "transaction_type"
+        - "amount"
+        - "account_id"
+    
+    documents:
+      path: "/api/v1/documents"
+      method: "POST"
+      required_fields:
+        - "document_type"
+        - "content"
+        - "metadata"
+
+  # Daten-Mapping
+  mapping:
+    inventory_status:
+      "in_stock": "verfügbar"
+      "out_of_stock": "nicht_verfügbar"
+      "reserved": "reserviert"
+    
+    transaction_types:
+      "purchase": "EINKAUF"
+      "sale": "VERKAUF"
+      "transfer": "UMBUCHUNG"
+
+  # Event-Handling
+  events:
+    inventory_update:
+      queue: "inventory_updates"
+      retry_count: 3
+    
+    transaction_complete:
+      queue: "transaction_events"
+      retry_count: 3
+
+  # Fehlerbehandlung
+  error_handling:
+    retry_codes:
+      - 500
+      - 502
+      - 503
+      - 504
+    alert_threshold: 5
+    alert_window_minutes: 15
+
+  # Monitoring
+  monitoring:
+    metrics:
+      - name: "integration_requests_total"
+        type: "counter"
+        labels:
+          - "endpoint"
+          - "status"
+      - name: "integration_latency_seconds"
+        type: "histogram"
+        labels:
+          - "endpoint"
+    alerts:
+      - name: "high_error_rate"
+        threshold: 0.1
+        window: "5m"
+      - name: "high_latency"
+        threshold: 2.0
+        window: "5m" 

@@ -1,0 +1,550 @@
+# Migrationsplan für verbleibende Dienste zu Kubernetes
+# ----------------------------------------------------
+# Dieser Plan beschreibt die Migration der restlichen Dienste des ERP-Systems
+# von Docker-Compose zu Kubernetes.
+
+# Liste der zu migrierenden Dienste:
+# 1. Frontend-Anwendung
+# 2. Dokumentenmanagement-Service
+# 3. Reporting-Service
+# 4. Authentifizierungsservice
+# 5. Notification-Service
+
+# Reihenfolge der Migration:
+# 1. Stateless Services (Frontend, Auth)
+# 2. Stateful Services mit geringer Abhängigkeit (Reporting)
+# 3. Komplexe Services (Dokumentenmanagement, Notification)
+
+# Migration: Frontend-Anwendung
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: erp-system
+  labels:
+    app: frontend
+    component: ui
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: frontend
+        component: ui
+    spec:
+      containers:
+      - name: frontend
+        image: ghcr.io/organization/erp-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        env:
+        - name: API_URL
+          value: "http://api-server:8003"
+        - name: AUTH_SERVICE_URL
+          value: "http://auth-service:8080"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: erp-system
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  namespace: erp-system
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: erp.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - erp.example.com
+    secretName: erp-tls-secret
+
+# Migration: Authentifizierungsservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: erp-system
+  labels:
+    app: auth-service
+    component: security
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+        component: security
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+      containers:
+      - name: auth-service
+        image: ghcr.io/organization/erp-auth-service:latest
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: auth-config
+              key: db_host
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: auth-secrets
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: auth-secrets
+              key: db_password
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth-secrets
+              key: jwt_secret
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: auth-config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: auth-config-volume
+        configMap:
+          name: auth-config
+      - name: tmp
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: erp-system
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+  namespace: erp-system
+data:
+  db_host: "auth-db.erp-system.svc.cluster.local"
+  config.json: |
+    {
+      "session_timeout": 3600,
+      "max_login_attempts": 5,
+      "password_policy": {
+        "min_length": 10,
+        "require_special_chars": true,
+        "require_numbers": true
+      }
+    }
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-secrets
+  namespace: erp-system
+type: Opaque
+data:
+  db_user: YWRtaW4=  # admin
+  db_password: c2VjdXJlX3Bhc3N3b3JkXzEyMw==  # secure_password_123
+  jwt_secret: dmVyeV9zZWN1cmVfc2VjcmV0X2tleV9mb3Jfand0X3Rva2Vucw==  # very_secure_secret_key_for_jwt_tokens
+
+# Migration: Reporting-Service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reporting-service
+  namespace: erp-system
+  labels:
+    app: reporting-service
+    component: analytics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reporting-service
+  template:
+    metadata:
+      labels:
+        app: reporting-service
+        component: analytics
+    spec:
+      containers:
+      - name: reporting-service
+        image: ghcr.io/organization/erp-reporting:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8090
+          name: http
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: API_SERVER_URL
+          value: "http://api-server:8003"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        volumeMounts:
+        - name: report-templates
+          mountPath: /app/templates
+          readOnly: true
+        - name: report-data
+          mountPath: /app/data
+      volumes:
+      - name: report-templates
+        configMap:
+          name: report-templates
+      - name: report-data
+        persistentVolumeClaim:
+          claimName: report-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reporting-service
+  namespace: erp-system
+spec:
+  selector:
+    app: reporting-service
+  ports:
+  - port: 8090
+    targetPort: 8090
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: report-data-pvc
+  namespace: erp-system
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: report-templates
+  namespace: erp-system
+data:
+  invoice-template.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Rechnung</title></head>
+    <body>
+      <h1>Rechnung #{{invoice_number}}</h1>
+      <p>Datum: {{date}}</p>
+      <!-- Weitere Template-Inhalte -->
+    </body>
+    </html>
+
+# Migration: Dokumentenmanagement-Service
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: document-service
+  namespace: erp-system
+  labels:
+    app: document-service
+    component: storage
+spec:
+  serviceName: "document-service"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: document-service
+  template:
+    metadata:
+      labels:
+        app: document-service
+        component: storage
+    spec:
+      containers:
+      - name: document-service
+        image: ghcr.io/organization/erp-document-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8070
+          name: http
+        env:
+        - name: STORAGE_PATH
+          value: "/data/documents"
+        - name: DB_HOST
+          value: "document-db"
+        - name: MAX_UPLOAD_SIZE
+          value: "50MB"
+        - name: AUTH_SERVICE_URL
+          value: "http://auth-service:8080"
+        resources:
+          requests:
+            cpu: 300m
+            memory: 512Mi
+          limits:
+            cpu: 800m
+            memory: 1Gi
+        volumeMounts:
+        - name: document-storage
+          mountPath: /data/documents
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8070
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8070
+          initialDelaySeconds: 10
+          periodSeconds: 10
+  volumeClaimTemplates:
+  - metadata:
+      name: document-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-service
+  namespace: erp-system
+spec:
+  selector:
+    app: document-service
+  ports:
+  - port: 8070
+    targetPort: 8070
+    name: http
+  type: ClusterIP
+
+# Migration: Notification-Service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: erp-system
+  labels:
+    app: notification-service
+    component: communication
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        component: communication
+    spec:
+      containers:
+      - name: notification-service
+        image: ghcr.io/organization/erp-notification:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8060
+          name: http
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: SMTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: notification-config
+              key: smtp_host
+        - name: SMTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: notification-config
+              key: smtp_port
+        - name: SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: smtp_user
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notification-secrets
+              key: smtp_password
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: notification-templates
+          mountPath: /app/templates
+          readOnly: true
+      volumes:
+      - name: notification-templates
+        configMap:
+          name: notification-templates
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: erp-system
+spec:
+  selector:
+    app: notification-service
+  ports:
+  - port: 8060
+    targetPort: 8060
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-config
+  namespace: erp-system
+data:
+  smtp_host: "smtp.example.com"
+  smtp_port: "587"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-templates
+  namespace: erp-system
+data:
+  order-confirmation.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Bestellbestätigung</title></head>
+    <body>
+      <h1>Vielen Dank für Ihre Bestellung!</h1>
+      <p>Sehr geehrte(r) {{customer_name}},</p>
+      <p>Ihre Bestellung #{{order_number}} wurde erfolgreich bearbeitet.</p>
+      <!-- Weitere Template-Inhalte -->
+    </body>
+    </html>
+  password-reset.html: |
+    <!DOCTYPE html>
+    <html>
+    <head><title>Passwort zurücksetzen</title></head>
+    <body>
+      <h1>Passwort zurücksetzen</h1>
+      <p>Klicken Sie auf den folgenden Link, um Ihr Passwort zurückzusetzen:</p>
+      <p><a href="{{reset_link}}">Passwort zurücksetzen</a></p>
+      <!-- Weitere Template-Inhalte -->
+    </body>
+    </html>
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: notification-secrets
+  namespace: erp-system
+type: Opaque
+data:
+  smtp_user: bm90aWZpY2F0aW9uQGV4YW1wbGUuY29t  # notification@example.com
+  smtp_password: c210cF9wYXNzd29yZF8xMjM=  # smtp_password_123 

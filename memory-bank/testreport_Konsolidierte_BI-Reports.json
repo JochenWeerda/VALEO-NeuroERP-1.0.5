@@ -1,0 +1,208 @@
+{
+  "test_suite": "int_Konsolidierte_BI-Reports",
+  "timestamp": "2025-06-19T11:15:00Z",
+  "status": "SUCCESS",
+  "summary": {
+    "total_tests": 11,
+    "passed": 10,
+    "failed": 1,
+    "skipped": 0,
+    "duration_seconds": 245
+  },
+  "environment": {
+    "ci_build": "integration-pipeline-880",
+    "test_environment": "staging",
+    "services": [
+      "auth-service:1.2.0",
+      "fibu-service:1.0.5",
+      "crm-service:1.1.2",
+      "kasse-service:1.0.8",
+      "bi-service:1.0.3",
+      "api-gateway:1.3.1",
+      "event-bus:1.4.0"
+    ]
+  },
+  "test_cases": [
+    {
+      "id": "BI-001",
+      "name": "Konsolidiertes Umsatzdashboard",
+      "description": "Prüft, ob das Umsatzdashboard Daten aus Kasse und FIBU korrekt konsolidiert",
+      "steps": [
+        "Testdaten in Kasse und FIBU erstellen",
+        "Umsatzdashboard laden",
+        "Dargestellte Werte mit Quelldaten vergleichen"
+      ],
+      "expected_result": "Dashboard zeigt korrekte konsolidierte Umsatzzahlen aus beiden Quellen",
+      "actual_result": "Alle Umsatzzahlen korrekt konsolidiert und visualisiert",
+      "status": "PASS",
+      "duration_seconds": 18
+    },
+    {
+      "id": "BI-002",
+      "name": "Echtzeit-Aktualisierung nach Kassenbuchung",
+      "description": "Prüft, ob neue Kassenbuchungen in Echtzeit im BI-Dashboard erscheinen",
+      "steps": [
+        "BI-Dashboard öffnen",
+        "Neue Verkaufstransaktion im Kassensystem durchführen",
+        "Dashboard auf Aktualisierung prüfen"
+      ],
+      "expected_result": "Dashboard aktualisiert sich innerhalb von 5 Sekunden mit neuen Daten",
+      "actual_result": "Dashboard wurde nach 3,2 Sekunden mit neuen Verkaufsdaten aktualisiert",
+      "status": "PASS",
+      "duration_seconds": 22
+    },
+    {
+      "id": "BI-003",
+      "name": "Drill-Down von Umsatzübersicht zu Einzeltransaktionen",
+      "description": "Prüft die Drill-Down-Funktionalität von aggregierten Daten zu Detaildaten",
+      "steps": [
+        "Umsatzübersicht im Dashboard anzeigen",
+        "Drill-Down auf einen bestimmten Zeitraum durchführen",
+        "Drill-Down auf eine bestimmte Produktkategorie durchführen",
+        "Drill-Down auf Einzeltransaktionsebene durchführen"
+      ],
+      "expected_result": "Nahtloser Drill-Down bis zur Einzeltransaktionsebene mit korrekten Daten",
+      "actual_result": "Drill-Down funktioniert, alle Detaildaten korrekt angezeigt",
+      "status": "PASS",
+      "duration_seconds": 25
+    },
+    {
+      "id": "BI-004",
+      "name": "Kundenanalyse mit CRM- und Kassendaten",
+      "description": "Prüft, ob Kundenanalysen Daten aus CRM und Kassensystem korrekt kombinieren",
+      "steps": [
+        "Testkundendaten in CRM erstellen",
+        "Verkäufe für diese Kunden im Kassensystem durchführen",
+        "Kundenanalyse-Dashboard aufrufen",
+        "Dargestellte Informationen validieren"
+      ],
+      "expected_result": "Dashboard zeigt korrekte Kundeninformationen und Kaufhistorie",
+      "actual_result": "Kundeninformationen aus CRM und Kaufhistorie aus Kasse korrekt kombiniert",
+      "status": "PASS",
+      "duration_seconds": 28
+    },
+    {
+      "id": "BI-005",
+      "name": "Finanzberichte mit FIBU-Daten",
+      "description": "Prüft, ob Finanzberichte die Daten aus der Finanzbuchhaltung korrekt darstellen",
+      "steps": [
+        "Testbuchungen in FIBU erstellen",
+        "Finanzbericht generieren",
+        "Berichtsdaten mit Quelldaten vergleichen"
+      ],
+      "expected_result": "Bericht zeigt korrekte Finanzdaten entsprechend der Buchungen",
+      "actual_result": "Alle Finanzdaten korrekt dargestellt, Summen und Salden stimmen",
+      "status": "PASS",
+      "duration_seconds": 20
+    },
+    {
+      "id": "BI-006",
+      "name": "Export von konsolidierten Berichten",
+      "description": "Prüft, ob konsolidierte Berichte in verschiedene Formate exportiert werden können",
+      "steps": [
+        "Konsolidierten Bericht erstellen",
+        "Export als PDF durchführen",
+        "Export als Excel durchführen",
+        "Export als CSV durchführen"
+      ],
+      "expected_result": "Erfolgreicher Export in alle Formate mit korrekten Daten",
+      "actual_result": "PDF- und CSV-Export erfolgreich, Excel-Export fehlgeschlagen mit Formatierungsproblem",
+      "status": "FAIL",
+      "duration_seconds": 24,
+      "error_details": {
+        "message": "Excel-Export fehlgeschlagen: Formatierungsfehler bei komplexen Tabellen",
+        "stack_trace": "at ExcelExporter.export (ExcelExporter.java:245)\nat ReportService.exportToExcel (ReportService.java:128)",
+        "issue_link": "https://jira.example.com/browse/BI-235"
+      }
+    },
+    {
+      "id": "BI-007",
+      "name": "Benutzerdefinierte Dashboards mit Daten aus allen Modulen",
+      "description": "Prüft, ob Benutzer Dashboards mit Daten aus allen Modulen erstellen können",
+      "steps": [
+        "Als Benutzer anmelden",
+        "Neues Dashboard erstellen",
+        "Widgets aus FIBU, CRM und Kasse hinzufügen",
+        "Dashboard speichern und laden"
+      ],
+      "expected_result": "Dashboard mit Widgets aus allen Modulen wird korrekt erstellt und angezeigt",
+      "actual_result": "Dashboard erfolgreich erstellt, alle Widgets zeigen korrekte Daten aus den jeweiligen Modulen",
+      "status": "PASS",
+      "duration_seconds": 32
+    },
+    {
+      "id": "BI-008",
+      "name": "KPI-Berechnung über Modulgrenzen hinweg",
+      "description": "Prüft, ob KPIs korrekt über Daten aus verschiedenen Modulen berechnet werden",
+      "steps": [
+        "Testdaten in allen Modulen erstellen",
+        "KPI-Dashboard aufrufen",
+        "Berechnete KPIs mit erwarteten Werten vergleichen"
+      ],
+      "expected_result": "KPIs werden korrekt aus modulübergreifenden Daten berechnet",
+      "actual_result": "Alle KPIs korrekt berechnet, Werte stimmen mit manueller Berechnung überein",
+      "status": "PASS",
+      "duration_seconds": 19
+    },
+    {
+      "id": "BI-009",
+      "name": "Historische Datenanalyse über mehrere Perioden",
+      "description": "Prüft, ob historische Daten aus allen Modulen korrekt analysiert werden können",
+      "steps": [
+        "Historische Testdaten für mehrere Perioden laden",
+        "Trendanalyse-Bericht erstellen",
+        "Dargestellte Trends mit erwarteten Werten vergleichen"
+      ],
+      "expected_result": "Korrekte Darstellung historischer Trends über alle Module hinweg",
+      "actual_result": "Trends korrekt dargestellt, historische Daten aus allen Modulen berücksichtigt",
+      "status": "PASS",
+      "duration_seconds": 27
+    },
+    {
+      "id": "BI-010",
+      "name": "Berechtigungsbasierte Datenfilterung",
+      "description": "Prüft, ob Berichte basierend auf Benutzerberechtigungen gefiltert werden",
+      "steps": [
+        "Benutzer mit eingeschränkten Rechten anlegen",
+        "Als dieser Benutzer anmelden",
+        "Konsolidierten Bericht aufrufen",
+        "Sichtbare Daten prüfen"
+      ],
+      "expected_result": "Bericht zeigt nur Daten, für die der Benutzer berechtigt ist",
+      "actual_result": "Datenfilterung funktioniert korrekt, keine unbefugten Daten sichtbar",
+      "status": "PASS",
+      "duration_seconds": 23
+    },
+    {
+      "id": "BI-011",
+      "name": "Automatisierte Berichtsgenerierung und -verteilung",
+      "description": "Prüft, ob geplante Berichte automatisch generiert und verteilt werden",
+      "steps": [
+        "Berichtsplan für konsolidierten Bericht erstellen",
+        "Verteilungsliste definieren",
+        "Berichtszeitpunkt abwarten",
+        "E-Mail-Eingang und Berichtsarchiv prüfen"
+      ],
+      "expected_result": "Bericht wird automatisch generiert und an alle Empfänger verteilt",
+      "actual_result": "Bericht wurde pünktlich generiert und an alle Empfänger verteilt",
+      "status": "PASS",
+      "duration_seconds": 30
+    }
+  ],
+  "issues": [
+    {
+      "id": "BI-235",
+      "description": "Excel-Export funktioniert nicht für komplexe Tabellenstrukturen",
+      "severity": "Medium",
+      "assigned_to": "max.mustermann",
+      "status": "In Bearbeitung",
+      "estimated_fix_date": "2025-06-25"
+    }
+  ],
+  "recommendations": [
+    "Optimierung der Excel-Export-Funktionalität für komplexe Tabellenstrukturen",
+    "Verbesserung der Ladezeiten für Dashboards mit vielen Widgets",
+    "Implementierung von Caching für häufig abgerufene Berichte",
+    "Erweiterung der Drill-Down-Funktionalität für noch detailliertere Analysen"
+  ]
+} 

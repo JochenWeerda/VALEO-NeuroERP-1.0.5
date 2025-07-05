@@ -1,0 +1,80 @@
+# 📁 Datei: prompts/launch_cycle_valero_v1.4.yaml
+# 🚀 GENXAIS Prompt zur Initialisierung des nächsten Multi-Pipeline-Zyklus für VALERO-Die NeuroERP (v1.4)
+
+name: Launch GENXAIS Cycle – VALERO v1.4
+type: multi-agent-cycle
+versioning:
+  previous_version: v1.3
+  current_version: v1.4
+trigger: launch_cycle.py
+mode: full-automation
+
+phases:
+  - VAN
+  - PLAN
+  - CREATE
+  - IMPLEMENTATION
+  - REFLEKTION
+
+orchestrator: LangGraph
+memory: MCP
+graph_knowledge: Graphiti
+database: MongoDB
+ui: Streamlit
+monitoring:
+  grafana: enabled
+  prometheus: enabled
+
+pipelines:
+  - id: pipeline_arch
+    name: Architekturvalidierung & Microservice-Design
+    agents: [ArchitekturAgent, InfraScanAgent, ChangeLogAgent]
+    goals:
+      - Erkennen neuer Architekturänderungen
+      - Anpassen der Microservice-Struktur
+      - Dokumentation im `architektur_snapshot.md`
+
+  - id: pipeline_graphiti
+    name: Decision Graph Expansion
+    agents: [GraphitiAgent, RetrospektiveAgent]
+    goals:
+      - Erweiterung des bestehenden Graphiti-Wissensgraphen
+      - Verlinkung mit aktuellen Artefakten und Memory-Bank-Inhalten
+      - Export als `graphiti_v1.4_snapshot.graphml`
+
+  - id: pipeline_devops
+    name: DevOps Pipeline Optimierung
+    agents: [DeployAgent, HelmValidator, MonitoringAgent]
+    goals:
+      - Helm-Konfiguration überprüfen und verbessern
+      - Prometheus/Grafana Setup validieren
+      - Neue Metriken zur Phase CREATE integrieren
+
+  - id: pipeline_qa
+    name: QA & Testing Enhancement
+    agents: [TestAgent, CodeCoverAgent, SnapshotAgent]
+    goals:
+      - Neue Testfälle aufbauen
+      - Code-Coverage Bericht generieren
+      - Export nach `testsuite_snapshot.md`
+
+  - id: pipeline_review
+    name: Übergabe & Retro-Vorbereitung
+    agents: [ReviewAgent, ArchivAgent, PräsentationsAgent]
+    goals:
+      - Zusammenfassung des Zyklus als `v1.4_final_review.md`
+      - Präsentation in Streamlit einbinden
+      - Alle Artefakte archivieren und Übergabe an VAN v1.5 vorbereiten
+
+output_documents:
+  - architektur_snapshot.md
+  - graphiti_v1.4_snapshot.graphml
+  - testsuite_snapshot.md
+  - changelog_v1.4.md
+  - v1.4_final_review.md
+
+post_actions:
+  - update system_state to "ready_for_VAN_v1.5"
+  - send summary to streamlit_dashboard
+  - prepare next version context in MongoDB
+  - launch suggest_next_cycle: VAN for GENXAIS_v1.5 

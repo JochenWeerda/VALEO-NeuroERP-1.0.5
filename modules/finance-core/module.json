@@ -1,0 +1,72 @@
+{
+  "name": "finance-core",
+  "version": "1.0.0",
+  "description": "Kernmodul für Finanzfunktionalitäten im AI-ERP-System",
+  "maintainer": "Finance-Team",
+  "stability": "stable",
+  "dependencies": [
+    {
+      "module": "core-database",
+      "version": "^2.0.0"
+    },
+    {
+      "module": "auth-service",
+      "version": "^1.5.0"
+    },
+    {
+      "module": "logging-service",
+      "version": "~1.2.3"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "FinancialTransactionAPI",
+      "version": "1.0.0",
+      "schema": "schemas/financial-transaction-api.json",
+      "description": "API für Finanztransaktionen"
+    },
+    {
+      "name": "AccountingAPI",
+      "version": "1.0.0",
+      "schema": "schemas/accounting-api.json",
+      "description": "API für Buchhaltungsfunktionen"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/index.js",
+      "role": "entry"
+    },
+    {
+      "path": "src/transaction.js",
+      "role": "module"
+    },
+    {
+      "path": "src/accounting.js",
+      "role": "module"
+    },
+    {
+      "path": "src/validators.js",
+      "role": "utility"
+    },
+    {
+      "path": "schemas/financial-transaction-api.json",
+      "role": "schema"
+    },
+    {
+      "path": "schemas/accounting-api.json",
+      "role": "schema"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-06-02",
+      "changes": [
+        "Initiale Version des Finanz-Kernmoduls",
+        "Implementierung der FinancialTransactionAPI",
+        "Implementierung der AccountingAPI"
+      ]
+    }
+  ]
+} 

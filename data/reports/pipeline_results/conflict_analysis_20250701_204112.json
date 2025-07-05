@@ -1,0 +1,66 @@
+{
+    "name": "Konfliktanalyse & Datenintegrität",
+    "timestamp": "2025-07-01T19:45:00Z",
+    "overall_status": "warning",
+    "summary": {
+        "total_tests": 4,
+        "passed_tests": 3,
+        "warning_tests": 1,
+        "failed_tests": 0,
+        "success_rate": "75.0%"
+    },
+    "results": [
+        {
+            "test": "concurrent_access",
+            "description": "Analyse gleichzeitiger Zugriffe auf Edge-Ressourcen",
+            "status": "passed",
+            "details": {
+                "max_concurrent_users": 50,
+                "resource_contention": "low",
+                "lock_timeout_rate": "0.5%"
+            }
+        },
+        {
+            "test": "conflict_patterns",
+            "description": "Identifikation von Konfliktmustern bei parallelen Edge-Zugriffen",
+            "status": "warning",
+            "details": {
+                "identified_patterns": [
+                    "write-write conflicts on inventory updates",
+                    "read-write conflicts on pricing data"
+                ],
+                "occurrence_frequency": "medium",
+                "impact_severity": "moderate"
+            }
+        },
+        {
+            "test": "resolution_strategies",
+            "description": "Bewertung von Strategien zur Konfliktlösung",
+            "status": "passed",
+            "details": {
+                "evaluated_strategies": [
+                    "optimistic locking",
+                    "last-write-wins",
+                    "merge-based resolution"
+                ],
+                "recommended_strategy": "optimistic locking with merge fallback",
+                "expected_success_rate": "98.5%"
+            }
+        },
+        {
+            "test": "data_integrity",
+            "description": "Überprüfung der Datenintegrität nach Konfliktlösungen",
+            "status": "passed",
+            "details": {
+                "consistency_check": "passed",
+                "referential_integrity": "maintained",
+                "data_loss_incidents": 0,
+                "corruption_incidents": 0
+            }
+        }
+    ],
+    "recommendations": [
+        "Implementiere optimistisches Locking für Inventaraktualisierungen",
+        "Verwende Versionsbasierte Konfliktlösung für Preisdaten"
+    ]
+}

@@ -1,0 +1,92 @@
+# 📁 Datei: prompts/init_genxais_cycle_v1.3.yaml
+# 🔁 Initialisierungs-Prompt für neue GENXAIS-Runde im Multi-Pipeline-Modus
+
+name: GENXAIS-Cycle-Start-v1.3
+type: multi-pipeline-cycle
+versioning:
+  current_version: v1.2
+  next_version: v1.3
+trigger: cron
+schedule: "0 5 * * *" # täglich um 5 Uhr
+mode: automated
+
+phases:
+  - VAN
+  - PLAN
+  - CREATE
+  - IMPLEMENTATION
+  - REFLEKTION
+
+context:
+  orchestrator: LangGraph
+  knowledge_graph: Graphiti
+  memory_system: MCP
+  persistence: MongoDB
+  ui: Streamlit
+  cron: true
+
+pipelines:
+  - id: pipeline_1
+    name: Architektur & Infrastruktur
+    agents: [ArchitekturAgent, ConfigAgent, InfraValidator]
+    goals:
+      - Bewertung bestehender Architektur
+      - Validierung der Konfigurationsdateien (Dataclasses, TriggerTypes)
+      - Aktualisierung der Infrastrukturdefinition in MongoDB
+
+  - id: pipeline_2
+    name: Knowledge Engineering & Graphiti
+    agents: [GraphAgent, ReviewAgent, GraphitiAgent]
+    goals:
+      - Analyse und Visualisierung bestehender Phasen
+      - Erstellung von Knoten- und Kantenbeziehungen für Knowledge Graph
+      - Export als `.graphiti_snapshot`
+
+  - id: pipeline_3
+    name: Dokumentation & Tests
+    agents: [DocAgent, TestAgent, SnapshotAgent]
+    goals:
+      - Erstellung von API-Dokumentation
+      - Schreiben von Unittests auf Basis der CHANGE-Logs
+      - Erstellung von `create_snapshot.md` für Zwischenstand
+
+  - id: pipeline_4
+    name: Monitoring & Deployment
+    agents: [MonitoringAgent, DeployAgent, IssueTrackerAgent]
+    goals:
+      - Setup von Prometheus & Grafana
+      - Rollout-Testumgebung VALERO v1.3
+      - Sammlung offener Issues mit auto-tagging
+
+  - id: pipeline_5
+    name: Evaluation & Übergabe
+    agents: [ReviewAgent, RetrospektivAgent, ArchivAgent]
+    goals:
+      - Zusammenfassung in `v1.3_final_review.md`
+      - Präsentationsfolien für Streamlit UI
+      - Automatische Archivierung & Start der nächsten VAN-Runde
+
+output_documents:
+  - architektur_update.md
+  - graphiti_snapshot.json
+  - create_snapshot.md
+  - monitoring_config_snapshot.yaml
+  - v1.3_final_review.md
+
+monitoring:
+  streamlit:
+    active: true
+    endpoints:
+      - /status
+      - /pipeline-progress
+      - /knowledge-graph
+  grafana:
+    port: 3000
+  prometheus:
+    port: 9090
+
+actions:
+  - update system_state to "RUNNING"
+  - generate streamlit report every 10 min
+  - auto-archive on phase REFLEKTION completion
+  - prepare VAN for GENXAIS_v1.4 

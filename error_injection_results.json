@@ -1,0 +1,199 @@
+{
+  "invalid_data": [
+    {
+      "endpoint": "/api/v1/queue",
+      "payload": "{'data': None}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/queue",
+      "payload": "{'data': ''}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/queue",
+      "payload": "{'data': \"{'invalid': json}\"}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/queue",
+      "payload": "{'data': '\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/queue",
+      "payload": "{'data': {'nested': {'depth': 100}}}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/queue",
+      "payload": "{'data': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/events",
+      "payload": "{'data': None}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/events",
+      "payload": "{'data': ''}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/events",
+      "payload": "{'data': \"{'invalid': json}\"}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/events",
+      "payload": "{'data': '\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/events",
+      "payload": "{'data': {'nested': {'depth': 100}}}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/events",
+      "payload": "{'data': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/users",
+      "payload": "{'data': None}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/users",
+      "payload": "{'data': ''}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/users",
+      "payload": "{'data': \"{'invalid': json}\"}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/users",
+      "payload": "{'data': '\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4\u00e4",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/users",
+      "payload": "{'data': {'nested': {'depth': 100}}}",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    },
+    {
+      "endpoint": "/api/v1/users",
+      "payload": "{'data': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": false
+    }
+  ],
+  "malformed_requests": [
+    {
+      "scenario": {
+        "headers": {
+          "Content-Type": "invalid/type"
+        }
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": true
+    },
+    {
+      "scenario": {
+        "headers": {
+          "Content-Length": "invalid"
+        }
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": true
+    },
+    {
+      "scenario": {
+        "headers": {
+          "Authorization": "malformed_token"
+        }
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": true
+    },
+    {
+      "scenario": {
+        "method": "INVALID"
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": true
+    },
+    {
+      "scenario": {
+        "encoding": "invalid"
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "error_handled": true
+    }
+  ],
+  "resource_exhaustion": [
+    {
+      "scenario": {
+        "memory_mb": 1024
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "handled": true
+    },
+    {
+      "scenario": {
+        "cpu_load": 0.95
+      },
+      "error": "",
+      "handled": true
+    },
+    {
+      "scenario": {
+        "disk_space_mb": 1024
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "handled": true
+    },
+    {
+      "scenario": {
+        "open_files": 1000
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "handled": true
+    },
+    {
+      "scenario": {
+        "network_connections": 500
+      },
+      "error": "Cannot connect to host localhost:8000 ssl:default [Der Remotecomputer hat die Netzwerkverbindung abgelehnt]",
+      "handled": true
+    }
+  ],
+  "summary": {
+    "duration": 73.81608,
+    "total_tests": 28,
+    "error_handling_rate": 0.21739130434782608,
+    "resource_tests_completed": 5,
+    "critical_failures": 0
+  }
+}

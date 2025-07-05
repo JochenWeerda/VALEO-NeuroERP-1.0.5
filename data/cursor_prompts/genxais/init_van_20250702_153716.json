@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-07-02 15:37:16",
+  "phase": "VAN",
+  "mode": "Multi-Pipeline",
+  "sources": [
+    "Memory Bank",
+    "Tasks.yaml",
+    "Letztes Handover"
+  ],
+  "project_path": "C:\\Users\\Jochen\\VALEO-NeuroERP-1.01",
+  "version": "1.8.1"
+}
