@@ -14,6 +14,7 @@ from backend.services.api_gateway import (
     ServiceRegistration,
     APIResponse
 )
+from fastapi import HTTPException
 
 # Test Data
 TEST_API_KEY = APIKey(
@@ -260,4 +261,32 @@ class TestAPIGateway:
             )
             
             assert response.status_code == 400
-            assert "Invalid email format" in response.json()["detail"] 
+            assert "Invalid email format" in response.json()["detail"]
+
+    async def test_handle_request_with_bearer_token(self, api_gateway, test_client):
+        """Test: Erfolgreiche Request-Verarbeitung mit Bearer-Token"""
+        api_gateway.services["user-service"] = TEST_SERVICE
+        # Simuliertes JWT-Payload
+        with patch.object(api_gateway, "validate_auth", return_value={"sub": "user1"}), \
+             patch.object(api_gateway, "forward_request") as mock_forward:
+            mock_forward.return_value = APIResponse(
+                success=True,
+                data={"id": 1, "name": "Test User"}
+            )
+            response = test_client.get(
+                "/api/v1/user-service/users",
+                headers={"Authorization": "Bearer test.jwt.token"}
+            )
+            assert response.status_code == 200
+            assert mock_forward.called
+
+    async def test_handle_request_with_invalid_token(self, api_gateway, test_client):
+        """Test: Fehlerhafte Authentifizierung mit ungültigem Bearer-Token"""
+        api_gateway.services["user-service"] = TEST_SERVICE
+        with patch.object(api_gateway, "validate_auth", side_effect=HTTPException(status_code=401, detail="Ungültiges Token")):
+            response = test_client.get(
+                "/api/v1/user-service/users",
+                headers={"Authorization": "Bearer invalid.token"}
+            )
+            assert response.status_code == 401
+            assert response.json()["detail"] == "Ungültiges Token" 

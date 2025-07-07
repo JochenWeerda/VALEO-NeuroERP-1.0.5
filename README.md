@@ -1,256 +1,117 @@
-# VALERO – Die NeuroERP
+# VALEO-NeuroERP 2.0
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://python.org)
-[![Framework](https://img.shields.io/badge/Framework-VALERO-green.svg)](https://github.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+Eine moderne ERP-Lösung mit KI-Integration, entwickelt mit Python, FastAPI und MongoDB.
 
-> **"Die nächste Generation KI-gestützter Warenwirtschaftssysteme"**
+## Features
 
-## 🧠 Bedeutung des Namens VALERO
+- Benutzer-Authentifizierung und -Autorisierung
+- Dokumenten-Management
+- Workflow-Engine
+- RAG (Retrieval-Augmented Generation)
+- LangGraph-Integration
+- Monitoring und Metriken
+- REST API
+- Docker-Support
 
-VALERO ist ein Kunstwort, das symbolisch für die Kernkomponenten des Systems steht:
+## Technologie-Stack
 
-| Buchstabe | Bedeutung im Kontext des Systems |
-|-----------|----------------------------------|
-| V | Vernetzte Datenflüsse und Agenten |
-| A | Automatisierung durch KI-Modelle (z.B. LangGraph, Cursor.ai) |
-| L | Lernfähigkeit via RAG + Memory-Bank |
-| E | Erweiterbarkeit über Microservices & MCP |
-| R | Resilienz durch robuste Netzwerk- und Fehlerlogik |
-| O | Orchestrierung durch GENXAIS-Multi-Pipeline-Systeme |
-
-## 🧩 Was ist "Die NeuroERP"?
-
-Der Zusatz "Die NeuroERP" beschreibt eine neue Generation von ERP-Systemen, die weit über klassische Buchhaltungs- oder Warenwirtschaftsfunktionen hinausgeht:
-
-- Neuronale Netzwerke zur Entscheidungsfindung
-- Multi-agentische Systeme (APM mit VAN/PLAN/CREATE...)
-- Kontextsensitive Arbeitsweise durch Memory-Bank
-- Selbstverbessernde Zyklen (GENXAIS) für iterative Weiterentwicklung
-
-## 🔍 Ziel und Philosophie
-
-VALERO – Die NeuroERP ist:
-
-- 🧠 **Intelligent**: Durch RAG, LLMs und LangGraph
-- 🔁 **Selbstverbessernd**: Via GENXAIS-Zyklus
-- 🤝 **Kooperativ**: Multi-Agenten mit geteiltem Kontext
-- 💡 **Adaptiv**: Lernt aus Nutzerverhalten, API-Flows und Systemereignissen
-- 🌐 **Vernetzt**: REST/gRPC, MCP, Cloud-native oder lokal
-
-## Hauptfunktionen
-
-### 🤖 KI-Integration
-- RAG-basierte Wissensverwaltung
-- LangGraph für komplexe Entscheidungsprozesse
-- Cursor.ai für intelligente Entwicklungsunterstützung
-
-### 🔄 Multi-Agent-System
-- APM-Methodologie (VAN → PLAN → CREATE → IMPLEMENT → REFLECT)
-- Kontextbewusste Agentenkommunikation
-- Memory-Bank für Wissenserhalt
-
-### 📊 Selbstoptimierung
-- GENXAIS-Zyklen zur kontinuierlichen Verbesserung
-- Automatische Performance-Optimierung
-- Lernende Systemanpassung
-
-### 🛠 Technische Exzellenz
-- Microservice-Architektur
-- MCP (Multi-Context-Protocol) Integration
-- Robuste Fehlerbehandlung und Resilienz
+- Python 3.9+
+- FastAPI
+- MongoDB
+- Redis
+- Prometheus
+- Grafana
+- Docker
+- Kubernetes
 
 ## Installation
 
-### Voraussetzungen
-
-- Python 3.8 oder höher
-- Docker & Docker Compose
-- MongoDB
-- Redis
-
-### Standardinstallation
-
+1. Repository klonen:
 ```bash
-# 1. Repository klonen
-git clone https://github.com/IHR-USERNAME/VALEO-NeuroERP.git
-cd VALEO-NeuroERP
+git clone https://github.com/username/VALEO-NeuroERP-2.0.git
+cd VALEO-NeuroERP-2.0
+```
 
-# 2. Virtuelle Umgebung erstellen (empfohlen)
+2. Python Virtual Environment erstellen:
+```bash
 python -m venv venv
+source venv/bin/activate  # Linux/Mac
+.\venv\Scripts\activate   # Windows
+```
 
-# Windows
-venv\Scripts\activate
-
-# Linux/Mac
-source venv/bin/activate
-
-# 3. Abhängigkeiten installieren
+3. Dependencies installieren:
+```bash
 pip install -r requirements.txt
-
-# 4. Installation überprüfen
-python -m backend.main --help
 ```
 
-### Entwicklungsinstallation
-
+4. Umgebungsvariablen konfigurieren:
 ```bash
-# Installation im Entwicklungsmodus mit zusätzlichen Abhängigkeiten
-pip install -e .
-pip install -r requirements-dev.txt
-
-# Tests ausführen
-python -m pytest tests/
-
-# Entwicklungsserver starten
-python -m backend.main --debug
+cp .env.example .env
+# .env-Datei anpassen
 ```
 
-## Konfiguration
-
-### 1. Konfigurationsdatei erstellen
-
+5. Datenbank initialisieren:
 ```bash
-# Beispielkonfiguration kopieren
-cp config/default.example.py config/default.py
+python scripts/init_db.py
 ```
-
-### 2. Konfiguration anpassen
-
-Bearbeiten Sie `config/default.py`:
-
-```python
-{
-    "mongodb": {
-        "url": "mongodb://localhost:27017/",
-        "database": "valeo_neuroerp",
-        "username": "optional-benutzername",
-        "password": "optional-passwort"
-    },
-    "redis": {
-        "host": "localhost",
-        "port": 6379,
-        "db": 0
-    },
-    "api": {
-        "host": "0.0.0.0",
-        "port": 8000,
-        "debug": False
-    }
-}
-```
-
-### 3. Umgebungsvariablen (Alternative)
-
-```bash
-# Umgebungsvariablen statt Konfigurationsdatei
-export MONGODB_URL="mongodb://localhost:27017/"
-export REDIS_HOST="localhost"
-export API_PORT="8000"
-
-# System-spezifische Einstellungen
-export VALEO_DEBUG="false"
-export VALEO_LOG_LEVEL="INFO"
-```
-
-## Monitoring
-
-### Zugriff auf Monitoring-Tools
-
-- Grafana: http://localhost:3000 (admin/admin)
-- Prometheus: http://localhost:9090
-
-### Wichtige Metriken
-
-- API-Performance
-- Datenbankoperationen
-- Cache-Effizienz
-- Systemressourcen
-- Feature-Nutzung
 
 ## Entwicklung
 
-### Code-Stil
-
+1. API-Server starten:
 ```bash
-# Code formatieren
-black .
-isort .
-
-# Linting
-flake8
+uvicorn apps.api.main:app --reload
 ```
 
-### Tests
-
+2. Worker starten:
 ```bash
-# Alle Tests ausführen
+python -m apps.worker.main
+```
+
+3. Tests ausführen:
+```bash
 pytest
-
-# Spezifische Tests
-pytest tests/test_services.py
-pytest tests/test_api.py
 ```
 
-### Dokumentation
+## Docker
 
+Mit Docker Compose starten:
 ```bash
-# Dokumentation generieren
-python tools/generate_docs.py
-
-# API-Dokumentation aktualisieren
-python tools/update_api_docs.py
-```
-
-## Deployment
-
-### Docker-Deployment
-
-```bash
-# Container bauen
-docker build -t valeo-neuroerp .
-
-# Container starten
-docker run -d -p 8000:8000 valeo-neuroerp
-```
-
-### Monitoring-Stack
-
-```bash
-# Monitoring-Services starten
-cd monitoring
 docker-compose up -d
 ```
 
-## Fehlerbehebung
+## API-Dokumentation
 
-### Bekannte Probleme
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
 
-1. MongoDB-Verbindung:
-   - MongoDB-Service-Status prüfen
-   - Verbindungsstring in der Konfiguration überprüfen
+## Monitoring
 
-2. Redis-Cache:
-   - Redis-Service-Status prüfen
-   - Cache-Konfiguration überprüfen
+- Prometheus: http://localhost:9090
+- Grafana: http://localhost:3000
 
-3. Monitoring:
-   - Prometheus-Targets überprüfen
-   - Grafana-Datenquellen überprüfen
+## Verzeichnisstruktur
 
-### Logs
-
-- Anwendung: `logs/app.log`
-- Zugriff: `logs/access.log`
-- Fehler: `logs/error.log`
-
-### Support
-
-Bei Problemen:
-1. Logs überprüfen
-2. Issue erstellen
-3. Support kontaktieren
+```
+VALEO-NeuroERP-2.0/
+├── apps/                  # Anwendungsmodule
+│   ├── api/              # REST API
+│   ├── web/              # Web-Frontend
+│   └── worker/           # Background-Worker
+├── core/                 # Kernfunktionalität
+│   ├── models/           # Datenmodelle
+│   ├── services/         # Business-Logik
+│   └── utils/            # Hilfsfunktionen
+├── data_integration/     # Datenintegration
+│   ├── rag/              # RAG-System
+│   ├── langgraph/        # LangGraph-Integration
+│   └── mongodb/          # MongoDB-Integration
+├── infrastructure/       # Infrastruktur
+│   ├── docker/           # Docker-Konfiguration
+│   ├── kubernetes/       # Kubernetes-Manifeste
+│   └── terraform/        # Terraform-Module
+└── tests/               # Tests
+```
 
 ## Lizenz
 
-MIT Lizenz - siehe [LICENSE](LICENSE) für Details.
+MIT

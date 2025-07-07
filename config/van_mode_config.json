@@ -1,0 +1,101 @@
+{
+    "mode": "van_optimized",
+    "project_id": "valeo_neuroerp_1_01",
+    "input_data": {
+        "requirements": [
+            {
+                "id": "REQ-001",
+                "type": "functional",
+                "description": "Integration des LangGraph-basierten Workflow Managers",
+                "priority": "high"
+            },
+            {
+                "id": "REQ-002",
+                "type": "functional",
+                "description": "Implementierung der VAN, PLAN, CREATE, IMPLEMENTATION, REFLECTION Phasen",
+                "priority": "high"
+            },
+            {
+                "id": "REQ-003",
+                "type": "functional",
+                "description": "Multi-Pipeline-Unterstützung für parallele Zyklen",
+                "priority": "medium"
+            },
+            {
+                "id": "REQ-004",
+                "type": "non_functional",
+                "description": "Token-Optimierung durch intelligente Agent-Delegation",
+                "priority": "high"
+            },
+            {
+                "id": "REQ-005",
+                "type": "non_functional",
+                "description": "Monitoring und Fehlerbehandlung für alle Phasen",
+                "priority": "medium"
+            }
+        ],
+        "constraints": [
+            {
+                "id": "CON-001",
+                "type": "technical",
+                "description": "Nutzung von LangGraph für Workflow-Steuerung"
+            },
+            {
+                "id": "CON-002",
+                "type": "technical",
+                "description": "Integration mit bestehendem APM Framework"
+            },
+            {
+                "id": "CON-003",
+                "type": "operational",
+                "description": "Maximale Parallelität von 5 Pipelines"
+            }
+        ],
+        "resources": {
+            "frameworks": ["langgraph", "fastapi", "react"],
+            "infrastructure": ["kubernetes", "prometheus", "elasticsearch"],
+            "team_size": 3,
+            "timeline_weeks": 12
+        },
+        "capabilities": [
+            "workflow_management",
+            "agent_delegation",
+            "token_optimization",
+            "monitoring",
+            "error_handling"
+        ]
+    },
+    "validation_rules": {
+        "requirements": {
+            "min_count": 3,
+            "required_types": ["functional", "non_functional"]
+        },
+        "constraints": {
+            "min_count": 2,
+            "required_types": ["technical", "operational"]
+        }
+    },
+    "optimization": {
+        "enable_token_tracking": true,
+        "enable_agent_delegation": true,
+        "enable_template_usage": true,
+        "llm_threshold": "complex_only"
+    },
+    "monitoring": {
+        "metrics": [
+            "token_usage",
+            "agent_delegations",
+            "llm_calls",
+            "processing_time"
+        ],
+        "alerts": {
+            "token_threshold": 1000,
+            "error_threshold": 0.1
+        }
+    },
+    "output": {
+        "format": "structured",
+        "include_metrics": true,
+        "store_in_rag": true
+    }
+} 

@@ -15,6 +15,12 @@ from pydantic import BaseModel
 import uvicorn
 import json
 from datetime import datetime, timedelta
+from backend.middleware.security import (
+    SecurityMiddleware,
+    RateLimitMiddleware,
+    CORSMiddleware as CustomCORSMiddleware
+)
+from backend.core.config import settings
 
 # Komponenten importieren
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -39,18 +45,27 @@ logger = logging.getLogger(__name__)
 
 # Anwendung erstellen
 app = FastAPI(
-    title="VALEO-NeuroERP API",
-    description="API für das VALEO-NeuroERP-System",
-    version="1.0.0",
+    title=settings.PROJECT_NAME,
+    description=settings.PROJECT_DESCRIPTION,
+    version=settings.VERSION
 )
 
-# CORS-Middleware hinzufügen
+# Security Middleware
+app.add_middleware(SecurityMiddleware)
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # In Produktion auf spezifische Domains einschränken
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    RateLimitMiddleware,
+    rate_limit=settings.RATE_LIMIT,
+    window_size=settings.RATE_LIMIT_WINDOW
+)
+
+# CORS Middleware
+app.add_middleware(
+    CustomCORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_methods=settings.CORS_METHODS,
+    allow_headers=settings.CORS_HEADERS,
+    expose_headers=settings.CORS_EXPOSE_HEADERS,
+    max_age=settings.CORS_MAX_AGE
 )
 
 # OAuth2-Schema für die Authentifizierung
@@ -255,6 +270,16 @@ async def mark_notification_read(notification_id: str, current_user: User = Depe
     if not success:
         raise HTTPException(status_code=404, detail="Notification not found")
     return {"status": "success"}
+
+# API Router importieren und einbinden
+from backend.api.v1.api import api_router
+app.include_router(api_router, prefix=settings.API_V1_STR)
+
+# Health Check
+@app.get("/health")
+async def health_check():
+    """Health Check Endpoint"""
+    return {"status": "healthy"}
 
 if __name__ == "__main__":
     # Stellen Sie sicher, dass der Logs-Ordner existiert

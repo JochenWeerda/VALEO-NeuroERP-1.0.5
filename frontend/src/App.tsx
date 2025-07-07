@@ -11,6 +11,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import PrivateRoute from './components/PrivateRoute';
 import Notification from './components/Notification';
+import ChatPanel from './components/dashboard/ChatPanel';
 
 // Seiten importieren
 import LoginPage from './pages/LoginPage';
@@ -23,6 +24,7 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
+import MobileUploadPage from './pages/mobile/MobileUploadPage';
 
 // Kontext importieren
 import { AuthProvider } from './contexts/AuthContext';
@@ -34,6 +36,7 @@ import { checkAuthStatus } from './services/authService';
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -66,10 +69,11 @@ const App: React.FC = () => {
         <NotificationProvider>
           <Router>
             <div className="app">
+              <ChatPanel isOpen={isChatOpen} onToggle={() => setIsChatOpen(o => !o)} />
               <Routes>
                 <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/dashboard" />} />
                 
-                <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Layout onChatToggle={() => setIsChatOpen(o => !o)} isChatOpen={isChatOpen} />}>
                   <Route index element={<Navigate to="/dashboard" />} />
                   <Route path="/dashboard" element={
                     <PrivateRoute>
@@ -111,6 +115,7 @@ const App: React.FC = () => {
                       <ProfilePage />
                     </PrivateRoute>
                   } />
+                  <Route path="/mobile-upload" element={<MobileUploadPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Route>
               </Routes>

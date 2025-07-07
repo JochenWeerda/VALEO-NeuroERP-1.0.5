@@ -1,0 +1,129 @@
+# Migration Configuration
+
+# Verzeichnisse
+old_base_dir: "C:/Users/Jochen/VALEO-NeuroERP-1.01"
+new_base_dir: "C:/Users/Jochen/VALEO-NeuroERP-2.0"
+
+# MongoDB Konfiguration
+old_mongodb_uri: "mongodb://localhost:27017/valeo_v1"
+new_mongodb_uri: "mongodb://localhost:27017/valeo_v2"
+old_db_name: "valeo_v1"
+new_db_name: "valeo_v2"
+
+# Collections für Migration
+mongodb_collections:
+  - users
+  - documents
+  - transactions
+  - workflows
+  - agents
+  - metrics
+  - audit_logs
+  - configurations
+  - templates
+  - notifications
+
+# RAG Konfiguration
+rag_settings:
+  chunk_size: 512
+  overlap: 50
+  embeddings_model: "sentence-transformers/all-mpnet-base-v2"
+  similarity_top_k: 5
+
+# LangGraph Konfiguration
+langgraph_settings:
+  max_nodes: 1000
+  node_types:
+    - processor
+    - transformer
+    - validator
+    - aggregator
+  edge_types:
+    - data_flow
+    - control_flow
+    - dependency
+
+# MCP Konfiguration
+mcp_settings:
+  pipeline_version: "2.0"
+  compatibility_mode: true
+  auto_upgrade: true
+  backup_old_data: true
+
+# Validierungs-Regeln
+validation_rules:
+  mongodb:
+    - check_schema_compatibility
+    - verify_data_integrity
+    - validate_references
+  rag:
+    - verify_index_consistency
+    - check_embeddings_quality
+    - validate_chunks
+  langgraph:
+    - verify_graph_structure
+    - check_node_connections
+    - validate_edge_types
+  mcp:
+    - check_pipeline_compatibility
+    - verify_agent_configurations
+    - validate_workflow_definitions
+
+# Backup-Konfiguration
+backup:
+  enabled: true
+  backup_dir: "backup"
+  retention_days: 30
+  compress: true
+  include_collections: true
+  include_files: true
+  include_indexes: true
+
+# Logging-Konfiguration
+logging:
+  level: INFO
+  file_enabled: true
+  file_path: "logs/migration.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  rotate:
+    enabled: true
+    max_size: 10485760  # 10MB
+    backup_count: 5
+
+# Performance-Einstellungen
+performance:
+  batch_size: 1000
+  parallel_processes: 4
+  timeout: 3600  # 1 Stunde
+  retry:
+    max_attempts: 3
+    delay: 5  # Sekunden
+    backoff_factor: 2
+
+# Monitoring
+monitoring:
+  enabled: true
+  metrics:
+    - migration_duration
+    - documents_processed
+    - errors_count
+    - memory_usage
+  alerts:
+    - type: error_threshold
+      threshold: 10
+    - type: duration_threshold
+      threshold: 7200  # 2 Stunden
+
+# Cleanup-Einstellungen
+cleanup:
+  enabled: true
+  remove_temp_files: true
+  remove_old_backups: true
+  vacuum_database: true
+
+# Sicherheits-Einstellungen
+security:
+  encrypt_sensitive_data: true
+  verify_checksums: true
+  require_ssl: true
+  validate_permissions: true 

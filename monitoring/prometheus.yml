@@ -1,0 +1,59 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+rule_files:
+  - "rules/*.yml"
+
+scrape_configs:
+  # Load Balancer Nginx
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:9113']
+    metrics_path: /metrics
+    
+  # Backend Server
+  - job_name: 'backend'
+    static_configs:
+      - targets:
+        - 'backend1:8000'
+        - 'backend2:8000'
+        - 'backend3:8000'
+    metrics_path: /metrics
+    
+  # Frontend Server
+  - job_name: 'frontend'
+    static_configs:
+      - targets:
+        - 'frontend1:3000'
+        - 'frontend2:3000'
+    metrics_path: /metrics
+    
+  # PostgreSQL
+  - job_name: 'postgresql'
+    static_configs:
+      - targets:
+        - 'postgres-master:9187'
+        - 'postgres-replica:9187'
+    metrics_path: /metrics
+    
+  # Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets:
+        - 'redis-master:9121'
+        - 'redis-replica:9121'
+    metrics_path: /metrics
+
+  # Node Exporter für Host-Metriken
+  - job_name: 'node'
+    static_configs:
+      - targets:
+        - 'node-exporter:9100'
+    metrics_path: /metrics 

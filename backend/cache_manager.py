@@ -1,136 +1,207 @@
 """
-Cache-Manager für das AI-driven ERP-System
-Implementiert ein effizientes In-Memory-Caching mit Zeitsteuerung
+Redis Cache Manager für VALERO-NeuroERP
 """
+import asyncio
+import json
+from typing import Any, Dict, List, Optional, Union
+from datetime import datetime, timedelta
+import aioredis
+import logging
+from functools import wraps
 
-import time
-import threading
-import functools
-from typing import Any, Dict, Callable, Tuple, Optional, Union, List
+logger = logging.getLogger("cache-manager")
 
-class CacheManager:
-    """Cache-Manager mit Time-to-Live (TTL) Funktionalität"""
+class RedisCacheManager:
+    """
+    Redis Cache Manager für optimierte Datenzugriffe
+    """
     
-    def __init__(self, default_ttl: int = 300):
-        """
-        Initialisiert den Cache-Manager
+    def __init__(self, host: str = "localhost", port: int = 6379, db: int = 0):
+        self.redis = None
+        self.host = host
+        self.port = port
+        self.db = db
+        self.default_ttl = 3600  # 1 Stunde
         
-        Args:
-            default_ttl: Standard-Lebensdauer für Cache-Einträge in Sekunden (Standard: 300s)
-        """
-        self._cache: Dict[str, Tuple[Any, float]] = {}
-        self._default_ttl = default_ttl
-        self._lock = threading.RLock()
-        
-        # Hintergrund-Thread zur Cache-Bereinigung starten
-        self._cleanup_thread = threading.Thread(target=self._cleanup_expired, daemon=True)
-        self._cleanup_thread.start()
-    
-    def get(self, key: str) -> Optional[Any]:
-        """
-        Holt einen Wert aus dem Cache
-        
-        Args:
-            key: Cache-Schlüssel
+    async def connect(self) -> None:
+        """Redis-Verbindung herstellen"""
+        try:
+            self.redis = await aioredis.create_redis_pool(
+                f'redis://{self.host}:{self.port}',
+                db=self.db,
+                encoding='utf-8'
+            )
+            logger.info("Redis-Verbindung hergestellt")
+        except Exception as e:
+            logger.error(f"Redis-Verbindungsfehler: {str(e)}")
+            raise
             
-        Returns:
-            Den zwischengespeicherten Wert oder None, wenn nicht vorhanden oder abgelaufen
-        """
-        with self._lock:
-            if key not in self._cache:
-                return None
+    async def disconnect(self) -> None:
+        """Redis-Verbindung trennen"""
+        if self.redis:
+            self.redis.close()
+            await self.redis.wait_closed()
+            logger.info("Redis-Verbindung getrennt")
             
-            value, expiry = self._cache[key]
-            if expiry < time.time():
-                # Abgelaufenen Eintrag entfernen
-                del self._cache[key]
-                return None
+    async def get(self, key: str) -> Optional[Any]:
+        """Wert aus Cache lesen"""
+        try:
+            value = await self.redis.get(key)
+            if value:
+                return json.loads(value)
+            return None
+        except Exception as e:
+            logger.error(f"Cache-Lesefehler: {str(e)}")
+            return None
+            
+    async def set(
+        self,
+        key: str,
+        value: Any,
+        ttl: Optional[int] = None,
+        nx: bool = False
+    ) -> bool:
+        """Wert in Cache schreiben"""
+        try:
+            ttl = ttl or self.default_ttl
+            value_str = json.dumps(value)
+            
+            if nx:
+                return await self.redis.set(key, value_str, expire=ttl, exist=False)
+            else:
+                return await self.redis.set(key, value_str, expire=ttl)
                 
-            return value
-    
-    def set(self, key: str, value: Any, ttl: Optional[int] = None) -> None:
-        """
-        Speichert einen Wert im Cache
-        
-        Args:
-            key: Cache-Schlüssel
-            value: Zu speichernder Wert
-            ttl: Lebensdauer in Sekunden (verwendet default_ttl, wenn None)
-        """
-        with self._lock:
-            ttl = ttl if ttl is not None else self._default_ttl
-            expiry = time.time() + ttl
-            self._cache[key] = (value, expiry)
-    
-    def delete(self, key: str) -> bool:
-        """
-        Löscht einen Eintrag aus dem Cache
-        
-        Args:
-            key: Cache-Schlüssel
-            
-        Returns:
-            True wenn der Eintrag existierte und gelöscht wurde, sonst False
-        """
-        with self._lock:
-            if key in self._cache:
-                del self._cache[key]
-                return True
+        except Exception as e:
+            logger.error(f"Cache-Schreibfehler: {str(e)}")
             return False
-    
-    def clear(self) -> None:
-        """Löscht alle Einträge aus dem Cache"""
-        with self._lock:
-            self._cache.clear()
-    
-    def _cleanup_expired(self) -> None:
-        """Hintergrund-Thread zur regelmäßigen Entfernung abgelaufener Einträge"""
-        while True:
-            time.sleep(60)  # Alle 60 Sekunden prüfen
             
-            now = time.time()
-            with self._lock:
-                # Liste der abgelaufenen Schlüssel erstellen
-                expired_keys = [k for k, (_, exp) in self._cache.items() if exp < now]
+    async def delete(self, key: str) -> bool:
+        """Wert aus Cache löschen"""
+        try:
+            return await self.redis.delete(key) > 0
+        except Exception as e:
+            logger.error(f"Cache-Löschfehler: {str(e)}")
+            return False
+            
+    async def exists(self, key: str) -> bool:
+        """Prüfen ob Schlüssel existiert"""
+        try:
+            return await self.redis.exists(key)
+        except Exception as e:
+            logger.error(f"Cache-Existenzprüfung fehlgeschlagen: {str(e)}")
+            return False
+            
+    async def increment(self, key: str, amount: int = 1) -> Optional[int]:
+        """Wert inkrementieren"""
+        try:
+            return await self.redis.incrby(key, amount)
+        except Exception as e:
+            logger.error(f"Cache-Inkrementierungsfehler: {str(e)}")
+            return None
+            
+    async def expire(self, key: str, seconds: int) -> bool:
+        """TTL setzen"""
+        try:
+            return await self.redis.expire(key, seconds)
+        except Exception as e:
+            logger.error(f"Cache-TTL-Fehler: {str(e)}")
+            return False
+            
+    async def clear(self, pattern: str = "*") -> bool:
+        """Cache leeren"""
+        try:
+            keys = await self.redis.keys(pattern)
+            if keys:
+                await self.redis.delete(*keys)
+            return True
+        except Exception as e:
+            logger.error(f"Cache-Bereinigungsfehler: {str(e)}")
+            return False
+            
+    async def get_many(self, keys: List[str]) -> Dict[str, Any]:
+        """Mehrere Werte aus Cache lesen"""
+        try:
+            pipeline = self.redis.pipeline()
+            for key in keys:
+                pipeline.get(key)
+            values = await pipeline.execute()
+            
+            result = {}
+            for key, value in zip(keys, values):
+                if value:
+                    result[key] = json.loads(value)
+            return result
+            
+        except Exception as e:
+            logger.error(f"Multi-Cache-Lesefehler: {str(e)}")
+            return {}
+            
+    async def set_many(
+        self,
+        mapping: Dict[str, Any],
+        ttl: Optional[int] = None
+    ) -> bool:
+        """Mehrere Werte in Cache schreiben"""
+        try:
+            ttl = ttl or self.default_ttl
+            pipeline = self.redis.pipeline()
+            
+            for key, value in mapping.items():
+                value_str = json.dumps(value)
+                pipeline.set(key, value_str, expire=ttl)
                 
-                # Abgelaufene Einträge entfernen
-                for key in expired_keys:
-                    del self._cache[key]
-    
-    def cached(self, ttl: Optional[int] = None) -> Callable:
+            results = await pipeline.execute()
+            return all(results)
+            
+        except Exception as e:
+            logger.error(f"Multi-Cache-Schreibfehler: {str(e)}")
+            return False
+            
+    def cached(
+        self,
+        key_prefix: str,
+        ttl: Optional[int] = None,
+        key_builder: Optional[callable] = None
+    ):
         """
-        Dekorator zum automatischen Caching von Funktionsaufrufen
+        Decorator für automatisches Caching
         
-        Args:
-            ttl: Lebensdauer in Sekunden (verwendet default_ttl, wenn None)
-            
-        Returns:
-            Dekorierte Funktion mit Caching-Funktionalität
+        @cache_manager.cached("user", ttl=3600)
+        async def get_user(user_id: int) -> Dict:
+            ...
         """
-        def decorator(func: Callable) -> Callable:
-            @functools.wraps(func)
-            async def wrapper(*args, **kwargs) -> Any:
-                # Cache-Schlüssel aus Funktionsname und Argumenten erstellen
-                key_parts = [func.__name__]
-                # Positionale Argumente hinzufügen (erstes überspringen bei Methoden)
-                key_parts.extend([str(arg) for arg in args])
-                # Keyword-Argumente hinzufügen
-                key_parts.extend([f"{k}:{v}" for k, v in sorted(kwargs.items())])
-                
-                cache_key = "|".join(key_parts)
-                
-                # Prüfen, ob Ergebnis im Cache ist
-                cached_result = self.get(cache_key)
-                if cached_result is not None:
-                    return cached_result
-                
-                # Funktion ausführen und Ergebnis cachen
+        def decorator(func):
+            @wraps(func)
+            async def wrapper(*args, **kwargs):
+                # Cache-Key erstellen
+                if key_builder:
+                    cache_key = key_builder(*args, **kwargs)
+                else:
+                    # Standard Key-Builder
+                    key_parts = [key_prefix]
+                    key_parts.extend(str(arg) for arg in args)
+                    key_parts.extend(f"{k}:{v}" for k, v in sorted(kwargs.items()))
+                    cache_key = ":".join(key_parts)
+                    
+                # Aus Cache lesen
+                cached_value = await self.get(cache_key)
+                if cached_value is not None:
+                    return cached_value
+                    
+                # Funktion ausführen
                 result = await func(*args, **kwargs)
-                self.set(cache_key, result, ttl)
+                
+                # In Cache schreiben
+                if result is not None:
+                    await self.set(cache_key, result, ttl=ttl)
+                    
                 return result
-            
+                
             return wrapper
         return decorator
+        
+# Cache Manager Instanz
+cache_manager = RedisCacheManager()
 
-# Singleton-Instanz für die Anwendung
-cache = CacheManager() 
+# Export
+__all__ = ["cache_manager", "RedisCacheManager"] 

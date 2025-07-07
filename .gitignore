@@ -47,6 +47,16 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# MongoDB
+data/db/journal/
+data/db/WiredTiger*
+data/db/*.wt
+data/db/mongod.lock
+data/db/storage.bson
+data/db/diagnostic.data/
+data/db/_mdb_catalog.wt
+data/db/sizeStorer.wt
+
 # User-specific files
 .bash_history
 .boto
@@ -163,4 +173,43 @@ htmlcov/
 *~
 
 # Externe Repositories
-ai-engineering-hub/ 
+ai-engineering-hub/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Database
+*.sqlite3
+*.db
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Build
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Data
+data/chroma/
+data/langgraph/
+data/mongodb/
+
+# Misc
+.DS_Store
+Thumbs.db 

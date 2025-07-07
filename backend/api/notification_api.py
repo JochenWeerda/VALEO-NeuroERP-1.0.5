@@ -1,6 +1,7 @@
 from typing import List, Optional, Dict, Any
-from fastapi import APIRouter, Depends, HTTPException, Query, Path, Body, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Path, Body, status, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
+import asyncio
 
 from ..database import get_db
 from ..schemas.notification import (
@@ -18,6 +19,8 @@ router = APIRouter(
     tags=["notifications"],
 )
 logger = logging.getLogger(__name__)
+
+notification_ws_router = APIRouter()
 
 def get_notification_service(db: Session = Depends(get_db)) -> NotificationService:
     return NotificationService(db)
@@ -470,4 +473,16 @@ def test_sms_notification(
         raise
     except Exception as e:
         logger.error(f"Fehler beim Testen des SMS-Versands: {str(e)}")
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) 
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+@notification_ws_router.websocket("/api/v1/notifications/ws")
+async def websocket_notifications(websocket: WebSocket, service: NotificationService = Depends(get_notification_service)):
+    await service.register_websocket(websocket)
+    try:
+        while True:
+            # Halte die Verbindung offen, empfange aber keine Nachrichten
+            await asyncio.sleep(10)
+    except WebSocketDisconnect:
+        await service.unregister_websocket(websocket)
+
+router.include_router(notification_ws_router) 

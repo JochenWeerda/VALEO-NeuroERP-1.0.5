@@ -415,6 +415,16 @@ export const deleteDokument = async (dokumentId: string): Promise<void> => {
   }
 };
 
+export const getDokumentOCRStatus = async (dokumentId: string): Promise<any> => {
+  try {
+    const response = await axios.get(`${DOKUMENTE_ENDPOINT}/${dokumentId}/ocr`);
+    return response.data;
+  } catch (error) {
+    console.error(`Fehler beim Abrufen des OCR-Status für Dokument ${dokumentId}:`, error);
+    throw error;
+  }
+};
+
 // API-Funktionen für Lieferanten
 export const getLieferantStammdaten = async (id: string): Promise<LieferantStammdaten> => {
   try {

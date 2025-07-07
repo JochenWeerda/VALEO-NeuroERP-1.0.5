@@ -36,13 +36,28 @@ const NotificationBell: React.FC = () => {
 
   useEffect(() => {
     fetchNotifications();
-    
+    // WebSocket-Verbindung für Echtzeit-Benachrichtigungen
+    let ws: WebSocket | null = null;
+    if (user?.id) {
+      ws = new WebSocket(
+        `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/api/v1/notifications/ws`
+      );
+      ws.onmessage = (event) => {
+        // Bei neuer Benachrichtigung sofort aktualisieren
+        fetchNotifications();
+      };
+      ws.onerror = (event) => {
+        console.error('WebSocket-Fehler:', event);
+      };
+    }
     // Polling einrichten
     const intervalId = setInterval(fetchNotifications, POLLING_INTERVAL);
-    
-    // Polling beim Unmount bereinigen
-    return () => clearInterval(intervalId);
-  }, [fetchNotifications]);
+    // Cleanup
+    return () => {
+      clearInterval(intervalId);
+      if (ws) ws.close();
+    };
+  }, [fetchNotifications, user?.id]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

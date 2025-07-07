@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Set
 from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Text, Enum
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,6 +10,10 @@ import requests
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import threading
+import pika
+from fastapi import WebSocket
+from fastapi.concurrency import run_in_threadpool
 
 from ..models.emergency import EmergencyCase, EmergencyEscalation, EscalationLevel
 from ..models.user import User
@@ -94,6 +98,10 @@ class NotificationService:
             "password": "password",
             "from_email": "notification@example.com"
         }
+        
+        # WebSocket-Client-Management
+        self.websocket_clients: Set[WebSocket] = set()
+        self.websocket_lock = threading.Lock()
     
     def send_emergency_notification(self, emergency: EmergencyCase, notification_type: str) -> bool:
         """Sendet Benachrichtigungen für Notfallereignisse"""
@@ -695,4 +703,39 @@ class NotificationService:
         except Exception as e:
             self.db.rollback()
             self.logger.error(f"Fehler beim Senden der Test-Benachrichtigung: {str(e)}")
-            return False 
+            return False
+
+    # WebSocket-Client-Management
+    def start_event_bus_listener(self, queue_name: str = "notifications"):
+        """Startet einen Thread, der auf RabbitMQ-Events lauscht und Benachrichtigungen verteilt."""
+        def callback(ch, method, properties, body):
+            message = body.decode()
+            # Hier könnte die Nachricht geparst und an WebSocket-Clients verteilt werden
+            self.broadcast_websocket_notification(message)
+        def run():
+            connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+            channel = connection.channel()
+            channel.queue_declare(queue=queue_name)
+            channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+            channel.start_consuming()
+        thread = threading.Thread(target=run, daemon=True)
+        thread.start()
+
+    async def register_websocket(self, websocket: WebSocket):
+        await websocket.accept()
+        with self.websocket_lock:
+            self.websocket_clients.add(websocket)
+
+    async def unregister_websocket(self, websocket: WebSocket):
+        with self.websocket_lock:
+            self.websocket_clients.discard(websocket)
+
+    def broadcast_websocket_notification(self, message: str):
+        """Sendet eine Nachricht an alle verbundenen WebSocket-Clients."""
+        # Da FastAPI-WS async ist, nutzen wir run_in_threadpool
+        for ws in list(self.websocket_clients):
+            try:
+                run_in_threadpool(ws.send_text, message)
+            except Exception:
+                with self.websocket_lock:
+                    self.websocket_clients.discard(ws) 

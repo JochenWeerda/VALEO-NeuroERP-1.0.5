@@ -61,7 +61,9 @@ setup(
         "motor>=3.3.0",
         "aioredis>=2.0.0",
         "fastapi>=0.100.0",
-        "uvicorn>=0.22.0"
+        "uvicorn>=0.22.0",
+        'pytest>=7.4.3',
+        'pytest-mock>=3.12.0',
     ],
     extras_require={
         "dev": [

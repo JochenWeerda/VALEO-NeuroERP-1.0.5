@@ -1,0 +1,121 @@
+{
+    "mode": "IMPLEMENTATION",
+    "version": "1.0.0",
+    "description": "Basis Rules für den IMPLEMENTATION Mode",
+    "rules": {
+        "testing": {
+            "required": true,
+            "min_coverage": 80,
+            "test_types": [
+                "unit",
+                "integration",
+                "performance"
+            ]
+        },
+        "code_quality": {
+            "linting": {
+                "python": {
+                    "tool": "flake8",
+                    "max_line_length": 88,
+                    "ignore": ["E203", "W503"]
+                },
+                "typescript": {
+                    "tool": "eslint",
+                    "config": "typescript-recommended"
+                }
+            },
+            "formatting": {
+                "python": "black",
+                "typescript": "prettier"
+            }
+        },
+        "documentation": {
+            "required_files": [
+                "README.md",
+                "CHANGELOG.md",
+                "docs/api.md",
+                "docs/deployment.md"
+            ],
+            "code_comments": {
+                "classes": true,
+                "functions": true,
+                "complex_logic": true
+            }
+        },
+        "git": {
+            "branch_naming": "^(feature|bugfix|hotfix)/[a-z0-9-]+$",
+            "commit_message": "^(feat|fix|docs|style|refactor|test|chore): .+$",
+            "max_commit_size": 500
+        },
+        "security": {
+            "required_checks": [
+                "dependency_scan",
+                "sast_analysis",
+                "secrets_detection"
+            ],
+            "compliance": [
+                "GDPR",
+                "DSGVO"
+            ]
+        },
+        "performance": {
+            "metrics": [
+                "response_time",
+                "throughput",
+                "error_rate"
+            ],
+            "thresholds": {
+                "response_time_ms": 200,
+                "error_rate_percent": 1
+            }
+        }
+    },
+    "workflows": {
+        "test": {
+            "steps": [
+                "lint",
+                "test",
+                "coverage"
+            ],
+            "automated": true
+        },
+        "build": {
+            "steps": [
+                "compile",
+                "bundle",
+                "optimize"
+            ],
+            "automated": true
+        },
+        "deploy": {
+            "steps": [
+                "validate",
+                "backup",
+                "deploy",
+                "verify"
+            ],
+            "automated": false,
+            "approval_required": true
+        }
+    },
+    "monitoring": {
+        "required": true,
+        "metrics": [
+            "cpu_usage",
+            "memory_usage",
+            "disk_usage",
+            "network_io"
+        ],
+        "alerting": {
+            "channels": [
+                "email",
+                "slack"
+            ],
+            "thresholds": {
+                "cpu_percent": 80,
+                "memory_percent": 85,
+                "disk_percent": 90
+            }
+        }
+    }
+} 

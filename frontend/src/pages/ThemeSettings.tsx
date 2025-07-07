@@ -13,7 +13,9 @@ import {
   MenuItem,
   Button,
   Divider,
-  SelectChangeEvent
+  SelectChangeEvent,
+  ToggleButton,
+  ToggleButtonGroup
 } from '@mui/material';
 import { useThemeSystem } from '../themes/ThemeProvider';
 import { ThemeMode, ThemeVariant } from '../themes/themeTypes';
@@ -22,6 +24,7 @@ import AI from '../components/AI';
 
 const ThemeSettings: React.FC = () => {
   const { mode, variant, parameters, setMode, setVariant, setParameters, resetTheme } = useThemeSystem();
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
 
   const handleModeChange = (event: SelectChangeEvent<string>) => {
     setMode(event.target.value as ThemeMode);
@@ -57,20 +60,15 @@ const ThemeSettings: React.FC = () => {
             </Typography>
             <Divider sx={{ mb: 3 }} />
             
-            <FormControl fullWidth margin="normal">
-              <InputLabel id="theme-mode-label">Modus</InputLabel>
-              <Select
-                labelId="theme-mode-label"
-                id="theme-mode"
-                value={mode}
-                label="Modus"
-                onChange={handleModeChange}
-              >
-                <MenuItem value="light">Hell</MenuItem>
-                <MenuItem value="dark">Dunkel</MenuItem>
-                <MenuItem value="high-contrast">Hoher Kontrast</MenuItem>
-              </Select>
-            </FormControl>
+            <ToggleButtonGroup
+              value={theme}
+              exclusive
+              onChange={(_, value) => value && setTheme(value)}
+              sx={{ mb: 2 }}
+            >
+              <ToggleButton value="light">Hell</ToggleButton>
+              <ToggleButton value="dark">Dunkel</ToggleButton>
+            </ToggleButtonGroup>
             
             <FormControl fullWidth margin="normal">
               <InputLabel id="theme-variant-label">Variante</InputLabel>
@@ -158,7 +156,7 @@ const ThemeSettings: React.FC = () => {
             <CardHeader title="Aktuelle Theme-Konfiguration" />
             <CardContent>
               <Typography variant="body1" gutterBottom>
-                <strong>Modus:</strong> {mode === 'light' ? 'Hell' : mode === 'dark' ? 'Dunkel' : 'Hoher Kontrast'}
+                <strong>Modus:</strong> {theme === 'light' ? 'Hell' : 'Dunkel'}
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Variante:</strong> {variant}

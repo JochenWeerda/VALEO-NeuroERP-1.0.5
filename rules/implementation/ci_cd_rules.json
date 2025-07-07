@@ -1,0 +1,143 @@
+{
+    "mode": "IMPLEMENTATION",
+    "version": "1.0.0",
+    "description": "CI/CD Rules für den IMPLEMENTATION Mode",
+    "ci_rules": {
+        "pipeline": {
+            "required": true,
+            "platform": "github_actions",
+            "triggers": [
+                "push",
+                "pull_request",
+                "schedule"
+            ],
+            "stages": [
+                "lint",
+                "test",
+                "build",
+                "security_scan",
+                "deploy"
+            ]
+        },
+        "environments": {
+            "development": {
+                "automatic": true,
+                "branch_pattern": "^feature/.*$"
+            },
+            "staging": {
+                "automatic": true,
+                "branch_pattern": "^release/.*$",
+                "approval_required": true
+            },
+            "production": {
+                "automatic": false,
+                "branch_pattern": "^main$",
+                "approval_required": true,
+                "rollback_plan": true
+            }
+        },
+        "quality_gates": {
+            "test_coverage": {
+                "min_percent": 80,
+                "blocking": true
+            },
+            "code_quality": {
+                "max_complexity": 10,
+                "max_violations": 0,
+                "blocking": true
+            },
+            "security_scan": {
+                "max_high_severity": 0,
+                "max_medium_severity": 2,
+                "blocking": true
+            }
+        }
+    },
+    "cd_rules": {
+        "deployment": {
+            "strategy": "rolling_update",
+            "containers": {
+                "registry": "ghcr.io",
+                "scanning": true
+            },
+            "kubernetes": {
+                "namespace": "valeo-neuroerp",
+                "resources": {
+                    "requests": {
+                        "cpu": "100m",
+                        "memory": "128Mi"
+                    },
+                    "limits": {
+                        "cpu": "500m",
+                        "memory": "512Mi"
+                    }
+                }
+            }
+        },
+        "monitoring": {
+            "required": true,
+            "tools": {
+                "metrics": "prometheus",
+                "logging": "loki",
+                "tracing": "jaeger"
+            },
+            "alerts": {
+                "channels": [
+                    "email",
+                    "slack"
+                ],
+                "severity_levels": [
+                    "critical",
+                    "warning",
+                    "info"
+                ]
+            }
+        },
+        "rollback": {
+            "automatic": true,
+            "triggers": [
+                "health_check_failure",
+                "error_rate_threshold",
+                "manual"
+            ],
+            "max_attempts": 3
+        }
+    },
+    "security_rules": {
+        "scanning": {
+            "container": {
+                "tool": "trivy",
+                "frequency": "daily"
+            },
+            "dependencies": {
+                "tool": "dependabot",
+                "frequency": "weekly"
+            },
+            "code": {
+                "tool": "sonarqube",
+                "frequency": "on_commit"
+            }
+        },
+        "secrets": {
+            "management": "vault",
+            "rotation": {
+                "enabled": true,
+                "frequency": "30d"
+            }
+        }
+    },
+    "artifact_rules": {
+        "versioning": {
+            "scheme": "semver",
+            "auto_increment": true
+        },
+        "storage": {
+            "type": "artifact_registry",
+            "retention": "90d"
+        },
+        "signing": {
+            "required": true,
+            "method": "cosign"
+        }
+    }
+} 

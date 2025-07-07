@@ -1,0 +1,108 @@
+{
+    "project": {
+        "name": "VALEO-NeuroERP",
+        "version": "1.01",
+        "description": "ERP-System mit KI-gestützter Prozessoptimierung"
+    },
+    "apm_framework": {
+        "version": "2.0",
+        "mode": "full_integration",
+        "language": "de",
+        "phases": [
+            {
+                "name": "van",
+                "enabled": true,
+                "config": {
+                    "analysis_mode": "real",
+                    "data_collection": "active",
+                    "metrics_enabled": true
+                }
+            },
+            {
+                "name": "plan",
+                "enabled": true,
+                "config": {
+                    "use_van_results": true,
+                    "timeline_required": true,
+                    "risk_analysis": true
+                }
+            },
+            {
+                "name": "create",
+                "enabled": true,
+                "config": {
+                    "test_driven": true,
+                    "doc_driven": true,
+                    "modular_design": true
+                }
+            },
+            {
+                "name": "implement",
+                "enabled": true,
+                "config": {
+                    "step_by_step": true,
+                    "continuous_testing": true,
+                    "rollback_enabled": true
+                }
+            },
+            {
+                "name": "reflect",
+                "enabled": true,
+                "config": {
+                    "metrics_based": true,
+                    "documentation_required": true,
+                    "optimization_focus": true
+                }
+            }
+        ],
+        "integrations": {
+            "cursor": {
+                "enabled": true,
+                "rules_path": ".cursor/rules/apm_rules.md"
+            },
+            "git": {
+                "enabled": true,
+                "branch_prefix": "apm/"
+            },
+            "monitoring": {
+                "enabled": true,
+                "tools": ["prometheus", "grafana"]
+            }
+        }
+    },
+    "memory_bank": {
+        "enabled": true,
+        "storage": {
+            "type": "file",
+            "path": "memory-bank/"
+        },
+        "sections": [
+            "context",
+            "decisions",
+            "progress",
+            "metrics"
+        ]
+    },
+    "documentation": {
+        "format": "markdown",
+        "auto_generate": true,
+        "paths": {
+            "technical": "docs/technical/",
+            "user": "docs/user/",
+            "api": "docs/api/"
+        }
+    },
+    "monitoring": {
+        "enabled": true,
+        "metrics": [
+            "performance",
+            "errors",
+            "usage",
+            "response_times"
+        ],
+        "alerts": {
+            "enabled": true,
+            "channels": ["log", "email"]
+        }
+    }
+} 

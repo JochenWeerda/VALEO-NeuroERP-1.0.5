@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+nde#!/usr/bin/env python3
 """
 Skript zum Aktivieren der VAN-Phase im APM-Framework für das VALEO-NeuroERP-System.
 """

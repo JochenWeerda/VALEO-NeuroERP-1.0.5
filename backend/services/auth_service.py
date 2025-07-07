@@ -7,7 +7,7 @@ auf Funktions-, Daten- und Feldebene.
 
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
-from fastapi import APIRouter, Depends, HTTPException, Security
+from fastapi import APIRouter, Depends, HTTPException, Security, Body
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -15,6 +15,8 @@ from pydantic import BaseModel, Field, EmailStr
 import redis
 from sqlalchemy.orm import Session
 from backend.db.database import get_db
+from backend.app.models.erp import Role, Permission, TemporaryPermission, PermissionAuditLog, User, UserRoleAssociation
+import json
 
 # Security Setup
 SECRET_KEY = "your-secret-key"  # In Produktion aus Umgebungsvariablen laden
@@ -138,38 +140,29 @@ class PermissionChecker:
     def __init__(self, required_permissions: List[Permission]):
         self.required_permissions = required_permissions
         
-    def __call__(self, user: User = Depends(get_current_user)) -> bool:
+    def __call__(self, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> bool:
         """Prüft ob der Benutzer die erforderlichen Berechtigungen hat"""
-        user_permissions = self.get_user_permissions(user)
-        
-        for required in self.required_permissions:
-            if not self.has_permission(required, user_permissions):
-                raise HTTPException(
-                    status_code=403,
-                    detail="Keine ausreichenden Berechtigungen"
-                )
-                
-        return True
-        
-    def get_user_permissions(self, user: User) -> List[Permission]:
-        """Ermittelt alle Berechtigungen eines Benutzers"""
+        # Alle Rollen des Users berücksichtigen
+        user_roles = user.roles
         permissions = []
-        for role_id in user.roles:
-            role = get_role(role_id)
-            if role:
-                permissions.extend(role.permissions)
-        return permissions
-        
-    def has_permission(
-        self,
-        required: Permission,
-        user_permissions: List[Permission]
-    ) -> bool:
-        """Prüft eine einzelne Berechtigung"""
-        for perm in user_permissions:
-            if self.match_permission(required, perm):
-                return True
-        return False
+        for role in user_roles:
+            db_role = db.query(Role).filter(Role.id == role.id).first()
+            if db_role:
+                permissions.extend(db_role.permissions)
+        # Temporäre Berechtigungen berücksichtigen
+        now = datetime.utcnow()
+        temp_perms = db.query(TemporaryPermission).filter(
+            TemporaryPermission.user_id == user.id,
+            TemporaryPermission.valid_from <= now,
+            TemporaryPermission.valid_until >= now
+        ).all()
+        for temp in temp_perms:
+            permissions.append(temp.permission)
+        # Prüfen, ob alle erforderlichen Permissions vorhanden sind
+        for required in self.required_permissions:
+            if not any(self.match_permission(required, p) for p in permissions):
+                raise HTTPException(status_code=403, detail="Keine ausreichenden Berechtigungen")
+        return True
         
     def match_permission(
         self,
@@ -304,4 +297,146 @@ async def access_protected_resource(
     ]))
 ) -> Dict[str, str]:
     """Beispiel für einen geschützten Endpunkt"""
-    return {"message": "Zugriff erlaubt"} 
+    return {"message": "Zugriff erlaubt"}
+
+# --- CRUD für Rollen ---
+@router.post("/roles", response_model=Role)
+def create_role(
+    db: Session = Depends(get_db),
+    name: str = Body(...),
+    description: str = Body("")
+):
+    role = Role(name=name, description=description, created_at=datetime.utcnow())
+    db.add(role)
+    db.commit()
+    db.refresh(role)
+    # Audit-Log
+    log = PermissionAuditLog(user_id=None, action="create_role", role_id=role.id, timestamp=datetime.utcnow(), context=json.dumps({"name": name}))
+    db.add(log)
+    db.commit()
+    return role
+
+@router.get("/roles", response_model=List[Role])
+def list_roles(db: Session = Depends(get_db)):
+    return db.query(Role).all()
+
+@router.get("/roles/{role_id}", response_model=Role)
+def get_role_detail(role_id: int, db: Session = Depends(get_db)):
+    return db.query(Role).filter(Role.id == role_id).first()
+
+@router.put("/roles/{role_id}", response_model=Role)
+def update_role(role_id: int, name: str = Body(None), description: str = Body(None), db: Session = Depends(get_db)):
+    role = db.query(Role).filter(Role.id == role_id).first()
+    if name:
+        role.name = name
+    if description:
+        role.description = description
+    role.updated_at = datetime.utcnow()
+    db.commit()
+    db.refresh(role)
+    # Audit-Log
+    log = PermissionAuditLog(user_id=None, action="update_role", role_id=role.id, timestamp=datetime.utcnow(), context=json.dumps({"name": name, "description": description}))
+    db.add(log)
+    db.commit()
+    return role
+
+@router.delete("/roles/{role_id}")
+def delete_role(role_id: int, db: Session = Depends(get_db)):
+    role = db.query(Role).filter(Role.id == role_id).first()
+    db.delete(role)
+    db.commit()
+    # Audit-Log
+    log = PermissionAuditLog(user_id=None, action="delete_role", role_id=role_id, timestamp=datetime.utcnow(), context="{}")
+    db.add(log)
+    db.commit()
+    return {"message": "Role deleted"}
+
+# --- CRUD für Permissions ---
+@router.post("/permissions", response_model=Permission)
+def create_permission(
+    db: Session = Depends(get_db),
+    resource: str = Body(...),
+    action: str = Body(...),
+    conditions: str = Body("{}"),
+    fields: str = Body("[]")
+):
+    perm = Permission(resource=resource, action=action, conditions=conditions, fields=fields)
+    db.add(perm)
+    db.commit()
+    db.refresh(perm)
+    # Audit-Log
+    log = PermissionAuditLog(user_id=None, action="create_permission", permission_id=perm.id, timestamp=datetime.utcnow(), context=json.dumps({"resource": resource, "action": action}))
+    db.add(log)
+    db.commit()
+    return perm
+
+@router.get("/permissions", response_model=List[Permission])
+def list_permissions(db: Session = Depends(get_db)):
+    return db.query(Permission).all()
+
+@router.get("/permissions/{perm_id}", response_model=Permission)
+def get_permission_detail(perm_id: int, db: Session = Depends(get_db)):
+    return db.query(Permission).filter(Permission.id == perm_id).first()
+
+@router.put("/permissions/{perm_id}", response_model=Permission)
+def update_permission(perm_id: int, resource: str = Body(None), action: str = Body(None), db: Session = Depends(get_db)):
+    perm = db.query(Permission).filter(Permission.id == perm_id).first()
+    if resource:
+        perm.resource = resource
+    if action:
+        perm.action = action
+    db.commit()
+    db.refresh(perm)
+    # Audit-Log
+    log = PermissionAuditLog(user_id=None, action="update_permission", permission_id=perm.id, timestamp=datetime.utcnow(), context=json.dumps({"resource": resource, "action": action}))
+    db.add(log)
+    db.commit()
+    return perm
+
+@router.delete("/permissions/{perm_id}")
+def delete_permission(perm_id: int, db: Session = Depends(get_db)):
+    perm = db.query(Permission).filter(Permission.id == perm_id).first()
+    db.delete(perm)
+    db.commit()
+    # Audit-Log
+    log = PermissionAuditLog(user_id=None, action="delete_permission", permission_id=perm_id, timestamp=datetime.utcnow(), context="{}")
+    db.add(log)
+    db.commit()
+    return {"message": "Permission deleted"}
+
+# --- Temporäre Berechtigungen ---
+@router.post("/temporary-permissions", response_model=TemporaryPermission)
+def grant_temporary_permission(
+    db: Session = Depends(get_db),
+    user_id: int = Body(...),
+    permission_id: int = Body(...),
+    valid_from: datetime = Body(...),
+    valid_until: datetime = Body(...),
+    context: str = Body("{}"),
+    granted_by: int = Body(None)
+):
+    temp_perm = TemporaryPermission(
+        user_id=user_id,
+        permission_id=permission_id,
+        valid_from=valid_from,
+        valid_until=valid_until,
+        context=context,
+        granted_by=granted_by
+    )
+    db.add(temp_perm)
+    db.commit()
+    db.refresh(temp_perm)
+    # Audit-Log
+    log = PermissionAuditLog(user_id=granted_by, action="grant_temporary_permission", permission_id=permission_id, timestamp=datetime.utcnow(), context=context)
+    db.add(log)
+    db.commit()
+    return temp_perm
+
+@router.get("/temporary-permissions", response_model=List[TemporaryPermission])
+def list_temporary_permissions(db: Session = Depends(get_db)):
+    return db.query(TemporaryPermission).all()
+
+# --- Audit-Log ---
+@router.get("/audit-log", response_model=List[PermissionAuditLog])
+def get_audit_log(db: Session = Depends(get_db)):
+    return db.query(PermissionAuditLog).order_by(PermissionAuditLog.timestamp.desc()).all() 

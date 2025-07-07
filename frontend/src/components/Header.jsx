@@ -24,7 +24,7 @@ import { useTheme } from '../themes/ThemeProvider';
 /**
  * Header-Komponente im Odoo-Stil mit Zurück-Button
  */
-const Header = () => {
+const Header = ({ onChatToggle, isChatOpen }) => {
   const muiTheme = useMuiTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -124,7 +124,12 @@ const Header = () => {
             </IconButton>
           </Tooltip>
         )}
-        
+        {/* Chatbot-Button */}
+        <Tooltip title={isChatOpen ? "Chatbot schließen" : "Chatbot öffnen"}>
+          <IconButton color={isChatOpen ? "primary" : "default"} onClick={onChatToggle}>
+            <span className="material-icons">smart_toy</span>
+          </IconButton>
+        </Tooltip>
         <Box sx={{ flexGrow: 1 }} />
         
         <Box sx={{ display: 'flex' }}>
@@ -160,6 +165,11 @@ const Header = () => {
       {renderNotificationsMenu}
     </AppBar>
   );
+};
+
+Header.defaultProps = {
+  onChatToggle: () => {},
+  isChatOpen: false
 };
 
 export default Header; 

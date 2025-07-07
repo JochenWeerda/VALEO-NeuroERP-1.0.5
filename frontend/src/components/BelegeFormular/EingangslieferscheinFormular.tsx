@@ -10,13 +10,20 @@ import {
   Tabs,
   Tab,
   Alert,
-  CircularProgress
+  CircularProgress,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import de from 'date-fns/locale/de';
+import { QRCodeCanvas } from 'qrcode.react';
+import { v4 as uuidv4 } from 'uuid';
 
 // Eigene Komponenten
 import BelegFormBase from './BelegFormBase';
@@ -119,7 +126,8 @@ const EingangslieferscheinFormular: React.FC = () => {
     lieferant: { id: '', name: '' },
     eingangsdatum: new Date().toISOString().split('T')[0],
     positionen: [],
-    status: EINGANGSLIEFERSCHEIN_STATUS.ENTWURF
+    status: EINGANGSLIEFERSCHEIN_STATUS.ENTWURF,
+    qualitaetspruefung: { erforderlich: false }
   });
   const [lieferanten, setLieferanten] = useState<Lieferant[]>([]);
   const [selectedLieferant, setSelectedLieferant] = useState<Lieferant | null>(null);
@@ -127,6 +135,14 @@ const EingangslieferscheinFormular: React.FC = () => {
   const [selectedBestellung, setSelectedBestellung] = useState<Bestellung | null>(null);
   const [showChargenDialog, setShowChargenDialog] = useState(false);
   const [selectedPositionIndex, setSelectedPositionIndex] = useState<number | null>(null);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [showQrCode, setShowQrCode] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [polling, setPolling] = useState<NodeJS.Timeout | null>(null);
 
   // Eingangslieferschein aus der API laden, wenn ID vorhanden
   useEffect(() => {
@@ -323,6 +339,7 @@ const EingangslieferscheinFormular: React.FC = () => {
     setEingangslieferschein({
       ...eingangslieferschein,
       qualitaetspruefung: {
+        erforderlich: (field === 'erforderlich') ? event.target.checked : (eingangslieferschein.qualitaetspruefung?.erforderlich ?? false),
         ...eingangslieferschein.qualitaetspruefung,
         [field]: field === 'erforderlich' || field === 'durchgefuehrt' 
           ? event.target.checked 
@@ -385,6 +402,7 @@ const EingangslieferscheinFormular: React.FC = () => {
         ...eingangslieferschein,
         status: EINGANGSLIEFERSCHEIN_STATUS.GEPRUEFT,
         qualitaetspruefung: {
+          erforderlich: eingangslieferschein.qualitaetspruefung?.erforderlich ?? false,
           ...eingangslieferschein.qualitaetspruefung,
           durchgefuehrt: true
         }
@@ -455,6 +473,64 @@ const EingangslieferscheinFormular: React.FC = () => {
     },
     loading
   );
+
+  const handleOpenUploadDialog = () => {
+    setSessionId(uuidv4());
+    setUploadDialogOpen(true);
+    setShowQrCode(false);
+    setUploadFile(null);
+    setUploadSuccess(false);
+    setUploadError(null);
+  };
+  const handleCloseUploadDialog = () => {
+    setUploadDialogOpen(false);
+    if (polling) clearInterval(polling);
+  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setUploadFile(e.target.files[0]);
+      setUploadError(null);
+    }
+  };
+  const handleUpload = async () => {
+    if (!uploadFile) return;
+    setUploading(true);
+    setUploadError(null);
+    setUploadSuccess(false);
+    try {
+      const formData = new FormData();
+      formData.append('file', uploadFile);
+      if (sessionId) formData.append('session', sessionId);
+      await fetch('/api/documents/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      setUploadSuccess(true);
+      setUploadFile(null);
+      // Starte Polling für neuen Beleg
+      const interval = setInterval(() => pollForNewBeleg(), 3000);
+      setPolling(interval);
+    } catch (e) {
+      setUploadError('Fehler beim Hochladen. Bitte versuchen Sie es erneut.');
+    } finally {
+      setUploading(false);
+    }
+  };
+  const pollForNewBeleg = async () => {
+    if (!sessionId) return;
+    try {
+      const res = await fetch(`/api/documents/by-session/${sessionId}`);
+      if (res.ok) {
+        // Dokument gefunden: Dialog schließen, ggf. UI aktualisieren
+        setUploadDialogOpen(false);
+        if (polling) clearInterval(polling);
+        // Optional: Snackbar oder Hinweis anzeigen
+        // TODO: Belegliste aktualisieren, falls relevant
+      }
+    } catch (e) {
+      // Noch kein Dokument vorhanden, weiterpolling
+    }
+  };
 
   return (
     <BelegFormBase
@@ -662,14 +738,10 @@ const EingangslieferscheinFormular: React.FC = () => {
             <ChargenAuswahlDialog
               open={showChargenDialog}
               onClose={() => setShowChargenDialog(false)}
-              onApply={handleApplyChargen}
-              position={eingangslieferschein.positionen[selectedPositionIndex]}
-              chargen={[
-                { chargennummer: 'CH-2023-001', menge: 100, mhd: '2024-06-01', lagerplatz: 'Hauptlager', einlagerungsdatum: '2023-06-01' }
-              ]}
-              title="Chargen für Wareneingang erfassen"
-              buchungsregel="FIFO"
-              istEinlagerung={true}
+              onConfirm={handleApplyChargen}
+              artikelId={eingangslieferschein.positionen[selectedPositionIndex]?.artikelId || ''}
+              artikelBezeichnung={eingangslieferschein.positionen[selectedPositionIndex]?.artikelBezeichnung || ''}
+              benötigteMenge={eingangslieferschein.positionen[selectedPositionIndex]?.menge || 0}
             />
           )}
         </TabPanel>
@@ -753,6 +825,74 @@ const EingangslieferscheinFormular: React.FC = () => {
           )}
         </TabPanel>
       </Paper>
+
+      {/* Upload-Button */}
+      <Button variant="outlined" color="primary" onClick={handleOpenUploadDialog} sx={{ mt: 2 }}>
+        Eingangslieferschein per Foto/Scan hochladen
+      </Button>
+      {/* Upload-Dialog */}
+      <Dialog open={uploadDialogOpen} onClose={handleCloseUploadDialog} maxWidth="sm" fullWidth>
+        <DialogTitle>Mobiler Upload Eingangslieferschein</DialogTitle>
+        <DialogContent>
+          <Box mt={2} display="flex" alignItems="center" gap={2}>
+            <Button variant="outlined" color="primary" onClick={() => setShowQrCode(q => !q)} disabled={!sessionId}>
+              Mit Handy scannen
+            </Button>
+            {showQrCode && sessionId && (
+              <Box>
+                <Typography variant="body2" gutterBottom>
+                  Scannen Sie diesen QR-Code mit Ihrem Smartphone, um ein Foto aufzunehmen und hochzuladen:
+                </Typography>
+                <QRCodeCanvas value={`${window.location.origin}/mobile-upload?session=${sessionId}`} size={128} />
+                <Typography variant="caption" display="block" mt={1}>
+                  (Sicherer Link mit Session-ID)
+                </Typography>
+              </Box>
+            )}
+          </Box>
+          <Box mt={2}>
+            <Alert severity="info">
+              <strong>Tipp:</strong> Sie können Eingangslieferscheine direkt mit der Kamera Ihres Smartphones fotografieren und hochladen.<br />
+              Klicken Sie dazu auf <b>„Datei auswählen“</b> und wählen Sie <b>„Foto aufnehmen“</b> oder <b>„Aus Mediathek wählen“</b>.<br />
+              Für beste Ergebnisse achten Sie auf gute Beleuchtung und eine gerade Aufnahme.
+            </Alert>
+          </Box>
+          <Box mt={2}>
+            <input
+              type="file"
+              accept="image/*,application/pdf"
+              capture="environment"
+              style={{ display: 'none' }}
+              id="eingangslieferschein-upload-input"
+              onChange={handleFileChange}
+            />
+            <label htmlFor="eingangslieferschein-upload-input">
+              <Button variant="contained" color="primary" component="span" fullWidth disabled={uploading || uploadSuccess} sx={{ mb: 2 }}>
+                {uploadFile ? 'Anderes Foto wählen' : 'Foto aufnehmen oder auswählen'}
+              </Button>
+            </label>
+            {uploadFile && (
+              <Typography variant="body2" mb={2}>
+                Ausgewählt: {uploadFile.name}
+              </Typography>
+            )}
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleUpload}
+              fullWidth
+              disabled={!uploadFile || uploading || uploadSuccess}
+            >
+              {uploading ? <CircularProgress size={24} /> : 'Hochladen'}
+            </Button>
+            {uploadSuccess && <Alert severity="success" sx={{ mt: 2 }}>Upload erfolgreich! Sie können das Fenster schließen.</Alert>}
+            {uploadError && <Alert severity="error" sx={{ mt: 2 }}>{uploadError}</Alert>}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseUploadDialog}>Schließen</Button>
+        </DialogActions>
+      </Dialog>
     </BelegFormBase>
   );
 };

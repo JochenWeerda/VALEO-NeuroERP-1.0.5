@@ -10,8 +10,61 @@ import json
 import os
 from typing import Dict, Any, Optional
 import logging
+from pydantic_settings import BaseSettings
 
 logger = logging.getLogger("GENXAIS.Config")
+
+class Settings(BaseSettings):
+    # Environment
+    ENVIRONMENT: str = "development"
+    
+    # MongoDB
+    MONGODB_URI: str = "mongodb://localhost:27017"
+    MONGODB_DATABASE: str = "valeo_neuroerp"
+    
+    # PostgreSQL
+    POSTGRES_HOST: str = "localhost"
+    POSTGRES_PORT: int = 5432
+    POSTGRES_DB: str = "valeo_neuroerp"
+    POSTGRES_USER: str = "valeo"
+    POSTGRES_PASSWORD: str = "secure_password"
+    
+    # API
+    API_HOST: str = "0.0.0.0"
+    API_PORT: int = 8000
+    API_DEBUG: bool = True
+    
+    # JWT
+    JWT_SECRET: str = "your-secret-key"
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    
+    # RAG
+    CHROMA_PERSIST_DIRECTORY: str = "./data/chroma"
+    EMBEDDING_MODEL: str = "sentence-transformers/all-mpnet-base-v2"
+    
+    # LangGraph
+    LANGGRAPH_CACHE_DIR: str = "./data/langgraph"
+    LANGGRAPH_LOG_LEVEL: str = "INFO"
+    
+    # Monitoring
+    PROMETHEUS_PORT: int = 9090
+    GRAFANA_PORT: int = 3000
+    
+    # Redis Cache
+    REDIS_HOST: str = "localhost"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+    
+    # Logging
+    LOG_LEVEL: str = "DEBUG"
+    LOG_FILE: str = "./logs/app.log"
+    
+    class Config:
+        case_sensitive = True
+
+# Create global settings instance
+settings = Settings()
 
 class Config:
     """Configuration manager for GENXAIS Framework."""
@@ -28,7 +81,7 @@ class Config:
             "project": {
                 "name": self.project_name,
                 "type": "general",
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "description": f"GENXAIS project: {self.project_name}"
             },
             "apm": {
@@ -59,7 +112,7 @@ class Config:
                 "logging_level": "INFO"
             },
             "rag": {
-                "storage_type": "local_json",
+                "storage_type": "chroma",
                 "mongodb_url": "mongodb://localhost:27017/",
                 "database_name": "genxais_rag",
                 "collection_prefix": "genxais_",
@@ -142,116 +195,102 @@ class Config:
         keys = key_path.split('.')
         current = self.config
         
-        # Navigate to parent
         for key in keys[:-1]:
             if key not in current:
                 current[key] = {}
             current = current[key]
         
-        # Set value
         current[keys[-1]] = value
-        logger.info(f"⚙️ Config updated: {key_path} = {value}")
+        logger.info(f"⚙️ Configuration updated: {key_path} = {value}")
     
     def save(self, path: Optional[str] = None):
         """Save configuration to file."""
         
-        save_path = path or self.config_path or "genxais_config.json"
+        save_path = path or self.config_path
+        if not save_path:
+            raise ValueError("No path specified for saving configuration")
         
         try:
             with open(save_path, 'w', encoding='utf-8') as f:
-                json.dump(self.config, f, indent=2, ensure_ascii=False)
-            logger.info(f"💾 Configuration saved to {save_path}")
+                json.dump(self.config, f, indent=4)
+            logger.info(f"✅ Configuration saved to {save_path}")
         except Exception as e:
-            logger.error(f"❌ Failed to save configuration: {e}")
+            logger.error(f"❌ Could not save config to {save_path}: {e}")
+            raise
     
     def validate(self) -> bool:
-        """Validate configuration integrity."""
+        """Validate configuration."""
         
-        required_sections = ["project", "apm", "agents", "error_handling"]
-        missing_sections = []
-        
-        for section in required_sections:
-            if section not in self.config:
-                missing_sections.append(section)
-        
-        if missing_sections:
-            logger.error(f"❌ Missing configuration sections: {missing_sections}")
-            return False
-        
-        # Validate specific requirements
-        validations = [
-            (self.get("agents.max_parallel", 0) > 0, "agents.max_parallel must be > 0"),
-            (self.get("project.name"), "project.name is required"),
-            (self.get("apm.phase_timeout", 0) > 0, "apm.phase_timeout must be > 0")
+        required_keys = [
+            "project.name",
+            "project.version",
+            "apm.enable_all_phases",
+            "agents.max_parallel",
+            "error_handling.robust_mode",
+            "monitoring.logging_level",
+            "rag.storage_type",
+            "templates.default_template"
         ]
         
-        for is_valid, error_msg in validations:
-            if not is_valid:
-                logger.error(f"❌ Configuration validation failed: {error_msg}")
+        for key in required_keys:
+            if self.get(key) is None:
+                logger.error(f"❌ Missing required configuration: {key}")
                 return False
         
-        logger.info("✅ Configuration validation passed")
+        logger.info("✅ Configuration validation successful")
         return True
     
     def get_template_config(self, template_name: str) -> Dict[str, Any]:
-        """Get template-specific configuration."""
+        """Get configuration for a specific template."""
         
-        template_configs = {
-            "web_app": {
-                "backend_framework": "fastapi",
-                "frontend_framework": "react",
-                "database": "postgresql",
-                "containerization": "docker"
-            },
-            "api_service": {
-                "framework": "fastapi",
-                "database": "postgresql",
-                "documentation": "openapi",
-                "testing": "pytest"
-            },
-            "ml_pipeline": {
-                "framework": "sklearn",
-                "data_storage": "s3",
-                "model_tracking": "mlflow",
-                "deployment": "kubernetes"
-            }
-        }
+        template_path = os.path.join(
+            self.get("templates.custom_templates_path", "./templates/custom"),
+            f"{template_name}.json"
+        )
         
-        return template_configs.get(template_name, {})
+        if not os.path.exists(template_path):
+            logger.warning(f"⚠️ Template configuration not found: {template_path}")
+            return {}
+        
+        try:
+            with open(template_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"❌ Could not load template config from {template_path}: {e}")
+            return {}
     
     def merge_template_config(self, template_name: str):
-        """Merge template-specific configuration."""
+        """Merge template configuration into current configuration."""
         
         template_config = self.get_template_config(template_name)
         if template_config:
-            if "template" not in self.config:
-                self.config["template"] = {}
-            self.config["template"].update(template_config)
-            logger.info(f"🎨 Template configuration merged: {template_name}")
+            self.config.update(template_config)
+            logger.info(f"✅ Template configuration merged: {template_name}")
     
     def export_for_agents(self) -> Dict[str, Any]:
-        """Export configuration formatted for agents."""
+        """Export configuration for agent consumption."""
         
-        return {
-            "project_info": self.config["project"],
-            "execution_limits": {
-                "timeout": self.get("agents.timeout", 600),
-                "retry_attempts": self.get("agents.retry_attempts", 3),
-                "max_parallel": self.get("agents.max_parallel", 3)
-            },
-            "preferences": {
-                "debug_mode": self.get("development.debug_mode", False),
-                "auto_handover": self.get("apm.auto_handover", True),
-                "conflict_resolution": self.get("agents.conflict_resolution", "merge_strategies")
+        agent_config = {
+            "project": self.config["project"],
+            "apm": self.config["apm"],
+            "agents": self.config["agents"],
+            "error_handling": self.config["error_handling"],
+            "monitoring": {
+                "logging_level": self.config["monitoring"]["logging_level"]
             }
         }
+        
+        logger.info("✅ Configuration exported for agents")
+        return agent_config
     
     def __str__(self) -> str:
         """String representation of configuration."""
-        
-        return f"GENXAIS Config[{self.project_name}]: {len(self.config)} sections"
+        return f"GENXAIS Config: {self.project_name} ({self.get('project.version', 'unknown')})"
     
     def __repr__(self) -> str:
-        """Detailed representation."""
-        
-        return f"Config(project='{self.project_name}', sections={list(self.config.keys())})" 
+        """Detailed string representation of configuration."""
+        return f"GENXAIS Config({self.project_name}, {self.config_path})"
+    
+    def get_config(self) -> Dict[str, Any]:
+        """Get complete configuration."""
+        return self.config.copy() 

@@ -14,7 +14,7 @@ import IconSet from './IconSet';
  * Header und dem Hauptinhaltsbereich. Das Design orientiert sich an Odoo's
  * Enterprise-Version mit responsiven Anpassungen.
  */
-const Layout = ({ children }) => {
+const Layout = ({ children, onChatToggle, isChatOpen }) => {
   const { parameters } = useTheme();
   const muiTheme = useMuiTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
       <CssBaseline />
       
       {/* Header */}
-      <Header />
+      <Header onChatToggle={onChatToggle} isChatOpen={isChatOpen} />
       
       {/* Hauptinhalt */}
       <Box

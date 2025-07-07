@@ -1,0 +1,212 @@
+{
+  "from_phase": "van",
+  "to_phase": "plan",
+  "timestamp": "2025-07-05T10:36:38.231475",
+  "phase_results": {
+    "timestamp": "2025-07-05T10:36:38.230475",
+    "system_structure": {
+      "components": {
+        "core": {
+          "count": 17,
+          "type": "Core Components",
+          "status": "active"
+        },
+        "backend": {
+          "count": 33,
+          "type": "Backend Services",
+          "status": "active"
+        },
+        "frontend": {
+          "count": 102,
+          "type": "Frontend Components",
+          "status": "active"
+        }
+      },
+      "architecture": {
+        "type": "Microservices",
+        "communication": "Event-driven",
+        "data_storage": "Distributed"
+      },
+      "interfaces": {
+        "api": {
+          "count": 45,
+          "type": "REST",
+          "version": "v1"
+        },
+        "events": {
+          "count": 28,
+          "type": "Async",
+          "broker": "RabbitMQ"
+        }
+      }
+    },
+    "performance": {
+      "metrics": {
+        "response_time": {
+          "avg": 120,
+          "p95": 250,
+          "p99": 450
+        },
+        "throughput": {
+          "avg": 1000,
+          "peak": 2500
+        },
+        "error_rate": {
+          "avg": 0.1,
+          "peak": 0.5
+        }
+      },
+      "bottlenecks": [
+        {
+          "component": "Database",
+          "type": "I/O",
+          "severity": "medium"
+        },
+        {
+          "component": "API Gateway",
+          "type": "CPU",
+          "severity": "low"
+        }
+      ],
+      "optimizations": [
+        {
+          "target": "Caching",
+          "potential": "high",
+          "effort": "medium"
+        },
+        {
+          "target": "Query Optimization",
+          "potential": "medium",
+          "effort": "high"
+        }
+      ]
+    },
+    "dependencies": {
+      "internal": {
+        "services": [
+          {
+            "name": "Auth Service",
+            "dependencies": [
+              "User Service",
+              "Role Service"
+            ],
+            "type": "critical"
+          },
+          {
+            "name": "Order Service",
+            "dependencies": [
+              "Product Service",
+              "Payment Service"
+            ],
+            "type": "business"
+          }
+        ],
+        "databases": [
+          {
+            "name": "User DB",
+            "type": "PostgreSQL",
+            "services": [
+              "Auth Service",
+              "User Service"
+            ]
+          },
+          {
+            "name": "Order DB",
+            "type": "MongoDB",
+            "services": [
+              "Order Service"
+            ]
+          }
+        ]
+      },
+      "external": {
+        "apis": [
+          {
+            "name": "Payment Gateway",
+            "type": "REST",
+            "criticality": "high"
+          },
+          {
+            "name": "Shipping API",
+            "type": "REST",
+            "criticality": "medium"
+          }
+        ],
+        "services": [
+          {
+            "name": "Email Service",
+            "type": "SMTP",
+            "criticality": "low"
+          }
+        ]
+      }
+    },
+    "status": "completed"
+  },
+  "metrics": {
+    "timestamp": "2025-07-05T10:36:38.231475",
+    "performance": {
+      "cpu_usage": 0,
+      "memory_usage": 0,
+      "response_times": []
+    },
+    "quality": {
+      "test_coverage": 0,
+      "code_quality": 0,
+      "documentation_coverage": 0
+    },
+    "progress": {
+      "completed_tasks": 0,
+      "total_tasks": 0,
+      "milestone_progress": 0
+    }
+  },
+  "next_steps": [
+    {
+      "step": "Ergebnisse validieren",
+      "description": "Validierung der VAN Phase Ergebnisse",
+      "priority": "high"
+    },
+    {
+      "step": "Abhängigkeiten prüfen",
+      "description": "Prüfung der Abhängigkeiten für PLAN Phase",
+      "priority": "high"
+    },
+    {
+      "step": "Team informieren",
+      "description": "Team über Phasenübergang informieren",
+      "priority": "medium"
+    }
+  ],
+  "dependencies": [
+    {
+      "type": "data",
+      "description": "Analyseergebnisse der vorherigen Phase",
+      "required": true
+    },
+    {
+      "type": "resource",
+      "description": "Team-Verfügbarkeit",
+      "required": true
+    },
+    {
+      "type": "technical",
+      "description": "System-Zugang und Berechtigungen",
+      "required": true
+    }
+  ],
+  "risks": [
+    {
+      "category": "technical",
+      "description": "Datenverlust während Migration",
+      "severity": "high",
+      "mitigation": "Backup-Strategie implementieren"
+    },
+    {
+      "category": "process",
+      "description": "Verzögerung durch fehlende Ressourcen",
+      "severity": "medium",
+      "mitigation": "Ressourcenplanung optimieren"
+    }
+  ]
+}

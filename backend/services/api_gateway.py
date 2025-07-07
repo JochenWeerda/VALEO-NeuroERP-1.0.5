@@ -8,10 +8,10 @@ einschließlich Rate Limiting, API-Key-Verwaltung und Request/Response-Validieru
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Request, Response
-from fastapi.security import APIKeyHeader
+from fastapi.security import APIKeyHeader, OAuth2PasswordBearer
 from pydantic import BaseModel, Field, AnyHttpUrl
 import redis
-from prometheus_client import Counter, Histogram
+from prometheus_client import Counter, Histogram, Gauge
 import jwt
 import hashlib
 import uuid
@@ -29,6 +29,23 @@ request_duration = Histogram(
     'api_gateway_request_duration_seconds',
     'Request duration in seconds',
     ['api_key', 'endpoint']
+)
+
+# Zusätzliche Prometheus-Metriken für Alerting
+error_count = Counter(
+    'api_gateway_errors_total',
+    'Total number of error responses',
+    ['api_key', 'endpoint', 'error_type']
+)
+rate_limit_exceeded = Counter(
+    'api_gateway_rate_limit_exceeded_total',
+    'Total number of rate limit exceeded events',
+    ['api_key', 'endpoint']
+)
+anomaly_gauge = Gauge(
+    'api_gateway_anomaly_score',
+    'Anomaly score for error and rate limit events',
+    ['endpoint']
 )
 
 # Security Setup
@@ -75,6 +92,8 @@ class ServiceRegistration(BaseModel):
     endpoints: List[APIEndpoint]
     is_active: bool = True
 
+OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
+
 class APIGateway:
     """Hauptklasse für das API Gateway"""
     
@@ -107,26 +126,34 @@ class APIGateway:
         
         self.app.include_router(self.router)
         
-    async def validate_api_key(
+    async def validate_auth(
         self,
-        api_key: str = Depends(API_KEY_HEADER),
+        request: Request,
         db: Session = Depends(get_db)
-    ) -> APIKey:
-        """Validiert einen API-Key"""
-        key_data = await self.get_api_key_data(api_key, db)
-        if not key_data or not key_data.is_active:
-            raise HTTPException(
-                status_code=401,
-                detail="Ungültiger API-Key"
-            )
-            
-        if key_data.expires_at and key_data.expires_at < datetime.now():
-            raise HTTPException(
-                status_code=401,
-                detail="API-Key abgelaufen"
-            )
-            
-        return key_data
+    ) -> Any:
+        """Validiert API-Key oder OAuth2-Token"""
+        api_key = request.headers.get("X-API-Key")
+        auth_header = request.headers.get("Authorization")
+        if api_key:
+            key_data = await self.get_api_key_data(api_key, db)
+            if not key_data or not key_data.is_active:
+                raise HTTPException(status_code=401, detail="Ungültiger API-Key")
+            if key_data.expires_at and key_data.expires_at < datetime.now():
+                raise HTTPException(status_code=401, detail="API-Key abgelaufen")
+            return key_data
+        elif auth_header and auth_header.startswith("Bearer "):
+            token = auth_header.split(" ", 1)[1]
+            # Token-Validierung über Auth-Service (z. B. JWT prüfen)
+            try:
+                from backend.app.core.security import decode_token
+                payload = decode_token(token)
+                if not payload:
+                    raise HTTPException(status_code=401, detail="Ungültiges Token")
+                return payload
+            except Exception:
+                raise HTTPException(status_code=401, detail="Ungültiges Token")
+        else:
+            raise HTTPException(status_code=401, detail="Authentifizierung erforderlich")
         
     async def check_rate_limit(
         self,
@@ -164,7 +191,7 @@ class APIGateway:
         request: Request,
         service_name: str,
         path: str,
-        api_key: APIKey = Depends(validate_api_key)
+        auth_data: Any = Depends(validate_auth)
     ) -> Response:
         """Verarbeitet eingehende Requests"""
         # Service prüfen
@@ -187,14 +214,18 @@ class APIGateway:
             )
             
         # Rate Limit prüfen
-        if not await self.check_rate_limit(api_key, endpoint):
+        if not await self.check_rate_limit(auth_data, endpoint):
+            rate_limit_exceeded.labels(api_key=auth_data.id, endpoint=path).inc()
+            self.update_anomaly_score(path)
             raise HTTPException(
                 status_code=429,
                 detail="Rate Limit überschritten"
             )
             
         # Berechtigungen prüfen
-        if not await self.validate_permissions(api_key, endpoint):
+        if not await self.validate_permissions(auth_data, endpoint):
+            error_count.labels(api_key=auth_data.id, endpoint=path, error_type="permission").inc()
+            self.update_anomaly_score(path)
             raise HTTPException(
                 status_code=403,
                 detail="Keine ausreichenden Berechtigungen"
@@ -222,7 +253,7 @@ class APIGateway:
                 
         # Metriken aktualisieren
         request_count.labels(
-            api_key=api_key.id,
+            api_key=auth_data.id,
             endpoint=path,
             method=request.method
         ).inc()
@@ -372,4 +403,33 @@ class APIGateway:
     ) -> Optional[APIKey]:
         """Lädt einen API-Key aus der Datenbank"""
         # TODO: Implementierung der Datenbankabfrage
-        pass 
+        pass
+        
+    def update_anomaly_score(self, endpoint: str):
+        """Einfache Anomalie-Erkennung: Score steigt bei Fehlern und Rate-Limit-Events"""
+        # Beispiel: Score = Fehler + 2*RateLimit in letzter Minute
+        error_val = error_count.labels(api_key="*", endpoint=endpoint, error_type="permission")._value.get()
+        rate_val = rate_limit_exceeded.labels(api_key="*", endpoint=endpoint)._value.get()
+        score = error_val + 2 * rate_val
+        anomaly_gauge.labels(endpoint=endpoint).set(score)
+        # Alertmanager kann auf anomaly_gauge > Schwelle triggern
+
+# --- Dokumentation der Metriken und Alerts ---
+"""
+Prometheus-Metriken:
+- api_gateway_requests_total: Requests pro API-Key, Endpoint, Methode
+- api_gateway_request_duration_seconds: Dauer pro API-Key, Endpoint
+- api_gateway_errors_total: Fehler pro API-Key, Endpoint, Typ
+- api_gateway_rate_limit_exceeded_total: Rate-Limit-Events pro API-Key, Endpoint
+- api_gateway_anomaly_score: Anomalie-Score pro Endpoint
+
+Alerting-Beispiel (Alertmanager):
+- alert: APIGatewayAnomalyDetected
+  expr: api_gateway_anomaly_score > 10
+  for: 1m
+  labels:
+    severity: critical
+  annotations:
+    summary: "Anomalie im API-Gateway für {{ $labels.endpoint }}"
+    description: "Hohe Fehler- oder Rate-Limit-Rate erkannt."
+""" 

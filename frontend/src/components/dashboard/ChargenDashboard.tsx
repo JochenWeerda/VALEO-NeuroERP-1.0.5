@@ -63,11 +63,43 @@ const dummyChargenData = {
 // Farben für die Charts
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#FF4842'];
 
+// Widget-Typen
+export type WidgetType = 'kpi' | 'chart' | 'warnung' | 'liste';
+
+export interface DashboardWidgetConfig {
+  id: string;
+  type: WidgetType;
+  title: string;
+  props?: any;
+}
+
+const DEFAULT_WIDGETS: DashboardWidgetConfig[] = [
+  { id: 'gesamtChargen', type: 'kpi', title: 'Gesamt-Chargen', props: { value: dummyChargenData.bestandsmetriken.gesamtChargen } },
+  { id: 'qualitaetsindex', type: 'kpi', title: 'Qualitätsindex', props: { value: dummyChargenData.qualitaetsmetriken.qualitaetsindex, unit: '%' } },
+  { id: 'statusChart', type: 'chart', title: 'Chargenstatus', props: { data: Object.entries(dummyChargenData.chargenStatus).map(([name, value]) => ({ name, value })) } },
+  { id: 'warnungen', type: 'warnung', title: 'Kritische Warnungen', props: { items: dummyChargenData.kritischeWarnungen } },
+];
+
+function loadWidgetConfig(): DashboardWidgetConfig[] {
+  const raw = localStorage.getItem('dashboardWidgets');
+  if (!raw) return DEFAULT_WIDGETS;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return DEFAULT_WIDGETS;
+  }
+}
+
+function saveWidgetConfig(widgets: DashboardWidgetConfig[]) {
+  localStorage.setItem('dashboardWidgets', JSON.stringify(widgets));
+}
+
 const ChargenDashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
   const [timeRange, setTimeRange] = useState<string>('30tage');
+  const [widgetConfig, setWidgetConfig] = useState<DashboardWidgetConfig[]>(loadWidgetConfig());
 
   useEffect(() => {
     // Hier würde normalerweise ein API-Aufruf stattfinden
@@ -112,38 +144,94 @@ const ChargenDashboard: React.FC = () => {
     value: value
   }));
 
+  // Widget-Operationen
+  const handleRemoveWidget = (id: string) => {
+    const updated = widgetConfig.filter(w => w.id !== id);
+    setWidgetConfig(updated);
+    saveWidgetConfig(updated);
+  };
+  const handleAddWidget = (widget: DashboardWidgetConfig) => {
+    const updated = [...widgetConfig, widget];
+    setWidgetConfig(updated);
+    saveWidgetConfig(updated);
+  };
+  const handleMoveWidget = (from: number, to: number) => {
+    if (from === to) return;
+    const updated = [...widgetConfig];
+    const [moved] = updated.splice(from, 1);
+    updated.splice(to, 0, moved);
+    setWidgetConfig(updated);
+    saveWidgetConfig(updated);
+  };
+
+  // Widget-Renderer
+  const renderWidget = (widget: DashboardWidgetConfig, idx: number) => {
+    switch (widget.type) {
+      case 'kpi':
+        return (
+          <Card key={widget.id} sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>{widget.title}</Typography>
+              <Typography variant="h4">{widget.props.value}{widget.props.unit || ''}</Typography>
+              <Button size="small" onClick={() => handleRemoveWidget(widget.id)}>Entfernen</Button>
+            </CardContent>
+          </Card>
+        );
+      case 'chart':
+        return (
+          <Card key={widget.id} sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>{widget.title}</Typography>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={widget.props.data}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#1976d2" />
+                </BarChart>
+              </ResponsiveContainer>
+              <Button size="small" onClick={() => handleRemoveWidget(widget.id)}>Entfernen</Button>
+            </CardContent>
+          </Card>
+        );
+      case 'warnung':
+        return (
+          <Card key={widget.id} sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>{widget.title}</Typography>
+              {widget.props.items.map((warn: any) => (
+                <Alert key={warn.id} severity={warn.prioritaet === 'hoch' ? 'error' : warn.prioritaet === 'mittel' ? 'warning' : 'info'} sx={{ mb: 1 }}>{warn.titel} (Charge: {warn.charge})</Alert>
+              ))}
+              <Button size="small" onClick={() => handleRemoveWidget(widget.id)}>Entfernen</Button>
+            </CardContent>
+          </Card>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1, p: 2 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4" gutterBottom>
           Chargenverwaltung - KPI Dashboard
         </Typography>
-        <Box>
-          <Button 
-            variant={timeRange === '7tage' ? 'contained' : 'outlined'} 
-            size="small" 
-            onClick={() => setTimeRange('7tage')}
-            sx={{ mr: 1 }}
-          >
-            7 Tage
-          </Button>
-          <Button 
-            variant={timeRange === '30tage' ? 'contained' : 'outlined'} 
-            size="small" 
-            onClick={() => setTimeRange('30tage')}
-            sx={{ mr: 1 }}
-          >
-            30 Tage
-          </Button>
-          <Button 
-            variant={timeRange === '90tage' ? 'contained' : 'outlined'} 
-            size="small" 
-            onClick={() => setTimeRange('90tage')}
-          >
-            90 Tage
-          </Button>
-        </Box>
+        <Button size="small" variant="outlined" onClick={() => handleAddWidget({ id: `kpi${Date.now()}`, type: 'kpi', title: 'Neue KPI', props: { value: 0 } })}>
+          Widget hinzufügen
+        </Button>
       </Box>
+      <Grid container spacing={3} mb={3}>
+        {widgetConfig.map((widget, idx) => (
+          <Grid item xs={12} sm={6} md={3} key={widget.id}>
+            {renderWidget(widget, idx)}
+            <Box display="flex" justifyContent="space-between">
+              <Button size="small" disabled={idx === 0} onClick={() => handleMoveWidget(idx, idx - 1)}>↑</Button>
+              <Button size="small" disabled={idx === widgetConfig.length - 1} onClick={() => handleMoveWidget(idx, idx + 1)}>↓</Button>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
 
       {/* KPI-Karten */}
       <Grid container spacing={3} mb={3}>

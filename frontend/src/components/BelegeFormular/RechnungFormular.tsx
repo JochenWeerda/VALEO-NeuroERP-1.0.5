@@ -12,7 +12,7 @@ import {
   Alert,
   CircularProgress
 } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -116,17 +116,40 @@ interface Kunde {
   ust_id?: string;
 }
 
+// Hilfsfunktion: Felder aus OCR-Text extrahieren (einfaches Beispiel, später KI/RegEx)
+export function extractFieldsFromOCR(ocrText: string): Partial<Rechnung> {
+  const result: Partial<Rechnung> = {};
+  // Rechnungsnummer
+  const nummerMatch = ocrText.match(/Rechnungsnummer[:\s]*([A-Za-z0-9\-\/]+)/i);
+  if (nummerMatch) result.nummer = nummerMatch[1];
+  // Rechnungsdatum
+  const datumMatch = ocrText.match(/Rechnungsdatum[:\s]*([0-9]{2,4}[.\/-][0-9]{1,2}[.\/-][0-9]{2,4})/i);
+  if (datumMatch) result.rechnungsdatum = datumMatch[1];
+  // Betrag
+  const betragMatch = ocrText.match(/Betrag[:\s]*([0-9.,]+) ?(EUR|€)/i);
+  if (betragMatch) result.gesamtsumme = parseFloat(betragMatch[1].replace(',', '.'));
+  // Empfänger
+  const empfaengerMatch = ocrText.match(/Empfänger[:\s]*([A-Za-z0-9 .,&-]+)/i);
+  if (empfaengerMatch) result.kunde = { id: '', name: empfaengerMatch[1] };
+  return result;
+}
+
 const RechnungFormular: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [rechnung, setRechnung] = useState<Rechnung>({
-    kunde: { id: '', name: '' },
-    rechnungsdatum: new Date().toISOString().split('T')[0],
-    positionen: [],
-    status: RECHNUNG_STATUS.ENTWURF
+  const [rechnung, setRechnung] = useState<Rechnung>(() => {
+    const vorbelegung = location.state?.vorbelegung as Partial<Rechnung> | undefined;
+    return {
+      kunde: { id: '', name: '' },
+      rechnungsdatum: new Date().toISOString().split('T')[0],
+      positionen: [],
+      status: RECHNUNG_STATUS.ENTWURF,
+      ...vorbelegung
+    };
   });
   const [kunden, setKunden] = useState<Kunde[]>([]);
   const [selectedKunde, setSelectedKunde] = useState<Kunde | null>(null);

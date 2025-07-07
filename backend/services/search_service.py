@@ -1,257 +1,256 @@
 """
-Such-Service für VALEO-NeuroERP
-
-Dieser Service implementiert die Web-Suche und die Speicherung der Suchergebnisse in MongoDB.
+Unified Search Service für VALEO-NeuroERP.
+Kombiniert MongoDB Atlas Search und FAISS für optimale Suchergebnisse.
 """
 
-import time
-import logging
-from typing import Dict, List, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 from datetime import datetime
+import logging
+from enum import Enum
 
-from linkup import Linkup
+from backend.services.faiss_metadata_manager import FaissWithMetadataManager
+from backend.core.config import settings
+from backend.models.reports.mongodb_schemas import SearchHistoryModel, RAGHistoryModel
+from linkup_mcp.mongodb_connector import MCPMongoDBConnector
 
-from backend.mongodb_connector import MongoDBConnector
-from backend.models.search_history import (
-    SearchQuery,
-    SearchResult,
-    SearchHistoryItem
-)
+logger = logging.getLogger(__name__)
 
-logger = logging.getLogger("valeo-neuroerp.search-service")
+class SearchType(Enum):
+    """Verfügbare Suchtypen."""
+    FULL_TEXT = "full_text"  # Atlas Search
+    SEMANTIC = "semantic"    # FAISS
+    HYBRID = "hybrid"       # Kombiniert beide
 
-class SearchService:
+class UnifiedSearchService:
     """
-    Service für die Web-Suche und die Speicherung der Suchergebnisse.
+    Vereinheitlichter Suchdienst, der Atlas Search und FAISS kombiniert.
     """
     
-    def __init__(self, linkup_api_key: str, mongodb_connector: MongoDBConnector):
+    def __init__(self):
+        """Initialisiert den Suchdienst."""
+        # MongoDB/Atlas Search Setup
+        self.mongodb = MCPMongoDBConnector(
+            uri=settings.MONGODB_URI,
+            db_name=settings.MONGODB_DB
+        )
+        
+        # FAISS Setup
+        self.faiss_manager = FaissWithMetadataManager(
+            dim=settings.EMBEDDING_DIMENSION,
+            mongo_uri=settings.MONGODB_URI,
+            db_name=settings.MONGODB_DB
+        )
+        
+        # Collections
+        self.search_history_collection = "search_history"
+        self.rag_history_collection = "rag_history"
+
+    async def search(
+        self,
+        query: str,
+        search_type: SearchType = SearchType.HYBRID,
+        embedding: Optional[List[float]] = None,
+        filter_criteria: Optional[Dict[str, Any]] = None,
+        limit: int = 5,
+        user_id: Optional[str] = None
+    ) -> Dict[str, Any]:
         """
-        Initialisiert den Such-Service.
+        Führt eine Suche basierend auf dem gewählten Suchtyp durch.
         
         Args:
-            linkup_api_key: API-Schlüssel für die Linkup API
-            mongodb_connector: MongoDB-Connector für die Datenbankverbindung
-        """
-        self.linkup_client = Linkup(api_key=linkup_api_key)
-        self.mongodb = mongodb_connector
-        
-        # Collection-Namen
-        self.search_history_collection = "search_history"
-        
-        # Indizes erstellen
-        self._create_indexes()
-    
-    def _create_indexes(self):
-        """
-        Erstellt Indizes für die MongoDB-Collections.
+            query: Suchanfrage (Text)
+            search_type: Art der Suche (Volltext, Semantisch, Hybrid)
+            embedding: Optional, Embedding für semantische Suche
+            filter_criteria: Optionale Filterkriterien
+            limit: Maximale Anzahl der Ergebnisse
+            user_id: Optional, ID des suchenden Benutzers
+            
+        Returns:
+            Dict mit Suchergebnissen und Metadaten
         """
         try:
-            # Index für die Suchhistorie nach Zeitstempel
-            self.mongodb.create_index(
-                self.search_history_collection,
-                [("timestamp", -1)]
-            )
+            results = []
             
-            # Index für die Suchhistorie nach Benutzer-ID
-            self.mongodb.create_index(
-                self.search_history_collection,
-                [("user_id", 1)]
-            )
+            # Atlas Search für Volltextsuche
+            if search_type in [SearchType.FULL_TEXT, SearchType.HYBRID]:
+                atlas_results = await self._atlas_search(
+                    query=query,
+                    filter_criteria=filter_criteria,
+                    limit=limit
+                )
+                results.extend(atlas_results)
             
-            # Index für die Suchhistorie nach Abfrage
-            self.mongodb.create_index(
-                self.search_history_collection,
-                [("query.query", "text")]
-            )
+            # FAISS für semantische Suche
+            if search_type in [SearchType.SEMANTIC, SearchType.HYBRID] and embedding:
+                faiss_results = self.faiss_manager.search(
+                    query_vector=embedding,
+                    filter_criteria=filter_criteria,
+                    k=limit
+                )
+                results.extend(faiss_results)
             
-            logger.info("Indizes für die Suchhistorie erstellt")
+            # Ergebnisse deduplizieren und sortieren
+            if search_type == SearchType.HYBRID:
+                results = self._merge_results(results, limit)
+            
+            # Suchhistorie speichern
+            search_history = SearchHistoryModel(
+                query=query,
+                results=results,
+                user_id=user_id,
+                context={
+                    "search_type": search_type.value,
+                    "filter_criteria": filter_criteria
+                }
+            )
+            await self._save_search_history(search_history)
+            
+            return {
+                "query": query,
+                "search_type": search_type.value,
+                "results": results,
+                "total_results": len(results),
+                "timestamp": datetime.now()
+            }
+            
         except Exception as e:
-            logger.error(f"Fehler beim Erstellen der Indizes: {str(e)}")
-    
-    def perform_web_search(self, query: str, search_type: str = "sourcedAnswer",
-                           region: Optional[str] = None, language: Optional[str] = None,
-                           time_period: Optional[str] = None, user_id: Optional[str] = None) -> Dict[str, Any]:
+            logger.error(f"Fehler bei der Suche: {str(e)}")
+            raise
+
+    async def _atlas_search(
+        self,
+        query: str,
+        filter_criteria: Optional[Dict[str, Any]] = None,
+        limit: int = 5
+    ) -> List[Dict[str, Any]]:
         """
-        Führt eine Web-Suche durch und speichert die Ergebnisse in der Datenbank.
+        Führt eine Atlas Search durch.
         
         Args:
             query: Suchanfrage
-            search_type: Art der Suche (sourcedAnswer, search, etc.)
-            region: Region für die Suche (optional)
-            language: Sprache für die Suche (optional)
-            time_period: Zeitraum für die Suche (optional)
-            user_id: ID des Benutzers (optional)
+            filter_criteria: Filterkriterien
+            limit: Maximale Anzahl der Ergebnisse
             
         Returns:
-            Dict[str, Any]: Suchergebnisse
+            Liste der Suchergebnisse
         """
         try:
-            # Startzeit für Leistungsmessung
-            start_time = time.time()
+            # Atlas Search Pipeline erstellen
+            pipeline = [
+                {
+                    "$search": {
+                        "text": {
+                            "query": query,
+                            "path": ["title", "content"],
+                            "fuzzy": {}
+                        }
+                    }
+                }
+            ]
             
-            # Parameter für die Linkup-Suche
-            params = {
-                "query": query,
-                "type": search_type
-            }
+            # Filter hinzufügen
+            if filter_criteria:
+                pipeline.append({"$match": filter_criteria})
             
-            # Optionale Parameter hinzufügen
-            if region:
-                params["region"] = region
-            if language:
-                params["language"] = language
-            if time_period:
-                params["timePeriod"] = time_period
+            # Limit setzen
+            pipeline.append({"$limit": limit})
             
-            # Suche durchführen
-            logger.info(f"Web-Suche: {query}")
-            response = self.linkup_client.search(**params)
+            # Suche ausführen
+            results = list(self.mongodb.db.documents.aggregate(pipeline))
             
-            # Antwortzeit berechnen
-            response_time_ms = int((time.time() - start_time) * 1000)
+            return [{
+                "id": str(doc["_id"]),
+                "title": doc.get("title", ""),
+                "content": doc.get("content", ""),
+                "score": doc.get("score", 0.0),
+                "source": "atlas_search",
+                **{k: v for k, v in doc.items() if k not in ["_id", "title", "content", "score"]}
+            } for doc in results]
             
-            # Suchanfrage und Ergebnisse für die Datenbank aufbereiten
-            search_query = SearchQuery(
-                query=query,
-                search_type=search_type,
-                region=region,
-                language=language,
-                time_period=time_period
-            )
+        except Exception as e:
+            logger.error(f"Fehler bei Atlas Search: {str(e)}")
+            return []
+
+    def _merge_results(
+        self,
+        results: List[Dict[str, Any]],
+        limit: int
+    ) -> List[Dict[str, Any]]:
+        """
+        Kombiniert und dedupliziert Ergebnisse aus verschiedenen Quellen.
+        
+        Args:
+            results: Liste aller Ergebnisse
+            limit: Maximale Anzahl der Ergebnisse
             
-            # Suchergebnisse extrahieren
-            search_results = []
-            
-            if search_type == "sourcedAnswer" and "answer" in response:
-                # Für sourcedAnswer-Typ
-                answer = response["answer"]
-                for source in response.get("sources", []):
-                    search_results.append(SearchResult(
-                        title=source.get("title"),
-                        snippet=source.get("snippet"),
-                        url=source.get("url"),
-                        source="linkup"
-                    ))
-            elif "results" in response:
-                # Für search-Typ
-                for result in response["results"]:
-                    search_results.append(SearchResult(
-                        title=result.get("title"),
-                        snippet=result.get("snippet"),
-                        url=result.get("url"),
-                        source="linkup"
-                    ))
-            
-            # Suchhistorie-Eintrag erstellen
-            search_history_item = SearchHistoryItem(
-                user_id=user_id,
-                query=search_query,
-                results=search_results,
-                response_time_ms=response_time_ms
-            )
-            
-            # In MongoDB speichern
+        Returns:
+            Deduplizierte und sortierte Ergebnisliste
+        """
+        # Deduplizierung nach ID
+        seen_ids = set()
+        unique_results = []
+        
+        for result in results:
+            result_id = result.get("id")
+            if result_id and result_id not in seen_ids:
+                seen_ids.add(result_id)
+                unique_results.append(result)
+        
+        # Nach Score sortieren
+        sorted_results = sorted(
+            unique_results,
+            key=lambda x: x.get("score", 0.0),
+            reverse=True
+        )
+        
+        return sorted_results[:limit]
+
+    async def _save_search_history(self, history: SearchHistoryModel):
+        """
+        Speichert einen Sucheintrag in der Historie.
+        
+        Args:
+            history: Suchhistorien-Eintrag
+        """
+        try:
             self.mongodb.insert_one(
                 self.search_history_collection,
-                search_history_item.to_mongo()
+                history.dict()
             )
-            
-            logger.info(f"Web-Suche erfolgreich: {query} ({response_time_ms}ms)")
-            return response
-            
         except Exception as e:
-            logger.error(f"Fehler bei Web-Suche: {str(e)}")
-            raise
-    
-    def get_search_history(self, user_id: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
+            logger.error(f"Fehler beim Speichern der Suchhistorie: {str(e)}")
+
+    async def get_search_history(
+        self,
+        user_id: Optional[str] = None,
+        limit: int = 10
+    ) -> List[Dict[str, Any]]:
         """
-        Ruft die Suchhistorie aus der Datenbank ab.
+        Ruft die Suchhistorie ab.
         
         Args:
-            user_id: ID des Benutzers (optional)
-            limit: Maximale Anzahl der zurückzugebenden Einträge
+            user_id: Optional, ID des Benutzers
+            limit: Maximale Anzahl der Einträge
             
         Returns:
-            List[Dict[str, Any]]: Liste der Suchhistorieneinträge
+            Liste der Suchhistorien-Einträge
         """
         try:
-            query = {}
-            if user_id:
-                query["user_id"] = user_id
-            
-            # Nach Zeitstempel absteigend sortieren
-            results = self.mongodb.find_many(
+            query = {"user_id": user_id} if user_id else {}
+            return self.mongodb.find_many(
                 self.search_history_collection,
-                query,
+                query=query,
+                sort=[("timestamp", -1)],
                 limit=limit
             )
-            
-            return results
         except Exception as e:
             logger.error(f"Fehler beim Abrufen der Suchhistorie: {str(e)}")
-            raise
-    
-    def clear_search_history(self, user_id: Optional[str] = None) -> int:
-        """
-        Löscht die Suchhistorie aus der Datenbank.
-        
-        Args:
-            user_id: ID des Benutzers (optional, wenn nicht angegeben, wird die gesamte Historie gelöscht)
-            
-        Returns:
-            int: Anzahl der gelöschten Einträge
-        """
+            return []
+
+    def cleanup(self):
+        """Räumt Ressourcen auf."""
         try:
-            query = {}
-            if user_id:
-                query["user_id"] = user_id
-            
-            deleted_count = self.mongodb.delete_many(
-                self.search_history_collection,
-                query
-            )
-            
-            if user_id:
-                logger.info(f"Suchhistorie für Benutzer {user_id} gelöscht: {deleted_count} Einträge")
-            else:
-                logger.info(f"Gesamte Suchhistorie gelöscht: {deleted_count} Einträge")
-            
-            return deleted_count
+            self.mongodb.close()
+            self.faiss_manager.cleanup()
         except Exception as e:
-            logger.error(f"Fehler beim Löschen der Suchhistorie: {str(e)}")
-            raise
-    
-    def search_in_history(self, search_term: str, user_id: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
-        """
-        Sucht in der Suchhistorie nach einem Suchbegriff.
-        
-        Args:
-            search_term: Suchbegriff
-            user_id: ID des Benutzers (optional)
-            limit: Maximale Anzahl der zurückzugebenden Einträge
-            
-        Returns:
-            List[Dict[str, Any]]: Liste der gefundenen Suchhistorieneinträge
-        """
-        try:
-            # MongoDB Text-Suche verwenden
-            query = {
-                "$text": {
-                    "$search": search_term
-                }
-            }
-            
-            if user_id:
-                query["user_id"] = user_id
-            
-            results = self.mongodb.find_many(
-                self.search_history_collection,
-                query,
-                limit=limit
-            )
-            
-            return results
-        except Exception as e:
-            logger.error(f"Fehler bei der Suche in der Suchhistorie: {str(e)}")
-            raise
+            logger.error(f"Fehler beim Aufräumen: {str(e)}")

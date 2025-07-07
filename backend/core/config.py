@@ -24,6 +24,8 @@ class Settings(PydanticSettings):
     
     # Datenbank Einstellungen
     DATABASE_URL: str = "sqlite:///./valeo_neuro_erp.db"
+    MONGODB_URI: str = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
+    MONGODB_DB: str = os.getenv("MONGODB_DB", "valeo_neuroerp")
     
     # Batch-Verarbeitung
     BATCH_CHUNK_SIZE: int = 100
@@ -54,6 +56,11 @@ class Settings(PydanticSettings):
     FEATURE_FLAGS_FILE: Path = Path("config/feature_flags.json")
     FEATURE_FLAGS: Dict[str, bool] = {}
     
+    # Vector Search
+    EMBEDDING_DIMENSION: int = 1536  # OpenAI ada-002
+    FAISS_INDEX_PATH: Path = Path("data/faiss_db")
+    FAISS_METADATA_PATH: Path = Path("data/faiss_metadata")
+    
     @validator("FEATURE_FLAGS", pre=True)
     def load_feature_flags(cls, v: Optional[Dict[str, bool]], values: Dict[str, Any]) -> Dict[str, bool]:
         file_path = values.get("FEATURE_FLAGS_FILE")
@@ -65,7 +72,8 @@ class Settings(PydanticSettings):
             "async_processing": True,
             "monitoring": True,
             "api_versioning": True,
-            "documentation": True
+            "documentation": True,
+            "vector_search": True
         }
     
     class Config:
@@ -93,6 +101,13 @@ class Settings(PydanticSettings):
             "connect_args": {"check_same_thread": False}
             if self.DATABASE_URL.startswith("sqlite")
             else {}
+        }
+
+    def get_mongodb_config(self) -> Dict[str, str]:
+        """Gibt die MongoDB-Konfiguration zurück."""
+        return {
+            "uri": self.MONGODB_URI,
+            "db": self.MONGODB_DB
         }
 
     def get_logging_config(self) -> Dict[str, Any]:

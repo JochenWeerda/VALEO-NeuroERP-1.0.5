@@ -1,0 +1,45 @@
+{
+    "atlas_search": {
+        "enabled": true,
+        "collections": {
+            "documents": {
+                "index_name": "default",
+                "searchable_fields": ["title", "content"],
+                "default_language": "german"
+            }
+        },
+        "fuzzy_search": {
+            "enabled": true,
+            "max_edits": 2
+        }
+    },
+    "faiss": {
+        "enabled": true,
+        "index_type": "L2",
+        "embedding_dimension": 768,
+        "nlist": 100,
+        "nprobe": 10,
+        "metadata_store": {
+            "type": "mongodb",
+            "collection": "faiss_metadata"
+        }
+    },
+    "hybrid_search": {
+        "enabled": true,
+        "weights": {
+            "atlas": 0.4,
+            "faiss": 0.6
+        },
+        "merge_strategy": "score_weighted"
+    },
+    "performance": {
+        "cache_enabled": true,
+        "cache_ttl_seconds": 3600,
+        "max_results_per_query": 100
+    },
+    "monitoring": {
+        "enabled": true,
+        "metrics_collection": "search_metrics",
+        "log_level": "INFO"
+    }
+} 

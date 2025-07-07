@@ -1,0 +1,155 @@
+{
+    "phases": {
+        "VAN": {
+            "nodes": [
+                "analyze_requirements",
+                "validate_requirements",
+                "next_steps"
+            ],
+            "timeout": 3600,
+            "retry_count": 3
+        },
+        "PLAN": {
+            "nodes": [
+                "create_architecture",
+                "design_components",
+                "plan_implementation"
+            ],
+            "timeout": 7200,
+            "retry_count": 2
+        },
+        "CREATE": {
+            "nodes": [
+                "setup_environment",
+                "generate_code",
+                "review_code"
+            ],
+            "timeout": 14400,
+            "retry_count": 2
+        },
+        "IMPLEMENTATION": {
+            "nodes": [
+                "deploy_code",
+                "run_tests",
+                "monitor_performance"
+            ],
+            "timeout": 7200,
+            "retry_count": 3
+        },
+        "REFLECTION": {
+            "nodes": [
+                "analyze_metrics",
+                "generate_insights",
+                "plan_improvements"
+            ],
+            "timeout": 3600,
+            "retry_count": 2
+        }
+    },
+    "modes": {
+        "analysis": {
+            "tools": [
+                "requirements_analyzer",
+                "architecture_analyzer",
+                "code_analyzer"
+            ],
+            "models": [
+                "gpt-4-turbo",
+                "claude-3-opus"
+            ]
+        },
+        "design": {
+            "tools": [
+                "architecture_designer",
+                "component_designer",
+                "interface_designer"
+            ],
+            "models": [
+                "gpt-4-turbo",
+                "claude-3-opus"
+            ]
+        },
+        "development": {
+            "tools": [
+                "code_generator",
+                "test_generator",
+                "documentation_generator"
+            ],
+            "models": [
+                "gpt-4-turbo",
+                "claude-3-opus",
+                "code-llama"
+            ]
+        },
+        "testing": {
+            "tools": [
+                "test_runner",
+                "performance_analyzer",
+                "security_scanner"
+            ],
+            "models": [
+                "gpt-4-turbo",
+                "claude-3-opus"
+            ]
+        },
+        "deployment": {
+            "tools": [
+                "deployment_manager",
+                "monitoring_system",
+                "alerting_system"
+            ],
+            "models": [
+                "gpt-4-turbo",
+                "claude-3-opus"
+            ]
+        }
+    },
+    "pipeline": {
+        "max_concurrent_pipelines": 5,
+        "max_retries": 3,
+        "timeout": 86400,
+        "monitoring": {
+            "enabled": true,
+            "metrics": [
+                "duration",
+                "success_rate",
+                "error_rate",
+                "resource_usage"
+            ],
+            "alerts": {
+                "error_threshold": 0.1,
+                "duration_threshold": 3600
+            }
+        },
+        "logging": {
+            "level": "INFO",
+            "handlers": [
+                "console",
+                "file",
+                "elasticsearch"
+            ]
+        }
+    },
+    "storage": {
+        "type": "mongodb",
+        "collection": "workflows",
+        "retention_days": 30
+    },
+    "security": {
+        "authentication": {
+            "required": true,
+            "methods": [
+                "api_key",
+                "jwt"
+            ]
+        },
+        "authorization": {
+            "required": true,
+            "roles": [
+                "admin",
+                "developer",
+                "viewer"
+            ]
+        }
+    }
+} 

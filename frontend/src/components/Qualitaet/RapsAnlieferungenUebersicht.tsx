@@ -49,8 +49,13 @@ import {
   getRapsAnlieferungen,
   updateRapsAnlieferung,
   getLieferantStammdaten,
-  uploadDokument
+  uploadDokument,
+  getDokumentOCRStatus
 } from '../../services/qualitaetsApi';
+import { extractFieldsFromOCR } from '../BelegeFormular/RechnungFormular';
+import { useNavigate } from 'react-router-dom';
+import QRCode from 'qrcode.react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface RapsAnlieferungenUebersichtProps {
   erntejahr?: string;
@@ -78,6 +83,15 @@ const RapsAnlieferungenUebersicht: React.FC<RapsAnlieferungenUebersichtProps> = 
   // Dokument-Upload-States
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [dokumentTyp, setDokumentTyp] = useState<string>('nachhaltigkeitserklaerung');
+  const [ocrStatus, setOcrStatus] = useState<string | null>(null);
+  const [ocrText, setOcrText] = useState<string | null>(null);
+  const [ocrPolling, setOcrPolling] = useState<NodeJS.Timeout | null>(null);
+  
+  const navigate = useNavigate();
+  
+  // QR-Code-State
+  const [showQrCode, setShowQrCode] = useState<boolean>(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   
   // Laden der Daten
   useEffect(() => {
@@ -124,28 +138,49 @@ const RapsAnlieferungenUebersicht: React.FC<RapsAnlieferungenUebersichtProps> = 
     setDokumentDialog(true);
   };
   
+  const pollOcrStatus = async (dokumentId: string) => {
+    try {
+      const result = await getDokumentOCRStatus(dokumentId);
+      setOcrStatus(result.ocr_status);
+      if (result.ocr_status === 'done') {
+        setOcrText(result.ocr_text);
+        if (ocrPolling) clearInterval(ocrPolling);
+        setOcrPolling(null);
+      } else if (result.ocr_status === 'error') {
+        setOcrText('Fehler bei der OCR-Verarbeitung.');
+        if (ocrPolling) clearInterval(ocrPolling);
+        setOcrPolling(null);
+      }
+    } catch (e) {
+      setOcrStatus('error');
+      setOcrText('Fehler beim Abrufen des OCR-Status.');
+      if (ocrPolling) clearInterval(ocrPolling);
+      setOcrPolling(null);
+    }
+  };
+  
   const handleDokumentUpload = async () => {
     if (!uploadFile || !selectedAnlieferung) return;
-    
     setLoading(true);
     try {
-      await uploadDokument(selectedAnlieferung.id, uploadFile, dokumentTyp);
+      const dokument = await uploadDokument(selectedAnlieferung.id, uploadFile, dokumentTyp);
+      setOcrStatus('processing');
+      setOcrText(null);
+      // Starte Polling auf OCR-Status
+      const interval = setInterval(() => pollOcrStatus(dokument.id), 3000);
+      setOcrPolling(interval);
       
-      // Aktualisieren der Anlieferung nach erfolgreichem Upload
       if (dokumentTyp === 'nachhaltigkeitserklaerung' || dokumentTyp === 'sortenschutzerklaerung') {
         const updatedAnlieferung = {
           ...selectedAnlieferung,
           nachhaltigkeitsDokumenteVollstaendig: true
         };
         await updateRapsAnlieferung(selectedAnlieferung.id, updatedAnlieferung);
-        
-        // Aktualisieren der Anlieferungsliste
         setAnlieferungen(prev => 
           prev.map(a => a.id === selectedAnlieferung.id ? 
             { ...a, nachhaltigkeitsDokumenteVollstaendig: true } : a)
         );
       }
-      
       setSuccess('Dokument erfolgreich hochgeladen.');
       setDokumentDialog(false);
       setUploadFile(null);
@@ -238,6 +273,17 @@ const RapsAnlieferungenUebersicht: React.FC<RapsAnlieferungenUebersichtProps> = 
   };
   
   const { summeNachhaltig, summeNichtNachhaltig } = calculateSummen();
+
+  useEffect(() => {
+    return () => {
+      if (ocrPolling) clearInterval(ocrPolling);
+    };
+  }, [ocrPolling]);
+
+  const handleOpenDialog = () => {
+    setSessionId(uuidv4());
+    setDokumentDialog(true);
+  };
 
   // Rendering der Komponente
   return (
@@ -577,6 +623,62 @@ const RapsAnlieferungenUebersicht: React.FC<RapsAnlieferungenUebersichtProps> = 
                     </Box>
                   )}
                 </Box>
+                <Box mt={2} display="flex" alignItems="center" gap={2}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => setShowQrCode(q => !q)}
+                    disabled={!sessionId}
+                  >
+                    Mit Handy scannen
+                  </Button>
+                  {showQrCode && sessionId && (
+                    <Box>
+                      <Typography variant="body2" gutterBottom>
+                        Scannen Sie diesen QR-Code mit Ihrem Smartphone, um ein Foto aufzunehmen und hochzuladen:
+                      </Typography>
+                      <QRCode value={`${window.location.origin}/mobile-upload?session=${sessionId}`} size={128} />
+                      <Typography variant="caption" display="block" mt={1}>
+                        (Sicherer Link mit Session-ID)
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+                <Box mt={2}>
+                  <Alert severity="info">
+                    <strong>Tipp:</strong> Sie können Rechnungen und Belege direkt mit der Kamera Ihres Smartphones (iPhone/Android) fotografieren und hochladen.<br />
+                    Klicken Sie dazu auf <b>„Datei auswählen“</b> und wählen Sie <b>„Foto aufnehmen“</b> oder <b>„Aus Mediathek wählen“</b>.<br />
+                    Für beste Ergebnisse achten Sie auf gute Beleuchtung und eine gerade Aufnahme.
+                  </Alert>
+                </Box>
+                {ocrStatus && (
+                  <Box mt={2}>
+                    <Alert severity={ocrStatus === 'done' ? 'success' : ocrStatus === 'error' ? 'error' : 'info'}>
+                      {ocrStatus === 'processing' && 'Das Dokument wird per KI (OCR) analysiert...'}
+                      {ocrStatus === 'done' && 'OCR abgeschlossen. Extrahierter Text:'}
+                      {ocrStatus === 'error' && 'Fehler bei der OCR-Verarbeitung.'}
+                    </Alert>
+                    {ocrText && ocrStatus === 'done' && (
+                      <Box mt={1}>
+                        <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{ocrText}</Typography>
+                      </Box>
+                    )}
+                    {ocrText && ocrStatus === 'done' && (
+                      <Box mt={2}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            const fields = extractFieldsFromOCR(ocrText);
+                            navigate('/belege/rechnung/neu', { state: { vorbelegung: fields } });
+                          }}
+                        >
+                          Extrahierte Felder ins Rechnungsformular übernehmen
+                        </Button>
+                      </Box>
+                    )}
+                  </Box>
+                )}
               </Box>
             </DialogContent>
             <DialogActions>

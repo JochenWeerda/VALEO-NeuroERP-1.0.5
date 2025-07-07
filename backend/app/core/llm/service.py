@@ -72,5 +72,24 @@ class LLMService:
             logger.error(f"Fehler bei der Embedding-Generierung: {str(e)}")
             raise
 
+    async def generate_automation_suggestions(self, workflow_context: dict, feedback_stats: dict = None) -> dict:
+        """Erzeugt Automatisierungsvorschläge auf Basis von Workflow-Daten und optionalem Feedback."""
+        await self.ensure_model_loaded()
+        prompt = (
+            "Du bist ein KI-Experte für Geschäftsprozessautomatisierung. "
+            "Analysiere den folgenden Workflow-Kontext und mache konkrete Vorschläge, wie einzelne Schritte automatisiert oder optimiert werden können. "
+            "Berücksichtige ggf. das bisherige Nutzerfeedback.\n"
+            f"Workflow-Kontext: {json.dumps(workflow_context, ensure_ascii=False)}\n"
+        )
+        if feedback_stats:
+            prompt += f"Feedback-Statistiken: {json.dumps(feedback_stats, ensure_ascii=False)}\n"
+        prompt += "Antworte mit einer Liste konkreter Automatisierungsvorschläge."
+        try:
+            response = await self.generate(prompt)
+            return response
+        except Exception as e:
+            logger.error(f"Fehler bei der Generierung von Automatisierungsvorschlägen: {str(e)}")
+            raise
+
     async def close(self):
         await self.client.aclose() 

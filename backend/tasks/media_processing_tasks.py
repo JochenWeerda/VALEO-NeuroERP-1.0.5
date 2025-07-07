@@ -37,6 +37,8 @@ except ImportError:
 
 # Lokale Imports
 from backend.services.task_queue import update_task_progress
+from core.db.mongodb import get_database
+import asyncio
 
 logger = logging.getLogger(__name__)
 
@@ -174,7 +176,7 @@ def process_image(self, image_path: str, operations: List[Dict[str, Any]] = None
 
 @shared_task(bind=True)
 def extract_text_ocr(self, image_path: str, language: str = 'deu', 
-                    preprocess: bool = True) -> Dict[str, Any]:
+                    preprocess: bool = True, document_id: str = None) -> Dict[str, Any]:
     """
     Extrahiert Text aus einem Bild mittels OCR (Optical Character Recognition).
     
@@ -264,10 +266,30 @@ def extract_text_ocr(self, image_path: str, language: str = 'deu',
         
         update_task_progress(self.request.id, 100, "OCR-Textextraktion abgeschlossen")
         
+        # Ergebnis speichern, falls document_id übergeben wurde
+        if document_id:
+            async def update_doc():
+                db = await get_database()
+                await db.documents.update_one({"_id": document_id}, {"$set": {
+                    "ocr_status": "done",
+                    "ocr_text": text,
+                    "ocr_data": results
+                }})
+            asyncio.run(update_doc())
         return results
         
     except Exception as e:
         logger.error(f"Fehler bei der OCR-Textextraktion: {str(e)}")
+        # Fehlerstatus speichern
+        if document_id:
+            async def update_doc_error():
+                db = await get_database()
+                await db.documents.update_one({"_id": document_id}, {"$set": {
+                    "ocr_status": "error",
+                    "ocr_text": None,
+                    "ocr_data": {"error": str(e)}
+                }})
+            asyncio.run(update_doc_error())
         raise
 
 @shared_task(bind=True)

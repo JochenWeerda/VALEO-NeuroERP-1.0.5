@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import List
 from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
+import subprocess
+from core.config import settings
 
 # Logger konfigurieren
 logging.basicConfig(
@@ -129,6 +131,118 @@ class DatabaseBackup:
         """Schließt die Datenbankverbindung."""
         self.client.close()
 
+def create_backup_dir():
+    """Backup-Verzeichnis erstellen"""
+    backup_dir = os.path.join("data", "backups", datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
+    os.makedirs(backup_dir, exist_ok=True)
+    return backup_dir
+
+def backup_mongodb():
+    """MongoDB-Backup erstellen"""
+    try:
+        backup_dir = create_backup_dir()
+        output_file = os.path.join(backup_dir, "mongodb_backup.gz")
+        
+        cmd = [
+            "mongodump",
+            "--uri", settings.MONGODB_URI,
+            "--gzip",
+            "--archive=" + output_file
+        ]
+        
+        subprocess.run(cmd, check=True)
+        logger.info(f"MongoDB-Backup erstellt: {output_file}")
+        
+    except Exception as e:
+        logger.error(f"Fehler beim MongoDB-Backup: {str(e)}")
+        raise
+
+def backup_postgresql():
+    """PostgreSQL-Backup erstellen"""
+    try:
+        backup_dir = create_backup_dir()
+        output_file = os.path.join(backup_dir, "postgresql_backup.sql")
+        
+        env = os.environ.copy()
+        env["PGPASSWORD"] = settings.POSTGRES_PASSWORD
+        
+        cmd = [
+            "pg_dump",
+            "-h", settings.POSTGRES_HOST,
+            "-p", str(settings.POSTGRES_PORT),
+            "-U", settings.POSTGRES_USER,
+            "-d", settings.POSTGRES_DB,
+            "-f", output_file
+        ]
+        
+        subprocess.run(cmd, env=env, check=True)
+        logger.info(f"PostgreSQL-Backup erstellt: {output_file}")
+        
+    except Exception as e:
+        logger.error(f"Fehler beim PostgreSQL-Backup: {str(e)}")
+        raise
+
+def restore_mongodb(backup_file):
+    """MongoDB-Backup wiederherstellen"""
+    try:
+        cmd = [
+            "mongorestore",
+            "--uri", settings.MONGODB_URI,
+            "--gzip",
+            "--archive=" + backup_file
+        ]
+        
+        subprocess.run(cmd, check=True)
+        logger.info("MongoDB-Backup wiederhergestellt")
+        
+    except Exception as e:
+        logger.error(f"Fehler bei MongoDB-Wiederherstellung: {str(e)}")
+        raise
+
+def restore_postgresql(backup_file):
+    """PostgreSQL-Backup wiederherstellen"""
+    try:
+        env = os.environ.copy()
+        env["PGPASSWORD"] = settings.POSTGRES_PASSWORD
+        
+        cmd = [
+            "psql",
+            "-h", settings.POSTGRES_HOST,
+            "-p", str(settings.POSTGRES_PORT),
+            "-U", settings.POSTGRES_USER,
+            "-d", settings.POSTGRES_DB,
+            "-f", backup_file
+        ]
+        
+        subprocess.run(cmd, env=env, check=True)
+        logger.info("PostgreSQL-Backup wiederhergestellt")
+        
+    except Exception as e:
+        logger.error(f"Fehler bei PostgreSQL-Wiederherstellung: {str(e)}")
+        raise
+
+def backup_all():
+    """Alle Datenbanken sichern"""
+    try:
+        backup_mongodb()
+        backup_postgresql()
+        logger.info("Alle Backups erfolgreich erstellt")
+        
+    except Exception as e:
+        logger.error(f"Fehler beim Backup: {str(e)}")
+        raise
+
+def restore_all(mongodb_backup, postgresql_backup):
+    """Alle Datenbanken wiederherstellen"""
+    try:
+        restore_mongodb(mongodb_backup)
+        restore_postgresql(postgresql_backup)
+        logger.info("Alle Backups erfolgreich wiederhergestellt")
+        
+    except Exception as e:
+        logger.error(f"Fehler bei der Wiederherstellung: {str(e)}")
+        raise
+
 async def main():
     """Hauptfunktion."""
     backup_manager = None
@@ -143,4 +257,18 @@ async def main():
             await backup_manager.close()
 
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    import argparse
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--action", choices=["backup", "restore"], required=True)
+    parser.add_argument("--mongodb-backup", help="MongoDB backup file for restore")
+    parser.add_argument("--postgresql-backup", help="PostgreSQL backup file for restore")
+    
+    args = parser.parse_args()
+    
+    if args.action == "backup":
+        backup_all()
+    else:
+        if not args.mongodb_backup or not args.postgresql_backup:
+            parser.error("Backup-Dateien müssen für Restore angegeben werden")
+        restore_all(args.mongodb_backup, args.postgresql_backup) 

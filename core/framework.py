@@ -8,9 +8,13 @@ Main framework class and orchestration logic.
 
 import asyncio
 import os
+import sys
 from datetime import datetime
 from typing import Dict, Any, Optional
 import logging
+
+# Add error_handling to Python path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from .config import Config
 from .apm_phases import APMPhases
@@ -60,7 +64,7 @@ class GENXAIS_Framework:
         
         try:
             from error_handling.framework import GENXAISErrorHandler
-            error_handler = GENXAISErrorHandler(self.config)
+            error_handler = GENXAISErrorHandler(self.config.get_config())
             logger.info("🛡️ Advanced error handling loaded")
             return error_handler
         except ImportError:

@@ -283,4 +283,60 @@ class TestAuthService:
             permissions = checker.get_user_permissions(user)
             
             # Benutzer sollte alle Berechtigungen beider Rollen haben
-            assert len(permissions) == 3 
+            assert len(permissions) == 3
+
+    def test_create_role_and_permission(self, test_client, mock_db):
+        """Test: Rolle und Berechtigung anlegen"""
+        # Rolle anlegen
+        response = test_client.post("/api/v1/auth/roles", json={"name": "Testrolle", "description": "Test"})
+        assert response.status_code == 200
+        role = response.json()
+        assert role["name"] == "Testrolle"
+        # Berechtigung anlegen
+        response = test_client.post("/api/v1/auth/permissions", json={"resource": "test", "action": "read"})
+        assert response.status_code == 200
+        perm = response.json()
+        assert perm["resource"] == "test"
+
+    def test_grant_temporary_permission(self, test_client, mock_db):
+        """Test: Temporäre Berechtigung vergeben und prüfen"""
+        # Temporäre Berechtigung anlegen
+        now = datetime.utcnow()
+        response = test_client.post("/api/v1/auth/temporary-permissions", json={
+            "user_id": 1,
+            "permission_id": 1,
+            "valid_from": now.isoformat(),
+            "valid_until": (now + timedelta(hours=1)).isoformat(),
+            "context": "{}",
+            "granted_by": 2
+        })
+        assert response.status_code == 200
+        temp_perm = response.json()
+        assert temp_perm["user_id"] == 1
+        assert temp_perm["permission_id"] == 1
+
+    def test_audit_log(self, test_client, mock_db):
+        """Test: Audit-Log abrufen"""
+        response = test_client.get("/api/v1/auth/audit-log")
+        assert response.status_code == 200
+        logs = response.json()
+        assert isinstance(logs, list)
+
+    def test_permission_check_with_multiple_roles_and_temp(self, test_client, mock_db):
+        """Test: Permission-Check mit mehreren Rollen und temporärer Berechtigung"""
+        # User mit zwei Rollen und einer temporären Berechtigung
+        with patch("backend.services.auth_service.get_user", return_value=TEST_USER), \
+             patch("backend.services.auth_service.get_role") as mock_get_role, \
+             patch("backend.services.auth_service.TemporaryPermission") as mock_temp_perm:
+            mock_get_role.side_effect = [TEST_ROLE_ADMIN, TEST_ROLE_USER]
+            mock_temp_perm.query.filter.return_value.all.return_value = [
+                Permission(resource="special", action="access", conditions=None, fields=None)
+            ]
+            token = create_access_token({"user_id": TEST_USER.id}).access_token
+            response = test_client.get(
+                "/api/v1/auth/check-permission",
+                params={"resource": "special", "action": "access"},
+                headers={"Authorization": f"Bearer {token}"}
+            )
+            assert response.status_code == 200
+            assert response.json() is True 

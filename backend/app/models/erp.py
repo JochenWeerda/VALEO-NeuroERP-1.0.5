@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Enum, Text, Boolean, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Enum, Text, Boolean, DateTime, Table
+from sqlalchemy.orm import relationship, backref
 import enum
 from backend.app.models.base import Base
 
@@ -20,6 +20,11 @@ class User(Base):
     # Beziehungen
     orders = relationship("Order", back_populates="user")
     customers = relationship("Customer", back_populates="sales_rep")
+    roles = relationship(
+        "Role",
+        secondary="user_role_association",
+        back_populates="users"
+    )
 
 class Customer(Base):
     id = Column(Integer, primary_key=True, index=True)
@@ -77,4 +82,79 @@ class Inventory(Base):
     last_restock_date = Column(DateTime)
     
     # Beziehungen
-    product = relationship("Product") 
+    product = relationship("Product")
+
+# Neue Tabellen für Rollen- und Berechtigungssystem
+
+# Assoziationstabelle User <-> Role
+UserRoleAssociation = Table(
+    "user_role_association",
+    Base.metadata,
+    Column("user_id", Integer, ForeignKey("user.id"), primary_key=True),
+    Column("role_id", Integer, ForeignKey("role.id"), primary_key=True)
+)
+
+# Assoziationstabelle Role <-> Permission
+RolePermissionAssociation = Table(
+    "role_permission_association",
+    Base.metadata,
+    Column("role_id", Integer, ForeignKey("role.id"), primary_key=True),
+    Column("permission_id", Integer, ForeignKey("permission.id"), primary_key=True)
+)
+
+class Role(Base):
+    __tablename__ = "role"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, nullable=False)
+    description = Column(String)
+    permissions = relationship(
+        "Permission",
+        secondary=RolePermissionAssociation,
+        back_populates="roles"
+    )
+    users = relationship(
+        "User",
+        secondary=UserRoleAssociation,
+        back_populates="roles"
+    )
+    created_at = Column(DateTime)
+    updated_at = Column(DateTime)
+
+class Permission(Base):
+    __tablename__ = "permission"
+    id = Column(Integer, primary_key=True, index=True)
+    resource = Column(String, nullable=False)
+    action = Column(String, nullable=False)
+    conditions = Column(Text)  # JSON-String für Bedingungen
+    fields = Column(Text)      # JSON-String für Feldlisten
+    roles = relationship(
+        "Role",
+        secondary=RolePermissionAssociation,
+        back_populates="permissions"
+    )
+
+class TemporaryPermission(Base):
+    __tablename__ = "temporary_permission"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    permission_id = Column(Integer, ForeignKey("permission.id"), nullable=False)
+    valid_from = Column(DateTime, nullable=False)
+    valid_until = Column(DateTime, nullable=False)
+    context = Column(Text)  # JSON-String für Kontextregeln
+    granted_by = Column(Integer, ForeignKey("user.id"))
+    user = relationship("User", foreign_keys=[user_id], backref=backref("temporary_permissions", lazy="dynamic"))
+    permission = relationship("Permission")
+    granter = relationship("User", foreign_keys=[granted_by])
+
+class PermissionAuditLog(Base):
+    __tablename__ = "permission_audit_log"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    action = Column(String, nullable=False)  # z.B. 'grant', 'revoke', 'update'
+    permission_id = Column(Integer, ForeignKey("permission.id"))
+    role_id = Column(Integer, ForeignKey("role.id"))
+    timestamp = Column(DateTime, nullable=False)
+    context = Column(Text)  # JSON-String für Kontext/Begründung
+    user = relationship("User")
+    permission = relationship("Permission")
+    role = relationship("Role") 

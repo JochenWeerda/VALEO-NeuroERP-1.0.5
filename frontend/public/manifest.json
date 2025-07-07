@@ -1,25 +1,74 @@
 {
-  "short_name": "Folkerts ERP",
-  "name": "Folkerts Landhandel ERP-System",
+  "short_name": "VALERO-ERP",
+  "name": "VALERO-NeuroERP",
+  "description": "Intelligentes ERP-System mit KI-Integration",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64",
       "type": "image/x-icon"
     },
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#4a7c59",
-  "background_color": "#f5f5f5"
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "orientation": "any",
+  "categories": ["business", "finance", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Neue Transaktion",
+      "short_name": "Neu",
+      "description": "Neue Transaktion erstellen",
+      "url": "/transactions/new",
+      "icons": [
+        {
+          "src": "shortcuts/new.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Zum Dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "shortcuts/dashboard.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Dashboard des VALERO-NeuroERP Systems"
+    },
+    {
+      "src": "screenshots/transactions.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Transaktionsübersicht"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
 } 

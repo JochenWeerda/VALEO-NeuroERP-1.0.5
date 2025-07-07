@@ -1,0 +1,136 @@
+{
+    "mode": "IMPLEMENTATION",
+    "version": "1.0.0",
+    "description": "Test Rules für den IMPLEMENTATION Mode",
+    "test_rules": {
+        "unit_tests": {
+            "required": true,
+            "framework": {
+                "python": "pytest",
+                "typescript": "jest"
+            },
+            "coverage": {
+                "min_total": 80,
+                "min_per_file": 70,
+                "exclude_patterns": [
+                    "**/__init__.py",
+                    "**/migrations/*",
+                    "**/tests/*"
+                ]
+            },
+            "naming": {
+                "files": "test_*.py",
+                "classes": "Test*",
+                "functions": "test_*"
+            }
+        },
+        "integration_tests": {
+            "required": true,
+            "framework": {
+                "api": "pytest-asyncio",
+                "e2e": "cypress"
+            },
+            "coverage": {
+                "min_total": 70,
+                "focus_areas": [
+                    "api_endpoints",
+                    "database_operations",
+                    "external_services"
+                ]
+            },
+            "environment": {
+                "type": "containerized",
+                "cleanup": true
+            }
+        },
+        "performance_tests": {
+            "required": true,
+            "tools": {
+                "load_testing": "locust",
+                "stress_testing": "k6",
+                "profiling": "cProfile"
+            },
+            "metrics": {
+                "response_time": {
+                    "p95_ms": 200,
+                    "p99_ms": 500
+                },
+                "throughput": {
+                    "min_rps": 100
+                },
+                "resource_usage": {
+                    "max_cpu_percent": 80,
+                    "max_memory_mb": 1024
+                }
+            }
+        },
+        "security_tests": {
+            "required": true,
+            "tools": {
+                "sast": "bandit",
+                "dast": "zap",
+                "dependency_check": "safety"
+            },
+            "checks": [
+                "sql_injection",
+                "xss",
+                "csrf",
+                "auth_bypass"
+            ]
+        }
+    },
+    "test_environments": {
+        "local": {
+            "required": true,
+            "setup": [
+                "virtualenv",
+                "dependencies",
+                "database"
+            ]
+        },
+        "ci": {
+            "required": true,
+            "setup": [
+                "docker",
+                "docker-compose",
+                "test-database"
+            ]
+        },
+        "staging": {
+            "required": false,
+            "setup": [
+                "kubernetes",
+                "monitoring",
+                "test-data"
+            ]
+        }
+    },
+    "test_data": {
+        "factories": {
+            "required": true,
+            "framework": "factory_boy"
+        },
+        "fixtures": {
+            "required": true,
+            "format": "json"
+        },
+        "mocking": {
+            "required": true,
+            "framework": "pytest-mock"
+        }
+    },
+    "test_reporting": {
+        "required": true,
+        "formats": [
+            "junit",
+            "html",
+            "coverage-xml"
+        ],
+        "notifications": {
+            "on_failure": [
+                "email",
+                "slack"
+            ]
+        }
+    }
+} 
