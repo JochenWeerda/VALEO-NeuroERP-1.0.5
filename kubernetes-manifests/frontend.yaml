@@ -96,7 +96,7 @@ spec:
     name: http
   type: ClusterIP
 ---
-# Ingress
+# Ingress für lokale Desktop-Nutzung
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -104,10 +104,11 @@ metadata:
   namespace: erp-system
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # Für lokale Nutzung: hosts-Datei anpassen -> 127.0.0.1 neuroerp.local
 spec:
   rules:
-  - host: erp.example.com
+  - host: neuroerp.local
     http:
       paths:
       - path: /
@@ -117,7 +118,8 @@ spec:
             name: frontend
             port:
               number: 80
-  tls:
-  - hosts:
-    - erp.example.com
-    secretName: erp-tls-secret 
+  # TLS für lokale Nutzung auskommentiert
+  # tls:
+  # - hosts:
+  #   - neuroerp.local
+  #   secretName: erp-tls-secret 

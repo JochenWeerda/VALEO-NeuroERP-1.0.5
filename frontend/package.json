@@ -17,7 +17,7 @@
         "eject": "react-scripts eject"
     },
     "dependencies": {
-        "@ant-design/charts": "^1.4.2",
+        "@ant-design/charts": "^2.6.0",
         "@ant-design/icons": "^5.0.1",
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",

@@ -15,12 +15,6 @@ from pydantic import BaseModel
 import uvicorn
 import json
 from datetime import datetime, timedelta
-from backend.middleware.security import (
-    SecurityMiddleware,
-    RateLimitMiddleware,
-    CORSMiddleware as CustomCORSMiddleware
-)
-from backend.core.config import settings
 
 # Komponenten importieren
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -31,6 +25,8 @@ from components.InventoryManagementComponent import InventoryManagementComponent
 from components.DocumentManagementComponent import DocumentManagementComponent
 from components.DataAnalysisComponent import DataAnalysisComponent
 from components.NotificationComponent import NotificationComponent
+from middleware.security import SecurityMiddleware, RateLimitMiddleware, CORSMiddleware as CustomCORSMiddleware
+from core.config import settings
 
 # Logger konfigurieren
 logging.basicConfig(
@@ -286,4 +282,4 @@ if __name__ == "__main__":
     os.makedirs("logs", exist_ok=True)
     
     # Server starten
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

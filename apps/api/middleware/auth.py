@@ -1,11 +1,27 @@
 from typing import Optional, Callable
-from fastapi import Request, Response
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.middleware.base import BaseHTTPMiddleware
 from jose import jwt, JWTError
 from core.config import settings
 
 security = HTTPBearer()
+
+async def get_current_user(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        payload = jwt.decode(
+            credentials.credentials,
+            settings.JWT_SECRET,
+            algorithms=[settings.JWT_ALGORITHM]
+        )
+        request.state.user = payload
+        return payload
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Ungültiger Token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: Callable) -> Response:

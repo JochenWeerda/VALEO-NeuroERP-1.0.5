@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from core.models.document import Document, DocumentCreate, DocumentUpdate
 from core.models.user import User
 from core.services.document_service import DocumentService
-from middleware.auth import get_current_user
+from apps.api.middleware.auth import get_current_user
 
 router = APIRouter()
 

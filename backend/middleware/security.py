@@ -7,6 +7,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from typing import Callable
 import secrets
+import time
 
 class SecurityMiddleware(BaseHTTPMiddleware):
     """Security Middleware Implementation"""

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from core.models.workflow import Workflow, WorkflowCreate, WorkflowUpdate
 from core.models.user import User
 from core.services.workflow_service import WorkflowService
-from middleware.auth import get_current_user
+from apps.api.middleware.auth import get_current_user
 
 router = APIRouter()
 

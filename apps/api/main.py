@@ -4,12 +4,12 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from prometheus_client import make_asgi_app
 
 # Import routes
-from routes import auth, users, documents, workflows, transactions
+from apps.api.routes import auth, users, documents, workflows, transactions
 
 # Import middleware
-from middleware.logging import LoggingMiddleware
-from middleware.auth import AuthMiddleware
-from middleware.metrics import MetricsMiddleware
+from apps.api.middleware.logging import LoggingMiddleware
+from apps.api.middleware.auth import AuthMiddleware
+from apps.api.middleware.metrics import MetricsMiddleware
 
 # Create FastAPI app
 app = FastAPI(

@@ -5,7 +5,7 @@ from core.models.transaction import Transaction, TransactionCreate, TransactionU
 from core.models.user import User
 from core.services.transaction_service import TransactionService
 from core.db.postgresql import get_db
-from middleware.auth import get_current_user
+from apps.api.middleware.auth import get_current_user
 
 router = APIRouter()
 
