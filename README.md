@@ -44,6 +44,22 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
+## Wichtiger Hinweis zu PyTorch (torch) und GPU-Unterstützung
+
+Das Paket `torch` (PyTorch) wird standardmäßig als CPU-Version installiert. Für die meisten Entwicklungs- und Backend-Zwecke ist dies ausreichend und sorgt für einen stabilen Build – auch in Docker-Containern und auf Windows/WSL2.
+
+**Falls GPU-Unterstützung benötigt wird:**
+- Die Installation der GPU-Version von torch erfordert passende CUDA-Treiber und ein spezielles CUDA-Basis-Image im Dockerfile (z.B. `FROM nvidia/cuda:12.1.0-base`).
+- Die Installation erfolgt dann z.B. mit `pip install torch==2.1.0+cu121` (je nach CUDA-Version).
+- In Docker Desktop für Windows/WSL2 muss die GPU-Unterstützung explizit aktiviert und aktuelle NVIDIA-Treiber installiert sein.
+
+**Empfehlung:**
+- Für einen fehlerfreien Build im lokalen Kubernetes-Cluster und für Demos wird torch ohne CUDA installiert. Das System läuft dann auf CPU.
+- GPU-Support kann bei Bedarf gezielt nachgerüstet werden.
+
+Weitere Informationen: https://pytorch.org/get-started/locally/
+
+
 4. Umgebungsvariablen konfigurieren:
 ```bash
 cp .env.example .env

@@ -4,7 +4,7 @@ Task-Module für das VALEO-NeuroERP-System.
 Dieses Paket enthält alle asynchronen Tasks für die Hintergrundverarbeitung.
 """
 
-from backend.tasks.celery_app import app
+from backend.tasks.celery_app import celery_app as app
 from backend.tasks.data_import_tasks import *
 from backend.tasks.report_tasks import *
 from backend.tasks.email_tasks import *

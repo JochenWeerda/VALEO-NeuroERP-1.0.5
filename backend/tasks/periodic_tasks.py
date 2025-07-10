@@ -22,6 +22,7 @@ from django.db.models import Q
 
 from backend.services.task_queue import ensure_tasks_executed, update_task_progress, retry_task_with_exponential_backoff
 from backend.models.async_task import AsyncTask, PeriodicTask
+from backend.celery_app import app
 
 logger = logging.getLogger(__name__)
 

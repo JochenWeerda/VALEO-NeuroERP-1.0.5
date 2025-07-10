@@ -2,6 +2,7 @@ from typing import Optional, Callable
 from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 from jose import jwt, JWTError
 from core.config import settings
 
