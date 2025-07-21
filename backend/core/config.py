@@ -4,18 +4,19 @@ Konfigurationseinstellungen für das VALEO-NeuroERP-System.
 
 import secrets
 from typing import List, Optional, Dict, Any
-from pydantic import BaseSettings, PostgresDsn, validator
-from pydantic_settings import BaseSettings as PydanticSettings
+from pydantic import PostgresDsn, validator
+from pydantic_settings import BaseSettings
 from pathlib import Path
 from functools import lru_cache
 import os
 import json
 
-class Settings(PydanticSettings):
+class Settings(BaseSettings):
     """Zentrale Systemkonfiguration."""
     
     # Allgemeine Einstellungen
     PROJECT_NAME: str = "VALEO-NeuroERP"
+    PROJECT_DESCRIPTION: str = "Intelligentes ERP-System mit KI-Integration"
     VERSION: str = "1.0.1"
     DEBUG: bool = False
     
@@ -50,7 +51,20 @@ class Settings(PydanticSettings):
     
     # Performance
     RATE_LIMIT: int = 100  # Anfragen pro Minute
+    RATE_LIMIT_WINDOW: int = 60  # Sekunden
     TIMEOUT: int = 60  # Sekunden
+    
+    # CORS Einstellungen
+    CORS_ORIGINS: List[str] = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
+    ]
+    CORS_METHODS: List[str] = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    CORS_HEADERS: List[str] = ["*"]
+    CORS_EXPOSE_HEADERS: List[str] = ["Content-Length", "Content-Type"]
+    CORS_MAX_AGE: int = 86400
     
     # Feature Flags
     FEATURE_FLAGS_FILE: Path = Path("config/feature_flags.json")
@@ -98,16 +112,17 @@ class Settings(PydanticSettings):
         """Gibt die Datenbank-Konfiguration zurück."""
         return {
             "url": self.DATABASE_URL,
-            "connect_args": {"check_same_thread": False}
-            if self.DATABASE_URL.startswith("sqlite")
-            else {}
+            "pool_size": 10,
+            "max_overflow": 20,
+            "pool_timeout": 30,
+            "pool_recycle": 3600
         }
 
     def get_mongodb_config(self) -> Dict[str, str]:
         """Gibt die MongoDB-Konfiguration zurück."""
         return {
             "uri": self.MONGODB_URI,
-            "db": self.MONGODB_DB
+            "database": self.MONGODB_DB
         }
 
     def get_logging_config(self) -> Dict[str, Any]:
@@ -128,22 +143,22 @@ class Settings(PydanticSettings):
                 },
                 "file": {
                     "class": "logging.handlers.RotatingFileHandler",
-                    "formatter": "default",
-                    "filename": str(self.LOG_DIR / "app.log"),
+                    "filename": self.LOG_DIR / "app.log",
                     "maxBytes": self.MAX_LOG_SIZE,
-                    "backupCount": self.LOG_BACKUP_COUNT
+                    "backupCount": self.LOG_BACKUP_COUNT,
+                    "formatter": "default",
+                    "level": self.LOG_LEVEL
                 }
             },
             "root": {
-                "level": self.LOG_LEVEL,
-                "handlers": ["console", "file"]
+                "handlers": ["console", "file"],
+                "level": self.LOG_LEVEL
             }
         }
 
 @lru_cache()
 def get_settings() -> Settings:
-    """Gibt eine gecachte Instanz der Einstellungen zurück."""
+    """Gibt die Systemeinstellungen zurück."""
     return Settings()
 
-# Globale Einstellungen
 settings = get_settings() 

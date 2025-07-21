@@ -1,0 +1,862 @@
+# VALEO NeuroERP Frontend Development Rules
+# Cursor AI Configuration für React/TypeScript/UI-Frameworks
+
+## 🎯 Projekt-Übersicht
+Dies ist das Frontend für VALEO NeuroERP - ein intelligentes ERP-System mit KI-Integration.
+Tech-Stack: React 18, TypeScript, Material-UI, Ant Design, Tailwind CSS, Zustand, React Query
+
+## 📁 Projektstruktur
+```
+frontend/
+├── src/
+│   ├── components/     # Wiederverwendbare UI-Komponenten
+│   ├── pages/         # Seiten-Komponenten
+│   ├── layouts/       # Layout-Komponenten
+│   ├── hooks/         # Custom React Hooks
+│   ├── services/      # API-Services
+│   ├── store/         # Zustand Store
+│   ├── types/         # TypeScript Typen
+│   ├── utils/         # Utility-Funktionen
+│   ├── themes/        # Theme-Konfiguration
+│   └── styles/        # CSS/SCSS Dateien
+```
+
+## 🎨 UI-Framework Regeln
+
+### Material-UI (MUI) Komponenten
+- Verwende MUI v5 Komponenten für komplexe UI-Elemente
+- Nutze `@mui/material` für Buttons, Cards, Dialogs, etc.
+- Verwende `@mui/icons-material` für Icons
+- Implementiere Theme-Provider für konsistente Farben
+- Beispiel:
+```tsx
+import { Button, Card, Typography } from '@mui/material';
+import { Add as AddIcon } from '@mui/icons-material';
+
+const MyComponent = () => (
+  <Card sx={{ p: 2 }}>
+    <Typography variant="h6">Titel</Typography>
+    <Button variant="contained" startIcon={<AddIcon />}>
+      Hinzufügen
+    </Button>
+  </Card>
+);
+```
+
+### Ant Design Komponenten
+- Verwende Ant Design für Tabellen, Formulare, Navigation
+- Nutze `antd` für DataGrid, Form, Menu, etc.
+- Implementiere deutsche Lokalisierung
+- Beispiel:
+```tsx
+import { Table, Form, Input, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
+const MyForm = () => (
+  <Form layout="vertical">
+    <Form.Item label="Name" name="name">
+      <Input />
+    </Form.Item>
+    <Button type="primary" icon={<PlusOutlined />}>
+      Speichern
+    </Button>
+  </Form>
+);
+```
+
+### Tailwind CSS Utility-Klassen
+- Verwende Tailwind für Layout, Spacing, Responsive Design
+- Kombiniere mit MUI/Ant Design für beste Ergebnisse
+- Nutze deutsche Klassennamen-Konventionen
+- Beispiel:
+```tsx
+<div className="flex flex-col space-y-4 p-6 bg-white rounded-lg shadow-md">
+  <h2 className="text-xl font-semibold text-gray-800">Titel</h2>
+  <p className="text-gray-600">Beschreibung</p>
+</div>
+```
+
+## 🔧 TypeScript Regeln
+
+### Typen-Definitionen
+- Erstelle immer TypeScript Interfaces für Props
+- Verwende Union Types für Status/Enums
+- Nutze Generic Types für wiederverwendbare Komponenten
+- Beispiel:
+```tsx
+interface UserCardProps {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: 'admin' | 'user' | 'manager';
+  };
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
+}
+
+const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
+  // Implementation
+};
+```
+
+### Custom Hooks
+- Erstelle TypeScript-Hooks für wiederverwendbare Logik
+- Verwende Generic Types für flexible Hooks
+- Beispiel:
+```tsx
+import { useState, useEffect } from 'react';
+
+interface UseApiData<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
+}
+
+export const useApiData = <T>(url: string): UseApiData<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(url);
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unbekannter Fehler');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error, refetch: fetchData };
+};
+```
+
+## 🎯 Komponenten-Entwicklung
+
+### Komponenten-Struktur
+- Verwende Functional Components mit Hooks
+- Implementiere Props-Validierung mit TypeScript
+- Erstelle wiederverwendbare Komponenten
+- Beispiel:
+```tsx
+import React from 'react';
+import { Card, Typography, Button } from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+
+interface DataCardProps {
+  title: string;
+  description: string;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  children?: React.ReactNode;
+}
+
+export const DataCard: React.FC<DataCardProps> = ({
+  title,
+  description,
+  onEdit,
+  onDelete,
+  children
+}) => {
+  return (
+    <Card className="p-4 hover:shadow-lg transition-shadow">
+      <div className="flex justify-between items-start mb-3">
+        <div>
+          <Typography variant="h6" className="text-gray-800">
+            {title}
+          </Typography>
+          <Typography variant="body2" className="text-gray-600">
+            {description}
+          </Typography>
+        </div>
+        <div className="flex space-x-2">
+          {onEdit && (
+            <Button
+              size="small"
+              startIcon={<EditIcon />}
+              onClick={onEdit}
+              variant="outlined"
+            >
+              Bearbeiten
+            </Button>
+          )}
+          {onDelete && (
+            <Button
+              size="small"
+              startIcon={<DeleteIcon />}
+              onClick={onDelete}
+              variant="outlined"
+              color="error"
+            >
+              Löschen
+            </Button>
+          )}
+        </div>
+      </div>
+      {children}
+    </Card>
+  );
+};
+```
+
+### Formulare
+- Verwende React Hook Form für Formulare
+- Implementiere Yup/Zod Validierung
+- Nutze MUI/Ant Design Form-Komponenten
+- Beispiel:
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { TextField, Button, Alert } from '@mui/material';
+
+const schema = yup.object({
+  name: yup.string().required('Name ist erforderlich'),
+  email: yup.string().email('Ungültige E-Mail').required('E-Mail ist erforderlich'),
+  phone: yup.string().matches(/^[0-9+\-\s()]+$/, 'Ungültige Telefonnummer')
+});
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export const ContactForm: React.FC = () => {
+  const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: yupResolver(schema)
+  });
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Controller
+        name="name"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Name"
+            fullWidth
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
+        )}
+      />
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="E-Mail"
+            type="email"
+            fullWidth
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          />
+        )}
+      />
+      <Button type="submit" variant="contained" fullWidth>
+        Speichern
+      </Button>
+    </form>
+  );
+};
+```
+
+## 📊 Daten-Management
+
+### Zustand Store
+- Verwende Zustand für globalen State
+- Erstelle TypeScript-Interfaces für Store
+- Implementiere Actions und Selectors
+- Beispiel:
+```tsx
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+interface UserStore {
+  users: User[];
+  loading: boolean;
+  error: string | null;
+  fetchUsers: () => Promise<void>;
+  addUser: (user: Omit<User, 'id'>) => Promise<void>;
+  updateUser: (id: string, user: Partial<User>) => Promise<void>;
+  deleteUser: (id: string) => Promise<void>;
+}
+
+export const useUserStore = create<UserStore>()(
+  devtools(
+    (set, get) => ({
+      users: [],
+      loading: false,
+      error: null,
+      
+      fetchUsers: async () => {
+        set({ loading: true, error: null });
+        try {
+          const response = await fetch('/api/users');
+          const users = await response.json();
+          set({ users, loading: false });
+        } catch (error) {
+          set({ error: 'Fehler beim Laden der Benutzer', loading: false });
+        }
+      },
+      
+      addUser: async (userData) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+          });
+          const newUser = await response.json();
+          set(state => ({ 
+            users: [...state.users, newUser], 
+            loading: false 
+          }));
+        } catch (error) {
+          set({ error: 'Fehler beim Erstellen des Benutzers', loading: false });
+        }
+      },
+      
+      updateUser: async (id, userData) => {
+        set({ loading: true, error: null });
+        try {
+          const response = await fetch(`/api/users/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+          });
+          const updatedUser = await response.json();
+          set(state => ({
+            users: state.users.map(user => 
+              user.id === id ? updatedUser : user
+            ),
+            loading: false
+          }));
+        } catch (error) {
+          set({ error: 'Fehler beim Aktualisieren des Benutzers', loading: false });
+        }
+      },
+      
+      deleteUser: async (id) => {
+        set({ loading: true, error: null });
+        try {
+          await fetch(`/api/users/${id}`, { method: 'DELETE' });
+          set(state => ({
+            users: state.users.filter(user => user.id !== id),
+            loading: false
+          }));
+        } catch (error) {
+          set({ error: 'Fehler beim Löschen des Benutzers', loading: false });
+        }
+      }
+    }),
+    { name: 'user-store' }
+  )
+);
+```
+
+### React Query
+- Verwende React Query für Server-State
+- Implementiere Caching und Optimistic Updates
+- Nutze TypeScript für Query-Funktionen
+- Beispiel:
+```tsx
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { api } from '../services/api';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+// Query Hook
+export const useUsers = () => {
+  return useQuery<User[], Error>('users', () => 
+    api.get('/users').then(res => res.data)
+  );
+};
+
+// Mutation Hook
+export const useCreateUser = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation<User, Error, Omit<User, 'id'>>(
+    (userData) => api.post('/users', userData).then(res => res.data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('users');
+      }
+    }
+  );
+};
+
+// Verwendung in Komponente
+export const UserList: React.FC = () => {
+  const { data: users, isLoading, error } = useUsers();
+  const createUserMutation = useCreateUser();
+
+  if (isLoading) return <div>Lade...</div>;
+  if (error) return <div>Fehler: {error.message}</div>;
+
+  return (
+    <div>
+      {users?.map(user => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+    </div>
+  );
+};
+```
+
+## 🎨 Styling und Theming
+
+### Material-UI Theme
+- Erstelle ein konsistentes Theme
+- Verwende deutsche Farbnamen
+- Implementiere Dark/Light Mode
+- Beispiel:
+```tsx
+import { createTheme } from '@mui/material/styles';
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+      light: '#42a5f5',
+      dark: '#1565c0'
+    },
+    secondary: {
+      main: '#dc004e',
+      light: '#ff5983',
+      dark: '#9a0036'
+    },
+    background: {
+      default: '#f5f5f5',
+      paper: '#ffffff'
+    }
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 500
+    },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 500
+    },
+    h6: {
+      fontSize: '1.25rem',
+      fontWeight: 500
+    }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: 8
+        }
+      }
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        }
+      }
+    }
+  }
+});
+```
+
+### Tailwind CSS Konfiguration
+- Erweitere Tailwind mit Projekt-spezifischen Klassen
+- Verwende deutsche Klassennamen
+- Beispiel:
+```tsx
+// tailwind.config.js
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          900: '#1e3a8a'
+        },
+        secondary: {
+          50: '#fdf2f8',
+          500: '#ec4899',
+          900: '#831843'
+        }
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem'
+      },
+      borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.5rem'
+      }
+    }
+  },
+  plugins: []
+};
+```
+
+## 🧪 Testing
+
+### Komponenten-Tests
+- Verwende React Testing Library
+- Schreibe Tests für Benutzer-Interaktionen
+- Teste Accessibility
+- Beispiel:
+```tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../theme';
+import { UserCard } from './UserCard';
+
+const mockUser = {
+  id: '1',
+  name: 'Max Mustermann',
+  email: 'max@example.com',
+  role: 'user' as const
+};
+
+const renderWithTheme = (component: React.ReactElement) => {
+  return render(
+    <ThemeProvider theme={theme}>
+      {component}
+    </ThemeProvider>
+  );
+};
+
+describe('UserCard', () => {
+  it('rendert Benutzerinformationen korrekt', () => {
+    renderWithTheme(<UserCard user={mockUser} />);
+    
+    expect(screen.getByText('Max Mustermann')).toBeInTheDocument();
+    expect(screen.getByText('max@example.com')).toBeInTheDocument();
+  });
+
+  it('ruft onEdit auf, wenn Bearbeiten-Button geklickt wird', () => {
+    const onEdit = jest.fn();
+    renderWithTheme(<UserCard user={mockUser} onEdit={onEdit} />);
+    
+    fireEvent.click(screen.getByText('Bearbeiten'));
+    expect(onEdit).toHaveBeenCalledWith('1');
+  });
+});
+```
+
+## 📱 Responsive Design
+
+### Mobile-First Ansatz
+- Verwende Tailwind Responsive-Klassen
+- Implementiere Mobile-Navigation
+- Teste auf verschiedenen Bildschirmgrößen
+- Beispiel:
+```tsx
+const ResponsiveLayout: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <h1 className="text-xl font-semibold text-gray-900">
+              VALEO NeuroERP
+            </h1>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              <a href="/dashboard" className="text-gray-700 hover:text-gray-900">
+                Dashboard
+              </a>
+              <a href="/users" className="text-gray-700 hover:text-gray-900">
+                Benutzer
+              </a>
+            </nav>
+            
+            {/* Mobile Menu Button */}
+            <button className="md:hidden p-2 rounded-md text-gray-700">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Content Cards */}
+        </div>
+      </main>
+    </div>
+  );
+};
+```
+
+## 🔒 Sicherheit und Best Practices
+
+### Input-Validierung
+- Validiere alle Benutzer-Eingaben
+- Verwende TypeScript für Type Safety
+- Implementiere XSS-Schutz
+- Beispiel:
+```tsx
+import { z } from 'zod';
+
+const userSchema = z.object({
+  name: z.string().min(2, 'Name muss mindestens 2 Zeichen lang sein'),
+  email: z.string().email('Ungültige E-Mail-Adresse'),
+  age: z.number().min(18, 'Mindestalter ist 18 Jahre')
+});
+
+type UserInput = z.infer<typeof userSchema>;
+
+const validateUserInput = (input: unknown): UserInput => {
+  return userSchema.parse(input);
+};
+```
+
+### Error Boundaries
+- Implementiere Error Boundaries für React-Komponenten
+- Behandle Fehler gracefully
+- Logge Fehler für Debugging
+- Beispiel:
+```tsx
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Alert, Button } from '@mui/material';
+
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}
+
+export class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error Boundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-4">
+          <Alert severity="error" className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">
+              Ein Fehler ist aufgetreten
+            </h2>
+            <p className="mb-4">
+              Entschuldigung, etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.
+            </p>
+            <Button
+              variant="contained"
+              onClick={() => window.location.reload()}
+            >
+              Seite neu laden
+            </Button>
+          </Alert>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+## 🚀 Performance-Optimierung
+
+### Code-Splitting
+- Verwende React.lazy für Code-Splitting
+- Implementiere Suspense für Loading-States
+- Beispiel:
+```tsx
+import React, { Suspense, lazy } from 'react';
+import { CircularProgress } from '@mui/material';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const UserManagement = lazy(() => import('./pages/UserManagement'));
+
+const LoadingSpinner = () => (
+  <div className="flex justify-center items-center h-64">
+    <CircularProgress />
+  </div>
+);
+
+export const AppRouter: React.FC = () => {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/users" element={<UserManagement />} />
+      </Routes>
+    </Suspense>
+  );
+};
+```
+
+### Memoization
+- Verwende React.memo für teure Komponenten
+- Nutze useMemo und useCallback für Optimierung
+- Beispiel:
+```tsx
+import React, { useMemo, useCallback } from 'react';
+
+interface ExpensiveComponentProps {
+  data: number[];
+  onItemClick: (index: number) => void;
+}
+
+export const ExpensiveComponent = React.memo<ExpensiveComponentProps>(
+  ({ data, onItemClick }) => {
+    const processedData = useMemo(() => {
+      return data.map(item => item * 2).filter(item => item > 10);
+    }, [data]);
+
+    const handleClick = useCallback((index: number) => {
+      onItemClick(index);
+    }, [onItemClick]);
+
+    return (
+      <div>
+        {processedData.map((item, index) => (
+          <button
+            key={index}
+            onClick={() => handleClick(index)}
+            className="p-2 m-1 bg-blue-500 text-white rounded"
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+    );
+  }
+);
+```
+
+## 📝 Code-Qualität
+
+### ESLint Regeln
+- Verwende TypeScript-spezifische ESLint-Regeln
+- Implementiere Prettier für Code-Formatierung
+- Beispiel:
+```json
+{
+  "extends": [
+    "@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off"
+  }
+}
+```
+
+### Prettier Konfiguration
+```json
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false
+}
+```
+
+## 🎯 KI-Assistenz Regeln
+
+### Komponenten-Generierung
+Wenn du neue Komponenten erstellst:
+1. Verwende immer TypeScript mit Props-Interface
+2. Implementiere deutsche Texte und Labels
+3. Nutze Material-UI oder Ant Design Komponenten
+4. Füge Tailwind CSS für Layout hinzu
+5. Erstelle wiederverwendbare Komponenten
+6. Implementiere Error-Handling
+7. Füge Loading-States hinzu
+8. Teste Responsive-Design
+
+### Code-Review Checkliste
+- [ ] TypeScript-Typen definiert
+- [ ] Props-Interface erstellt
+- [ ] Deutsche Texte verwendet
+- [ ] Responsive Design implementiert
+- [ ] Error-Handling vorhanden
+- [ ] Loading-States definiert
+- [ ] Accessibility berücksichtigt
+- [ ] Performance optimiert
+- [ ] Tests geschrieben
+
+## 🔄 Workflow
+
+### Neue Komponente erstellen
+1. Erstelle TypeScript-Interface für Props
+2. Implementiere Functional Component
+3. Verwende MUI/Ant Design Komponenten
+4. Füge Tailwind CSS für Styling hinzu
+5. Implementiere Error Boundaries
+6. Schreibe Unit Tests
+7. Dokumentiere Komponente
+
+### Best Practices
+- Verwende immer TypeScript
+- Implementiere deutsche Lokalisierung
+- Nutze konsistente Namenskonventionen
+- Erstelle wiederverwendbare Komponenten
+- Teste auf verschiedenen Bildschirmgrößen
+- Implementiere Accessibility-Features
+- Optimiere Performance
+- Dokumentiere Code
+
+Diese Regeln stellen sicher, dass alle generierten Komponenten konsistent, wartbar und benutzerfreundlich sind. 

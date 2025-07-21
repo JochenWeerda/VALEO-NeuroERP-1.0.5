@@ -9,51 +9,65 @@ alerting:
           - alertmanager:9093
 
 rule_files:
-  - "rules/*.yml"
+  # - "first_rules.yml"
+  # - "second_rules.yml"
 
 scrape_configs:
-  # Load Balancer Nginx
-  - job_name: 'nginx'
+  # Prometheus selbst
+  - job_name: 'prometheus'
     static_configs:
-      - targets: ['nginx:9113']
-    metrics_path: /metrics
-    
-  # Backend Server
+      - targets: ['localhost:9090']
+
+  # Backend API
   - job_name: 'backend'
     static_configs:
-      - targets:
-        - 'backend1:8000'
-        - 'backend2:8000'
-        - 'backend3:8000'
-    metrics_path: /metrics
-    
-  # Frontend Server
-  - job_name: 'frontend'
+      - targets: ['backend:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Middleware
+  - job_name: 'middleware'
     static_configs:
-      - targets:
-        - 'frontend1:3000'
-        - 'frontend2:3000'
-    metrics_path: /metrics
-    
+      - targets: ['middleware:5000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Nginx (falls nginx-exporter verwendet wird)
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+    scrape_interval: 15s
+
   # PostgreSQL
-  - job_name: 'postgresql'
+  - job_name: 'postgres'
     static_configs:
-      - targets:
-        - 'postgres-master:9187'
-        - 'postgres-replica:9187'
-    metrics_path: /metrics
-    
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 15s
+
   # Redis
   - job_name: 'redis'
     static_configs:
-      - targets:
-        - 'redis-master:9121'
-        - 'redis-replica:9121'
-    metrics_path: /metrics
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 15s
 
-  # Node Exporter für Host-Metriken
+  # Node Exporter (System Metrics)
   - job_name: 'node'
     static_configs:
-      - targets:
-        - 'node-exporter:9100'
-    metrics_path: /metrics 
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+
+  # Docker Container Metrics
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 15s
+
+  # Health Checks
+  - job_name: 'health-checks'
+    static_configs:
+      - targets: ['backend:8000', 'middleware:5000', 'frontend:80']
+    metrics_path: '/health'
+    scrape_interval: 30s
+    scrape_timeout: 10s 

@@ -268,8 +268,8 @@ async def mark_notification_read(notification_id: str, current_user: User = Depe
     return {"status": "success"}
 
 # API Router importieren und einbinden
-from backend.api.v1.api import api_router
-app.include_router(api_router, prefix=settings.API_V1_STR)
+# from backend.api.v1.api import api_router
+# app.include_router(api_router, prefix=settings.API_V1_STR)
 
 # Health Check
 @app.get("/health")
@@ -282,4 +282,4 @@ if __name__ == "__main__":
     os.makedirs("logs", exist_ok=True)
     
     # Server starten
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

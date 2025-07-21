@@ -1,0 +1,324 @@
+# VALEO NeuroERP Frontend Development Rules
+# Agentenbasierte React/TypeScript/UI-Frameworks
+
+## 🎯 Projekt-Übersicht
+VALEO NeuroERP - Ein intelligentes, agentenbasiertes ERP-System mit LangGraph-Integration.
+Tech-Stack: React 18, TypeScript, Tailwind CSS, Agent-API, LangGraph
+
+## 📁 Projektstruktur
+```
+frontend/
+├── src/
+│   ├── components/     # UI-Bausteine (AgentSuggestion, AgentProcessingOverlay)
+│   ├── features/       # ERP-Module: crm/, fibu/, lager/, bi/
+│   ├── pages/          # Hauptseiten (Dashboard)
+│   ├── lib/            # Schemas, Agent-API, Utils
+│   ├── styles/         # Tailwind-Setup, globale Styles
+│   └── .cursorrules    # Diese Datei
+```
+
+## 🧠 Agentenbasierte Architektur
+
+### Agent-Module
+- **CRM Agent**: Lead-Analyse, Kundenbewertung, Upselling-Empfehlungen
+- **FIBu Agent**: Rechnungsanalyse, Transaktionskategorisierung, Anomalie-Erkennung
+- **Lager Agent**: Bestandsoptimierung, Nachbestellungsempfehlungen, Stockout-Vorhersage
+- **BI Agent**: Insights-Generierung, Visualisierungsempfehlungen, Trend-Vorhersage
+
+### Agent-Interaktionen
+```tsx
+// Agent-API verwenden
+import { mockAgentAPI } from '../lib/agent-api';
+
+const response = await mockAgentAPI.analyzeCustomer(customerData);
+if (response.suggestions) {
+  setSuggestions(response.suggestions);
+}
+```
+
+### Agent-Komponenten
+```tsx
+// AgentSuggestion für Empfehlungen
+<AgentSuggestionComponent
+  suggestion={suggestion}
+  onAction={handleAgentAction}
+/>
+
+// AgentProcessingOverlay für Status
+<AgentProcessingOverlay
+  isVisible={isProcessing}
+  status={processingStatus}
+  message="KI analysiert Daten..."
+/>
+```
+
+## 🎨 UI-Framework Regeln
+
+### Tailwind CSS mit Agent-Styles
+- Verwende agent-spezifische Farben: `agent-500`, `ai-500`
+- Nutze Agent-Animationen: `animate-agent-thinking`, `animate-ai-processing`
+- Implementiere Agent-Komponenten: `.agent-suggestion`, `.agent-card`
+
+### Responsive Design
+```tsx
+<div className="valeo-grid">
+  <div className="valeo-card hover:shadow-lg transition-shadow">
+    {/* Modul-Inhalt */}
+  </div>
+</div>
+```
+
+## 🔧 TypeScript Regeln
+
+### Agent-Schemas
+```tsx
+import type { AgentSuggestion, AgentContext } from '../lib/schemas';
+
+interface AgentSuggestionProps {
+  suggestion: AgentSuggestion;
+  onAction?: (action: string, parameters?: any) => void;
+}
+```
+
+### Module-Typen
+```tsx
+type Module = 'dashboard' | 'crm' | 'fibu' | 'lager' | 'bi';
+
+interface ModuleItem {
+  id: Module;
+  name: string;
+  icon: string;
+  description: string;
+}
+```
+
+## 🎯 Komponenten-Entwicklung
+
+### Agent-Integration
+- Jede Komponente kann Agent-Interaktionen haben
+- Verwende `AgentProcessingOverlay` für Loading-States
+- Implementiere `AgentSuggestionComponent` für Empfehlungen
+
+### Modul-Struktur
+```tsx
+export const CrmDashboard: React.FC = () => {
+  const [suggestions, setSuggestions] = useState<AgentSuggestion[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleAgentAnalysis = async (data: any) => {
+    setIsProcessing(true);
+    try {
+      const response = await mockAgentAPI.analyzeCustomer(data);
+      setSuggestions(response.suggestions || []);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Agent Suggestions */}
+      {suggestions.map(suggestion => (
+        <AgentSuggestionComponent
+          key={suggestion.id}
+          suggestion={suggestion}
+          onAction={handleAgentAction}
+        />
+      ))}
+      
+      {/* Agent Processing Overlay */}
+      <AgentProcessingOverlay
+        isVisible={isProcessing}
+        status="thinking"
+        message="KI analysiert Daten..."
+      />
+    </div>
+  );
+};
+```
+
+## 📊 Daten-Management
+
+### Agent-API Integration
+```tsx
+// CRM Agent
+await mockAgentAPI.analyzeCustomer(customerData);
+await mockAgentAPI.suggestLeadActions(leadId);
+await mockAgentAPI.predictLeadConversion(leadData);
+
+// FIBu Agent
+await mockAgentAPI.analyzeInvoice(invoiceData);
+await mockAgentAPI.suggestCategorization(transactionData);
+await mockAgentAPI.detectAnomalies(financialData);
+
+// Lager Agent
+await mockAgentAPI.optimizeInventory(productData);
+await mockAgentAPI.predictStockout(productId);
+await mockAgentAPI.suggestReorder(productData);
+
+// BI Agent
+await mockAgentAPI.generateInsights(data);
+await mockAgentAPI.suggestVisualizations(data);
+await mockAgentAPI.predictTrends(historicalData);
+```
+
+## 🎨 Styling und Theming
+
+### Agent-spezifische Farben
+```css
+.agent-500 { color: #0ea5e9; }
+.ai-500 { color: #d946ef; }
+.agent-thinking { animation: agentThinking 2s infinite; }
+.ai-processing { animation: aiProcessing 1.5s infinite; }
+```
+
+### Agent-Komponenten
+```css
+.agent-suggestion {
+  @apply bg-agent-50 border border-agent-200 rounded-lg p-4;
+}
+
+.agent-card {
+  @apply bg-gradient-to-br from-agent-50 to-agent-100;
+}
+
+.ai-card {
+  @apply bg-gradient-to-br from-ai-50 to-ai-100;
+}
+```
+
+## 🧪 Testing
+
+### Agent-Komponenten Tests
+```tsx
+describe('AgentSuggestionComponent', () => {
+  it('rendert Agent-Empfehlungen korrekt', () => {
+    const suggestion: AgentSuggestion = {
+      id: '1',
+      type: 'recommendation',
+      title: 'Lead Score erhöhen',
+      description: 'Empfehlung basierend auf Kundenhistorie',
+      confidence: 0.92,
+      actions: [],
+      context: createAgentContext('crm', 'analyze_customer')
+    };
+
+    render(<AgentSuggestionComponent suggestion={suggestion} />);
+    expect(screen.getByText('Lead Score erhöhen')).toBeInTheDocument();
+  });
+});
+```
+
+## 📱 Responsive Design
+
+### Mobile-First Agent-UI
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {modules.map(module => (
+    <div key={module.id} className="valeo-card">
+      {/* Agent-Integration */}
+    </div>
+  ))}
+</div>
+```
+
+## 🔒 Sicherheit und Best Practices
+
+### Agent-Validierung
+```tsx
+import { AgentSuggestionSchema } from '../lib/schemas';
+
+const validateAgentResponse = (response: unknown) => {
+  return AgentSuggestionSchema.parse(response);
+};
+```
+
+### Error Boundaries für Agenten
+```tsx
+export class AgentErrorBoundary extends Component {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Agent Error:', error, errorInfo);
+    // Agent-spezifische Fehlerbehandlung
+  }
+}
+```
+
+## 🚀 Performance-Optimierung
+
+### Agent-Caching
+```tsx
+const useAgentCache = (key: string, agentFunction: () => Promise<any>) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const cached = sessionStorage.getItem(`agent_${key}`);
+    if (cached) {
+      setData(JSON.parse(cached));
+    } else {
+      setLoading(true);
+      agentFunction().then(result => {
+        setData(result);
+        sessionStorage.setItem(`agent_${key}`, JSON.stringify(result));
+      }).finally(() => setLoading(false));
+    }
+  }, [key]);
+
+  return { data, loading };
+};
+```
+
+## 📝 Code-Qualität
+
+### Agent-spezifische ESLint Regeln
+```json
+{
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "react/prop-types": "off",
+    "agent/require-processing-overlay": "warn",
+    "agent/validate-suggestions": "error"
+  }
+}
+```
+
+## 🎯 KI-Assistenz Regeln
+
+### Agenten-Entwicklung
+Wenn du neue Agenten erstellst:
+1. Definiere Agent-Schema mit Zod
+2. Implementiere Agent-API Methoden
+3. Erstelle Agent-Komponenten
+4. Füge Processing-Overlay hinzu
+5. Teste Agent-Interaktionen
+6. Dokumentiere Agent-Funktionen
+
+### Code-Review Checkliste für Agenten
+- [ ] Agent-Schema definiert
+- [ ] Agent-API Methoden implementiert
+- [ ] Processing-Overlay vorhanden
+- [ ] Suggestion-Komponenten erstellt
+- [ ] Error-Handling implementiert
+- [ ] TypeScript-Typen definiert
+- [ ] Responsive Design getestet
+- [ ] Performance optimiert
+
+## 🔄 Workflow
+
+### Neues Agent-Modul erstellen
+1. Erstelle Agent-Schema in `lib/schemas.ts`
+2. Implementiere Agent-API Methoden in `lib/agent-api.ts`
+3. Erstelle Modul-Dashboard in `features/[module]/`
+4. Füge Agent-Komponenten hinzu
+5. Teste Agent-Interaktionen
+6. Dokumentiere Agent-Funktionen
+
+### Best Practices für Agenten
+- Verwende immer TypeScript für Agent-Interaktionen
+- Implementiere Loading-States mit Processing-Overlay
+- Validiere Agent-Responses mit Zod
+- Cache Agent-Ergebnisse für Performance
+- Teste Agent-Fehlerbehandlung
+- Dokumentiere Agent-Funktionen
+
+Diese Regeln stellen sicher, dass alle Agenten konsistent, wartbar und benutzerfreundlich sind. 

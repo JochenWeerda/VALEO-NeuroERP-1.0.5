@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Frontend Service (einfache HTML-Demo)
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/redirect.html:/usr/share/nginx/html/index.html
+      - ./frontend/static:/usr/share/nginx/html/static
+    restart: unless-stopped
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://valeo_user:valeo_password@postgres:5432/valeo_erp
+      - ENVIRONMENT=production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=valeo_erp
+      - POSTGRES_USER=valeo_user
+      - POSTGRES_PASSWORD=valeo_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U valeo_user -d valeo_erp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local 

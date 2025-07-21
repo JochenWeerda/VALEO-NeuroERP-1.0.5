@@ -1,0 +1,892 @@
+# Tailwind CSS Cursor Rules für VALEO NeuroERP
+# Spezifische Regeln für Tailwind CSS Utility-Klassen
+
+## 🎨 Tailwind CSS Komponenten-Regeln
+
+### Grundlegende Layout-Komponenten
+```tsx
+import React from 'react';
+
+interface ValeoContainerProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const ValeoContainer: React.FC<ValeoContainerProps> = ({ 
+  children, 
+  className = '' 
+}) => (
+  <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+    {children}
+  </div>
+);
+
+interface ValeoCardProps {
+  title?: string;
+  description?: string;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}
+
+export const ValeoCard: React.FC<ValeoCardProps> = ({
+  title,
+  description,
+  children,
+  className = '',
+  onClick
+}) => (
+  <div 
+    className={`
+      bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300
+      border border-gray-200 p-6 ${onClick ? 'cursor-pointer' : ''} ${className}
+    `}
+    onClick={onClick}
+  >
+    {title && (
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-1">
+          {title}
+        </h3>
+        {description && (
+          <p className="text-sm text-gray-600">
+            {description}
+          </p>
+        )}
+      </div>
+    )}
+    {children}
+  </div>
+);
+
+interface ValeoButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'danger' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: () => void;
+  className?: string;
+}
+
+export const ValeoButton: React.FC<ValeoButtonProps> = ({
+  children,
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  loading = false,
+  onClick,
+  className = ''
+}) => {
+  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  
+  const variantClasses = {
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500'
+  };
+  
+  const sizeClasses = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-sm',
+    lg: 'px-6 py-3 text-base'
+  };
+  
+  const disabledClasses = disabled || loading ? 'opacity-50 cursor-not-allowed' : '';
+  
+  return (
+    <button
+      className={`
+        ${baseClasses}
+        ${variantClasses[variant]}
+        ${sizeClasses[size]}
+        ${disabledClasses}
+        ${className}
+      `}
+      onClick={onClick}
+      disabled={disabled || loading}
+    >
+      {loading && (
+        <svg className="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+        </svg>
+      )}
+      {children}
+    </button>
+  );
+};
+```
+
+### Formulare mit Tailwind CSS
+```tsx
+import React from 'react';
+
+interface ValeoInputProps {
+  label: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  error?: string;
+  required?: boolean;
+  type?: 'text' | 'email' | 'password' | 'number';
+  disabled?: boolean;
+  className?: string;
+}
+
+export const ValeoInput: React.FC<ValeoInputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+  error,
+  required = false,
+  type = 'text',
+  disabled = false,
+  className = ''
+}) => (
+  <div className={`mb-4 ${className}`}>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      {label}
+      {required && <span className="text-red-500 ml-1">*</span>}
+    </label>
+    <input
+      type={type}
+      value={value}
+      onChange={(e) => onChange?.(e.target.value)}
+      placeholder={placeholder}
+      disabled={disabled}
+      className={`
+        w-full px-3 py-2 border rounded-lg shadow-sm
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+        ${error ? 'border-red-300' : 'border-gray-300'}
+        ${disabled ? 'bg-gray-50 cursor-not-allowed' : 'bg-white'}
+        transition-colors duration-200
+      `}
+    />
+    {error && (
+      <p className="mt-1 text-sm text-red-600">
+        {error}
+      </p>
+    )}
+  </div>
+);
+
+interface ValeoSelectProps {
+  label: string;
+  options: { value: string; label: string }[];
+  value?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  error?: string;
+  required?: boolean;
+  disabled?: boolean;
+  className?: string;
+}
+
+export const ValeoSelect: React.FC<ValeoSelectProps> = ({
+  label,
+  options,
+  value,
+  onChange,
+  placeholder,
+  error,
+  required = false,
+  disabled = false,
+  className = ''
+}) => (
+  <div className={`mb-4 ${className}`}>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      {label}
+      {required && <span className="text-red-500 ml-1">*</span>}
+    </label>
+    <select
+      value={value}
+      onChange={(e) => onChange?.(e.target.value)}
+      disabled={disabled}
+      className={`
+        w-full px-3 py-2 border rounded-lg shadow-sm
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+        ${error ? 'border-red-300' : 'border-gray-300'}
+        ${disabled ? 'bg-gray-50 cursor-not-allowed' : 'bg-white'}
+        transition-colors duration-200
+      `}
+    >
+      {placeholder && (
+        <option value="" disabled>
+          {placeholder}
+        </option>
+      )}
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+    {error && (
+      <p className="mt-1 text-sm text-red-600">
+        {error}
+      </p>
+    )}
+  </div>
+);
+
+interface ValeoFormProps {
+  children: React.ReactNode;
+  onSubmit: (e: React.FormEvent) => void;
+  className?: string;
+}
+
+export const ValeoForm: React.FC<ValeoFormProps> = ({
+  children,
+  onSubmit,
+  className = ''
+}) => (
+  <form 
+    onSubmit={onSubmit}
+    className={`space-y-6 ${className}`}
+  >
+    {children}
+  </form>
+);
+```
+
+### Tabellen mit Tailwind CSS
+```tsx
+import React from 'react';
+
+interface ValeoTableProps {
+  columns: {
+    key: string;
+    title: string;
+    render?: (value: any, record: any) => React.ReactNode;
+  }[];
+  data: any[];
+  loading?: boolean;
+  onRowClick?: (record: any) => void;
+  className?: string;
+}
+
+export const ValeoTable: React.FC<ValeoTableProps> = ({
+  columns,
+  data,
+  loading = false,
+  onRowClick,
+  className = ''
+}) => (
+  <div className={`overflow-x-auto ${className}`}>
+    <table className="min-w-full divide-y divide-gray-200">
+      <thead className="bg-gray-50">
+        <tr>
+          {columns.map((column) => (
+            <th
+              key={column.key}
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {column.title}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="bg-white divide-y divide-gray-200">
+        {loading ? (
+          <tr>
+            <td colSpan={columns.length} className="px-6 py-4 text-center">
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                <span className="ml-2 text-gray-500">Lade...</span>
+              </div>
+            </td>
+          </tr>
+        ) : data.length === 0 ? (
+          <tr>
+            <td colSpan={columns.length} className="px-6 py-4 text-center text-gray-500">
+              Keine Daten verfügbar
+            </td>
+          </tr>
+        ) : (
+          data.map((record, index) => (
+            <tr
+              key={record.id || index}
+              onClick={() => onRowClick?.(record)}
+              className={onRowClick ? 'cursor-pointer hover:bg-gray-50 transition-colors duration-150' : ''}
+            >
+              {columns.map((column) => (
+                <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {column.render ? column.render(record[column.key], record) : record[column.key]}
+                </td>
+              ))}
+            </tr>
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
+);
+
+// Beispiel für eine Benutzer-Tabelle
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: 'active' | 'inactive';
+  createdAt: string;
+}
+
+export const ValeoUserTable: React.FC<{
+  users: User[];
+  onEdit?: (user: User) => void;
+  onDelete?: (user: User) => void;
+  loading?: boolean;
+}> = ({ users, onEdit, onDelete, loading }) => {
+  const columns = [
+    {
+      key: 'name',
+      title: 'Name',
+      render: (value: string, record: User) => (
+        <div>
+          <div className="font-medium text-gray-900">{value}</div>
+          <div className="text-sm text-gray-500">{record.email}</div>
+        </div>
+      )
+    },
+    {
+      key: 'role',
+      title: 'Rolle',
+      render: (value: string) => {
+        const roleMap: Record<string, string> = {
+          admin: 'Administrator',
+          manager: 'Manager',
+          user: 'Benutzer',
+          viewer: 'Betrachter'
+        };
+        return roleMap[value] || value;
+      }
+    },
+    {
+      key: 'status',
+      title: 'Status',
+      render: (value: string) => (
+        <span className={`
+          inline-flex px-2 py-1 text-xs font-semibold rounded-full
+          ${value === 'active' 
+            ? 'bg-green-100 text-green-800' 
+            : 'bg-red-100 text-red-800'
+          }
+        `}>
+          {value === 'active' ? 'Aktiv' : 'Inaktiv'}
+        </span>
+      )
+    },
+    {
+      key: 'createdAt',
+      title: 'Erstellt am',
+      render: (value: string) => new Date(value).toLocaleDateString('de-DE')
+    },
+    {
+      key: 'actions',
+      title: 'Aktionen',
+      render: (_: any, record: User) => (
+        <div className="flex space-x-2">
+          {onEdit && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(record);
+              }}
+              className="text-blue-600 hover:text-blue-900 text-sm font-medium"
+            >
+              Bearbeiten
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(record);
+              }}
+              className="text-red-600 hover:text-red-900 text-sm font-medium"
+            >
+              Löschen
+            </button>
+          )}
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <ValeoTable
+      columns={columns}
+      data={users}
+      loading={loading}
+    />
+  );
+};
+```
+
+### Navigation und Layout
+```tsx
+import React from 'react';
+
+interface ValeoHeaderProps {
+  title: string;
+  children?: React.ReactNode;
+}
+
+export const ValeoHeader: React.FC<ValeoHeaderProps> = ({ title, children }) => (
+  <header className="bg-white shadow-sm border-b border-gray-200">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center h-16">
+        <h1 className="text-xl font-semibold text-gray-900">
+          {title}
+        </h1>
+        {children && (
+          <div className="flex items-center space-x-4">
+            {children}
+          </div>
+        )}
+      </div>
+    </div>
+  </header>
+);
+
+interface ValeoSidebarProps {
+  children: React.ReactNode;
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export const ValeoSidebar: React.FC<ValeoSidebarProps> = ({ 
+  children, 
+  isOpen = false, 
+  onClose 
+}) => (
+  <>
+    {/* Mobile backdrop */}
+    {isOpen && (
+      <div 
+        className="fixed inset-0 bg-gray-600 bg-opacity-75 z-40 lg:hidden"
+        onClick={onClose}
+      />
+    )}
+    
+    {/* Sidebar */}
+    <div className={`
+      fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+      ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      lg:translate-x-0 lg:static lg:inset-0
+    `}>
+      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+        <h2 className="text-lg font-semibold text-gray-900">VALEO NeuroERP</h2>
+        <button
+          onClick={onClose}
+          className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav className="mt-4 px-4">
+        {children}
+      </nav>
+    </div>
+  </>
+);
+
+interface ValeoNavItemProps {
+  icon?: React.ReactNode;
+  label: string;
+  href?: string;
+  active?: boolean;
+  onClick?: () => void;
+}
+
+export const ValeoNavItem: React.FC<ValeoNavItemProps> = ({
+  icon,
+  label,
+  href,
+  active = false,
+  onClick
+}) => {
+  const baseClasses = `
+    flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200
+    ${active 
+      ? 'bg-blue-100 text-blue-700' 
+      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+    }
+  `;
+
+  const content = (
+    <>
+      {icon && <span className="mr-3">{icon}</span>}
+      {label}
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} className={baseClasses}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button onClick={onClick} className={baseClasses}>
+      {content}
+    </button>
+  );
+};
+
+interface ValeoLayoutProps {
+  children: React.ReactNode;
+  sidebar?: React.ReactNode;
+  header?: React.ReactNode;
+}
+
+export const ValeoLayout: React.FC<ValeoLayoutProps> = ({ 
+  children, 
+  sidebar, 
+  header 
+}) => {
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile menu button */}
+      <div className="lg:hidden fixed top-4 left-4 z-50">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="p-2 rounded-md bg-white shadow-lg text-gray-400 hover:text-gray-500"
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div className="flex">
+        {/* Sidebar */}
+        {sidebar && (
+          <ValeoSidebar 
+            isOpen={sidebarOpen} 
+            onClose={() => setSidebarOpen(false)}
+          >
+            {sidebar}
+          </ValeoSidebar>
+        )}
+
+        {/* Main content */}
+        <div className="flex-1 flex flex-col">
+          {header}
+          <main className="flex-1 p-4 lg:p-8">
+            {children}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+};
+```
+
+### Loading und Error States
+```tsx
+import React from 'react';
+
+export const ValeoLoadingSpinner: React.FC = () => (
+  <div className="flex justify-center items-center h-64">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    <span className="ml-2 text-gray-500">Lade...</span>
+  </div>
+);
+
+export const ValeoSkeletonCard: React.FC = () => (
+  <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+    <div className="h-6 bg-gray-200 rounded mb-2 w-3/4"></div>
+    <div className="h-4 bg-gray-200 rounded mb-4 w-1/2"></div>
+    <div className="h-32 bg-gray-200 rounded"></div>
+  </div>
+);
+
+export const ValeoSkeletonTable: React.FC = () => (
+  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="px-6 py-4 border-b border-gray-200">
+      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+    </div>
+    <div className="p-6">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div key={index} className="flex space-x-4 mb-4">
+          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+interface ValeoErrorAlertProps {
+  title: string;
+  message: string;
+  onRetry?: () => void;
+}
+
+export const ValeoErrorAlert: React.FC<ValeoErrorAlertProps> = ({
+  title,
+  message,
+  onRetry
+}) => (
+  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+    <div className="flex">
+      <div className="flex-shrink-0">
+        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+        </svg>
+      </div>
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-red-800">
+          {title}
+        </h3>
+        <div className="mt-2 text-sm text-red-700">
+          <p>{message}</p>
+        </div>
+        {onRetry && (
+          <div className="mt-4">
+            <button
+              onClick={onRetry}
+              className="bg-red-100 text-red-800 px-3 py-2 rounded-md text-sm font-medium hover:bg-red-200 transition-colors duration-200"
+            >
+              Erneut versuchen
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+interface ValeoEmptyStateProps {
+  title: string;
+  description: string;
+  actionText?: string;
+  onAction?: () => void;
+}
+
+export const ValeoEmptyState: React.FC<ValeoEmptyStateProps> = ({
+  title,
+  description,
+  actionText,
+  onAction
+}) => (
+  <div className="text-center py-12">
+    <svg
+      className="mx-auto h-12 w-12 text-gray-400"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+      />
+    </svg>
+    <h3 className="mt-2 text-sm font-medium text-gray-900">{title}</h3>
+    <p className="mt-1 text-sm text-gray-500">{description}</p>
+    {actionText && onAction && (
+      <div className="mt-6">
+        <ValeoButton onClick={onAction}>
+          {actionText}
+        </ValeoButton>
+      </div>
+    )}
+  </div>
+);
+```
+
+### Responsive Design Utilities
+```tsx
+// Responsive Grid System
+export const ValeoGrid: React.FC<{ children: React.ReactNode; className?: string }> = ({ 
+  children, 
+  className = '' 
+}) => (
+  <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${className}`}>
+    {children}
+  </div>
+);
+
+// Responsive Text
+export const ValeoResponsiveText: React.FC<{ 
+  children: React.ReactNode; 
+  className?: string 
+}> = ({ children, className = '' }) => (
+  <div className={`text-sm md:text-base lg:text-lg ${className}`}>
+    {children}
+  </div>
+);
+
+// Responsive Spacing
+export const ValeoResponsiveSpacing: React.FC<{ 
+  children: React.ReactNode; 
+  className?: string 
+}> = ({ children, className = '' }) => (
+  <div className={`p-4 md:p-6 lg:p-8 ${className}`}>
+    {children}
+  </div>
+);
+
+// Mobile-First Navigation
+export const ValeoMobileNav: React.FC<{ 
+  children: React.ReactNode; 
+  isOpen: boolean; 
+  onClose: () => void 
+}> = ({ children, isOpen, onClose }) => (
+  <>
+    {/* Mobile backdrop */}
+    {isOpen && (
+      <div 
+        className="fixed inset-0 bg-gray-600 bg-opacity-75 z-40 lg:hidden"
+        onClick={onClose}
+      />
+    )}
+    
+    {/* Mobile menu */}
+    <div className={`
+      fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+      ${isOpen ? 'translate-x-0' : 'translate-x-full'}
+      lg:hidden
+    `}>
+      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+        <h2 className="text-lg font-semibold text-gray-900">Menü</h2>
+        <button
+          onClick={onClose}
+          className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav className="mt-4 px-4">
+        {children}
+      </nav>
+    </div>
+  </>
+);
+```
+
+## 🎯 Tailwind CSS Best Practices
+
+### Custom CSS-Klassen
+```css
+/* tailwind.config.js */
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+        },
+        secondary: {
+          50: '#fdf2f8',
+          100: '#fce7f3',
+          200: '#fbcfe8',
+          300: '#f9a8d4',
+          400: '#f472b6',
+          500: '#ec4899',
+          600: '#db2777',
+          700: '#be185d',
+          800: '#9d174d',
+          900: '#831843',
+        }
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+      borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.5rem',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      }
+    }
+  },
+  plugins: []
+};
+```
+
+### Utility-First Ansatz
+```tsx
+// Gute Praxis: Utility-Klassen verwenden
+<div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+  <h2 className="text-lg font-semibold text-gray-900">Titel</h2>
+  <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
+    Aktion
+  </button>
+</div>
+
+// Schlechte Praxis: Inline-Styles verwenden
+<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+  <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#111827' }}>Titel</h2>
+  <button style={{ padding: '8px 16px', backgroundColor: '#2563eb', color: 'white', borderRadius: '6px' }}>
+    Aktion
+  </button>
+</div>
+```
+
+### Responsive Design
+```tsx
+// Mobile-First Ansatz
+<div className="
+  p-4          /* Mobile: 16px padding */
+  md:p-6       /* Tablet: 24px padding */
+  lg:p-8       /* Desktop: 32px padding */
+  xl:p-12      /* Large Desktop: 48px padding */
+">
+  <div className="
+    grid
+    grid-cols-1     /* Mobile: 1 Spalte */
+    md:grid-cols-2  /* Tablet: 2 Spalten */
+    lg:grid-cols-3  /* Desktop: 3 Spalten */
+    xl:grid-cols-4  /* Large Desktop: 4 Spalten */
+    gap-4           /* Mobile: 16px gap */
+    md:gap-6        /* Tablet: 24px gap */
+    lg:gap-8        /* Desktop: 32px gap */
+  ">
+    {/* Grid Items */}
+  </div>
+</div>
+```
+
+Diese Regeln stellen sicher, dass alle Tailwind CSS Komponenten konsistent, benutzerfreundlich und an das VALEO Design-System angepasst sind. 

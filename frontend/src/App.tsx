@@ -1,130 +1,161 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import theme from './theme';
-import './App.css';
-
-// Komponenten importieren
-import { UserInterfaceComponent } from './components/UserInterfaceComponent';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import { ApiProvider } from './contexts/ApiContext';
 import Layout from './components/Layout';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import PrivateRoute from './components/PrivateRoute';
-import Notification from './components/Notification';
-import ChatPanel from './components/dashboard/ChatPanel';
+import LandingPage from './pages/LandingPage';
+import Dashboard from './pages/Dashboard';
+import PersonalManagement from './pages/PersonalManagement';
+import FinanceManagement from './pages/FinanceManagement';
+import AssetManagement from './pages/AssetManagement';
+import ProductionManagement from './pages/ProductionManagement';
+import WarehouseManagement from './pages/WarehouseManagement';
+import PurchasingManagement from './pages/PurchasingManagement';
+import SalesManagement from './pages/SalesManagement';
+import QualityManagement from './pages/QualityManagement';
+import CustomerManagement from './pages/CustomerManagement';
+import ProjectManagement from './pages/ProjectManagement';
+import DocumentManagement from './pages/DocumentManagement';
+import ReportingAnalytics from './pages/ReportingAnalytics';
 
-// Seiten importieren
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import TransactionsPage from './pages/TransactionsPage';
-import ReportsPage from './pages/ReportsPage';
-import InventoryPage from './pages/InventoryPage';
-import DocumentsPage from './pages/DocumentsPage';
-import AnalyticsPage from './pages/AnalyticsPage';
-import SettingsPage from './pages/SettingsPage';
-import ProfilePage from './pages/ProfilePage';
-import NotFoundPage from './pages/NotFoundPage';
-import MobileUploadPage from './pages/mobile/MobileUploadPage';
-
-// Kontext importieren
-import { AuthProvider } from './contexts/AuthContext';
-import { NotificationProvider } from './contexts/NotificationContext';
-
-// Services importieren
-import { checkAuthStatus } from './services/authService';
-
-const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const authStatus = await checkAuthStatus();
-        setIsAuthenticated(authStatus);
-      } catch (error) {
-        console.error('Fehler beim Überprüfen des Authentifizierungsstatus:', error);
-      } finally {
-        setIsLoading(false);
+// Theme erstellen
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+      light: '#42a5f5',
+      dark: '#1565c0'
+    },
+    secondary: {
+      main: '#dc004e',
+      light: '#ff5983',
+      dark: '#9a0036'
+    },
+    background: {
+      default: '#f5f5f5',
+      paper: '#ffffff'
+    }
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 500
+    },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 500
+    },
+    h6: {
+      fontSize: '1.25rem',
+      fontWeight: 500
+    }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: 8
+        }
       }
-    };
-
-    checkAuth();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Lade VALEO-NeuroERP...</p>
-      </div>
-    );
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        }
+      }
+    }
   }
+});
 
+function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AuthProvider>
-        <NotificationProvider>
-          <Router>
-            <div className="app">
-              <ChatPanel isOpen={isChatOpen} onToggle={() => setIsChatOpen(o => !o)} />
-              <Routes>
-                <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/dashboard" />} />
-                
-                <Route path="/" element={<Layout onChatToggle={() => setIsChatOpen(o => !o)} isChatOpen={isChatOpen} />}>
-                  <Route index element={<Navigate to="/dashboard" />} />
-                  <Route path="/dashboard" element={
-                    <PrivateRoute>
-                      <DashboardPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/transactions" element={
-                    <PrivateRoute>
-                      <TransactionsPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/reports" element={
-                    <PrivateRoute>
-                      <ReportsPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/inventory" element={
-                    <PrivateRoute>
-                      <InventoryPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/documents" element={
-                    <PrivateRoute>
-                      <DocumentsPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/analytics" element={
-                    <PrivateRoute>
-                      <AnalyticsPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/settings" element={
-                    <PrivateRoute>
-                      <SettingsPage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/profile" element={
-                    <PrivateRoute>
-                      <ProfilePage />
-                    </PrivateRoute>
-                  } />
-                  <Route path="/mobile-upload" element={<MobileUploadPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                </Route>
-              </Routes>
-            </div>
-          </Router>
-        </NotificationProvider>
-      </AuthProvider>
+      <ApiProvider>
+        <Router>
+          <Routes>
+            {/* Landing Page als Startseite */}
+            <Route path="/" element={<LandingPage />} />
+            
+            {/* Dashboard und ERP Module mit Layout */}
+            <Route path="/dashboard" element={
+              <Layout>
+                <Dashboard />
+              </Layout>
+            } />
+            <Route path="/personal" element={
+              <Layout>
+                <PersonalManagement />
+              </Layout>
+            } />
+            <Route path="/finance" element={
+              <Layout>
+                <FinanceManagement />
+              </Layout>
+            } />
+            <Route path="/assets" element={
+              <Layout>
+                <AssetManagement />
+              </Layout>
+            } />
+            <Route path="/production" element={
+              <Layout>
+                <ProductionManagement />
+              </Layout>
+            } />
+            <Route path="/warehouse" element={
+              <Layout>
+                <WarehouseManagement />
+              </Layout>
+            } />
+            <Route path="/purchasing" element={
+              <Layout>
+                <PurchasingManagement />
+              </Layout>
+            } />
+            <Route path="/sales" element={
+              <Layout>
+                <SalesManagement />
+              </Layout>
+            } />
+            <Route path="/quality" element={
+              <Layout>
+                <QualityManagement />
+              </Layout>
+            } />
+            <Route path="/customers" element={
+              <Layout>
+                <CustomerManagement />
+              </Layout>
+            } />
+            <Route path="/projects" element={
+              <Layout>
+                <ProjectManagement />
+              </Layout>
+            } />
+            <Route path="/documents" element={
+              <Layout>
+                <DocumentManagement />
+              </Layout>
+            } />
+            <Route path="/reporting" element={
+              <Layout>
+                <ReportingAnalytics />
+              </Layout>
+            } />
+            
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </ApiProvider>
     </ThemeProvider>
   );
-};
+}
 
-export default App; 
+export default App;

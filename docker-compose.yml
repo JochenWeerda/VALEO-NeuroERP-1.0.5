@@ -1,100 +1,91 @@
-# Automatisch generierte Docker Compose-Datei
-
 version: '3.8'
 
 services:
-  api:
+  # Frontend Service
+  frontend:
     build:
-      context: .
-      dockerfile: infrastructure/docker/api/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     environment:
+      - DATABASE_URL=postgresql://valeo_user:valeo_password@postgres:5432/valeo_erp
       - ENVIRONMENT=production
-      - MONGODB_URI=mongodb://mongodb:27017
-      - MONGODB_DATABASE=valeo_neuroerp
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=valeo_neuroerp
-      - POSTGRES_USER=valeo
-      - POSTGRES_PASSWORD=secure_password
-      - REDIS_HOST=redis
     depends_on:
-      - mongodb
-      - postgres
-      - redis
-    volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
-  worker:
-    build:
-      context: .
-      dockerfile: infrastructure/docker/worker/Dockerfile
-    environment:
-      - ENVIRONMENT=production
-      - MONGODB_URI=mongodb://mongodb:27017
-      - MONGODB_DATABASE=valeo_neuroerp
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=valeo_neuroerp
-      - POSTGRES_USER=valeo
-      - POSTGRES_PASSWORD=secure_password
-      - REDIS_HOST=redis
-    depends_on:
-      - mongodb
-      - postgres
-      - redis
-    volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
-
-  mongodb:
-    image: mongo:4.4
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-
+  # PostgreSQL Database
   postgres:
-    image: postgres:13
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=valeo_erp
+      - POSTGRES_USER=valeo_user
+      - POSTGRES_PASSWORD=valeo_password
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_DB=valeo_neuroerp
-      - POSTGRES_USER=valeo
-      - POSTGRES_PASSWORD=secure_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U valeo_user -d valeo_erp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # Redis Cache (optional)
   redis:
-    image: redis:6.2
+    image: redis:7-alpine
     ports:
       - "6379:6379"
-    volumes:
-      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-  prometheus:
-    image: prom/prometheus:v2.30.3
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
     ports:
-      - "9090:9090"
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./infrastructure/docker/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-
-  grafana:
-    image: grafana/grafana:8.2.2
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - ./infrastructure/docker/monitoring/grafana/provisioning:/etc/grafana/provisioning
-      - grafana_data:/var/lib/grafana
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
 
 volumes:
-  mongodb_data:
   postgres_data:
-  redis_data:
-  prometheus_data:
-  grafana_data:
+    driver: local

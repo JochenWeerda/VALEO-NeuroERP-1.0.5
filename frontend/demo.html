@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALEO NeuroERP - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+        
+        .card p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 1rem 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .features {
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🚀 VALEO NeuroERP</div>
+        <div class="subtitle">Intelligentes ERP-System für den Landhandel</div>
+    </div>
+    
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="http://localhost:5174" class="button">🏢 Vollständiges System öffnen</a>
+            <a href="http://localhost:3001/redirect.html" class="button">🎯 Demo-Startseite</a>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>💰 Finanzbuchhaltung</h3>
+                <p>Vollständige Finanzverwaltung mit Kontenplan, Buchungen, Rechnungen und Jahresabschluss.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">40</div>
+                        <div class="stat-label">Tabellen</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">L3-Abdeckung</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>👥 Personalverwaltung</h3>
+                <p>Umfassende Personalverwaltung mit Mitarbeitern, Abteilungen, Gehältern und Arbeitszeiten.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">35</div>
+                        <div class="stat-label">Tabellen</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">L3-Abdeckung</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>🏭 Produktionsmanagement</h3>
+                <p>Landhandel-spezifische Produktionsprozesse mit Stücklisten, Arbeitsplänen und Maschinenbelegung.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Tabellen</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">L3-Abdeckung</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📦 Lagerverwaltung</h3>
+                <p>Professionelle Lagerverwaltung mit Bestandsverwaltung, Ein-/Auslagerungen und Kommissionierung.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">35</div>
+                        <div class="stat-label">Tabellen</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">L3-Abdeckung</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>🛒 Einkaufsmanagement</h3>
+                <p>Lieferantenverwaltung, Bestellungen, Lieferungen und Qualitätsprüfungen.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">40</div>
+                        <div class="stat-label">Tabellen</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">L3-Abdeckung</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📈 Verkaufsmanagement</h3>
+                <p>Kundenverwaltung, Angebote, Verkaufsaufträge und Mahnwesen.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">40</div>
+                        <div class="stat-label">Tabellen</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">L3-Abdeckung</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <h3 style="margin-bottom: 1rem; color: #ffd700;">🎯 System-Highlights</h3>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>12 ERP-Module vollständig implementiert</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>440 Datenbank-Tabellen (100% L3-Abdeckung)</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>Deutsche Lokalisierung für alle Texte</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>Landhandel-spezifische Features</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>Responsive Design für alle Bildschirmgrößen</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>React 18 mit TypeScript</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <span>Material-UI v5 und Ant Design</span>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 15px;">
+            <h3 style="color: #ffd700; margin-bottom: 1rem;">🎯 Demo-Credentials</h3>
+            <p><strong>Benutzername:</strong> admin</p>
+            <p><strong>Passwort:</strong> admin123</p>
+        </div>
+    </div>
+</body>
+</html> 

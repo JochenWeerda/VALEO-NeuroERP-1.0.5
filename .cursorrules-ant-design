@@ -1,0 +1,1049 @@
+# Ant Design Cursor Rules für VALEO NeuroERP
+# Spezifische Regeln für Ant Design Komponenten
+
+## 🎨 Ant Design Komponenten-Regeln
+
+### Grundlegende Komponenten-Struktur
+```tsx
+import React from 'react';
+import { Card, Typography, Button, Space, Tag } from 'antd';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+
+const { Title, Text } = Typography;
+
+interface ValeoCardProps {
+  title: string;
+  description?: string;
+  status?: 'active' | 'inactive' | 'pending';
+  onAdd?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  children?: React.ReactNode;
+}
+
+export const ValeoCard: React.FC<ValeoCardProps> = ({
+  title,
+  description,
+  status,
+  onAdd,
+  onEdit,
+  onDelete,
+  children
+}) => {
+  const getStatusColor = (status?: string) => {
+    switch (status) {
+      case 'active': return 'success';
+      case 'inactive': return 'error';
+      case 'pending': return 'warning';
+      default: return 'default';
+    }
+  };
+
+  const getStatusText = (status?: string) => {
+    switch (status) {
+      case 'active': return 'Aktiv';
+      case 'inactive': return 'Inaktiv';
+      case 'pending': return 'Ausstehend';
+      default: return '';
+    }
+  };
+
+  return (
+    <Card
+      title={
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <Title level={5} style={{ margin: 0 }}>
+              {title}
+            </Title>
+            {description && (
+              <Text type="secondary" style={{ fontSize: '14px' }}>
+                {description}
+              </Text>
+            )}
+          </div>
+          {status && (
+            <Tag color={getStatusColor(status)}>
+              {getStatusText(status)}
+            </Tag>
+          )}
+        </div>
+      }
+      extra={
+        <Space>
+          {onAdd && (
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={onAdd}
+              size="small"
+            >
+              Hinzufügen
+            </Button>
+          )}
+          {onEdit && (
+            <Button
+              icon={<EditOutlined />}
+              onClick={onEdit}
+              size="small"
+            >
+              Bearbeiten
+            </Button>
+          )}
+          {onDelete && (
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              onClick={onDelete}
+              size="small"
+            >
+              Löschen
+            </Button>
+          )}
+        </Space>
+      }
+      style={{ borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}
+    >
+      {children}
+    </Card>
+  );
+};
+```
+
+### Formulare mit Ant Design
+```tsx
+import React from 'react';
+import { Form, Input, Button, Select, DatePicker, Space, message } from 'antd';
+import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
+
+const { Option } = Select;
+
+interface UserFormData {
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  department: string;
+  startDate: string;
+}
+
+interface ValeoFormProps {
+  initialValues?: Partial<UserFormData>;
+  onSubmit: (values: UserFormData) => void;
+  onCancel?: () => void;
+  loading?: boolean;
+}
+
+export const ValeoUserForm: React.FC<ValeoFormProps> = ({
+  initialValues,
+  onSubmit,
+  onCancel,
+  loading = false
+}) => {
+  const [form] = Form.useForm();
+
+  const handleSubmit = async (values: UserFormData) => {
+    try {
+      await onSubmit(values);
+      message.success('Benutzer erfolgreich gespeichert');
+    } catch (error) {
+      message.error('Fehler beim Speichern des Benutzers');
+    }
+  };
+
+  return (
+    <Form
+      form={form}
+      layout="vertical"
+      initialValues={initialValues}
+      onFinish={handleSubmit}
+      requiredMark={false}
+    >
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            { required: true, message: 'Bitte geben Sie einen Namen ein' },
+            { min: 2, message: 'Name muss mindestens 2 Zeichen lang sein' }
+          ]}
+        >
+          <Input placeholder="Vollständiger Name" />
+        </Form.Item>
+
+        <Form.Item
+          name="email"
+          label="E-Mail"
+          rules={[
+            { required: true, message: 'Bitte geben Sie eine E-Mail-Adresse ein' },
+            { type: 'email', message: 'Bitte geben Sie eine gültige E-Mail-Adresse ein' }
+          ]}
+        >
+          <Input placeholder="beispiel@firma.de" />
+        </Form.Item>
+
+        <Form.Item
+          name="phone"
+          label="Telefon"
+          rules={[
+            { pattern: /^[0-9+\-\s()]+$/, message: 'Bitte geben Sie eine gültige Telefonnummer ein' }
+          ]}
+        >
+          <Input placeholder="+49 123 456789" />
+        </Form.Item>
+
+        <Form.Item
+          name="role"
+          label="Rolle"
+          rules={[{ required: true, message: 'Bitte wählen Sie eine Rolle' }]}
+        >
+          <Select placeholder="Rolle auswählen">
+            <Option value="admin">Administrator</Option>
+            <Option value="manager">Manager</Option>
+            <Option value="user">Benutzer</Option>
+            <Option value="viewer">Betrachter</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="department"
+          label="Abteilung"
+          rules={[{ required: true, message: 'Bitte wählen Sie eine Abteilung' }]}
+        >
+          <Select placeholder="Abteilung auswählen">
+            <Option value="it">IT</Option>
+            <Option value="hr">Personal</Option>
+            <Option value="finance">Finanzen</Option>
+            <Option value="sales">Vertrieb</Option>
+            <Option value="marketing">Marketing</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="startDate"
+          label="Eintrittsdatum"
+          rules={[{ required: true, message: 'Bitte wählen Sie ein Eintrittsdatum' }]}
+        >
+          <DatePicker
+            placeholder="Datum auswählen"
+            style={{ width: '100%' }}
+            format="DD.MM.YYYY"
+          />
+        </Form.Item>
+      </div>
+
+      <Form.Item style={{ marginTop: '24px', marginBottom: 0 }}>
+        <Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            icon={<SaveOutlined />}
+            loading={loading}
+          >
+            {loading ? 'Speichere...' : 'Speichern'}
+          </Button>
+          {onCancel && (
+            <Button
+              icon={<CloseOutlined />}
+              onClick={onCancel}
+              disabled={loading}
+            >
+              Abbrechen
+            </Button>
+          )}
+        </Space>
+      </Form.Item>
+    </Form>
+  );
+};
+```
+
+### Tabellen mit Ant Design
+```tsx
+import React from 'react';
+import { Table, Button, Space, Tag, Tooltip, Popconfirm, message } from 'antd';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  department: string;
+  status: 'active' | 'inactive' | 'pending';
+  createdAt: string;
+}
+
+interface ValeoTableProps {
+  users: User[];
+  onEdit?: (user: User) => void;
+  onDelete?: (id: string) => void;
+  onView?: (user: User) => void;
+  loading?: boolean;
+}
+
+export const ValeoUserTable: React.FC<ValeoTableProps> = ({
+  users,
+  onEdit,
+  onDelete,
+  onView,
+  loading = false
+}) => {
+  const handleDelete = async (id: string) => {
+    try {
+      await onDelete?.(id);
+      message.success('Benutzer erfolgreich gelöscht');
+    } catch (error) {
+      message.error('Fehler beim Löschen des Benutzers');
+    }
+  };
+
+  const getRoleText = (role: string) => {
+    const roleMap: Record<string, string> = {
+      admin: 'Administrator',
+      manager: 'Manager',
+      user: 'Benutzer',
+      viewer: 'Betrachter'
+    };
+    return roleMap[role] || role;
+  };
+
+  const getDepartmentText = (department: string) => {
+    const deptMap: Record<string, string> = {
+      it: 'IT',
+      hr: 'Personal',
+      finance: 'Finanzen',
+      sales: 'Vertrieb',
+      marketing: 'Marketing'
+    };
+    return deptMap[department] || department;
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'active': return 'success';
+      case 'inactive': return 'error';
+      case 'pending': return 'warning';
+      default: return 'default';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'active': return 'Aktiv';
+      case 'inactive': return 'Inaktiv';
+      case 'pending': return 'Ausstehend';
+      default: return status;
+    }
+  };
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      sorter: (a: User, b: User) => a.name.localeCompare(b.name),
+      render: (text: string, record: User) => (
+        <div>
+          <div style={{ fontWeight: 500 }}>{text}</div>
+          <div style={{ fontSize: '12px', color: '#666' }}>{record.email}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Rolle',
+      dataIndex: 'role',
+      key: 'role',
+      filters: [
+        { text: 'Administrator', value: 'admin' },
+        { text: 'Manager', value: 'manager' },
+        { text: 'Benutzer', value: 'user' },
+        { text: 'Betrachter', value: 'viewer' }
+      ],
+      onFilter: (value: string, record: User) => record.role === value,
+      render: (role: string) => getRoleText(role)
+    },
+    {
+      title: 'Abteilung',
+      dataIndex: 'department',
+      key: 'department',
+      filters: [
+        { text: 'IT', value: 'it' },
+        { text: 'Personal', value: 'hr' },
+        { text: 'Finanzen', value: 'finance' },
+        { text: 'Vertrieb', value: 'sales' },
+        { text: 'Marketing', value: 'marketing' }
+      ],
+      onFilter: (value: string, record: User) => record.department === value,
+      render: (department: string) => getDepartmentText(department)
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      filters: [
+        { text: 'Aktiv', value: 'active' },
+        { text: 'Inaktiv', value: 'inactive' },
+        { text: 'Ausstehend', value: 'pending' }
+      ],
+      onFilter: (value: string, record: User) => record.status === value,
+      render: (status: string) => (
+        <Tag color={getStatusColor(status)}>
+          {getStatusText(status)}
+        </Tag>
+      )
+    },
+    {
+      title: 'Erstellt am',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      sorter: (a: User, b: User) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      render: (date: string) => new Date(date).toLocaleDateString('de-DE')
+    },
+    {
+      title: 'Aktionen',
+      key: 'actions',
+      render: (_: any, record: User) => (
+        <Space size="small">
+          {onView && (
+            <Tooltip title="Anzeigen">
+              <Button
+                type="text"
+                icon={<EyeOutlined />}
+                onClick={() => onView(record)}
+                size="small"
+              />
+            </Tooltip>
+          )}
+          {onEdit && (
+            <Tooltip title="Bearbeiten">
+              <Button
+                type="text"
+                icon={<EditOutlined />}
+                onClick={() => onEdit(record)}
+                size="small"
+              />
+            </Tooltip>
+          )}
+          {onDelete && (
+            <Tooltip title="Löschen">
+              <Popconfirm
+                title="Benutzer löschen"
+                description="Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?"
+                onConfirm={() => handleDelete(record.id)}
+                okText="Ja"
+                cancelText="Nein"
+                placement="left"
+              >
+                <Button
+                  type="text"
+                  danger
+                  icon={<DeleteOutlined />}
+                  size="small"
+                />
+              </Popconfirm>
+            </Tooltip>
+          )}
+        </Space>
+      )
+    }
+  ];
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={users}
+      loading={loading}
+      rowKey="id"
+      pagination={{
+        showSizeChanger: true,
+        showQuickJumper: true,
+        showTotal: (total, range) => 
+          `${range[0]}-${range[1]} von ${total} Einträgen`,
+        pageSizeOptions: ['10', '25', '50', '100'],
+        defaultPageSize: 25
+      }}
+      scroll={{ x: 1200 }}
+      locale={{
+        triggerDesc: 'Absteigend sortieren',
+        triggerAsc: 'Aufsteigend sortieren',
+        cancelSort: 'Sortierung aufheben',
+        filterConfirm: 'OK',
+        filterReset: 'Zurücksetzen',
+        filterEmptyText: 'Keine Filter',
+        emptyText: 'Keine Daten verfügbar',
+        selectAll: 'Alle auswählen',
+        selectInvert: 'Auswahl umkehren'
+      }}
+    />
+  );
+};
+```
+
+### Modal und Dialoge
+```tsx
+import React from 'react';
+import { Modal, Form, Input, Select, Button, Space, message } from 'antd';
+import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
+
+const { Option } = Select;
+
+interface ValeoModalProps {
+  open: boolean;
+  title: string;
+  children: React.ReactNode;
+  onOk?: () => void;
+  onCancel: () => void;
+  okText?: string;
+  cancelText?: string;
+  width?: number;
+  loading?: boolean;
+  destroyOnClose?: boolean;
+}
+
+export const ValeoModal: React.FC<ValeoModalProps> = ({
+  open,
+  title,
+  children,
+  onOk,
+  onCancel,
+  okText = 'Bestätigen',
+  cancelText = 'Abbrechen',
+  width = 600,
+  loading = false,
+  destroyOnClose = true
+}) => {
+  return (
+    <Modal
+      open={open}
+      title={title}
+      onOk={onOk}
+      onCancel={onCancel}
+      okText={okText}
+      cancelText={cancelText}
+      width={width}
+      confirmLoading={loading}
+      destroyOnClose={destroyOnClose}
+      okButtonProps={{
+        icon: <SaveOutlined />,
+        disabled: loading
+      }}
+      cancelButtonProps={{
+        icon: <CloseOutlined />,
+        disabled: loading
+      }}
+      style={{ top: 20 }}
+    >
+      {children}
+    </Modal>
+  );
+};
+
+// Beispiel für ein Benutzer-Modal
+interface UserModalProps {
+  open: boolean;
+  user?: any;
+  onSave: (values: any) => void;
+  onCancel: () => void;
+  loading?: boolean;
+}
+
+export const UserModal: React.FC<UserModalProps> = ({
+  open,
+  user,
+  onSave,
+  onCancel,
+  loading = false
+}) => {
+  const [form] = Form.useForm();
+
+  const handleSave = async () => {
+    try {
+      const values = await form.validateFields();
+      await onSave(values);
+      message.success('Benutzer erfolgreich gespeichert');
+      form.resetFields();
+    } catch (error) {
+      message.error('Bitte überprüfen Sie die Eingaben');
+    }
+  };
+
+  return (
+    <ValeoModal
+      open={open}
+      title={user ? 'Benutzer bearbeiten' : 'Neuen Benutzer erstellen'}
+      onOk={handleSave}
+      onCancel={onCancel}
+      okText="Speichern"
+      loading={loading}
+      width={700}
+    >
+      <ValeoUserForm
+        initialValues={user}
+        onSubmit={onSave}
+        onCancel={onCancel}
+        loading={loading}
+      />
+    </ValeoModal>
+  );
+};
+```
+
+### Navigation und Layout
+```tsx
+import React from 'react';
+import { Layout, Menu, Button, Avatar, Dropdown, Space, Badge } from 'antd';
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  DashboardOutlined,
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  BellOutlined,
+  SearchOutlined
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+
+const { Header, Sider, Content } = Layout;
+
+interface ValeoLayoutProps {
+  children: React.ReactNode;
+}
+
+export const ValeoLayout: React.FC<ValeoLayoutProps> = ({ children }) => {
+  const [collapsed, setCollapsed] = React.useState(false);
+
+  const menuItems: MenuProps['items'] = [
+    {
+      key: 'dashboard',
+      icon: <DashboardOutlined />,
+      label: 'Dashboard',
+    },
+    {
+      key: 'users',
+      icon: <UserOutlined />,
+      label: 'Benutzerverwaltung',
+      children: [
+        {
+          key: 'users-list',
+          label: 'Benutzerliste',
+        },
+        {
+          key: 'users-roles',
+          label: 'Rollen & Berechtigungen',
+        }
+      ]
+    },
+    {
+      key: 'inventory',
+      icon: <UserOutlined />,
+      label: 'Lagerverwaltung',
+      children: [
+        {
+          key: 'inventory-items',
+          label: 'Artikel',
+        },
+        {
+          key: 'inventory-categories',
+          label: 'Kategorien',
+        }
+      ]
+    },
+    {
+      key: 'analytics',
+      icon: <DashboardOutlined />,
+      label: 'Analysen',
+    },
+    {
+      key: 'settings',
+      icon: <SettingOutlined />,
+      label: 'Einstellungen',
+    }
+  ];
+
+  const userMenuItems: MenuProps['items'] = [
+    {
+      key: 'profile',
+      icon: <UserOutlined />,
+      label: 'Profil',
+    },
+    {
+      key: 'settings',
+      icon: <SettingOutlined />,
+      label: 'Einstellungen',
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Abmelden',
+    }
+  ];
+
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
+        <div style={{ 
+          height: 64, 
+          margin: 16, 
+          background: 'rgba(255, 255, 255, 0.2)', 
+          borderRadius: 6,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontWeight: 'bold'
+        }}>
+          {collapsed ? 'V' : 'VALEO'}
+        </div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['dashboard']}
+          items={menuItems}
+        />
+      </Sider>
+      
+      <Layout>
+        <Header style={{ 
+          padding: '0 16px', 
+          background: '#fff', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{ fontSize: '16px', width: 64, height: 64 }}
+          />
+          
+          <Space size="large">
+            <Button
+              type="text"
+              icon={<SearchOutlined />}
+              style={{ fontSize: '16px' }}
+            />
+            
+            <Badge count={5}>
+              <Button
+                type="text"
+                icon={<BellOutlined />}
+                style={{ fontSize: '16px' }}
+              />
+            </Badge>
+            
+            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+              <Space style={{ cursor: 'pointer' }}>
+                <Avatar icon={<UserOutlined />} />
+                <span>Max Mustermann</span>
+              </Space>
+            </Dropdown>
+          </Space>
+        </Header>
+        
+        <Content style={{ 
+          margin: '24px 16px', 
+          padding: 24, 
+          background: '#fff', 
+          borderRadius: 8,
+          minHeight: 280
+        }}>
+          {children}
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
+```
+
+### Loading und Error States
+```tsx
+import React from 'react';
+import { Spin, Skeleton, Alert, Empty, Button, Result } from 'antd';
+import { ReloadOutlined, PlusOutlined } from '@ant-design/icons';
+
+export const ValeoLoadingSpinner: React.FC = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: 400 
+  }}>
+    <Spin size="large" />
+  </div>
+);
+
+export const ValeoSkeletonCard: React.FC = () => (
+  <div style={{ padding: 24, background: '#fff', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+    <Skeleton active paragraph={{ rows: 3 }} />
+  </div>
+);
+
+export const ValeoErrorAlert: React.FC<{
+  error: string;
+  onRetry?: () => void;
+}> = ({ error, onRetry }) => (
+  <Alert
+    message="Fehler"
+    description={error}
+    type="error"
+    showIcon
+    action={
+      onRetry && (
+        <Button
+          size="small"
+          danger
+          icon={<ReloadOutlined />}
+          onClick={onRetry}
+        >
+          Wiederholen
+        </Button>
+      )
+    }
+  />
+);
+
+export const ValeoEmptyState: React.FC<{
+  title: string;
+  description: string;
+  actionText?: string;
+  onAction?: () => void;
+}> = ({ title, description, actionText, onAction }) => (
+  <Empty
+    image={Empty.PRESENTED_IMAGE_SIMPLE}
+    description={
+      <div>
+        <div style={{ fontSize: '16px', fontWeight: 500, marginBottom: 8 }}>
+          {title}
+        </div>
+        <div style={{ color: '#666' }}>
+          {description}
+        </div>
+      </div>
+    }
+  >
+    {actionText && onAction && (
+      <Button
+        type="primary"
+        icon={<PlusOutlined />}
+        onClick={onAction}
+      >
+        {actionText}
+      </Button>
+    )}
+  </Empty>
+);
+
+export const ValeoErrorResult: React.FC<{
+  title: string;
+  subTitle: string;
+  onRetry?: () => void;
+}> = ({ title, subTitle, onRetry }) => (
+  <Result
+    status="error"
+    title={title}
+    subTitle={subTitle}
+    extra={
+      onRetry && (
+        <Button
+          type="primary"
+          icon={<ReloadOutlined />}
+          onClick={onRetry}
+        >
+          Erneut versuchen
+        </Button>
+      )
+    }
+  />
+);
+```
+
+### Statistiken und Dashboard-Komponenten
+```tsx
+import React from 'react';
+import { Card, Statistic, Row, Col, Progress, Tag } from 'antd';
+import { 
+  UserOutlined, 
+  ShoppingCartOutlined, 
+  DollarOutlined, 
+  RiseOutlined,
+  FallOutlined 
+} from '@ant-design/icons';
+
+interface StatCardProps {
+  title: string;
+  value: number;
+  prefix?: React.ReactNode;
+  suffix?: string;
+  precision?: number;
+  valueStyle?: React.CSSProperties;
+  trend?: {
+    value: number;
+    type: 'up' | 'down';
+  };
+}
+
+export const ValeoStatCard: React.FC<StatCardProps> = ({
+  title,
+  value,
+  prefix,
+  suffix,
+  precision = 0,
+  valueStyle,
+  trend
+}) => (
+  <Card>
+    <Statistic
+      title={title}
+      value={value}
+      prefix={prefix}
+      suffix={suffix}
+      precision={precision}
+      valueStyle={valueStyle}
+    />
+    {trend && (
+      <div style={{ marginTop: 8 }}>
+        <Tag color={trend.type === 'up' ? 'green' : 'red'}>
+          {trend.type === 'up' ? <RiseOutlined /> : <FallOutlined />}
+          {trend.value}%
+        </Tag>
+        <span style={{ marginLeft: 8, fontSize: '12px', color: '#666' }}>
+          vs. letzter Monat
+        </span>
+      </div>
+    )}
+  </Card>
+);
+
+export const ValeoDashboard: React.FC = () => {
+  const stats = [
+    {
+      title: 'Aktive Benutzer',
+      value: 1247,
+      prefix: <UserOutlined />,
+      trend: { value: 12, type: 'up' as const }
+    },
+    {
+      title: 'Bestellungen',
+      value: 89,
+      prefix: <ShoppingCartOutlined />,
+      trend: { value: 5, type: 'up' as const }
+    },
+    {
+      title: 'Umsatz',
+      value: 125430,
+      prefix: <DollarOutlined />,
+      suffix: '€',
+      precision: 0,
+      trend: { value: 8, type: 'down' as const }
+    }
+  ];
+
+  return (
+    <div>
+      <Row gutter={[16, 16]}>
+        {stats.map((stat, index) => (
+          <Col xs={24} sm={12} lg={8} key={index}>
+            <ValeoStatCard {...stat} />
+          </Col>
+        ))}
+      </Row>
+      
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col xs={24} lg={12}>
+          <Card title="System-Performance">
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span>CPU-Auslastung</span>
+                <span>78%</span>
+              </div>
+              <Progress percent={78} status="active" />
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span>Speicherauslastung</span>
+                <span>65%</span>
+              </div>
+              <Progress percent={65} />
+            </div>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span>Festplattenauslastung</span>
+                <span>42%</span>
+              </div>
+              <Progress percent={42} />
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} lg={12}>
+          <Card title="Letzte Aktivitäten">
+            <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ color: '#1890ff' }}>Max Mustermann</span> hat einen neuen Benutzer erstellt
+                <div style={{ fontSize: '12px', color: '#666' }}>vor 5 Minuten</div>
+              </div>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ color: '#1890ff' }}>Anna Schmidt</span> hat eine Bestellung bearbeitet
+                <div style={{ fontSize: '12px', color: '#666' }}>vor 15 Minuten</div>
+              </div>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ color: '#1890ff' }}>System</span> hat ein Backup erstellt
+                <div style={{ fontSize: '12px', color: '#666' }}>vor 1 Stunde</div>
+              </div>
+            </div>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+```
+
+## 🎯 Ant Design Best Practices
+
+### Lokalisierung
+```tsx
+import { ConfigProvider } from 'antd';
+import deDE from 'antd/locale/de_DE';
+
+export const ValeoApp: React.FC = () => {
+  return (
+    <ConfigProvider
+      locale={deDE}
+      theme={{
+        token: {
+          colorPrimary: '#1890ff',
+          borderRadius: 6,
+        },
+      }}
+    >
+      {/* App Content */}
+    </ConfigProvider>
+  );
+};
+```
+
+### Responsive Design
+```tsx
+import { useBreakpoint } from 'antd/lib/grid/hooks/useBreakpoint';
+
+export const useResponsive = () => {
+  const screens = useBreakpoint();
+  
+  return {
+    isMobile: !screens.md,
+    isTablet: screens.md && !screens.lg,
+    isDesktop: screens.lg,
+    isLargeScreen: screens.xl
+  };
+};
+```
+
+Diese Regeln stellen sicher, dass alle Ant Design Komponenten konsistent, benutzerfreundlich und an das VALEO Design-System angepasst sind. 

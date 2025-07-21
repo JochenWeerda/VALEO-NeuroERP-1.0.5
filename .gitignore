@@ -33,7 +33,6 @@ wheels/
 *.egg
 .python-version
 venv/
-.env/
 .venv/
 .venv311/
 
@@ -213,3 +212,10 @@ data/mongodb/
 # Misc
 .DS_Store
 Thumbs.db 
+
+# Sensible Umgebungsdateien ausschließen
+.env
+.env.*
+config/.env
+# Beispiel für Umgebungsvariablen
+.env.example 

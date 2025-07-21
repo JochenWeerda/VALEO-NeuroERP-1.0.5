@@ -1,113 +1,512 @@
-:root {
-  --folkerts-green: #4a7c59;
-  --folkerts-light-green: #6ba378;
-  --folkerts-dark-green: #305a3a;
-  --folkerts-accent: #f9a03f;
-  --folkerts-light: #f5f5f5;
-  --folkerts-dark: #333333;
-  --folkerts-grey: #e0e0e0;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--folkerts-light);
-  color: var(--folkerts-dark);
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* VALEO NeuroERP Custom Styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+  
+  body {
+    background-color: #f9fafb;
+    color: #111827;
   }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+  /* VALEO Button Styles */
+  .btn-primary {
+    background-color: #2563eb;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .btn-secondary {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #d1d5db;
+  }
+  
+  .btn-success {
+    background-color: #16a34a;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-success:hover {
+    background-color: #15803d;
+  }
+  
+  .btn-warning {
+    background-color: #d97706;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-warning:hover {
+    background-color: #b45309;
+  }
+  
+  .btn-danger {
+    background-color: #dc2626;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-danger:hover {
+    background-color: #b91c1c;
+  }
+
+  /* Agent-spezifische Buttons */
+  .btn-agent {
+    background-color: #0284c7;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-agent:hover {
+    background-color: #0369a1;
+  }
+
+  .btn-ai {
+    background-color: #c026d3;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-ai:hover {
+    background-color: #a21caf;
+  }
+  
+  /* VALEO Card Styles */
+  .valeo-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+  }
+  
+  .valeo-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .valeo-card-header {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .valeo-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .valeo-card-subtitle {
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-top: 0.25rem;
+  }
+
+  /* Agent-spezifische Cards */
+  .agent-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: all 0.2s;
+  }
+  
+  .agent-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-card {
+    background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
+    border: 1px solid #f5d0fe;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: all 0.2s;
+  }
+  
+  .ai-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* VALEO Form Styles */
+  .valeo-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.2s;
+  }
+  
+  .valeo-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .valeo-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Agent-spezifische Inputs */
+  .agent-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #7dd3fc;
+    border-radius: 0.5rem;
+    background-color: #f0f9ff;
+    transition: border-color 0.2s;
+  }
+  
+  .agent-input:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  }
+  
+  /* VALEO Navigation Styles */
+  .valeo-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: #374151;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+  
+  .valeo-nav-link:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+  }
+  
+  .valeo-nav-link.active {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  /* Agent-spezifische Navigation */
+  .agent-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: #0369a1;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+  
+  .agent-nav-link:hover {
+    background-color: #e0f2fe;
+    color: #0c4a6e;
+  }
+  
+  .agent-nav-link.active {
+    background-color: #bae6fd;
+    color: #075985;
+  }
+  
+  /* VALEO Status Indicators */
+  .status-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+  }
+  
+  .status-dot.success {
+    background-color: #22c55e;
+  }
+  
+  .status-dot.warning {
+    background-color: #f59e0b;
+  }
+  
+  .status-dot.danger {
+    background-color: #ef4444;
+  }
+  
+  .status-dot.info {
+    background-color: #3b82f6;
+  }
+
+  .status-dot.agent {
+    background-color: #0ea5e9;
+  }
+
+  .status-dot.ai {
+    background-color: #d946ef;
+  }
+  
+  /* VALEO Dashboard Grid */
+  .valeo-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .valeo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .valeo-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .valeo-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  /* VALEO Loading States */
+  .valeo-loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    background-color: #e5e7eb;
+    border-radius: 0.25rem;
+  }
+
+  /* Agent-spezifische Loading States */
+  .agent-loading {
+    animation: agentThinking 2s ease-in-out infinite;
+    background-color: #bae6fd;
+    border-radius: 0.25rem;
+  }
+
+  .ai-loading {
+    animation: aiProcessing 1.5s ease-in-out infinite;
+    background-color: #f5d0fe;
+    border-radius: 0.25rem;
+  }
+  
+  /* VALEO Animations */
+  .valeo-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .valeo-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  /* Agent-spezifische Komponenten */
+  .agent-suggestion {
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .agent-suggestion-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .agent-suggestion-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #0ea5e9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+  }
+
+  .agent-suggestion-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #0c4a6e;
+  }
+
+  .agent-suggestion-content {
+    font-size: 0.875rem;
+    color: #0369a1;
+  }
+
+  .agent-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  /* AI-spezifische Komponenten */
+  .ai-insight {
+    background-color: #fdf4ff;
+    border: 1px solid #f5d0fe;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .ai-insight-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .ai-insight-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #d946ef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+  }
+
+  .ai-insight-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #86198f;
+  }
+
+  .ai-insight-content {
+    font-size: 0.875rem;
+    color: #a21caf;
+  }
+
+  /* Agent Processing Overlay */
+  .agent-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+
+  .agent-processing {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 28rem;
+    margin: 0 1rem;
+    text-align: center;
+  }
+
+  .agent-processing-icon {
+    width: 3rem;
+    height: 3rem;
+    background-color: #0ea5e9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    animation: agentThinking 2s ease-in-out infinite;
+  }
+
+  .agent-processing-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 0.5rem;
+  }
+
+  .agent-processing-subtext {
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
 }
 
-.MuiContainer-root {
-  padding-top: 1rem;
-  padding-bottom: 2rem;
+@layer utilities {
+  /* VALEO Custom Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Agent-spezifische Utilities */
+  .agent-blur {
+    backdrop-filter: blur(2px);
+  }
+
+  .agent-glow {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  }
+
+  .ai-glow {
+    box-shadow: 0 0 20px rgba(217, 70, 239, 0.3);
+  }
 }
 
-/* Scrollbar-Stile für Webkit-Browser */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Keyframes für Animationen */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+@keyframes slideUp {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+@keyframes agentThinking {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+@keyframes aiProcessing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
