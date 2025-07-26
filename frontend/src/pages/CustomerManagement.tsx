@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -89,6 +89,19 @@ const CustomerManagement: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogType, setDialogType] = useState<'kunde' | 'lead' | 'aktivitaet' | 'chance' | 'kontakt' | 'protokoll' | 'eintrag'>('kunde');
+  const [customers, setCustomers] = useState<any[]>([]);
+  const [statistics, setStatistics] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(20);
+  const [total, setTotal] = useState(0);
+
+  // Import the new CRM service
+  useEffect(() => {
+    // Load customers and statistics when component mounts
+    // This will be implemented with the new API
+  }, []);
 
   // Mock-Daten für KPI-Cards
   const kpiData = {

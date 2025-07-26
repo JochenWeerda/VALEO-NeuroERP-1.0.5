@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALEO NeuroERP - AI Integration Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">VALEO NeuroERP</h1>
+                        <p class="text-blue-100">AI-Integration Demo</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        AI Service Online
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- AI Features Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">AI-Barcode Generator</h3>
+                    <p class="text-gray-600 text-sm">
+                        Intelligente Barcode-Vorschläge basierend auf Produktanalyse, 
+                        Markttrends und Kategorie-Mustern.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Marktanalyse</h3>
+                    <p class="text-gray-600 text-sm">
+                        Echtzeit-Markttrends, Nachfrageprognosen und 
+                        Preisanalysen für optimale Entscheidungen.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Produktoptimierung</h3>
+                    <p class="text-gray-600 text-sm">
+                        KI-gestützte Produktempfehlungen und 
+                        Kategorisierung für bessere Kundenorientierung.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Barcode Generator Demo -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">AI-Barcode Generator</h2>
+                <span class="bg-green-500 text-white px-2 py-1 rounded text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+
+            <!-- Input Section -->
+            <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Produkt für Barcode-Vorschläge</h3>
+                <div class="flex space-x-4">
+                    <input 
+                        type="text" 
+                        id="productName"
+                        placeholder="z.B. iPhone 15 Pro, Harry Potter Box Set"
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                    <button 
+                        onclick="getBarcodeSuggestions()"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                    >
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"></path>
+                        </svg>
+                        <span>Vorschläge</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="hidden text-center py-8">
+                <div class="inline-flex items-center space-x-2">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                    <span class="text-gray-600">Analysiere Produkt...</span>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span id="errorMessage" class="text-red-700 font-medium"></span>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="hidden">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">AI-Barcode Vorschläge</h3>
+                <div id="suggestionsList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Suggestions will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Info Section -->
+            <div id="info" class="bg-blue-50 rounded-lg p-4">
+                <p class="text-blue-800 text-sm">
+                    <strong>💡 Tipp:</strong> Geben Sie einen Produktnamen ein, um intelligente 
+                    Barcode-Vorschläge basierend auf KI-Analyse zu erhalten. Das System berücksichtigt 
+                    Produktkategorien, Markttrends und ähnliche Produkte für optimale Empfehlungen.
+                </p>
+            </div>
+        </div>
+
+        <!-- AI Service Status -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">🤖 AI-Service Status</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600">Barcode AI Service:</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-green-600 font-medium">Online</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600">Marktanalyse Service:</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-green-600 font-medium">Online</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600">Produktoptimierung:</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <span class="text-yellow-600 font-medium">In Entwicklung</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">📊 AI-Features Übersicht</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">✅ Verfügbar</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Intelligente Barcode-Generierung</li>
+                            <li>• Markttrend-Analyse</li>
+                            <li>• Produktkategorisierung</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">🔄 In Entwicklung</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Erweiterte Produktoptimierung</li>
+                            <li>• Predictive Analytics</li>
+                            <li>• Automatische Bestellvorschläge</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function getBarcodeSuggestions() {
+            const productName = document.getElementById('productName').value.trim();
+            
+            if (!productName) {
+                showError('Bitte geben Sie einen Produktnamen ein');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('info').classList.add('hidden');
+
+            try {
+                const response = await fetch('http://localhost:8000/api/ai/barcode/suggestions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ product_name: productName }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Fehler beim Abrufen der Barcode-Vorschläge');
+                }
+
+                const data = await response.json();
+                const suggestions = data.suggestions || [];
+                
+                displaySuggestions(suggestions);
+            } catch (error) {
+                showError(error.message || 'Unbekannter Fehler');
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('error').classList.remove('hidden');
+        }
+
+        function displaySuggestions(suggestions) {
+            const container = document.getElementById('suggestionsList');
+            container.innerHTML = '';
+
+            suggestions.forEach(suggestion => {
+                const card = createSuggestionCard(suggestion);
+                container.appendChild(card);
+            });
+
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        function createSuggestionCard(suggestion) {
+            const card = document.createElement('div');
+            card.className = 'bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow';
+            
+            const confidenceColor = suggestion.confidence_score >= 0.8 ? 'green' : 
+                                  suggestion.confidence_score >= 0.6 ? 'yellow' : 'red';
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <h4 class="text-lg font-semibold text-gray-900">${suggestion.product_name}</h4>
+                    <span class="bg-${confidenceColor}-100 text-${confidenceColor}-800 px-2 py-1 rounded text-sm font-medium">
+                        ${Math.round(suggestion.confidence_score * 100)}%
+                    </span>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-2"><strong>Vorgeschlagener Barcode:</strong></p>
+                    <code class="bg-gray-100 px-3 py-2 rounded text-lg font-mono">${suggestion.suggested_barcode}</code>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-2"><strong>Begründung:</strong></p>
+                    <p class="text-sm">${suggestion.reasoning}</p>
+                </div>
+                
+                <div class="mb-4">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">${suggestion.category}</span>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-2"><strong>Markt-Trends:</strong></p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Nachfrage: ${suggestion.market_trends.demand_trend}</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Preis: ${suggestion.market_trends.price_trend}</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Saisonalität: ${suggestion.market_trends.seasonality}</span>
+                    </div>
+                </div>
+                
+                ${suggestion.similar_products.length > 0 ? `
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-2"><strong>Ähnliche Produkte:</strong></p>
+                    <div class="flex flex-wrap gap-1">
+                        ${suggestion.similar_products.map(product => 
+                            `<span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">${product}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+                ` : ''}
+                
+                <button onclick="selectBarcode('${suggestion.suggested_barcode}')" 
+                        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    Barcode verwenden
+                </button>
+            `;
+            
+            return card;
+        }
+
+        function selectBarcode(barcode) {
+            alert(`Barcode "${barcode}" wurde ausgewählt!`);
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('productName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getBarcodeSuggestions();
+            }
+        });
+    </script>
+</body>
+</html> 

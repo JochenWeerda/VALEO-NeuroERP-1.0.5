@@ -1,0 +1,444 @@
+{
+  "Chargenverwaltung": {
+    "Charge": {
+      "Metadaten": {
+        "Chargen_ID": "string",
+        "Artikel_Nr": "string",
+        "Artikel_Bezeichnung": "string",
+        "Menge": "float",
+        "Einheit": "string",
+        "Lieferdatum": "date",
+        "Lieferant_ID": "string",
+        "Lieferant_Name": "string",
+        "MHD": "date",
+        "Lagerort": "string",
+        "Lagerfach": "string",
+        "Erstellt_am": "date",
+        "Erstellt_von": "string",
+        "Geaendert_am": "date",
+        "Geaendert_von": "string",
+        "Version": "string"
+      },
+      "Chargen_ID_Generierung": {
+        "Automatische_ID": "string",
+        "Manuelle_ID": "string",
+        "Format": "string",
+        "Komponenten": {
+          "Jahr": "string",
+          "Monat": "string",
+          "Tag": "string",
+          "Artikel_Kategorie": "string",
+          "Herkunfts_Code": "string",
+          "Sequenz": "string",
+          "Lieferant_Code": "string"
+        },
+        "Selbsterklaerend": "boolean",
+        "Beispiel": "240315-GET-LIEF-001"
+      },
+      "Warenbewegungen": {
+        "Wareneingang": {
+          "Datum": "date",
+          "Lieferschein_Nr": "string",
+          "Menge": "float",
+          "Einheit": "string",
+          "Preis": "float",
+          "Waehrung": "string",
+          "Bediener": "string"
+        },
+        "Warenausgang": [
+          {
+            "Datum": "date",
+            "Lieferschein_Nr": "string",
+            "Kunde_ID": "string",
+            "Kunde_Name": "string",
+            "Menge": "float",
+            "Einheit": "string",
+            "Preis": "float",
+            "Waehrung": "string",
+            "Bediener": "string"
+          }
+        ],
+        "Umlagerung": [
+          {
+            "Datum": "date",
+            "Von_Lagerort": "string",
+            "Nach_Lagerort": "string",
+            "Menge": "float",
+            "Bediener": "string"
+          }
+        ],
+        "Produktion": [
+          {
+            "Datum": "date",
+            "Produktionsauftrag_Nr": "string",
+            "Menge": "float",
+            "Einheit": "string",
+            "Bediener": "string"
+          }
+        ]
+      },
+      "QS_Attribute": {
+        "VLOG_Kennzeichnung": {
+          "GVO_Status": {
+            "Wert": "string",
+            "Enum_Werte": [
+              "GVO_frei_zertifiziert",
+              "GVO_frei_eigene_Erklaerung",
+              "GVO_Spuren_unter_0_9_Prozent",
+              "GVO_enthaltend_Kennzeichnungspflichtig",
+              "Nicht_relevant"
+            ],
+            "Quelldaten": {
+              "Primaer": "string",
+              "Sekundaer": "string",
+              "Automatische_Befuellung": "boolean"
+            },
+            "Validierung": {
+              "Manuelle_Bestaetigung_Erforderlich": "boolean",
+              "Warnhinweis_bei_Widerspruch": "boolean",
+              "Letzte_Validierung": "date",
+              "Validierung_durch": "string"
+            }
+          },
+          "VLOG_Zertifikat": {
+            "Zertifikat_Nr": "string",
+            "Aussteller": "string",
+            "Gueltig_bis": "date",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string"
+          }
+        },
+        "QS_Milch_Relevanz": {
+          "QS_Milch_relevant": "boolean",
+          "Aflatoxin_Wert": {
+            "Wert": "float",
+            "Einheit": "string",
+            "Grenzwert": "float",
+            "Quelldaten": "string",
+            "Validierung": {
+              "Pflichtfeld": "boolean",
+              "Grenzwert_Pruefung": "boolean",
+              "Warnmeldung_bei_Ueberschreitung": "boolean",
+              "Automatische_Sperrung": "boolean"
+            }
+          },
+          "QM_Milch_Lieferanten_QS_Status": {
+            "Status": "string",
+            "Enum_Werte": [
+              "Zertifiziert",
+              "In_Pruefung",
+              "Nicht_zertifiziert"
+            ],
+            "QS_Nummer": "string",
+            "Pruefung_Datum": "date",
+            "Warnung_bei_Nicht_zertifiziert": "boolean"
+          },
+          "Analysenzertifikat": {
+            "Zertifikat_Nr": "string",
+            "Labor": "string",
+            "Datum": "date",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string"
+          }
+        }
+      },
+      "Nachhaltigkeit": {
+        "EUDR_Konformitaet": {
+          "EUDR_Konform": "boolean",
+          "Entwaldungsfreiheit_Stichtag_2020": "boolean",
+          "Geo_Koordinaten_Anbauflaeche": {
+            "Typ": "string",
+            "Koordinaten": "string",
+            "JSON_Format": "object",
+            "Visualisierung_Moeglich": "boolean",
+            "GIS_Schnittstelle": "boolean"
+          },
+          "Rechtskonformitaet_Produktionsland": "boolean",
+          "Sorgfaltserklaerung": {
+            "Datum": "date",
+            "Aussteller": "string",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string"
+          },
+          "Validierung": {
+            "Pflichtfeld": "boolean",
+            "Initial_False": "boolean",
+            "Dokumentation_Vollstaendig": "boolean",
+            "Automatische_Sperrung_bei_False": "boolean"
+          }
+        },
+        "Nachhaltigkeit_Raps": {
+          "Nachhaltig_Raps_relevant": "boolean",
+          "Landnutzungs_Konformitaet": {
+            "Wert": "string",
+            "Enum_Werte": [
+              "Konform_Ackerstatus_2008",
+              "Konform_Kein_Hoch_Biodiverses_Gruenland_nach_2008",
+              "Nicht_konform"
+            ],
+            "Quelldaten": "string",
+            "Validierung": {
+              "Pflichtfeld": "boolean",
+              "Automatische_Sperrung_bei_Nicht_konform": "boolean",
+              "Warnmeldung": "boolean"
+            }
+          },
+          "Zertifizierung_System": {
+            "System": "string",
+            "Enum_Werte": [
+              "ISCC",
+              "REDcert_EU",
+              "Keine"
+            ],
+            "Zertifikat_Nr": "string",
+            "Gueltig_bis": "date"
+          },
+          "Nachhaltigkeitszertifikat": {
+            "Zertifikat_Nr": "string",
+            "Aussteller": "string",
+            "Datum": "date",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string"
+          }
+        }
+      },
+      "Status_Management": {
+        "Aktueller_Status": "string",
+        "Status_Enum": [
+          "Neu",
+          "In_Qualitaetspruefung",
+          "Gesperrt_Qualitaet",
+          "Freigegeben_QS",
+          "Aktiv",
+          "Gesperrt_Nachhaltigkeit",
+          "Abgelaufen",
+          "Verbraucht"
+        ],
+        "Status_Historie": [
+          {
+            "Datum": "date",
+            "Zeit": "string",
+            "Alter_Status": "string",
+            "Neuer_Status": "string",
+            "Grund": "string",
+            "Bediener": "string"
+          }
+        ],
+        "Automatische_Statuswechsel": {
+          "Aktiviert": "boolean",
+          "Regeln": [
+            {
+              "Bedingung": "string",
+              "Neuer_Status": "string",
+              "Aktiv": "boolean"
+            }
+          ]
+        }
+      },
+      "Dokumente": {
+        "Zertifikate": [
+          {
+            "Typ": "string",
+            "Bezeichnung": "string",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string",
+            "Gueltig_bis": "date",
+            "Status": "string"
+          }
+        ],
+        "Analysen": [
+          {
+            "Typ": "string",
+            "Labor": "string",
+            "Datum": "date",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string"
+          }
+        ],
+        "Lieferscheine": [
+          {
+            "Lieferschein_Nr": "string",
+            "Datum": "date",
+            "Datei_Pfad": "string",
+            "Hochgeladen_am": "date",
+            "Hochgeladen_von": "string"
+          }
+        ]
+      }
+    },
+    "Workflow_Integration": {
+      "Wareneingangsprozess": {
+        "Automatische_Erkennung": {
+          "OCR_Schnittstelle": "boolean",
+          "Strukturdaten_Schnittstelle": "boolean",
+          "Erkannte_Felder": [
+            "Chargen_ID",
+            "Artikel_Nr",
+            "Menge",
+            "Lieferant_ID",
+            "Zertifikate"
+          ],
+          "Konfidenz_Score": "float"
+        },
+        "Workflow_fuer_fehlende_Daten": {
+          "Aktiviert": "boolean",
+          "Benachrichtigung_QS": "boolean",
+          "Charge_gesperrt_bis_Freigabe": "boolean",
+          "Verantwortliche_Person": "string",
+          "Workflow_Status": "string"
+        },
+        "Upload_Zertifikate": {
+          "Unterstuetze_Formate": [
+            "PDF",
+            "JPG",
+            "PNG",
+            "TIF"
+          ],
+          "Max_Dateigroesse": "string",
+          "Automatische_Verknuepfung": "boolean"
+        }
+      }
+    },
+    "Auswertungen_Berichte": {
+      "Filter_Suchfunktionen": {
+        "Filter_Attribute": [
+          "GVO_Status",
+          "QS_Milch_relevant",
+          "EUDR_Konform",
+          "Nachhaltig_Raps_relevant",
+          "Chargen_Status"
+        ],
+        "Erweiterte_Suche": {
+          "Beispiel_1": "Alle_Soja_Chargen_nicht_EUDR_konform",
+          "Beispiel_2": "Alle_Maismehl_Chargen_Aflatoxin_ueber_X",
+          "Beispiel_3": "Alle_GVO_freien_Chargen"
+        }
+      },
+      "Audit_Trail": {
+        "Aktiviert": "boolean",
+        "Protokollierung": [
+          {
+            "Datum": "date",
+            "Zeit": "string",
+            "Benutzer": "string",
+            "Aktion": "string",
+            "Alter_Wert": "string",
+            "Neuer_Wert": "string",
+            "IP_Adresse": "string"
+          }
+        ]
+      },
+      "Berichtswesen": {
+        "QS_Standards": [
+          {
+            "Bericht_Typ": "string",
+            "Beispiel": "Aflatoxin_Uebersicht",
+            "Generierung": "string",
+            "Export_Format": [
+              "PDF",
+              "Excel",
+              "CSV"
+            ]
+          }
+        ],
+        "Nachhaltigkeitsanforderungen": [
+          {
+            "Bericht_Typ": "string",
+            "Beispiel": "EUDR_Konformitaet_Soja_Lieferungen",
+            "Generierung": "string",
+            "Export_Format": [
+              "PDF",
+              "Excel",
+              "CSV"
+            ]
+          }
+        ]
+      }
+    },
+    "KI_Erweiterung": {
+      "Intelligente_Vorschlaege": {
+        "Attribut_Bewertung": {
+          "Aktiviert": "boolean",
+          "Beispiel": "hoechstwahrscheinlich_EUDR_konform_basierend_Vorjahresdaten",
+          "Konfidenz_Score": "float"
+        },
+        "Automatisierte_Klassifizierung": {
+          "Warengruppe_Vorschlag": "string",
+          "GVO_Status_Vorschlag": "string",
+          "QS_Relevanz_Vorschlag": "boolean",
+          "Konfidenz_Score": "float"
+        },
+        "Sperrvermerk_Vorschlag": {
+          "Vorschlag": "string",
+          "Begruendung": "string",
+          "Zertifikatluecken": [
+            "string"
+          ],
+          "Konfidenz_Score": "float"
+        }
+      },
+      "Anomalie_Erkennung": {
+        "Preis_Anomalien": "boolean",
+        "Qualitaets_Anomalien": "boolean",
+        "Dokumentations_Anomalien": "boolean",
+        "Anomalie_Score": "float",
+        "Anomalie_Begruendung": "string"
+      },
+      "Prognose_Modelle": {
+        "Qualitaets_Prognose": "float",
+        "Haltbarkeits_Prognose": "date",
+        "Nachfrage_Prognose": "float",
+        "Konfidenz_Score": "float"
+      }
+    },
+    "Schnittstellen": {
+      "Lieferantendatenbank": {
+        "QS_ID_Pruefung": "boolean",
+        "API_Schnittstelle": "string",
+        "CSV_Import": "boolean",
+        "Aktualisierung_Intervall": "string"
+      },
+      "OCR_Scanning": {
+        "Microservice": "string",
+        "Lieferscheinparser": "boolean",
+        "Automatische_Extraktion": [
+          "Chargen_ID",
+          "Artikel",
+          "Menge",
+          "Lieferant",
+          "Zertifikate"
+        ],
+        "Konfidenz_Score": "float"
+      },
+      "GIS_Dienste": {
+        "Externe_GIS_Schnittstelle": "boolean",
+        "Entwaldungshistorie_Pruefung": "boolean",
+        "API_Endpoint": "string"
+      }
+    },
+    "Konfiguration": {
+      "Skalierbarkeit": {
+        "Max_Chargen_Anzahl": "int",
+        "Max_Attribute_Anzahl": "int",
+        "Partitionierung": "boolean"
+      },
+      "Flexibilitaet": {
+        "Konfigurierbare_Regeln": "boolean",
+        "Erweiterbare_Attribute": "boolean",
+        "Plugin_System": "boolean"
+      },
+      "Benutzerfreundlichkeit": {
+        "Intuitive_Oberflaeche": "boolean",
+            "Manuelle_Dateneingabe": "boolean",
+            "Datenpruefung": "boolean",
+            "Hilfe_System": "boolean"
+      }
+    }
+  }
+} 

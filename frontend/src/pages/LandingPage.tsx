@@ -98,16 +98,15 @@ import {
   Logout as LogoutIcon,
   Login as LoginIcon,
   Menu as MenuIcon,
+  BugReport as BugReportIcon,
   Close as CloseIcon,
-  Home as HomeIcon,
-  Assessment as AssessmentIcon,
   BarChart as BarChartIcon,
-  PieChart as PieChartIcon,
   Timeline as TimelineIcon,
-  TrendingUp as TrendingUpIcon2,
   ShowChart as ShowChartIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { Last9Test } from '../components/DataDogTest';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -184,15 +183,12 @@ interface BIParameter {
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
   const [tabValue, setTabValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<string>('');
-  
-  // Neue States für Header-Features
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({ name: 'Max Mustermann', email: 'max@valeo.de' });
   const [darkMode, setDarkMode] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
@@ -305,7 +301,7 @@ const LandingPage: React.FC = () => {
   const availableFavorites: FavoriteItem[] = [
     { id: '1', title: 'Dashboard', type: 'menu', path: '/dashboard', icon: <DashboardIcon />, category: 'Navigation' },
     { id: '2', title: 'Umsatz-Analyse', type: 'bi', path: '/analytics/sales', icon: <BarChartIcon />, category: 'Business Intelligence' },
-    { id: '3', title: 'Kundenzufriedenheit', type: 'parameter', path: '/kpi/satisfaction', icon: <TrendingUpIcon2 />, category: 'KPIs' },
+    { id: '3', title: 'Kundenzufriedenheit', type: 'parameter', path: '/kpi/satisfaction', icon: <TrendingUpIcon />, category: 'KPIs' },
     { id: '4', title: 'Lagerbestand', type: 'bi', path: '/analytics/inventory', icon: <InventoryIcon />, category: 'Business Intelligence' },
     { id: '5', title: 'Personal-Management', type: 'menu', path: '/personal', icon: <PersonIcon />, category: 'Navigation' },
     { id: '6', title: 'Produktivität', type: 'parameter', path: '/kpi/productivity', icon: <ShowChartIcon />, category: 'KPIs' }
@@ -352,12 +348,11 @@ const LandingPage: React.FC = () => {
   };
 
   const handleLogin = () => {
-    setIsLoggedIn(true);
-    setUserMenuAnchorEl(null);
+    navigate('/login');
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     setUserMenuAnchorEl(null);
   };
 
@@ -472,14 +467,44 @@ const LandingPage: React.FC = () => {
             <SettingsIcon />
           </IconButton>
 
+          {/* Login Button */}
+          {!isAuthenticated && (
+            <Tooltip title="Anmelden">
+              <IconButton
+                color="inherit"
+                onClick={handleLogin}
+                sx={{ mr: 1 }}
+              >
+                <LoginIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+
+          {/* Last9 Test Button */}
+          <Tooltip title="Last9 Observability Test">
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                // Scroll to Last9 Test component
+                const last9Test = document.getElementById('last9-test');
+                if (last9Test) {
+                  last9Test.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              sx={{ mr: 1 }}
+            >
+              <BugReportIcon />
+            </IconButton>
+          </Tooltip>
+
           {/* Benutzer-Menü */}
           <IconButton
             color="inherit"
             onClick={(e) => setUserMenuAnchorEl(e.currentTarget)}
           >
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
-                {user.name.charAt(0)}
+                {user?.full_name?.charAt(0) || user?.username?.charAt(0) || 'U'}
               </Avatar>
             ) : (
               <AccountCircleIcon />
@@ -492,19 +517,19 @@ const LandingPage: React.FC = () => {
             open={Boolean(userMenuAnchorEl)}
             onClose={() => setUserMenuAnchorEl(null)}
           >
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <>
                 <MenuItem onClick={() => setUserMenuAnchorEl(null)}>
                   <ListItemIcon>
                     <AccountCircleIcon fontSize="small" />
                   </ListItemIcon>
-                  {user.name}
+                  {user?.full_name || user?.username || 'Unbekannter Benutzer'}
                 </MenuItem>
                 <MenuItem onClick={() => setUserMenuAnchorEl(null)}>
                   <ListItemIcon>
                     <EmailIcon fontSize="small" />
                   </ListItemIcon>
-                  {user.email}
+                  {user?.email}
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={handleLogout}>
@@ -637,9 +662,9 @@ const LandingPage: React.FC = () => {
                 <ListItem key={param.id} sx={{ px: 0 }}>
                   <ListItemIcon sx={{ minWidth: 40 }}>
                     {param.trend === 'up' ? (
-                      <TrendingUpIcon2 color="success" />
+                      <TrendingUpIcon color="success" />
                     ) : param.trend === 'down' ? (
-                      <TrendingUpIcon2 color="error" sx={{ transform: 'rotate(180deg)' }} />
+                      <TrendingUpIcon color="error" sx={{ transform: 'rotate(180deg)' }} />
                     ) : (
                       <TimelineIcon color="action" />
                     )}
@@ -1287,6 +1312,11 @@ const LandingPage: React.FC = () => {
           <Button onClick={() => setOpenVideoDialog(false)}>Schließen</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Last9 Test */}
+      <Box id="last9-test" sx={{ mt: 4 }}>
+        <Last9Test />
+      </Box>
     </Box>
   );
 };

@@ -1,0 +1,100 @@
+{
+  "mode": "CREATE",
+  "description": "Codegenerierung, Ressourcenbereitstellung, Entwurfsmuster, Architekturprinzipien, Tests - Modus für die Implementierung",
+  "rules": [
+    {
+      "id": "create-1",
+      "description": "Generiere Code basierend auf dem Lösungsdesign aus dem PLAN-Modus",
+      "priority": "high"
+    },
+    {
+      "id": "create-2",
+      "description": "Implementiere die Aufgaben in der festgelegten Reihenfolge",
+      "priority": "high"
+    },
+    {
+      "id": "create-3",
+      "description": "Verwende etablierte Entwurfsmuster für wiederkehrende Probleme",
+      "priority": "medium"
+    },
+    {
+      "id": "create-4",
+      "description": "Halte dich an die Architekturprinzipien des Projekts",
+      "priority": "high"
+    },
+    {
+      "id": "create-5",
+      "description": "Erstelle Ressourcenanforderungen für die Implementierung",
+      "priority": "medium"
+    },
+    {
+      "id": "create-6",
+      "description": "Implementiere Tests für den generierten Code",
+      "priority": "high"
+    },
+    {
+      "id": "create-7",
+      "description": "Dokumentiere den Code und die Implementierungsentscheidungen",
+      "priority": "medium"
+    },
+    {
+      "id": "create-8",
+      "description": "Berücksichtige Sicherheits- und Leistungsaspekte",
+      "priority": "high"
+    },
+    {
+      "id": "create-9",
+      "description": "Überprüfe die Codequalität und Einhaltung von Standards",
+      "priority": "medium"
+    },
+    {
+      "id": "create-10",
+      "description": "Verwende die MongoDB-Integration, um Code-Artefakte und Tests zu speichern",
+      "priority": "medium"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "code_artifacts",
+      "description": "Generierte Code-Artefakte",
+      "format": "code"
+    },
+    {
+      "name": "resource_requirements",
+      "description": "Ressourcenanforderungen für die Implementierung",
+      "format": "markdown"
+    },
+    {
+      "name": "design_patterns",
+      "description": "Verwendete Entwurfsmuster mit Begründung",
+      "format": "markdown"
+    },
+    {
+      "name": "test_cases",
+      "description": "Testfälle für den generierten Code",
+      "format": "code"
+    }
+  ],
+  "mongodb_collections": [
+    {
+      "name": "code_artifacts",
+      "description": "Sammlung von Code-Artefakten"
+    },
+    {
+      "name": "resource_requirements",
+      "description": "Sammlung von Ressourcenanforderungen"
+    },
+    {
+      "name": "design_patterns",
+      "description": "Sammlung von verwendeten Entwurfsmustern"
+    },
+    {
+      "name": "test_cases",
+      "description": "Sammlung von Testfällen"
+    },
+    {
+      "name": "create_results",
+      "description": "Sammlung von Ergebnissen der Erstellungsphase"
+    }
+  ]
+} 

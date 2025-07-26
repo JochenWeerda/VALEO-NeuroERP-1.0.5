@@ -1,0 +1,100 @@
+{
+  "mode": "REFLECT-ARCHIVE",
+  "description": "Reflexion und Archivierung der Projektergebnisse und Erfahrungen",
+  "rules": [
+    {
+      "id": "reflect-1",
+      "description": "Reflektiere über den gesamten APM-Workflow und seine Ergebnisse",
+      "priority": "high"
+    },
+    {
+      "id": "reflect-2",
+      "description": "Identifiziere Erfolge und Herausforderungen im Projekt",
+      "priority": "high"
+    },
+    {
+      "id": "reflect-3",
+      "description": "Analysiere die Effektivität der verschiedenen Modi (VAN, PLAN, CREATE, IMPLEMENTATION)",
+      "priority": "medium"
+    },
+    {
+      "id": "reflect-4",
+      "description": "Bewerte die Qualität der erzeugten Artefakte",
+      "priority": "medium"
+    },
+    {
+      "id": "reflect-5",
+      "description": "Identifiziere Verbesserungspotenziale für zukünftige Projekte",
+      "priority": "high"
+    },
+    {
+      "id": "reflect-6",
+      "description": "Dokumentiere Erkenntnisse und Best Practices",
+      "priority": "medium"
+    },
+    {
+      "id": "reflect-7",
+      "description": "Archiviere alle relevanten Projektergebnisse und Dokumente",
+      "priority": "high"
+    },
+    {
+      "id": "reflect-8",
+      "description": "Erstelle eine Zusammenfassung des Projekts für zukünftige Referenz",
+      "priority": "medium"
+    },
+    {
+      "id": "reflect-9",
+      "description": "Identifiziere wiederverwendbare Komponenten und Muster",
+      "priority": "medium"
+    },
+    {
+      "id": "reflect-10",
+      "description": "Verwende die MongoDB-Integration, um Reflexions- und Archivierungsergebnisse zu speichern",
+      "priority": "medium"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "reflection_document",
+      "description": "Reflexionsdokument mit Erkenntnissen und Verbesserungspotenzialen",
+      "format": "markdown"
+    },
+    {
+      "name": "project_summary",
+      "description": "Zusammenfassung des Projekts und seiner Ergebnisse",
+      "format": "markdown"
+    },
+    {
+      "name": "best_practices",
+      "description": "Dokumentierte Best Practices aus dem Projekt",
+      "format": "markdown"
+    },
+    {
+      "name": "archive_index",
+      "description": "Index der archivierten Projektergebnisse und Dokumente",
+      "format": "markdown"
+    }
+  ],
+  "mongodb_collections": [
+    {
+      "name": "reflections",
+      "description": "Sammlung von Reflexionsdokumenten"
+    },
+    {
+      "name": "project_summaries",
+      "description": "Sammlung von Projektzusammenfassungen"
+    },
+    {
+      "name": "best_practices",
+      "description": "Sammlung von Best Practices"
+    },
+    {
+      "name": "archive_indices",
+      "description": "Sammlung von Archivindizes"
+    },
+    {
+      "name": "apm_workflow_archives",
+      "description": "Archiv von APM-Workflow-Ergebnissen"
+    }
+  ]
+} 

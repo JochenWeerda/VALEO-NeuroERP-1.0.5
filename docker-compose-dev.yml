@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: docker/api-server.Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://valeo_user:valeo_password@host.docker.internal:5432/valeo_neuroerp
+    volumes:
+      - ./backend:/app/backend
+    command: ["uvicorn", "backend.simple_server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend-server.Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules 

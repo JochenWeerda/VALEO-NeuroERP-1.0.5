@@ -1,0 +1,39 @@
+{
+  "thresholds": {
+    "codeCoverage": 0.9,
+    "testPassRate": 0.95,
+    "securityScore": 0.9,
+    "performanceScore": 0.8,
+    "maintainabilityScore": 0.8,
+    "documentationScore": 0.7
+  },
+  "rules": [
+    {
+      "id": "no-critical-bugs",
+      "name": "Keine kritischen Bugs",
+      "type": "blocking",
+      "condition": "bugSeverity === \"critical\"",
+      "action": "reject"
+    },
+    {
+      "id": "security-compliance",
+      "name": "Sicherheits-Compliance",
+      "type": "blocking",
+      "condition": "securityScore < 0.9",
+      "action": "reject"
+    },
+    {
+      "id": "performance-requirement",
+      "name": "Performance-Anforderung",
+      "type": "warning",
+      "condition": "performanceScore < 0.8",
+      "action": "optimize"
+    }
+  ],
+  "automation": {
+    "enabled": true,
+    "autoFix": true,
+    "autoOptimize": true,
+    "autoTest": true
+  }
+}

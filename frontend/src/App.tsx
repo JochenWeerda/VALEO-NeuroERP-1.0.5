@@ -1,23 +1,48 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
-import { ApiProvider } from './contexts/ApiContext';
-import Layout from './components/Layout';
-import LandingPage from './pages/LandingPage';
-import Dashboard from './pages/Dashboard';
-import PersonalManagement from './pages/PersonalManagement';
-import FinanceManagement from './pages/FinanceManagement';
-import AssetManagement from './pages/AssetManagement';
-import ProductionManagement from './pages/ProductionManagement';
-import WarehouseManagement from './pages/WarehouseManagement';
-import PurchasingManagement from './pages/PurchasingManagement';
-import SalesManagement from './pages/SalesManagement';
-import QualityManagement from './pages/QualityManagement';
-import CustomerManagement from './pages/CustomerManagement';
-import ProjectManagement from './pages/ProjectManagement';
-import DocumentManagement from './pages/DocumentManagement';
-import ReportingAnalytics from './pages/ReportingAnalytics';
+import { CssBaseline, Box, CircularProgress } from '@mui/material';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { PreloadRouter } from './components/PreloadRouter';
+import { Navigation } from './components/Navigation';
+import { PreloadIndicator } from './components/Navigation';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import OfflineStatusBar from './components/OfflineStatusBar';
+
+// Query Client erstellen
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+// Loading Component
+const LoadingSpinner: React.FC = () => (
+  <Box
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      flexDirection: 'column',
+      gap: 2
+    }}
+  >
+    <CircularProgress size={60} />
+    <Box sx={{ textAlign: 'center' }}>
+      <div style={{ fontSize: '1.1rem', fontWeight: 500, marginBottom: '0.5rem' }}>
+        VALEO NeuroERP lädt...
+      </div>
+      <div style={{ fontSize: '0.9rem', color: '#666' }}>
+        Bitte warten Sie einen Moment
+      </div>
+    </Box>
+  </Box>
+);
 
 // Theme erstellen
 const theme = createTheme({
@@ -39,18 +64,6 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    h1: {
-      fontSize: '2.5rem',
-      fontWeight: 500
-    },
-    h2: {
-      fontSize: '2rem',
-      fontWeight: 500
-    },
-    h6: {
-      fontSize: '1.25rem',
-      fontWeight: 500
-    }
   },
   components: {
     MuiButton: {
@@ -72,89 +85,35 @@ const theme = createTheme({
   }
 });
 
+const AppContent: React.FC = () => {
+  const { isAuthenticated, loading, logout } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <Router>
+      <Navigation />
+      <PreloadRouter isAuthenticated={isAuthenticated} />
+      <PreloadIndicator />
+      <OfflineStatusBar />
+    </Router>
+  );
+};
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ApiProvider>
-        <Router>
-          <Routes>
-            {/* Landing Page als Startseite */}
-            <Route path="/" element={<LandingPage />} />
-            
-            {/* Dashboard und ERP Module mit Layout */}
-            <Route path="/dashboard" element={
-              <Layout>
-                <Dashboard />
-              </Layout>
-            } />
-            <Route path="/personal" element={
-              <Layout>
-                <PersonalManagement />
-              </Layout>
-            } />
-            <Route path="/finance" element={
-              <Layout>
-                <FinanceManagement />
-              </Layout>
-            } />
-            <Route path="/assets" element={
-              <Layout>
-                <AssetManagement />
-              </Layout>
-            } />
-            <Route path="/production" element={
-              <Layout>
-                <ProductionManagement />
-              </Layout>
-            } />
-            <Route path="/warehouse" element={
-              <Layout>
-                <WarehouseManagement />
-              </Layout>
-            } />
-            <Route path="/purchasing" element={
-              <Layout>
-                <PurchasingManagement />
-              </Layout>
-            } />
-            <Route path="/sales" element={
-              <Layout>
-                <SalesManagement />
-              </Layout>
-            } />
-            <Route path="/quality" element={
-              <Layout>
-                <QualityManagement />
-              </Layout>
-            } />
-            <Route path="/customers" element={
-              <Layout>
-                <CustomerManagement />
-              </Layout>
-            } />
-            <Route path="/projects" element={
-              <Layout>
-                <ProjectManagement />
-              </Layout>
-            } />
-            <Route path="/documents" element={
-              <Layout>
-                <DocumentManagement />
-              </Layout>
-            } />
-            <Route path="/reporting" element={
-              <Layout>
-                <ReportingAnalytics />
-              </Layout>
-            } />
-            
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Router>
-      </ApiProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -1,0 +1,96 @@
+{
+  "mode": "PLAN",
+  "description": "Projektplanung, Lösungskonzeption, Aufgabenverteilung, Nächste Schritte - Modus für die Projektplanung",
+  "rules": [
+    {
+      "id": "plan-1",
+      "description": "Erstelle einen strukturierten Projektplan basierend auf der VAN-Analyse",
+      "priority": "high"
+    },
+    {
+      "id": "plan-2",
+      "description": "Definiere klare Meilensteine mit messbaren Ergebnissen",
+      "priority": "high"
+    },
+    {
+      "id": "plan-3",
+      "description": "Entwickle ein Lösungsdesign, das die Anforderungen erfüllt",
+      "priority": "high"
+    },
+    {
+      "id": "plan-4",
+      "description": "Berücksichtige alternative Lösungsansätze und begründe die Entscheidungen",
+      "priority": "medium"
+    },
+    {
+      "id": "plan-5",
+      "description": "Teile das Projekt in überschaubare Aufgaben auf",
+      "priority": "high"
+    },
+    {
+      "id": "plan-6",
+      "description": "Identifiziere Abhängigkeiten zwischen Aufgaben",
+      "priority": "medium"
+    },
+    {
+      "id": "plan-7",
+      "description": "Schätze den Aufwand für jede Aufgabe",
+      "priority": "medium"
+    },
+    {
+      "id": "plan-8",
+      "description": "Priorisiere Aufgaben nach Wichtigkeit und Dringlichkeit",
+      "priority": "medium"
+    },
+    {
+      "id": "plan-9",
+      "description": "Definiere die nächsten konkreten Schritte für die Umsetzung",
+      "priority": "high"
+    },
+    {
+      "id": "plan-10",
+      "description": "Verwende die MongoDB-Integration, um Projektpläne und Aufgaben zu speichern",
+      "priority": "medium"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "project_plan",
+      "description": "Strukturierter Projektplan mit Meilensteinen und Zeitplanung",
+      "format": "markdown"
+    },
+    {
+      "name": "solution_design",
+      "description": "Lösungsdesign mit Architekturübersicht und Designentscheidungen",
+      "format": "markdown"
+    },
+    {
+      "name": "task_list",
+      "description": "Liste von Aufgaben mit Abhängigkeiten und Prioritäten",
+      "format": "list"
+    },
+    {
+      "name": "next_steps",
+      "description": "Konkrete nächste Schritte für die Umsetzung",
+      "format": "list"
+    }
+  ],
+  "mongodb_collections": [
+    {
+      "name": "project_plans",
+      "description": "Sammlung von Projektplänen"
+    },
+    {
+      "name": "solution_designs",
+      "description": "Sammlung von Lösungsdesigns"
+    },
+    {
+      "name": "tasks",
+      "description": "Sammlung von Aufgaben"
+    },
+    {
+      "name": "plan_results",
+      "description": "Sammlung von Ergebnissen der Planungsphase"
+    }
+  ]
+} 

@@ -1,0 +1,134 @@
+{
+  "phase": "phase_1",
+  "name": "Foundation & Infrastructure",
+  "status": "in_progress",
+  "start_date": "2025-07-24T21:46:28.729468",
+  "target_date": "2025-10-02T21:46:28.729468",
+  "duration": "8-12 Wochen",
+  "priority": "critical",
+  "components": {
+    "cloud_infrastructure": {
+      "name": "Cloud-Infrastruktur Setup",
+      "status": "pending",
+      "priority": "critical",
+      "dependencies": [],
+      "tools": [
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "AWS/Azure/GCP"
+      ]
+    },
+    "ci_cd_pipeline": {
+      "name": "CI/CD Pipeline",
+      "status": "pending",
+      "priority": "critical",
+      "dependencies": [
+        "cloud_infrastructure"
+      ],
+      "tools": [
+        "GitHub Actions",
+        "Jenkins",
+        "ArgoCD"
+      ]
+    },
+    "monitoring_logging": {
+      "name": "Monitoring & Logging",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        "cloud_infrastructure"
+      ],
+      "tools": [
+        "Prometheus",
+        "Grafana",
+        "ELK Stack",
+        "Jaeger"
+      ]
+    },
+    "security_framework": {
+      "name": "Security Framework",
+      "status": "pending",
+      "priority": "critical",
+      "dependencies": [
+        "cloud_infrastructure"
+      ],
+      "tools": [
+        "Vault",
+        "Cert-Manager",
+        "Network Policies",
+        "RBAC"
+      ]
+    },
+    "database_design": {
+      "name": "Datenbank-Design",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        "cloud_infrastructure"
+      ],
+      "tools": [
+        "PostgreSQL",
+        "Redis",
+        "MongoDB",
+        "Elasticsearch"
+      ]
+    }
+  },
+  "success_criteria": [
+    "Infrastruktur deployt",
+    "CI/CD funktioniert",
+    "Monitoring aktiv",
+    "Security-Audit bestanden"
+  ],
+  "configurations": {
+    "docker_compose": "services:\n  elasticsearch:\n    environment:\n      discovery.type: single-node\n      xpack.security.enabled: 'false'\n    image: elasticsearch:8.11.0\n    ports:\n    - 9200:9200\n    volumes:\n    - ./data/elasticsearch:/usr/share/elasticsearch/data\n  grafana:\n    environment:\n      GF_SECURITY_ADMIN_PASSWORD: valeo_admin\n    image: grafana/grafana:latest\n    ports:\n    - 3000:3000\n    volumes:\n    - ./data/grafana:/var/lib/grafana\n  kibana:\n    depends_on:\n    - elasticsearch\n    image: kibana:8.11.0\n    ports:\n    - 5601:5601\n  postgres:\n    environment:\n      POSTGRES_DB: valeo_neuroerp\n      POSTGRES_PASSWORD: valeo_password\n      POSTGRES_USER: valeo_user\n    image: postgres:15\n    ports:\n    - 5432:5432\n    volumes:\n    - ./data/postgres:/var/lib/postgresql/data\n  prometheus:\n    image: prom/prometheus:latest\n    ports:\n    - 9090:9090\n    volumes:\n    - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml\n    - ./data/prometheus:/prometheus\n  rabbitmq:\n    environment:\n      RABBITMQ_DEFAULT_PASS: valeo_password\n      RABBITMQ_DEFAULT_USER: valeo_user\n    image: rabbitmq:3-management\n    ports:\n    - 5672:5672\n    - 15672:15672\n  redis:\n    image: redis:7-alpine\n    ports:\n    - 6379:6379\n    volumes:\n    - ./data/redis:/data\nversion: '3.8'\nvolumes:\n  elasticsearch_data: null\n  grafana_data: null\n  postgres_data: null\n  prometheus_data: null\n  redis_data: null\n",
+    "kubernetes_manifests": {
+      "namespace.yaml": "\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: valeo-neuroerp\n  labels:\n    name: valeo-neuroerp\n",
+      "postgres-statefulset.yaml": "\napiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: postgres\n  namespace: valeo-neuroerp\nspec:\n  serviceName: postgres\n  replicas: 1\n  selector:\n    matchLabels:\n      app: postgres\n  template:\n    metadata:\n      labels:\n        app: postgres\n    spec:\n      containers:\n      - name: postgres\n        image: postgres:15\n        env:\n        - name: POSTGRES_DB\n          value: \"valeo_neuroerp\"\n        - name: POSTGRES_USER\n          value: \"valeo_user\"\n        - name: POSTGRES_PASSWORD\n          valueFrom:\n            secretKeyRef:\n              name: postgres-secret\n              key: password\n        ports:\n        - containerPort: 5432\n        volumeMounts:\n        - name: postgres-storage\n          mountPath: /var/lib/postgresql/data\n  volumeClaimTemplates:\n  - metadata:\n      name: postgres-storage\n    spec:\n      accessModes: [\"ReadWriteOnce\"]\n      resources:\n        requests:\n          storage: 10Gi\n",
+      "redis-deployment.yaml": "\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: redis\n  namespace: valeo-neuroerp\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: redis\n  template:\n    metadata:\n      labels:\n        app: redis\n    spec:\n      containers:\n      - name: redis\n        image: redis:7-alpine\n        ports:\n        - containerPort: 6379\n        volumeMounts:\n        - name: redis-storage\n          mountPath: /data\n      volumes:\n      - name: redis-storage\n        persistentVolumeClaim:\n          claimName: redis-pvc\n"
+    },
+    "github_actions": "jobs:\n  build:\n    needs: test\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - name: Set up Docker Buildx\n      uses: docker/setup-buildx-action@v3\n    - name: Build and push\n      uses: docker/build-push-action@v5\n      with:\n        context: .\n        push: true\n        tags: valeo-neuroerp:latest\n  deploy:\n    if: github.ref == 'refs/heads/main'\n    needs: build\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - name: Deploy to Kubernetes\n      run: kubectl apply -f k8s/\n  test:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - name: Set up Python\n      uses: actions/setup-python@v4\n      with:\n        python-version: '3.11'\n    - name: Install dependencies\n      run: pip install -r requirements.txt\n    - name: Run tests\n      run: python -m pytest tests/\n    - name: Run linting\n      run: flake8 .\nname: VALEO-NeuroERP CI/CD Pipeline\n'on':\n  pull_request:\n    branches:\n    - main\n  push:\n    branches:\n    - main\n    - develop\n",
+    "monitoring": {
+      "prometheus.yml": "\nglobal:\n  scrape_interval: 15s\n\nscrape_configs:\n  - job_name: 'valeo-neuroerp-backend'\n    static_configs:\n      - targets: ['localhost:8000']\n    metrics_path: '/metrics'\n    \n  - job_name: 'postgres'\n    static_configs:\n      - targets: ['localhost:5432']\n      \n  - job_name: 'redis'\n    static_configs:\n      - targets: ['localhost:6379']\n",
+      "grafana-dashboard.json": "\n{\n  \"dashboard\": {\n    \"title\": \"VALEO-NeuroERP Dashboard\",\n    \"panels\": [\n      {\n        \"title\": \"API Response Time\",\n        \"type\": \"graph\",\n        \"targets\": [\n          {\n            \"expr\": \"rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])\"\n          }\n        ]\n      },\n      {\n        \"title\": \"Database Connections\",\n        \"type\": \"graph\", \n        \"targets\": [\n          {\n            \"expr\": \"pg_stat_database_numbackends\"\n          }\n        ]\n      }\n    ]\n  }\n}\n"
+    },
+    "security": {
+      "network-policies.yaml": "\napiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: valeo-neuroerp-network-policy\n  namespace: valeo-neuroerp\nspec:\n  podSelector:\n    matchLabels:\n      app: valeo-neuroerp\n  policyTypes:\n  - Ingress\n  - Egress\n  ingress:\n  - from:\n    - namespaceSelector:\n        matchLabels:\n          name: ingress-nginx\n    ports:\n    - protocol: TCP\n      port: 8000\n  egress:\n  - to:\n    - podSelector:\n        matchLabels:\n          app: postgres\n    ports:\n    - protocol: TCP\n      port: 5432\n",
+      "rbac.yaml": "\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: valeo-neuroerp-sa\n  namespace: valeo-neuroerp\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: Role\nmetadata:\n  name: valeo-neuroerp-role\n  namespace: valeo-neuroerp\nrules:\n- apiGroups: [\"\"]\n  resources: [\"pods\", \"services\"]\n  verbs: [\"get\", \"list\", \"watch\"]\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: RoleBinding\nmetadata:\n  name: valeo-neuroerp-rolebinding\n  namespace: valeo-neuroerp\nsubjects:\n- kind: ServiceAccount\n  name: valeo-neuroerp-sa\n  namespace: valeo-neuroerp\nroleRef:\n  kind: Role\n  name: valeo-neuroerp-role\n  apiGroup: rbac.authorization.k8s.io\n"
+    },
+    "terraform": "\n# VALEO-NeuroERP Infrastructure as Code\nterraform {\n  required_version = \">= 1.0\"\n  required_providers {\n    aws = {\n      source  = \"hashicorp/aws\"\n      version = \"~> 5.0\"\n    }\n  }\n}\n\nprovider \"aws\" {\n  region = var.aws_region\n}\n\n# VPC\nresource \"aws_vpc\" \"valeo_vpc\" {\n  cidr_block           = \"10.0.0.0/16\"\n  enable_dns_hostnames = true\n  enable_dns_support   = true\n  \n  tags = {\n    Name = \"valeo-neuroerp-vpc\"\n    Environment = var.environment\n  }\n}\n\n# EKS Cluster\nresource \"aws_eks_cluster\" \"valeo_cluster\" {\n  name     = \"valeo-neuroerp-cluster\"\n  role_arn = aws_iam_role.eks_cluster.arn\n  version  = \"1.28\"\n\n  vpc_config {\n    subnet_ids = aws_subnet.private[*].id\n  }\n  \n  depends_on = [\n    aws_iam_role_policy_attachment.eks_cluster_policy\n  ]\n}\n\n# RDS PostgreSQL\nresource \"aws_db_instance\" \"valeo_postgres\" {\n  identifier           = \"valeo-neuroerp-postgres\"\n  engine               = \"postgres\"\n  engine_version       = \"15.4\"\n  instance_class       = \"db.t3.micro\"\n  allocated_storage    = 20\n  storage_type         = \"gp2\"\n  username             = var.db_username\n  password             = var.db_password\n  skip_final_snapshot  = true\n  \n  tags = {\n    Name = \"valeo-neuroerp-postgres\"\n    Environment = var.environment\n  }\n}\n\n# ElastiCache Redis\nresource \"aws_elasticache_cluster\" \"valeo_redis\" {\n  cluster_id           = \"valeo-neuroerp-redis\"\n  engine               = \"redis\"\n  node_type            = \"cache.t3.micro\"\n  num_cache_nodes      = 1\n  parameter_group_name = \"default.redis7\"\n  port                 = 6379\n}\n\n# Variables\nvariable \"aws_region\" {\n  description = \"AWS region\"\n  type        = string\n  default     = \"eu-west-1\"\n}\n\nvariable \"environment\" {\n  description = \"Environment name\"\n  type        = string\n  default     = \"production\"\n}\n\nvariable \"db_username\" {\n  description = \"Database username\"\n  type        = string\n  sensitive   = true\n}\n\nvariable \"db_password\" {\n  description = \"Database password\"\n  type        = string\n  sensitive   = true\n}\n"
+  },
+  "next_steps": [
+    {
+      "action": "Setup Development Environment",
+      "description": "Docker Compose für lokale Entwicklung einrichten",
+      "priority": "critical",
+      "deadline": "2025-07-31T21:46:28.729468"
+    },
+    {
+      "action": "Setup CI/CD Pipeline",
+      "description": "GitHub Actions Workflow implementieren",
+      "priority": "critical",
+      "deadline": "2025-08-07T21:46:28.729468"
+    },
+    {
+      "action": "Setup Monitoring",
+      "description": "Prometheus und Grafana konfigurieren",
+      "priority": "high",
+      "deadline": "2025-08-14T21:46:28.729468"
+    },
+    {
+      "action": "Setup Security Framework",
+      "description": "Network Policies und RBAC implementieren",
+      "priority": "critical",
+      "deadline": "2025-08-21T21:46:28.729468"
+    },
+    {
+      "action": "Setup Production Infrastructure",
+      "description": "Terraform für Cloud-Infrastruktur deployen",
+      "priority": "high",
+      "deadline": "2025-08-28T21:46:28.729468"
+    }
+  ]
+}

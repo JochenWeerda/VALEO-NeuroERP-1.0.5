@@ -1,0 +1,67 @@
+{
+  "agents": [
+    {
+      "id": "frontend-agent",
+      "type": "frontend",
+      "capabilities": [
+        "react",
+        "typescript",
+        "mui",
+        "tailwind",
+        "testing"
+      ],
+      "autonomy": "high",
+      "status": "ready"
+    },
+    {
+      "id": "backend-agent",
+      "type": "backend",
+      "capabilities": [
+        "nodejs",
+        "express",
+        "database",
+        "api",
+        "security"
+      ],
+      "autonomy": "high",
+      "status": "ready"
+    },
+    {
+      "id": "ai-agent",
+      "type": "ai",
+      "capabilities": [
+        "ml",
+        "nlp",
+        "prediction",
+        "optimization",
+        "analysis"
+      ],
+      "autonomy": "full",
+      "status": "ready"
+    },
+    {
+      "id": "testing-agent",
+      "type": "testing",
+      "capabilities": [
+        "unit-tests",
+        "integration-tests",
+        "e2e",
+        "performance"
+      ],
+      "autonomy": "high",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-agent",
+      "type": "deployment",
+      "capabilities": [
+        "docker",
+        "kubernetes",
+        "ci-cd",
+        "monitoring"
+      ],
+      "autonomy": "high",
+      "status": "ready"
+    }
+  ]
+}

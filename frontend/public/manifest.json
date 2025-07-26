@@ -1,0 +1,113 @@
+{
+  "short_name": "VALEO NeuroERP",
+  "name": "VALEO NeuroERP - Intelligentes Kassensystem",
+  "description": "Modernes ERP-System mit KI-Integration für intelligente Geschäftsprozesse",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "de",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "productivity",
+    "finance"
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard mit KI-Integration"
+    },
+    {
+      "src": "screenshots/pos.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "POS-System mit Barcode-Scanner"
+    },
+    {
+      "src": "screenshots/mobile-dashboard.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Dashboard"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "POS-System",
+      "short_name": "POS",
+      "description": "Schnellzugriff auf das Kassensystem",
+      "url": "/pos",
+      "icons": [
+        {
+          "src": "icons/pos.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "KI-Dashboard",
+      "short_name": "KI",
+      "description": "KI-gestützte Analysen und Vorschläge",
+      "url": "/ai-barcode",
+      "icons": [
+        {
+          "src": "icons/ai.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Tagesbericht",
+      "short_name": "Bericht",
+      "description": "Tägliche Verkaufsberichte",
+      "url": "/daily-report",
+      "icons": [
+        {
+          "src": "icons/report.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "protocol_handlers": [
+    {
+      "protocol": "web+neuroerp",
+      "url": "/?action=%s"
+    }
+  ]
+} 

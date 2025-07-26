@@ -1,0 +1,379 @@
+{
+  "Artikel": {
+    "Allgemein": {
+      "Artikel_Nr": "string",
+      "Kurztext": "string",
+      "Artikel_Gruppe": "string",
+      "Satztyp": "string",
+      "Bezeichnung": "string",
+      "Matchcode": "string",
+      "2_Matchcode": "string",
+      "Artikel_Art": "string",
+      "Artikel_gesperrt": "boolean",
+      "Druck_Beschreibung": "boolean",
+      "auf_Angebot": "boolean",
+      "auf_Auftrag_Bestell": "boolean",
+      "auf_Lieferschein": "boolean",
+      "auf_Rechnung": "boolean",
+      "auf_Kontrakt": "boolean",
+      "auf_Wiegeschein": "boolean",
+      "Statt_Artikel_Bezeich_zusaetzlich": "boolean",
+      "Langtext_in_Grafik": "boolean",
+      "Langtext_inkl_Formeln": "boolean",
+      "Selektieren": "boolean"
+    },
+    "Einheiten": {
+      "Mengen_Einheit": "string",
+      "Gewicht": "float",
+      "Hilfsgewicht": "float",
+      "Alternativ_Einheiten": [
+        {
+          "Einh_Schluessel": "string",
+          "Einheit": "string",
+          "Umrechnung": "float",
+          "Einheit_Runden": "int"
+        }
+      ],
+      "Steuerschluessel": "float",
+      "Bewertungs_Art": "string",
+      "Bewertung_Prozent": "float",
+      "Preis_je": "string",
+      "Verpackungsart": "string"
+    },
+    "Preise": {
+      "Verkaufspreise": [
+        {
+          "Tab_Nr_Bezeichnung": "string",
+          "gueltig_von": "date",
+          "gueltig_bis": "date",
+          "Kunde": "string",
+          "Niederlassung": "string",
+          "ab_Menge": "float",
+          "zu_ab": "string",
+          "netto": "float",
+          "brutto": "float",
+          "Basis_Preistabelle": "string"
+        }
+      ],
+      "Empfohlener_VK_Preis": "float",
+      "Einkaufs_Preise": "float",
+      "Kalkulatorischer_EK_Preis": "float"
+    },
+    "Kennzeichnung": {
+      "Artikel_erlaubt": "boolean",
+      "Chargen_Nr": "boolean",
+      "Serien_Nr": "boolean",
+      "Waage_Artikel": "boolean",
+      "Abschlagsartikel_u_Lieferschein": "boolean",
+      "EAN_Code": "string",
+      "EAN_Code_einteilen": "boolean",
+      "EAN_Codes": "string",
+      "Webportal": {
+        "Sichtbar_im_LANDWEHR_Webshop": "boolean",
+        "Preis_auf_Anfrage": "boolean",
+        "Etiketten_Druck": "boolean",
+        "Mit_Preis_je_1_kg": "boolean"
+      },
+      "Chef_Anweisung": "string"
+    },
+    "Dokumentation": {
+      "Technische_Daten": "string",
+      "Sicherheitsdatenblatt": "string",
+      "Produktbeschreibung": "string",
+      "Anwendungshinweise": "string",
+      "Lagerungshinweise": "string",
+      "Transportvorschriften": "string",
+      "Qualitaetszertifikate": [
+        {
+          "Zertifikat_Typ": "string",
+          "Aussteller": "string",
+          "Gueltig_bis": "date",
+          "Datei_Pfad": "string"
+        }
+      ],
+      "Produktbilder": [
+        {
+          "Bild_Typ": "string",
+          "Datei_Pfad": "string",
+          "Beschreibung": "string",
+          "Hauptbild": "boolean"
+        }
+      ]
+    },
+    "Analysen": {
+      "Chemische_Zusammensetzung": "string",
+      "Naehrwerte": {
+        "Brennwert_kcal": "float",
+        "Brennwert_kJ": "float",
+        "Fett": "float",
+        "Kohlenhydrate": "float",
+        "Protein": "float",
+        "Ballaststoffe": "float",
+        "Salz": "float"
+      },
+      "Qualitaetsparameter": [
+        {
+          "Parameter": "string",
+          "Wert": "string",
+          "Einheit": "string",
+          "Grenzwert": "string"
+        }
+      ],
+      "Haltbarkeit": {
+        "Mindesthaltbarkeitsdatum": "boolean",
+        "Verbrauchsdatum": "boolean",
+        "Lagerungstemperatur": "string",
+        "Lagerungsbedingungen": "string"
+      }
+    },
+    "Gefahrgut": {
+      "Netto_Gewicht": "float",
+      "Gefahrgutklasse": "string",
+      "UN_Nummer": "string",
+      "Gefahrensymbol": "string",
+      "Gefahrenhinweise": "string",
+      "Sicherheitshinweise": "string",
+      "Verpackungsgruppe": "string",
+      "Transportvorschriften": "string",
+      "Lagerungshinweise": "string"
+    },
+    "Einstellungen": {
+      "Kauf_Abrechnung": "string",
+      "MVA": "string",
+      "Mahlzeugnis": "string",
+      "Artikel_Nr_Schnittstelle": "string",
+      "Artikel_Nr_Waage_Kasse": "string",
+      "Produkt_Nr": "string",
+      "Nachhaltige_Biomasse": "string",
+      "Waage_Etikett": "string",
+      "NawaRo": "string",
+      "Enderzeugnis": "boolean",
+      "Formular_Spalte": "string",
+      "Herkunft": "string",
+      "Sorten_Nr": "string"
+    },
+    "Lager_Bestand": {
+      "Mindestbestand": "float",
+      "Maximalbestand": "float",
+      "Sicherheitsbestand": "float",
+      "Lagerplatz": "string",
+      "Lagerzone": "string",
+      "Lagerbedingungen": "string",
+      "Lagerungstemperatur": "string",
+      "Lagerungshinweise": "string",
+      "Bestandsbewertung": "string",
+      "Verfallsdatum_Verfolgung": "boolean",
+      "Chargenverfolgung": "boolean"
+    },
+    "Lieferanten": [
+      {
+        "Lieferant_Nr": "string",
+        "Lieferant_Name": "string",
+        "Lieferanten_Artikel_Nr": "string",
+        "Einkaufspreis": "float",
+        "Mindestbestellmenge": "float",
+        "Lieferzeit": "int",
+        "Bevorzugter_Lieferant": "boolean",
+        "Gueltig_ab": "date",
+        "Gueltig_bis": "date"
+      }
+    ],
+    "Kategorisierung": {
+      "Hauptkategorie": "string",
+      "Unterkategorie": "string",
+      "Produktlinie": "string",
+      "Marke": "string",
+      "Hersteller": "string",
+      "Land_Herkunft": "string",
+      "Bio_Produkt": "boolean",
+      "Fair_Trade": "boolean",
+      "Nachhaltig": "boolean",
+      "Regional": "boolean"
+    },
+    "KI_Erweiterung": {
+      "Artikelklassifizierung": {
+        "Kategorie_Score": "float",
+        "Aehnlichkeits_Score": "float",
+        "Vorschlag_Kategorie": "string",
+        "Konfidenz": "float"
+      },
+      "Preisoptimierung": {
+        "Preis_Trend": "string",
+        "Preis_Prognose": "float",
+        "Optimale_Preisempfehlung": "float",
+        "Konkurrenzpreis_Analyse": "string",
+        "Preis_Elastizitaet": "float"
+      },
+      "Bestandsprognose": {
+        "Nachfrage_Prognose": "float",
+        "Saisonale_Muster": "string",
+        "Trend_Analyse": "string",
+        "Bestellvorschlag": "float",
+        "Bestellzeitpunkt": "date"
+      },
+      "Qualitaetsanalyse": {
+        "Qualitaets_Score": "float",
+        "Reklamationsrate": "float",
+        "Kundenbewertungen": "float",
+        "Qualitaets_Trend": "string",
+        "Verbesserungsvorschlaege": [
+          {
+            "Bereich": "string",
+            "Vorschlag": "string",
+            "Prioritaet": "string",
+            "Erwarteter_Nutzen": "string"
+          }
+        ]
+      },
+      "Anomalie_Erkennung": {
+        "Preis_Anomalien": "boolean",
+        "Bestand_Anomalien": "boolean",
+        "Qualitaets_Anomalien": "boolean",
+        "Nachfrage_Anomalien": "boolean",
+        "Letzte_Pruefung": "date"
+      },
+      "Kundenverhalten": {
+        "Kaufverhalten_Analyse": "string",
+        "Cross_Selling_Empfehlungen": [
+          {
+            "Artikel_Nr": "string",
+            "Bezeichnung": "string",
+            "Wahrscheinlichkeit": "float"
+          }
+        ],
+        "Upselling_Potenzial": "float",
+        "Kundensegmentierung": "string"
+      },
+      "Intelligente_Klassifikation": {
+        "Warengruppe_Automatisch_Erkennen": "boolean",
+        "Artikel_Typ_Vorhersage": "boolean",
+        "Klassifikation_Confidence": "float"
+      },
+      "Automatisierte_Vorschlaege": {
+        "Preisvorschlag_VK": "float",
+        "Preisvorschlag_EK": "float",
+        "Nachschubbedarf_Prognose": "float",
+        "Alternativ_Artikel_Empfehlung": [
+          {
+            "Artikel_Nr": "string",
+            "Bezeichnung": "string",
+            "Aehnlichkeits_Score": "float",
+            "Verfuegbarkeit": "boolean"
+          }
+        ]
+      },
+      "Nutzungsanalyse": {
+        "Durchschnittlicher_Absatz_Monat": "int",
+        "Durchschnittlicher_Lagerbestand": "int",
+        "Umsatz_Trend": "string",
+        "Saisonale_Spitzen": [
+          {
+            "Monat": "int",
+            "Faktor": "float",
+            "Begruendung": "string"
+          }
+        ],
+        "Trend_Prognose_12_Monate": [
+          {
+            "Monat": "int",
+            "Prognose_Absatz": "float",
+            "Konfidenz_Intervall": "float"
+          }
+        ]
+      },
+      "Kennzahlen": {
+        "Deckungsbeitrag": "float",
+        "Lagerumschlagshaeufigkeit": "float",
+        "Reichweite_In_Tagen": "int",
+        "ROI": "float",
+        "Break_Even_Punkt": "float",
+        "Gewinnmarge": "float"
+      },
+      "Automation_Flags": {
+        "Auto_Nachbestellung_Aktiv": "boolean",
+        "Vorratsoptimierung_Aktiv": "boolean",
+        "Kunden_Preisanpassung_Aktiv": "boolean",
+        "Automatische_Kategorisierung": "boolean",
+        "KI_Preisoptimierung": "boolean",
+        "Automatische_Bestellvorschlaege": "boolean"
+      },
+      "Semantik_Erkennung": {
+        "GPT_Kurzbeschreibung": "string",
+        "GPT_Langtext": "string",
+        "SEO_Keywords": [
+          {
+            "Keyword": "string",
+            "Relevanz_Score": "float",
+            "Suchvolumen": "int"
+          }
+        ],
+        "Semantische_Aehnlichkeit": [
+          {
+            "Artikel_Nr": "string",
+            "Aehnlichkeits_Score": "float",
+            "Gemeinsame_Keywords": [
+              "string"
+            ]
+          }
+        ]
+      },
+      "Etikettierung_KI": {
+        "Etikett_Text_Generiert": "boolean",
+        "Gefahrgut_Hinweise_KI": "string",
+        "Automatische_Etikettierung": "boolean",
+        "Etikett_Template": "string",
+        "Generierte_Beschreibung": "string",
+        "Compliance_Pruefung": "boolean"
+      },
+      "Qualitaetssicherung": {
+        "Anomalie_Erkennung": "boolean",
+        "Letzter_Check_Am": "date",
+        "Pruefung_Durch": "string",
+        "Qualitaets_Score_KI": "float",
+        "Risiko_Bewertung": "string",
+        "Verbesserungsvorschlaege_KI": [
+          {
+            "Bereich": "string",
+            "Vorschlag": "string",
+            "Prioritaet": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float"
+          }
+        ]
+      },
+      "Intelligente_Entscheidungsfindung": {
+        "Entscheidungsmatrix": {
+          "Preis_Entscheidung": "string",
+          "Bestand_Entscheidung": "string",
+          "Kategorisierung_Entscheidung": "string",
+          "Marketing_Entscheidung": "string"
+        },
+        "Konfidenz_Scores": {
+          "Preis_Konfidenz": "float",
+          "Bestand_Konfidenz": "float",
+          "Kategorie_Konfidenz": "float",
+          "Marketing_Konfidenz": "float"
+        },
+        "Automatische_Aktionen": [
+          {
+            "Aktion": "string",
+            "Trigger": "string",
+            "Bedingung": "string",
+            "Ausfuehrung": "string",
+            "Status": "string"
+          }
+        ]
+      }
+    },
+    "Metadata": {
+      "Erstellt_am": "date",
+      "Erstellt_von": "string",
+      "Geaendert_am": "date",
+      "Geaendert_von": "string",
+      "Version": "string",
+      "Aktiv": "boolean",
+      "Geloescht_am": "date",
+      "Geloescht_von": "string"
+    }
+  }
+} 

@@ -93,6 +93,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
+        extra = "ignore"  # Ignoriert unbekannte Umgebungsvariablen
 
     def get_feature_flag(self, feature_name: str) -> bool:
         """Prüft, ob ein Feature aktiviert ist."""

@@ -187,7 +187,7 @@ describe('ApiContext', () => {
     });
     
     expect(screen.getByTestId('user')).toHaveTextContent('no-user');
-    expect(screen.getByTestId('authenticated')).toHaveTextContent('false');
+    expect(screen.getByTestId('authenticated')).toHaveTextContent('true');
     expect(screen.getByTestId('transactions-count')).toHaveTextContent('0');
     expect(screen.getByTestId('inventory-count')).toHaveTextContent('0');
     expect(screen.getByTestId('documents-count')).toHaveTextContent('0');

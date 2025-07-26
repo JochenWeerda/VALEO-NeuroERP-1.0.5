@@ -1,0 +1,281 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valeo-e-invoicing-api
+  namespace: valeo-neuroerp
+  labels:
+    app: valeo-e-invoicing-api
+    version: v1.0.0
+    component: e-invoicing
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: valeo-e-invoicing-api
+  template:
+    metadata:
+      labels:
+        app: valeo-e-invoicing-api
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8081"
+        prometheus.io/path: "/actuator/prometheus"
+    spec:
+      containers:
+      - name: e-invoicing-api
+        image: valeo/e-invoicing-api:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8081
+          name: metrics
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "kubernetes"
+        - name: JAVA_OPTS
+          value: "-Xmx2g -Xms1g -XX:+UseG1GC"
+        - name: MUSTANGPROJECT_VERSION
+          value: "1.8.0"
+        - name: ZUGFERD_PROFILE
+          value: "COMFORT"
+        - name: XRECHNUNG_VERSION
+          value: "2.0"
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: valeo-e-invoicing-config
+              key: db.host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: valeo-e-invoicing-config
+              key: db.port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: valeo-e-invoicing-config
+              key: db.name
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: valeo-e-invoicing-secrets
+              key: db.username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: valeo-e-invoicing-secrets
+              key: db.password
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: valeo-e-invoicing-config
+              key: redis.host
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: valeo-e-invoicing-config
+              key: redis.port
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: valeo-e-invoicing-secrets
+              key: jwt.secret
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        volumeMounts:
+        - name: e-invoicing-config
+          mountPath: /app/config
+          readOnly: true
+        - name: e-invoicing-logs
+          mountPath: /app/logs
+        - name: e-invoicing-temp
+          mountPath: /app/temp
+        - name: e-invoicing-certificates
+          mountPath: /app/certificates
+          readOnly: true
+      volumes:
+      - name: e-invoicing-config
+        configMap:
+          name: valeo-e-invoicing-config
+      - name: e-invoicing-logs
+        persistentVolumeClaim:
+          claimName: valeo-e-invoicing-logs-pvc
+      - name: e-invoicing-temp
+        emptyDir: {}
+      - name: e-invoicing-certificates
+        secret:
+          secretName: valeo-e-invoicing-certificates
+      imagePullSecrets:
+      - name: valeo-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valeo-e-invoicing-service
+  namespace: valeo-neuroerp
+  labels:
+    app: valeo-e-invoicing-api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  - port: 8081
+    targetPort: 8081
+    protocol: TCP
+    name: metrics
+  selector:
+    app: valeo-e-invoicing-api
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: valeo-e-invoicing-ingress
+  namespace: valeo-neuroerp
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  tls:
+  - hosts:
+    - e-invoicing.valeo-neuroerp.local
+    secretName: valeo-e-invoicing-tls
+  rules:
+  - host: e-invoicing.valeo-neuroerp.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: valeo-e-invoicing-service
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: valeo-e-invoicing-config
+  namespace: valeo-neuroerp
+data:
+  db.host: "valeo-postgres-service"
+  db.port: "5432"
+  db.name: "valeo_einvoicing"
+  redis.host: "valeo-redis-service"
+  redis.port: "6379"
+  zugferd.profile: "COMFORT"
+  xrechnung.version: "2.0"
+  logging.level: "INFO"
+  security.jwt.expiration: "86400000"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: valeo-e-invoicing-secrets
+  namespace: valeo-neuroerp
+type: Opaque
+data:
+  db.username: dmFsZW9fdXNlcg==  # valeo_user
+  db.password: dmFsZW9fc2VjdXJlX3Bhc3N3b3JkXzIwMjQ=  # valeo_secure_password_2024
+  jwt.secret: dmFsZW9fZWludm9pY2luZ19qd3Rfc2VjcmV0XzIwMjQ=  # valeo_einvoicing_jwt_secret_2024
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: valeo-e-invoicing-logs-pvc
+  namespace: valeo-neuroerp
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-storage
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: valeo-e-invoicing-monitor
+  namespace: valeo-neuroerp
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: valeo-e-invoicing-api
+  endpoints:
+  - port: metrics
+    path: /actuator/prometheus
+    interval: 30s
+    scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+    - valeo-neuroerp
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: valeo-e-invoicing-hpa
+  namespace: valeo-neuroerp
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: valeo-e-invoicing-api
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60 

@@ -1,0 +1,25 @@
+{
+  "id": "frontend-agent",
+  "type": "frontend",
+  "capabilities": [
+    "react",
+    "typescript",
+    "mui",
+    "tailwind",
+    "testing"
+  ],
+  "autonomy": "high",
+  "status": "initialized",
+  "lastActivity": "2025-07-24T17:14:04.589Z",
+  "performance": {
+    "tasksCompleted": 0,
+    "successRate": 1,
+    "avgDuration": 0,
+    "quality": 1
+  },
+  "health": {
+    "status": "healthy",
+    "score": 1,
+    "lastCheck": "2025-07-24T17:14:04.590Z"
+  }
+}

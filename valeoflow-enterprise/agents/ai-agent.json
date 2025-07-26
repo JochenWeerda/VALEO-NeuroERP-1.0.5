@@ -1,0 +1,25 @@
+{
+  "id": "ai-agent",
+  "type": "ai",
+  "capabilities": [
+    "ml",
+    "nlp",
+    "prediction",
+    "optimization",
+    "analysis"
+  ],
+  "autonomy": "full",
+  "status": "initialized",
+  "lastActivity": "2025-07-24T17:14:04.595Z",
+  "performance": {
+    "tasksCompleted": 0,
+    "successRate": 1,
+    "avgDuration": 0,
+    "quality": 1
+  },
+  "health": {
+    "status": "healthy",
+    "score": 1,
+    "lastCheck": "2025-07-24T17:14:04.595Z"
+  }
+}

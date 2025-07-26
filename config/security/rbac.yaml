@@ -1,0 +1,30 @@
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: valeo-neuroerp-sa
+  namespace: valeo-neuroerp
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: valeo-neuroerp-role
+  namespace: valeo-neuroerp
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: valeo-neuroerp-rolebinding
+  namespace: valeo-neuroerp
+subjects:
+- kind: ServiceAccount
+  name: valeo-neuroerp-sa
+  namespace: valeo-neuroerp
+roleRef:
+  kind: Role
+  name: valeo-neuroerp-role
+  apiGroup: rbac.authorization.k8s.io

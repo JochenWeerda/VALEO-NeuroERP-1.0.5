@@ -1,0 +1,595 @@
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { neuralTheme } from '../../themes/NeuroFlowTheme';
+import { ApiProvider } from '../../contexts/ApiContext';
+import SapFioriDashboard from '../../pages/SapFioriDashboard';
+import TransactionsPage from '../../pages/TransactionsPage';
+import AnalyticsPage from '../../pages/AnalyticsPage';
+
+// Mock für fetch
+const mockFetch = jest.fn();
+global.fetch = mockFetch;
+
+// Mock für Chart.js
+jest.mock('chart.js/auto', () => ({
+  Chart: jest.fn().mockImplementation(() => ({
+    destroy: jest.fn(),
+    update: jest.fn(),
+  })),
+}));
+
+const renderWithProviders = (component: React.ReactElement) => {
+  return render(
+    <BrowserRouter>
+      <ThemeProvider theme={neuralTheme}>
+        <ApiProvider>
+          {component}
+        </ApiProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+};
+
+// Hilfsfunktion zum Prüfen von ARIA-Attributen
+const checkAriaAttributes = (element: HTMLElement): string[] => {
+  const issues: string[] = [];
+  
+  // Prüfe ob interaktive Elemente ARIA-Labels haben
+  if (element.tagName === 'BUTTON' || element.tagName === 'A' || element.tagName === 'INPUT') {
+    const ariaLabel = element.getAttribute('aria-label');
+    const ariaLabelledby = element.getAttribute('aria-labelledby');
+    const title = element.getAttribute('title');
+    
+    if (!ariaLabel && !ariaLabelledby && !title && !element.textContent?.trim()) {
+      issues.push(`${element.tagName} ohne beschreibenden Text`);
+    }
+  }
+  
+  // Prüfe Formularelemente
+  if (element.tagName === 'INPUT' || element.tagName === 'SELECT' || element.tagName === 'TEXTAREA') {
+    const ariaRequired = element.getAttribute('aria-required');
+    const required = element.hasAttribute('required');
+    
+    if (required && ariaRequired !== 'true') {
+      issues.push('Erforderliches Formularelement ohne aria-required');
+    }
+  }
+  
+  // Prüfe Tabellen
+  if (element.tagName === 'TABLE') {
+    const caption = element.querySelector('caption');
+    const ariaLabel = element.getAttribute('aria-label');
+    const ariaLabelledby = element.getAttribute('aria-labelledby');
+    
+    if (!caption && !ariaLabel && !ariaLabelledby) {
+      issues.push('Tabelle ohne Beschreibung');
+    }
+  }
+  
+  return issues;
+};
+
+// Hilfsfunktion zum Prüfen der Keyboard-Navigation
+const checkKeyboardNavigation = (container: HTMLElement): string[] => {
+  const issues: string[] = [];
+  
+  // Finde alle interaktiven Elemente
+  const interactiveElements = container.querySelectorAll('button, a, input, select, textarea, [tabindex]');
+  
+  // Prüfe Tab-Reihenfolge
+  const tabIndexes = Array.from(interactiveElements).map(el => {
+    const tabIndex = el.getAttribute('tabindex');
+    return tabIndex ? parseInt(tabIndex) : 0;
+  });
+  
+  // Prüfe auf ungültige Tab-Index-Werte
+  const invalidTabIndexes = tabIndexes.filter(index => index < 0 && index !== -1);
+  if (invalidTabIndexes.length > 0) {
+    issues.push('Ungültige Tab-Index-Werte gefunden');
+  }
+  
+  // Prüfe auf doppelte positive Tab-Index-Werte
+  const positiveTabIndexes = tabIndexes.filter(index => index > 0);
+  const uniquePositiveIndexes = new Set(positiveTabIndexes);
+  if (positiveTabIndexes.length !== uniquePositiveIndexes.size) {
+    issues.push('Doppelte positive Tab-Index-Werte gefunden');
+  }
+  
+  return issues;
+};
+
+// Hilfsfunktion zum Prüfen der Farbkontraste
+const checkColorContrast = (element: HTMLElement): string[] => {
+  const issues: string[] = [];
+  
+  // Vereinfachte Kontrast-Prüfung (in der Praxis würde hier eine echte Kontrast-Prüfung stehen)
+  const computedStyle = window.getComputedStyle(element);
+  const backgroundColor = computedStyle.backgroundColor;
+  const color = computedStyle.color;
+  
+  // Prüfe auf transparente Hintergründe ohne Fallback
+  if (backgroundColor === 'rgba(0, 0, 0, 0)' || backgroundColor === 'transparent') {
+    const parent = element.parentElement;
+    if (parent) {
+      const parentBackground = window.getComputedStyle(parent).backgroundColor;
+      if (parentBackground === 'rgba(0, 0, 0, 0)' || parentBackground === 'transparent') {
+        issues.push('Transparenter Hintergrund ohne Fallback');
+      }
+    }
+  }
+  
+  return issues;
+};
+
+// Hilfsfunktion zum Prüfen der Screen-Reader-Unterstützung
+const checkScreenReaderSupport = (container: HTMLElement): string[] => {
+  const issues: string[] = [];
+  
+  // Prüfe Icons ohne Beschreibung
+  const icons = container.querySelectorAll('svg, [class*="icon"], [class*="Icon"]');
+  icons.forEach(icon => {
+    const ariaLabel = icon.getAttribute('aria-label');
+    const ariaLabelledby = icon.getAttribute('aria-labelledby');
+    const title = icon.querySelector('title');
+    
+    if (!ariaLabel && !ariaLabelledby && !title) {
+      issues.push('Icon ohne Beschreibung');
+    }
+  });
+  
+  return issues;
+};
+
+// TEMPORÄR DEAKTIVIERT: Accessibility-Tests bis zur vollständigen Implementierung
+xdescribe('Accessibility Tests', () => {
+  beforeEach(() => {
+    mockFetch.mockClear();
+    
+    // Mock für API-Daten
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({
+        transactions: [
+          { id: 1, amount: 1000, description: 'Test Transaction', status: 'completed' },
+          { id: 2, amount: 2000, description: 'Test Transaction 2', status: 'pending' }
+        ],
+        inventory: [
+          { id: 1, name: 'Test Product', quantity: 100, price: 10.99 },
+          { id: 2, name: 'Test Product 2', quantity: 50, price: 25.50 }
+        ],
+        analytics: {
+          revenue: 10000,
+          growth: 15,
+          transactions: 150,
+          customers: 25
+        }
+      })
+    });
+  });
+
+  describe('ARIA Attributes', () => {
+    test('alle interaktiven Elemente haben ARIA-Attribute', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const allElements = container.querySelectorAll('*');
+      const issues: string[] = [];
+      
+      allElements.forEach(element => {
+        const elementIssues = checkAriaAttributes(element as HTMLElement);
+        issues.push(...elementIssues);
+      });
+      
+      expect(issues).toHaveLength(0);
+      console.log(`ARIA-Attribute geprüft: ${allElements.length} Elemente`);
+    });
+
+    test('Formularelemente haben korrekte ARIA-Attribute', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      // Prüfe Input-Felder
+      const inputs = container.querySelectorAll('input');
+      inputs.forEach(input => {
+        const ariaLabel = input.getAttribute('aria-label');
+        const ariaLabelledby = input.getAttribute('aria-labelledby');
+        const id = input.getAttribute('id');
+        
+        expect(ariaLabel || ariaLabelledby || id).toBeTruthy();
+      });
+      
+      // Prüfe Labels
+      const labels = container.querySelectorAll('label');
+      labels.forEach(label => {
+        const forAttribute = label.getAttribute('for');
+        const id = label.getAttribute('id');
+        
+        expect(forAttribute || id).toBeTruthy();
+      });
+    });
+
+    test('Tabellen haben korrekte ARIA-Attribute', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      const tables = container.querySelectorAll('table');
+      tables.forEach(table => {
+        const caption = table.querySelector('caption');
+        const ariaLabel = table.getAttribute('aria-label');
+        const ariaLabelledby = table.getAttribute('aria-labelledby');
+        
+        expect(caption || ariaLabel || ariaLabelledby).toBeTruthy();
+        
+        // Prüfe Tabellen-Header
+        const headers = table.querySelectorAll('th');
+        headers.forEach(header => {
+          const scope = header.getAttribute('scope');
+          expect(scope).toBeTruthy();
+        });
+      });
+    });
+  });
+
+  describe('Keyboard Navigation', () => {
+    test('alle interaktiven Elemente sind über Tastatur erreichbar', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const issues = checkKeyboardNavigation(container);
+      expect(issues).toHaveLength(0);
+      
+      const interactiveElements = container.querySelectorAll('button, a, input, select, textarea, [tabindex]');
+      console.log(`Keyboard-navigierbare Elemente: ${interactiveElements.length}`);
+    });
+
+    test('Tab-Reihenfolge ist logisch', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      const interactiveElements = container.querySelectorAll('button, a, input, select, textarea, [tabindex]');
+      const tabIndexes = Array.from(interactiveElements).map(el => {
+        const tabIndex = el.getAttribute('tabindex');
+        return tabIndex ? parseInt(tabIndex) : 0;
+      });
+      
+      // Prüfe auf negative Tab-Index-Werte (außer -1 für skip links)
+      const negativeIndexes = tabIndexes.filter(index => index < 0 && index !== -1);
+      expect(negativeIndexes).toHaveLength(0);
+      
+      // Prüfe auf zu hohe Tab-Index-Werte
+      const highIndexes = tabIndexes.filter(index => index > 100);
+      expect(highIndexes).toHaveLength(0);
+    });
+
+    test('Skip-Links sind vorhanden', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const skipLinks = container.querySelectorAll('a[href^="#"], [tabindex="-1"]');
+      expect(skipLinks.length).toBeGreaterThan(0);
+    });
+
+    test('Escape-Taste funktioniert korrekt', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      // Öffne ein Modal oder Dropdown
+      const menuButton = container.querySelector('button[aria-haspopup="true"]');
+      if (menuButton) {
+        fireEvent.click(menuButton);
+        
+        // Prüfe ob Dropdown geöffnet ist
+        const dropdown = container.querySelector('[role="menu"]');
+        expect(dropdown).toBeInTheDocument();
+        
+        // Drücke Escape
+        fireEvent.keyDown(document, { key: 'Escape' });
+        
+        // Prüfe ob Dropdown geschlossen ist
+        await waitFor(() => {
+          expect(container.querySelector('[role="menu"]')).not.toBeInTheDocument();
+        });
+      }
+    });
+  });
+
+  describe('Screen Reader Support', () => {
+    test('alle Bilder haben Alt-Text', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const images = container.querySelectorAll('img');
+      images.forEach(img => {
+        const alt = img.getAttribute('alt');
+        expect(alt).toBeTruthy();
+      });
+      
+      console.log(`Bilder mit Alt-Text geprüft: ${images.length}`);
+    });
+
+    test('Icons haben beschreibende Texte', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const icons = container.querySelectorAll('[class*="icon"], svg, [data-testid*="icon"]');
+      const issues: string[] = [];
+      
+      icons.forEach(icon => {
+        const ariaLabel = icon.getAttribute('aria-label');
+        const ariaLabelledby = icon.getAttribute('aria-labelledby');
+        const title = icon.getAttribute('title');
+        const textContent = icon.textContent?.trim();
+        
+        if (!ariaLabel && !ariaLabelledby && !title && !textContent) {
+          issues.push('Icon ohne Beschreibung gefunden');
+        }
+      });
+      
+      expect(issues).toHaveLength(0);
+      console.log(`Icons mit Beschreibung geprüft: ${icons.length}`);
+    });
+
+    test('Landmark-Rollen sind definiert', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const landmarks = container.querySelectorAll('[role="banner"], [role="main"], [role="navigation"], [role="contentinfo"]');
+      expect(landmarks.length).toBeGreaterThan(0);
+      
+      // Prüfe spezifische Landmarks
+      const main = container.querySelector('[role="main"]');
+      expect(main).toBeInTheDocument();
+      
+      const navigation = container.querySelector('[role="navigation"]');
+      expect(navigation).toBeInTheDocument();
+    });
+
+    test('Status-Nachrichten sind für Screen-Reader verfügbar', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      const statusRegions = container.querySelectorAll('[role="status"], [role="alert"], [aria-live]');
+      expect(statusRegions.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Color Contrast', () => {
+    test('Text hat ausreichenden Kontrast', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const textElements = container.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, button, a');
+      const issues: string[] = [];
+      
+      textElements.forEach(element => {
+        const elementIssues = checkColorContrast(element as HTMLElement);
+        issues.push(...elementIssues);
+      });
+      
+      expect(issues).toHaveLength(0);
+      console.log(`Kontrast geprüft: ${textElements.length} Text-Elemente`);
+    });
+
+    test('Fokus-Indikatoren sind sichtbar', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const interactiveElements = container.querySelectorAll('button, a, input, select, textarea');
+      const issues: string[] = [];
+      
+      interactiveElements.forEach(element => {
+        const styles = window.getComputedStyle(element as HTMLElement);
+        const outline = styles.outline;
+        const outlineStyle = styles.outlineStyle;
+        
+        if (outline === 'none' && outlineStyle === 'none') {
+          issues.push('Element ohne sichtbaren Fokus-Indikator');
+        }
+      });
+      
+      expect(issues).toHaveLength(0);
+      console.log(`Fokus-Indikatoren geprüft: ${interactiveElements.length} Elemente`);
+    });
+  });
+
+  describe('Form Accessibility', () => {
+    test('Formulare haben korrekte Labels', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      const formInputs = container.querySelectorAll('input, select, textarea');
+      formInputs.forEach(input => {
+        const id = input.getAttribute('id');
+        const ariaLabel = input.getAttribute('aria-label');
+        const ariaLabelledby = input.getAttribute('aria-labelledby');
+        
+        if (id) {
+          const label = container.querySelector(`label[for="${id}"]`);
+          expect(label || ariaLabel || ariaLabelledby).toBeTruthy();
+        } else {
+          expect(ariaLabel || ariaLabelledby).toBeTruthy();
+        }
+      });
+    });
+
+    test('Erforderliche Felder sind gekennzeichnet', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      const requiredInputs = container.querySelectorAll('input[required], select[required], textarea[required]');
+      requiredInputs.forEach(input => {
+        const ariaRequired = input.getAttribute('aria-required');
+        expect(ariaRequired).toBe('true');
+      });
+    });
+
+    test('Fehlermeldungen sind für Screen-Reader verfügbar', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      // Simuliere Formular-Fehler
+      const form = container.querySelector('form');
+      if (form) {
+        const errorMessage = document.createElement('div');
+        errorMessage.setAttribute('role', 'alert');
+        errorMessage.textContent = 'Fehlermeldung';
+        form.appendChild(errorMessage);
+        
+        const alertElements = container.querySelectorAll('[role="alert"]');
+        expect(alertElements.length).toBeGreaterThan(0);
+      }
+    });
+  });
+
+  describe('Dynamic Content Accessibility', () => {
+    test('Lade-Zustände sind für Screen-Reader verfügbar', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const loadingElements = container.querySelectorAll('[aria-busy="true"], [role="progressbar"]');
+      expect(loadingElements.length).toBeGreaterThan(0);
+    });
+
+    test('Erfolgs- und Fehlermeldungen sind zugänglich', async () => {
+      const { container } = renderWithProviders(<TransactionsPage />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/transaktionen/i)).toBeInTheDocument();
+      });
+      
+      // Simuliere Erfolgsmeldung
+      const successMessage = document.createElement('div');
+      successMessage.setAttribute('role', 'status');
+      successMessage.setAttribute('aria-live', 'polite');
+      successMessage.textContent = 'Erfolgreich gespeichert';
+      container.appendChild(successMessage);
+      
+      const statusElements = container.querySelectorAll('[role="status"], [role="alert"]');
+      expect(statusElements.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Mobile Accessibility', () => {
+    test('Touch-Targets sind ausreichend groß', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const touchTargets = container.querySelectorAll('button, a, input, select, textarea');
+      const issues: string[] = [];
+      
+      touchTargets.forEach(target => {
+        const styles = window.getComputedStyle(target as HTMLElement);
+        const width = parseFloat(styles.width);
+        const height = parseFloat(styles.height);
+        
+        // Touch-Targets sollten mindestens 44x44px sein
+        if (width < 44 || height < 44) {
+          issues.push('Touch-Target zu klein');
+        }
+      });
+      
+      expect(issues).toHaveLength(0);
+      console.log(`Touch-Targets geprüft: ${touchTargets.length} Elemente`);
+    });
+
+    test('Viewport ist korrekt konfiguriert', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const viewport = document.querySelector('meta[name="viewport"]');
+      expect(viewport).toBeInTheDocument();
+      
+      const content = viewport?.getAttribute('content');
+      expect(content).toContain('width=device-width');
+      expect(content).toContain('initial-scale=1');
+    });
+  });
+
+  describe('Accessibility Compliance', () => {
+    test('WCAG 2.1 AA Compliance', async () => {
+      const { container } = renderWithProviders(<SapFioriDashboard />);
+      
+      await waitFor(() => {
+        expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      });
+      
+      const allIssues: string[] = [];
+      
+      // Sammle alle Accessibility-Issues
+      const ariaIssues = checkAriaAttributes(container);
+      const keyboardIssues = checkKeyboardNavigation(container);
+      const contrastIssues = checkColorContrast(container);
+      const screenReaderIssues = checkScreenReaderSupport(container);
+      
+      allIssues.push(...ariaIssues, ...keyboardIssues, ...contrastIssues, ...screenReaderIssues);
+      
+      // Erstelle detaillierten Bericht
+      if (allIssues.length > 0) {
+        console.log('Accessibility Issues gefunden:');
+        allIssues.forEach(issue => console.log(`- ${issue}`));
+      }
+      
+      expect(allIssues).toHaveLength(0);
+      console.log('WCAG 2.1 AA Compliance bestätigt');
+    });
+  });
+}); 

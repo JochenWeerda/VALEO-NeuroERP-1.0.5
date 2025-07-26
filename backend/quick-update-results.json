@@ -1,0 +1,37 @@
+{
+  "timestamp": 1753516860.1510923,
+  "security_results": {
+    "python-jose": {
+      "current_version": "3.5.0",
+      "min_safe_version": "3.4.0",
+      "is_safe": true,
+      "cve": "CVE-2024-33663",
+      "severity": "KRITISCH"
+    },
+    "starlette": {
+      "current_version": "0.47.2",
+      "min_safe_version": "0.47.0",
+      "is_safe": true,
+      "cve": "CVE-2024-47874",
+      "severity": "HOCH"
+    }
+  },
+  "compatibility_results": {
+    "python-jose-34": {
+      "description": "python-jose 3.4+ (Sicherheitsfix)",
+      "dry_run_success": true,
+      "import_works": false,
+      "compatible": true
+    },
+    "starlette-latest": {
+      "description": "starlette 0.47+ (Sicherheitsfix)",
+      "dry_run_success": true,
+      "import_works": true,
+      "compatible": true
+    }
+  },
+  "summary": {
+    "unsafe_packages": 0,
+    "total_critical_packages": 2
+  }
+}

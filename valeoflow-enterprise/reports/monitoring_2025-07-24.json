@@ -1,0 +1,477 @@
+[
+  {
+    "timestamp": "2025-07-24T17:30:06.221Z",
+    "systemHealth": 1,
+    "activeAgents": 3,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 186.9629010182813,
+      "throughput": 1065.4601882030997,
+      "errorRate": 0.024357114754330857,
+      "successRate": 0.9833903935298455,
+      "cpuEfficiency": 0.9325868405002921,
+      "memoryEfficiency": 0.8225281014885454
+    },
+    "quality": {
+      "codeCoverage": 0.7754077174181261,
+      "testPassRate": 0.9606450054706236,
+      "bugDensity": 0.0529082102891832,
+      "technicalDebt": 0.041770152121380515,
+      "securityScore": 0.8683886741808495,
+      "maintainability": 0.8047035777451892
+    },
+    "alerts": 3,
+    "warnings": 1,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:30:36.237Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 428.42405535601984,
+      "throughput": 888.8757486562979,
+      "errorRate": 0.009543573750758916,
+      "successRate": 0.9021808068625777,
+      "cpuEfficiency": 0.7932673268307461,
+      "memoryEfficiency": 0.911698908077555
+    },
+    "quality": {
+      "codeCoverage": 0.7539587474513059,
+      "testPassRate": 0.9027373988158867,
+      "bugDensity": 0.055167623059287046,
+      "technicalDebt": 0.06359138147618996,
+      "securityScore": 0.8072774608677654,
+      "maintainability": 0.9999552126641872
+    },
+    "alerts": 4,
+    "warnings": 1,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:31:06.272Z",
+    "systemHealth": 0.8,
+    "activeAgents": 4,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 289.40320120092815,
+      "throughput": 588.5176602236553,
+      "errorRate": 0.013305951339154543,
+      "successRate": 0.910866788464948,
+      "cpuEfficiency": 0.7839246426369609,
+      "memoryEfficiency": 0.9965614475154693
+    },
+    "quality": {
+      "codeCoverage": 0.7033020762962284,
+      "testPassRate": 0.9027731656244323,
+      "bugDensity": 0.07216198134485914,
+      "technicalDebt": 0.06377439331433923,
+      "securityScore": 0.9692821310555451,
+      "maintainability": 0.7807545830356983
+    },
+    "alerts": 6,
+    "warnings": 3,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:31:36.307Z",
+    "systemHealth": 0.9,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 419.60450440685486,
+      "throughput": 1403.6975664756603,
+      "errorRate": 0.020734674828686208,
+      "successRate": 0.9528671030958049,
+      "cpuEfficiency": 0.7118598307546585,
+      "memoryEfficiency": 0.9902396081749849
+    },
+    "quality": {
+      "codeCoverage": 0.7720806395795184,
+      "testPassRate": 0.9437030867620374,
+      "bugDensity": 0.02363464156553279,
+      "technicalDebt": 0.06087262914912244,
+      "securityScore": 0.98714386512328,
+      "maintainability": 0.9196124827060221
+    },
+    "alerts": 7,
+    "warnings": 4,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:34:45.373Z",
+    "systemHealth": 0.9,
+    "activeAgents": 4,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 454.7453292747619,
+      "throughput": 954.4661861292079,
+      "errorRate": 0.033305844185819,
+      "successRate": 0.9714852263135343,
+      "cpuEfficiency": 0.793144154221327,
+      "memoryEfficiency": 0.9128092385937643
+    },
+    "quality": {
+      "codeCoverage": 0.9396462229144715,
+      "testPassRate": 0.9819555587056328,
+      "bugDensity": 0.05493291099869207,
+      "technicalDebt": 0.09083192731971078,
+      "securityScore": 0.8116331567989916,
+      "maintainability": 0.8608753545077455
+    },
+    "alerts": 1,
+    "warnings": 1,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:35:15.402Z",
+    "systemHealth": 1,
+    "activeAgents": 4,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 524.6807708052957,
+      "throughput": 1063.461857464246,
+      "errorRate": 0.019924665599253745,
+      "successRate": 0.9231417989829307,
+      "cpuEfficiency": 0.762662282251485,
+      "memoryEfficiency": 0.8265897553698156
+    },
+    "quality": {
+      "codeCoverage": 0.8909426942701806,
+      "testPassRate": 0.9991493998637819,
+      "bugDensity": 0.05287420565602015,
+      "technicalDebt": 0.1250902141053723,
+      "securityScore": 0.9575664742767435,
+      "maintainability": 0.9048690836006564
+    },
+    "alerts": 2,
+    "warnings": 4,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:35:45.426Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 588.8384272050034,
+      "throughput": 946.6860546412707,
+      "errorRate": 0.04653926133948667,
+      "successRate": 0.9465655197928919,
+      "cpuEfficiency": 0.7918101492105039,
+      "memoryEfficiency": 0.9797333686969258
+    },
+    "quality": {
+      "codeCoverage": 0.7747273299248415,
+      "testPassRate": 0.9265600037858074,
+      "bugDensity": 0.026464250661513523,
+      "technicalDebt": 0.10389982506026803,
+      "securityScore": 0.832068441650411,
+      "maintainability": 0.7032879120553107
+    },
+    "alerts": 3,
+    "warnings": 5,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:36:15.447Z",
+    "systemHealth": 0.9,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 269.4077652429963,
+      "throughput": 728.9494163313599,
+      "errorRate": 0.03168907049400541,
+      "successRate": 0.9369475337776192,
+      "cpuEfficiency": 0.7416407539231199,
+      "memoryEfficiency": 0.8916052110829421
+    },
+    "quality": {
+      "codeCoverage": 0.7991437438401792,
+      "testPassRate": 0.949135081287068,
+      "bugDensity": 0.055099578405038055,
+      "technicalDebt": 0.06971446666696704,
+      "securityScore": 0.8226784416667805,
+      "maintainability": 0.9051390261219077
+    },
+    "alerts": 4,
+    "warnings": 7,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:36:45.479Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 483.2952833783494,
+      "throughput": 1146.8021489733053,
+      "errorRate": 0.037213771770206565,
+      "successRate": 0.9569120590891376,
+      "cpuEfficiency": 0.735267659794025,
+      "memoryEfficiency": 0.9538454096020315
+    },
+    "quality": {
+      "codeCoverage": 0.9967003162748522,
+      "testPassRate": 0.9501797643357234,
+      "bugDensity": 0.01665897779157397,
+      "technicalDebt": 0.08654236235526183,
+      "securityScore": 0.8698669460651917,
+      "maintainability": 0.7046556784282844
+    },
+    "alerts": 4,
+    "warnings": 10,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:37:15.517Z",
+    "systemHealth": 0.9,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 464.53585819185986,
+      "throughput": 1023.7213212836278,
+      "errorRate": 0.014091852041070219,
+      "successRate": 0.9683617994751448,
+      "cpuEfficiency": 0.7461109191869754,
+      "memoryEfficiency": 0.9518154690079029
+    },
+    "quality": {
+      "codeCoverage": 0.9195256603472197,
+      "testPassRate": 0.9144017859290431,
+      "bugDensity": 0.015561970712719187,
+      "technicalDebt": 0.12874693048766095,
+      "securityScore": 0.8382133174645887,
+      "maintainability": 0.7124769432278918
+    },
+    "alerts": 4,
+    "warnings": 12,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:37:45.539Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 573.8150083849735,
+      "throughput": 653.7901913111864,
+      "errorRate": 0.025517769703574257,
+      "successRate": 0.9502899425697674,
+      "cpuEfficiency": 0.7467539125106771,
+      "memoryEfficiency": 0.8762186950845889
+    },
+    "quality": {
+      "codeCoverage": 0.9894750723750991,
+      "testPassRate": 0.9813790592771079,
+      "bugDensity": 0.045953671026744886,
+      "technicalDebt": 0.13086848281747163,
+      "securityScore": 0.9310818782011885,
+      "maintainability": 0.8077310809364284
+    },
+    "alerts": 4,
+    "warnings": 13,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:38:15.589Z",
+    "systemHealth": 0.9,
+    "activeAgents": 4,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 492.5652584242026,
+      "throughput": 1174.4056306885414,
+      "errorRate": 0.01930691018954417,
+      "successRate": 0.931411130637175,
+      "cpuEfficiency": 0.7214096830634508,
+      "memoryEfficiency": 0.9483219861950056
+    },
+    "quality": {
+      "codeCoverage": 0.9440855443249687,
+      "testPassRate": 0.9483523021618494,
+      "bugDensity": 0.06006886001114922,
+      "technicalDebt": 0.10907002478595831,
+      "securityScore": 0.9320876057524697,
+      "maintainability": 0.871957481680247
+    },
+    "alerts": 5,
+    "warnings": 14,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:38:45.612Z",
+    "systemHealth": 0.9,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 501.77575223397565,
+      "throughput": 767.3958864589418,
+      "errorRate": 0.007772396086753031,
+      "successRate": 0.9309148570804697,
+      "cpuEfficiency": 0.7323361558102807,
+      "memoryEfficiency": 0.9697425259243545
+    },
+    "quality": {
+      "codeCoverage": 0.811600194579899,
+      "testPassRate": 0.9873664897791228,
+      "bugDensity": 0.06627474023161968,
+      "technicalDebt": 0.19520734696302613,
+      "securityScore": 0.960513487179373,
+      "maintainability": 0.9635629354397748
+    },
+    "alerts": 5,
+    "warnings": 18,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:39:15.635Z",
+    "systemHealth": 0.9,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 564.9742509547722,
+      "throughput": 1040.613223581164,
+      "errorRate": 0.04915330782229754,
+      "successRate": 0.9463590625386595,
+      "cpuEfficiency": 0.9051168966193868,
+      "memoryEfficiency": 0.8127813527337895
+    },
+    "quality": {
+      "codeCoverage": 0.9262665209713642,
+      "testPassRate": 0.9344537799005287,
+      "bugDensity": 0.04411698476610633,
+      "technicalDebt": 0.17230033765387606,
+      "securityScore": 0.9055679838504324,
+      "maintainability": 0.9636127137598461
+    },
+    "alerts": 5,
+    "warnings": 20,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:39:45.679Z",
+    "systemHealth": 1,
+    "activeAgents": 4,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 174.94528220092968,
+      "throughput": 552.0394458893401,
+      "errorRate": 0.009603214872775401,
+      "successRate": 0.9853881466636628,
+      "cpuEfficiency": 0.8124433411717479,
+      "memoryEfficiency": 0.9479487233081989
+    },
+    "quality": {
+      "codeCoverage": 0.7065991605240775,
+      "testPassRate": 0.9039741718593309,
+      "bugDensity": 0.09857886972926802,
+      "technicalDebt": 0.17166290709678528,
+      "securityScore": 0.9105876842904439,
+      "maintainability": 0.9517832758991509
+    },
+    "alerts": 7,
+    "warnings": 21,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:40:15.697Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 260.9281914702756,
+      "throughput": 689.1872332136859,
+      "errorRate": 0.043159507190425266,
+      "successRate": 0.9687564296911352,
+      "cpuEfficiency": 0.9496298930577656,
+      "memoryEfficiency": 0.9499649967026824
+    },
+    "quality": {
+      "codeCoverage": 0.998587676729052,
+      "testPassRate": 0.930047548461181,
+      "bugDensity": 0.05851438231387254,
+      "technicalDebt": 0.0798168598710697,
+      "securityScore": 0.8617727694044641,
+      "maintainability": 0.8490009428165737
+    },
+    "alerts": 7,
+    "warnings": 21,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:40:45.721Z",
+    "systemHealth": 0.9,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 371.2347936560685,
+      "throughput": 636.4806693084823,
+      "errorRate": 0.015414171823505652,
+      "successRate": 0.9628820991553908,
+      "cpuEfficiency": 0.7517405542846921,
+      "memoryEfficiency": 0.8938714255560677
+    },
+    "quality": {
+      "codeCoverage": 0.7394109294228413,
+      "testPassRate": 0.9147952852957439,
+      "bugDensity": 0.028156439044294237,
+      "technicalDebt": 0.0599879772621716,
+      "securityScore": 0.8743344869441558,
+      "maintainability": 0.8922408122430776
+    },
+    "alerts": 8,
+    "warnings": 22,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:41:15.750Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 422.18929856365696,
+      "throughput": 1047.683965685871,
+      "errorRate": 0.004929615231023011,
+      "successRate": 0.9529498347323418,
+      "cpuEfficiency": 0.8939069473808955,
+      "memoryEfficiency": 0.8569407323466036
+    },
+    "quality": {
+      "codeCoverage": 0.8819666909271388,
+      "testPassRate": 0.9505000629874739,
+      "bugDensity": 0.08354127182921399,
+      "technicalDebt": 0.15161746950181285,
+      "securityScore": 0.8807757005717683,
+      "maintainability": 0.8388420399811013
+    },
+    "alerts": 8,
+    "warnings": 22,
+    "errors": 0
+  },
+  {
+    "timestamp": "2025-07-24T17:41:45.792Z",
+    "systemHealth": 1,
+    "activeAgents": 5,
+    "totalAgents": 5,
+    "performance": {
+      "responseTime": 285.70988103943716,
+      "throughput": 1098.8866323783031,
+      "errorRate": 0.015384820301613145,
+      "successRate": 0.9430730787021558,
+      "cpuEfficiency": 0.9676244057064074,
+      "memoryEfficiency": 0.916861322480858
+    },
+    "quality": {
+      "codeCoverage": 0.9487548463361325,
+      "testPassRate": 0.9388543860360996,
+      "bugDensity": 0.01426001282887175,
+      "technicalDebt": 0.03922444486665664,
+      "securityScore": 0.993393966671737,
+      "maintainability": 0.8651090366795273
+    },
+    "alerts": 8,
+    "warnings": 22,
+    "errors": 0
+  }
+]

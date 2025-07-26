@@ -1,0 +1,248 @@
+{
+  "Lieferant": {
+    "Allgemein": {
+      "Lieferantennr": "string",
+      "Suchbegriff": "string",
+      "Erstanlage": "date",
+      "Niederlassung": "string",
+      "Kostenstelle": "string"
+    },
+    "Firmenanschrift": {
+      "Firmenname": "string",
+      "Name2": "string",
+      "Name3": "string",
+      "Straße": "string",
+      "Land": "string",
+      "PLZ": "string",
+      "Ort": "string",
+      "Postfach": "string",
+      "Postfach_PLZ": "string",
+      "Postfach_Ort": "string",
+      "Telefon1": "string",
+      "Telefon2": "string",
+      "Telefax": "string",
+      "Anrede": "string",
+      "Briefanrede": "string",
+      "E_Mail": "string",
+      "Homepage": "string",
+      "Freifeld1": "string",
+      "Freifeld2": "string",
+      "Freifeld3": "string",
+      "Gebiet": "string",
+      "Info1": "string",
+      "Info2": "string",
+      "Info3": "string",
+      "Info4": "string",
+      "Info5": "string",
+      "Info6": "string"
+    },
+    "Konditionen": {
+      "Kreditoren_Konto": "string",
+      "Oberkreditor": "string",
+      "Bezugsquelle": "string",
+      "Disponent": "string",
+      "VB": "string",
+      "ABC_Umsatzstatus": "string",
+      "UST_ID_Nr": "string",
+      "Steuer_Nr": "string",
+      "Sperre": "boolean",
+      "Sperre_Grund": "string",
+      "Kundengruppe": "string",
+      "Fax_Sperre": "boolean"
+    },
+    "Ansprechpartner": [
+      {
+        "Prioritaet": "int",
+        "Name": "string",
+        "Vorname": "string",
+        "Position": "string",
+        "Telefon1": "string",
+        "Telefon2": "string",
+        "Telefonnummer_Mobil": "string",
+        "Straße": "string",
+        "PLZ": "string",
+        "Ort": "string",
+        "Anrede": "string",
+        "Titel": "string",
+        "Briefanrede": "string",
+        "E_Mail": "string",
+        "Homepage": "string",
+        "Abteilung": "string",
+        "Entscheider": "boolean",
+        "Geburtsdatum": "date",
+        "Hobbies": "string",
+        "Info1": "string",
+        "Info2": "string",
+        "Disponent": "string",
+        "Empf_Rechnung_per_Mail": "boolean",
+        "Empf_Mahnung_per_Mail": "boolean",
+        "Kontaktsperre": "boolean",
+        "Erstanlage": "date",
+        "Inaktiv": "boolean",
+        "Erstkontaktquelle": "string",
+        "CAD_System": "string",
+        "Steuerungssystem": "string",
+        "Sicherheitsbeauftragter": "boolean",
+        "Datenschutzbeauftragter": "boolean"
+      }
+    ],
+    "Versandinformationen": {
+      "Rechnung_Versandart": "string",
+      "Mahnung_Versandart": "string",
+      "Kontaktzusammenstellung": "string",
+      "Dispo_Nummern": [
+        {
+          "Nummer": "string",
+          "Versandart": "string"
+        }
+      ],
+      "Installationsanweisung": "string"
+    },
+    "Lieferanten_Artikel": [
+      {
+        "Artikel_Nr": "string",
+        "Bezeichnung1": "string",
+        "Bezeichnung2": "string",
+        "Matchcode": "string",
+        "Lief_Artikel_Nr": "string",
+        "Mindestbestellmenge": "float",
+        "Einheit": "string",
+        "Schluessel": "string",
+        "EK_Preis": "float",
+        "Wiederbeschaffung": "int",
+        "Letzter_Bezug": "date"
+      }
+    ],
+    "Bank_Zahlungsverkehr": {
+      "Zahlungsbedingungen_Tage": "int",
+      "Zahlungsbedingungen_Skonto": "float",
+      "Zahlungsbedingungen_Netto_Kasse": "boolean",
+      "Bank_Name": "string",
+      "IBAN": "string",
+      "BIC": "string",
+      "Kontoinhaber": "string",
+      "Waehrung": "string",
+      "Zahlungsart": "string",
+      "Skonto1_Tage": "int",
+      "Skonto1_Prozent": "float",
+      "Skonto2_Tage": "int",
+      "Skonto2_Prozent": "float"
+    },
+    "Bewertung_Qualitaet": {
+      "Rating": "int",
+      "Zuverlaessigkeits_Score": "int",
+      "Qualitaets_Score": "int",
+      "Liefer_Score": "int",
+      "Preis_Score": "int",
+      "Service_Score": "int",
+      "Gesamtbewertung": "float",
+      "Letzte_Bewertung": "date",
+      "Bewertungs_Historie": [
+        {
+          "Datum": "date",
+          "Kategorie": "string",
+          "Bewertung": "int",
+          "Kommentar": "string"
+        }
+      ]
+    },
+    "Lieferdaten": {
+      "Durchschnittliche_Lieferzeit": "int",
+      "Mindestbestellwert": "float",
+      "Kostenlose_Lieferung_ab": "float",
+      "Liefergebiet": "string",
+      "Lieferzeiten": [
+        {
+          "Artikelgruppe": "string",
+          "Standard_Lieferzeit": "int",
+          "Express_Lieferzeit": "int",
+          "Notfall_Lieferzeit": "int"
+        }
+      ],
+      "Lieferbedingungen": "string",
+      "Versandkosten": "float",
+      "Versandkosten_ab_Bestellwert": "float"
+    },
+    "Zertifizierungen": {
+      "ISO_9001": "boolean",
+      "ISO_14001": "boolean",
+      "ISO_45001": "boolean",
+      "DIN_EN_ISO_9001": "boolean",
+      "Weitere_Zertifizierungen": "string",
+      "Zertifizierungs_Datum": "date",
+      "Zertifizierungs_Gueltig_bis": "date",
+      "Zertifizierungsstelle": "string"
+    },
+    "Status_Verwaltung": {
+      "Status": "string",
+      "Bevorzugter_Lieferant": "boolean",
+      "Zertifiziert": "boolean",
+      "Lokaler_Lieferant": "boolean",
+      "Notfall_Lieferant": "boolean",
+      "Exklusiv_Lieferant": "boolean",
+      "Sperrgrund": "string",
+      "Sperrdatum": "date",
+      "Freigabe_datum": "date",
+      "Freigabe_durch": "string"
+    },
+    "Notizen_Dokumente": {
+      "Notizen": "string",
+      "Interne_Notizen": "string",
+      "Dokumente": [
+        {
+          "Dokument_Typ": "string",
+          "Datei_Pfad": "string",
+          "Hochgeladen_am": "date",
+          "Hochgeladen_von": "string",
+          "Beschreibung": "string"
+        }
+      ],
+      "Korrespondenz_Historie": [
+        {
+          "Datum": "date",
+          "Typ": "string",
+          "Betreff": "string",
+          "Empfaenger": "string",
+          "Status": "string"
+        }
+      ]
+    },
+    "KI_Erweiterung": {
+      "Lieferantenbonitaet_Score": "int",
+      "Preis_Trend_Analyse": "string",
+      "Qualitaets_Trend": "string",
+      "Lieferzeit_Prognose": "int",
+      "Risiko_Bewertung": "string",
+      "Optimierungs_Vorschlaege": [
+        {
+          "Kategorie": "string",
+          "Vorschlag": "string",
+          "Prioritaet": "string",
+          "Erwarteter_Nutzen": "string"
+        }
+      ],
+      "Anomalie_Erkennung": {
+        "Preis_Anomalien": "boolean",
+        "Lieferzeit_Anomalien": "boolean",
+        "Qualitaets_Anomalien": "boolean",
+        "Letzte_Pruefung": "date"
+      },
+      "Automatische_Bewertung": {
+        "Aktiviert": "boolean",
+        "Bewertungskriterien": "string",
+        "Gewichtung": "string",
+        "Letzte_Aktualisierung": "date"
+      }
+    },
+    "Metadata": {
+      "Erstellt_am": "date",
+      "Erstellt_von": "string",
+      "Geaendert_am": "date",
+      "Geaendert_von": "string",
+      "Version": "string",
+      "Aktiv": "boolean",
+      "Geloescht_am": "date",
+      "Geloescht_von": "string"
+    }
+  }
+} 

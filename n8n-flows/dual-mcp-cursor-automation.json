@@ -1,0 +1,304 @@
+{
+  "name": "VALEO NeuroERP - Dual MCP Cursor Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "api/tables",
+        "options": {}
+      },
+      "id": "schema-mcp-tables",
+      "name": "Schema MCP - Get Tables",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [240, 300],
+      "webhookId": "schema-mcp-tables"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "ui/tables",
+        "options": {}
+      },
+      "id": "ui-mcp-tables",
+      "name": "UI MCP - Get Tables",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [240, 500],
+      "webhookId": "ui-mcp-tables"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Kombiniere Schema und UI Metadata\nconst schemaTables = $input.first().json.tables || [];\nconst uiTables = $input.all()[1].json.tables || [];\n\n// Gemeinsame Tabellen finden\nconst commonTables = schemaTables.filter(table => uiTables.includes(table));\n\nreturn {\n  json: {\n    commonTables,\n    schemaTables,\n    uiTables,\n    message: `Gefunden: ${commonTables.length} Tabellen mit Schema und UI Metadata`\n  }\n};"
+      },
+      "id": "combine-tables",
+      "name": "Combine Tables",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "api/schema/{{$json.table}}",
+        "options": {}
+      },
+      "id": "get-schema",
+      "name": "Get Schema",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 300],
+      "webhookId": "get-schema"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "ui/{{$json.table}}",
+        "options": {}
+      },
+      "id": "get-ui-metadata",
+      "name": "Get UI Metadata",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 500],
+      "webhookId": "get-ui-metadata"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Kombiniere Schema und UI Metadata für eine Tabelle\nconst schema = $input.first().json;\nconst uiMetadata = $input.all()[1].json;\n\n// Enhanced Fields erstellen\nconst enhancedFields = schema.columns.map(column => {\n  const uiField = uiMetadata.form?.fields?.find(f => f.field_name === column.name);\n  \n  return {\n    // Schema-Informationen\n    name: column.name,\n    type: column.type,\n    not_null: column.not_null,\n    default_value: column.default,\n    is_primary_key: column.primary,\n    is_foreign_key: column.foreign_key ? true : false,\n    foreign_table: column.foreign_key,\n    enum_values: column.enum_values,\n    \n    // UI-Informationen\n    ui_component: uiField?.ui_component || 'text',\n    label: uiField?.label || column.name,\n    placeholder: uiField?.placeholder,\n    tooltip: uiField?.tooltip,\n    order: uiField?.order || 999,\n    required: uiField?.required ?? column.not_null,\n    readonly: uiField?.readonly ?? column.primary,\n    hidden: uiField?.hidden ?? false,\n    group: uiField?.group,\n    options: uiField?.options || []\n  };\n});\n\nreturn {\n  json: {\n    table_name: schema.table,\n    schema,\n    ui_metadata: uiMetadata,\n    enhanced_fields: enhancedFields,\n    message: `Enhanced Schema für ${schema.table} erstellt`\n  }\n};"
+      },
+      "id": "combine-metadata",
+      "name": "Combine Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "prompt": "Erstelle eine React-Komponente basierend auf dem folgenden Dual-MCP-Schema:\n\n**Tabelle:** {{$json.table_name}}\n\n**Enhanced Fields:**\n{{$json.enhanced_fields.map(field => `- ${field.name} (${field.type}): ${field.label} - ${field.ui_component} - Required: ${field.required} - Order: ${field.order}`).join('\\n')}}\n\n**Anforderungen:**\n- Verwende React Hook Form mit Zod-Validierung\n- Verwende Shadcn UI Komponenten\n- Implementiere TypeScript-Typen\n- Berücksichtige RLS-Richtlinien\n- Verwende deutsche Labels\n- Erstelle eine vollständige, funktionsfähige Komponente\n\n**Ausgabe:**\n- React-Komponente (.tsx)\n- Zod-Schema (.ts)\n- TypeScript-Typen (.ts)",
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 4000
+        }
+      },
+      "id": "cursor-ai-generate",
+      "name": "Cursor AI - Generate Component",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [1120, 400],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-api-key",
+          "name": "OpenAI API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "writeFile",
+        "filePath": "generated-components/{{$json.table_name}}Form.tsx",
+        "fileName": "{{$json.table_name}}Form.tsx",
+        "fileContent": "{{$json.choices[0].message.content}}"
+      },
+      "id": "save-component",
+      "name": "Save Component",
+      "type": "n8n-nodes-base.fileOperations",
+      "typeVersion": 1,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{$json.table_name}}",
+              "rightValue": "invoices",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-table",
+      "name": "Check Table",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [460, 200]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "merge-schema-ui",
+      "name": "Merge Schema & UI",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "merge-tables",
+      "name": "Merge Tables",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"success\",\n  \"message\": \"Dual MCP Integration erfolgreich\",\n  \"generated_components\": $json.generated_components,\n  \"timestamp\": new Date().toISOString()\n}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1560, 400]
+    }
+  ],
+  "connections": {
+    "schema-mcp-tables": {
+      "main": [
+        [
+          {
+            "node": "merge-tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ui-mcp-tables": {
+      "main": [
+        [
+          {
+            "node": "merge-tables",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "combine-tables": {
+      "main": [
+        [
+          {
+            "node": "check-table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check-table": {
+      "main": [
+        [
+          {
+            "node": "merge-schema-ui",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get-schema": {
+      "main": [
+        [
+          {
+            "node": "merge-schema-ui",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "get-ui-metadata": {
+      "main": [
+        [
+          {
+            "node": "merge-schema-ui",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "combine-metadata": {
+      "main": [
+        [
+          {
+            "node": "cursor-ai-generate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cursor-ai-generate": {
+      "main": [
+        [
+          {
+            "node": "save-component",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save-component": {
+      "main": [
+        [
+          {
+            "node": "webhook-response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-22T19:30:00.000Z",
+      "updatedAt": "2025-07-22T19:30:00.000Z",
+      "id": "valeo-neuroerp",
+      "name": "VALEO NeuroERP"
+    },
+    {
+      "createdAt": "2025-07-22T19:30:00.000Z",
+      "updatedAt": "2025-07-22T19:30:00.000Z",
+      "id": "mcp-integration",
+      "name": "MCP Integration"
+    },
+    {
+      "createdAt": "2025-07-22T19:30:00.000Z",
+      "updatedAt": "2025-07-22T19:30:00.000Z",
+      "id": "cursor-ai",
+      "name": "Cursor AI"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-07-22T19:30:00.000Z",
+  "versionId": "1"
+} 

@@ -1,0 +1,109 @@
+{
+  "mode": "IMPLEMENTATION",
+  "description": "Integration, Modultests, Produktionsbereitstellung, Evaluation, Nachbesserung - Modus für die Produktionsbereitstellung",
+  "rules": [
+    {
+      "id": "implement-1",
+      "description": "Integriere die implementierten Komponenten in das Gesamtsystem",
+      "priority": "high"
+    },
+    {
+      "id": "implement-2",
+      "description": "Führe Modultests durch, um die Funktionalität zu überprüfen",
+      "priority": "high"
+    },
+    {
+      "id": "implement-3",
+      "description": "Erstelle Deployment-Konfigurationen für verschiedene Umgebungen",
+      "priority": "medium"
+    },
+    {
+      "id": "implement-4",
+      "description": "Führe Integrationstests durch, um die Zusammenarbeit der Komponenten zu überprüfen",
+      "priority": "high"
+    },
+    {
+      "id": "implement-5",
+      "description": "Evaluiere die Leistung und Qualität der Implementierung",
+      "priority": "medium"
+    },
+    {
+      "id": "implement-6",
+      "description": "Identifiziere und behebe Probleme und Fehler",
+      "priority": "high"
+    },
+    {
+      "id": "implement-7",
+      "description": "Optimiere die Implementierung für Leistung und Ressourcennutzung",
+      "priority": "medium"
+    },
+    {
+      "id": "implement-8",
+      "description": "Erstelle Dokumentation für Benutzer und Administratoren",
+      "priority": "medium"
+    },
+    {
+      "id": "implement-9",
+      "description": "Führe eine abschließende Überprüfung der Anforderungen durch",
+      "priority": "high"
+    },
+    {
+      "id": "implement-10",
+      "description": "Verwende die MongoDB-Integration, um Implementierungsergebnisse zu speichern",
+      "priority": "medium"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "integration_results",
+      "description": "Ergebnisse der Integration der Komponenten",
+      "format": "markdown"
+    },
+    {
+      "name": "test_results",
+      "description": "Ergebnisse der Modul- und Integrationstests",
+      "format": "markdown"
+    },
+    {
+      "name": "deployment_configs",
+      "description": "Deployment-Konfigurationen für verschiedene Umgebungen",
+      "format": "code"
+    },
+    {
+      "name": "evaluation_metrics",
+      "description": "Metriken zur Evaluation der Implementierung",
+      "format": "markdown"
+    },
+    {
+      "name": "improvements",
+      "description": "Identifizierte Verbesserungen und Fehlerbehebungen",
+      "format": "markdown"
+    }
+  ],
+  "mongodb_collections": [
+    {
+      "name": "integration_results",
+      "description": "Sammlung von Integrationsergebnissen"
+    },
+    {
+      "name": "test_results",
+      "description": "Sammlung von Testergebnissen"
+    },
+    {
+      "name": "deployment_configs",
+      "description": "Sammlung von Deployment-Konfigurationen"
+    },
+    {
+      "name": "evaluation_metrics",
+      "description": "Sammlung von Evaluationsmetriken"
+    },
+    {
+      "name": "improvements",
+      "description": "Sammlung von Verbesserungen"
+    },
+    {
+      "name": "implementation_results",
+      "description": "Sammlung von Ergebnissen der Implementierungsphase"
+    }
+  ]
+} 

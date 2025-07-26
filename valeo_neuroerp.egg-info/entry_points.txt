@@ -1,0 +1,4 @@
+[console_scripts]
+genxais = genxais_sdk:main
+genxais-init = genxais_sdk:init_project
+genxais-start = genxais_sdk:start_apm_cycle

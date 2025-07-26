@@ -1,0 +1,355 @@
+{
+  "name": "NeuroFlow Frontend Assistant",
+  "description": "KI-first, responsive-first Frontend-Entwicklung für VALEO NeuroERP mit MCP-Integration",
+  "version": "2.1.0",
+  "lastUpdated": "2024-12-19",
+  "learningProgress": {
+    "articlesManagement": "completed",
+    "customerManagement": "completed", 
+    "invoiceManagement": "completed",
+    "supplierManagement": "next",
+    "inventoryManagement": "planned",
+    "financialAccounting": "planned",
+    "hrManagement": "planned"
+  },
+  "corePrinciples": {
+    "errorFreeCode": {
+      "priority": "CRITICAL",
+      "description": "100% fehlerfreier TypeScript-Code mit vollständiger Validierung",
+      "requirements": [
+        "Keine any Types verwenden",
+        "Vollständige Zod-Schema-Validierung",
+        "Strikte TypeScript-Konfiguration",
+        "Umfassende Error-Handling",
+        "Compile-Zeit-Fehlerprüfung"
+      ]
+    },
+    "mcpIntegration": {
+      "priority": "HIGH",
+      "description": "Live Schema-Integration über MCP-Server",
+      "requirements": [
+        "Schema MCP Server (Port 8000)",
+        "UI Metadata MCP Server (Port 8001)",
+        "RLS-Compliance",
+        "Live Schema Updates",
+        "Type Safety durch Schema"
+      ]
+    },
+    "neuroflowDesign": {
+      "priority": "HIGH", 
+      "description": "KI-first, responsive-first Design System",
+      "requirements": [
+        "Material-UI v5 Komponenten",
+        "NeuroFlow Theme",
+        "Responsive Design",
+        "Accessibility (WCAG 2.1)",
+        "Performance-Optimierung"
+      ]
+    },
+    "erpFunctionality": {
+      "priority": "HIGH",
+      "description": "Vollständige ERP-Funktionalität",
+      "requirements": [
+        "Stammdatenpflege",
+        "Lagerverwaltung", 
+        "Preiskalkulation",
+        "Lieferanten-Integration",
+        "Finanzbuchhaltung"
+      ]
+    }
+  },
+  "technicalStack": {
+    "frontend": {
+      "framework": "React 18",
+      "language": "TypeScript 5.0+",
+      "ui": "Material-UI v5",
+      "styling": "TailwindCSS",
+      "forms": "React Hook Form + Zod",
+      "state": "Zustand",
+      "data": "React Query",
+      "icons": "Material-UI Icons"
+    },
+    "backend": {
+      "database": "Supabase (PostgreSQL)",
+      "api": "FastAPI",
+      "mcp": "Dual MCP Architecture",
+      "authentication": "Supabase Auth",
+      "realTime": "Supabase Realtime"
+    },
+    "development": {
+      "ide": "Cursor.ai",
+      "versionControl": "Git",
+      "testing": "Jest + React Testing Library",
+      "linting": "ESLint + Prettier",
+      "bundling": "Vite"
+    }
+  },
+  "componentPatterns": {
+    "formComponents": {
+      "structure": [
+        "NeuroFlowCard Wrapper",
+        "Header mit Icon und Titel",
+        "Tabs für verschiedene Bereiche",
+        "Grid-Layout für Felder",
+        "Controller-basierte Formulare",
+        "Zod-Validierung",
+        "Error-Handling",
+        "Loading States"
+      ],
+      "requiredFields": [
+        "TypeScript Interface",
+        "Zod Schema",
+        "useForm Hook",
+        "Controller Components",
+        "Error Display",
+        "Submit Handler",
+        "Cancel Handler"
+      ]
+    },
+    "tableComponents": {
+      "structure": [
+        "NeuroFlowCard Wrapper",
+        "Header mit Aktionen",
+        "Filter-Bereich",
+        "Sortierbare Tabelle",
+        "Pagination",
+        "Row Actions",
+        "Loading States"
+      ],
+      "requiredFields": [
+        "TypeScript Interface",
+        "Mock Data",
+        "Filter Logic",
+        "Sort Logic",
+        "Pagination Logic",
+        "Action Handlers",
+        "Status Indicators"
+      ]
+    },
+    "pageComponents": {
+      "structure": [
+        "Container Layout",
+        "Page Header",
+        "Dashboard Cards",
+        "Main Content",
+        "Statistics",
+        "Alerts/Warnings"
+      ],
+      "requiredFields": [
+        "State Management",
+        "Data Fetching",
+        "Error Handling",
+        "Loading States",
+        "Navigation",
+        "Statistics Calculation"
+      ]
+    }
+  },
+  "erpModules": {
+    "articlesManagement": {
+      "status": "completed",
+      "components": [
+        "NeuroFlowArticleForm.tsx",
+        "NeuroFlowArticleTable.tsx", 
+        "NeuroFlowArticlesPage.tsx"
+      ],
+      "features": [
+        "Artikelstammdaten",
+        "Kategorisierung",
+        "Maße & Gewicht",
+        "Preiskalkulation",
+        "Lagerverwaltung",
+        "Lieferanten-Integration",
+        "Artikel-Typen (Service, Digital, Gefahrgut)"
+      ],
+      "lessons": [
+        "7-Tab Interface für komplexe ERP-Formulare",
+        "Auto-Preisberechnung basierend auf Einkaufspreis und MwSt",
+        "Intelligente Bestandsverwaltung mit Warnungen",
+        "Dashboard mit Statistiken und Trends"
+      ]
+    },
+    "customerManagement": {
+      "status": "completed",
+      "components": [
+        "NeuroFlowCustomerForm.tsx",
+        "NeuroFlowCustomerTable.tsx",
+        "NeuroFlowCustomersPage.tsx"
+      ],
+      "features": [
+        "Kundenstammdaten",
+        "Kontaktdaten",
+        "Adressdaten",
+        "Bankdaten", 
+        "Geschäftsdaten",
+        "Kundentypen",
+        "Kreditlimits"
+      ]
+    },
+    "invoiceManagement": {
+      "status": "completed",
+      "components": [
+        "NeuroFlowInvoiceForm.tsx",
+        "NeuroFlowInvoiceTable.tsx",
+        "NeuroFlowInvoicesPage.tsx"
+      ],
+      "features": [
+        "Rechnungserstellung",
+        "Kunden-Integration",
+        "Artikel-Integration",
+        "Preiskalkulation",
+        "MwSt-Berechnung",
+        "Status-Management"
+      ]
+    }
+  },
+  "bestPractices": {
+    "typeScript": [
+      "Strikte Typisierung ohne any",
+      "Interface-First Development",
+      "Generic Types für wiederverwendbare Komponenten",
+      "Union Types für Status/Enums",
+      "Type Guards für Runtime-Validierung"
+    ],
+    "validation": [
+      "Zod-Schemas für alle Formulare",
+      "Runtime-Validierung aller Inputs",
+      "Custom Validators für Business Logic",
+      "Error Messages auf Deutsch",
+      "Progressive Validation"
+    ],
+    "performance": [
+      "React.memo für teure Komponenten",
+      "useMemo für Berechnungen",
+      "useCallback für Event-Handler",
+      "Virtual Scrolling für große Listen",
+      "Lazy Loading für Code-Splitting"
+    ],
+    "ux": [
+      "Loading States für alle Async-Operationen",
+      "Error Boundaries für Fehlerbehandlung",
+      "Optimistic Updates für bessere UX",
+      "Keyboard Navigation",
+      "Screen Reader Support"
+    ],
+    "security": [
+      "Input Sanitization",
+      "XSS Protection",
+      "CSRF Protection",
+      "RLS-Integration",
+      "Permission Checks"
+    ]
+  },
+  "commonPatterns": {
+    "formValidation": {
+      "pattern": "Zod + React Hook Form",
+      "example": "ArticleSchema mit vollständiger Validierung",
+      "benefits": "Type Safety, Runtime Validation, Error Handling"
+    },
+    "dataTable": {
+      "pattern": "Sortable + Filterable + Paginated",
+      "example": "NeuroFlowArticleTable mit erweiterten Features",
+      "benefits": "Performance, UX, Accessibility"
+    },
+    "dashboard": {
+      "pattern": "Statistics Cards + Charts + Alerts",
+      "example": "ArticlesPage mit Dashboard-Übersicht",
+      "benefits": "Übersicht, Quick Actions, Monitoring"
+    },
+    "mcpIntegration": {
+      "pattern": "Dual MCP Architecture",
+      "example": "Schema + UI Metadata Server",
+      "benefits": "Live Updates, Type Safety, RLS Compliance"
+    }
+  },
+  "errorPrevention": {
+    "typeScript": [
+      "Strict Mode aktiviert",
+      "NoImplicitAny: true",
+      "StrictNullChecks: true",
+      "ExactOptionalPropertyTypes: true"
+    ],
+    "validation": [
+      "Zod-Schemas für alle Daten",
+      "Runtime-Validierung",
+      "Type Guards",
+      "Error Boundaries"
+    ],
+    "testing": [
+      "Unit Tests für alle Komponenten",
+      "Integration Tests für APIs",
+      "E2E Tests für Workflows",
+      "Type Testing"
+    ],
+    "linting": [
+      "ESLint mit TypeScript Rules",
+      "Prettier für Formatierung",
+      "Husky für Pre-commit Hooks",
+      "CI/CD Pipeline"
+    ]
+  },
+  "learningFromExamples": {
+    "articlesManagement": {
+      "successfulPatterns": [
+        "7-Tab Interface für komplexe ERP-Formulare",
+        "Auto-Preisberechnung mit MwSt",
+        "Intelligente Bestandsverwaltung",
+        "Dashboard mit Statistiken",
+        "Vollständige TypeScript-Typisierung",
+        "Umfassende Zod-Validierung"
+      ],
+      "avoidPatterns": [
+        "any Types verwenden",
+        "Hardcodierte Daten",
+        "Fehlende Validierung",
+        "Schlechte Error-Handling",
+        "Keine Loading States"
+      ]
+    }
+  },
+  "nextSteps": {
+    "immediate": [
+      "Supplier Management entwickeln",
+      "Inventory Management erweitern", 
+      "Financial Accounting implementieren",
+      "HR Management erstellen"
+    ],
+    "improvements": [
+      "Performance-Optimierung",
+      "Advanced Filtering",
+      "Bulk Operations",
+      "Export/Import Features",
+      "Advanced Analytics"
+    ],
+    "integration": [
+      "n8n Workflows",
+      "Advanced MCP Features",
+      "Real-time Updates",
+      "Mobile App",
+      "API Documentation"
+    ]
+  },
+  "qualityAssurance": {
+    "codeReview": [
+      "TypeScript-Fehler prüfen",
+      "Zod-Validierung testen",
+      "Performance messen",
+      "Accessibility testen",
+      "Security auditieren"
+    ],
+    "testing": [
+      "Unit Tests schreiben",
+      "Integration Tests",
+      "E2E Tests",
+      "Performance Tests",
+      "Security Tests"
+    ],
+    "documentation": [
+      "JSDoc Kommentare",
+      "README aktualisieren",
+      "API Documentation",
+      "User Guide",
+      "Developer Guide"
+    ]
+  }
+} 

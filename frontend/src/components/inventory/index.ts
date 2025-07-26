@@ -1,0 +1,1 @@
+export { StockOpnameInterface } from './StockOpnameInterface'; 

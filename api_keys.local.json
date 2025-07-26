@@ -1,0 +1,21 @@
+{
+  "API_KEYS": {
+    "OPENAI_API_KEY": "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",
+    "LINKUP_API_KEY": "aca0b877-88dd-4423-a35b-97de39012db9",
+    "AZURE_API_KEY": "your-azure-api-key",
+    "GOOGLE_MAPS_API_KEY": "your-google-maps-api-key",
+    "WEATHER_API_KEY": "your-weather-api-key",
+    "EMAIL_SERVICE_API_KEY": "your-email-service-api-key"
+  },
+  "DATABASE_CREDENTIALS": {
+    "POSTGRES_USER": "postgres",
+    "POSTGRES_PASSWORD": "postgres",
+    "POSTGRES_DB": "valeo_erp",
+    "POSTGRES_SERVER": "localhost"
+  },
+  "SECRET_KEYS": {
+    "JWT_SECRET_KEY": "your-jwt-secret-key",
+    "ENCRYPTION_KEY": "your-encryption-key"
+  },
+  "DATA_PATHS": {}
+} 

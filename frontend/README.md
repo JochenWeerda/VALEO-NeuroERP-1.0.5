@@ -196,3 +196,31 @@ VALEO NeuroERP - Proprietäre Software
 ## 📞 Support
 
 Bei Fragen oder Problemen wenden Sie sich an das VALEO-Team.
+
+## 🚀 Preloading für kritische Routen
+
+### Ziel
+Beschleunigung der User Experience durch intelligentes Vorladen der wichtigsten Routen und Komponenten (z.B. Dashboard, POS, E-Invoicing, Streckengeschäft).
+
+### Umsetzung
+- Preloading-Logik in `src/utils/preloading.ts` implementiert
+- Initialisierung direkt in `src/main.tsx` mit `initializeCriticalPreloading()`
+- Preloading-Strategien: Sofort (IMMEDIATE), Idle, Hover, Intersection
+
+### Beispiel (Ausschnitt):
+```typescript
+import { initializeCriticalPreloading } from './utils/preloading';
+// ...
+initializeCriticalPreloading();
+```
+
+### Erweiterung
+- Weitere Routen können in `CRITICAL_ROUTES` ergänzt werden
+- Preloading kann für jede Route individuell konfiguriert werden (z.B. nur bei Hover oder Sichtbarkeit)
+
+### Vorteile
+- Schnellere Ladezeiten für Hauptfeatures
+- Bessere User Experience
+- Optimale Ausnutzung von Browser-Idle-Zeiten
+
+---

@@ -1,0 +1,94 @@
+{
+  "timestamp": "2025-07-26 07:01:08",
+  "base_url": "http://localhost:8000",
+  "results": [
+    {
+      "endpoint": "health",
+      "tests": [
+        {
+          "test": "health_barcode",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "health_inventory",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "health_voucher",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        }
+      ]
+    },
+    {
+      "endpoint": "barcode",
+      "tests": [
+        {
+          "test": "get_suggestions",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "get_stats",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "retrain_model",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        }
+      ]
+    },
+    {
+      "endpoint": "inventory",
+      "tests": [
+        {
+          "test": "get_suggestions",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "get_analytics",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "optimize_parameters",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        }
+      ]
+    },
+    {
+      "endpoint": "voucher",
+      "tests": [
+        {
+          "test": "get_optimizations",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "get_analytics",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        },
+        {
+          "test": "get_segments",
+          "status": "FAIL",
+          "error": "HTTP 404"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_tests": 12,
+    "passed_tests": 0,
+    "failed_tests": 12,
+    "success_rate": 0.0,
+    "total_time": 24.53130841255188,
+    "avg_response_time": 0
+  }
+}

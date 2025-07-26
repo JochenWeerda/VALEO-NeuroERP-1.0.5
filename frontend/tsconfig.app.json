@@ -10,7 +10,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
@@ -29,8 +29,18 @@
     "noImplicitReturns": false,
     "noImplicitThis": false,
 
-    /* Test Support */
+    /* Jest Support */
     "types": ["jest", "node", "@testing-library/jest-dom"]
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*",
+    "components/**/*",
+    "pages/**/*",
+    "services/**/*",
+    "store/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "jest.setup.ts"
+  ],
+  "exclude": ["node_modules"]
 }

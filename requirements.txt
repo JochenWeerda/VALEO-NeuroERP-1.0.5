@@ -49,3 +49,7 @@ pytz>=2023.3
 networkx>=2.6.3
 rich>=12.0.0
 click>=8.1.7 
+
+# WhatsApp Web Integration
+playwright==1.40.0
+asyncio-mqtt==0.13.0 

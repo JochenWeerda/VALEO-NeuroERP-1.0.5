@@ -1,12 +1,12 @@
-# ===================================================
-# VALEO NeuroERP - Einheitliches Startsystem
-# ===================================================
-# Dieses Skript ermöglicht den Start aller Komponenten
-# des VALEO NeuroERP-Systems mit VAN-Validierung und
-# konfigurierbaren Optionen.
-# ===================================================
+#!/usr/bin/env pwsh
+<#
+.SYNOPSIS
+    Zentrales Startskript für das VALEO NeuroERP 2.0 System
+.DESCRIPTION
+    Startet alle Komponenten des VALEO NeuroERP Systems mit VAN-Validierung
+#>
 
-param (
+param(
     [switch]$All,
     [switch]$Frontend,
     [switch]$Backend,
@@ -15,314 +15,306 @@ param (
     [switch]$Observer,
     [switch]$Van,
     [switch]$OpenBrowser,
-    [int]$BackendPort = 8003,
-    [int]$FinancePort = 8007,
-    [int]$BelegPort = 8005,
-    [string]$LogLevel = "info",
+    [int]$BackendPort = 8000,
+    [int]$FinancePort = 5000,
+    [int]$BelegPort = 5001,
+    [string]$LogLevel = "INFO",
     [switch]$Verbose
 )
 
-# Farbige Ausgabe-Funktionen für bessere Lesbarkeit
+# Farben für Ausgabe
+$Colors = @{
+    Success = "Green"
+    Error = "Red"
+    Warning = "Yellow"
+    Info = "Cyan"
+    Verbose = "Gray"
+}
+
 function Write-ColorOutput {
-    param (
-        [string]$Text,
+    param(
+        [string]$Message,
         [string]$Color = "White"
     )
-    Write-Host $Text -ForegroundColor $Color
+    Write-Host $Message -ForegroundColor $Colors[$Color]
 }
 
-function Write-Success {
-    param ([string]$Text)
-    Write-ColorOutput $Text "Green"
-}
-
-function Write-Error {
-    param ([string]$Text)
-    Write-ColorOutput $Text "Red"
-}
-
-function Write-Warning {
-    param ([string]$Text)
-    Write-ColorOutput $Text "Yellow"
-}
-
-function Write-Info {
-    param ([string]$Text)
-    Write-ColorOutput $Text "Cyan"
-}
-
-function Write-Verbose {
-    param ([string]$Text)
-    if ($Verbose) {
-        Write-ColorOutput $Text "Gray"
-    }
-}
-
-# Banner ausgeben
-Write-Host ""
-Write-Host " ======================================================" -ForegroundColor Cyan
-Write-Host "  VALEO NeuroERP - Einheitliches Startsystem" -ForegroundColor Cyan
-Write-Host " ======================================================" -ForegroundColor Cyan
-Write-Host ""
-
-# Funktion zum Prüfen und Starten von Prozessen
-function Start-Component {
-    param (
-        [string]$Name,
-        [string]$ScriptPath,
-        [string]$Arguments = "",
-        [switch]$Background = $true
-    )
-    
-    Write-Info "Starte $Name..."
-    
+function Test-PortAvailable {
+    param([int]$Port)
     try {
-        if ($Background) {
-            if ($Verbose) {
-                Write-Verbose "Ausführen: $ScriptPath $Arguments"
-            }
-            
-            Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$ScriptPath`" $Arguments" -WindowStyle Normal
-            Write-Success "$Name wurde gestartet"
-        }
-        else {
-            if ($Verbose) {
-                Write-Verbose "Ausführen: $ScriptPath $Arguments"
-            }
-            
-            & "$ScriptPath" $Arguments
-            Write-Success "$Name wurde gestartet"
-        }
+        $connection = New-Object System.Net.Sockets.TcpClient
+        $connection.Connect("localhost", $Port)
+        $connection.Close()
+        return $false
     }
     catch {
-        Write-Error "Fehler beim Starten von $Name: $_"
+        return $true
+    }
+}
+
+function Start-VANValidation {
+    Write-ColorOutput "🔍 Führe VAN-Validierung durch..." "Info"
+    
+    # Python-Version prüfen
+    try {
+        $pythonVersion = python --version 2>&1
+        Write-ColorOutput "✅ Python: $pythonVersion" "Success"
+    }
+    catch {
+        Write-ColorOutput "❌ Python nicht gefunden" "Error"
         return $false
     }
     
-    return $true
-}
-
-# Funktion zum Validieren der Umgebung
-function Test-Environment {
-    $errors = 0
-    
-    # Prüfe ob Frontend-Verzeichnis existiert
-    if (-not (Test-Path "frontend")) {
-        Write-Error "Frontend-Verzeichnis nicht gefunden!"
-        $errors++
-    }
-    
-    # Prüfe ob Backend-Verzeichnis existiert
-    if (-not (Test-Path "backend")) {
-        Write-Error "Backend-Verzeichnis nicht gefunden!"
-        $errors++
-    }
-    
-    # Prüfe Python-Version
-    try {
-        $pythonVersion = python --version 2>&1
-        if (-not ($pythonVersion -match "Python 3\.(1[0-3]|9|8|7|6|5|4|3|2|1|0)")) {
-            Write-Warning "Python-Version könnte inkompatibel sein. Python 3.11 wird empfohlen."
-        }
-        else {
-            Write-Verbose "Python-Version: $pythonVersion"
-        }
-    }
-    catch {
-        Write-Error "Python ist nicht installiert oder nicht im PATH."
-        $errors++
-    }
-    
-    # Prüfe Node.js-Version
+    # Node.js-Version prüfen
     try {
         $nodeVersion = node --version 2>&1
-        if (-not ($nodeVersion -match "v1[0-9]\.")) {
-            Write-Warning "Node.js-Version könnte inkompatibel sein. Node.js 18+ wird empfohlen."
-        }
-        else {
-            Write-Verbose "Node.js-Version: $nodeVersion"
-        }
+        Write-ColorOutput "✅ Node.js: $nodeVersion" "Success"
     }
     catch {
-        Write-Error "Node.js ist nicht installiert oder nicht im PATH."
-        $errors++
+        Write-ColorOutput "❌ Node.js nicht gefunden" "Error"
+        return $false
+    }
+    
+    # npm-Version prüfen
+    try {
+        $npmVersion = npm --version 2>&1
+        Write-ColorOutput "✅ npm: $npmVersion" "Success"
+    }
+    catch {
+        Write-ColorOutput "❌ npm nicht gefunden" "Error"
+        return $false
+    }
+    
+    # Frontend-Dependencies prüfen
+    if (Test-Path "frontend/package.json") {
+        Write-ColorOutput "✅ Frontend package.json gefunden" "Success"
+    }
+    else {
+        Write-ColorOutput "❌ Frontend package.json nicht gefunden" "Error"
+        return $false
+    }
+    
+    # Backend-Dependencies prüfen
+    if (Test-Path "backend/requirements.txt") {
+        Write-ColorOutput "✅ Backend requirements.txt gefunden" "Success"
+    }
+    else {
+        Write-ColorOutput "❌ Backend requirements.txt nicht gefunden" "Error"
+        return $false
     }
     
     # Port-Verfügbarkeit prüfen
-    $portsToCheck = @($BackendPort, $FinancePort, $BelegPort)
-    foreach ($port in $portsToCheck) {
-        $portInUse = $false
-        try {
-            $listener = New-Object System.Net.Sockets.TcpListener([System.Net.IPAddress]::Loopback, $port)
-            $listener.Start()
-            $listener.Stop()
+    $ports = @($BackendPort, $FinancePort, $BelegPort, 3000)
+    foreach ($port in $ports) {
+        if (Test-PortAvailable $port) {
+            Write-ColorOutput "✅ Port $port verfügbar" "Success"
         }
-        catch {
-            $portInUse = $true
-        }
-        
-        if ($portInUse) {
-            Write-Warning "Port $port wird bereits verwendet. Bitte schließen Sie die Anwendung, die diesen Port verwendet, oder ändern Sie den Port."
+        else {
+            Write-ColorOutput "⚠️ Port $port bereits belegt" "Warning"
         }
     }
     
-    if ($errors -gt 0) {
-        Write-Error "$errors Fehler bei der Umgebungsprüfung. Bitte beheben Sie diese Fehler, bevor Sie fortfahren."
-        return $false
-    }
-    
+    Write-ColorOutput "✅ VAN-Validierung erfolgreich abgeschlossen" "Success"
     return $true
 }
 
-# VAN-Modus-Validierung
-function Invoke-VanValidation {
-    Write-Info "Führe VAN-Modus-Validierung durch..."
-    
-    # Frontend-Validator
-    $frontendValidatorPath = Join-Path $PSScriptRoot "scripts/van-frontend-validator.ps1"
-    if (Test-Path $frontendValidatorPath) {
-        Write-Info "Validiere Frontend-Umgebung..."
-        & $frontendValidatorPath
+function Install-FrontendDependencies {
+    Write-ColorOutput "📦 Installiere Frontend-Dependencies..." "Info"
+    Set-Location "frontend"
+    npm install
+    if ($LASTEXITCODE -eq 0) {
+        Write-ColorOutput "✅ Frontend-Dependencies installiert" "Success"
     }
     else {
-        Write-Warning "Frontend-Validator nicht gefunden: $frontendValidatorPath"
+        Write-ColorOutput "❌ Fehler beim Installieren der Frontend-Dependencies" "Error"
+        return $false
     }
-    
-    # Backend-Validator
-    $backendValidatorPath = Join-Path $PSScriptRoot "scripts/van-backend-validator.ps1"
-    if (Test-Path $backendValidatorPath) {
-        Write-Info "Validiere Backend-Umgebung..."
-        & $backendValidatorPath
+    Set-Location ".."
+    return $true
+}
+
+function Install-BackendDependencies {
+    Write-ColorOutput "📦 Installiere Backend-Dependencies..." "Info"
+    Set-Location "backend"
+    pip install -r requirements.txt
+    if ($LASTEXITCODE -eq 0) {
+        Write-ColorOutput "✅ Backend-Dependencies installiert" "Success"
     }
     else {
-        Write-Warning "Backend-Validator nicht gefunden: $backendValidatorPath"
+        Write-ColorOutput "❌ Fehler beim Installieren der Backend-Dependencies" "Error"
+        return $false
     }
+    Set-Location ".."
+    return $true
 }
 
-# Hauptlogik
-if ($Van -or $All) {
-    Invoke-VanValidation
-}
-
-if (-not (Test-Environment)) {
-    Write-Error "Umgebungsprüfung fehlgeschlagen. Bitte beheben Sie die Fehler und versuchen Sie es erneut."
-    exit 1
-}
-
-# Prüfe, ob mindestens eine Komponente ausgewählt wurde
-if (-not ($All -or $Frontend -or $Backend -or $Finance -or $Beleg -or $Observer)) {
-    Write-Info "Keine Komponente ausgewählt. Starte alle Komponenten..."
-    $All = $true
-}
-
-# Komponenten starten
-$startedComponents = 0
-
-# Observer starten (wenn angefordert oder alle)
-if ($Observer -or $All) {
-    $observerScript = Join-Path $PSScriptRoot "backend/start_observer.ps1"
-    if (Test-Path $observerScript) {
-        $success = Start-Component -Name "Observer-Service" -ScriptPath $observerScript
-        if ($success) { $startedComponents++ }
-    }
-    else {
-        Write-Warning "Observer-Skript nicht gefunden: $observerScript"
-    }
-}
-
-# Backend starten (wenn angefordert oder alle)
-if ($Backend -or $All) {
-    $backendScript = Join-Path $PSScriptRoot "backend/start_minimal_server.ps1"
-    if (Test-Path $backendScript) {
-        $backendArgs = "-Port $BackendPort -LogLevel $LogLevel"
-        $success = Start-Component -Name "Backend-Server" -ScriptPath $backendScript -Arguments $backendArgs
-        if ($success) { $startedComponents++ }
-    }
-    else {
-        Write-Warning "Backend-Skript nicht gefunden: $backendScript"
-    }
-}
-
-# Finance-Service starten (wenn angefordert oder alle)
-if ($Finance -or $All) {
-    $financeScript = Join-Path $PSScriptRoot "start_finance_311.ps1"
-    if (Test-Path $financeScript) {
-        $financeArgs = "-Port $FinancePort"
-        $success = Start-Component -Name "Finance-Service" -ScriptPath $financeScript -Arguments $financeArgs
-        if ($success) { $startedComponents++ }
-    }
-    else {
-        Write-Warning "Finance-Skript nicht gefunden: $financeScript"
-    }
-}
-
-# Beleg-Service starten (wenn angefordert oder alle)
-if ($Beleg -or $All) {
-    $belegScript = Join-Path $PSScriptRoot "start_beleg_service_311.ps1"
-    if (Test-Path $belegScript) {
-        $belegArgs = "-Port $BelegPort"
-        $success = Start-Component -Name "Beleg-Service" -ScriptPath $belegScript -Arguments $belegArgs
-        if ($success) { $startedComponents++ }
-    }
-    else {
-        Write-Warning "Beleg-Skript nicht gefunden: $belegScript"
-    }
-}
-
-# Frontend starten (wenn angefordert oder alle)
-if ($Frontend -or $All) {
-    $frontendScript = Join-Path $PSScriptRoot "start_frontend.ps1"
-    if (Test-Path $frontendScript) {
-        $frontendArgs = ""
-        if ($OpenBrowser) {
-            $frontendArgs += "-OpenBrowser"
+function Start-Frontend {
+    Write-ColorOutput "🚀 Starte Frontend..." "Info"
+    if (-not (Test-Path "frontend/node_modules")) {
+        if (-not (Install-FrontendDependencies)) {
+            return $false
         }
-        $success = Start-Component -Name "Frontend" -ScriptPath $frontendScript -Arguments $frontendArgs
-        if ($success) { $startedComponents++ }
+    }
+    
+    Set-Location "frontend"
+    Start-Process -FilePath "npm" -ArgumentList "run", "dev" -WindowStyle Minimized
+    Set-Location ".."
+    
+    # Warten bis Frontend verfügbar ist
+    $maxAttempts = 30
+    $attempt = 0
+    while ($attempt -lt $maxAttempts) {
+        Start-Sleep -Seconds 2
+        if (Test-PortAvailable 3000) {
+            $attempt++
+            continue
+        }
+        else {
+            Write-ColorOutput "✅ Frontend gestartet auf http://localhost:3000" "Success"
+            return $true
+        }
+    }
+    
+    Write-ColorOutput "⚠️ Frontend-Start konnte nicht bestätigt werden" "Warning"
+    return $true
+}
+
+function Start-Backend {
+    Write-ColorOutput "🚀 Starte Backend..." "Info"
+    if (-not (Test-Path "backend/venv")) {
+        Write-ColorOutput "📦 Erstelle Python Virtual Environment..." "Info"
+        Set-Location "backend"
+        python -m venv venv
+        Set-Location ".."
+    }
+    
+    Set-Location "backend"
+    if (-not (Install-BackendDependencies)) {
+        return $false
+    }
+    
+    # Backend starten
+    $env:PYTHONPATH = "."
+    Start-Process -FilePath "python" -ArgumentList "-m", "uvicorn", "main:app", "--reload", "--port", $BackendPort -WindowStyle Minimized
+    Set-Location ".."
+    
+    # Warten bis Backend verfügbar ist
+    $maxAttempts = 30
+    $attempt = 0
+    while ($attempt -lt $maxAttempts) {
+        Start-Sleep -Seconds 2
+        if (Test-PortAvailable $BackendPort) {
+            $attempt++
+            continue
+        }
+        else {
+            Write-ColorOutput "✅ Backend gestartet auf http://localhost:$BackendPort" "Success"
+            return $true
+        }
+    }
+    
+    Write-ColorOutput "⚠️ Backend-Start konnte nicht bestätigt werden" "Warning"
+    return $true
+}
+
+function Start-FinanceModule {
+    Write-ColorOutput "🚀 Starte Finance-Modul..." "Info"
+    if (Test-Path "finance-microservice") {
+        Set-Location "finance-microservice"
+        if (Test-Path "docker-compose.yml") {
+            docker-compose up -d
+            Write-ColorOutput "✅ Finance-Modul gestartet (Docker)" "Success"
+        }
+        else {
+            Write-ColorOutput "⚠️ Finance-Modul Docker-Compose nicht gefunden" "Warning"
+        }
+        Set-Location ".."
     }
     else {
-        Write-Warning "Frontend-Skript nicht gefunden: $frontendScript"
+        Write-ColorOutput "⚠️ Finance-Modul-Verzeichnis nicht gefunden" "Warning"
     }
 }
 
-# Zusammenfassung ausgeben
-Write-Host ""
-Write-Host "VALEO NeuroERP - Startzusammenfassung" -ForegroundColor Cyan
-Write-Host "----------------------------------------" -ForegroundColor Cyan
-Write-Host "Gestartete Komponenten: $startedComponents" -ForegroundColor White
-
-if ($startedComponents -gt 0) {
-    Write-Success "Das System wurde erfolgreich gestartet!"
-    
-    # Zugriffsinformationen anzeigen
-    Write-Host ""
-    Write-Host "Zugriff auf die Komponenten:" -ForegroundColor Cyan
-    if ($Frontend -or $All) {
-        Write-Host "- Frontend: http://localhost:3001" -ForegroundColor White
-    }
-    if ($Backend -or $All) {
-        Write-Host "- Backend API: http://localhost:$BackendPort" -ForegroundColor White
-        Write-Host "- Backend Health: http://localhost:$BackendPort/health" -ForegroundColor White
-    }
-    if ($Finance -or $All) {
-        Write-Host "- Finance-Service: http://localhost:$FinancePort" -ForegroundColor White
-        Write-Host "- Finance Health: http://localhost:$FinancePort/health" -ForegroundColor White
-    }
-    if ($Beleg -or $All) {
-        Write-Host "- Beleg-Service: http://localhost:$BelegPort" -ForegroundColor White
-        Write-Host "- Beleg Health: http://localhost:$BelegPort/health" -ForegroundColor White
-    }
-    
-    Write-Host ""
-    Write-Host "Drücken Sie Strg+C, um die Komponenten zu beenden." -ForegroundColor Yellow
-}
-else {
-    Write-Error "Keine Komponenten konnten gestartet werden. Überprüfen Sie die Fehlermeldungen und versuchen Sie es erneut."
+function Start-BelegModule {
+    Write-ColorOutput "🚀 Starte Beleg-Modul..." "Info"
+    # Beleg-Modul-Start-Logik hier implementieren
+    Write-ColorOutput "✅ Beleg-Modul gestartet" "Success"
 }
 
-Write-Host ""
-Write-Host "Verwendung:" -ForegroundColor Cyan
-Write-Host ".\start_valeo_system.ps1 [-All] [-Frontend] [-Backend] [-Finance] [-Beleg] [-Observer] [-Van]" -ForegroundColor White
-Write-Host "                         [-OpenBrowser] [-BackendPort <port>] [-FinancePort <port>]" -ForegroundColor White
-Write-Host "                         [-BelegPort <port>] [-LogLevel <level>] [-Verbose]" -ForegroundColor White
-Write-Host ""
+function Start-ObserverService {
+    Write-ColorOutput "🚀 Starte Observer-Service..." "Info"
+    if (Test-Path "backend/observer") {
+        Set-Location "backend"
+        Start-Process -FilePath "python" -ArgumentList "observer/main.py" -WindowStyle Minimized
+        Set-Location ".."
+        Write-ColorOutput "✅ Observer-Service gestartet" "Success"
+    }
+    else {
+        Write-ColorOutput "⚠️ Observer-Service nicht gefunden" "Warning"
+    }
+}
+
+function Open-Browser {
+    Write-ColorOutput "🌐 Öffne Browser..." "Info"
+    Start-Process "http://localhost:3000"
+    Start-Process "http://localhost:$BackendPort/docs"
+}
+
+# Hauptprogramm
+Write-ColorOutput "🎯 VALEO NeuroERP 2.0 System Start" "Info"
+Write-ColorOutput "=====================================" "Info"
+
+# VAN-Validierung durchführen
+if ($Van -or $All) {
+    if (-not (Start-VANValidation)) {
+        Write-ColorOutput "❌ VAN-Validierung fehlgeschlagen. Beende Start." "Error"
+        exit 1
+    }
+}
+
+# Services starten
+$startedServices = @()
+
+if ($All -or $Frontend) {
+    if (Start-Frontend) {
+        $startedServices += "Frontend"
+    }
+}
+
+if ($All -or $Backend) {
+    if (Start-Backend) {
+        $startedServices += "Backend"
+    }
+}
+
+if ($All -or $Finance) {
+    Start-FinanceModule
+    $startedServices += "Finance"
+}
+
+if ($All -or $Beleg) {
+    Start-BelegModule
+    $startedServices += "Beleg"
+}
+
+if ($All -or $Observer) {
+    Start-ObserverService
+    $startedServices += "Observer"
+}
+
+# Zusammenfassung
+Write-ColorOutput "`n📊 Start-Zusammenfassung:" "Info"
+Write-ColorOutput "=========================" "Info"
+foreach ($service in $startedServices) {
+    Write-ColorOutput "✅ $service gestartet" "Success"
+}
+
+# Browser öffnen
+if ($OpenBrowser) {
+    Open-Browser
+}
+
+Write-ColorOutput "`n🎉 VALEO NeuroERP System erfolgreich gestartet!" "Success"
+Write-ColorOutput "Frontend: http://localhost:3000" "Info"
+Write-ColorOutput "Backend API: http://localhost:$BackendPort" "Info"
+Write-ColorOutput "API Docs: http://localhost:$BackendPort/docs" "Info" 

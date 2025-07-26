@@ -1,0 +1,24 @@
+{
+  "id": "testing-agent",
+  "type": "testing",
+  "capabilities": [
+    "unit-tests",
+    "integration-tests",
+    "e2e",
+    "performance"
+  ],
+  "autonomy": "high",
+  "status": "initialized",
+  "lastActivity": "2025-07-24T17:14:04.597Z",
+  "performance": {
+    "tasksCompleted": 0,
+    "successRate": 1,
+    "avgDuration": 0,
+    "quality": 1
+  },
+  "health": {
+    "status": "healthy",
+    "score": 1,
+    "lastCheck": "2025-07-24T17:14:04.597Z"
+  }
+}

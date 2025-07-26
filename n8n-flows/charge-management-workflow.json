@@ -1,0 +1,312 @@
+{
+  "name": "Charge Management Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "charge-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "charge-webhook-trigger",
+      "name": "Charge Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "charge-management"
+    },
+    {
+      "parameters": {
+        "jsCode": "// KI-Analyse für neue Charge\nconst chargeData = $input.first().json;\n\n// Risiko-Score berechnen\nlet riskScore = 50; // Basis-Score\n\n// Qualitätsfaktoren bewerten\nif (chargeData.quality_status === 'approved') {\n  riskScore -= 20;\n} else if (chargeData.quality_status === 'rejected') {\n  riskScore += 30;\n}\n\n// VLOG/GMO Status bewerten\nif (chargeData.vlog_gmo_status === 'VLOG') {\n  riskScore -= 10;\n} else if (chargeData.vlog_gmo_status === 'GMO') {\n  riskScore += 25;\n}\n\n// Analysedaten bewerten\nif (chargeData.protein_content && chargeData.protein_content > 20) {\n  riskScore -= 5;\n}\n\nif (chargeData.moisture_content && chargeData.moisture_content > 15) {\n  riskScore += 10;\n}\n\n// Haltbarkeitsvorhersage\nconst productionDate = new Date(chargeData.production_date);\nconst expiryDate = new Date(chargeData.expiry_date);\nconst shelfLifeDays = Math.floor((expiryDate - productionDate) / (1000 * 60 * 60 * 24));\n\n// Qualitätsvorhersage basierend auf Risiko-Score\nlet qualityPrediction = 'average';\nif (riskScore < 30) qualityPrediction = 'excellent';\nelse if (riskScore < 60) qualityPrediction = 'good';\nelse if (riskScore > 80) qualityPrediction = 'poor';\n\n// Anomalie-Erkennung\nconst anomalyDetection = riskScore > 70 || \n                        (chargeData.purchase_price && chargeData.purchase_price > 1000) ||\n                        (chargeData.batch_size && chargeData.batch_size > 10000);\n\n// Trend-Analyse\nconst trendAnalysis = `Risiko-Score: ${riskScore}/100, ` +\n                     `Qualität: ${qualityPrediction}, ` +\n                     `Haltbarkeit: ${shelfLifeDays} Tage`;\n\n// KI-Analyse-Ergebnisse\nconst kiAnalysis = {\n  risk_score: Math.max(0, Math.min(100, riskScore)),\n  quality_prediction: qualityPrediction,\n  shelf_life_prediction: shelfLifeDays,\n  price_optimization_suggestion: chargeData.purchase_price * (0.9 + Math.random() * 0.2),\n  anomaly_detection: anomalyDetection,\n  trend_analysis: trendAnalysis\n};\n\n// Workflow-Schritte definieren\nconst workflowSteps = [\n  {\n    step: 'Datenvalidierung',\n    status: 'completed',\n    completed_by: 'System',\n    completed_at: new Date().toISOString(),\n    notes: 'Grunddaten validiert'\n  },\n  {\n    step: 'KI-Analyse',\n    status: 'completed',\n    completed_by: 'KI-System',\n    completed_at: new Date().toISOString(),\n    notes: 'KI-Analyse durchgeführt'\n  },\n  {\n    step: 'Qualitätsprüfung',\n    status: 'pending',\n    completed_by: null,\n    completed_at: null,\n    notes: 'Wartet auf Qualitätsprüfung'\n  },\n  {\n    step: 'Freigabe',\n    status: 'pending',\n    completed_by: null,\n    completed_at: null,\n    notes: 'Wartet auf Freigabe'\n  }\n];\n\n// Aktualisierte Chargendaten\nconst updatedChargeData = {\n  ...chargeData,\n  ki_analysis: kiAnalysis,\n  workflow_steps: workflowSteps,\n  workflow_status: 'in_review'\n};\n\nreturn [{ json: updatedChargeData }];"
+      },
+      "id": "ki-analysis-node",
+      "name": "KI-Analyse",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "risk-score-high",
+              "leftValue": "={{ $json.ki_analysis.risk_score }}",
+              "rightValue": 70,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "risk-assessment",
+      "name": "Risiko-Bewertung",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/charges/{{ $json.charge_number }}/quarantine",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "reason",
+              "value": "Hoher Risiko-Score: {{ $json.ki_analysis.risk_score }}/100"
+            },
+            {
+              "name": "ki_analysis",
+              "value": "={{ $json.ki_analysis }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "quarantine-action",
+      "name": "Quarantäne-Aktion",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/charges/{{ $json.charge_number }}/approve",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "ki_analysis",
+              "value": "={{ $json.ki_analysis }}"
+            },
+            {
+              "name": "approved_by",
+              "value": "KI-System"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "approve-action",
+      "name": "Freigabe-Aktion",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/charges",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "charge_data",
+              "value": "={{ $json }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "save-charge",
+      "name": "Charge speichern",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/notifications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "charge_processed"
+            },
+            {
+              "name": "charge_number",
+              "value": "={{ $json.charge_number }}"
+            },
+            {
+              "name": "status",
+              "value": "={{ $json.workflow_status }}"
+            },
+            {
+              "name": "message",
+              "value": "Charge {{ $json.charge_number }} wurde verarbeitet. Status: {{ $json.workflow_status }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "notification",
+      "name": "Benachrichtigung",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, charge_number: $json.charge_number, workflow_status: $json.workflow_status } }}"
+      },
+      "id": "webhook-response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1560, 300]
+    }
+  ],
+  "connections": {
+    "Charge Webhook": {
+      "main": [
+        [
+          {
+            "node": "KI-Analyse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KI-Analyse": {
+      "main": [
+        [
+          {
+            "node": "Risiko-Bewertung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Risiko-Bewertung": {
+      "main": [
+        [
+          {
+            "node": "Quarantäne-Aktion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Freigabe-Aktion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quarantäne-Aktion": {
+      "main": [
+        [
+          {
+            "node": "Charge speichern",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Freigabe-Aktion": {
+      "main": [
+        [
+          {
+            "node": "Charge speichern",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Charge speichern": {
+      "main": [
+        [
+          {
+            "node": "Benachrichtigung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Benachrichtigung": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "charge-management-workflow",
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "charge-management",
+      "name": "Charge Management"
+    }
+  ]
+} 

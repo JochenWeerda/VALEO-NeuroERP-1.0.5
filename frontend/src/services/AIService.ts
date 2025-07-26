@@ -3,6 +3,19 @@
  * Mock-Implementierung für Demo-Zwecke
  */
 
+import {
+  BarcodeSuggestion,
+  AIBarcodeStats,
+  BarcodeOptimizationParams,
+  InventorySuggestion,
+  InventoryStats,
+  InventoryOptimizationParams,
+  VoucherOptimization,
+  VoucherStats,
+  VoucherOptimizationParams,
+  ApiResponse
+} from '../types/ai';
+
 export interface TransactionData {
   date: string;
   amount: number;
@@ -371,6 +384,93 @@ class AIService {
       ]
     };
   }
+}
+
+// Barcode
+export async function fetchBarcodeSuggestions(): Promise<BarcodeSuggestion[]> {
+  const res = await fetch('/api/ai/barcode/suggestions');
+  if (!res.ok) throw new Error('Fehler beim Laden der Barcode-Vorschläge');
+  const data: ApiResponse<BarcodeSuggestion[]> = await res.json();
+  return data.data;
+}
+
+export async function fetchBarcodeStats(): Promise<AIBarcodeStats> {
+  const res = await fetch('/api/ai/barcode/stats');
+  if (!res.ok) throw new Error('Fehler beim Laden der Barcode-Statistiken');
+  const data: ApiResponse<AIBarcodeStats> = await res.json();
+  return data.data;
+}
+
+export async function optimizeBarcode(id: string, params: BarcodeOptimizationParams): Promise<void> {
+  const res = await fetch(`/api/ai/barcode/optimize/${id}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) throw new Error('Fehler bei der Barcode-Optimierung');
+}
+
+export async function retrainBarcodeModel(): Promise<void> {
+  const res = await fetch('/api/ai/barcode/retrain', { method: 'POST' });
+  if (!res.ok) throw new Error('Fehler beim Neuladen des Barcode-Modells');
+}
+
+// Inventory
+export async function fetchInventorySuggestions(): Promise<InventorySuggestion[]> {
+  const res = await fetch('/api/ai/inventory/suggestions');
+  if (!res.ok) throw new Error('Fehler beim Laden der Inventur-Vorschläge');
+  const data: ApiResponse<InventorySuggestion[]> = await res.json();
+  return data.data;
+}
+
+export async function fetchInventoryStats(): Promise<InventoryStats> {
+  const res = await fetch('/api/ai/inventory/stats');
+  if (!res.ok) throw new Error('Fehler beim Laden der Inventur-Statistiken');
+  const data: ApiResponse<InventoryStats> = await res.json();
+  return data.data;
+}
+
+export async function optimizeInventory(params: InventoryOptimizationParams): Promise<void> {
+  const res = await fetch('/api/ai/inventory/optimize', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) throw new Error('Fehler bei der Inventur-Optimierung');
+}
+
+export async function retrainInventoryModel(): Promise<void> {
+  const res = await fetch('/api/ai/inventory/retrain', { method: 'POST' });
+  if (!res.ok) throw new Error('Fehler beim Neuladen des Inventur-Modells');
+}
+
+// Voucher
+export async function fetchVoucherOptimizations(): Promise<VoucherOptimization[]> {
+  const res = await fetch('/api/ai/voucher/optimizations');
+  if (!res.ok) throw new Error('Fehler beim Laden der Voucher-Optimierungen');
+  const data: ApiResponse<VoucherOptimization[]> = await res.json();
+  return data.data;
+}
+
+export async function fetchVoucherStats(): Promise<VoucherStats> {
+  const res = await fetch('/api/ai/voucher/stats');
+  if (!res.ok) throw new Error('Fehler beim Laden der Voucher-Statistiken');
+  const data: ApiResponse<VoucherStats> = await res.json();
+  return data.data;
+}
+
+export async function optimizeVoucher(params: VoucherOptimizationParams): Promise<void> {
+  const res = await fetch('/api/ai/voucher/optimize', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) throw new Error('Fehler bei der Voucher-Optimierung');
+}
+
+export async function retrainVoucherModel(): Promise<void> {
+  const res = await fetch('/api/ai/voucher/retrain', { method: 'POST' });
+  if (!res.ok) throw new Error('Fehler beim Neuladen des Voucher-Modells');
 }
 
 export const aiService = new AIService();

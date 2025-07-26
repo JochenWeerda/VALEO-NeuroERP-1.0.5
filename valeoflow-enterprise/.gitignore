@@ -1,0 +1,41 @@
+# VALEO-Die NeuroERP - Gitignore für Secrets
+
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.staging
+
+# API Keys und Secrets
+secrets/
+*.key
+*.pem
+*.p12
+
+# Backup-Dateien
+backups/
+*.backup
+*.bak
+
+# Logs
+logs/
+*.log
+
+# Node Modules
+node_modules/
+
+# Build-Dateien
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporäre Dateien
+*.tmp
+*.temp

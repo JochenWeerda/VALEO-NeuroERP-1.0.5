@@ -13,61 +13,28 @@ rule_files:
   # - "second_rules.yml"
 
 scrape_configs:
-  # Prometheus selbst
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
 
-  # Backend API
-  - job_name: 'backend'
+  - job_name: 'valeo-backend'
     static_configs:
       - targets: ['backend:8000']
     metrics_path: '/metrics'
-    scrape_interval: 10s
-    scrape_timeout: 5s
+    scrape_interval: 30s
 
-  # Middleware
-  - job_name: 'middleware'
+  - job_name: 'valeo-frontend'
     static_configs:
-      - targets: ['middleware:5000']
+      - targets: ['frontend:3000']
     metrics_path: '/metrics'
-    scrape_interval: 10s
-    scrape_timeout: 5s
+    scrape_interval: 30s
 
-  # Nginx (falls nginx-exporter verwendet wird)
-  - job_name: 'nginx'
-    static_configs:
-      - targets: ['nginx-exporter:9113']
-    scrape_interval: 15s
-
-  # PostgreSQL
   - job_name: 'postgres'
     static_configs:
-      - targets: ['postgres-exporter:9187']
-    scrape_interval: 15s
+      - targets: ['postgres:5432']
+    scrape_interval: 30s
 
-  # Redis
   - job_name: 'redis'
     static_configs:
-      - targets: ['redis-exporter:9121']
-    scrape_interval: 15s
-
-  # Node Exporter (System Metrics)
-  - job_name: 'node'
-    static_configs:
-      - targets: ['node-exporter:9100']
-    scrape_interval: 15s
-
-  # Docker Container Metrics
-  - job_name: 'docker'
-    static_configs:
-      - targets: ['cadvisor:8080']
-    scrape_interval: 15s
-
-  # Health Checks
-  - job_name: 'health-checks'
-    static_configs:
-      - targets: ['backend:8000', 'middleware:5000', 'frontend:80']
-    metrics_path: '/health'
-    scrape_interval: 30s
-    scrape_timeout: 10s 
+      - targets: ['redis:6379']
+    scrape_interval: 30s 

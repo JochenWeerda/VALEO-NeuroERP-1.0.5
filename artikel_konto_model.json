@@ -1,0 +1,210 @@
+{
+  "ArtikelKonto": {
+    "Metadaten": {
+      "Artikelnummer": "string",
+      "Artikelbezeichnung": "string",
+      "Zeitraum_von": "date",
+      "Zeitraum_bis": "date",
+      "Niederlassung": "string",
+      "Buchungsdatum": "date",
+      "Sortierung": "string",
+      "UmsatzHauptkontoZugeordnet": "boolean"
+    },
+    "Tabelle_Buchungen": [
+      {
+        "Datum": "date",
+        "LieferscheinNr": "string",
+        "DebitorKreditorNr": "string",
+        "DebitorKreditorName": "string",
+        "Menge": "float",
+        "Einheit": "string",
+        "Einzelpreis": "float",
+        "Gesamtbetrag": "float",
+        "Rechnungsdatum": "date",
+        "BelegNr": "string",
+        "AuftragsNr": "string",
+        "Kostenstelle": "string",
+        "Niederlassung": "string",
+        "Lagerfach": "string",
+        "ChargenNr": "string",
+        "SerienNr": "string",
+        "Bediener": "string",
+        "Bemerkung": "string"
+      }
+    ],
+    "Summen": {
+      "KumulierteEinkaufsmenge": "float",
+      "KumulierteEinkaufssumme": "float",
+      "KumulierteVerkaufsmenge": "float",
+      "KumulierteVerkaufssumme": "float",
+      "Saldo": "float"
+    },
+    "Preise": {
+      "DurchschnittlicherEKPreis": "float",
+      "DurchschnittlicherVKPreis": "float",
+      "Bezugsgröße": "string"
+    },
+    "Lagerstatus": {
+      "VerfügbarerBestand": "float",
+      "AktuellerBuchbestand": "float"
+    },
+    "Funktionen": {
+      "SummierungArtikelUmbuchungen": "boolean",
+      "ArtikelbewegungenDrucken": "boolean",
+      "ArtikelKontoauszugDrucken": "boolean",
+      "KalkulationAktivieren": "boolean",
+      "Aufbereiten": "button"
+    },
+    "KI_Erweiterung": {
+      "Prognosen": {
+        "KI_Prognose_BestandIn30Tagen": "float",
+        "KI_Prognose_BestandIn60Tagen": "float",
+        "KI_Prognose_BestandIn90Tagen": "float",
+        "KI_Preisprognose_VK": "float",
+        "KI_Preisprognose_EK": "float",
+        "KI_Umsatzprognose_30Tage": "float",
+        "KI_Nachfrageprognose_30Tage": "float",
+        "Prognose_Konfidenz": "float",
+        "Prognose_Letzte_Aktualisierung": "date"
+      },
+      "Abweichungsanalyse": {
+        "Abweichung_IST_vs_SOLL": "float",
+        "Abweichung_Prozent": "float",
+        "Abweichung_Bestand": "float",
+        "Abweichung_Preis": "float",
+        "Abweichung_Umsatz": "float",
+        "Abweichung_Trend": "string",
+        "Abweichung_Kritisch": "boolean",
+        "Abweichung_Massnahmen": [
+          {
+            "Massnahme": "string",
+            "Prioritaet": "string",
+            "Erwarteter_Effekt": "string",
+            "Implementierungskosten": "float"
+          }
+        ]
+      },
+      "Anomalie_Erkennung": {
+        "Anomalie_Transaktion": "boolean",
+        "Anomalie_Preis": "boolean",
+        "Anomalie_Menge": "boolean",
+        "Anomalie_Haeufigkeit": "boolean",
+        "Anomalie_Score": "float",
+        "Anomalie_Begruendung": "string",
+        "Anomalie_Letzte_Pruefung": "date",
+        "Anomalie_Historie": [
+          {
+            "Datum": "date",
+            "Typ": "string",
+            "Score": "float",
+            "Beschreibung": "string",
+            "Status": "string"
+          }
+        ]
+      },
+      "Trend_Analyse": {
+        "Trend_Bestand": "string",
+        "Trend_Preis": "string",
+        "Trend_Umsatz": "string",
+        "Trend_Nachfrage": "string",
+        "Saisonale_Muster": "string",
+        "Trend_Prognose_12_Monate": [
+          {
+            "Monat": "int",
+            "Bestand_Prognose": "float",
+            "Umsatz_Prognose": "float",
+            "Preis_Prognose": "float",
+            "Konfidenz": "float"
+          }
+        ]
+      },
+      "Kennzahlen_KI": {
+        "Lagerumschlagshaeufigkeit_KI": "float",
+        "Deckungsbeitrag_KI": "float",
+        "ROI_KI": "float",
+        "Break_Even_Punkt_KI": "float",
+        "Gewinnmarge_KI": "float",
+        "Cash_Flow_Prognose": "float",
+        "Kapitalbindung_Prognose": "float"
+      },
+      "Optimierungsvorschlaege": {
+        "Bestelloptimierung": [
+          {
+            "Vorschlag": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float",
+            "Prioritaet": "string"
+          }
+        ],
+        "Preisoptimierung": [
+          {
+            "Vorschlag": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float",
+            "Prioritaet": "string"
+          }
+        ],
+        "Lageroptimierung": [
+          {
+            "Vorschlag": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float",
+            "Prioritaet": "string"
+          }
+        ]
+      },
+      "Risiko_Bewertung": {
+        "Risiko_Score": "float",
+        "Risiko_Kategorie": "string",
+        "Risiko_Faktoren": [
+          {
+            "Faktor": "string",
+            "Gewichtung": "float",
+            "Aktueller_Wert": "string",
+            "Grenzwert": "string"
+          }
+        ],
+        "Risiko_Massnahmen": [
+          {
+            "Massnahme": "string",
+            "Prioritaet": "string",
+            "Erwarteter_Effekt": "string",
+            "Implementierungskosten": "float"
+          }
+        ]
+      },
+      "Automatische_Aktionen": {
+        "Auto_Bestellung": "boolean",
+        "Auto_Preisanpassung": "boolean",
+        "Auto_Alarm": "boolean",
+        "Auto_Reporting": "boolean",
+        "Trigger_Bedingungen": [
+          {
+            "Bedingung": "string",
+            "Aktion": "string",
+            "Aktiv": "boolean",
+            "Letzte_Ausfuehrung": "date"
+          }
+        ]
+      },
+      "Performance_Monitoring": {
+        "Performance_Score": "float",
+        "Performance_Trend": "string",
+        "Performance_Vergleich_Vorjahr": "float",
+        "Performance_Benchmark": "float",
+        "Performance_Verbesserungspotenzial": "float",
+        "Performance_Massnahmen": [
+          {
+            "Massnahme": "string",
+            "Erwarteter_Effekt": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float"
+          }
+        ]
+      }
+    }
+  }
+} 

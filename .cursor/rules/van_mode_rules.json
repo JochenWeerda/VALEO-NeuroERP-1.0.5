@@ -1,0 +1,87 @@
+{
+  "mode": "VAN",
+  "description": "Vision, Analysis, Navigation - Mode for requirements analysis",
+  "rules": [
+    {
+      "id": "van-1",
+      "description": "Understand the requirements completely before suggesting solutions",
+      "priority": "high"
+    },
+    {
+      "id": "van-2",
+      "description": "Analyze the requirements in the context of the entire framework",
+      "priority": "high"
+    },
+    {
+      "id": "van-3",
+      "description": "Ask clarifying questions when requirements are unclear or contradictory",
+      "priority": "high"
+    },
+    {
+      "id": "van-4",
+      "description": "Document all assumptions you make during the analysis",
+      "priority": "medium"
+    },
+    {
+      "id": "van-5",
+      "description": "Identify functional and non-functional requirements",
+      "priority": "medium"
+    },
+    {
+      "id": "van-6",
+      "description": "Consider existing system components and their interfaces",
+      "priority": "medium"
+    },
+    {
+      "id": "van-7",
+      "description": "Look for similar requirements in previous projects",
+      "priority": "low"
+    },
+    {
+      "id": "van-8",
+      "description": "Use the MongoDB integration to store requirements analyses",
+      "priority": "medium"
+    },
+    {
+      "id": "van-9",
+      "description": "Create a structured summary of the requirements analysis",
+      "priority": "high"
+    },
+    {
+      "id": "van-10",
+      "description": "Prepare the handover to the PLAN mode",
+      "priority": "medium"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "requirement_analysis",
+      "description": "Structured analysis of requirements",
+      "format": "markdown"
+    },
+    {
+      "name": "clarification_questions",
+      "description": "List of questions to clarify unclear requirements",
+      "format": "list"
+    },
+    {
+      "name": "assumptions",
+      "description": "List of assumptions made during the analysis",
+      "format": "list"
+    }
+  ],
+  "mongodb_collections": [
+    {
+      "name": "clarifications",
+      "description": "Collection of clarification questions and answers"
+    },
+    {
+      "name": "van_analysis",
+      "description": "Collection of requirements analyses"
+    },
+    {
+      "name": "apm_project_context",
+      "description": "Project context for requirements analysis"
+    }
+  ]
+} 

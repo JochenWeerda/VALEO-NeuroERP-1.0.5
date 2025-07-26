@@ -1,0 +1,43 @@
+{
+  "metrics": {
+    "systemHealth": {
+      "enabled": true,
+      "interval": 30000
+    },
+    "agentStatus": {
+      "enabled": true,
+      "interval": 60000
+    },
+    "performance": {
+      "enabled": true,
+      "interval": 30000
+    },
+    "quality": {
+      "enabled": true,
+      "interval": 60000
+    }
+  },
+  "alerts": {
+    "systemHealth": {
+      "threshold": 0.8,
+      "severity": "warning"
+    },
+    "agentHealth": {
+      "threshold": 0.7,
+      "severity": "critical"
+    },
+    "performance": {
+      "threshold": 0.8,
+      "severity": "warning"
+    },
+    "quality": {
+      "threshold": 0.9,
+      "severity": "warning"
+    }
+  },
+  "retention": {
+    "reports": 24,
+    "logs": 168,
+    "metrics": 720
+  }
+}

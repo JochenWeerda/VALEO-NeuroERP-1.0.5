@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALEO NeuroERP - Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .offline-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .offline-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #6c757d;
+        }
+
+        .offline-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .offline-subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .offline-features {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .offline-features h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .retry-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .retry-button:hover {
+            background: #0056b3;
+        }
+
+        .offline-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .offline-button:hover {
+            background: #545b62;
+        }
+
+        .connection-status {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .status-offline {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-online {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        @media (max-width: 768px) {
+            .offline-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .offline-title {
+                font-size: 1.5rem;
+            }
+
+            .offline-subtitle {
+                font-size: 1rem;
+            }
+
+            .retry-button,
+            .offline-button {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon pulse">
+            📡
+        </div>
+        
+        <h1 class="offline-title">Keine Internetverbindung</h1>
+        
+        <p class="offline-subtitle">
+            VALEO NeuroERP ist derzeit offline. Einige Funktionen sind weiterhin verfügbar.
+        </p>
+
+        <div class="offline-features">
+            <h3>Verfügbare Offline-Funktionen:</h3>
+            <ul class="feature-list">
+                <li>Produktdaten anzeigen (gecacht)</li>
+                <li>Transaktionen lokal speichern</li>
+                <li>Barcode-Scanner verwenden</li>
+                <li>Bereits geladene KI-Vorschläge anzeigen</li>
+                <li>Lokale Berichte generieren</li>
+            </ul>
+        </div>
+
+        <div>
+            <button class="retry-button" onclick="retryConnection()">
+                🔄 Verbindung wiederherstellen
+            </button>
+            <button class="offline-button" onclick="continueOffline()">
+                📱 Offline fortfahren
+            </button>
+        </div>
+
+        <div id="connectionStatus" class="connection-status status-offline">
+            <strong>Status:</strong> Offline - Synchronisation ausstehend
+        </div>
+    </div>
+
+    <script>
+        // Verbindungsstatus überwachen
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            
+            if (navigator.onLine) {
+                statusElement.className = 'connection-status status-online';
+                statusElement.innerHTML = '<strong>Status:</strong> Online - Synchronisation läuft...';
+                
+                // Automatisch zur Hauptseite weiterleiten
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                statusElement.className = 'connection-status status-offline';
+                statusElement.innerHTML = '<strong>Status:</strong> Offline - Synchronisation ausstehend';
+            }
+        }
+
+        // Verbindung wiederherstellen
+        function retryConnection() {
+            const retryButton = document.querySelector('.retry-button');
+            retryButton.textContent = '🔄 Verbinde...';
+            retryButton.disabled = true;
+            
+            // Simuliere Verbindungsversuch
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    window.location.reload();
+                } else {
+                    retryButton.textContent = '🔄 Verbindung wiederherstellen';
+                    retryButton.disabled = false;
+                    alert('Verbindung konnte nicht hergestellt werden. Bitte überprüfen Sie Ihre Internetverbindung.');
+                }
+            }, 3000);
+        }
+
+        // Offline fortfahren
+        function continueOffline() {
+            // Versuche zur Hauptseite zu navigieren (mit Fallback)
+            try {
+                window.location.href = '/';
+            } catch (error) {
+                // Fallback: Zeige lokale Daten an
+                showOfflineData();
+            }
+        }
+
+        // Offline-Daten anzeigen
+        function showOfflineData() {
+            // Hier könnte eine lokale Datenbank-Abfrage erfolgen
+            alert('Offline-Modus aktiviert. Lokale Daten werden geladen...');
+        }
+
+        // Event Listener für Online/Offline-Status
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+
+        // Initial Status setzen
+        updateConnectionStatus();
+
+        // Service Worker registrieren (falls noch nicht geschehen)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registriert:', registration);
+                })
+                .catch(error => {
+                    console.log('Service Worker Registrierung fehlgeschlagen:', error);
+                });
+        }
+
+        // Periodische Verbindungsprüfung
+        setInterval(() => {
+            if (navigator.onLine) {
+                updateConnectionStatus();
+            }
+        }, 5000);
+    </script>
+</body>
+</html> 

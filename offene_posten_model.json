@@ -1,0 +1,355 @@
+{
+  "OffenePosten": {
+    "Metadaten": {
+      "KontoNr": "string",
+      "Name": "string",
+      "Status": "string",
+      "Typ": "string",
+      "Niederlassung": "string",
+      "Buchungsdatum": "date",
+      "Zeitraum_von": "date",
+      "Zeitraum_bis": "date"
+    },
+    "Buchungen": [
+      {
+        "RechnungsArt": "string",
+        "RechnungsNr": "string",
+        "Datum": "date",
+        "FaelligBis": "date",
+        "ValutaDatum": "date",
+        "OPBetrag": "float",
+        "S_H": "string",
+        "OPBetragS_H": "float",
+        "OPRestSumme": "float",
+        "MandatsNr": "string",
+        "Mahnfaehigkeit": "boolean",
+        "Zahlziel_Tage": "int",
+        "Skonto1_Tage": "int",
+        "Skonto1_Prozent": "float",
+        "Skonto2_Tage": "int",
+        "Skonto2_Prozent": "float",
+        "NettoSkontierfaehig": "boolean",
+        "Steuerschluessel": "string",
+        "OPInfoText": "string",
+        "Bediener": "string",
+        "Bemerkung": "string",
+        "Kostenstelle": "string",
+        "Lagerfach": "string",
+        "ChargenNr": "string",
+        "SerienNr": "string"
+      }
+    ],
+    "Historie": [
+      {
+        "Typ": "string",
+        "VerrechnungRechNr": "string",
+        "Datum": "date",
+        "BuchDatum": "date",
+        "Uhrzeit": "string",
+        "VeränderungBetrag": "float",
+        "BuchBetrag": "float",
+        "SH": "string",
+        "Text": "string",
+        "Bediener": "string",
+        "Bemerkung": "string"
+      }
+    ],
+    "Summenblock": {
+      "OPGesamtsumme": "float",
+      "FaelligSumme": "float",
+      "NichtFaelligSumme": "float",
+      "SaldoAktuell": "float",
+      "LetzteBewegungAm": "date",
+      "SkontoDatum": "date",
+      "Kreditlimit": "float",
+      "KfWLimit": "float",
+      "Sperrgrund": "string",
+      "KumulierteEinkaufsmenge": "float",
+      "KumulierteEinkaufssumme": "float",
+      "KumulierteVerkaufsmenge": "float",
+      "KumulierteVerkaufssumme": "float",
+      "DurchschnittlicherEKPreis": "float",
+      "DurchschnittlicherVKPreis": "float",
+      "VerfügbarerBestand": "float",
+      "AktuellerBuchbestand": "float"
+    },
+    "Funktionen": {
+      "OriginalBelegAnzeigen": "boolean",
+      "BelegDrucken": "boolean",
+      "CalcAktiv": "boolean",
+      "SummierungArtikelUmbuchungen": "boolean",
+      "ArtikelbewegungenDrucken": "boolean",
+      "ArtikelKontoauszugDrucken": "boolean",
+      "KalkulationAktivieren": "boolean",
+      "Aufbereiten": "button",
+      "MahnwesenAktivieren": "boolean",
+      "ZahlungsplanErstellen": "boolean",
+      "SkontoBerechnung": "boolean",
+      "RatenzahlungVereinbaren": "boolean"
+    },
+    "KI_Erweiterung": {
+      "Zahlungswahrscheinlichkeit": "float",
+      "Empfohlene_Mahnstufe": "int",
+      "RisikoScore": "int",
+      "Anomalieerkennung": "boolean",
+      "Zahlungsverhalten_Analyse": "string",
+      "Empfohlene_Zahlungsbedingungen": "string",
+      "Kreditlimit_Optimierung": "float",
+      "Frühwarnung_Überfälligkeit": "boolean",
+      "Automatische_Mahnung": "boolean",
+      "Zahlungsprognose_30_Tage": "float",
+      "Kundenbonität_Score": "int",
+      "Empfohlene_Skonto_Angebote": "object",
+      "Liquiditätsprognose": "float",
+      "Risikokategorie": "string"
+    },
+    "Mahnwesen": {
+      "Mahnstufe": "int",
+      "LetzteMahnung": "date",
+      "NächsteMahnung": "date",
+      "Mahngebühren": "float",
+      "Mahnstufen_Historie": [
+        {
+          "Datum": "date",
+          "Mahnstufe": "int",
+          "Betrag": "float",
+          "Mahngebühren": "float"
+        }
+      ],
+      "Mahnstopp": "boolean",
+      "Mahnstopp_Grund": "string",
+      "Mahnstopp_Bis": "date"
+    },
+    "Zahlungsplan": {
+      "Ratenzahlung_Aktiv": "boolean",
+      "Anzahl_Raten": "int",
+      "Ratenhöhe": "float",
+      "Nächste_Rate": "date",
+      "Verbleibende_Raten": "int",
+      "Zinsen_Ratenzahlung": "float",
+      "Raten_Historie": [
+        {
+          "Rate_Nr": "int",
+          "Fälligkeitsdatum": "date",
+          "Betrag": "float",
+          "Bezahlt_am": "date",
+          "Status": "string"
+        }
+      ]
+    },
+    "Skonto_Verwaltung": {
+      "Skonto1_Verfügbar": "boolean",
+      "Skonto1_Verfallen": "boolean",
+      "Skonto2_Verfügbar": "boolean",
+      "Skonto2_Verfallen": "boolean",
+      "Skonto_Betrag_Verfügbar": "float",
+      "Skonto_Betrag_Verfallen": "float",
+      "Skonto_Historie": [
+        {
+          "Datum": "date",
+          "Skonto_Art": "string",
+          "Betrag": "float",
+          "Prozent": "float"
+        }
+      ]
+    },
+    "SEPA_Verwaltung": {
+      "SEPA_Mandat_Vorhanden": "boolean",
+      "SEPA_Mandat_Nr": "string",
+      "SEPA_Mandat_Datum": "date",
+      "SEPA_Mandat_Status": "string",
+      "IBAN": "string",
+      "BIC": "string",
+      "Kontoinhaber": "string",
+      "Bank_Name": "string",
+      "Letzte_SEPA_Buchung": "date",
+      "SEPA_Historie": [
+        {
+          "Datum": "date",
+          "Betrag": "float",
+          "Status": "string",
+          "Mandatsreferenz": "string"
+        }
+      ]
+    },
+    "Kontakt_Historie": {
+      "Letzter_Kontakt": "date",
+      "Kontakt_Art": "string",
+      "Kontakt_Ergebnis": "string",
+      "Nächster_Kontakt": "date",
+      "Kontakt_Notizen": "string",
+      "Kontakt_Historie_Liste": [
+        {
+          "Datum": "date",
+          "Zeit": "string",
+          "Kontakt_Art": "string",
+          "Ergebnis": "string",
+          "Bediener": "string",
+          "Notizen": "string"
+        }
+      ]
+    },
+    "Dokumente": {
+      "Rechnung_PDF": "string",
+      "Mahnung_PDF": "string",
+      "Zahlungsplan_PDF": "string",
+      "Korrespondenz_Historie": [
+        {
+          "Datum": "date",
+          "Dokument_Typ": "string",
+          "Datei_Pfad": "string",
+          "Versand_Art": "string",
+          "Empfänger": "string"
+        }
+      ]
+    },
+    "Statistiken": {
+      "Durchschnittliche_Zahlungsdauer": "int",
+      "Anzahl_Überfälligkeiten": "int",
+      "Höchste_Überfälligkeit": "float",
+      "Zahlungsmoral_Score": "int",
+      "Kunde_seit": "date",
+      "Gesamtumsatz": "float",
+      "Durchschnittlicher_Auftragswert": "float",
+      "Anzahl_Aufträge": "int"
+    },
+    "KI_Erweiterung": {
+      "Zahlungswahrscheinlichkeit": "float",
+      "Empfohlene_Mahnstufe": "int",
+      "RisikoScore": "int",
+      "Anomalieerkennung": "boolean",
+      "Zahlungsverhalten_Analyse": {
+        "Durchschnittliche_Zahlungsdauer": "int",
+        "Zahlungsverhalten_Trend": "string",
+        "Puenktlichkeit_Score": "float",
+        "Letzte_Zahlung": "date",
+        "Zahlungshistorie": [
+          {
+            "RechnungsNr": "string",
+            "Faelligkeitsdatum": "date",
+            "Zahlungsdatum": "date",
+            "Verzug_Tage": "int",
+            "Zahlungsart": "string"
+          }
+        ]
+      },
+      "Mahnwesen_KI": {
+        "Automatische_Mahnung": "boolean",
+        "Mahnstufe_Optimal": "int",
+        "Mahngebuehren_Empfehlung": "float",
+        "Mahnung_Timing": "date",
+        "Mahnung_Text_Vorschlag": "string",
+        "Mahnung_Historie": [
+          {
+            "Datum": "date",
+            "Mahnstufe": "int",
+            "Reaktion": "string",
+            "Zahlungseingang": "float"
+          }
+        ]
+      },
+      "Risiko_Bewertung": {
+        "Risiko_Kategorie": "string",
+        "Risiko_Faktoren": [
+          {
+            "Faktor": "string",
+            "Gewichtung": "float",
+            "Aktueller_Wert": "string",
+            "Grenzwert": "string"
+          }
+        ],
+        "Kreditlimit_Auslastung": "float",
+        "Bonitaets_Score": "float",
+        "Risiko_Trend": "string",
+        "Risiko_Massnahmen": [
+          {
+            "Massnahme": "string",
+            "Prioritaet": "string",
+            "Erwarteter_Effekt": "string"
+          }
+        ]
+      },
+      "Anomalie_Erkennung": {
+        "Anomalie_Typ": "string",
+        "Anomalie_Score": "float",
+        "Anomalie_Begruendung": "string",
+        "Anomalie_Letzte_Pruefung": "date",
+        "Anomalie_Historie": [
+          {
+            "Datum": "date",
+            "Typ": "string",
+            "Score": "float",
+            "Beschreibung": "string",
+            "Status": "string"
+          }
+        ]
+      },
+      "Cash_Flow_Prognose": {
+        "Erwarteter_Zahlungseingang": "float",
+        "Zahlungseingang_Prognose_30Tage": "float",
+        "Zahlungseingang_Prognose_60Tage": "float",
+        "Zahlungseingang_Prognose_90Tage": "float",
+        "Prognose_Konfidenz": "float",
+        "Prognose_Letzte_Aktualisierung": "date"
+      },
+      "Optimierungsvorschlaege": {
+        "Zahlungsbedingungen_Optimierung": [
+          {
+            "Vorschlag": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float",
+            "Prioritaet": "string"
+          }
+        ],
+        "Mahnwesen_Optimierung": [
+          {
+            "Vorschlag": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float",
+            "Prioritaet": "string"
+          }
+        ],
+        "Kreditlimit_Optimierung": [
+          {
+            "Vorschlag": "string",
+            "Erwarteter_Nutzen": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float",
+            "Prioritaet": "string"
+          }
+        ]
+      },
+      "Automatische_Aktionen": {
+        "Auto_Mahnung": "boolean",
+        "Auto_Kreditlimit_Anpassung": "boolean",
+        "Auto_Risiko_Alarm": "boolean",
+        "Auto_Reporting": "boolean",
+        "Trigger_Bedingungen": [
+          {
+            "Bedingung": "string",
+            "Aktion": "string",
+            "Aktiv": "boolean",
+            "Letzte_Ausfuehrung": "date"
+          }
+        ]
+      },
+      "Performance_Monitoring": {
+        "Performance_Score": "float",
+        "Performance_Trend": "string",
+        "Performance_Vergleich_Vorjahr": "float",
+        "Performance_Benchmark": "float",
+        "Performance_Verbesserungspotenzial": "float",
+        "Performance_Massnahmen": [
+          {
+            "Massnahme": "string",
+            "Erwarteter_Effekt": "string",
+            "Implementierungskosten": "float",
+            "ROI": "float"
+          }
+        ]
+      }
+    }
+  }
+} 

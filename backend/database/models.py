@@ -126,4 +126,18 @@ class Notification(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     # Relationships
-    user = relationship("User", back_populates="notifications") 
+    user = relationship("User", back_populates="notifications")
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+    
+    id = Column(String(36), primary_key=True, index=True)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False)
+    action = Column(String(100), nullable=False, index=True)
+    details = Column(Text)
+    ip_address = Column(String(45))  # IPv6 support
+    user_agent = Column(Text)
+    timestamp = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+    
+    # Relationships
+    user = relationship("User") 

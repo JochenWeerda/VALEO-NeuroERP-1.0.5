@@ -1,0 +1,282 @@
+{
+  "personalstamm": {
+    "personalnummer": "string",
+    "anrede": "string",
+    "vorname": "string",
+    "nachname": "string",
+    "titel": "string",
+    "vorsaetze_zusaetze": "string",
+    "geschaeftsstelle": "string",
+    "kostenstelle": "string",
+    "fremdloehner": "boolean",
+
+    "hauptwohnsitz": {
+      "strasse": "string",
+      "postleitzahl": "string",
+      "ort": "string",
+      "land": "string",
+      "telefon_1": "string",
+      "telefon_2": "string",
+      "email": "string",
+      "homepage": "string"
+    },
+
+    "allgemein": {
+      "geschlecht": "string",
+      "familienstand": "string",
+      "geburtsdatum": "date",
+      "staatsangehoerigkeit": "string",
+      "bundesland": "string",
+      "disponent": "string",
+      "ausweis_nr": "string",
+      "ausweis_gueltig_bis": "date",
+      "ausweis_ausgestellt_am": "date",
+      "ewg_ausweis_gueltig_bis": "date",
+      "reisepass_nr": "string",
+      "kontaktperson": "string"
+    },
+
+    "beschaeftigung": {
+      "eintritt": "date",
+      "austritt": "date",
+      "wiedereintritt": "date",
+      "techn_eintritt": "date",
+      "urlaubstage": "int",
+      "reisebereitschaft": "boolean",
+      "erlernter_beruf": "string",
+      "eingestellt_als": "string",
+      "beschreibung": "string",
+      "sonst_vereinbarungen": "string"
+    },
+
+    "student": {
+      "schule": "string",
+      "schulort": "string",
+      "studienfach": "string",
+      "studienrichtung": "string",
+      "semester": "int",
+      "hundertstel": "int",
+      "einsatz_folgejahr": "int",
+      "einsatz_erfuellt": "boolean",
+      "tage_vorarbeitgeber": "int",
+      "immatrikulationsbescheinigung": "string",
+      "gueltig_bis": "date"
+    },
+
+    "eigenschaften": {
+      "behinderung": {
+        "vorhanden": "boolean",
+        "grad": "string"
+      },
+      "beruf_qualifikation": [
+        {
+          "qualifikation": "string",
+          "abschluss_datum": "date",
+          "institution": "string",
+          "gueltig_bis": "date",
+          "zertifikat": "string"
+        }
+      ],
+      "bewerbung": "string",
+      "fuehrerscheine_fahrzeuge": [
+        {
+          "fuehrerschein_klasse": "string",
+          "erworben_am": "date",
+          "gueltig_bis": "date",
+          "fahrzeug_typ": "string",
+          "beschraenkungen": "string"
+        }
+      ],
+      "lebenslauf": "string",
+      "lieferant_verknuepfung": "string",
+      "weiterbildungen": [
+        {
+          "kurs_bezeichnung": "string",
+          "anbieter": "string",
+          "beginn": "date",
+          "ende": "date",
+          "zertifikat": "string",
+          "kosten": "float",
+          "status": "string"
+        }
+      ]
+    },
+
+    "massnahmen": {
+      "abmahnungen_kuendigung": [
+        {
+          "datum": "date",
+          "typ": "string",
+          "grund": "string",
+          "aussteller": "string",
+          "status": "string"
+        }
+      ],
+      "datenschutz": {
+        "einwilligung": "boolean",
+        "gueltig_bis": "date",
+        "angelegt_am": "date",
+        "angelegt_von": "string"
+      },
+      "sicherheitsbelehrungen": [
+        {
+          "thema": "string",
+          "datum": "date",
+          "durchfuehrer": "string",
+          "gueltig_bis": "date",
+          "zertifikat": "string"
+        }
+      ],
+      "vorsorgeuntersuchungen": [
+        {
+          "untersuchungstyp": "string",
+          "datum": "date",
+          "arzt": "string",
+          "ergebnis": "string",
+          "naechste_untersuchung": "date"
+        }
+      ],
+      "wiedereingliederung": [
+        {
+          "beginn": "date",
+          "ende": "date",
+          "massnahme": "string",
+          "verantwortlicher": "string",
+          "status": "string"
+        }
+      ]
+    },
+
+    "lohn": {
+      "berufsgenossenschaft": {
+        "mitgliedschaft": "string",
+        "berufsgruppenschluessel": "string"
+      },
+      "lohn_gehalt": {
+        "lohnart": "string",
+        "lohnstufe": "string",
+        "stundenlohn": "float",
+        "gehalt": "float"
+      },
+      "sozialversicherung": {
+        "sv_nummer": "string",
+        "kasse": "string",
+        "beitragssatz": "float"
+      },
+      "steuerkarte": {
+        "steuerklasse": "string",
+        "kinderfreibetrag": "int",
+        "kirchensteuer": "boolean"
+      },
+      "vertraege": {
+        "art": "string",
+        "beginn": "date",
+        "ende": "date"
+      }
+    },
+
+    "abwesenheiten": {
+      "urlaub": [
+        {
+          "jahr": "int",
+          "genommen": "int",
+          "verbleibend": "int",
+          "uebertrag": "int"
+        }
+      ],
+      "krankheit": [
+        {
+          "beginn": "date",
+          "ende": "date",
+          "grund": "string",
+          "arzt": "string",
+          "krankschreibung": "boolean"
+        }
+      ],
+      "fortbildung": [
+        {
+          "beginn": "date",
+          "ende": "date",
+          "thema": "string",
+          "anbieter": "string",
+          "kosten": "float"
+        }
+      ]
+    },
+
+    "dokumente": {
+      "vertrag": "string",
+      "arbeitszeugnis": "string",
+      "ausweise": [
+        {
+          "typ": "string",
+          "nummer": "string",
+          "gueltig_bis": "date",
+          "datei": "string"
+        }
+      ],
+      "zertifikate": [
+        {
+          "bezeichnung": "string",
+          "aussteller": "string",
+          "datum": "date",
+          "gueltig_bis": "date",
+          "datei": "string"
+        }
+      ]
+    },
+
+    "ki_erweiterung": {
+      "leistungsbewertung": {
+        "score": "int",
+        "kategorien": {
+          "fachkompetenz": "int",
+          "sozialkompetenz": "int",
+          "selbststaendigkeit": "int",
+          "teamfaehigkeit": "int"
+        },
+        "letzte_bewertung": "date",
+        "bewertungs_historie": [
+          {
+            "datum": "date",
+            "bewerter": "string",
+            "score": "int",
+            "kommentar": "string"
+          }
+        ]
+      },
+      "karriereplanung": {
+        "potenzial": "string",
+        "entwicklungsziele": [
+          {
+            "ziel": "string",
+            "zeitraum": "string",
+            "status": "string",
+            "massnahmen": "string"
+          }
+        ],
+        "weiterbildungsempfehlungen": [
+          {
+            "kurs": "string",
+            "prioritaet": "string",
+            "begruendung": "string"
+          }
+        ]
+      },
+      "anomalie_erkennung": {
+        "abwesenheitsmuster": "string",
+        "leistungsschwankungen": "boolean",
+        "letzte_analyse": "date"
+      }
+    },
+
+    "metadata": {
+      "erstellt_am": "date",
+      "erstellt_von": "string",
+      "geaendert_am": "date",
+      "geaendert_von": "string",
+      "version": "string",
+      "aktiv": "boolean"
+    }
+  }
+} 

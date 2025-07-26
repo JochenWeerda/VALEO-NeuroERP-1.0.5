@@ -1,0 +1,26 @@
+
+{
+  "dashboard": {
+    "title": "VALEO-NeuroERP Dashboard",
+    "panels": [
+      {
+        "title": "API Response Time",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])"
+          }
+        ]
+      },
+      {
+        "title": "Database Connections",
+        "type": "graph", 
+        "targets": [
+          {
+            "expr": "pg_stat_database_numbackends"
+          }
+        ]
+      }
+    ]
+  }
+}

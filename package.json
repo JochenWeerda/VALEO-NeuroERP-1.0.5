@@ -67,6 +67,7 @@
     "@babel/preset-typescript": "^7.27.1",
     "@types/file-saver": "^2.0.7",
     "babel-jest": "^29.7.0",
+    "claude-flow": "^2.0.0-alpha.72",
     "eslint-plugin-react-refresh": "^0.4.20"
   }
 }
