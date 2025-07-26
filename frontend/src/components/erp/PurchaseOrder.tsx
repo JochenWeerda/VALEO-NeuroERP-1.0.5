@@ -85,9 +85,13 @@ export interface PaymentTerms {
 }
 
 export interface PurchaseOrderProps {
-  onOrderCreate: (order: PurchaseOrderData) => void;
-  onOrderUpdate: (id: string, order: Partial<PurchaseOrderData>) => void;
-  onOrderDelete: (id: string) => void;
+  mode: 'create' | 'edit' | 'view';
+  initialData?: PurchaseOrderData;
+  onSave: (order: PurchaseOrderData) => void;
+  onCancel: () => void;
+  onOrderCreate?: (order: PurchaseOrderData) => void;
+  onOrderUpdate?: (id: string, order: Partial<PurchaseOrderData>) => void;
+  onOrderDelete?: (id: string) => void;
 }
 
 // Validierungsschema
