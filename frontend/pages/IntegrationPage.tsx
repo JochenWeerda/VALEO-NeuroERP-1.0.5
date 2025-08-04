@@ -5,25 +5,15 @@ import {
   Grid,
   Card,
   CardContent,
-  CardActions,
   Tabs,
   Tab,
   Box,
   Alert,
-  CircularProgress,
-  Paper,
-  Button,
-  Chip
+  CircularProgress
 } from '@mui/material';
-import { 
-  Assignment as AssignmentIcon,
-  People as PeopleIcon,
-  LocalShipping as DeliveryIcon,
-  Assessment as AssessmentIcon
-} from '@mui/icons-material';
 import { useErpStore } from '../store/erpStore';
-import { OrderForm, ZvooveOrderForm } from '../components/zvoove-integration/OrderForm';
-import { ContactOverview, ZvooveContactOverview } from '../components/zvoove-integration/ContactOverview';
+import { OrderForm } from '../components/zvoove-integration/OrderForm';
+import { ContactOverview } from '../components/zvoove-integration/ContactOverview';
 import { Navigation } from '../components/zvoove-integration/Navigation';
 
 // TypeScript Interfaces
@@ -32,48 +22,6 @@ interface IntegrationPageProps {
 }
 
 type NavigationTab = 'orders' | 'contacts' | 'deliveries';
-
-interface ContactFilters {
-  contactType: string;
-  sortBy: string;
-  sortOrder: 'asc' | 'desc';
-  search?: string;
-}
-
-interface OrderData {
-  orderNumber?: string;
-  customer: string;
-  items: Array<{
-    articleNumber: string;
-    description: string;
-    quantity: number;
-    price: number;
-  }>;
-  totalAmount: number;
-  status: string;
-}
-
-// Tab Panel Component
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`integration-tabpanel-${index}`}
-      aria-labelledby={`integration-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
 
 export const IntegrationPage: React.FC<IntegrationPageProps> = ({
   initialTab = 'orders'
@@ -93,22 +41,7 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
     clearError
   } = useErpStore();
 
-  // Selector functions
-  const selectors = {
-    getFilteredContacts: () => contacts,
-    getContactCount: () => contacts.length,
-    getOrderStatistics: () => ({
-      total: orders.length,
-      pending: orders.filter(o => o.status === 'pending').length,
-      processing: orders.filter(o => o.status === 'processing').length,
-      completed: orders.filter(o => o.status === 'completed').length
-    }),
-    getContactStatistics: () => ({
-      total: contacts.length,
-      active: contacts.filter(c => c.active).length,
-      inactive: contacts.filter(c => !c.active).length
-    })
-  };
+  const selectors = useErpSelectors();
 
   // Contact Filters
   const [contactFilters, setContactFilters] = useState<ContactFilters>({
@@ -127,7 +60,7 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
   // Initial Data laden
   useEffect(() => {
     fetchOrders();
-    fetchContacts();
+    fetchContacts(contactFilters);
   }, []);
 
   // Tab ändern
@@ -164,7 +97,7 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
   // Contact Filter ändern
   const handleContactFilterChange = (newFilters: ContactFilters) => {
     setContactFilters(newFilters);
-    fetchContacts();
+    fetchContacts(newFilters);
   };
 
   // Statistiken berechnen

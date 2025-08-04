@@ -79,6 +79,15 @@ except ImportError:
     POS_ROUTES_AVAILABLE = False
     logger.warning("POS API nicht verfügbar")
 
+# Dokumente Module API
+try:
+    from routers.dokumente import router as dokumente_router
+    DOKUMENTE_ROUTES_AVAILABLE = True
+    logger.info("Dokumente Module API verfügbar")
+except ImportError:
+    DOKUMENTE_ROUTES_AVAILABLE = False
+    logger.warning("Dokumente Module API nicht verfügbar")
+
 # KI-Integration APIs - Direkte Implementierung
 AI_APIS_AVAILABLE = True
 logger.info("KI-APIs werden direkt implementiert")
@@ -579,6 +588,16 @@ if AI_APIS_AVAILABLE:
         app.include_router(voucher_router)
         
         logger.info("KI-APIs erfolgreich eingebunden")
+
+# Dokumente Module Router hinzufügen
+if DOKUMENTE_ROUTES_AVAILABLE:
+    try:
+        app.include_router(dokumente_router)
+        logger.info("Dokumente Module API erfolgreich eingebunden")
+    except Exception as e:
+        logger.error(f"Fehler beim Einbinden der Dokumente Module API: {e}")
+else:
+    logger.warning("Dokumente Module API nicht verfügbar")
         
     except Exception as e:
         logger.error(f"Fehler beim Einbinden der KI-APIs: {e}")

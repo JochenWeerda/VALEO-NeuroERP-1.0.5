@@ -48,7 +48,7 @@ import {
   Assessment as AssessmentIcon
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useApi } from '../src/contexts/ApiContext';
+import { useApi } from '../contexts/ApiContext';
 
 interface LayoutProps {
   children: React.ReactNode;

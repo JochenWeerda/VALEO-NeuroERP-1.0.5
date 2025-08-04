@@ -51,6 +51,11 @@ const AIDashboard = lazyWithPreload(
   '/ai-dashboard'
 );
 
+const DokumentePage = lazyWithPreload(
+  () => import('../pages/DokumentePage'),
+  '/dokumente'
+);
+
 // Loading Component für Routen mit Preload-Status
 const RouteLoader: React.FC<{ routeName: string; isPreloaded?: boolean }> = ({ 
   routeName, 
@@ -225,6 +230,13 @@ export const PreloadRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => 
       routeName: 'AI Dashboard',
       protected: true,
       route: '/ai-dashboard'
+    },
+    {
+      path: '/dokumente',
+      component: DokumentePage.Component,
+      routeName: 'Dokumente',
+      protected: true,
+      route: '/dokumente'
     }
   ], []);
 

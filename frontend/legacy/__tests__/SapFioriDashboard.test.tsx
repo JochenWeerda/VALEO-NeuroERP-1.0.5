@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import SapFioriDashboard from '../SapFioriDashboard';
-import { ApiProvider } from '../../src/contexts/ApiContext';
+import { ApiProvider } from '../../contexts/ApiContext';
 
 // Mock für react-router-dom
 jest.mock('react-router-dom', () => ({

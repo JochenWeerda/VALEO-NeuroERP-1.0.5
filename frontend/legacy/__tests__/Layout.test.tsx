@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
-import { ApiProvider } from '../../src/contexts/ApiContext';
+import { ApiProvider } from '../../contexts/ApiContext';
 import Layout from '../Layout';
 
 // Mock für die Theme

@@ -31,7 +31,8 @@ import {
   Notifications as NotificationsIcon,
   AccountCircle as AccountCircleIcon,
   Logout as LogoutIcon,
-  AutoAwesome as AutoAwesomeIcon
+  AutoAwesome as AutoAwesomeIcon,
+  Description as DescriptionIcon
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import { preloadService } from '../services/PreloadService';
@@ -59,6 +60,12 @@ const NavigationContent: React.FC = () => {
       path: '/ai-dashboard',
       label: 'AI Dashboard',
       icon: AutoAwesomeIcon,
+      priority: 'high'
+    },
+    {
+      path: '/dokumente',
+      label: 'Dokumente',
+      icon: DescriptionIcon,
       priority: 'high'
     },
     {

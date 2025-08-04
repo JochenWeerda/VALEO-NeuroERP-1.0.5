@@ -8,9 +8,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-venv/
-env/
-ENV/
 
 # Build/Dist
 frontend/dist/
@@ -58,6 +55,3 @@ coverage/
 
 # Ignore example envs NICHT
 !env.prod.example
-
-# Ignore files with secrets
-setup-n8n-simple.ps1
