@@ -1,159 +1,267 @@
 version: '3.8'
 
-networks:
-  valeo-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
-
 services:
-  # Backend API Server
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: valeo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: valeo_neuroerp
+      POSTGRES_USER: ${DB_USER:-valeo}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-valeo2024!}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=de_DE.utf8"
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/02-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-valeo}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: valeo-redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis2024!}
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  # Backend API
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
-    container_name: valeo-neuroerp-backend
-    networks:
-      valeo-network:
-        ipv4_address: 172.20.1.10
-    ports:
-      - "8000:8000"
-    environment:
-      - TZ=Europe/Berlin
-      - PYTHONPATH=/app
-      - ENVIRONMENT=production
-    volumes:
-      - ./backend:/app
-      - ./logs:/app/logs
+      args:
+        - REACT_APP_API_URL=${API_URL:-http://localhost:8000}
+    container_name: valeo-backend
     restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-valeo}:${DB_PASSWORD:-valeo2024!}@postgres:5432/valeo_neuroerp
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis2024!}
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-here}
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DEBUG=${DEBUG:-false}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app/backend:ro
+      - media-files:/app/media
+      - static-files:/app/static
+      - logs:/app/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-
-  # Frontend React App
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: valeo-neuroerp-frontend
     networks:
-      valeo-network:
-        ipv4_address: 172.20.1.20
-    ports:
-      - "3000:3000"
+      - backend
+      - frontend
+
+  # Frontend (Development)
+  frontend-dev:
+    image: node:20-alpine
+    container_name: valeo-frontend-dev
+    working_dir: /app
     environment:
-      - TZ=Europe/Berlin
-      - REACT_APP_API_URL=http://172.20.1.10:8000
+      - REACT_APP_API_URL=${API_URL:-http://localhost:8000}
+      - WATCHPACK_POLLING=true
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    command: npm start
+    profiles:
+      - development
+    networks:
+      - frontend
+
+  # Nginx (Production)
+  nginx:
+    image: nginx:alpine
+    container_name: valeo-nginx
     restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+      - ./frontend/build:/usr/share/nginx/html:ro
+      - static-files:/usr/share/nginx/static:ro
+      - media-files:/usr/share/nginx/media:ro
+      - nginx-logs:/var/log/nginx
+      - ./nginx/ssl:/etc/nginx/ssl:ro
     depends_on:
       - backend
-
-  # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
-    container_name: valeo-neuroerp-postgres
-    networks:
-      valeo-network:
-        ipv4_address: 172.20.1.30
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=valeo_neuroerp
-      - POSTGRES_USER=valeo_user
-      - POSTGRES_PASSWORD=valeo_password
-      - TZ=Europe/Berlin
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./database/init:/docker-entrypoint-initdb.d
-    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U valeo_user -d valeo_neuroerp"]
+      test: ["CMD", "nginx", "-t"]
       interval: 30s
       timeout: 10s
       retries: 3
-
-  # Redis Cache
-  redis:
-    image: redis:7-alpine
-    container_name: valeo-neuroerp-redis
+    profiles:
+      - production
     networks:
-      valeo-network:
-        ipv4_address: 172.20.1.40
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    restart: unless-stopped
-    command: redis-server --appendonly yes
-
-  # Nginx Reverse Proxy
-  nginx:
-    image: nginx:alpine
-    container_name: valeo-neuroerp-nginx
-    networks:
-      valeo-network:
-        ipv4_address: 172.20.1.50
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/ssl:/etc/nginx/ssl
-    restart: unless-stopped
-    depends_on:
       - frontend
       - backend
 
-  # Monitoring - Prometheus
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: valeo-neuroerp-prometheus
-    networks:
-      valeo-network:
-        ipv4_address: 172.20.1.60
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
+  # Celery Worker
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: valeo-celery-worker
     restart: unless-stopped
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-
-  # Monitoring - Grafana
-  grafana:
-    image: grafana/grafana:latest
-    container_name: valeo-neuroerp-grafana
-    networks:
-      valeo-network:
-        ipv4_address: 172.20.1.70
-    ports:
-      - "3001:3000"
+    command: celery -A backend.app.celery_app worker --loglevel=info
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=valeo_admin
-      - TZ=Europe/Berlin
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
-    restart: unless-stopped
+      - DATABASE_URL=postgresql://${DB_USER:-valeo}:${DB_PASSWORD:-valeo2024!}@postgres:5432/valeo_neuroerp
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis2024!}
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD:-redis2024!}@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD:-redis2024!}@redis:6379/0
     depends_on:
-      - prometheus
+      - postgres
+      - redis
+      - backend
+    volumes:
+      - ./backend:/app/backend:ro
+      - logs:/app/logs
+    networks:
+      - backend
+
+  # Celery Beat
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: valeo-celery-beat
+    restart: unless-stopped
+    command: celery -A backend.app.celery_app beat --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-valeo}:${DB_PASSWORD:-valeo2024!}@postgres:5432/valeo_neuroerp
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis2024!}
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD:-redis2024!}@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD:-redis2024!}@redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    volumes:
+      - ./backend:/app/backend:ro
+      - logs:/app/logs
+    networks:
+      - backend
+
+  # Flower (Celery Monitoring)
+  flower:
+    image: mher/flower:latest
+    container_name: valeo-flower
+    restart: unless-stopped
+    environment:
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD:-redis2024!}@redis:6379/0
+      - FLOWER_PORT=5555
+      - FLOWER_BASIC_AUTH=${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-flower2024!}
+    ports:
+      - "${FLOWER_PORT:-5555}:5555"
+    depends_on:
+      - redis
+      - celery-worker
+    profiles:
+      - monitoring
+    networks:
+      - backend
+
+  # pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: valeo-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@valeo.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-pgadmin2024!}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    profiles:
+      - tools
+    networks:
+      - backend
+
+  # Backup Service
+  backup:
+    image: postgres:15-alpine
+    container_name: valeo-backup
+    restart: unless-stopped
+    environment:
+      - PGHOST=postgres
+      - PGPORT=5432
+      - PGDATABASE=valeo_neuroerp
+      - PGUSER=${DB_USER:-valeo}
+      - PGPASSWORD=${DB_PASSWORD:-valeo2024!}
+    volumes:
+      - ./scripts/backup.sh:/backup.sh:ro
+      - backup-data:/backups
+    command: sh -c "chmod +x /backup.sh && crond -f -d 8"
+    depends_on:
+      - postgres
+    profiles:
+      - production
+    networks:
+      - backend
 
 volumes:
-  postgres_data:
+  postgres-data:
     driver: local
-  redis_data:
+  redis-data:
     driver: local
-  prometheus_data:
+  media-files:
     driver: local
-  grafana_data:
+  static-files:
     driver: local
+  logs:
+    driver: local
+  nginx-logs:
+    driver: local
+  pgadmin-data:
+    driver: local
+  backup-data:
+    driver: local
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

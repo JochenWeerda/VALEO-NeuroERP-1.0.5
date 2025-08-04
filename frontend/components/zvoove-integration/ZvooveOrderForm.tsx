@@ -466,4 +466,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({
       </form>
     </Card>
   );
-}; 
+};
+
+export { OrderForm as ZvooveOrderForm }; 

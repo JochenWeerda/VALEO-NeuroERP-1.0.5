@@ -1,0 +1,189 @@
+@startuml Warenwirtschaft_Prozesslandschaft
+!theme blueprint
+title VALEO NeuroERP 2.0 - Prozesslandschaft Warenwirtschaft
+
+|#LightBlue|Artikelstammdaten|
+start
+:Artikel anlegen;
+note right
+  - Artikelnummer generieren
+  - Grunddaten erfassen
+  - EAN/GTIN zuweisen
+end note
+:Artikelklassifizierung;
+split
+  :Warengruppe zuordnen;
+split again
+  :Produktkategorie definieren;
+split again
+  :Eigenschaften pflegen;
+end split
+:Varianten verwalten;
+if (Hat Varianten?) then (ja)
+  :Variantenmatrix erstellen;
+  :Größen/Farben definieren;
+else (nein)
+endif
+:Stücklisten pflegen;
+if (Ist Baugruppe?) then (ja)
+  :Komponenten zuordnen;
+  :Mengen definieren;
+  :Fertigungsschritte;
+else (nein)
+endif
+:Preise & Konditionen;
+:Lagerparameter setzen;
+note right
+  - Mindestbestand
+  - Meldebestand
+  - Maximalbestand
+end note
+stop
+
+|#LightGreen|Lagerverwaltung|
+start
+:Wareneingang;
+fork
+  :Lieferschein scannen;
+  :Artikel identifizieren;
+fork again
+  :Menge prüfen;
+  :Qualitätskontrolle;
+end fork
+:Lagerplatz zuweisen;
+note right
+  ABC-Analyse
+  Umschlaghäufigkeit
+  Chaotische Lagerung
+end note
+:Bestand buchen;
+if (Chargenführung?) then (ja)
+  :Chargennummer erfassen;
+  :MHD eingeben;
+endif
+:Inventur durchführen;
+split
+  :Stichtagsinventur;
+split again
+  :Permanente Inventur;
+split again
+  :Stichprobeninventur;
+end split
+:Differenzen analysieren;
+stop
+
+|#Yellow|Bestellwesen|
+start
+:Bedarfsermittlung;
+note left
+  - Dispositionsverfahren
+  - Verbrauchsorientiert
+  - Bedarfsorientiert
+end note
+:Lieferantenauswahl;
+fork
+  :Preisvergleich;
+fork again
+  :Lieferzeit prüfen;
+fork again
+  :Lieferantenbewertung;
+end fork
+:Anfrage erstellen;
+:Angebote vergleichen;
+:Bestellung anlegen;
+:Bestellung versenden;
+note right
+  - E-Mail
+  - EDI
+  - Portal
+end note
+:AB überwachen;
+if (AB erhalten?) then (ja)
+  :Termin bestätigen;
+else (nein)
+  :Nachfassen;
+endif
+stop
+
+|#Pink|Warenausgang|
+start
+:Kundenauftrag;
+:Verfügbarkeit prüfen;
+if (Verfügbar?) then (ja)
+  :Reservierung;
+else (nein)
+  :Rückstand;
+  :Teillieferung?;
+endif
+:Kommissionierliste;
+:Picken;
+split
+  :Papierlos (Scanner);
+split again
+  :Pick-by-Light;
+split again
+  :Pick-by-Voice;
+end split
+:Verpacken;
+:Versandetiketten;
+note right
+  - Paketdienst
+  - Spedition
+  - Selbstabholer
+end note
+:Lieferschein;
+:Warenausgang buchen;
+stop
+
+|#Orange|Produktion|
+start
+:Produktionsauftrag;
+:Stückliste auflösen;
+:Materialverfügbarkeit;
+if (Material vorhanden?) then (ja)
+  :Reservierung;
+else (nein)
+  :Bestellung auslösen;
+  -[#red]-> Bestellwesen;
+endif
+:Arbeitsplan;
+:Kapazitätsprüfung;
+:Rüsten;
+:Fertigung;
+fork
+  :Zeiterfassung;
+fork again
+  :Mengenrückmeldung;
+fork again
+  :Ausschuss erfassen;
+end fork
+:Qualitätsprüfung;
+:Einlagerung;
+stop
+
+|#Cyan|Retouren|
+start
+:Retourenankündigung;
+:Wareneingang Retoure;
+:Zustand prüfen;
+if (Mangelhaft?) then (ja)
+  split
+    :Reparatur;
+  split again
+    :Verschrottung;
+  split again
+    :Wiederverkauf B-Ware;
+  end split
+else (nein)
+  :Wiedereinlagerung;
+endif
+:Gutschrift/Ersatzlieferung;
+:Ursachenanalyse;
+note left
+  - Statistik
+  - Lieferantenreklamation
+  - Prozessverbesserung
+end note
+stop
+
+@enduml
