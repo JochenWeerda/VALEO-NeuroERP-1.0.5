@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
-VALEO NeuroERP - GEHÄRTETES Warenwirtschafts-SDK
-ROBUSTE FEHLERBEHANDLUNG - NIEMALS ÜBERSCHREIBEN!
-Strikt nach APM Framework Zyklus: VAN → PLAN → CREATE → IMPLEMENT → REFLECT
+Hardened Warenwirtschafts-SDK für VALEO-NeuroERP-2.0.
+Enhanced mit robusten Fehlerbehandlungen und automatischen Recovery-Mechanismen.
+REGEL: NIEMALS CODE ÜBERSCHREIBEN - NUR ERWEITERN!
 """
 
 import asyncio
@@ -12,6 +12,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional
+
+# Stelle sicher, dass das aktuelle Verzeichnis im Python-Pfad ist
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Importiere Error Handler (mit Fallback)
 try:
