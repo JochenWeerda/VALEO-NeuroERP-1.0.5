@@ -31,10 +31,10 @@ import {
   Refresh as RefreshIcon,
   CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
-import { useApi } from '../contexts/ApiContext';
+import { useApi } from '../src/contexts/ApiContext';
 import {
-  ObjectPageHeader
-} from '../components/ui/NeuroFlowComponents';
+    ObjectPageHeader
+} from '../src/components/ui/NeuroFlowComponents';
 
 interface DashboardCard {
   id: string;

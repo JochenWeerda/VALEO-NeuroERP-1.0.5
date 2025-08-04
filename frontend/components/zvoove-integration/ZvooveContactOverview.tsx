@@ -544,4 +544,7 @@ export const ContactOverview: React.FC<ContactOverviewProps> = ({
       </Card>
     </div>
   );
-}; 
+};
+
+// Export für Kompatibilität
+export { ContactOverview as ZvooveContactOverview }; 
