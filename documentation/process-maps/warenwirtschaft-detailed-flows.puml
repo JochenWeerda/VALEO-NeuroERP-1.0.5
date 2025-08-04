@@ -1,0 +1,302 @@
+@startuml Detaillierte_WaWi_Prozesse
+!theme blueprint
+
+page 2x2
+title VALEO NeuroERP 2.0 - Detaillierte Warenwirtschaftsprozesse
+
+' Seite 1: Artikelanlage mit allen Details
+newpage Artikelstammdaten-Workflow
+
+participant "Benutzer" as USER
+participant "Frontend\n(ArticleForm)" as UI
+participant "API\n(articles)" as API
+participant "Validation\nService" as VAL
+participant "Database" as DB
+participant "Cache" as CACHE
+participant "Search\nIndex" as SEARCH
+
+USER -> UI: Neue Artikelanlage
+activate UI
+
+UI -> UI: Formular anzeigen
+note right: - Pflichtfelder markiert\n- Validierung clientseitig
+
+USER -> UI: Grunddaten eingeben
+note left
+  - Bezeichnung
+  - Beschreibung
+  - EAN/GTIN
+  - Kategorie
+  - Einheit
+end note
+
+UI -> VAL: Live-Validierung
+VAL -> VAL: Prüfe EAN-Format
+VAL -> API: Prüfe EAN-Dublette
+API -> DB: SELECT * FROM articles\nWHERE ean = ?
+DB --> API: Ergebnis
+API --> VAL: Eindeutigkeit
+VAL --> UI: Validierungsstatus
+
+USER -> UI: Preise eingeben
+note left
+  - Einkaufspreis
+  - Verkaufspreis
+  - Aktionspreis
+  - Staffelpreise
+end note
+
+UI -> UI: Margin berechnen
+UI -> UI: Preise validieren
+
+USER -> UI: Lagerparameter
+note left
+  - Mindestbestand
+  - Meldebestand
+  - Maximalbestand
+  - Dispositionsart
+end note
+
+USER -> UI: Speichern
+UI -> API: POST /api/v2/articles
+activate API
+
+API -> VAL: Servervalidierung
+VAL -> VAL: Business Rules
+note right
+  - VK > EK
+  - Meldebestand < Max
+  - Pflichtfelder
+end note
+
+API -> DB: BEGIN TRANSACTION
+API -> DB: INSERT INTO articles
+API -> DB: INSERT INTO article_prices
+API -> DB: INSERT INTO article_extended
+
+alt Variantenartikel
+  API -> DB: INSERT INTO article_variants
+  loop Für jede Variante
+    API -> DB: INSERT Variante
+  end
+end
+
+API -> DB: COMMIT
+DB --> API: Artikel-ID
+
+API -> CACHE: Invalidate artikel:*
+API -> SEARCH: Index Artikel
+API -> API: Event: ArticleCreated
+
+API --> UI: 201 Created + Artikel
+deactivate API
+
+UI -> UI: Erfolg anzeigen
+UI -> UI: Zu Detailansicht
+deactivate UI
+
+' Seite 2: Wareneingang
+newpage Wareneingang-Prozess
+
+actor "Lagerist" as LAGER
+participant "Mobile App" as APP
+participant "Scanner" as SCAN
+participant "Backend" as BACK
+participant "WMS" as WMS
+database "DB" as DB2
+
+LAGER -> APP: Wareneingang starten
+APP -> APP: Lieferantenauswahl
+
+LAGER -> SCAN: Lieferschein scannen
+SCAN -> APP: Barcode/QR-Data
+APP -> BACK: GET /api/v2/deliveries/{code}
+BACK -> DB2: Lieferung suchen
+alt Lieferavis vorhanden
+  DB2 --> BACK: Lieferdaten
+  BACK --> APP: Sollpositionen
+  APP -> APP: Soll/Ist Vergleich
+else Keine Avisierung
+  APP -> APP: Manuelle Erfassung
+end
+
+loop Für jede Position
+  LAGER -> SCAN: Artikel scannen
+  SCAN -> APP: EAN/Artikelnummer
+  
+  APP -> BACK: GET /api/v2/articles/by-ean/{ean}
+  BACK --> APP: Artikeldaten
+  
+  APP -> APP: Position anzeigen
+  LAGER -> APP: Menge eingeben
+  
+  alt Chargenartikel
+    LAGER -> APP: Charge erfassen
+    LAGER -> APP: MHD eingeben
+  end
+  
+  APP -> APP: Zwischenspeichern
+end
+
+LAGER -> APP: Qualitätskontrolle
+alt Mängel vorhanden
+  APP -> APP: Reklamation erfassen
+  APP -> APP: Fotos anhängen
+  APP -> BACK: POST /api/v2/complaints
+end
+
+LAGER -> APP: Wareneingang buchen
+APP -> BACK: POST /api/v2/goods-receipts
+activate BACK
+
+BACK -> DB2: BEGIN TRANSACTION
+loop Für jede Position
+  BACK -> DB2: INSERT stock_movements
+  BACK -> DB2: UPDATE articles.stock
+  BACK -> WMS: Lagerplatz anfragen
+  WMS --> BACK: Einlagerungsvorschlag
+  BACK -> DB2: INSERT storage_locations
+end
+BACK -> DB2: COMMIT
+
+BACK -> BACK: Event: GoodsReceived
+BACK --> APP: Buchungsbeleg
+deactivate BACK
+
+APP -> APP: Etiketten drucken
+LAGER -> LAGER: Ware einlagern
+
+' Seite 3: Bestellvorschlag
+newpage Automatischer Bestellvorschlag
+
+participant "Scheduler" as CRON
+participant "Disposition\nService" as DISP
+participant "Analytics" as ANAL
+database "DB" as DB3
+participant "AI Service" as AI
+participant "Notification" as NOTIFY
+
+CRON -> DISP: Tägliche Disposition
+activate DISP
+
+DISP -> DB3: SELECT articles WHERE\nstock <= reorder_point
+DB3 --> DISP: Artikel unter Meldebestand
+
+loop Für jeden Artikel
+  DISP -> ANAL: Verbrauchsanalyse
+  ANAL -> DB3: SELECT stock_movements\nLAST 90 DAYS
+  DB3 --> ANAL: Bewegungsdaten
+  
+  ANAL -> ANAL: Berechne
+  note right
+    - Durchschnittsverbrauch
+    - Saisonalität
+    - Trend
+    - Wiederbeschaffungszeit
+  end note
+  
+  ANAL --> DISP: Bedarfsprognose
+  
+  alt KI-Unterstützung aktiv
+    DISP -> AI: Predict demand
+    AI -> AI: ML-Modell
+    note right
+      - Historische Daten
+      - Saisonmuster
+      - Events/Feiertage
+      - Wetterprognose
+    end note
+    AI --> DISP: Optimierte Menge
+  end
+  
+  DISP -> DISP: Bestellmenge berechnen
+  note left
+    Menge = (Tagesdurchschnitt × 
+    Wiederbeschaffungszeit) + 
+    Sicherheitsbestand - 
+    Aktueller Bestand - 
+    Offene Bestellungen
+  end note
+end
+
+DISP -> DB3: Lieferanten abrufen
+DISP -> DISP: Nach Lieferant gruppieren
+DISP -> DISP: Mindestbestellwerte prüfen
+
+DISP -> DB3: INSERT purchase_proposals
+DISP -> NOTIFY: Bestellvorschläge bereit
+NOTIFY -> NOTIFY: E-Mail an Einkauf
+
+deactivate DISP
+
+' Seite 4: Kommissionierung
+newpage Kommissionier-Workflow
+
+actor "Kommissionierer" as KOMM
+participant "Mobile Device" as MOB
+participant "WMS API" as WAPI
+participant "Route\nOptimizer" as ROUTE
+database "DB" as DB4
+
+KOMM -> MOB: Login + Lager wählen
+MOB -> WAPI: GET /api/v2/picking-lists
+WAPI -> DB4: Offene Aufträge
+DB4 --> WAPI: Auftragsliste
+WAPI --> MOB: Verfügbare Aufträge
+
+KOMM -> MOB: Auftrag auswählen
+MOB -> WAPI: POST /api/v2/picking/start/{order}
+WAPI -> DB4: Auftrag sperren
+WAPI -> DB4: Positionen laden
+
+WAPI -> ROUTE: Optimize route
+ROUTE -> ROUTE: Berechne kürzesten Weg
+note right
+  - Lagerplatztopologie
+  - Artikelgewicht
+  - Gangbreiten
+  - Kommissionierart
+end note
+ROUTE --> WAPI: Optimierte Reihenfolge
+
+WAPI --> MOB: Pickliste mit Route
+MOB -> MOB: Navigation starten
+
+loop Für jede Position
+  MOB -> MOB: Zeige nächsten Lagerplatz
+  MOB -> MOB: Zeige Artikel + Menge
+  
+  KOMM -> KOMM: Zum Lagerplatz gehen
+  KOMM -> MOB: Lagerplatz scannen
+  MOB -> MOB: Platz verifizieren
+  
+  KOMM -> MOB: Artikel scannen
+  MOB -> MOB: Artikel verifizieren
+  
+  alt Seriennummer erforderlich
+    KOMM -> MOB: SN scannen
+    MOB -> WAPI: Validate SN
+  end
+  
+  KOMM -> MOB: Menge bestätigen
+  MOB -> WAPI: POST /api/v2/picking/confirm
+  WAPI -> DB4: UPDATE pick_status
+  
+  alt Artikel nicht verfügbar
+    MOB -> MOB: Fehlmenge erfassen
+    MOB -> WAPI: Report shortage
+    WAPI -> WAPI: Teillieferung
+  end
+end
+
+KOMM -> MOB: Kommissionierung abschließen
+MOB -> WAPI: POST /api/v2/picking/complete
+WAPI -> DB4: UPDATE order_status
+WAPI -> DB4: INSERT shipping_documents
+WAPI -> WAPI: Generate labels
+
+WAPI --> MOB: Versandetiketten
+MOB -> MOB: Drucken
+KOMM -> KOMM: Ware verpacken
+
+@enduml
