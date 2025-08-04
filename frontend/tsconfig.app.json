@@ -29,8 +29,8 @@
     "noImplicitReturns": false,
     "noImplicitThis": false,
 
-    /* Jest Support */
-    "types": ["jest", "node", "@testing-library/jest-dom"]
+    /* Node types for build */
+    "types": ["node"]
   },
   "include": [
     "src/**/*",
