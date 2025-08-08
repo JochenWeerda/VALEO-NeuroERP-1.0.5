@@ -1,0 +1,2507 @@
+{
+  "count": 417,
+  "items": [
+    {
+      "file": "/workspace/extract_db_tables.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeo_neuroerp_enhancement_engine.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/analyze_database_matrix.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/setup.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/van_analysis.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/server_fastmcp_mongodb.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/warenwirtschaft_sdk.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/van_navigation.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/error_handling_framework.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/hardened_warenwirtschaft_sdk.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/pipeline_integration.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/check_plan_result.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/activate_implementation_mode.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/enhanced_dashboard.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/create_solution_design.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/store_structure.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/init_dashboard.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/run_create_mode.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/load_backend_to_mongodb.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/streamlit_dashboard.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/activate_apm_van_phase.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/handover_generator.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/store_rag.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/implement_all.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/implementation_mode_demo.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/simple_migration.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/apm_workflow_demo.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/check_project_plan.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/implement_landhandel_modules.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/dashboard_prompt_module.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/cron_cycle_updater.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/streamlit_app_mcp_integration.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/activate_create_mode.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/launch_cycle.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/load_scripts_to_mongodb.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/create_mode_demo.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/check_mongodb.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/check_code_artifacts.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/update_todos.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/plan_mode_demo.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/activate_van_phase.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/update_todos_new.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/fix_dependencies.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/genxais_prompt_generator_simple.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/performance_profiler.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/migrate_to_enhanced_cache.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/genxais_prompt_generator.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/templates/web_app.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/agents/parallel_improvement_agent.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/examples/mongodb_pipeline_example.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/simple_http_finance.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/mcp_supabase_server.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/start_erp_system.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/monitor_dashboard.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/main.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/minimal_server_ip_enabled.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/tools/check_updates.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/demo_token_optimization.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/apm_langgraph_example.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/warenwirtschaft_sdk.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/run_parallel_agents.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/mobile/src/screens/TagesprotokollScreen.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/scripts/store_plan_phase_prompt.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/scripts/store_implementation_phase_prompt.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/scripts/store_create_phase_prompt.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/scripts/store_handover.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/scripts/store_reflektion_phase_prompt.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/tools/valero-codegraph/src/agents/TypeSuggestor.ts",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/MitarbeiterFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/PersonalManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/WarehouseManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/CustomerManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/Dashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ReportingAnalytics.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/FinanceManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/SalesManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/AssetManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ApiCommunicationDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/Table.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/KundenFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/Layout.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/AnalyticsPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/TrustIndicator.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/PersonalizedDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/LieferantenFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/AIAnalyticsDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProjectManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProjektFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/DocumentManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProduktFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/FinanzFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/TrustAwareDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/QualityManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/TransactionsPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/PurchasingManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/SapFioriDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/AssetManagement_MCP_NEW.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/InventoryPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/WarenwirtschaftFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/DocumentsPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProductionManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/LandingPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/BelegeErstellung.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/NeuroFlowDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/pages/IntegrationPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/public/sw.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/lodash-BQSKQrpq.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/antd-core-Bn6Stp_u.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/services-B0UdZUHq.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/components-Dj2tQkqX.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/streckengeschaeft-CkKAL3kB.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/neuroflow-DF58GYou.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/pos-system-D3uS3wb4.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/antd-icons-ZoMdwZyJ.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/auth-Bv6CYr1e.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/pages-DLIdYrrg.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/validation-CXIZp7Zb.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/e-invoicing-DCH02efg.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/react-vendor-C09FwfLq.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/other-vendor-OscdKVAu.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/axios-BDGNVNQ7.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/mui-material-B4Zm8Ctl.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/PreloadRouter.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/Router.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/Table.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/Layout.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/TrustIndicator.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/Navigation.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/UserManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/MitarbeiterFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/FormDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/PersonalManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/DatabaseIntegrationDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/WarehouseManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/CustomerManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/CRMPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/Dashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ReportingAnalytics.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/FinanceManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/BundleAnalysisPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/SalesManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/AssetManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ApiCommunicationDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ERPDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/KundenFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/DokumentePage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/StreckengeschaeftPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/AnalyticsPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/PersonalizedDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/LieferantenFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/AIAnalyticsDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProjectManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProjektFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/DocumentManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/CentralFormTableDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProduktFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/FinanzFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/TrustAwareDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/QualityManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/TransactionsPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/PurchasingManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/SapFioriDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/AssetManagement_MCP_NEW.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/IntegrationPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/InventoryPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/WarenwirtschaftFormular.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/DocumentsPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/CompleteFormDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProductionManagement.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/LandingPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/BelegeErstellung.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/NeuroFlowDemo.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/hooks/usePreload.ts",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/hooks/useMCPForm.ts",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/hooks/useOffline.ts",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/examples/DualMCPExample.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/utils/cursorComponentGenerator.ts",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/crm/CrmDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/fibu/FibuDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/lager/LagerDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/bi/BiDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/warenwirtschaft/components/L3App.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/warenwirtschaft/components/Kassensystem.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/features/warenwirtschaft/components/EdiSchnittstellen.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/POS/DailyReportPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/POS/LakasirFeatures.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/POS/POSPage.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/ai/AIBarcodeDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/ai/HorizonBetaChat.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/ai/AIVoucherDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/ai/AIInventoryDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/auth/LoginForm.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/e-invoicing/EInvoicingList.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/CRMRibbon.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/CRMContextMenu.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/CRMMainView.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/ui/ComponentLibrary.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/admin/FormRegistryTable.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/forms/OptimizedSimpleForm.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/forms/FormManager.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowDashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowAutocomplete.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/tabs/CustomerGeneralTab.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/tabs/CustomerContactsTab.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/tabs/CustomerWhatsAppHistoryTab.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/crm/reporting/CRMReportingAnalytics.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ui/ComponentLibrary.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/components/erp/PurchaseOrder.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/components/zvoove-integration/OrderForm.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/models/search_history.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/db/init_landhandel_data.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/qs_futtermittel.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/metrics.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/scanner.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/autocomplete.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/produktion.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/production_api.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/crm_routes.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/users_api.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/chargen_lager.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/report_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/media_processing_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/data_analysis_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/transaction_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/email_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/periodic_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/data_import_tasks.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/search/api.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/ecommerce_service.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/document_service.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/apm_framework/models.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/apm_framework/rag_service_server.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/utils/module_optimizer.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/app/main.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/app/api/v1/endpoints/artikel_stammdaten.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/alembic/versions/e77c8a185a46_migration_20250522_084428.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/edge_resilience/examples/example_usage.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/migrations/versions/add_notification_system.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/report_tasks/excel_exports.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/report_tasks/scheduled_reports.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/report_tasks/pdf_reports.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/report_tasks/data_visualization.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/v1/landhandel.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/modules/artikel-stammdaten/src/index.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/modules/finance-core/src/index.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/finance-microservice/src/core/cache.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/finance-microservice/src/core/logging.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/finance-microservice/src/api/v1/llm.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/api-gateway/src/middleware/auth.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/inventory/src/server.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/finance/src/server.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/users/src/server.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/crm/src/server.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/src/components/Dashboard.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/src/components/ChargenBerichte.js",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/src/components/SimpleIconComponent.jsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/src/components/SimpleDashboard.jsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/src/icons/IconSet.tsx",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/simple_finance_server.py",
+      "issue": "Datei sehr lang (920 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/productive_genxais_cycle.py",
+      "issue": "Datei sehr lang (901 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/dashboard_prompt_module.py",
+      "issue": "Datei sehr lang (1162 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/streamlit_app_mcp_integration.py",
+      "issue": "Datei sehr lang (1041 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/templates/web_app.py",
+      "issue": "Datei sehr lang (880 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/agents/parallel_improvement_agent.py",
+      "issue": "Datei sehr lang (2474 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/observer_service.py",
+      "issue": "Datei sehr lang (815 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/WarehouseManagement.tsx",
+      "issue": "Datei sehr lang (916 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/CustomerManagement.tsx",
+      "issue": "Datei sehr lang (1477 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ReportingAnalytics.tsx",
+      "issue": "Datei sehr lang (1187 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/FinanceManagement.tsx",
+      "issue": "Datei sehr lang (965 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/SalesManagement.tsx",
+      "issue": "Datei sehr lang (809 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/AssetManagement.tsx",
+      "issue": "Datei sehr lang (1133 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProjectManagement.tsx",
+      "issue": "Datei sehr lang (1031 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProjektFormular.tsx",
+      "issue": "Datei sehr lang (1045 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/DocumentManagement.tsx",
+      "issue": "Datei sehr lang (1502 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProduktFormular.tsx",
+      "issue": "Datei sehr lang (854 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/FinanzFormular.tsx",
+      "issue": "Datei sehr lang (935 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/QualityManagement.tsx",
+      "issue": "Datei sehr lang (974 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/PurchasingManagement.tsx",
+      "issue": "Datei sehr lang (866 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/AssetManagement_MCP_NEW.tsx",
+      "issue": "Datei sehr lang (1234 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/WarenwirtschaftFormular.tsx",
+      "issue": "Datei sehr lang (1038 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/ProductionManagement.tsx",
+      "issue": "Datei sehr lang (980 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/LandingPage.tsx",
+      "issue": "Datei sehr lang (1324 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/BelegeErstellung.tsx",
+      "issue": "Datei sehr lang (831 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/store/erpStore.ts",
+      "issue": "Datei sehr lang (1184 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/antd-core-Bn6Stp_u.js",
+      "issue": "Datei sehr lang (28338 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/components-Dj2tQkqX.js",
+      "issue": "Datei sehr lang (1725 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/streckengeschaeft-CkKAL3kB.js",
+      "issue": "Datei sehr lang (2429 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/neuroflow-DF58GYou.js",
+      "issue": "Datei sehr lang (3226 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/pos-system-D3uS3wb4.js",
+      "issue": "Datei sehr lang (839 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/validation-CXIZp7Zb.js",
+      "issue": "Datei sehr lang (5031 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/e-invoicing-DCH02efg.js",
+      "issue": "Datei sehr lang (1123 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/react-vendor-C09FwfLq.js",
+      "issue": "Datei sehr lang (10403 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/other-vendor-OscdKVAu.js",
+      "issue": "Datei sehr lang (41423 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/axios-BDGNVNQ7.js",
+      "issue": "Datei sehr lang (2494 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/mui-material-B4Zm8Ctl.js",
+      "issue": "Datei sehr lang (14327 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/types/forms.ts",
+      "issue": "Datei sehr lang (2617 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/types/crm.ts",
+      "issue": "Datei sehr lang (2920 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/UserManagement.tsx",
+      "issue": "Datei sehr lang (820 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/WarehouseManagement.tsx",
+      "issue": "Datei sehr lang (916 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/CustomerManagement.tsx",
+      "issue": "Datei sehr lang (1490 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ReportingAnalytics.tsx",
+      "issue": "Datei sehr lang (1187 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/FinanceManagement.tsx",
+      "issue": "Datei sehr lang (965 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/SalesManagement.tsx",
+      "issue": "Datei sehr lang (809 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/AssetManagement.tsx",
+      "issue": "Datei sehr lang (1133 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProjectManagement.tsx",
+      "issue": "Datei sehr lang (1031 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProjektFormular.tsx",
+      "issue": "Datei sehr lang (1045 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/DocumentManagement.tsx",
+      "issue": "Datei sehr lang (1502 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProduktFormular.tsx",
+      "issue": "Datei sehr lang (854 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/FinanzFormular.tsx",
+      "issue": "Datei sehr lang (935 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/QualityManagement.tsx",
+      "issue": "Datei sehr lang (974 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/PurchasingManagement.tsx",
+      "issue": "Datei sehr lang (866 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/AssetManagement_MCP_NEW.tsx",
+      "issue": "Datei sehr lang (1312 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/WarenwirtschaftFormular.tsx",
+      "issue": "Datei sehr lang (1038 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/CompleteFormDemo.tsx",
+      "issue": "Datei sehr lang (813 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/ProductionManagement.tsx",
+      "issue": "Datei sehr lang (980 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/LandingPage.tsx",
+      "issue": "Datei sehr lang (1324 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/pages/BelegeErstellung.tsx",
+      "issue": "Datei sehr lang (831 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/services/ExtendedFormRegistry.ts",
+      "issue": "Datei sehr lang (854 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/services/FormDataService.ts",
+      "issue": "Datei sehr lang (809 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/services/FormRegistryService.ts",
+      "issue": "Datei sehr lang (3740 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/services/MissingFormsGenerator.ts",
+      "issue": "Datei sehr lang (1237 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/utils/cursorComponentGenerator.ts",
+      "issue": "Datei sehr lang (814 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/utils/dualMCPClient.ts",
+      "issue": "Datei sehr lang (856 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/erp/PurchaseOrder.tsx",
+      "issue": "Datei sehr lang (825 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/streckengeschaeft/StreckengeschaeftForm.tsx",
+      "issue": "Datei sehr lang (1375 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowArticleForm.tsx",
+      "issue": "Datei sehr lang (1118 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowChargenverwaltung.tsx",
+      "issue": "Datei sehr lang (1288 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowDashboard.tsx",
+      "issue": "Datei sehr lang (942 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowCustomerForm.tsx",
+      "issue": "Datei sehr lang (1050 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/components/neuroflow/NeuroFlowSupplierForm.tsx",
+      "issue": "Datei sehr lang (1229 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/components/erp/PurchaseOrder.tsx",
+      "issue": "Datei sehr lang (962 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/qs_futtermittel.py",
+      "issue": "Datei sehr lang (1103 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/database_mapping.py",
+      "issue": "Datei sehr lang (1031 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/tasks/periodic_tasks.py",
+      "issue": "Datei sehr lang (1019 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/modules/ai_voucher_optimization.py",
+      "issue": "Datei sehr lang (979 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/emergency_service.py",
+      "issue": "Datei sehr lang (818 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/backup-manager.js",
+      "issue": "Datei sehr lang (32367 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/real-code-fixer.js",
+      "issue": "Datei sehr lang (1155 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/version-manager.js",
+      "issue": "Datei sehr lang (929 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/swarm-coordinator.ts",
+      "issue": "Datei sehr lang (18983 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/inventory/src/server.js",
+      "issue": "Datei sehr lang (21078 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/inventory/src/services/database.js",
+      "issue": "Datei sehr lang (939 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/finance/src/server.js",
+      "issue": "Datei sehr lang (22018 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/finance/src/services/database.js",
+      "issue": "Datei sehr lang (855 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/users/src/server.js",
+      "issue": "Datei sehr lang (28048 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/users/src/services/database.js",
+      "issue": "Datei sehr lang (944 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/crm/src/server.js",
+      "issue": "Datei sehr lang (20351 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/crm/src/services/database.js",
+      "issue": "Datei sehr lang (6056 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/coordination/swarm-coordinator.js",
+      "issue": "Datei sehr lang (19860 Zeilen). Aufteilen erwägen.",
+      "priority": 2,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/error_handling_framework.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/initialize_memory_bank.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/streamlit_dashboard.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/productive_genxais_cycle.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/dashboard_prompt_module.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/update_todos.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/scripts/update_todos_new.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/agents/task_handlers.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/agents/__init__.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/observer_service.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/langgraph_graphiti_integration.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/web_interface.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/system_controller.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/cli.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/monitoring/system_monitor.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/agents/serena_refactor.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/agents/quality_analyst.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/linkup_mcp/tools/implementation_tool.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/tools/valero-codegraph/src/agents/QualityAnalyst.ts",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/TransactionsPage.tsx",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/InventoryPage.tsx",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/legacy/DocumentsPage.tsx",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/antd-core-Bn6Stp_u.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/validation-CXIZp7Zb.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/other-vendor-OscdKVAu.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/dist-analysis/js/mui-material-B4Zm8Ctl.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/src/store/userStore.ts",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/frontend/components/erp/PurchaseOrder.tsx",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/core/van_phase_manager.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/search/performance.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/excel_export_service.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/failover_monitor.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/auth_service.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/api_gateway.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/services/crm_service.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/apm_framework/create_mode.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/utils/microservice_register.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/app/api/odata_router.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/backend/api/v1/compliance.py",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/swarm-develop.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/swarm-init.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/backup-manager.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/code-analyzer.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/swarm-monitor.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/real-code-fixer.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/swarm-autonomous.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/version-manager.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/scripts/swarm-start.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/swarm-coordinator.ts",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/quality-controller.ts",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/decision-engine.ts",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/resource-manager.ts",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/api-gateway/src/server.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/api-gateway/src/services/logger.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/inventory/src/server.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/inventory/src/services/database.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/finance/src/server.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/finance/src/services/database.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/users/src/server.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/users/src/services/database.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/crm/scripts/setup-database.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/crm/src/server.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/microservices/crm/src/services/database.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/coordination/decision-engine.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/coordination/quality-controller.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/coordination/resource-manager.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
+      "file": "/workspace/valeoflow-enterprise/coordination/coordination/swarm-coordinator.js",
+      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
+      "priority": 3,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    }
+  ]
+}

@@ -7,12 +7,15 @@ from mcp.server.fastmcp import FastMCP
 from pymongo import MongoClient
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from .memory.rag_manager import RAGMemoryManager
+from pathlib import Path
 
 load_dotenv()
 
 mcp = FastMCP('linkup-server')
 client = LinkupClient()
 rag_workflow = RAGWorkflow()
+rag_memory = RAGMemoryManager()
 
 # MongoDB-Verbindung herstellen
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/")
@@ -87,6 +90,19 @@ async def rag_query(question: str, user_id: Optional[str] = None) -> str:
     rag_history_collection.insert_one(rag_history_item)
     
     return str(response)
+
+@mcp.tool()
+def build_rag_index(paths: list[str] | None = None) -> dict:
+    """Baut oder erweitert den RAG-Index aus den gegebenen Pfaden."""
+    if not paths:
+        paths = [str(Path.cwd())]
+    rag_memory.build_index(paths)
+    return rag_memory.export_manifest()
+
+@mcp.tool()
+def rag_query_local(question: str, top_k: int = 6) -> list[dict]:
+    """Fragt den lokalen RAG-Speicher ab und liefert Top-K Treffer mit Scores."""
+    return rag_memory.query(question, top_k=top_k)
 
 @mcp.tool()
 def get_search_history(user_id: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
