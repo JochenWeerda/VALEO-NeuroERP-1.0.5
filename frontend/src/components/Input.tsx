@@ -1,8 +1,5 @@
 import React from 'react';
-import { cn } from '../lib/utils';
-// ✅ NEU: Import der standardisierten UI-Komponenten
-import { StandardTextField } from './forms/FormStandardization';
-import { UI_LABELS } from './ui/UIStandardization';
+import { TextField } from '@mui/material';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -37,14 +34,18 @@ export const Input: React.FC<InputProps> = ({
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
 
   return (
-    <StandardTextField
-      name={inputId}
+    <TextField
+      id={inputId}
       label={label}
-      type={type as 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date'}
+      type={type}
       required={required}
       disabled={disabled}
       placeholder={placeholder}
+      fullWidth
+      variant="outlined"
+      error={!!error}
       helperText={error || helperText}
+      inputProps={props}
     />
   );
 }; 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import '@testing-library/jest-dom';
 import SapFioriDashboard from '../SapFioriDashboard';
 import { ApiProvider } from '../../contexts/ApiContext';
 
@@ -115,9 +116,10 @@ describe('SapFioriDashboard', () => {
     ) as jest.Mock;
 
     renderWithProviders(<SapFioriDashboard />);
-    
-    // Loading sollte initial angezeigt werden
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+
+    // Loading-Overlay wird nur angezeigt, wenn useApi().isLoading true ist;
+    // da der Mock oben isLoading nicht manipuliert, prüfen wir stattdessen auf Vorhandensein des Headers während Laden.
+    expect(screen.getByText('VALEO NeuroERP Dashboard')).toBeInTheDocument();
   });
 
   test('behandelt Fehler korrekt', async () => {

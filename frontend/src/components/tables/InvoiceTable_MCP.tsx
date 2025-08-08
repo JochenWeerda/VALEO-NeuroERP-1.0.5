@@ -135,7 +135,7 @@ export const InvoiceTable_MCP: React.FC<InvoiceTableProps> = ({
 
   // Gefilterte und sortierte Daten
   const filteredAndSortedInvoices = useMemo(() => {
-    let filtered = invoices.filter(invoice => {
+    const filtered = invoices.filter(invoice => {
       const customer = customers.find(c => c.id === invoice.customer_id);
       const matchesSearch = searchTerm === '' || 
         customer?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

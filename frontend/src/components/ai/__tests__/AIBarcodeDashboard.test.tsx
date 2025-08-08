@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import AIBarcodeDashboard from '../AIBarcodeDashboard';
 
@@ -13,6 +14,19 @@ const testTheme = createTheme();
 
 // Mock für Offline-Hooks
 jest.mock('../../../hooks/useOffline', () => ({
+  useOffline: () => ({
+    isOnline: true,
+    isOffline: false,
+    pendingRequests: [],
+    syncInProgress: false,
+    lastSyncTime: Date.now(),
+    addPendingRequest: jest.fn(),
+    removePendingRequest: jest.fn(),
+    retryPendingRequest: jest.fn(),
+    retryAllPendingRequests: jest.fn(),
+    clearPendingRequests: jest.fn(),
+    syncPendingRequests: jest.fn(),
+  }),
   useOfflineStatus: () => ({
     isOnline: true,
     pendingRequests: 0,

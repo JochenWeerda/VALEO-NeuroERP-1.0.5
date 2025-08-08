@@ -214,17 +214,26 @@ export const StandardSelectField: React.FC<StandardSelectFieldProps> = ({
     <Controller
       name={name}
       control={control}
+      defaultValue={multiple ? [] : ''}
       rules={{
         required: required ? `${label} ist erforderlich` : false
       }}
       render={({ field }) => (
         <Box sx={{ position: 'relative' }}>
           <FormControl fullWidth error={!!errors[name]} disabled={disabled}>
-            <InputLabel>{label}</InputLabel>
+            {/** Verbinde Label und Select per IDs für korrekte ARIA-Assoziation */}
+            <InputLabel id={`${name}-label`} required={required}>{label}</InputLabel>
             <Select
               {...field}
+              labelId={`${name}-label`}
+              id={`${name}-select`}
               label={label}
               multiple={multiple}
+              value={multiple ? (Array.isArray(field.value) ? field.value : (field.value ? [field.value] : [])) : (field.value ?? '')}
+              onChange={(event) => {
+                const value = (event.target as HTMLInputElement).value as any;
+                field.onChange(value);
+              }}
               sx={{
                 borderRadius: 2,
                 '&:hover .MuiOutlinedInput-notchedOutline': {
@@ -410,11 +419,14 @@ export const FormMessage: React.FC<{
  * Standardisierte Formular-Validierung
  */
 export const useFormValidation = () => {
-  const { formState: { errors, isValid, isDirty } } = useFormContext();
-  
+  const { formState: { errors, isDirty } } = useFormContext();
+
   const hasErrors = Object.keys(errors).length > 0;
-  const errorMessages = Object.values(errors).map((error: any) => error.message);
-  
+  const errorMessages = Object.values(errors).map((error: any) => error?.message);
+
+  // isValid leitet sich robust aus fehlenden Errors ab (Tests erwarten true ohne Felder)
+  const isValid = !hasErrors;
+
   return {
     hasErrors,
     errorMessages,

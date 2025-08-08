@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { OrderForm } from '../ZvooveOrderForm';
@@ -21,26 +22,11 @@ jest.mock('../../../services/zvooveApi', () => ({
   }
 }));
 
-// Ant Design Konfiguration für Tests
-const antdConfig = {
-  locale: {
-    locale: 'de_DE',
-    Table: {
-      filterTitle: 'Filter',
-      filterConfirm: 'OK',
-      filterReset: 'Zurücksetzen',
-      emptyText: 'Keine Daten',
-    },
-  },
-};
-
-// Render-Helper mit allen Providern
+// Render-Helper mit Theme
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
     <ThemeProvider theme={theme}>
-      {/* <ConfigProvider {...antdConfig}> */}
-        {component}
-      {/* </ConfigProvider> */}
+      {component}
     </ThemeProvider>
   );
 };
@@ -60,7 +46,7 @@ describe('Zvoove Integration Tests', () => {
     expect(typeof zvooveApiService.getSystemStatus).toBe('function');
   });
 
-  test('✅ OrderForm rendert korrekt', () => {
+  test('✅ OrderForm rendert Header', () => {
     renderWithProviders(
       <OrderForm
         mode="order"
@@ -68,11 +54,12 @@ describe('Zvoove Integration Tests', () => {
         onCancel={() => {}}
       />
     );
-
-    expect(screen.getByText(/Auftragserfassung/i)).toBeInTheDocument();
+    // Header kann durch Typographie-Layout getrennt sein
+    const heading = screen.getByRole('heading', { name: /Auftrag\s*erfassen/i });
+    expect(heading).toBeInTheDocument();
   });
 
-  test('✅ ContactOverview rendert korrekt', () => {
+  test('✅ ContactOverview rendert Tabelle', () => {
     const mockContacts = [];
     const mockFilters = {
       contactType: 'all' as const,
@@ -94,7 +81,7 @@ describe('Zvoove Integration Tests', () => {
         onFilterChange={() => {}}
       />
     );
-
-    expect(screen.getByText(/Kontakte/i)).toBeInTheDocument();
+    // Prüfe auf Tabellen-Spalten der Kontaktübersicht
+    expect(screen.getByRole('columnheader', { name: 'Kontakt-Nr.' })).toBeInTheDocument();
   });
 }); 

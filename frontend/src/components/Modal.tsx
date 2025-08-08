@@ -76,6 +76,9 @@ export const Modal: React.FC<ModalProps> = ({
           boxShadow: 24
         }
       }}
+      slotProps={{
+        backdrop: { 'data-testid': 'modal-backdrop' }
+      } as any}
     >
       {title && (
         <DialogTitle sx={{

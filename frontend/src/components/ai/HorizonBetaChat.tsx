@@ -184,10 +184,14 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
 
       let fullResponse = '';
       
-      while (true) {
+      // Stream lesen, bis der Reader signalisiert, dass der Stream zu Ende ist
+      let doneReading = false;
+      while (!doneReading) {
         const { done, value } = await reader.read();
-        
-        if (done) break;
+        if (done) {
+          doneReading = true;
+          break;
+        }
         
         const chunk = new TextDecoder().decode(value);
         const lines = chunk.split('\n');

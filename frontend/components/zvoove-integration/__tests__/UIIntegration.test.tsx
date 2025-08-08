@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { OrderForm } from '../ZvooveOrderForm';
@@ -50,11 +51,12 @@ describe('Zvoove UI Integration Tests', () => {
         />
       </ThemeProvider>
     );
-
-    expect(screen.getByText(/Erfassung/i)).toBeInTheDocument();
+    // Es gibt mehrere Vorkommen von "Erfassung" (Chip/Label). Wähle Tab-Rolle.
+    const tab = screen.getAllByRole('tab').find(el => /Erfassung/i.test(el.textContent || ''));
+    expect(tab).toBeTruthy();
   });
 
-  test('✅ OrderForm rendert korrekt', async () => {
+  test('✅ OrderForm rendert Header', async () => {
     render(
       <ThemeProvider theme={theme}>
         <OrderForm 
@@ -64,11 +66,11 @@ describe('Zvoove UI Integration Tests', () => {
         />
       </ThemeProvider>
     );
-
-    expect(screen.getByText(/Auftragserfassung/i)).toBeInTheDocument();
+    const heading = screen.getByRole('heading', { name: /Auftrag\s*erfassen/i });
+    expect(heading).toBeInTheDocument();
   });
 
-  test('✅ ContactOverview rendert korrekt', async () => {
+  test('✅ ContactOverview rendert Tabelle', async () => {
     const mockContacts = [];
     const mockFilters = {
       contactType: 'all' as const,
@@ -92,7 +94,6 @@ describe('Zvoove UI Integration Tests', () => {
         />
       </ThemeProvider>
     );
-
-    expect(screen.getByText(/Kontakte/i)).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Kontakt-Nr.' })).toBeInTheDocument();
   });
 }); 

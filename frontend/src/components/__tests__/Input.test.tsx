@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
+import '@testing-library/jest-dom';
 import { createTheme } from '@mui/material/styles';
 import { Input } from '../Input';
 
@@ -19,7 +20,7 @@ const renderWithTheme = (component: React.ReactElement) => {
 describe('Input Component', () => {
   it('rendert Input mit Label korrekt', () => {
     renderWithTheme(<Input label="Test Label" />);
-    expect(screen.getByText('Test Label')).toBeInTheDocument();
+    expect(screen.getByLabelText('Test Label')).toBeInTheDocument();
   });
 
   it('rendert Input ohne Label korrekt', () => {
@@ -64,9 +65,9 @@ describe('Input Component', () => {
   });
 
   it('wendet korrekte CSS-Klassen an', () => {
-    const { container } = renderWithTheme(<Input className="custom-class" />);
-    const input = container.querySelector('input');
-    expect(input).toHaveClass('custom-class');
+    const { container } = renderWithTheme(<Input label="X" className="custom-class" />);
+    const wrapper = container.querySelector('.MuiFormControl-root');
+    expect(wrapper).toHaveClass('custom-class');
   });
 
   it('behält Input-Wert bei', () => {

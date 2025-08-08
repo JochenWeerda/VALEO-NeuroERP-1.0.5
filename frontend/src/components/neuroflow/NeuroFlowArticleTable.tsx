@@ -251,7 +251,7 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
 
   // Filter and Sort Logic
   const filteredAndSortedArticles = useMemo(() => {
-    let filtered = articles.filter((article) => {
+    const filtered = articles.filter((article) => {
       const matchesSearch = 
         article.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         article.article_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
