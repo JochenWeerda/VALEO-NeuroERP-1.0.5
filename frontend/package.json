@@ -10,7 +10,7 @@
     "build:prod": "tsc -b && vite build --mode production",
     "typecheck": "tsc --noEmit --pretty false",
     "typecheck:strict": "tsc --noEmit --strict --pretty false",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "analyze": "npm run build:analysis && start dist/bundle-analysis.html",
     "test": "jest",
