@@ -281,11 +281,14 @@ export function useCriticalPreload(
   const [criticalLoaded, setCriticalLoaded] = useState(false);
   const [nonCriticalLoaded, setNonCriticalLoaded] = useState(false);
 
+  // Hooks müssen top-level aufgerufen werden
+  const criticalPreload = usePreload(criticalItems, { priority: 'high' });
+  const nonCriticalPreload = usePreload(nonCriticalItems, { priority: 'low' });
+
   const preloadCritical = useCallback(async () => {
-    const criticalPreload = usePreload(criticalItems, { priority: 'high' });
     await criticalPreload.preload();
     setCriticalLoaded(true);
-  }, [criticalItems]);
+  }, [criticalPreload]);
 
   const preloadNonCritical = useCallback(async () => {
     if (nonCriticalItems.length === 0) {
@@ -293,10 +296,9 @@ export function useCriticalPreload(
       return;
     }
 
-    const nonCriticalPreload = usePreload(nonCriticalItems, { priority: 'low' });
     await nonCriticalPreload.preload();
     setNonCriticalLoaded(true);
-  }, [nonCriticalItems]);
+  }, [nonCriticalItems, nonCriticalPreload]);
 
   const preloadAll = useCallback(async () => {
     await preloadCritical();
