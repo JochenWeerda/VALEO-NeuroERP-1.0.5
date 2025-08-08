@@ -52,6 +52,7 @@ export interface RefactorSuggestion {
   title: string;
   description: string;
   impact: 'low' | 'medium' | 'high';
+  component?: string;
 }
 
 export interface RagVector {

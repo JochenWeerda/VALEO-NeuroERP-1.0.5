@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
 import fse from 'fs-extra';
-import { artifactsDir, ignoreGlobs, scanRoots } from '../config.js';
+import { artifactsDir, ignoreGlobs, scanRoots, writeJsonArtifacts } from '../config.js';
 import { CodeFile, CodeMap, CodeChunk } from '../types.js';
 
 const TEXT_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx', '.json', '.md', '.txt', '.yml', '.yaml', '.css', '.scss'];
@@ -46,8 +46,28 @@ export async function scanRepo(): Promise<CodeMap> {
     chunks,
   };
 
-  await fse.ensureDir(artifactsDir);
-  fs.writeFileSync(path.join(artifactsDir, 'code-map.json'), JSON.stringify(codeMap, null, 2), 'utf8');
+  // Für Artefakt: Speicher-schonende Variante ohne vollständige Inhalte
+  const codeMapForDisk = {
+    scannedAt: codeMap.scannedAt,
+    rootDir: codeMap.rootDir,
+    files: files.map(f => ({
+      path: f.path,
+      language: f.language,
+      sizeBytes: f.sizeBytes,
+      imports: f.imports,
+    })),
+    chunks: chunks.map(c => ({
+      id: c.id,
+      filePath: c.filePath,
+      startLine: c.startLine,
+      endLine: c.endLine,
+      // Preview weglassen, um Artefakte klein zu halten – Index enthält Inhalt
+      textPreview: undefined,
+      textLength: c.text.length,
+    })),
+  };
+
+  await writeJsonArtifacts('code-map.json', codeMapForDisk);
   return codeMap;
 }
 

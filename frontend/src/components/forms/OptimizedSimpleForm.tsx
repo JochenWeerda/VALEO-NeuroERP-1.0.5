@@ -44,9 +44,15 @@ import {
 import { useTheme } from '@mui/material/styles';
 // import { useHotkeys } from 'react-hotkeys-hook'; // Entfernt - nicht verfügbar
 
-// Einfache Keyboard-Event-Behandlung
-const useKeyboardShortcuts = (onSave: (data?: any) => void, onCancel: () => void) => {
+// Einfache Keyboard-Event-Behandlung (immer aufrufen, intern per enabled steuern)
+const useKeyboardShortcuts = (
+  onSave: (data?: any) => void,
+  onCancel: () => void,
+  enabled: boolean
+) => {
   React.useEffect(() => {
+    if (!enabled) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey) {
         switch (event.key) {
@@ -64,7 +70,7 @@ const useKeyboardShortcuts = (onSave: (data?: any) => void, onCancel: () => void
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onSave, onCancel]);
+  }, [enabled, onSave, onCancel]);
 };
 
 // Erweiterte TypeScript-Interfaces für bessere Typsicherheit
@@ -352,10 +358,12 @@ export const OptimizedSimpleForm: React.FC<OptimizedSimpleFormProps> = React.mem
     };
   }, [formValues, autoSave, isDirty, isValid, autoSaveInterval, onAutoSave, getValues]);
 
-  // Keyboard-Shortcuts für bessere Benutzerfreundlichkeit
-  if (keyboardShortcuts) {
-    useKeyboardShortcuts(() => handleSubmit(onSubmit)(), onCancel || (() => {}));
-  }
+  // Keyboard-Shortcuts für bessere Benutzerfreundlichkeit (Hook immer aufrufen)
+  useKeyboardShortcuts(
+    () => handleSubmit(onSubmit)(),
+    onCancel || (() => {}),
+    Boolean(keyboardShortcuts)
+  );
 
   useEffect(() => {
     const handleTab = (event: KeyboardEvent) => {

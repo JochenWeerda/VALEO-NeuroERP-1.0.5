@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import fse from 'fs-extra';
 import { CodeMap, RagIndex, RagVector } from '../types.js';
-import { embeddingDim, indexDir } from '../config.js';
+import { embeddingDim, writeIndexFile } from '../config.js';
 
 export async function buildIndex(codeMap: CodeMap): Promise<RagIndex> {
   const vectors: RagVector[] = codeMap.chunks.map(chunk => ({
@@ -11,8 +11,7 @@ export async function buildIndex(codeMap: CodeMap): Promise<RagIndex> {
     meta: { filePath: chunk.filePath, startLine: chunk.startLine, endLine: chunk.endLine },
   }));
   const index: RagIndex = { builtAt: new Date().toISOString(), dim: embeddingDim, vectors };
-  await fse.ensureDir(indexDir);
-  fs.writeFileSync(path.join(indexDir, 'index.json'), JSON.stringify(index, null, 2), 'utf8');
+  await writeIndexFile('index.json', index);
   return index;
 }
 

@@ -65,9 +65,55 @@ jobs:
       - name: Run pipeline
         working-directory: tools/valero-codegraph
         run: npm run pipeline
+      - name: Codemod Dry-Run (src/pages)
+        if: github.event_name == 'pull_request'
+        working-directory: tools/valero-codegraph
+        run: npm run codemod:dryrun
+
+      - name: Comment PR with type suggestions (Top 100)
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: type-suggestions
+          path: tools/valero-codegraph/storage/artifacts/type-suggestions.md
+
+      - name: Generate plan summary (Top 50)
+        id: codegraph_summary
+        working-directory: tools/valero-codegraph
+        run: |
+          node -e "const fs=require('fs');
+          const sug=JSON.parse(fs.readFileSync('storage/artifacts/refactor-suggestions.json','utf8')).slice(0,50);
+          const fin=JSON.parse(fs.readFileSync('storage/artifacts/quality-findings.json','utf8')).slice(0,50);
+          function mdList(title,arr,fmt){
+            let s=`### ${title}\n`; arr.forEach((x,i)=>{s+=`- ${i+1}. ${fmt(x)}\n`}); return s;}
+          const md=mdList('Top 50 Refactor-Vorschläge',sug,x=>`${x.impact.toUpperCase()} · ${x.filePath} · ${x.title}`)+\
+                   '\n'+mdList('Top 50 Findings',fin,x=>`${x.severity?.toUpperCase?.()||'N/A'} · ${x.filePath} · ${x.rule}`);
+          fs.writeFileSync('storage/artifacts/summary.md',md);"
+
+      - name: Attach Codemod Dry-Run summary
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: codemod-dry-run
+          path: tools/valero-codegraph/storage/artifacts/codemod-summary.md
+
+      - name: Comment PR with summary
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: codegraph-summary
+          path: tools/valero-codegraph/storage/artifacts/summary.md
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: codegraph-artifacts
           path: tools/valero-codegraph/storage
+
+      - name: Dry-run codemods (placeholder)
+        if: github.event_name == 'pull_request'
+        working-directory: frontend
+        run: |
+          echo "Running codemod dry-run (placeholder)";
+          echo "- any→Typen: Analyse durchgeführt (kein Write).";
+          echo "- Large-file split: Analyse durchgeführt (kein Write).";

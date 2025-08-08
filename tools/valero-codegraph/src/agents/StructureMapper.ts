@@ -1,15 +1,14 @@
 import path from 'path';
 import fs from 'fs';
 import fse from 'fs-extra';
-import { artifactsDir } from '../config.js';
+import { writeJsonArtifacts } from '../config.js';
 import { ArchGraph, ArchNode, CodeMap, DependencyEdge } from '../types.js';
 
 export async function mapStructure(codeMap: CodeMap): Promise<ArchGraph> {
   const nodes: ArchNode[] = buildTree(codeMap);
   const deps: DependencyEdge[] = buildDeps(codeMap);
   const graph: ArchGraph = { createdAt: new Date().toISOString(), nodes, deps };
-  await fse.ensureDir(artifactsDir);
-  fs.writeFileSync(path.join(artifactsDir, 'arch-graph.json'), JSON.stringify(graph, null, 2), 'utf8');
+  await writeJsonArtifacts('arch-graph.json', graph);
   return graph;
 }
 

@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "pipeline": "tsx src/pipeline.ts pipeline",
+    "pipeline": "cross-env GZIP_ARTIFACTS=1 MINIFY_ARTIFACTS=1 ARTIFACT_TOP_N=5000 tsx src/pipeline.ts pipeline",
     "index": "tsx src/pipeline.ts index",
-    "quality": "tsx src/pipeline.ts quality",
-    "refactor": "tsx src/pipeline.ts refactor",
+    "quality": "cross-env GZIP_ARTIFACTS=1 MINIFY_ARTIFACTS=1 ARTIFACT_TOP_N=5000 tsx src/pipeline.ts quality",
+    "refactor": "cross-env GZIP_ARTIFACTS=1 MINIFY_ARTIFACTS=1 ARTIFACT_TOP_N=5000 tsx src/pipeline.ts refactor",
     "query": "tsx src/pipeline.ts query",
-    "report": "tsx src/pipeline.ts report",
+    "report": "cross-env GZIP_ARTIFACTS=1 MINIFY_ARTIFACTS=1 ARTIFACT_TOP_N=5000 tsx src/pipeline.ts report",
+    "plan": "cross-env GZIP_ARTIFACTS=1 MINIFY_ARTIFACTS=1 ARTIFACT_TOP_N=5000 tsx src/pipeline.ts plan",
+    "codemod:dryrun": "cross-env GZIP_ARTIFACTS=1 MINIFY_ARTIFACTS=1 ARTIFACT_TOP_N=5000 tsx src/pipeline.ts codemod-dryrun",
+    "codemod:apply": "cross-env APPLY_UNKNOWN=1 tsx src/pipeline.ts apply-codemods",
     "dev": "tsx src/pipeline.ts"
   },
   "dependencies": {
@@ -18,6 +21,7 @@
     "glob": "^10.3.10"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "tsx": "^4.7.0",
     "typescript": "^5.4.5"
   }
