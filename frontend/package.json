@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "build:analysis": "tsc -b && cross-env BUNDLE_ANALYSIS=true vite build",
     "build:prod": "tsc -b && vite build --mode production",
+    "typecheck": "tsc --noEmit --pretty false",
+    "typecheck:strict": "tsc --noEmit --strict --pretty false",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "analyze": "npm run build:analysis && start dist/bundle-analysis.html",
@@ -26,7 +28,8 @@
     "test:ui:forms": "npm run test:ui -- -TestPattern=forms",
     "test:ui:workflow": "npm run test:ui -- -TestPattern=workflow",
     "test:ui:accessibility": "npm run test:ui -- -TestPattern=accessibility",
-    "test:ui:responsive": "npm run test:ui -- -TestPattern=responsive"
+    "test:ui:responsive": "npm run test:ui -- -TestPattern=responsive",
+    "ci:verify": "npm run typecheck && npm run lint && npm run test --silent && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -74,7 +77,6 @@
     "jest-environment-jsdom": "^29.7.0",
     "rollup-plugin-visualizer": "^6.0.3",
     "terser": "^5.43.1",
-    "ts-jest": "^29.4.0",
     "typescript": "^5.0.0",
     "typescript-eslint": "^8.39.0",
     "vite": "^5.0.0"

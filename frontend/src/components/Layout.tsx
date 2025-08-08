@@ -467,7 +467,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   {notification.message}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  {new Date().toLocaleString('de-DE')}
+                  {new Date((notification as any).createdAt ?? (notification as any).timestamp ?? Date.now()).toLocaleString('de-DE')}
                 </Typography>
               </Box>
             </MenuItem>

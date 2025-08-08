@@ -1,0 +1,24 @@
+{
+  "name": "valero-codegraph",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "pipeline": "tsx src/pipeline.ts pipeline",
+    "index": "tsx src/pipeline.ts index",
+    "quality": "tsx src/pipeline.ts quality",
+    "refactor": "tsx src/pipeline.ts refactor",
+    "query": "tsx src/pipeline.ts query",
+    "report": "tsx src/pipeline.ts report",
+    "dev": "tsx src/pipeline.ts"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.5"
+  }
+}

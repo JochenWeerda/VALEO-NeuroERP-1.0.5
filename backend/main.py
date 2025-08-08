@@ -588,6 +588,9 @@ if AI_APIS_AVAILABLE:
         app.include_router(voucher_router)
         
         logger.info("KI-APIs erfolgreich eingebunden")
+    except Exception as e:
+        logger.error(f"Fehler beim Einbinden der KI-APIs: {e}")
+        logger.warning("KI-APIs nicht verfügbar")
 
 # Dokumente Module Router hinzufügen
 if DOKUMENTE_ROUTES_AVAILABLE:
@@ -598,11 +601,6 @@ if DOKUMENTE_ROUTES_AVAILABLE:
         logger.error(f"Fehler beim Einbinden der Dokumente Module API: {e}")
 else:
     logger.warning("Dokumente Module API nicht verfügbar")
-        
-    except Exception as e:
-        logger.error(f"Fehler beim Einbinden der KI-APIs: {e}")
-else:
-    logger.warning("KI-APIs nicht verfügbar")
 
 if __name__ == "__main__":
     # Stellen Sie sicher, dass der Logs-Ordner existiert
