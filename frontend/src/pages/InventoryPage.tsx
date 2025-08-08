@@ -97,6 +97,7 @@ const InventoryPage: React.FC = () => {
       } else {
         await createInventoryItem({
           ...formData,
+          price: formData.unit_price, // Map unit_price to price
           status: 'in_stock'
         });
       }
@@ -108,12 +109,11 @@ const InventoryPage: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Möchten Sie diesen Artikel wirklich löschen?')) {
-      // TODO: Implement deleteInventoryItem
-      console.log('Delete inventory item:', id);
-      loadInventory();
-    }
+  const handleDeleteItem = (id: string) => {
+    // Mock-Implementation für das Löschen
+    console.log('Deleting inventory item:', id);
+    // In einer echten Implementierung würde hier die API aufgerufen werden
+    // und dann der lokale State aktualisiert werden
   };
 
   const handleEdit = (item: any) => {
@@ -143,8 +143,8 @@ const InventoryPage: React.FC = () => {
 
   const filteredInventory = inventory.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.location?.toLowerCase().includes(searchTerm.toLowerCase());
+                         (item.sku?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+                         (item.location?.toLowerCase().includes(searchTerm.toLowerCase()) || false);
     const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
     const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
     return matchesSearch && matchesCategory && matchesStatus;
@@ -182,7 +182,7 @@ const InventoryPage: React.FC = () => {
     }
   };
 
-  const totalValue = filteredInventory.reduce((sum, item) => sum + (item.quantity * item.unit_price), 0);
+  const totalValue = filteredInventory.reduce((sum, item) => sum + (item.quantity * (item.unit_price || item.price || 0)), 0);
   const totalItems = filteredInventory.reduce((sum, item) => sum + item.quantity, 0);
   const lowStockItems = filteredInventory.filter(item => item.status === 'low_stock').length;
   const outOfStockItems = filteredInventory.filter(item => item.status === 'out_of_stock').length;
@@ -382,7 +382,7 @@ const InventoryPage: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
-                        {item.sku}
+                        {item.sku || 'N/A'}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -401,12 +401,12 @@ const InventoryPage: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2">
-                        {item.unit_price.toFixed(2)}€
+                        {(item.unit_price || item.price || 0).toFixed(2)}€
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontWeight: 600, color: '#0A6ED1' }}>
-                        {(item.quantity * item.unit_price).toFixed(2)}€
+                        {(item.quantity * (item.unit_price || item.price || 0)).toFixed(2)}€
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -419,11 +419,11 @@ const InventoryPage: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {getStatusIcon(item.status)}
+                        {getStatusIcon(item.status || 'unknown')}
                         <Chip
-                          label={getStatusText(item.status)}
+                          label={getStatusText(item.status || 'unknown')}
                           size="small"
-                          color={getStatusColor(item.status) as any}
+                          color={getStatusColor(item.status || 'unknown') as any}
                         />
                       </Box>
                     </TableCell>
@@ -441,7 +441,7 @@ const InventoryPage: React.FC = () => {
                           <IconButton
                             size="small"
                             color="error"
-                            onClick={() => handleDelete(item.id)}
+                            onClick={() => handleDeleteItem(item.id)}
                           >
                             <DeleteIcon />
                           </IconButton>

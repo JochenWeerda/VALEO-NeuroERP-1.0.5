@@ -1,5 +1,20 @@
 import React from 'react';
-import { cn } from '../lib/utils';
+import {
+  Table as MuiTable,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+  Skeleton,
+  IconButton
+} from '@mui/material';
+import { Sort, Inbox } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 
 interface Column<T> {
   key: string;
@@ -28,75 +43,93 @@ export function Table<T>({
 }: TableProps<T>) {
   if (loading) {
     return (
-      <div className={cn('valeo-card', className)}>
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded mb-4"></div>
+      <Paper sx={{ p: 2 }}>
+        <Box>
+          <Skeleton variant="rectangular" height={32} sx={{ mb: 2 }} />
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-12 bg-gray-200 rounded mb-2"></div>
+            <Skeleton key={i} variant="rectangular" height={48} sx={{ mb: 1 }} />
           ))}
-        </div>
-      </div>
+        </Box>
+      </Paper>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className={cn('valeo-card text-center py-12', className)}>
-        <i className="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
-        <p className="text-gray-500">{emptyMessage}</p>
-      </div>
+      <Paper sx={{ p: 6, textAlign: 'center' }}>
+        <Inbox sx={{ fontSize: 48, color: 'grey.400', mb: 2 }} />
+        <Typography variant="body1" color="text.secondary">
+          {emptyMessage}
+        </Typography>
+      </Paper>
     );
   }
 
   return (
-    <div className={cn('valeo-card overflow-hidden', className)}>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
+    <Paper sx={{ overflow: 'hidden' }} className={className}>
+      <TableContainer>
+        <MuiTable>
+          <TableHead>
+            <TableRow>
               {columns.map((column) => (
-                <th
+                <TableCell
                   key={column.key}
-                  className={cn(
-                    'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider',
-                    column.width && `w-${column.width}`
-                  )}
+                  sx={{
+                    px: 3,
+                    py: 1.5,
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    color: 'text.secondary',
+                    width: column.width
+                  }}
                 >
-                  <div className="flex items-center space-x-1">
-                    <span>{column.header}</span>
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    <Typography variant="caption" fontWeight="medium">
+                      {column.header}
+                    </Typography>
                     {column.sortable && (
-                      <i className="fas fa-sort text-gray-400"></i>
+                      <IconButton size="small" sx={{ p: 0 }}>
+                        <Sort fontSize="small" />
+                      </IconButton>
                     )}
-                  </div>
-                </th>
+                  </Box>
+                </TableCell>
               ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {data.map((row, rowIndex) => (
-              <tr
+              <TableRow
                 key={rowIndex}
-                className={cn(
-                  'hover:bg-gray-50 transition-colors duration-200',
-                  onRowClick && 'cursor-pointer'
-                )}
+                sx={{
+                  '&:hover': { backgroundColor: 'action.hover' },
+                  cursor: onRowClick ? 'pointer' : 'default',
+                  transition: 'background-color 0.2s'
+                }}
                 onClick={() => onRowClick?.(row)}
               >
                 {columns.map((column) => (
-                  <td
+                  <TableCell
                     key={column.key}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    sx={{
+                      px: 3,
+                      py: 2,
+                      fontSize: '0.875rem',
+                      color: 'text.primary'
+                    }}
                   >
                     {column.render
                       ? column.render((row as any)[column.key], row)
                       : (row as any)[column.key]}
-                  </td>
+                  </TableCell>
                 ))}
-              </tr>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </TableBody>
+        </MuiTable>
+      </TableContainer>
+    </Paper>
   );
 } 

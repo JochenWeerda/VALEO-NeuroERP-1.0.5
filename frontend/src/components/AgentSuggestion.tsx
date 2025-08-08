@@ -1,6 +1,21 @@
 import React from 'react';
 import type { AgentSuggestion as AgentSuggestionType } from '../lib/schemas';
-import { cn } from '../lib/utils';
+import { 
+  Card, 
+  CardContent, 
+  Typography, 
+  Box, 
+  Avatar,
+  Chip
+} from '@mui/material';
+import { 
+  SmartToy as RobotIcon,
+  Check as CheckIcon,
+  Close as CloseIcon
+} from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StandardButton } from './forms/FormStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 
 export interface AgentSuggestionProps {
   suggestion: AgentSuggestionType;
@@ -24,49 +39,75 @@ export const AgentSuggestion: React.FC<AgentSuggestionProps> = ({
   };
 
   return (
-    <div className={cn('bg-white border border-gray-200 rounded-lg p-4 shadow-sm', className)}>
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-agent-500 rounded-full flex items-center justify-center">
-            <i className="fas fa-robot text-white text-sm"></i>
-          </div>
-          <div>
-            <h4 className="text-sm font-medium text-gray-900">{suggestion.title}</h4>
-            <p className="text-xs text-gray-500">KI-Vorschlag</p>
-          </div>
-        </div>
-        <div className="flex items-center space-x-1">
-          <span className="text-xs text-gray-400">Konfidenz: {suggestion.confidence}%</span>
-        </div>
-      </div>
+    <Card sx={{ p: 2, border: 1, borderColor: 'divider' }} className={className}>
+      <CardContent>
+        <Box display="flex" alignItems="flex-start" justifyContent="space-between" mb={2}>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+              <RobotIcon fontSize="small" />
+            </Avatar>
+            <Box>
+              <Typography variant="subtitle2" fontWeight="medium" color="text.primary">
+                {suggestion.title}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {UI_LABELS.AI.SUGGESTION}
+              </Typography>
+            </Box>
+          </Box>
+          <Box display="flex" alignItems="center" gap={0.5}>
+            <Typography variant="caption" color="text.secondary">
+              {UI_LABELS.AI.CONFIDENCE}: {suggestion.confidence}%
+            </Typography>
+          </Box>
+        </Box>
 
-      <p className="text-sm text-gray-700 mb-4">{suggestion.description}</p>
+        <Typography variant="body2" color="text.primary" mb={2}>
+          {suggestion.description}
+        </Typography>
 
-      {suggestion.parameters && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-md">
-          <h5 className="text-xs font-medium text-gray-600 mb-2">Details:</h5>
-          <pre className="text-xs text-gray-700 whitespace-pre-wrap">
-            {JSON.stringify(suggestion.parameters, null, 2)}
-          </pre>
-        </div>
-      )}
+        {suggestion.parameters && (
+          <Box mb={2} p={1.5} bgcolor="grey.50" borderRadius={1}>
+            <Typography variant="caption" fontWeight="medium" color="text.secondary" display="block" mb={1}>
+              {UI_LABELS.AI.DETAILS}:
+            </Typography>
+            <Box 
+              component="pre" 
+              sx={{ 
+                fontSize: '0.75rem', 
+                color: 'text.secondary',
+                whiteSpace: 'pre-wrap',
+                margin: 0
+              }}
+            >
+              {JSON.stringify(suggestion.parameters, null, 2)}
+            </Box>
+          </Box>
+        )}
 
-      <div className="flex space-x-2">
-        <button
-          onClick={handleAccept}
-          className="flex-1 px-3 py-2 bg-green-500 text-white text-sm rounded-md hover:bg-green-600 transition-colors"
-        >
-          <i className="fas fa-check mr-2"></i>
-          Akzeptieren
-        </button>
-        <button
-          onClick={handleReject}
-          className="flex-1 px-3 py-2 bg-red-500 text-white text-sm rounded-md hover:bg-red-600 transition-colors"
-        >
-          <i className="fas fa-times mr-2"></i>
-          Ablehnen
-        </button>
-      </div>
-    </div>
+        <Box display="flex" gap={1}>
+          <StandardButton
+            variant="contained"
+            color="success"
+            size="small"
+            onClick={handleAccept}
+            startIcon={<CheckIcon />}
+            sx={{ flex: 1 }}
+          >
+            {UI_LABELS.ACTIONS.ACCEPT}
+          </StandardButton>
+          <StandardButton
+            variant="contained"
+            color="error"
+            size="small"
+            onClick={handleReject}
+            startIcon={<CloseIcon />}
+            sx={{ flex: 1 }}
+          >
+            {UI_LABELS.ACTIONS.REJECT}
+          </StandardButton>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }; 

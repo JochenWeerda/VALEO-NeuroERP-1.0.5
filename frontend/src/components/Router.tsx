@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 
 // Lazy Loading für alle Seiten
 const Dashboard = lazy(() => import('./neuroflow/NeuroFlowDashboard'));
@@ -25,10 +27,10 @@ const RouteLoader: React.FC<{ routeName: string }> = ({ routeName }) => (
     <CircularProgress size={60} />
     <Box sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ mb: 1 }}>
-        {routeName} wird geladen...
+        {routeName} {UI_LABELS.MESSAGES.LOADING}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        Bitte warten Sie einen Moment
+        {UI_LABELS.MESSAGES.PLEASE_WAIT}
       </Typography>
     </Box>
   </Box>
@@ -60,7 +62,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/login"
           element={
-            <Suspense fallback={<RouteLoader routeName="Login" />}>
+            <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.LOGIN} />}>
               <LoginForm />
             </Suspense>
           }
@@ -71,7 +73,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
           path="/"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="Dashboard" />}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD} />}>
                 <Dashboard />
               </Suspense>
             </ProtectedRoute>
@@ -82,7 +84,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
           path="/dashboard"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="Dashboard" />}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD} />}>
                 <Dashboard />
               </Suspense>
             </ProtectedRoute>
@@ -93,7 +95,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
           path="/streckengeschaeft"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="Streckengeschäft" />}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.STRECKENGESCHAEFT} />}>
                 <StreckengeschaeftPage />
               </Suspense>
             </ProtectedRoute>
@@ -104,7 +106,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
           path="/pos"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="POS-System" />}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.POS} />}>
                 <POSPage />
               </Suspense>
             </ProtectedRoute>
@@ -115,7 +117,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
           path="/daily-report"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="Tagesbericht" />}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DAILY_REPORT} />}>
                 <DailyReportPage />
               </Suspense>
             </ProtectedRoute>
@@ -126,7 +128,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
           path="/e-invoicing"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="E-Invoicing" />}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.E_INVOICING} />}>
                 <EInvoicingPage />
               </Suspense>
             </ProtectedRoute>

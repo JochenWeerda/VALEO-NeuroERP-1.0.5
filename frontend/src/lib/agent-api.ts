@@ -1,77 +1,175 @@
-import type { AgentContext, AgentSuggestion } from './schemas';
-import { createAgentContext } from './schemas';
+/**
+ * Agent API für VALEO NeuroERP 2.0
+ * Integration mit verschiedenen AI-Agenten und MCP-Services
+ */
 
-// Mock Agent API Implementation
-export class AgentAPI {
-  static async getSuggestions(context: string, data: string): Promise<string[]> {
-    // Mock implementation für Agent-Vorschläge
-    console.log('Getting agent suggestions for:', context, data);
-    return [
-      'Vorschlag 1: Optimieren Sie die Lagerbestände',
-      'Vorschlag 2: Überprüfen Sie die Lieferantenbewertungen',
-      'Vorschlag 3: Analysieren Sie die Verkaufszahlen'
-    ];
+interface AgentRequest {
+  method: string;
+  params: Record<string, unknown>;
+  context?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+interface AgentResponse {
+  success: boolean;
+  data?: unknown;
+  error?: string;
+  timestamp: string;
+  [key: string]: unknown;
+}
+
+interface MCPRequest {
+  method: string;
+  params: Record<string, unknown>;
+  source?: string;
+  [key: string]: unknown;
+}
+
+interface MCPResponse {
+  success: boolean;
+  data?: unknown;
+  error?: string;
+  timestamp: string;
+  [key: string]: unknown;
+}
+
+class AgentAPI {
+  private baseUrl: string;
+  private apiKey: string | null = null;
+
+  constructor(baseUrl: string = 'http://localhost:3001') {
+    this.baseUrl = baseUrl;
   }
 
-  // Process agent action
-  static async processAction(
-    actionId: string,
-    _parameters: Record<string, any>,
-    _context: AgentContext
-  ): Promise<{ success: boolean; message: string; data?: any }> {
-    // Mock implementation - replace with actual API call
-    console.log(`Processing action: ${actionId}`);
-    
-    return {
-      success: true,
-      message: `Aktion ${actionId} erfolgreich ausgeführt`,
-      data: {
-        actionId,
-        timestamp: new Date(),
-        status: 'completed'
-      }
+  setApiKey(apiKey: string) {
+    this.apiKey = apiKey;
+  }
+
+  private async makeRequest<T>(
+    endpoint: string,
+    data: Record<string, unknown>
+  ): Promise<T> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
     };
-  }
 
-  // Submit feedback for agent suggestions
-  static async submitFeedback(
-    suggestionId: string,
-    _data: any,
-    _source: string
-  ): Promise<{ success: boolean; message: string }> {
-    // Mock implementation - replace with actual API call
-    console.log(`Submitting feedback for suggestion: ${suggestionId}`);
-    
-    return {
-      success: true,
-      message: 'Feedback erfolgreich übermittelt'
-    };
-  }
+    if (this.apiKey) {
+      headers['Authorization'] = `Bearer ${this.apiKey}`;
+    }
 
-  // Get agent context for current session
-  static async getContext(userId: string, sessionId: string, module: string): Promise<AgentContext> {
-    return createAgentContext({
-      userId,
-      sessionId,
-      module,
-      metadata: {
-        userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString()
-      }
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data)
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    return response.json() as T;
   }
 
-  // Validate agent suggestion
-  static async validateSuggestion(suggestion: AgentSuggestion): Promise<{
-    valid: boolean;
-    confidence: number;
-    trustLevel: 'fact' | 'assumption' | 'uncertain';
-  }> {
-    // Mock validation - replace with actual validation logic
-    return {
-      valid: suggestion.confidence > 70,
-      confidence: suggestion.confidence,
-      trustLevel: suggestion.trustLevel
-    };
+  // Agent-spezifische Methoden
+  async sendAgentRequest(request: AgentRequest): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/agent/request', request);
   }
-} 
+
+  async getAgentStatus(agentId: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/agent/status', { agentId });
+  }
+
+  async listAgents(): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/agent/list', {});
+  }
+
+  // MCP-spezifische Methoden
+  async sendMCPRequest(request: MCPRequest): Promise<MCPResponse> {
+    return this.makeRequest<MCPResponse>('/mcp/request', request);
+  }
+
+  async getMCPSchema(tableName: string): Promise<MCPResponse> {
+    return this.makeRequest<MCPResponse>('/mcp/schema', { tableName });
+  }
+
+  async executeMCPQuery(query: string, params: Record<string, unknown> = {}): Promise<MCPResponse> {
+    return this.makeRequest<MCPResponse>('/mcp/query', { query, params });
+  }
+
+  // AI-Integration
+  async sendAIMessage(message: string, context?: Record<string, unknown>): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/ai/chat', { message, context });
+  }
+
+  async generateAIResponse(prompt: string, options?: Record<string, unknown>): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/ai/generate', { prompt, options });
+  }
+
+  async analyzeData(data: unknown, analysisType: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/ai/analyze', { data, analysisType });
+  }
+
+  // Workflow-Integration
+  async startWorkflow(workflowId: string, input: Record<string, unknown>): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/workflow/start', { workflowId, input });
+  }
+
+  async getWorkflowStatus(workflowId: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/workflow/status', { workflowId });
+  }
+
+  async pauseWorkflow(workflowId: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/workflow/pause', { workflowId });
+  }
+
+  async resumeWorkflow(workflowId: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/workflow/resume', { workflowId });
+  }
+
+  async cancelWorkflow(workflowId: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/workflow/cancel', { workflowId });
+  }
+
+  // Daten-Integration
+  async syncData(source: string, target: string, options?: Record<string, unknown>): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/data/sync', { source, target, options });
+  }
+
+  async validateData(data: unknown, schema: unknown): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/data/validate', { data, schema });
+  }
+
+  async transformData(data: unknown, transformation: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/data/transform', { data, transformation });
+  }
+
+  // Monitoring und Logging
+  async getSystemHealth(): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/system/health', {});
+  }
+
+  async getMetrics(timeRange?: string): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/system/metrics', { timeRange });
+  }
+
+  async getLogs(level?: string, limit?: number): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/system/logs', { level, limit });
+  }
+
+  // Konfiguration
+  async getConfig(): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/config/get', {});
+  }
+
+  async updateConfig(config: Record<string, unknown>): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/config/update', config);
+  }
+
+  async resetConfig(): Promise<AgentResponse> {
+    return this.makeRequest<AgentResponse>('/config/reset', {});
+  }
+}
+
+// Singleton-Instanz
+export const agentAPI = new AgentAPI();
+export default agentAPI; 

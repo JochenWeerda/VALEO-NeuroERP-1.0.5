@@ -485,6 +485,18 @@ class PreloadService {
       performanceMetrics: this.performanceMetrics.length
     };
   }
+
+  getStatus(): string {
+    return this.isIdle ? 'idle' : 'active';
+  }
+
+  getPreloadedRoutes(): string[] {
+    return Array.from(this.preloadedRoutes);
+  }
+
+  getPendingRoutes(): string[] {
+    return this.preloadQueue.map(item => item.route);
+  }
 }
 
 // Singleton-Instanz

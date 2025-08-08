@@ -4,6 +4,8 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon
 } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 
 export type Module = 'crm' | 'warenwirtschaft' | 'fibu' | 'lager' | 'bi' | 'dms' | 'settings' | 'help';
 
@@ -28,8 +30,8 @@ export interface SidebarProps {
 const defaultModules: ModuleItem[] = [
   {
     id: 'crm',
-    title: 'CRM',
-    description: 'Kundenverwaltung',
+    title: UI_LABELS.NAVIGATION.CRM,
+    description: UI_LABELS.NAVIGATION.CRM_DESCRIPTION,
     icon: 'fas fa-users',
     color: 'bg-blue-500',
     trustLevel: 'fact',
@@ -38,8 +40,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'warenwirtschaft',
-    title: 'Warenwirtschaft',
-    description: 'L3 Warenwirtschaft & ERP',
+    title: UI_LABELS.NAVIGATION.WAREHOUSE_MANAGEMENT,
+    description: UI_LABELS.NAVIGATION.WAREHOUSE_DESCRIPTION,
     icon: 'fas fa-warehouse',
     color: 'bg-purple-500',
     trustLevel: 'fact',
@@ -48,8 +50,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'fibu',
-    title: 'FiBu',
-    description: 'Finanzbuchhaltung',
+    title: UI_LABELS.NAVIGATION.FINANCE,
+    description: UI_LABELS.NAVIGATION.FINANCE_DESCRIPTION,
     icon: 'fas fa-calculator',
     color: 'bg-green-500',
     trustLevel: 'fact',
@@ -58,8 +60,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'lager',
-    title: 'Lager',
-    description: 'Lagerverwaltung',
+    title: UI_LABELS.NAVIGATION.INVENTORY,
+    description: UI_LABELS.NAVIGATION.INVENTORY_DESCRIPTION,
     icon: 'fas fa-boxes',
     color: 'bg-orange-500',
     trustLevel: 'fact',
@@ -68,8 +70,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'bi',
-    title: 'BI',
-    description: 'Business Intelligence',
+    title: UI_LABELS.NAVIGATION.BI,
+    description: UI_LABELS.NAVIGATION.BI_DESCRIPTION,
     icon: 'fas fa-chart-line',
     color: 'bg-teal-500',
     trustLevel: 'assumption',
@@ -78,8 +80,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'dms',
-    title: 'DMS',
-    description: 'Dokumentenmanagement',
+    title: UI_LABELS.NAVIGATION.DMS,
+    description: UI_LABELS.NAVIGATION.DMS_DESCRIPTION,
     icon: 'fas fa-file-alt',
     color: 'bg-indigo-500',
     trustLevel: 'fact',
@@ -88,8 +90,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'settings',
-    title: 'Einstellungen',
-    description: 'Systemkonfiguration',
+    title: UI_LABELS.NAVIGATION.SETTINGS,
+    description: UI_LABELS.NAVIGATION.SETTINGS_DESCRIPTION,
     icon: 'fas fa-cog',
     color: 'bg-gray-500',
     trustLevel: 'fact',
@@ -98,8 +100,8 @@ const defaultModules: ModuleItem[] = [
   },
   {
     id: 'help',
-    title: 'Hilfe',
-    description: 'Support & Dokumentation',
+    title: UI_LABELS.NAVIGATION.HELP,
+    description: UI_LABELS.NAVIGATION.HELP_DESCRIPTION,
     icon: 'fas fa-question-circle',
     color: 'bg-pink-500',
     trustLevel: 'fact',

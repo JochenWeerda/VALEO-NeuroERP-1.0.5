@@ -1,92 +1,240 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
-// LocalStorage Hook für VALEO NeuroERP
-interface UseLocalStorageOptions<T> {
-  defaultValue: T;
-  serializer?: (value: T) => string;
-  deserializer?: (value: string) => T;
+interface UseLocalStorageOptions {
+  serialize?: (value: unknown) => string;
+  deserialize?: (value: string) => unknown;
 }
 
-export const useLocalStorage = <T>(
-  key: string,
-  options: UseLocalStorageOptions<T>
-) => {
-  const { defaultValue, serializer = JSON.stringify, deserializer = JSON.parse } = options;
+const defaultOptions: UseLocalStorageOptions = {
+  serialize: JSON.stringify,
+  deserialize: JSON.parse,
+};
 
-  // Get initial value from localStorage or use default
-  const getStoredValue = useCallback((): T => {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T,
+  options: UseLocalStorageOptions = {}
+): [T, (value: T | ((val: T) => T)) => void] {
+  const { serialize, deserialize } = { ...defaultOptions, ...options };
+
+  // State to store our value
+  // Pass initial state function to useState so logic is only executed once
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
+
     try {
       const item = window.localStorage.getItem(key);
-      return item ? deserializer(item) : defaultValue;
+      return item ? (deserialize!(item) as T) : initialValue;
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
-      return defaultValue;
+      console.error(`Error reading localStorage key "${key}":`, error);
+      return initialValue;
     }
-  }, [key, defaultValue, deserializer]);
+  });
 
-  const [storedValue, setStoredValue] = useState<T>(getStoredValue);
-
-  // Set value to localStorage
-  const setValue = useCallback((value: T | ((val: T) => T)) => {
+  // Return a wrapped version of useState's setter function that ...
+  // ... persists the new value to localStorage.
+  const setValue = (value: T | ((val: T) => T)) => {
     try {
+      // Allow value to be a function so we have the same API as useState
       const valueToStore = value instanceof Function ? value(storedValue) : value;
+      
+      // Save state
       setStoredValue(valueToStore);
-      window.localStorage.setItem(key, serializer(valueToStore));
+      
+      // Save to local storage
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, serialize!(valueToStore));
+      }
     } catch (error) {
-      console.warn(`Error setting localStorage key "${key}":`, error);
+      console.error(`Error setting localStorage key "${key}":`, error);
     }
-  }, [key, serializer, storedValue]);
+  };
 
-  // Remove value from localStorage
-  const removeValue = useCallback(() => {
+  return [storedValue, setValue];
+}
+
+// Hook for managing multiple localStorage items
+export function useLocalStorageMulti<T extends Record<string, unknown>>(
+  keys: (keyof T)[],
+  initialValues: T
+): [T, (updates: Partial<T>) => void] {
+  const [values, setValues] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      return initialValues;
+    }
+
+    const result = { ...initialValues };
+    
+    keys.forEach((key) => {
+      try {
+        const item = window.localStorage.getItem(String(key));
+        if (item) {
+          result[key] = JSON.parse(item) as T[keyof T];
+        }
+      } catch (error) {
+        console.error(`Error reading localStorage key "${String(key)}":`, error);
+      }
+    });
+
+    return result;
+  });
+
+  const setValue = (updates: Partial<T>) => {
+    const newValues = { ...values, ...updates };
+    setValues(newValues);
+
+    if (typeof window !== 'undefined') {
+      Object.entries(updates).forEach(([key, value]) => {
+        try {
+          window.localStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+          console.error(`Error setting localStorage key "${key}":`, error);
+        }
+      });
+    }
+  };
+
+  return [values, setValue];
+}
+
+// Hook for managing localStorage with expiration
+export function useLocalStorageWithExpiry<T>(
+  key: string,
+  initialValue: T,
+  expiryInMinutes: number = 60
+): [T | null, (value: T) => void] {
+  const [storedValue, setStoredValue] = useState<T | null>(() => {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
     try {
-      setStoredValue(defaultValue);
-      window.localStorage.removeItem(key);
+      const item = window.localStorage.getItem(key);
+      if (!item) return null;
+
+      const parsedItem = JSON.parse(item) as { value: T; expiry: number };
+      
+      if (Date.now() > parsedItem.expiry) {
+        window.localStorage.removeItem(key);
+        return null;
+      }
+
+      return parsedItem.value;
     } catch (error) {
-      console.warn(`Error removing localStorage key "${key}":`, error);
-    }
-  }, [key, defaultValue]);
-
-  // Update stored value when key changes
-  useEffect(() => {
-    setStoredValue(getStoredValue());
-  }, [key, getStoredValue]);
-
-  return [storedValue, setValue, removeValue] as const;
-};
-
-// Specialized Hooks für häufige Datentypen
-export const useLocalStorageString = (key: string, defaultValue: string = '') => {
-  return useLocalStorage(key, {
-    defaultValue,
-    serializer: (value: string) => value,
-    deserializer: (value: string) => value
-  });
-};
-
-export const useLocalStorageNumber = (key: string, defaultValue: number = 0) => {
-  return useLocalStorage(key, {
-    defaultValue,
-    serializer: (value: number) => value.toString(),
-    deserializer: (value: string) => {
-      const parsed = parseFloat(value);
-      return isNaN(parsed) ? defaultValue : parsed;
+      console.error(`Error reading localStorage key "${key}":`, error);
+      return null;
     }
   });
-};
 
-export const useLocalStorageBoolean = (key: string, defaultValue: boolean = false) => {
-  return useLocalStorage(key, {
-    defaultValue,
-    serializer: (value: boolean) => value.toString(),
-    deserializer: (value: string) => value === 'true'
+  const setValue = (value: T) => {
+    try {
+      const item = {
+        value,
+        expiry: Date.now() + (expiryInMinutes * 60 * 1000),
+      };
+
+      setStoredValue(value);
+      
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(item));
+      }
+    } catch (error) {
+      console.error(`Error setting localStorage key "${key}":`, error);
+    }
+  };
+
+  return [storedValue, setValue];
+}
+
+// Hook for managing localStorage with encryption (basic)
+export function useLocalStorageEncrypted<T>(
+  key: string,
+  initialValue: T,
+  password: string
+): [T, (value: T) => void] {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
+
+    try {
+      const item = window.localStorage.getItem(key);
+      if (!item) return initialValue;
+
+      // Basic encryption/decryption (for production, use a proper encryption library)
+      const decrypted = atob(item);
+      const parsed = JSON.parse(decrypted) as T;
+      return parsed;
+    } catch (error) {
+      console.error(`Error reading encrypted localStorage key "${key}":`, error);
+      return initialValue;
+    }
   });
-};
 
-export const useLocalStorageArray = <T>(key: string, defaultValue: T[] = []) => {
-  return useLocalStorage<T[]>(key, { defaultValue });
-};
+  const setValue = (value: T) => {
+    try {
+      // Basic encryption (for production, use a proper encryption library)
+      const encrypted = btoa(JSON.stringify(value));
+      
+      setStoredValue(value);
+      
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, encrypted);
+      }
+    } catch (error) {
+      console.error(`Error setting encrypted localStorage key "${key}":`, error);
+    }
+  };
 
-export const useLocalStorageObject = <T extends Record<string, any>>(key: string, defaultValue: T) => {
-  return useLocalStorage<T>(key, { defaultValue });
-}; 
+  return [storedValue, setValue];
+}
+
+// Hook for managing localStorage with validation
+export function useLocalStorageWithValidation<T>(
+  key: string,
+  initialValue: T,
+  validator: (value: unknown) => value is T
+): [T, (value: T) => void] {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
+
+    try {
+      const item = window.localStorage.getItem(key);
+      if (!item) return initialValue;
+
+      const parsed = JSON.parse(item) as unknown;
+      
+      if (validator(parsed)) {
+        return parsed;
+      } else {
+        console.warn(`Invalid data in localStorage key "${key}", using initial value`);
+        return initialValue;
+      }
+    } catch (error) {
+      console.error(`Error reading localStorage key "${key}":`, error);
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: T) => {
+    try {
+      if (!validator(value)) {
+        throw new Error(`Invalid value for localStorage key "${key}"`);
+      }
+
+      setStoredValue(value);
+      
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      }
+    } catch (error) {
+      console.error(`Error setting localStorage key "${key}":`, error);
+    }
+  };
+
+  return [storedValue, setValue];
+} 

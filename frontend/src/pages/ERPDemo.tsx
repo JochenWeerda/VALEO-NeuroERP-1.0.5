@@ -101,13 +101,12 @@ export const ERPDemo: React.FC = () => {
       )
     },
     {
-      label: 'Bestellung',
+      label: 'Kaufbestellung',
       icon: <AssignmentIcon />,
       component: (
         <PurchaseOrder
           mode={componentMode}
-          initialData={purchaseOrderData || undefined}
-          onSave={(data) => handleSave(data, 'Bestellung')}
+          onSave={(data) => handleSave(data, 'Kaufbestellung')}
           onCancel={handleCancel}
         />
       )
@@ -117,10 +116,9 @@ export const ERPDemo: React.FC = () => {
       icon: <LocalOfferIcon />,
       component: (
         <SupplierOffer
-          mode={componentMode}
-          initialData={supplierOfferData || undefined}
-          onSave={(data) => handleSave(data, 'Lieferanten-Angebot')}
-          onCancel={handleCancel}
+          onOfferCreate={(data) => handleSave(data, 'Lieferanten-Angebot')}
+          onOfferUpdate={(id, data) => handleSave(data, 'Lieferanten-Angebot')}
+          onOfferDelete={(id) => console.log('Angebot gelöscht:', id)}
         />
       )
     },
@@ -129,22 +127,20 @@ export const ERPDemo: React.FC = () => {
       icon: <ShippingIcon />,
       component: (
         <DeliveryNote
-          mode={componentMode}
-          initialData={deliveryNoteData || undefined}
-          onSave={(data) => handleSave(data, 'Lieferschein')}
-          onCancel={handleCancel}
+          onDeliveryCreate={(data) => handleSave(data, 'Lieferschein')}
+          onDeliveryUpdate={(id, data) => handleSave(data, 'Lieferschein')}
+          onDeliveryDelete={(id) => console.log('Lieferschein gelöscht:', id)}
         />
       )
     },
     {
-      label: 'Auftragsbestätigung',
+      label: 'Bestellbestätigung',
       icon: <ConfirmationIcon />,
       component: (
         <OrderConfirmation
-          mode={componentMode}
-          initialData={orderConfirmationData || undefined}
-          onSave={(data) => handleSave(data, 'Auftragsbestätigung')}
-          onCancel={handleCancel}
+          onConfirmationCreate={(data) => handleSave(data, 'Bestellbestätigung')}
+          onConfirmationUpdate={(id, data) => handleSave(data, 'Bestellbestätigung')}
+          onConfirmationDelete={(id) => console.log('Bestellbestätigung gelöscht:', id)}
         />
       )
     }

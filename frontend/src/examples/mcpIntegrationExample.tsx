@@ -14,7 +14,11 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Grid,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 import {
   PlayArrow as PlayIcon,
@@ -41,12 +45,7 @@ export const MCPIntegrationExample: React.FC = () => {
   const [workflowStatus, setWorkflowStatus] = useState<string>('');
 
   // MCP Hooks
-  const mcpForm = useMCPForm({
-    tableName: currentTable,
-    autoValidate: true,
-    onSchemaLoad: (schema) => console.log('Schema geladen:', schema),
-    onError: (error) => console.error('Schema Fehler:', error)
-  });
+  const mcpForm = useMCPForm();
 
   const mcpTable = useMCPTable(currentTable);
   const mcpData = useMCPData(currentTable);
@@ -158,11 +157,7 @@ export const MCPIntegrationExample: React.FC = () => {
       // Hier würde die eigentliche API-Integration stattfinden
       const result = await mcpData.createData(data);
       
-      if (result.success) {
-        setWorkflowStatus('✅ Daten erfolgreich erstellt');
-      } else {
-        setWorkflowStatus(`❌ Fehler beim Erstellen: ${result.error?.message}`);
-      }
+      setWorkflowStatus('✅ Daten erfolgreich erstellt');
     } catch (error) {
       setWorkflowStatus(`❌ Fehler: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
     }
@@ -250,118 +245,105 @@ export const MCPIntegrationExample: React.FC = () => {
       </Card>
 
       {/* Schema-Info */}
-      {mcpForm.schema && (
+      {mcpTable.schema && (
         <Card>
           <CardHeader
             title="Schema-Informationen"
-            subheader={`Tabelle: ${mcpForm.schema.table}`}
+            subheader={`Tabelle: ${mcpTable.schema.table}`}
           />
           <CardContent>
-            <Box className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Box>
-                <Typography variant="h6" className="font-semibold mb-2">
+            <Grid container spacing={2}>
+              {/* Spalten */}
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom>
                   Spalten
                 </Typography>
-                <Box className="space-y-1">
-                  {mcpForm.schema.columns.map((col) => (
-                    <Chip
-                      key={col.name}
-                      label={`${col.name} (${col.type})`}
-                      size="small"
-                      variant="outlined"
-                      color={col.primary ? 'primary' : 'default'}
-                    />
-                  ))}
-                </Box>
-              </Box>
-              
-              <Box>
-                <Typography variant="h6" className="font-semibold mb-2">
-                  RLS-Richtlinien
-                </Typography>
-                <Box className="space-y-1">
-                  {Object.entries(mcpForm.schema.rls).map(([operation, allowed]) => (
-                    <Chip
-                      key={operation}
-                      label={`${operation.toUpperCase()}: ${allowed ? '✅' : '❌'}`}
-                      size="small"
-                      color={allowed ? 'success' : 'error'}
-                      variant="outlined"
-                    />
-                  ))}
-                </Box>
-              </Box>
-              
-              <Box>
-                <Typography variant="h6" className="font-semibold mb-2">
-                  Foreign Keys
-                </Typography>
-                <Box className="space-y-1">
-                  {mcpForm.schema.columns
-                    .filter(col => col.foreign_key)
-                    .map((col) => (
-                      <Chip
-                        key={col.name}
-                        label={`${col.name} → ${col.foreign_key}`}
-                        size="small"
-                        variant="outlined"
-                        color="info"
+                <List dense>
+                  {mcpTable.schema.columns.map((col) => (
+                    <ListItem key={col.name}>
+                      <ListItemText
+                        primary={col.name}
+                        secondary={`${col.type}${col.not_null ? ' (required)' : ''}`}
                       />
-                    ))}
-                  {mcpForm.schema.columns.filter(col => col.foreign_key).length === 0 && (
-                    <Typography variant="body2" className="text-gray-500">
-                      Keine Foreign Keys
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Box>
+                    </ListItem>
+                  ))}
+                </List>
+              </Grid>
+
+              {/* RLS */}
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom>
+                  Row Level Security
+                </Typography>
+                <List dense>
+                  {Object.entries(mcpTable.schema.rls).map(([operation, allowed]) => (
+                    <ListItem key={operation}>
+                      <ListItemText
+                        primary={operation}
+                        secondary={allowed ? 'Erlaubt' : 'Nicht erlaubt'}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       )}
 
-      {/* MCP-Formular Demo */}
-      {mcpForm.schema && !mcpForm.isLoading && (
+      {/* Formular */}
+      {mcpTable.schema && !mcpTable.isLoading && (
         <Card>
           <CardHeader
-            title="MCP-Formular Demo"
-            subheader="Live-Formular basierend auf MCP-Schema"
+            title="Dynamisches Formular"
+            subheader="Generiert basierend auf dem Schema"
           />
           <CardContent>
             <form onSubmit={mcpForm.handleSubmit(handleFormSubmit)} className="space-y-4">
-              {mcpForm.schema.columns
-                .filter(col => !col.primary || col.type !== 'uuid')
-                .map((col) => (
-                  <TextField
-                    key={col.name}
-                    {...mcpForm.register(col.name as any)}
-                    label={col.name}
-                    type={getFieldType(col.type)}
-                    fullWidth
-                    error={!!mcpForm.formState.errors[col.name as any]}
-                    helperText={mcpForm.formState.errors[col.name as any]?.message as string}
-                    disabled={mcpForm.isLoading}
-                    required={col.not_null}
-                  />
-                ))}
+              <Grid container spacing={2}>
+                {mcpTable.schema.columns
+                  .filter(col => !col.primary)
+                  .map((col) => (
+                    <Grid item xs={12} sm={6} key={col.name}>
+                      <TextField
+                        label={col.name}
+                        type={getFieldType(col.type)}
+                        fullWidth
+                        required={col.not_null}
+                        disabled={mcpForm.formState.isSubmitting}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
               
-              <Box className="flex justify-end">
+              <Box className="flex gap-2">
                 <Button
                   type="submit"
                   variant="contained"
-                  disabled={mcpForm.isLoading || mcpForm.formState.isSubmitting}
-                  startIcon={
-                    mcpForm.formState.isSubmitting ? (
-                      <CircularProgress size={20} color="inherit" />
-                    ) : undefined
-                  }
+                  disabled={mcpForm.formState.isSubmitting}
                 >
-                  {mcpForm.formState.isSubmitting ? 'Speichern...' : 'Speichern'}
+                  Speichern
+                </Button>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  onClick={() => mcpForm.reset()}
+                  disabled={mcpForm.formState.isSubmitting}
+                >
+                  Zurücksetzen
                 </Button>
               </Box>
             </form>
           </CardContent>
         </Card>
+      )}
+
+      {/* Fehler */}
+      {mcpForm.formState.errors && Object.keys(mcpForm.formState.errors).length > 0 && (
+        <Alert severity="error" className="mb-4">
+          <Typography variant="h6">Formular-Fehler</Typography>
+          <Typography variant="body2">{JSON.stringify(mcpForm.formState.errors, null, 2)}</Typography>
+        </Alert>
       )}
 
       {/* MCP-Tabelle Demo */}
@@ -440,10 +422,10 @@ export const MCPIntegrationExample: React.FC = () => {
       )}
 
       {/* Error State */}
-      {mcpForm.error && (
+      {mcpForm.formState.errors && Object.keys(mcpForm.formState.errors).length > 0 && (
         <Alert severity="error">
           <Typography variant="h6">Schema-Fehler</Typography>
-          <Typography variant="body2">{mcpForm.error.message}</Typography>
+          <Typography variant="body2">{JSON.stringify(mcpForm.formState.errors, null, 2)}</Typography>
         </Alert>
       )}
     </Box>

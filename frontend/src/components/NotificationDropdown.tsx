@@ -17,6 +17,9 @@ import {
   Warning as WarningIcon,
   Error as ErrorIcon
 } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StatusChip } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 import { TrustIndicator } from './TrustIndicator';
 
 interface NotificationDropdownProps {
@@ -56,30 +59,31 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'success':
-        return <CheckCircleIcon className="text-green-600" />;
+        return <CheckCircleIcon sx={{ color: 'success.main' }} />;
       case 'info':
-        return <InfoIcon className="text-blue-600" />;
+        return <InfoIcon sx={{ color: 'info.main' }} />;
       case 'warning':
-        return <WarningIcon className="text-yellow-600" />;
+        return <WarningIcon sx={{ color: 'warning.main' }} />;
       case 'error':
-        return <ErrorIcon className="text-red-600" />;
+        return <ErrorIcon sx={{ color: 'error.main' }} />;
       default:
-        return <InfoIcon className="text-gray-600" />;
+        return <InfoIcon sx={{ color: 'text.secondary' }} />;
     }
   };
 
-  const getPriorityColor = (priority: string) => {
+  // ✅ REFAKTORIERT: Verwendung von StatusChip für Priority-Anzeige
+  const getPriorityStatus = (priority: string) => {
     switch (priority) {
       case 'critical':
-        return 'error';
+        return 'error' as const;
       case 'high':
-        return 'warning';
+        return 'warning' as const;
       case 'medium':
-        return 'info';
+        return 'info' as const;
       case 'low':
-        return 'default';
+        return 'default' as const;
       default:
-        return 'default';
+        return 'default' as const;
     }
   };
 
@@ -93,11 +97,11 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
   });
 
   return (
-    <div>
+    <Box>
       <IconButton
         color="inherit"
         onClick={handleClick}
-        className="relative"
+        sx={{ position: 'relative' }}
       >
         <Badge badgeContent={unreadCount} color="error">
           <NotificationsIcon />
@@ -109,123 +113,127 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
         PaperProps={{
-          className: 'w-96 max-h-96'
+          sx: { width: 384, maxHeight: 384 }
         }}
       >
         {/* Header */}
-        <Box className="p-4 border-b">
-          <div className="flex items-center justify-between mb-2">
+        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+          <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
             <Typography variant="h6">Benachrichtigungen</Typography>
             {unreadCount > 0 && (
               <Chip
-                label={`${unreadCount} ungelesen`}
+                label={`${unreadCount} Ungelesen`}
                 size="small"
                 color="primary"
               />
             )}
-          </div>
+          </Box>
           
           {/* Filter Buttons */}
-          <div className="flex gap-1">
+          <Box display="flex" gap={0.5}>
             {(['all', 'unread', 'ai', 'system', 'business'] as const).map(filter => (
               <Chip
                 key={filter}
                 label={filter === 'all' ? 'Alle' : 
                        filter === 'unread' ? 'Ungelesen' :
                        filter === 'ai' ? 'KI' :
-                       filter === 'system' ? 'System' : 'Geschäft'}
+                       filter === 'system' ? 'System' : 
+                       'Geschäft'}
                 size="small"
                 variant={activeFilter === filter ? 'filled' : 'outlined'}
                 onClick={() => setActiveFilter(filter)}
-                className="text-xs"
+                sx={{ fontSize: '0.75rem' }}
               />
             ))}
-          </div>
+          </Box>
         </Box>
 
         {/* Notifications List */}
-        <div className="max-h-64 overflow-y-auto">
+        <Box sx={{ maxHeight: 256, overflowY: 'auto' }}>
           {filteredNotifications.length === 0 ? (
-            <Box className="p-4 text-center text-gray-500">
+            <Box sx={{ p: 2, textAlign: 'center', color: 'text.secondary' }}>
               <Typography variant="body2">
                 Keine Benachrichtigungen
               </Typography>
             </Box>
           ) : (
             filteredNotifications.map((notification, index) => (
-              <div key={notification.id}>
+              <Box key={notification.id}>
                 <MenuItem
                   onClick={() => handleNotificationClick(notification)}
-                  className={`p-3 ${!notification.read ? 'bg-blue-50' : ''}`}
+                  sx={{ 
+                    p: 1.5, 
+                    backgroundColor: !notification.read ? 'action.hover' : 'transparent'
+                  }}
                 >
-                  <div className="flex items-start space-x-3 w-full">
-                    <div className="flex-shrink-0 mt-1">
+                  <Box display="flex" alignItems="flex-start" gap={1.5} width="100%">
+                    <Box flexShrink={0} mt={0.5}>
                       {getNotificationIcon(notification.type)}
-                    </div>
+                    </Box>
                     
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <Typography variant="subtitle2" className="font-medium">
+                    <Box flex={1} minWidth={0}>
+                      <Box display="flex" alignItems="center" justifyContent="space-between" mb={0.5}>
+                        <Typography variant="subtitle2" fontWeight="medium">
                           {notification.title}
                         </Typography>
-                        <div className="flex items-center space-x-2">
+                        <Box display="flex" alignItems="center" gap={1}>
                           {notification.source && (
                             <Chip
                               label={notification.source}
                               size="small"
-                              className="text-xs"
+                              sx={{ fontSize: '0.75rem' }}
                             />
                           )}
                           <Chip
                             label={notification.priority}
                             size="small"
-                            color={getPriorityColor(notification.priority) as any}
-                            className="text-xs"
+                            color={getPriorityStatus(notification.priority) as 'success' | 'warning' | 'error' | 'info'}
+                            variant="outlined"
                           />
-                        </div>
-                      </div>
+                        </Box>
+                      </Box>
                       
-                      <Typography variant="body2" className="text-gray-600 mb-2">
+                      <Typography variant="body2" color="text.secondary" mb={1}>
                         {notification.message}
                       </Typography>
                       
-                      <div className="flex items-center justify-between">
-                        <Typography variant="caption" className="text-gray-500">
+                      <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <Typography variant="caption" color="text.secondary">
                           {notification.timestamp.toLocaleString('de-DE')}
                         </Typography>
                         
-                        <div className="flex items-center space-x-2">
+                        <Box display="flex" alignItems="center" gap={1}>
                           <TrustIndicator
                             level="high"
                           />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
                 </MenuItem>
                 {index < filteredNotifications.length - 1 && <Divider />}
-              </div>
+              </Box>
             ))
           )}
-        </div>
+        </Box>
 
         {/* Footer */}
         {unreadCount > 0 && (
-          <Box className="p-3 border-t bg-gray-50">
-            <div className="flex justify-between items-center">
-              <Typography variant="body2" className="text-gray-600">
-                {unreadCount} ungelesene Benachrichtigungen
+          <Box sx={{ p: 1.5, borderTop: 1, borderColor: 'divider', bgcolor: 'grey.50' }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Typography variant="body2" color="text.secondary">
+                {unreadCount} Ungelesen
               </Typography>
               <Chip
                 label="Alle als gelesen markieren"
                 size="small"
                 onClick={onMarkAllAsRead}
-                className="cursor-pointer"
+                sx={{ cursor: 'pointer' }}
               />
-            </div>
+            </Box>
           </Box>
         )}
       </Menu>
-    </div>
+    </Box>
   );
 }; 

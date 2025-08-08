@@ -135,10 +135,46 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
     setIsExportDialogOpen(true);
   };
 
-  const handleExportConfirm = () => {
-    // TODO: Implement export functionality
-    console.log('Exporting data in format:', exportFormat);
-    setIsExportDialogOpen(false);
+  const handleExportConfirm = async () => {
+    try {
+      const response = await fetch('/api/crm/reports/export', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          reportType: selectedReport,
+          format: exportFormat,
+          filters: filters,
+          dateRange: {
+            start: filters.startDate,
+            end: filters.endDate
+          }
+        })
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `crm-report-${selectedReport}-${new Date().toISOString().split('T')[0]}.${exportFormat}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        console.log('Report exported successfully in format:', exportFormat);
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+    } catch (err) {
+      console.error('Error exporting report:', err);
+      alert('Fehler beim Exportieren des Reports');
+    } finally {
+      setIsExportDialogOpen(false);
+    }
   };
 
   const formatCurrency = (amount: number) => {

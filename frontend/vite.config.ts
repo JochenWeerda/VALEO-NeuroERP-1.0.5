@@ -5,10 +5,12 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const isAnalysis = process.env.BUNDLE_ANALYSIS === 'true';
   const isProduction = mode === 'production';
 
   console.log(`🏭 ${isProduction ? 'Production' : 'Development'}-Build gestartet`);
+  
+  // Bundle-Analyse nur im Analyse-Modus
+  const isAnalysis = process.env.BUNDLE_ANALYSIS === 'true';
   if (isAnalysis) {
     console.log('🔍 Bundle-Analyse-Modus aktiviert');
   }
@@ -164,8 +166,7 @@ export default defineConfig(({ mode }) => {
           },
 
           // Chunk-Namen optimieren
-          chunkFileNames: (chunkInfo) => {
-            const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split('/').pop() : 'chunk';
+          chunkFileNames: () => {
             return `js/[name]-[hash].js`;
           },
 

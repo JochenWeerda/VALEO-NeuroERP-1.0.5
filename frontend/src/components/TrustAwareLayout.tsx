@@ -6,6 +6,8 @@ import {
   Settings as SettingsIcon,
   Logout as LogoutIcon
 } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 import { Sidebar } from './Sidebar';
 import { NotificationDropdown } from './NotificationDropdown';
 import type { ModuleItem, Module } from './Sidebar';
@@ -129,15 +131,15 @@ export const TrustAwareLayout: React.FC<TrustAwareLayoutProps> = ({
             >
               <MenuItem onClick={() => { onProfileClick(); handleUserMenuClose(); }}>
                 <AccountCircleIcon sx={{ mr: 1 }} />
-                Profil
+                {UI_LABELS.NAVIGATION.PROFILE}
               </MenuItem>
               <MenuItem onClick={() => { onSettingsClick(); handleUserMenuClose(); }}>
                 <SettingsIcon sx={{ mr: 1 }} />
-                Einstellungen
+                {UI_LABELS.NAVIGATION.SETTINGS}
               </MenuItem>
               <MenuItem onClick={() => { onLogout(); handleUserMenuClose(); }}>
                 <LogoutIcon sx={{ mr: 1 }} />
-                Abmelden
+                {UI_LABELS.ACTIONS.LOGOUT}
               </MenuItem>
             </Menu>
           </Toolbar>

@@ -29,6 +29,39 @@ const renderWithConfig = (component: React.ReactElement) => {
 };
 
 describe('ContactOverview', () => {
+  const defaultProps = {
+    filters: {
+      contactType: 'all' as const,
+      sortBy: 'contactNumber' as const,
+      sortOrder: 'asc' as const,
+      representative: '',
+      dateRange: {
+        from: null,
+        to: null
+      },
+      parity: '',
+      onlyPlannedAppointments: false,
+      articleSumsInPrint: false,
+      searchText: '',
+      contactNumber: ''
+    },
+    onFilterChange: jest.fn(),
+    contacts: [
+      {
+        id: '1',
+        contactNumber: 'K001',
+        name: 'Test Kunde',
+        representative: 'Max Mustermann',
+        contactType: 'sales' as const,
+        orderQuantity: 100,
+        remainingQuantity: 50,
+        status: 'active' as const,
+        phone: '123456789',
+        email: 'test@example.com'
+      }
+    ]
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -58,14 +91,14 @@ describe('ContactOverview', () => {
 
   describe('UI-Rendering', () => {
     it('sollte die Kontaktübersicht korrekt rendern', () => {
-      renderWithConfig(<ContactOverview />);
+      renderWithConfig(<ContactOverview {...defaultProps} />);
 
       expect(screen.getByText('Kontakte')).toBeInTheDocument();
       expect(screen.getByText('Neuen Kontakt erstellen')).toBeInTheDocument();
     });
 
     it('sollte Suchfelder anzeigen', () => {
-      renderWithConfig(<ContactOverview />);
+      renderWithConfig(<ContactOverview {...defaultProps} />);
 
       expect(screen.getByPlaceholderText('Nach Namen oder E-Mail suchen...')).toBeInTheDocument();
       expect(screen.getByText('Filter')).toBeInTheDocument();
@@ -76,7 +109,7 @@ describe('ContactOverview', () => {
     it('sollte Suchfunktion korrekt ausführen', async () => {
       const user = userEvent.setup();
       
-      renderWithConfig(<ContactOverview />);
+      renderWithConfig(<ContactOverview {...defaultProps} />);
 
       const searchInput = screen.getByPlaceholderText('Nach Namen oder E-Mail suchen...');
       await user.type(searchInput, 'Test');
@@ -87,7 +120,7 @@ describe('ContactOverview', () => {
     it('sollte Filter öffnen und schließen', async () => {
       const user = userEvent.setup();
       
-      renderWithConfig(<ContactOverview />);
+      renderWithConfig(<ContactOverview {...defaultProps} />);
 
       const filterButton = screen.getByText('Filter');
       await user.click(filterButton);
@@ -100,7 +133,7 @@ describe('ContactOverview', () => {
     it('sollte neuen Kontakt erstellen', async () => {
       const user = userEvent.setup();
       
-      renderWithConfig(<ContactOverview />);
+      renderWithConfig(<ContactOverview {...defaultProps} />);
 
       const createButton = screen.getByText('Neuen Kontakt erstellen');
       await user.click(createButton);
@@ -111,7 +144,7 @@ describe('ContactOverview', () => {
     it('sollte Kontakt bearbeiten', async () => {
       const user = userEvent.setup();
       
-      renderWithConfig(<ContactOverview />);
+      renderWithConfig(<ContactOverview {...defaultProps} />);
 
       // Simuliere vorhandene Kontakte
       const mockContacts = [

@@ -148,11 +148,56 @@ export const StockOpnameInterface: React.FC<StockOpnameInterfaceProps> = ({
   }, []);
 
   // Barcode-Scan Handler
-  const handleBarcodeDetected = useCallback((barcode: string) => {
+  const handleBarcodeDetected = useCallback(async (barcode: string) => {
     // Produkt über Barcode suchen und zur Inventur hinzufügen
     console.log('Barcode erkannt:', barcode);
-    // TODO: API-Call zum Hinzufügen des Produkts
-  }, []);
+    
+    if (!currentOpname) {
+      setError('Keine aktive Inventur ausgewählt');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/products/barcode/${barcode}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      });
+
+      if (response.ok) {
+        const product = await response.json();
+        
+        // Add product to stock opname
+        const addResponse = await fetch(`/api/stock-opname/${currentOpname.id}/items`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          },
+          body: JSON.stringify({
+            product_id: product.id,
+            expected_quantity: product.quantity || 0
+          })
+        });
+
+        if (addResponse.ok) {
+          setSuccess(`Produkt "${product.name}" zur Inventur hinzugefügt`);
+          // Reload items
+          if (currentOpname) {
+            openStockOpname(currentOpname);
+          }
+        } else {
+          throw new Error('Fehler beim Hinzufügen des Produkts zur Inventur');
+        }
+      } else {
+        setError('Produkt nicht gefunden');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Fehler beim Hinzufügen des Produkts');
+    }
+  }, [currentOpname, openStockOpname]);
 
   // Item bearbeiten
   const editItem = useCallback((item: StockOpnameItem) => {

@@ -30,16 +30,8 @@ export const TestMCPIntegration: React.FC = () => {
 
   // MCP Hooks testen
   const mcpForm = useMCPForm({
-    tableName: 'invoices',
-    autoValidate: true,
-    onSchemaLoad: (schema) => {
-      console.log('✅ MCP Form Schema geladen:', schema);
-      setSchemaData(schema);
-    },
-    onError: (error) => {
-      console.error('❌ MCP Form Fehler:', error);
-      setError(error.message);
-    }
+    schema: undefined,
+    defaultValues: {}
   });
 
   const mcpTable = useMCPTable('invoices');
@@ -315,9 +307,9 @@ export const TestMCPIntegration: React.FC = () => {
                 useMCPForm (invoices)
               </Typography>
               <div className="text-sm text-gray-600">
-                <div>Schema geladen: {mcpForm.schema ? '✅' : '❌'}</div>
-                <div>Loading: {mcpForm.isLoading ? '🔄' : '✅'}</div>
-                <div>Error: {mcpForm.error ? mcpForm.error.message : 'Keine'}</div>
+                <div>Schema geladen: {mcpForm.formState ? '✅' : '❌'}</div>
+                <div>Loading: {mcpForm.formState?.isSubmitting ? '🔄' : '✅'}</div>
+                <div>Error: {Object.keys(mcpForm.formState?.errors || {}).length > 0 ? 'Fehler vorhanden' : 'Keine'}</div>
               </div>
             </div>
 

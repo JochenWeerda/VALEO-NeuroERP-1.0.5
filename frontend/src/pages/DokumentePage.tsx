@@ -29,15 +29,30 @@ import {
   Alert
 } from '@mui/material';
 import {
-  Print as PrintIcon,
-  Preview as PreviewIcon,
-  Settings as SettingsIcon,
-  Close as CloseIcon,
-  Refresh as RefreshIcon,
+  Add as AddIcon,
+  Edit as EditIcon,
   Delete as DeleteIcon,
-  Duplicate as DuplicateIcon,
+  Visibility as VisibilityIcon,
+  Download as DownloadIcon,
+  Print as PrintIcon,
+  Share as ShareIcon,
+  ContentCopy as DuplicateIcon,
+  Search as SearchIcon,
+  FilterList as FilterIcon,
+  Sort as SortIcon,
+  Refresh as RefreshIcon,
+  CloudUpload as UploadIcon,
+  Description as DocumentIcon,
+  PictureAsPdf as PdfIcon,
+  Image as ImageIcon,
+  Movie as VideoIcon,
+  AudioFile as AudioIcon,
+  Archive as ArchiveIcon,
+  Folder as FolderIcon,
   Save as SaveIcon,
-  Add as AddIcon
+  Close as CloseIcon,
+  Settings as SettingsIcon,
+  Preview as PreviewIcon
 } from '@mui/icons-material';
 
 interface TabPanelProps {

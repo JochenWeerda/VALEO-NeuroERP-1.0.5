@@ -1,4 +1,9 @@
 import React from 'react';
+import { Card, CardContent, Typography, Box } from '@mui/material';
+import { CheckCircle, Cancel, Build, Warning } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StatusChip } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 import { TrustIndicator } from './TrustIndicator';
 import type { TrustLevel } from './TrustIndicator';
 
@@ -15,50 +20,65 @@ export const StatusCard: React.FC<StatusCardProps> = ({
   trustLevel,
   confidence
 }) => {
-  const getStatusColor = () => {
+  // ✅ REFAKTORIERT: Verwendung von StatusChip für Status-Anzeige
+  const getStatusConfig = () => {
     switch (status) {
       case 'online':
-        return 'text-green-600 bg-green-100';
+        return { 
+          status: 'ACTIVE' as keyof typeof UI_LABELS.STATUS, 
+          icon: <CheckCircle fontSize="small" />,
+          label: 'Online'
+        };
       case 'offline':
-        return 'text-red-600 bg-red-100';
+        return { 
+          status: 'OFFLINE' as keyof typeof UI_LABELS.STATUS, 
+          icon: <Cancel fontSize="small" />,
+          label: 'Offline'
+        };
       case 'maintenance':
-        return 'text-yellow-600 bg-yellow-100';
+        return { 
+          status: 'MAINTENANCE' as keyof typeof UI_LABELS.STATUS, 
+          icon: <Build fontSize="small" />,
+          label: 'Wartung'
+        };
       case 'error':
-        return 'text-red-600 bg-red-100';
+        return { 
+          status: 'ERROR' as keyof typeof UI_LABELS.STATUS, 
+          icon: <Warning fontSize="small" />,
+          label: 'Fehler'
+        };
       default:
-        return 'text-gray-600 bg-gray-100';
+        return { 
+          status: 'PENDING' as keyof typeof UI_LABELS.STATUS, 
+          icon: <Warning fontSize="small" />,
+          label: status
+        };
     }
   };
 
-  const getStatusIcon = () => {
-    switch (status) {
-      case 'online':
-        return 'fas fa-check-circle';
-      case 'offline':
-        return 'fas fa-times-circle';
-      case 'maintenance':
-        return 'fas fa-tools';
-      case 'error':
-        return 'fas fa-exclamation-triangle';
-      default:
-        return 'fas fa-question-circle';
-    }
-  };
+  const statusConfig = getStatusConfig();
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4">
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
-          <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor()}`}>
-            <i className={`${getStatusIcon()} mr-1`}></i>
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </div>
-        </div>
-        <div className="ml-4">
-          <TrustIndicator level={trustLevel} confidence={confidence} />
-        </div>
-      </div>
-    </div>
+    <Card sx={{ p: 2, height: '100%' }}>
+      <CardContent>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Box flex={1}>
+            <Typography variant="body2" fontWeight="medium" color="text.primary" mb={0.5}>
+              {title}
+            </Typography>
+            <Box display="flex" alignItems="center" gap={0.5}>
+              {statusConfig.icon}
+              <StatusChip 
+                status={statusConfig.status} 
+                size="small"
+              />
+            </Box>
+          </Box>
+          <Box ml={2}>
+            <TrustIndicator level={trustLevel} confidence={confidence} />
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };

@@ -33,13 +33,13 @@ import { useErpStore } from '../../store/erpStore';
 import { OrderSuggestionData, OrderSuggestionFilters } from '../../types/erpTypes';
 
 // Validierungsschema für Filter
-const filterSchema = yup.object({
-  articleGroup: yup.string(),
-  branch: yup.string(),
-  matchcode: yup.string(),
-  minStock: yup.number().min(0, 'Mindestbestand muss größer oder gleich 0 sein'),
-  maxStock: yup.number().min(0, 'Maximalbestand muss größer oder gleich 0 sein')
-});
+const filterSchema: yup.ObjectSchema<OrderSuggestionFilters> = yup.object({
+  articleGroup: yup.string().optional(),
+  branch: yup.string().optional(),
+  matchcode: yup.string().optional(),
+  minStock: yup.number().min(0, 'Mindestbestand muss größer oder gleich 0 sein').optional(),
+  maxStock: yup.number().min(0, 'Maximalbestand muss größer oder gleich 0 sein').optional()
+}) as yup.ObjectSchema<OrderSuggestionFilters>;
 
 interface OrderSuggestionProps {
   onSuggestionSelect?: (suggestion: OrderSuggestionData) => void;

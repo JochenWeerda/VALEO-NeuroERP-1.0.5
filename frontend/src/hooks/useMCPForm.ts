@@ -1,234 +1,368 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useForm, UseFormReturn } from 'react-hook-form';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useForm, FieldValues, UseFormReturn, FieldError, FieldErrors, Path, PathValue, DefaultValues, Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { getMCPSchemaInjector } from '../utils/mcpSchemaInjector';
 import type { MCPSchema } from '../utils/mcpSchemaInjector';
 
-interface UseMCPFormOptions {
-  tableName: string;
-  initialData?: any;
-  onSchemaLoad?: (schema: MCPSchema) => void;
-  onError?: (error: Error) => void;
-  autoValidate?: boolean;
+interface MCPFormConfig<T extends FieldValues> {
+  schema?: z.ZodSchema<T>;
+  defaultValues?: DefaultValues<T>;
+  mode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
+  reValidateMode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
+  criteriaMode?: 'firstError' | 'all';
 }
 
-interface UseMCPFormReturn<T> extends UseFormReturn<T> {
-  schema: MCPSchema | null;
-  isLoading: boolean;
-  error: Error | null;
-  validationSchema: z.ZodSchema | null;
-  refreshSchema: () => Promise<void>;
-  validateField: (fieldName: string, value: any) => Promise<boolean>;
-  getFieldValidation: (fieldName: string) => z.ZodSchema | null;
+interface MCPFormState<T extends FieldValues> {
+  isDirty: boolean;
+  isSubmitting: boolean;
+  isSubmitted: boolean;
+  isValid: boolean;
+  errors: FieldErrors<T>;
+  touchedFields: Record<string, boolean>;
 }
 
-/**
- * React Hook für MCP-Schema-basierte Formulare
- * 
- * @example
- * ```tsx
- * const form = useMCPForm({
- *   tableName: 'invoices',
- *   initialData: { amount: 100 },
- *   onSchemaLoad: (schema) => console.log('Schema geladen:', schema)
- * });
- * 
- * return (
- *   <form onSubmit={form.handleSubmit(onSubmit)}>
- *     <input {...form.register('amount')} />
- *     {form.formState.errors.amount && (
- *       <span>{form.formState.errors.amount.message}</span>
- *     )}
- *   </form>
- * );
- * ```
- */
-export function useMCPForm<T = any>(options: UseMCPFormOptions): UseMCPFormReturn<T> {
-  const [schema, setSchema] = useState<MCPSchema | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-  const [validationSchema, setValidationSchema] = useState<z.ZodSchema | null>(null);
+interface MCPFormActions<T extends FieldValues> {
+  reset: (values?: DefaultValues<T>) => void;
+  setValue: (name: Path<T>, value: PathValue<T, Path<T>>) => void;
+  getValues: () => T;
+  trigger: (name?: Path<T> | Path<T>[]) => Promise<boolean>;
+  clearErrors: (name?: Path<T> | Path<T>[]) => void;
+  setError: (name: Path<T>, error: FieldError) => void;
+}
 
-  const mcpInjector = getMCPSchemaInjector();
+export function useMCPForm<T extends FieldValues = FieldValues>(
+  config: MCPFormConfig<T> = {}
+): UseFormReturn<T> & MCPFormState<T> & MCPFormActions<T> {
+  const {
+    schema,
+    defaultValues,
+    mode = 'onBlur',
+    reValidateMode = 'onChange',
+    criteriaMode = 'firstError'
+  } = config;
 
-  /**
-   * Schema vom MCP-Server laden
-   */
-  const loadSchema = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  const resolver: Resolver<T> | undefined = schema ? zodResolver(schema as any) : undefined;
 
-      console.log(`🔄 MCP Schema wird geladen für Tabelle: ${options.tableName}`);
-      
-      const loadedSchema = await mcpInjector.getTableSchema(options.tableName);
-      setSchema(loadedSchema);
-
-      // Zod-Schema aus MCP-Schema generieren
-      const zodSchema = generateZodSchema(loadedSchema);
-      setValidationSchema(zodSchema);
-
-      options.onSchemaLoad?.(loadedSchema);
-      
-      console.log(`✅ MCP Schema erfolgreich geladen für Tabelle: ${options.tableName}`);
-
-    } catch (err) {
-      const error = err instanceof Error ? err : new Error('Unbekannter Fehler beim Laden des Schemas');
-      setError(error);
-      options.onError?.(error);
-      console.error(`❌ MCP Schema Fehler für Tabelle: ${options.tableName}:`, error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [options.tableName, options.onSchemaLoad, options.onError]);
-
-  /**
-   * Schema beim Mount laden
-   */
-  useEffect(() => {
-    loadSchema();
-  }, [loadSchema]);
-
-  /**
-   * React Hook Form mit MCP-Schema initialisieren
-   */
   const form = useForm<T>({
-    resolver: validationSchema ? zodResolver(validationSchema) as any : undefined,
-    defaultValues: options.initialData || {},
-    mode: options.autoValidate ? 'onChange' : 'onSubmit'
+    defaultValues: defaultValues as DefaultValues<T>,
+    mode,
+    reValidateMode: reValidateMode as 'onBlur' | 'onChange' | 'onSubmit',
+    criteriaMode,
+    resolver
   });
 
-  /**
-   * Schema neu laden
-   */
-  const refreshSchema = useCallback(async () => {
-    await loadSchema();
-  }, [loadSchema]);
+  const [formState, setFormState] = useState<MCPFormState<T>>({
+    isDirty: false,
+    isSubmitting: false,
+    isSubmitted: false,
+    isValid: false,
+    errors: {} as FieldErrors<T>,
+    touchedFields: {}
+  });
 
-  /**
-   * Einzelnes Feld validieren
-   */
-  const validateField = useCallback(async (fieldName: string, value: any): Promise<boolean> => {
-    if (!validationSchema) return true;
+  const previousValues = useRef<T>(form.getValues());
 
-    try {
-      // Einfache Validierung für einzelne Felder
-      const fieldSchema = getFieldSchema(validationSchema, fieldName);
-      if (fieldSchema) {
-        fieldSchema.parse(value);
-        return true;
-      }
-      return true;
-    } catch (err) {
-      console.error(`Validierungsfehler für Feld ${fieldName}:`, err);
-      return false;
-    }
-  }, [validationSchema]);
+  // Form State synchronisieren
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const currentValues = value as T;
+      const isDirty = JSON.stringify(currentValues) !== JSON.stringify(previousValues.current);
+      
+      setFormState(prev => ({
+        ...prev,
+        isDirty,
+        isValid: form.formState.isValid,
+        errors: form.formState.errors,
+        touchedFields: form.formState.touchedFields as Record<string, boolean>
+      }));
+      
+      previousValues.current = currentValues;
+    });
 
-  /**
-   * Validierungsschema für ein Feld abrufen
-   */
-  const getFieldValidation = useCallback((fieldName: string): z.ZodSchema | null => {
-    if (!validationSchema) return null;
-    
-    try {
-      const fieldSchema = getFieldSchema(validationSchema, fieldName);
-      return fieldSchema || null;
-    } catch {
-      return null;
-    }
-  }, [validationSchema]);
+    return () => subscription.unsubscribe();
+  }, [form]);
+
+  // Reset Funktion
+  const reset = useCallback((values?: DefaultValues<T>) => {
+    form.reset(values as any);
+    setFormState(prev => ({
+      ...prev,
+      isDirty: false,
+      isSubmitted: false,
+      errors: {} as FieldErrors<T>,
+      touchedFields: {}
+    }));
+  }, [form]);
+
+  // SetValue Funktion
+  const setValue = useCallback((name: Path<T>, value: PathValue<T, Path<T>>) => {
+    form.setValue(name, value as any);
+  }, [form]);
+
+  // GetValues Funktion
+  const getValues = useCallback(() => {
+    return form.getValues();
+  }, [form]);
+
+  // Trigger Funktion
+  const trigger = useCallback(async (name?: Path<T> | Path<T>[]) => {
+    return await form.trigger(name);
+  }, [form]);
+
+  // ClearErrors Funktion
+  const clearErrors = useCallback((name?: Path<T> | Path<T>[]) => {
+    form.clearErrors(name);
+  }, [form]);
+
+  // SetError Funktion
+  const setError = useCallback((name: Path<T>, error: FieldError) => {
+    form.setError(name, error);
+  }, [form]);
 
   return {
     ...form,
-    schema,
-    isLoading,
-    error,
-    validationSchema,
-    refreshSchema,
-    validateField,
-    getFieldValidation
+    ...formState,
+    reset,
+    setValue,
+    getValues: getValues as any,
+    trigger,
+    clearErrors,
+    setError
   };
 }
 
-/**
- * Zod-Schema aus MCP-Schema generieren
- */
-function generateZodSchema(schema: MCPSchema): z.ZodSchema {
-  const schemaObject: Record<string, z.ZodTypeAny> = {};
-
-  schema.columns.forEach(column => {
-    let zodType: z.ZodTypeAny;
-
-    // Basis-Typ basierend auf Spalten-Typ
-    switch (column.type) {
-      case 'numeric':
-      case 'integer':
-        zodType = z.number();
-        break;
-      case 'boolean':
-        zodType = z.boolean();
-        break;
-      case 'timestamp':
-        zodType = z.string();
-        break;
-      default:
-        zodType = z.string();
-    }
-
-    // Enum-Werte hinzufügen
-    if (column.enum_values && column.enum_values.length > 0) {
-      zodType = z.enum(column.enum_values as [string, ...string[]]);
-    }
-
-    // Validierungsregeln hinzufügen
-    if (column.not_null) {
-      if (zodType instanceof z.ZodString) {
-        zodType = zodType.min(1, `${column.name} ist erforderlich`);
-      } else if (zodType instanceof z.ZodNumber) {
-        zodType = zodType.min(0.01, `${column.name} ist erforderlich`);
-      }
-    }
-
-    // Spezielle Validierungen
-    if (column.type === 'numeric' && zodType instanceof z.ZodNumber) {
-      zodType = zodType.positive(`${column.name} muss positiv sein`);
-    }
-
-    if (column.name === 'email' && zodType instanceof z.ZodString) {
-      zodType = zodType.email(`Ungültige E-Mail-Adresse`);
-    }
-
-    if (column.name.includes('id') && zodType instanceof z.ZodString) {
-      zodType = zodType.uuid(`Ungültige ${column.name} ID`);
-    }
-
-    schemaObject[column.name] = zodType;
+// Specialized hooks for common form patterns
+export function useMCPFormWithValidation<T extends FieldValues>(
+  schema: z.ZodSchema<T>,
+  defaultValues?: DefaultValues<T>
+) {
+  return useMCPForm<T>({
+    schema,
+    defaultValues
   });
-
-  return z.object(schemaObject);
 }
 
-/**
- * Feld-Schema aus einem Zod-Objekt extrahieren
- */
-function getFieldSchema(schema: z.ZodSchema, fieldName: string): z.ZodTypeAny | null {
-  try {
-    if (schema instanceof z.ZodObject) {
-      const shape = schema.shape;
-      return shape[fieldName] || null;
+export function useMCPFormWithAutoSave<T extends FieldValues>(
+  schema: z.ZodSchema<T>,
+  defaultValues?: DefaultValues<T>,
+  autoSaveDelay: number = 1000
+) {
+  const form = useMCPForm<T>({
+    schema,
+    defaultValues
+  });
+
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const autoSave = useCallback(async () => {
+    if (form.isDirty && form.isValid) {
+      setIsSaving(true);
+      try {
+        // Hier würde die tatsächliche Speicherlogik implementiert
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setLastSaved(new Date());
+        form.reset(form.getValues());
+      } catch (error) {
+        console.error('Auto-Save fehlgeschlagen:', error);
+      } finally {
+        setIsSaving(false);
+      }
     }
-    return null;
-  } catch {
-    return null;
-  }
+  }, [form]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(autoSave, autoSaveDelay);
+    return () => clearTimeout(timeoutId);
+  }, [form.watch(), autoSave, autoSaveDelay]);
+
+  return {
+    ...form,
+    lastSaved,
+    isSaving
+  };
+}
+
+export function useMCPFormWithSteps<T extends FieldValues>(
+  steps: Array<{
+    id: string;
+    title: string;
+    fields: (keyof T)[];
+    validation?: z.ZodSchema<Partial<T>>;
+  }>,
+  defaultValues?: DefaultValues<T>
+) {
+  const form = useMCPForm<T>({
+    defaultValues
+  });
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
+
+  const currentStepConfig = steps[currentStep];
+  const isFirstStep = currentStep === 0;
+  const isLastStep = currentStep === steps.length - 1;
+
+  const validateCurrentStep = useCallback(async () => {
+    if (currentStepConfig?.validation) {
+      try {
+        const stepFields = form.getValues();
+        currentStepConfig.validation.parse(stepFields);
+        return true;
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          const zodError = error as z.ZodError;
+          (zodError as any).errors.forEach((err: any) => {
+            const fieldName = err.path.join('.') as Path<T>;
+            form.setError(fieldName, {
+              type: 'validation',
+              message: err.message
+            });
+          });
+        }
+        return false;
+      }
+    }
+    return true;
+  }, [currentStepConfig, form]);
+
+  const nextStep = useCallback(async () => {
+    const isValid = await validateCurrentStep();
+    if (isValid && !isLastStep) {
+      setCompletedSteps(prev => new Set([...prev, currentStep]));
+      setCurrentStep(prev => prev + 1);
+    }
+  }, [validateCurrentStep, isLastStep, currentStep]);
+
+  const prevStep = useCallback(() => {
+    if (!isFirstStep) {
+      setCurrentStep(prev => prev - 1);
+    }
+  }, [isFirstStep]);
+
+  const goToStep = useCallback((stepIndex: number) => {
+    if (stepIndex >= 0 && stepIndex < steps.length) {
+      setCurrentStep(stepIndex);
+    }
+  }, [steps.length]);
+
+  const isStepCompleted = useCallback((stepIndex: number) => {
+    return completedSteps.has(stepIndex);
+  }, [completedSteps]);
+
+  return {
+    ...form,
+    currentStep,
+    currentStepConfig,
+    isFirstStep,
+    isLastStep,
+    nextStep,
+    prevStep,
+    goToStep,
+    isStepCompleted,
+    completedSteps: Array.from(completedSteps)
+  };
+}
+
+// Hook for form with conditional fields
+export function useMCPFormWithConditionalFields<T extends FieldValues>(
+  schema: z.ZodSchema<T>,
+  defaultValues?: DefaultValues<T>,
+  conditionalLogic?: Record<keyof T, (values: T) => boolean>
+) {
+  const form = useMCPForm<T>({
+    schema,
+    defaultValues
+  });
+
+  const [visibleFields, setVisibleFields] = useState<Set<keyof T>>(new Set());
+
+  useEffect(() => {
+    if (conditionalLogic) {
+      const values = form.getValues();
+      const newVisibleFields = new Set<keyof T>();
+
+      Object.entries(conditionalLogic).forEach(([field, condition]) => {
+        if (condition(values)) {
+          newVisibleFields.add(field as keyof T);
+        }
+      });
+
+      setVisibleFields(newVisibleFields);
+    }
+  }, [form.watch(), conditionalLogic, form]);
+
+  const isFieldVisible = useCallback((field: keyof T) => {
+    if (!conditionalLogic) return true;
+    return visibleFields.has(field);
+  }, [visibleFields, conditionalLogic]);
+
+  return {
+    ...form,
+    isFieldVisible,
+    visibleFields: Array.from(visibleFields)
+  };
+}
+
+// Hook for form with file uploads
+export function useMCPFormWithFileUpload<T extends FieldValues>(
+  schema: z.ZodSchema<T>,
+  defaultValues?: DefaultValues<T>
+) {
+  const form = useMCPForm<T>({
+    schema,
+    defaultValues
+  });
+
+  const [uploadedFiles, setUploadedFiles] = useState<Record<string, File[]>>({});
+
+  const handleFileUpload = useCallback((fieldName: keyof T, files: FileList | File[]) => {
+    const fileArray = Array.from(files);
+    setUploadedFiles(prev => ({
+      ...prev,
+      [fieldName as string]: fileArray
+    }));
+
+    // Update form value
+    form.setValue(fieldName as Path<T>, fileArray as PathValue<T, Path<T>>);
+  }, [form]);
+
+  const removeFile = useCallback((fieldName: keyof T, fileIndex: number) => {
+    setUploadedFiles(prev => {
+      const fieldFiles = prev[fieldName as string] || [];
+      const newFiles = fieldFiles.filter((_, index) => index !== fileIndex);
+      
+      return {
+        ...prev,
+        [fieldName as string]: newFiles
+      };
+    });
+  }, []);
+
+  const clearFiles = useCallback((fieldName: keyof T) => {
+    setUploadedFiles(prev => {
+      const newFiles = { ...prev };
+      delete newFiles[fieldName as string];
+      return newFiles;
+    });
+    
+    form.setValue(fieldName as Path<T>, [] as PathValue<T, Path<T>>);
+  }, [form]);
+
+  return {
+    ...form,
+    uploadedFiles,
+    handleFileUpload,
+    removeFile,
+    clearFiles
+  };
 }
 
 /**
  * React Hook für MCP-Tabellen
  */
-export function useMCPTable<T = any>(tableName: string) {
+export function useMCPTable<T = unknown>(tableName: string) {
   const [schema, setSchema] = useState<MCPSchema | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -253,7 +387,7 @@ export function useMCPTable<T = any>(tableName: string) {
     };
 
     loadSchema();
-  }, [tableName]);
+  }, [tableName, mcpInjector]);
 
   const getVisibleColumns = useCallback(() => {
     if (!schema) return [];
@@ -271,7 +405,7 @@ export function useMCPTable<T = any>(tableName: string) {
   }, [schema]);
 
   const canDelete = useCallback(() => {
-    return schema?.rls.delete || false;
+    return schema?.rls?.delete || false;
   }, [schema]);
 
   return {
@@ -287,7 +421,7 @@ export function useMCPTable<T = any>(tableName: string) {
 /**
  * React Hook für MCP-Datenoperationen
  */
-export function useMCPData<T = any>(tableName: string) {
+export function useMCPData<T = unknown>(tableName: string) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -296,7 +430,7 @@ export function useMCPData<T = any>(tableName: string) {
     limit?: number;
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
-    filters?: Record<string, any>;
+    filters?: Record<string, unknown>;
   }) => {
     try {
       setIsLoading(true);
@@ -306,7 +440,7 @@ export function useMCPData<T = any>(tableName: string) {
       const mockData = generateMockData(tableName);
       
       return {
-        data: mockData,
+        data: mockData as T[],
         total: mockData.length,
         page: options?.page || 1,
         limit: options?.limit || 10
@@ -328,13 +462,13 @@ export function useMCPData<T = any>(tableName: string) {
 
       // Mock-Daten für Demo-Zwecke
       const mockData = generateMockData(tableName);
-      const item = mockData.find((item: any) => item.id === id);
+      const item = mockData.find((item: { id: string }) => item.id === id);
       
       if (!item) {
         throw new Error('Element nicht gefunden');
       }
 
-      return item;
+      return item as T;
 
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unbekannter Fehler');
@@ -357,7 +491,7 @@ export function useMCPData<T = any>(tableName: string) {
         created_at: new Date().toISOString()
       };
 
-      return createdItem;
+      return createdItem as T;
 
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unbekannter Fehler');
@@ -380,7 +514,7 @@ export function useMCPData<T = any>(tableName: string) {
         updated_at: new Date().toISOString()
       };
 
-      return updatedItem;
+      return updatedItem as T;
 
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unbekannter Fehler');
@@ -422,7 +556,7 @@ export function useMCPData<T = any>(tableName: string) {
 /**
  * Mock-Daten generieren
  */
-function generateMockData(tableName: string): any[] {
+function generateMockData(tableName: string): unknown[] {
   switch (tableName) {
     case 'customers':
       return [

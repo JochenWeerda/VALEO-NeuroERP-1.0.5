@@ -568,7 +568,7 @@ const PersonalizedDashboard: React.FC = () => {
     <Box className="p-6 bg-gray-50 min-h-screen">
       {/* Header */}
       <SectionHeader
-        title={`Willkommen zurück, ${user?.full_name || 'Benutzer'}!`}
+        title={`Willkommen zurück, ${user?.name || 'Benutzer'}!`}
         subtitle="Ihr personalisiertes VALEO NeuroERP Dashboard"
         actions={
           <Box className="flex items-center space-x-2">

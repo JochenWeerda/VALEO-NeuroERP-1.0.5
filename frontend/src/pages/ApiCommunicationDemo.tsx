@@ -96,7 +96,10 @@ const ApiCommunicationDemo: React.FC = () => {
   };
 
   const handleLogin = async () => {
-    const response = await login(loginData);
+    const response = await login({
+      email: loginData.username, // Verwende username als email
+      password: loginData.password
+    });
     if (response.success) {
       setShowLoginDialog(false);
       setLoginData({ username: '', password: '' });
@@ -122,7 +125,7 @@ const ApiCommunicationDemo: React.FC = () => {
         name: createData.name || '',
         sku: createData.sku || '',
         quantity: parseInt(createData.quantity) || 0,
-        unit_price: parseFloat(createData.unit_price) || 0,
+        price: parseFloat(createData.unit_price) || 0, // Map unit_price to price
         location: createData.location || '',
         category: createData.category || 'general',
         status: 'in_stock'
@@ -338,10 +341,10 @@ const ApiCommunicationDemo: React.FC = () => {
                     <CheckCircleIcon color="primary" />
                   </ListItemIcon>
                   <ListItemText
-                    primary={`${transaction.type} - ${transaction.amount}€`}
+                    primary={`${transaction.type || 'unknown'} - ${transaction.amount}€`}
                     secondary={transaction.description}
                   />
-                  <Chip label={transaction.status} size="small" />
+                  <Chip label={transaction.status || 'pending'} size="small" />
                 </ListItem>
               ))}
             </List>
@@ -359,10 +362,10 @@ const ApiCommunicationDemo: React.FC = () => {
                   </ListItemIcon>
                   <ListItemText
                     primary={item.name}
-                    secondary={`SKU: ${item.sku} - ${item.quantity} Stück`}
+                    secondary={`SKU: ${item.sku || 'N/A'} - ${item.quantity} Stück`}
                   />
                   <Chip 
-                    label={item.status} 
+                    label={item.status || 'unknown'} 
                     size="small" 
                     color={item.status === 'in_stock' ? 'success' : 'warning'}
                   />

@@ -1,6 +1,10 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Alert, Button, Box, Typography, Paper } from '@mui/material';
 import { Refresh as RefreshIcon, BugReport as BugReportIcon } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StandardButton } from './forms/FormStandardization';
+import { StandardMessage } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 
 interface Props {
   children: ReactNode;
@@ -71,42 +75,41 @@ export class ErrorBoundary extends Component<Props, State> {
             />
             
             <Typography variant="h4" component="h1" gutterBottom color="error.main">
-              Ein Fehler ist aufgetreten
+              {UI_LABELS.ERRORS.TITLE}
             </Typography>
             
             <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-              Entschuldigung, etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support.
+              {UI_LABELS.ERRORS.DESCRIPTION}
             </Typography>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <Alert severity="error" sx={{ mb: 3, textAlign: 'left' }}>
-                <Typography variant="subtitle2" gutterBottom>
-                  Fehlerdetails (nur in Entwicklung):
-                </Typography>
-                <Typography variant="body2" component="pre" sx={{ fontSize: '0.75rem' }}>
-                  {this.state.error.toString()}
-                </Typography>
-              </Alert>
+              <Box sx={{ mb: 3, textAlign: 'left' }}>
+                <StandardMessage
+                  type="error"
+                  title={UI_LABELS.ERRORS.DETAILS_TITLE}
+                  message={this.state.error.toString()}
+                />
+              </Box>
             )}
 
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Button
+              <StandardButton
                 variant="contained"
                 startIcon={<RefreshIcon />}
                 onClick={this.handleReset}
                 sx={{ minWidth: 140 }}
               >
-                Erneut versuchen
-              </Button>
+                {UI_LABELS.ACTIONS.RETRY}
+              </StandardButton>
               
-              <Button
+              <StandardButton
                 variant="outlined"
                 startIcon={<RefreshIcon />}
                 onClick={this.handleReload}
                 sx={{ minWidth: 140 }}
               >
-                Seite neu laden
-              </Button>
+                {UI_LABELS.ACTIONS.RELOAD_PAGE}
+              </StandardButton>
             </Box>
           </Paper>
         </Box>

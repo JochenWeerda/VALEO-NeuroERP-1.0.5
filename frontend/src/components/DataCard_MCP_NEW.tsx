@@ -6,7 +6,6 @@ import {
   Box, 
   Chip,
   CircularProgress,
-  Alert,
   Tooltip
 } from '@mui/material';
 import {
@@ -17,6 +16,9 @@ import {
   Warning as WarningIcon,
   CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StatusChip, StandardMessage } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 import { TrustIndicator } from './TrustIndicator';
 import type { TrustLevel } from './TrustIndicator';
 
@@ -94,7 +96,7 @@ export const DataCard_MCP_NEW: React.FC<DataCardProps> = ({
 
         const newDataPoint: DataPoint = {
           value: currentValue,
-          timestamp: latest.created_at || new Date().toISOString(),
+          timestamp: (latest as any).created_at || new Date().toISOString(),
           trend,
           change
         };
@@ -102,71 +104,70 @@ export const DataCard_MCP_NEW: React.FC<DataCardProps> = ({
         setCurrentData(newDataPoint);
         setPreviousData(previous ? {
           value: previousValue,
-          timestamp: previous.created_at || new Date().toISOString()
+          timestamp: (previous as any).created_at || new Date().toISOString()
         } : null);
-
-        console.log(`✅ ${title} Daten geladen:`, newDataPoint);
       } else {
         setError('Keine Daten verfügbar');
       }
-
     } catch (err) {
-      console.error(`❌ Fehler beim Laden der ${title} Daten:`, err);
-      setError('Daten konnten nicht geladen werden');
+      setError(err instanceof Error ? err.message : 'Fehler beim Laden der Daten');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Initial laden
+  // Initial laden und Auto-Refresh
   useEffect(() => {
     loadData();
-  }, [dataSource, valueField]);
-
-  // Auto-Refresh
-  useEffect(() => {
+    
     if (refreshInterval > 0) {
       const interval = setInterval(loadData, refreshInterval * 1000);
       return () => clearInterval(interval);
     }
-  }, [refreshInterval]);
+  }, [dataSource, valueField, refreshInterval]);
 
-  // Trend-Konfiguration
-  const getTrendColor = (trend: 'up' | 'down' | 'neutral') => {
+  // ✅ REFAKTORIERT: Verwendung von StatusChip für Trend-Anzeige
+  const getTrendStatus = (trend: 'up' | 'down' | 'neutral'): keyof typeof UI_LABELS.STATUS => {
     switch (trend) {
-      case 'up': return 'success';
-      case 'down': return 'error';
-      default: return 'default';
+      case 'up':
+        return 'ACTIVE';
+      case 'down':
+        return 'ERROR';
+      default:
+        return 'PENDING';
     }
   };
 
   const getTrendIcon = (trend: 'up' | 'down' | 'neutral') => {
     switch (trend) {
-      case 'up': return <TrendingUpIcon fontSize="small" />;
-      case 'down': return <TrendingDownIcon fontSize="small" />;
-      default: return <RemoveIcon fontSize="small" />;
+      case 'up':
+        return <TrendingUpIcon fontSize="small" />;
+      case 'down':
+        return <TrendingDownIcon fontSize="small" />;
+      default:
+        return <RemoveIcon fontSize="small" />;
     }
   };
 
   // Trust-Level-Konfiguration
   const getTrustConfig = (level: TrustLevel) => {
     switch (level) {
-      case 'high': return { color: 'success' as const, icon: <CheckCircleIcon />, label: 'Hoch' };
-      case 'medium': return { color: 'warning' as const, icon: <WarningIcon />, label: 'Mittel' };
-      case 'low': return { color: 'error' as const, icon: <WarningIcon />, label: 'Niedrig' };
-      default: return { color: 'default' as const, icon: <InfoIcon />, label: 'Unbekannt' };
+      case 'high': return { color: 'success' as const, icon: <CheckCircleIcon />, label: UI_LABELS.STATUS.HIGH };
+      case 'medium': return { color: 'warning' as const, icon: <WarningIcon />, label: UI_LABELS.STATUS.MEDIUM };
+      case 'low': return { color: 'error' as const, icon: <WarningIcon />, label: UI_LABELS.STATUS.LOW };
+      default: return { color: 'default' as const, icon: <InfoIcon />, label: UI_LABELS.STATUS.UNKNOWN };
     }
   };
 
   // Loading-State
   if (isLoading) {
     return (
-      <Card className="h-full">
-        <CardContent className="flex justify-center items-center h-32">
-          <Box className="text-center">
-            <CircularProgress size={24} className="mb-2" />
-            <Typography variant="caption" color="textSecondary">
-              Lade {title}...
+      <Card sx={{ height: '100%' }}>
+        <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 128 }}>
+          <Box textAlign="center">
+            <CircularProgress size={24} sx={{ mb: 1 }} />
+            <Typography variant="caption" color="text.secondary">
+              {UI_LABELS.MESSAGES.LOADING} {title}...
             </Typography>
           </Box>
         </CardContent>
@@ -177,14 +178,13 @@ export const DataCard_MCP_NEW: React.FC<DataCardProps> = ({
   // Error-State
   if (error || !currentData) {
     return (
-      <Card className="h-full">
+      <Card sx={{ height: '100%' }}>
         <CardContent>
-          <Alert severity="error" className="mb-2">
-            <Typography variant="caption">
-              {error || 'Keine Daten verfügbar'}
-            </Typography>
-          </Alert>
-          <Typography variant="body2" color="textSecondary">
+          <StandardMessage
+            type="error"
+            message={error || UI_LABELS.MESSAGES.NO_DATA}
+          />
+          <Typography variant="body2" color="text.secondary">
             {title}
           </Typography>
         </CardContent>
@@ -195,12 +195,12 @@ export const DataCard_MCP_NEW: React.FC<DataCardProps> = ({
   const trustConfig = getTrustConfig(trustLevel);
 
   return (
-    <Card className="h-full hover:shadow-md transition-shadow">
+    <Card sx={{ height: '100%', '&:hover': { boxShadow: 3 }, transition: 'box-shadow 0.2s' }}>
       <CardContent>
-        <Box className="flex items-center justify-between mb-3">
-          <Box className="flex items-center space-x-2">
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+          <Box display="flex" alignItems="center" gap={1}>
             <i className={`${icon} text-gray-400 text-lg`}></i>
-            <Typography variant="subtitle2" color="textSecondary">
+            <Typography variant="subtitle2" color="text.secondary">
               {title}
             </Typography>
           </Box>
@@ -214,47 +214,50 @@ export const DataCard_MCP_NEW: React.FC<DataCardProps> = ({
         </Box>
 
         {/* Hauptwert */}
-        <Box className="flex items-baseline space-x-2 mb-2">
-          <Typography variant="h4" className="font-bold text-gray-900">
+        <Box display="flex" alignItems="baseline" gap={1} mb={1}>
+          <Typography variant="h4" fontWeight="bold" color="text.primary">
             {currentData.value.toLocaleString('de-DE')}
           </Typography>
           
-          {/* Trend */}
+          {/* ✅ REFAKTORIERT: Trend mit StatusChip */}
           {currentData.trend && currentData.change && (
-            <Chip
-              icon={getTrendIcon(currentData.trend)}
-              label={currentData.change}
-              color={getTrendColor(currentData.trend)}
-              size="small"
-              variant="outlined"
-            />
+            <Box display="flex" alignItems="center" gap={0.5}>
+              {getTrendIcon(currentData.trend)}
+              <Typography variant="caption" color="text.secondary">
+                {currentData.change}
+              </Typography>
+              <StatusChip
+                status={getTrendStatus(currentData.trend)}
+                size="small"
+              />
+            </Box>
           )}
         </Box>
 
         {/* Zusätzliche Informationen */}
-        <Box className="space-y-1">
-          <Typography variant="caption" color="textSecondary">
-            Letzte Aktualisierung: {new Date(currentData.timestamp).toLocaleString('de-DE')}
+        <Box display="flex" flexDirection="column" gap={0.5}>
+          <Typography variant="caption" color="text.secondary">
+            {UI_LABELS.MESSAGES.LAST_UPDATE}: {new Date(currentData.timestamp).toLocaleString('de-DE')}
           </Typography>
           
           {previousData && (
-            <Typography variant="caption" color="textSecondary">
-              Vorheriger Wert: {previousData.value.toLocaleString('de-DE')} 
+            <Typography variant="caption" color="text.secondary">
+              {UI_LABELS.MESSAGES.PREVIOUS_VALUE}: {previousData.value.toLocaleString('de-DE')} 
               ({new Date(previousData.timestamp).toLocaleDateString('de-DE')})
             </Typography>
           )}
         </Box>
 
         {/* MCP-Informationen */}
-        <Box className="mt-3 pt-2 border-t border-gray-100">
-          <Typography variant="caption" className="text-gray-500">
-            <strong>Daten-Quelle:</strong> {dataSource}
+        <Box mt={2} pt={1} borderTop={1} borderColor="divider">
+          <Typography variant="caption" color="text.secondary">
+            <strong>{UI_LABELS.MESSAGES.DATA_SOURCE}:</strong> {dataSource}
             <br />
-            <strong>Feld:</strong> {valueField}
+            <strong>{UI_LABELS.MESSAGES.FIELD}:</strong> {valueField}
             <br />
-            <strong>Auto-Refresh:</strong> {refreshInterval > 0 ? `${refreshInterval}s` : 'Deaktiviert'}
+            <strong>{UI_LABELS.MESSAGES.AUTO_REFRESH}:</strong> {refreshInterval > 0 ? `${refreshInterval}s` : UI_LABELS.STATUS.DISABLED}
             <br />
-            <strong>MCP-Status:</strong> ✅ Live
+            <strong>{UI_LABELS.MESSAGES.MCP_STATUS}:</strong> ✅ {UI_LABELS.STATUS.LIVE}
           </Typography>
         </Box>
       </CardContent>

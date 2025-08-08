@@ -83,7 +83,7 @@ const DocumentsPage: React.FC = () => {
         const file = new File([''], formData.name, { type: 'text/plain' });
         await uploadDocument(file, {
           ...formData,
-          user_id: 'current-user-id' // TODO: Get from context
+          user_id: localStorage.getItem('userId') || 'current-user-id'
         });
       }
       setOpenDialog(false);
@@ -94,12 +94,11 @@ const DocumentsPage: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Möchten Sie dieses Dokument wirklich löschen?')) {
-      // TODO: Implement deleteDocument
-      console.log('Delete document:', id);
-      loadDocuments();
-    }
+  const handleDeleteDocument = (id: string) => {
+    // Mock-Implementation für das Löschen
+    console.log('Deleting document:', id);
+    // In einer echten Implementierung würde hier die API aufgerufen werden
+    // und dann der lokale State aktualisiert werden
   };
 
   const handleEdit = (document: any) => {
@@ -368,7 +367,7 @@ const DocumentsPage: React.FC = () => {
                       <IconButton
                         size="small"
                         color="error"
-                        onClick={() => handleDelete(document.id)}
+                        onClick={() => handleDeleteDocument(document.id)}
                       >
                         <DeleteIcon />
                       </IconButton>

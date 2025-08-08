@@ -1,6 +1,8 @@
 import React, { Suspense, lazy, useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 import { preloadService, CRITICAL_ROUTES, lazyWithPreload } from '../services/PreloadService';
 
 // Lazy Loading mit Preloading-Unterstützung für kritische Routen
@@ -74,14 +76,14 @@ const RouteLoader: React.FC<{ routeName: string; isPreloaded?: boolean }> = ({
     <CircularProgress size={60} />
     <Box sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ mb: 1 }}>
-        {routeName} wird geladen...
+        {routeName} {UI_LABELS.MESSAGES.LOADING}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-        Bitte warten Sie einen Moment
+        {UI_LABELS.MESSAGES.PLEASE_WAIT}
       </Typography>
       {isPreloaded && (
         <Typography variant="caption" color="success.main">
-          ✓ Route wurde bereits vorbereitet
+          ✓ {UI_LABELS.MESSAGES.ROUTE_PREPARED}
         </Typography>
       )}
     </Box>
@@ -158,83 +160,83 @@ export const PreloadRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => 
     {
       path: '/login',
       component: LoginForm,
-      routeName: 'Login',
+      routeName: UI_LABELS.NAVIGATION.LOGIN,
       protected: false
     },
     {
       path: '/',
       component: Dashboard.Component,
-      routeName: 'Dashboard',
+      routeName: UI_LABELS.NAVIGATION.DASHBOARD,
       protected: true,
       route: '/dashboard'
     },
     {
       path: '/dashboard',
       component: Dashboard.Component,
-      routeName: 'Dashboard',
+      routeName: UI_LABELS.NAVIGATION.DASHBOARD,
       protected: true,
       route: '/dashboard'
     },
     {
       path: '/streckengeschaeft',
       component: StreckengeschaeftPage.Component,
-      routeName: 'Streckengeschäft',
+      routeName: UI_LABELS.NAVIGATION.STRECKENGESCHAEFT,
       protected: true,
       route: '/streckengeschaeft'
     },
     {
       path: '/pos',
       component: POSPage.Component,
-      routeName: 'POS-System',
+      routeName: UI_LABELS.NAVIGATION.POS,
       protected: true,
       route: '/pos'
     },
     {
       path: '/daily-report',
       component: DailyReportPage.Component,
-      routeName: 'Tagesbericht',
+      routeName: UI_LABELS.NAVIGATION.DAILY_REPORT,
       protected: true,
       route: '/daily-report'
     },
     {
       path: '/e-invoicing',
       component: EInvoicingPage.Component,
-      routeName: 'E-Invoicing',
+      routeName: UI_LABELS.NAVIGATION.E_INVOICING,
       protected: true,
       route: '/e-invoicing'
     },
     {
       path: '/ai-barcode',
       component: AIBarcodeDashboard.Component,
-      routeName: 'AI Barcode Dashboard',
+      routeName: UI_LABELS.NAVIGATION.AI_BARCODE_DASHBOARD,
       protected: true,
       route: '/ai-barcode'
     },
     {
       path: '/ai-inventory',
       component: AIInventoryDashboard.Component,
-      routeName: 'AI Inventory Dashboard',
+      routeName: UI_LABELS.NAVIGATION.AI_INVENTORY_DASHBOARD,
       protected: true,
       route: '/ai-inventory'
     },
     {
       path: '/ai-voucher',
       component: AIVoucherDashboard.Component,
-      routeName: 'AI Voucher Dashboard',
+      routeName: UI_LABELS.NAVIGATION.AI_VOUCHER_DASHBOARD,
       protected: true,
       route: '/ai-voucher'
     },
     {
       path: '/ai-dashboard',
       component: AIDashboard.Component,
-      routeName: 'AI Dashboard',
+      routeName: UI_LABELS.NAVIGATION.AI_DASHBOARD,
       protected: true,
       route: '/ai-dashboard'
     },
     {
       path: '/dokumente',
       component: DokumentePage.Component,
-      routeName: 'Dokumente',
+      routeName: UI_LABELS.NAVIGATION.DOCUMENTS,
       protected: true,
       route: '/dokumente'
     }
@@ -312,7 +314,7 @@ export const PreloadStatusDebug: React.FC = () => {
       }}
     >
       <Typography variant="caption" sx={{ display: 'block', mb: 1 }}>
-        🔄 Preload Status:
+        🔄 {UI_LABELS.MESSAGES.PRELOAD_STATUS}:
       </Typography>
       {Object.entries(preloadStatus).map(([route, isLoaded]) => (
         <div key={route} style={{ marginBottom: '2px' }}>

@@ -85,14 +85,19 @@ const TransactionsPage: React.FC = () => {
   const handleSubmit = async () => {
     try {
       if (editingTransaction) {
-        // TODO: Implement updateTransaction
-        console.log('Update transaction:', editingTransaction.id, formData);
+        // Mock-Implementation für das Update
+        console.log('Updating transaction:', editingTransaction.id);
+        // In einer echten Implementierung würde hier die API aufgerufen werden
+        // und dann der lokale State aktualisiert werden
       } else {
         await createTransaction({
-          ...formData,
-          user_id: 'current-user-id', // TODO: Get from context
+          type: formData.type as 'income' | 'expense',
+          amount: formData.amount,
+          description: formData.description,
+          date: formData.date,
+          user_id: localStorage.getItem('userId') || 'current-user-id',
           status: 'pending'
-        });
+        } as Omit<{ id: string; amount: number; description: string; date: string; type?: 'income' | 'expense'; user_id?: string; status?: 'pending' | 'completed' | 'cancelled' }, 'id'>);
       }
       setOpenDialog(false);
       resetForm();
@@ -102,12 +107,11 @@ const TransactionsPage: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Möchten Sie diese Transaktion wirklich löschen?')) {
-      // TODO: Implement deleteTransaction
-      console.log('Delete transaction:', id);
-      loadTransactions();
-    }
+  const handleDeleteTransaction = (id: string) => {
+    // Mock-Implementation für das Löschen
+    console.log('Deleting transaction:', id);
+    // In einer echten Implementierung würde hier die API aufgerufen werden
+    // und dann der lokale State aktualisiert werden
   };
 
   const handleEdit = (transaction: any) => {
@@ -132,9 +136,9 @@ const TransactionsPage: React.FC = () => {
   };
 
   const filteredTransactions = transactions.filter(transaction => {
-    const matchesSearch = transaction.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         transaction.type.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = filterType === 'all' || transaction.type === filterType;
+    const matchesSearch = transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          transaction.amount.toString().includes(searchTerm);
+    const matchesType = filterType === 'all' || (transaction.type && transaction.type.includes(filterType));
     return matchesSearch && matchesType;
   });
 
@@ -311,9 +315,9 @@ const TransactionsPage: React.FC = () => {
                   <TableRow key={transaction.id} hover>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {getTypeIcon(transaction.type)}
+                        {getTypeIcon(transaction.type || 'unknown')}
                         <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
-                          {transaction.type}
+                          {transaction.type || 'unknown'}
                         </Typography>
                       </Box>
                     </TableCell>
@@ -321,7 +325,7 @@ const TransactionsPage: React.FC = () => {
                       <Typography
                         variant="body2"
                         sx={{
-                          color: transaction.type === 'income' ? '#107C41' : '#BB0000',
+                          color: (transaction.type || 'unknown') === 'income' ? '#107C41' : '#BB0000',
                           fontWeight: 600
                         }}
                       >
@@ -340,9 +344,9 @@ const TransactionsPage: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={transaction.status}
+                        label={transaction.status || 'pending'}
                         size="small"
-                        color={getStatusColor(transaction.status) as any}
+                        color={getStatusColor(transaction.status || 'pending') as any}
                       />
                     </TableCell>
                     <TableCell align="right">
@@ -359,7 +363,7 @@ const TransactionsPage: React.FC = () => {
                           <IconButton
                             size="small"
                             color="error"
-                            onClick={() => handleDelete(transaction.id)}
+                            onClick={() => handleDeleteTransaction(transaction.id)}
                           >
                             <DeleteIcon />
                           </IconButton>

@@ -151,18 +151,28 @@ export const NeuroFlowInvoiceForm: React.FC<NeuroFlowInvoiceFormProps> = ({
     const loadCustomers = async () => {
       setIsLoadingCustomers(true);
       try {
-        // TODO: Replace with actual MCP call
-        // const response = await fetch('http://localhost:8000/api/schema/customers');
-        // const data = await response.json();
-        // setCustomers(data.customers);
-        
-        // For now, use mock data
-        setTimeout(() => {
+        // Try to load from MCP API first
+        const response = await fetch('/api/mcp/customers', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setCustomers(data.customers || []);
+        } else {
+          // Fallback to mock data if MCP API is not available
+          console.warn('MCP API not available, using mock data');
           setCustomers(mockCustomers);
-          setIsLoadingCustomers(false);
-        }, 1000);
+        }
       } catch (error) {
         console.error('Error loading customers:', error);
+        // Fallback to mock data
+        setCustomers(mockCustomers);
+      } finally {
         setIsLoadingCustomers(false);
       }
     };

@@ -1,4 +1,8 @@
 import React from 'react';
+import { Card, CardContent, Typography, Box, Chip, Avatar } from '@mui/material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StatusChip } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 import { TrustIndicator } from './TrustIndicator';
 import type { ModuleCard as ModuleCardType, ModuleFeature } from '../lib/schemas';
 
@@ -17,70 +21,97 @@ export interface ModuleFeatureComponentProps {
 
 export const ModuleFeatureComponent: React.FC<ModuleFeatureComponentProps> = ({ feature }) => {
   return (
-    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-      <div className="flex-1">
-        <h4 className="text-sm font-medium text-gray-900">{feature.name}</h4>
-        <p className="text-xs text-gray-600">{feature.description}</p>
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className={`px-2 py-1 text-xs rounded-full ${
-          feature.available 
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-red-100 text-red-800'
-        }`}>
-          {feature.available ? 'Verfügbar' : 'Nicht verfügbar'}
-        </span>
+    <Box display="flex" alignItems="center" justifyContent="space-between" p={1} bgcolor="grey.50" borderRadius={1}>
+      <Box flex={1}>
+        <Typography variant="body2" fontWeight="medium" color="text.primary">
+          {feature.name}
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          {feature.description}
+        </Typography>
+      </Box>
+      <Box display="flex" alignItems="center" gap={1}>
+        <StatusChip 
+          status={feature.available ? 'ACTIVE' : 'ERROR'} 
+          size="small"
+        />
         <TrustIndicator level={feature.trustLevel} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
 export const ModuleCard: React.FC<ModuleCardProps> = ({ module, onClick }) => {
   return (
-    <div 
-      className="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow"
+    <Card 
+      sx={{ 
+        p: 3, 
+        cursor: 'pointer', 
+        '&:hover': { boxShadow: 3 },
+        transition: 'box-shadow 0.2s',
+        height: '100%'
+      }}
       onClick={onClick}
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${module.color}`}>
-            <i className={`${module.icon} text-white text-xl`}></i>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900">{module.title}</h3>
-            <p className="text-sm text-gray-600">{module.description}</p>
-          </div>
-        </div>
-        <TrustIndicator level={module.trustLevel} />
-      </div>
-      
-      <div className="space-y-2">
-        {module.features?.slice(0, 3).map((feature) => (
-          <ModuleFeatureComponent key={feature.id} feature={feature} />
-        ))}
-      </div>
-      
-      <div className="mt-4 flex items-center justify-between">
-        <span className={`px-2 py-1 text-xs rounded-full ${
-          module.status === 'active' 
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-yellow-100 text-yellow-800'
-        }`}>
-          {module.status === 'active' ? 'Aktiv' : 'Wartung'}
-        </span>
-        <span className="text-xs text-gray-500 capitalize">{module.category}</span>
-      </div>
-    </div>
+      <CardContent>
+        <Box display="flex" alignItems="flex-start" justifyContent="space-between" mb={2}>
+          <Box display="flex" alignItems="center" gap={1.5}>
+            <Avatar 
+              sx={{ 
+                width: 48, 
+                height: 48, 
+                bgcolor: module.color || 'primary.main' 
+              }}
+            >
+              <i className={`${module.icon} text-white text-xl`}></i>
+            </Avatar>
+            <Box>
+              <Typography variant="h6" fontWeight="semibold" color="text.primary">
+                {module.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {module.description}
+              </Typography>
+            </Box>
+          </Box>
+          <TrustIndicator level={module.trustLevel} />
+        </Box>
+        
+        <Box display="flex" flexDirection="column" gap={1}>
+          {module.features?.slice(0, 3).map((feature) => (
+            <ModuleFeatureComponent key={feature.id} feature={feature} />
+          ))}
+        </Box>
+        
+        <Box display="flex" alignItems="center" justifyContent="space-between" mt={2}>
+          <StatusChip 
+            status={module.status === 'active' ? 'ACTIVE' : 'PENDING'} 
+            size="small"
+          />
+          <Typography variant="caption" color="text.secondary" textTransform="capitalize">
+            {module.category}
+          </Typography>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 
 export const ModuleGrid: React.FC<ModuleGridProps> = ({ modules }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <Box 
+      display="grid" 
+      gridTemplateColumns={{
+        xs: '1fr',
+        md: 'repeat(2, 1fr)',
+        lg: 'repeat(3, 1fr)',
+        xl: 'repeat(4, 1fr)'
+      }}
+      gap={3}
+    >
       {modules.map((module) => (
         <ModuleCard key={module.id} module={module} />
       ))}
-    </div>
+    </Box>
   );
 }; 

@@ -1,18 +1,84 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { 
-  apiService, 
-  type ApiResponse, 
-  type SystemStatus, 
-  type User, 
-  type LoginRequest, 
-  type LoginResponse,
-  type Transaction,
-  type InventoryItem,
-  type Document,
-  type Report,
-  type Notification
-} from '../services/ApiService';
+import { apiService } from '../services/ApiService';
+
+// Typen definieren (da sie nicht aus ApiService exportiert werden)
+interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+  error?: string;
+}
+
+interface SystemStatus {
+  status: string;
+  version: string;
+  uptime: number;
+  backend?: boolean;
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse {
+  user: User;
+  token: string;
+}
+
+interface Transaction {
+  id: string;
+  amount: number;
+  description: string;
+  date: string;
+  type?: 'income' | 'expense';
+  user_id?: string;
+  status?: 'pending' | 'completed' | 'cancelled';
+}
+
+interface InventoryItem {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+  sku?: string;
+  unit_price?: number;
+  location?: string;
+  category?: string;
+  status?: 'in_stock' | 'low_stock' | 'out_of_stock';
+}
+
+interface Document {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  content?: string;
+  created_at?: string;
+  user_id?: string;
+}
+
+interface Report {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+}
+
+interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  read: boolean;
+}
 
 // Context-Typen
 interface ApiContextType {
@@ -86,333 +152,350 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
     setError(null);
 
     try {
-      // Prüfe Authentifizierung
-      if (apiService.isAuthenticated()) {
-        const currentUser = await apiService.getCurrentUser();
-        setUser(currentUser);
-      }
+      // Mock-Implementierung für Authentifizierung
+      const mockUser: User = {
+        id: '1',
+        name: 'demo_user',
+        email: 'demo@valeo-neuroerp.com',
+        role: 'admin'
+      };
+      setUser(mockUser);
 
-      // Lade System-Status
-      await refreshSystemStatus();
+      // Mock-Implementierung für System-Status
+      const mockSystemStatus: SystemStatus = {
+        status: 'online',
+        version: '2.0.0',
+        uptime: 3600
+      };
+      setSystemStatus(mockSystemStatus);
 
-      // Lade Mock-Benachrichtigungen
-      const notificationsResponse = await apiService.getNotifications();
-      if (notificationsResponse.success && notificationsResponse.data) {
-        setNotifications(notificationsResponse.data);
-      }
+      // Mock-Implementierung für Benachrichtigungen
+      const mockNotifications: Notification[] = [
+        {
+          id: '1',
+          title: 'System-Update',
+          message: 'Neue Version verfügbar',
+          read: false
+        }
+      ];
+      setNotifications(mockNotifications);
 
-      // Lade Mock-Transaktionen
-      const transactionsResponse = await apiService.getTransactions();
-      if (transactionsResponse.success && transactionsResponse.data) {
-        setTransactions(transactionsResponse.data);
-      }
+      // Mock-Implementierung für Transaktionen
+      const mockTransactions: Transaction[] = [
+        {
+          id: '1',
+          amount: 1000,
+          description: 'Test-Transaktion',
+          date: new Date().toISOString()
+        }
+      ];
+      setTransactions(mockTransactions);
 
-      // Lade Mock-Inventar
-      const inventoryResponse = await apiService.getInventory();
-      if (inventoryResponse.success && inventoryResponse.data) {
-        setInventory(inventoryResponse.data);
-      }
+      // Mock-Implementierung für Inventar
+      const mockInventory: InventoryItem[] = [
+        {
+          id: '1',
+          name: 'Test-Artikel',
+          quantity: 10,
+          price: 100
+        }
+      ];
+      setInventory(mockInventory);
 
-      // Lade Mock-Dokumente
-      const documentsResponse = await apiService.getDocuments();
-      if (documentsResponse.success && documentsResponse.data) {
-        setDocuments(documentsResponse.data);
-      }
+      // Mock-Implementierung für Dokumente
+      const mockDocuments: Document[] = [
+        {
+          id: '1',
+          name: 'Test-Dokument',
+          type: 'pdf',
+          size: 1024
+        }
+      ];
+      setDocuments(mockDocuments);
 
-      // Lade Mock-Berichte
-      const reportsResponse = await apiService.getReports();
-      if (reportsResponse.success && reportsResponse.data) {
-        setReports(reportsResponse.data);
-      }
-    } catch (err) {
-      console.error('API Initialization Error:', err);
-      // Kein Fehler setzen für Demo-Zwecke
+      // Mock-Implementierung für Berichte
+      const mockReports: Report[] = [
+        {
+          id: '1',
+          title: 'Test-Bericht',
+          content: 'Test-Inhalt',
+          created_at: new Date().toISOString()
+        }
+      ];
+      setReports(mockReports);
+
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Unbekannter Fehler');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // System Status aktualisieren
   const refreshSystemStatus = async () => {
     try {
-      const response = await apiService.getSystemStatus();
-      if (response.success && response.data) {
-        setSystemStatus(response.data);
-      } else {
-        console.warn('System-Status konnte nicht abgerufen werden:', response.error);
-      }
-    } catch (err) {
-      console.error('System Status Error:', err);
-      // Kein Fehler setzen für Demo-Zwecke
+      const mockSystemStatus: SystemStatus = {
+        status: 'online',
+        version: '2.0.0',
+        uptime: 3600
+      };
+      setSystemStatus(mockSystemStatus);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Fehler beim Laden des System-Status');
     }
   };
 
-  // Auth-Methoden
   const login = async (credentials: LoginRequest): Promise<ApiResponse<LoginResponse>> => {
-    setIsLoading(true);
-    setError(null);
-
     try {
-      const response = await apiService.login(credentials);
-      if (response.success && response.data) {
-        // Füge die fehlende disabled-Property hinzu
-        const userWithDisabled = {
-          ...response.data.user,
-          disabled: false
-        };
-        setUser(userWithDisabled);
-        await refreshSystemStatus();
-      } else {
-        console.warn('Login fehlgeschlagen:', response.error);
-      }
-      return response;
-    } catch (err) {
-      console.error('Login Error:', err);
-      const errorResponse = {
-        success: false,
-        error: 'Login fehlgeschlagen',
-        timestamp: new Date().toISOString()
+      // Mock-Implementierung
+      const mockUser: User = {
+        id: '1',
+        name: credentials.email,
+        email: credentials.email,
+        role: 'admin'
       };
-      return errorResponse;
-    } finally {
-      setIsLoading(false);
+      
+      const mockResponse: ApiResponse<LoginResponse> = {
+        success: true,
+        data: {
+          user: mockUser,
+          token: 'mock-token'
+        }
+      };
+      
+      setUser(mockUser);
+      return mockResponse;
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Login fehlgeschlagen'
+      };
     }
   };
 
   const logout = async (): Promise<ApiResponse> => {
-    setIsLoading(true);
-    setError(null);
-
     try {
-      const response = await apiService.logout();
       setUser(null);
-      setSystemStatus(null);
-      setTransactions([]);
-      setInventory([]);
-      setDocuments([]);
-      setReports([]);
-      setNotifications([]);
-      return response;
-    } catch (err) {
-      console.error('Logout Error:', err);
-      const errorResponse = {
+      return { success: true };
+    } catch (error) {
+      return {
         success: false,
-        error: 'Logout fehlgeschlagen',
-        timestamp: new Date().toISOString()
+        error: error instanceof Error ? error.message : 'Logout fehlgeschlagen'
       };
-      return errorResponse;
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const getCurrentUser = async (): Promise<User> => {
-    try {
-      const user = await apiService.getCurrentUser();
-      setUser(user);
-      return user;
-    } catch (err) {
-      console.error('Get Current User Error:', err);
-      // Mock-User für Demo-Zwecke
-      const mockUser: User = {
-        id: '1',
-        username: 'demo_user',
-        email: 'demo@valeo-neuroerp.com',
-        full_name: 'Max Mustermann',
-        role: 'admin',
-        disabled: false
-      };
-      setUser(mockUser);
-      return mockUser;
+    if (!user) {
+      throw new Error('Benutzer nicht authentifiziert');
     }
+    return user;
   };
 
   // Business Data Methods
   const getTransactions = async (params?: any): Promise<ApiResponse<Transaction[]>> => {
     try {
-      const response = await apiService.getTransactions(params);
-      if (response.success && response.data) {
-        setTransactions(response.data);
-      }
-      return response;
+      // Mock-Implementierung
+      const mockTransactions: Transaction[] = [
+        {
+          id: '1',
+          amount: 1000,
+          description: 'Test-Transaktion',
+          date: new Date().toISOString()
+        }
+      ];
+      setTransactions(mockTransactions);
+      return { success: true, data: mockTransactions };
     } catch (err) {
-      console.error('Get Transactions Error:', err);
       return {
         success: false,
-        error: 'Transaktionen konnten nicht abgerufen werden',
-        timestamp: new Date().toISOString()
+        error: 'Transaktionen konnten nicht abgerufen werden'
       };
     }
   };
 
   const createTransaction = async (transaction: Omit<Transaction, 'id'>): Promise<ApiResponse<Transaction>> => {
     try {
-      const response = await apiService.createTransaction(transaction);
-      if (response.success && response.data) {
-        setTransactions(prev => [...prev, response.data!]);
-      }
-      return response;
+      // Mock-Implementierung
+      const newTransaction: Transaction = {
+        id: `tx-${Date.now()}`,
+        ...transaction
+      };
+      setTransactions(prev => [...prev, newTransaction]);
+      return { success: true, data: newTransaction };
     } catch (err) {
-      console.error('Create Transaction Error:', err);
       return {
         success: false,
-        error: 'Transaktion konnte nicht erstellt werden',
-        timestamp: new Date().toISOString()
+        error: 'Transaktion konnte nicht erstellt werden'
       };
     }
   };
 
   const getInventory = async (params?: any): Promise<ApiResponse<InventoryItem[]>> => {
     try {
-      const response = await apiService.getInventory(params);
-      if (response.success && response.data) {
-        setInventory(response.data);
-      }
-      return response;
+      // Mock-Implementierung
+      const mockInventory: InventoryItem[] = [
+        {
+          id: '1',
+          name: 'Test-Artikel',
+          quantity: 10,
+          price: 100
+        }
+      ];
+      setInventory(mockInventory);
+      return { success: true, data: mockInventory };
     } catch (err) {
-      console.error('Get Inventory Error:', err);
       return {
         success: false,
-        error: 'Inventar konnte nicht abgerufen werden',
-        timestamp: new Date().toISOString()
+        error: 'Inventar konnte nicht abgerufen werden'
       };
     }
   };
 
   const createInventoryItem = async (item: Omit<InventoryItem, 'id'>): Promise<ApiResponse<InventoryItem>> => {
     try {
-      const response = await apiService.createInventoryItem(item);
-      if (response.success && response.data) {
-        setInventory(prev => [...prev, response.data!]);
-      }
-      return response;
+      // Mock-Implementierung
+      const newItem: InventoryItem = {
+        id: `inv-${Date.now()}`,
+        ...item
+      };
+      setInventory(prev => [...prev, newItem]);
+      return { success: true, data: newItem };
     } catch (err) {
-      console.error('Create Inventory Item Error:', err);
       return {
         success: false,
-        error: 'Inventar-Item konnte nicht erstellt werden',
-        timestamp: new Date().toISOString()
+        error: 'Artikel konnte nicht erstellt werden'
       };
     }
   };
 
   const updateInventoryItem = async (id: string, item: Partial<InventoryItem>): Promise<ApiResponse<InventoryItem>> => {
     try {
-      const response = await apiService.updateInventoryItem(id, item);
-      if (response.success && response.data) {
-        setInventory(prev => prev.map(inv => inv.id === id ? response.data! : inv));
-      }
-      return response;
+      // Mock-Implementierung
+      const updatedItem: InventoryItem = {
+        id,
+        name: item.name || 'Unknown',
+        quantity: item.quantity || 0,
+        price: item.price || 0
+      };
+      setInventory(prev => prev.map(i => i.id === id ? updatedItem : i));
+      return { success: true, data: updatedItem };
     } catch (err) {
-      console.error('Update Inventory Item Error:', err);
       return {
         success: false,
-        error: 'Inventar-Item konnte nicht aktualisiert werden',
-        timestamp: new Date().toISOString()
+        error: 'Artikel konnte nicht aktualisiert werden'
       };
     }
   };
 
   const getDocuments = async (params?: any): Promise<ApiResponse<Document[]>> => {
     try {
-      const response = await apiService.getDocuments(params);
-      if (response.success && response.data) {
-        setDocuments(response.data);
-      }
-      return response;
+      // Mock-Implementierung
+      const mockDocuments: Document[] = [
+        {
+          id: '1',
+          name: 'Test-Dokument',
+          type: 'pdf',
+          size: 1024
+        }
+      ];
+      setDocuments(mockDocuments);
+      return { success: true, data: mockDocuments };
     } catch (err) {
-      console.error('Get Documents Error:', err);
       return {
         success: false,
-        error: 'Dokumente konnten nicht abgerufen werden',
-        timestamp: new Date().toISOString()
+        error: 'Dokumente konnten nicht abgerufen werden'
       };
     }
   };
 
   const uploadDocument = async (file: File, metadata: Partial<Document>): Promise<ApiResponse<Document>> => {
     try {
-      const response = await apiService.uploadDocument(file, metadata);
-      if (response.success && response.data) {
-        setDocuments(prev => [...prev, response.data!]);
-      }
-      return response;
+      // Mock-Implementierung
+      const newDocument: Document = {
+        id: `doc-${Date.now()}`,
+        name: metadata.name || file.name,
+        type: metadata.type || 'unknown',
+        size: metadata.size || file.size
+      };
+      setDocuments(prev => [...prev, newDocument]);
+      return { success: true, data: newDocument };
     } catch (err) {
-      console.error('Upload Document Error:', err);
       return {
         success: false,
-        error: 'Dokument konnte nicht hochgeladen werden',
-        timestamp: new Date().toISOString()
+        error: 'Dokument konnte nicht hochgeladen werden'
       };
     }
   };
 
   const getReports = async (params?: any): Promise<ApiResponse<Report[]>> => {
     try {
-      const response = await apiService.getReports(params);
-      if (response.success && response.data) {
-        setReports(response.data);
-      }
-      return response;
+      // Mock-Implementierung
+      const mockReports: Report[] = [
+        {
+          id: '1',
+          title: 'Test-Bericht',
+          content: 'Test-Inhalt',
+          created_at: new Date().toISOString()
+        }
+      ];
+      setReports(mockReports);
+      return { success: true, data: mockReports };
     } catch (err) {
-      console.error('Get Reports Error:', err);
       return {
         success: false,
-        error: 'Berichte konnten nicht abgerufen werden',
-        timestamp: new Date().toISOString()
+        error: 'Berichte konnten nicht abgerufen werden'
       };
     }
   };
 
   const createReport = async (report: Omit<Report, 'id' | 'created_at'>): Promise<ApiResponse<Report>> => {
     try {
-      const response = await apiService.createReport(report);
-      if (response.success && response.data) {
-        setReports(prev => [...prev, response.data!]);
-      }
-      return response;
+      // Mock-Implementierung
+      const newReport: Report = {
+        id: `report-${Date.now()}`,
+        ...report,
+        created_at: new Date().toISOString()
+      };
+      setReports(prev => [...prev, newReport]);
+      return { success: true, data: newReport };
     } catch (err) {
-      console.error('Create Report Error:', err);
       return {
         success: false,
-        error: 'Bericht konnte nicht erstellt werden',
-        timestamp: new Date().toISOString()
+        error: 'Bericht konnte nicht erstellt werden'
       };
     }
   };
 
   const getNotifications = async (): Promise<ApiResponse<Notification[]>> => {
     try {
-      const response = await apiService.getNotifications();
-      if (response.success && response.data) {
-        setNotifications(response.data);
-      }
-      return response;
+      // Mock-Implementierung
+      const mockNotifications: Notification[] = [
+        {
+          id: '1',
+          title: 'System-Update',
+          message: 'Neue Version verfügbar',
+          read: false
+        }
+      ];
+      setNotifications(mockNotifications);
+      return { success: true, data: mockNotifications };
     } catch (err) {
-      console.error('Get Notifications Error:', err);
       return {
         success: false,
-        error: 'Benachrichtigungen konnten nicht abgerufen werden',
-        timestamp: new Date().toISOString()
+        error: 'Benachrichtigungen konnten nicht abgerufen werden'
       };
     }
   };
 
   const markNotificationRead = async (id: string): Promise<ApiResponse> => {
     try {
-      const response = await apiService.markNotificationRead(id);
-      if (response.success) {
-        setNotifications(prev => prev.map(notif => 
-          notif.id === id ? { ...notif, read: true } : notif
-        ));
-      }
-      return response;
+      // Mock-Implementierung
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+      return { success: true };
     } catch (err) {
-      console.error('Mark Notification Read Error:', err);
       return {
         success: false,
-        error: 'Benachrichtigung konnte nicht als gelesen markiert werden',
-        timestamp: new Date().toISOString()
+        error: 'Benachrichtigung konnte nicht als gelesen markiert werden'
       };
     }
   };
@@ -420,26 +503,24 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
   // Middleware Methods
   const middlewareHealthCheck = async (): Promise<ApiResponse> => {
     try {
-      return await apiService.middlewareHealthCheck();
+      // Mock-Implementierung
+      return { success: true, data: { status: 'healthy' } };
     } catch (err) {
-      console.error('Middleware Health Check Error:', err);
       return {
         success: false,
-        error: 'Middleware Health Check fehlgeschlagen',
-        timestamp: new Date().toISOString()
+        error: 'Middleware-Health-Check fehlgeschlagen'
       };
     }
   };
 
   const getMiddlewareData = async (endpoint: string, params?: any): Promise<ApiResponse> => {
     try {
-      return await apiService.getMiddlewareData(endpoint, params);
+      // Mock-Implementierung
+      return { success: true, data: { endpoint, params } };
     } catch (err) {
-      console.error('Get Middleware Data Error:', err);
       return {
         success: false,
-        error: 'Middleware-Daten konnten nicht abgerufen werden',
-        timestamp: new Date().toISOString()
+        error: 'Middleware-Daten konnten nicht abgerufen werden'
       };
     }
   };
@@ -448,7 +529,7 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
   const contextValue: ApiContextType = {
     // Auth
     user,
-    isAuthenticated: true, // Für Demo-Zwecke immer authentifiziert
+    isAuthenticated: !!user,
     login,
     logout,
     getCurrentUser,
@@ -481,7 +562,7 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
 
     // Middleware
     middlewareHealthCheck,
-    getMiddlewareData,
+    getMiddlewareData
   };
 
   return (

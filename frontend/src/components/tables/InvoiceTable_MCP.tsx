@@ -107,8 +107,8 @@ export const InvoiceTable_MCP: React.FC<InvoiceTableProps> = ({
           customerData.fetchData()
         ]);
 
-        setInvoices(invoiceResult.data || []);
-        setCustomers(customerResult.data || []);
+        setInvoices((invoiceResult.data as Invoice[]) || []);
+        setCustomers((customerResult.data as Customer[]) || []);
 
         console.log('✅ Daten erfolgreich geladen:', {
           invoices: invoiceResult.data?.length || 0,

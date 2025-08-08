@@ -103,6 +103,13 @@ export interface DokumenteFilter {
   artikelgruppe?: string;
 }
 
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+  error?: string;
+}
+
 /**
  * Dokumente Service Klasse
  */
@@ -130,7 +137,7 @@ export class DokumenteService {
       if (filter?.erledigt !== undefined) params.append('erledigt', filter.erledigt.toString());
 
       const response = await api.get(`${this.baseUrl}/lieferscheine?${params.toString()}`);
-      return response.data;
+      return (response.data as Lieferschein[]) || [];
     } catch (error) {
       console.error('Fehler beim Abrufen der Lieferscheine:', error);
       throw error;
@@ -143,7 +150,7 @@ export class DokumenteService {
   async getLieferschein(lieferscheinNr: string): Promise<Lieferschein> {
     try {
       const response = await api.get(`${this.baseUrl}/lieferscheine/${lieferscheinNr}`);
-      return response.data;
+      return (response.data as Lieferschein) || { header: {} as LieferscheinHeader, positionen: [] };
     } catch (error) {
       console.error(`Fehler beim Abrufen des Lieferscheins ${lieferscheinNr}:`, error);
       throw error;
@@ -156,7 +163,7 @@ export class DokumenteService {
   async createLieferschein(lieferschein: Lieferschein): Promise<Lieferschein> {
     try {
       const response = await api.post(`${this.baseUrl}/lieferscheine`, lieferschein);
-      return response.data;
+      return (response.data as Lieferschein) || { header: {} as LieferscheinHeader, positionen: [] };
     } catch (error) {
       console.error('Fehler beim Erstellen des Lieferscheins:', error);
       throw error;
@@ -169,7 +176,7 @@ export class DokumenteService {
   async updateLieferschein(lieferscheinNr: string, lieferschein: Lieferschein): Promise<Lieferschein> {
     try {
       const response = await api.put(`${this.baseUrl}/lieferscheine/${lieferscheinNr}`, lieferschein);
-      return response.data;
+      return (response.data as Lieferschein) || { header: {} as LieferscheinHeader, positionen: [] };
     } catch (error) {
       console.error(`Fehler beim Aktualisieren des Lieferscheins ${lieferscheinNr}:`, error);
       throw error;
@@ -197,7 +204,7 @@ export class DokumenteService {
       if (niederlassung) params.append('niederlassung', niederlassung);
 
       const response = await api.get(`${this.baseUrl}/frachtausgaenge?${params.toString()}`);
-      return response.data;
+      return (response.data as Frachtausgang[]) || [];
     } catch (error) {
       console.error('Fehler beim Abrufen der Frachtausgänge:', error);
       throw error;
@@ -214,7 +221,7 @@ export class DokumenteService {
       if (filter?.artikelgruppe) params.append('artikelgruppe', filter.artikelgruppe);
 
       const response = await api.get(`${this.baseUrl}/bestellungen?${params.toString()}`);
-      return response.data;
+      return (response.data as Bestellung[]) || [];
     } catch (error) {
       console.error('Fehler beim Abrufen der Bestellungen:', error);
       throw error;
@@ -227,7 +234,7 @@ export class DokumenteService {
   async druckeLieferschein(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/lieferschein`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken des Lieferscheins:', error);
       throw error;
@@ -240,7 +247,7 @@ export class DokumenteService {
   async druckeKommissionsauftrag(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/kommissionsauftrag`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken des Kommissionsauftrags:', error);
       throw error;
@@ -253,7 +260,7 @@ export class DokumenteService {
   async druckeBetriebsauftrag(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/betriebsauftrag`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken des Betriebsauftrags:', error);
       throw error;
@@ -266,7 +273,7 @@ export class DokumenteService {
   async druckeVersandavis(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/versandavis`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken des Versandavis:', error);
       throw error;
@@ -279,7 +286,7 @@ export class DokumenteService {
   async druckePaketetiketten(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/paketetiketten`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken der Paketetiketten:', error);
       throw error;
@@ -292,7 +299,7 @@ export class DokumenteService {
   async druckeFrachtpapier(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/frachtpapier`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken des Frachtpapiers:', error);
       throw error;
@@ -305,7 +312,7 @@ export class DokumenteService {
   async druckeProduktionsdokumente(druckauftrag: Druckauftrag): Promise<DruckResponse> {
     try {
       const response = await api.post(`${this.baseUrl}/drucken/produktionsdokumente`, druckauftrag);
-      return response.data;
+      return (response.data as DruckResponse) || { success: false, message: 'Druck fehlgeschlagen' };
     } catch (error) {
       console.error('Fehler beim Drucken der Produktionsdokumente:', error);
       throw error;

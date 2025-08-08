@@ -241,9 +241,42 @@ export const NeuroFlowInvoicesPage: React.FC = () => {
   };
 
   // Handle view invoice
-  const handleViewInvoice = (invoice: Invoice) => {
-    // TODO: Implement view functionality
-    console.log('View invoice:', invoice);
+  const handleViewInvoice = async (invoice: Invoice) => {
+    try {
+      // Generate PDF preview
+      const response = await fetch(`/api/invoices/${invoice.id}/preview`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        // Open in new window/tab
+        const newWindow = window.open(url, '_blank');
+        if (!newWindow) {
+          // Fallback: download the file
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `invoice-${invoice.invoice_number}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+        
+        window.URL.revokeObjectURL(url);
+        console.log('Invoice preview generated:', invoice.id);
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+    } catch (err) {
+      console.error('Error generating invoice preview:', err);
+      alert('Fehler beim Generieren der Rechnungsvorschau');
+    }
   };
 
   // Format currency

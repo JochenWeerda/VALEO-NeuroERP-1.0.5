@@ -1,4 +1,9 @@
 import React from 'react';
+import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
+import { TrendingUp, TrendingDown, Remove } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StatusChip } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 import { TrustIndicator } from './TrustIndicator';
 import type { TrustLevel } from './TrustIndicator';
 
@@ -21,48 +26,57 @@ export const DataCard: React.FC<DataCardProps> = ({
   trustLevel,
   confidence
 }) => {
-  const getTrendColor = () => {
+  // ✅ REFAKTORIERT: Verwendung von StatusChip für Trend-Anzeige
+  const getTrendStatus = () => {
     switch (trend) {
       case 'up':
-        return 'text-green-600';
+        return 'success' as const;
       case 'down':
-        return 'text-red-600';
+        return 'error' as const;
       default:
-        return 'text-gray-600';
+        return 'warning' as const;
     }
   };
 
   const getTrendIcon = () => {
     switch (trend) {
       case 'up':
-        return 'fas fa-arrow-up';
+        return <TrendingUp fontSize="small" />;
       case 'down':
-        return 'fas fa-arrow-down';
+        return <TrendingDown fontSize="small" />;
       default:
-        return 'fas fa-minus';
+        return <Remove fontSize="small" />;
     }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <div className="flex items-center space-x-2 mb-2">
-            <i className={`${icon} text-gray-400`}></i>
-            <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-          </div>
-          <div className="flex items-baseline space-x-2">
-            <p className="text-2xl font-bold text-gray-900">{value}</p>
-            <div className={`flex items-center space-x-1 ${getTrendColor()}`}>
-              <i className={`${getTrendIcon()} text-xs`}></i>
-              <span className="text-sm font-medium">{change}</span>
-            </div>
-          </div>
-        </div>
-        <div className="ml-4">
-          <TrustIndicator level={trustLevel} />
-        </div>
-      </div>
-    </div>
+    <Card sx={{ p: 3, height: '100%' }}>
+      <CardContent>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Box flex={1}>
+            <Box display="flex" alignItems="center" gap={1} mb={1}>
+              <i className={`${icon} text-gray-400`}></i>
+              <Typography variant="body2" color="text.secondary">
+                {title}
+              </Typography>
+            </Box>
+            <Box display="flex" alignItems="baseline" gap={1}>
+              <Typography variant="h4" component="p" fontWeight="bold" color="text.primary">
+                {value}
+              </Typography>
+              <Box display="flex" alignItems="center" gap={0.5}>
+                {getTrendIcon()}
+                <Typography variant="body2" color="text.secondary" fontWeight="medium">
+                  {change}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box ml={2}>
+            <TrustIndicator level={trustLevel} />
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }; 

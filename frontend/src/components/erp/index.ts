@@ -14,4 +14,30 @@ export { OrderSuggestionForm } from './OrderSuggestionForm';
 export { FreightOrderForm } from './FreightOrderForm';
 
 // TypeScript Interfaces für externe Verwendung
-// Diese werden in den jeweiligen Komponenten-Dateien definiert 
+export type {
+  PurchaseOrderData,
+  PurchaseOrderPosition,
+  DocumentReference,
+  PaymentTerms,
+  PurchaseOrderProps
+} from './PurchaseOrder';
+
+export type {
+  OrderSuggestionData,
+  OrderSuggestionProps
+} from './OrderSuggestion';
+
+export type {
+  SupplierOfferData,
+  SupplierOfferProps
+} from './SupplierOffer';
+
+export type {
+  DeliveryNoteData,
+  DeliveryNoteProps
+} from './DeliveryNote';
+
+export type {
+  OrderConfirmationData,
+  OrderConfirmationProps
+} from './OrderConfirmation'; 

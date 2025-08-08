@@ -48,7 +48,7 @@ import {
   Assessment as AssessmentIcon
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useApi } from '../contexts/ApiContext';
+import { useApi } from '../src/contexts/ApiContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -331,7 +331,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               className="text-gray-700"
             >
               <Avatar className="w-8 h-8 bg-blue-600">
-                {user?.full_name?.charAt(0) || 'U'}
+                {user?.name?.charAt(0) || 'U'}
               </Avatar>
             </IconButton>
           </Tooltip>
@@ -356,7 +356,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Typography>
           </Box>
           <Typography variant="body2" className="text-gray-600 mt-1">
-            {user?.full_name || 'Benutzer'}
+            {user?.name || 'Benutzer'}
           </Typography>
         </Box>
 
@@ -453,7 +453,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         <Box className="px-4 py-3 border-b border-gray-200">
           <Typography variant="subtitle1" className="font-semibold text-gray-800">
-            {user?.full_name || 'Benutzer'}
+            {user?.name || 'Benutzer'}
           </Typography>
           <Typography variant="body2" className="text-gray-600">
             {user?.email || 'benutzer@valeo.com'}
@@ -503,7 +503,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   {notification.message}
                 </Typography>
                 <Typography variant="caption" className="text-gray-500">
-                  {new Date(notification.created_at).toLocaleString('de-DE')}
+                  {new Date().toLocaleString('de-DE')}
                 </Typography>
               </Box>
             </MenuItem>

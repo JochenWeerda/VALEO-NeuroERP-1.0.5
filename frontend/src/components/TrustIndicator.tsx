@@ -7,6 +7,9 @@ import {
   Error as ErrorIcon,
   Info as InfoIcon
 } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StatusChip } from './ui/UIStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 
 export interface TrustIndicatorProps {
   title?: string;
@@ -35,64 +38,39 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
   className,
   confidence
 }) => {
-  const getLevelConfig = (level: string) => {
+  // ✅ REFAKTORIERT: Verwendung von StatusChip für Level-Anzeige
+  const getLevelStatus = (level: string): keyof typeof UI_LABELS.STATUS => {
     switch (level) {
       case 'high':
-        return {
-          color: 'success' as const,
-          icon: <CheckCircleIcon />,
-          bgColor: '#e8f5e8',
-          textColor: '#2e7d32'
-        };
-      case 'medium':
-        return {
-          color: 'warning' as const,
-          icon: <WarningIcon />,
-          bgColor: '#fff8e1',
-          textColor: '#f57c00'
-        };
-      case 'low':
-        return {
-          color: 'error' as const,
-          icon: <ErrorIcon />,
-          bgColor: '#ffebee',
-          textColor: '#d32f2f'
-        };
-      case 'critical':
-        return {
-          color: 'error' as const,
-          icon: <ErrorIcon />,
-          bgColor: '#ffcdd2',
-          textColor: '#c62828'
-        };
       case 'fact':
-        return {
-          color: 'success' as const,
-          icon: <CheckCircleIcon />,
-          bgColor: '#e8f5e8',
-          textColor: '#2e7d32'
-        };
+        return 'ACTIVE';
+      case 'medium':
       case 'assumption':
-        return {
-          color: 'warning' as const,
-          icon: <WarningIcon />,
-          bgColor: '#fff8e1',
-          textColor: '#f57c00'
-        };
+        return 'PENDING';
+      case 'low':
       case 'uncertain':
-        return {
-          color: 'error' as const,
-          icon: <ErrorIcon />,
-          bgColor: '#ffebee',
-          textColor: '#d32f2f'
-        };
+        return 'SUSPENDED';
+      case 'critical':
+        return 'ERROR';
       default:
-        return {
-          color: 'info' as const,
-          icon: <InfoIcon />,
-          bgColor: '#e3f2fd',
-          textColor: '#1976d2'
-        };
+        return 'UNKNOWN';
+    }
+  };
+
+  const getLevelIcon = (level: string) => {
+    switch (level) {
+      case 'high':
+      case 'fact':
+        return <CheckCircleIcon />;
+      case 'medium':
+      case 'assumption':
+        return <WarningIcon />;
+      case 'low':
+      case 'uncertain':
+      case 'critical':
+        return <ErrorIcon />;
+      default:
+        return <InfoIcon />;
     }
   };
 
@@ -111,7 +89,8 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
     }
   };
 
-  const levelConfig = getLevelConfig(level);
+  const levelStatus = getLevelStatus(level);
+  const levelIcon = getLevelIcon(level);
 
   return (
     <Card 
@@ -121,8 +100,9 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        border: `2px solid ${levelConfig.bgColor}`,
-        backgroundColor: levelConfig.bgColor,
+        border: 2,
+        borderColor: `${levelStatus}.main`,
+        backgroundColor: `${levelStatus}.50`,
         transition: 'all 0.3s ease',
         '&:hover': {
           transform: 'translateY(-2px)',
@@ -130,16 +110,16 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
         }
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-        <Box sx={{ color: levelConfig.textColor, mr: 1 }}>
-          {levelConfig.icon}
+      <Box display="flex" alignItems="center" mb={1}>
+        <Box sx={{ color: `${levelStatus}.main`, mr: 1 }}>
+          {levelIcon}
         </Box>
         {title && (
           <Typography 
             variant="h6" 
             component="h3"
             sx={{ 
-              color: levelConfig.textColor,
+              color: `${levelStatus}.main`,
               fontWeight: 600,
               flex: 1
             }}
@@ -147,11 +127,9 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
             {title}
           </Typography>
         )}
-        <Chip 
-          label={level.toUpperCase()} 
-          color={levelConfig.color}
+        <StatusChip 
+          status={levelStatus}
           size="small"
-          variant="outlined"
         />
       </Box>
 
@@ -159,7 +137,7 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
         <Typography 
           variant="body2" 
           sx={{ 
-            color: '#666',
+            color: 'text.secondary',
             mb: 2,
             flex: 1
           }}
@@ -169,12 +147,12 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
       )}
 
       {value !== undefined && (
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+        <Box display="flex" alignItems="center" mb={1}>
           <Typography 
             variant="h4" 
             component="span"
             sx={{ 
-              color: levelConfig.textColor,
+              color: `${levelStatus}.main`,
               fontWeight: 700,
               mr: 0.5
             }}
@@ -184,13 +162,13 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
           {unit && (
             <Typography 
               variant="body2" 
-              sx={{ color: '#666' }}
+              sx={{ color: 'text.secondary' }}
             >
               {unit}
             </Typography>
           )}
           {trend && (
-            <Box sx={{ ml: 1 }}>
+            <Box ml={1}>
               {getTrendIcon(trend)}
             </Box>
           )}
@@ -198,14 +176,14 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
       )}
 
       {details && details.length > 0 && (
-        <Box sx={{ mt: 1 }}>
+        <Box mt={1}>
           {details.map((detail, index) => (
             <Typography 
               key={index}
               variant="caption" 
               sx={{ 
                 display: 'block',
-                color: '#666',
+                color: 'text.secondary',
                 fontSize: '0.75rem'
               }}
             >
@@ -219,13 +197,13 @@ const TrustIndicator: React.FC<TrustIndicatorProps> = ({
         <Typography 
           variant="caption" 
           sx={{ 
-            color: '#999',
+            color: 'text.disabled',
             fontSize: '0.7rem',
             mt: 1,
             display: 'block'
           }}
         >
-          Letzte Aktualisierung: {lastUpdated}
+          {UI_LABELS.MESSAGES.LAST_UPDATE}: {lastUpdated}
         </Typography>
       )}
     </Card>

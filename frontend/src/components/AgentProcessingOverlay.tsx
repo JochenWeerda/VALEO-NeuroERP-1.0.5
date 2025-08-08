@@ -1,5 +1,21 @@
 import React from 'react';
-import { cn } from '../lib/utils';
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Fade,
+  Backdrop
+} from '@mui/material';
+import {
+  Psychology as BrainIcon,
+  Settings as SettingsIcon,
+  CheckCircle as CheckCircleIcon,
+  Error as ErrorIcon,
+  SmartToy as RobotIcon
+} from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { StandardButton } from './forms/FormStandardization';
+import { UI_LABELS } from './ui/UIStandardization';
 
 type AgentStatus = 'thinking' | 'processing' | 'ready' | 'error';
 
@@ -20,72 +36,104 @@ export const AgentProcessingOverlay: React.FC<AgentProcessingOverlayProps> = ({
 }) => {
   if (!isVisible) return null;
 
+  // ✅ REFAKTORIERT: Verwendung von Material-UI Icons
   const getStatusIcon = () => {
     switch (status) {
       case 'thinking':
-        return 'fas fa-brain animate-agent-thinking';
+        return <BrainIcon sx={{ fontSize: 48, color: 'primary.main' }} />;
       case 'processing':
-        return 'fas fa-cogs animate-ai-processing';
+        return <SettingsIcon sx={{ fontSize: 48, color: 'primary.main' }} />;
       case 'ready':
-        return 'fas fa-check-circle text-success-500';
+        return <CheckCircleIcon sx={{ fontSize: 48, color: 'success.main' }} />;
       case 'error':
-        return 'fas fa-exclamation-triangle text-danger-500';
+        return <ErrorIcon sx={{ fontSize: 48, color: 'error.main' }} />;
       default:
-        return 'fas fa-robot';
+        return <RobotIcon sx={{ fontSize: 48, color: 'primary.main' }} />;
     }
   };
 
   const getStatusColor = () => {
     switch (status) {
       case 'thinking':
-        return 'text-agent-600';
+        return 'primary.main';
       case 'processing':
-        return 'text-ai-600';
+        return 'primary.main';
       case 'ready':
-        return 'text-success-600';
+        return 'success.main';
       case 'error':
-        return 'text-danger-600';
+        return 'error.main';
       default:
-        return 'text-gray-600';
+        return 'text.primary';
     }
   };
 
   return (
-    <div className="agent-overlay">
-      <div className="agent-processing">
-        <div className="agent-processing-icon">
-          <i className={getStatusIcon()}></i>
-        </div>
-        
-        <h3 className={cn('agent-processing-text', getStatusColor())}>
-          {message}
-        </h3>
-        
-        {subMessage && (
-          <p className="agent-processing-subtext">
-            {subMessage}
-          </p>
-        )}
+    <Backdrop
+      open={isVisible}
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+      }}
+    >
+      <Fade in={isVisible}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            p: 4,
+            bgcolor: 'background.paper',
+            borderRadius: 2,
+            boxShadow: 24,
+            maxWidth: 400,
+            width: '100%'
+          }}
+        >
+          <Box sx={{ mb: 2 }}>
+            {getStatusIcon()}
+          </Box>
 
-        {status === 'thinking' || status === 'processing' ? (
-          <div className="mt-4">
-            <div className="flex space-x-1 justify-center">
-              <div className="w-2 h-2 bg-agent-500 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-agent-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-2 h-2 bg-agent-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-            </div>
-          </div>
-        ) : null}
-
-        {onCancel && (status === 'thinking' || status === 'processing') && (
-          <button
-            onClick={onCancel}
-            className="mt-4 btn-secondary text-sm"
+          <Typography
+            variant="h6"
+            sx={{
+              color: getStatusColor(),
+              mb: 1
+            }}
           >
-            Abbrechen
-          </button>
-        )}
-      </div>
-    </div>
+            {message}
+          </Typography>
+
+          {subMessage && (
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              {subMessage}
+            </Typography>
+          )}
+
+          {(status === 'thinking' || status === 'processing') && (
+            <Box sx={{ mt: 2 }}>
+              <CircularProgress size={24} />
+            </Box>
+          )}
+
+          {onCancel && (status === 'thinking' || status === 'processing') && (
+            <Box sx={{ mt: 2 }}>
+              <StandardButton
+                variant="outlined"
+                size="small"
+                onClick={onCancel}
+              >
+                {UI_LABELS.ACTIONS.CANCEL}
+              </StandardButton>
+            </Box>
+          )}
+        </Box>
+      </Fade>
+    </Backdrop>
   );
 }; 

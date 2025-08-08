@@ -9,11 +9,21 @@ import {
   Tab,
   Box,
   Alert,
-  CircularProgress
+  CircularProgress,
+  Paper,
+  Button,
+  Chip,
+  CardActions
 } from '@mui/material';
+import {
+  Assignment as AssignmentIcon,
+  People as PeopleIcon,
+  LocalShipping as DeliveryIcon,
+  Assessment as AssessmentIcon
+} from '@mui/icons-material';
 import { useErpStore } from '../store/erpStore';
-import { OrderForm } from '../components/zvoove-integration/OrderForm';
-import { ContactOverview } from '../components/zvoove-integration/ContactOverview';
+import { OrderForm } from '../components/zvoove-integration/ZvooveOrderForm';
+import { ContactOverview } from '../components/zvoove-integration/ZvooveContactOverview';
 import { Navigation } from '../components/zvoove-integration/Navigation';
 
 // TypeScript Interfaces
@@ -21,7 +31,74 @@ interface IntegrationPageProps {
   initialTab?: 'orders' | 'contacts' | 'deliveries';
 }
 
+interface ContactFilters {
+  contactType: 'all' | 'sales' | 'purchase';
+  sortBy: 'contactNumber' | 'name' | 'date' | 'representative';
+  sortOrder: 'asc' | 'desc';
+  representative: string;
+  dateRange: { from: any; to: any };
+  parity: string;
+  onlyPlannedAppointments: boolean;
+  articleSumsInPrint: boolean;
+  searchText: string;
+  contactNumber: string;
+}
+
+interface OrderData {
+  // Belegdaten
+  customerNumber: string;
+  debtorNumber: string;
+  documentDate: Date;
+  contactPerson: string;
+  
+  // Positionen
+  positions: OrderPosition[];
+  
+  // Summen
+  netAmount: number;
+  vatAmount: number;
+  totalAmount: number;
+}
+
+interface OrderPosition {
+  id: string;
+  articleNumber: string;
+  description: string;
+  quantity: number;
+  unit: string;
+  unitPrice: number;
+  discount: number;
+  netPrice: number;
+}
+
 type NavigationTab = 'orders' | 'contacts' | 'deliveries';
+
+// TabPanel Component
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
 
 export const IntegrationPage: React.FC<IntegrationPageProps> = ({
   initialTab = 'orders'
@@ -41,8 +118,6 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
     clearError
   } = useErpStore();
 
-  const selectors = useErpSelectors();
-
   // Contact Filters
   const [contactFilters, setContactFilters] = useState<ContactFilters>({
     contactType: 'all',
@@ -60,7 +135,7 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
   // Initial Data laden
   useEffect(() => {
     fetchOrders();
-    fetchContacts(contactFilters);
+    fetchContacts();
   }, []);
 
   // Tab ändern
@@ -97,12 +172,27 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
   // Contact Filter ändern
   const handleContactFilterChange = (newFilters: ContactFilters) => {
     setContactFilters(newFilters);
-    fetchContacts(newFilters);
+    fetchContacts();
   };
 
   // Statistiken berechnen
-  const orderStats = selectors.getOrderStatistics();
-  const contactStats = selectors.getContactStatistics();
+  const orderStats = {
+    total: orders.length,
+    byType: {
+      offer: orders.filter(order => order.status === 'offer').length,
+      order: orders.filter(order => order.status === 'order').length
+    },
+    totalAmount: orders.reduce((sum, order) => sum + order.totalAmount, 0)
+  };
+  const contactStats = {
+    total: contacts.length,
+    byType: {
+      sales: contacts.filter(contact => contact.contactType === 'sales').length,
+      purchase: contacts.filter(contact => contact.contactType === 'purchase').length
+    },
+    totalOrderQuantity: contacts.reduce((sum, contact) => sum + contact.totalOrderQuantity, 0),
+    totalRemainingQuantity: contacts.reduce((sum, contact) => sum + contact.totalRemainingQuantity, 0)
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -244,7 +334,7 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
 
           {/* Auftragserfassung */}
           <TabPanel value={activeTab} index={0}>
-            <ZvooveOrderForm
+            <OrderForm
               mode="order"
               onSave={handleOrderSave}
               onCancel={handleOrderCancel}
@@ -253,7 +343,7 @@ export const IntegrationPage: React.FC<IntegrationPageProps> = ({
 
           {/* Kontaktübersicht */}
           <TabPanel value={activeTab} index={1}>
-            <ZvooveContactOverview
+            <ContactOverview
               filters={contactFilters}
               onFilterChange={handleContactFilterChange}
               contacts={contacts}

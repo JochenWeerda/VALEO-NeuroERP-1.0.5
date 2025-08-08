@@ -34,6 +34,8 @@ import {
   AutoAwesome as AutoAwesomeIcon,
   Description as DescriptionIcon
 } from '@mui/icons-material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 import { useAuth } from '../contexts/AuthContext';
 import { preloadService } from '../services/PreloadService';
 
@@ -52,13 +54,13 @@ const NavigationContent: React.FC = () => {
   const navigationItems = [
     {
       path: '/dashboard',
-      label: 'Dashboard',
+      label: UI_LABELS.NAVIGATION.DASHBOARD,
       icon: DashboardIcon,
       priority: 'high'
     },
     {
       path: '/ai-dashboard',
-      label: 'AI Dashboard',
+      label: 'KI-Dashboard',
       icon: AutoAwesomeIcon,
       priority: 'high'
     },
@@ -70,31 +72,31 @@ const NavigationContent: React.FC = () => {
     },
     {
       path: '/users',
-      label: 'Benutzer',
+      label: UI_LABELS.NAVIGATION.USERS,
       icon: PeopleIcon,
       priority: 'medium'
     },
     {
       path: '/inventory',
-      label: 'Inventar',
+      label: UI_LABELS.NAVIGATION.INVENTORY,
       icon: InventoryIcon,
       priority: 'medium'
     },
     {
       path: '/pos',
-      label: 'POS',
+      label: 'POS-System',
       icon: ShoppingCartIcon,
       priority: 'high'
     },
     {
       path: '/reports',
-      label: 'Berichte',
+      label: UI_LABELS.NAVIGATION.REPORTS,
       icon: AssessmentIcon,
       priority: 'low'
     },
     {
       path: '/settings',
-      label: 'Einstellungen',
+      label: UI_LABELS.NAVIGATION.SETTINGS,
       icon: SettingsIcon,
       priority: 'low'
     }
@@ -122,13 +124,12 @@ const NavigationContent: React.FC = () => {
 
   const handleNavigation = (path: string) => {
     navigate(path);
-    if (isMobile) {
-      setMobileOpen(false);
-    }
+    setMobileOpen(false);
   };
 
   const handleLogout = () => {
     logout();
+    navigate('/login');
     handleMenuClose();
   };
 
@@ -186,7 +187,7 @@ const NavigationContent: React.FC = () => {
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="Menü öffnen"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { md: 'none' } }}
@@ -216,9 +217,9 @@ const NavigationContent: React.FC = () => {
               onClick={handleMenuOpen}
               sx={{ ml: 1 }}
             >
-                             <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
-                 {user?.username?.charAt(0) || 'U'}
-               </Avatar>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                {user?.username?.charAt(0) || 'U'}
+              </Avatar>
             </IconButton>
           </Box>
         </Toolbar>
@@ -245,67 +246,81 @@ const NavigationContent: React.FC = () => {
         variant="permanent"
         sx={{
           display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
-            width: 250,
-            marginTop: '64px' // AppBar height
-          },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 250 },
         }}
         open
       >
         {drawer}
       </Drawer>
 
-      {/* Notifications Menu */}
-      <Menu
-        anchorEl={notificationsAnchor}
-        open={Boolean(notificationsAnchor)}
-        onClose={handleNotificationsClose}
-        PaperProps={{
-          sx: { width: 320, maxHeight: 400 }
-        }}
-      >
-        <MenuItem onClick={handleNotificationsClose}>
-          <Typography variant="body2">
-            Neuer Benutzer registriert
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={handleNotificationsClose}>
-          <Typography variant="body2">
-            Inventar-Update verfügbar
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={handleNotificationsClose}>
-          <Typography variant="body2">
-            System-Backup abgeschlossen
-          </Typography>
-        </MenuItem>
-      </Menu>
-
       {/* User Menu */}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
+        sx={{ mt: 1 }}
         PaperProps={{
-          sx: { width: 200 }
+          sx: { 
+            minWidth: 192, 
+            boxShadow: 3,
+            border: 1,
+            borderColor: 'divider'
+          }
         }}
       >
-        <MenuItem onClick={handleMenuClose}>
+        <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'semibold', color: 'text.primary' }}>
+            {user?.username || 'Benutzer'}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            {user?.email || 'benutzer@valeo.com'}
+          </Typography>
+        </Box>
+        <MenuItem onClick={() => { navigate('/profile'); handleMenuClose(); }}>
           <ListItemIcon>
-            <AccountCircleIcon fontSize="small" />
+            <AccountCircleIcon />
           </ListItemIcon>
-                     <Typography variant="body2">
-             {user?.username || 'Benutzer'}
-           </Typography>
+          <ListItemText primary="Profil" />
+        </MenuItem>
+        <MenuItem onClick={() => { navigate('/settings'); handleMenuClose(); }}>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Einstellungen" />
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
-            <LogoutIcon fontSize="small" />
+            <LogoutIcon />
           </ListItemIcon>
-          <Typography variant="body2">
-            Abmelden
+          <ListItemText primary="Abmelden" />
+        </MenuItem>
+      </Menu>
+
+      {/* Notifications Menu */}
+      <Menu
+        anchorEl={notificationsAnchor}
+        open={Boolean(notificationsAnchor)}
+        onClose={handleNotificationsClose}
+        sx={{ mt: 1 }}
+        PaperProps={{
+          sx: { 
+            minWidth: 320, 
+            maxHeight: 384, 
+            boxShadow: 3,
+            border: 1,
+            borderColor: 'divider'
+          }
+        }}
+      >
+        <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'semibold', color: 'text.primary' }}>
+            Benachrichtigungen
+          </Typography>
+        </Box>
+        <MenuItem disabled>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            Keine Benachrichtigungen
           </Typography>
         </MenuItem>
       </Menu>
@@ -313,46 +328,28 @@ const NavigationContent: React.FC = () => {
   );
 };
 
-// Wrapper-Komponente für Router-Kontext
 export const Navigation: React.FC = () => {
   return <NavigationContent />;
 };
 
-// Preload-Status Indicator (nur in Entwicklung)
 export const PreloadIndicator: React.FC = () => {
-  const [preloadStatus, setPreloadStatus] = React.useState<Record<string, boolean>>({});
+  const [status, setStatus] = useState<string>('');
 
-  React.useEffect(() => {
-    const updateStatus = () => {
-      setPreloadStatus(preloadService.getPreloadStatus());
-    };
+  const updateStatus = () => {
+    const currentStatus = preloadService.getStatus();
+    setStatus(currentStatus);
+  };
 
-    updateStatus();
-    const interval = setInterval(updateStatus, 2000);
-
+  useEffect(() => {
+    const interval = setInterval(updateStatus, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  if (process.env.NODE_ENV !== 'development') return null;
-
-  const loadedCount = Object.values(preloadStatus).filter(Boolean).length;
-  const totalCount = Object.keys(preloadStatus).length;
-
-  return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: 16,
-        right: 16,
-        bgcolor: 'rgba(0,0,0,0.8)',
-        color: 'white',
-        p: 1,
-        borderRadius: 1,
-        fontSize: '0.75rem',
-        zIndex: 9999
-      }}
-    >
-      🔄 {loadedCount}/{totalCount} Routen preloaded
+  return status ? (
+    <Box sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: 1000 }}>
+      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+        {status}
+      </Typography>
     </Box>
-  );
+  ) : null;
 }; 

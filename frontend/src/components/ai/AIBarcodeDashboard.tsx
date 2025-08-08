@@ -13,7 +13,7 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { SuggestionTable, SuggestionTableColumn } from './shared/SuggestionTable';
 import { ConfidenceIndicator } from './shared/ConfidenceIndicator';
-import { useOfflineStatus, useOfflineData } from '../../hooks/useOffline';
+import { useOffline } from '../../hooks/useOffline';
 
 interface BarcodeSuggestion {
   id: string;
@@ -122,9 +122,9 @@ const columns: SuggestionTableColumn<BarcodeSuggestion>[] = [
 
 const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' }) => {
   // Offline-Hooks für Offline-First-Funktionalität
-  const { isOnline, pendingRequests } = useOfflineStatus();
-  const { data: offlineSuggestions } = useOfflineData<BarcodeSuggestion>('ai_suggestion');
-  const { data: offlineStats } = useOfflineData<AIBarcodeStats>('ai_suggestion');
+  const { isOnline, pendingRequests } = useOffline();
+  const [offlineSuggestions, setOfflineSuggestions] = useState<BarcodeSuggestion[]>([]);
+  const [offlineStats, setOfflineStats] = useState<AIBarcodeStats | null>(null);
 
   const [suggestions, setSuggestions] = useState<BarcodeSuggestion[]>([]);
   const [stats, setStats] = useState<AIBarcodeStats | null>(null);
@@ -201,8 +201,8 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
     } catch (err) {
       console.error('Fehler beim Laden der Statistiken:', err);
       // Fallback zu Offline-Statistiken wenn verfügbar
-      if (offlineStats.length > 0) {
-        setStats(offlineStats[0]);
+      if (offlineStats) {
+        setStats(offlineStats);
       }
     }
   }, [offlineStats]);
@@ -384,9 +384,9 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
             icon={<OfflineIcon />}
             action={
               <Box className="flex items-center gap-2">
-                {pendingRequests > 0 && (
+                {pendingRequests.length > 0 && (
                   <Chip 
-                    label={`${pendingRequests} Sync`} 
+                    label={`${pendingRequests.length} Sync`} 
                     size="small" 
                     color="warning" 
                     variant="outlined"

@@ -1,184 +1,314 @@
-import { useEffect, useCallback, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { preloadService, CRITICAL_ROUTES } from '../services/PreloadService';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-// Hook für Preloading-Funktionalität
-export const usePreload = () => {
-  const location = useLocation();
-  const [preloadStatus, setPreloadStatus] = useState<Record<string, boolean>>({});
+interface PreloadOptions {
+  priority?: 'high' | 'low' | 'auto';
+  timeout?: number;
+  retries?: number;
+}
 
-  // Preload-Status aktualisieren
-  const updatePreloadStatus = useCallback(() => {
-    setPreloadStatus(preloadService.getPreloadStatus());
-  }, []);
+interface PreloadState {
+  isLoading: boolean;
+  progress: number;
+  loaded: number;
+  total: number;
+  error: Error | null;
+}
 
-  // Route preloaden
-  const preloadRoute = useCallback((route: string) => {
-    preloadService.preloadRoute(route);
-    updatePreloadStatus();
-  }, [updatePreloadStatus]);
+interface PreloadItem {
+  id: string;
+  url: string;
+  type: 'image' | 'script' | 'style' | 'data';
+  priority: 'high' | 'low' | 'auto';
+  status: 'pending' | 'loading' | 'loaded' | 'error';
+  progress: number;
+  error?: Error;
+}
 
-  // Kritische Routen preloaden
-  const preloadCriticalRoutes = useCallback(() => {
-    preloadService.preloadCriticalRoutes();
-    updatePreloadStatus();
-  }, [updatePreloadStatus]);
-
-  // Basierend auf aktueller Route preloaden
-  const preloadBasedOnCurrentRoute = useCallback(() => {
-    preloadService.preloadBasedOnCurrentRoute(location.pathname);
-    updatePreloadStatus();
-  }, [location.pathname, updatePreloadStatus]);
-
-  // Abhängigkeiten preloaden
-  const preloadDependencies = useCallback((route: string) => {
-    preloadService.preloadDependencies(route);
-    updatePreloadStatus();
-  }, [updatePreloadStatus]);
-
-  // Alle Routen preloaden
-  const preloadAllRoutes = useCallback(() => {
-    preloadService.preloadAllRoutes();
-    updatePreloadStatus();
-  }, [updatePreloadStatus]);
-
-  // Status regelmäßig aktualisieren
-  useEffect(() => {
-    updatePreloadStatus();
-    const interval = setInterval(updatePreloadStatus, 1000);
-    return () => clearInterval(interval);
-  }, [updatePreloadStatus]);
-
-  // Automatisches Preloading basierend auf Route-Änderungen
-  useEffect(() => {
-    preloadBasedOnCurrentRoute();
-  }, [preloadBasedOnCurrentRoute]);
-
-  return {
-    preloadRoute,
-    preloadCriticalRoutes,
-    preloadBasedOnCurrentRoute,
-    preloadDependencies,
-    preloadAllRoutes,
-    preloadStatus,
-    updatePreloadStatus,
-    isRoutePreloaded: (route: string) => preloadStatus[route] || false,
-    getPreloadedRoutes: () => Object.keys(preloadStatus).filter(route => preloadStatus[route]),
-    getPendingRoutes: () => Object.keys(CRITICAL_ROUTES).filter(route => !preloadStatus[route])
-  };
-};
-
-// Hook für spezifische Route-Preloading
-export const useRoutePreload = (route: string) => {
-  const { preloadRoute, isRoutePreloaded } = usePreload();
-  const [isPreloading, setIsPreloading] = useState(false);
-
-  const preload = useCallback(async () => {
-    if (isRoutePreloaded(route) || isPreloading) return;
-
-    setIsPreloading(true);
-    try {
-      preloadRoute(route);
-    } finally {
-      setIsPreloading(false);
-    }
-  }, [route, preloadRoute, isRoutePreloaded, isPreloading]);
-
-  return {
-    preload,
-    isPreloaded: isRoutePreloaded(route),
-    isPreloading
-  };
-};
-
-// Hook für intelligentes Preloading basierend auf Benutzerverhalten
-export const useSmartPreload = () => {
-  const location = useLocation();
-  const { preloadRoute, preloadStatus } = usePreload();
-  const [userBehavior, setUserBehavior] = useState<Record<string, number>>({});
-
-  // Benutzerverhalten tracken
-  const trackRouteVisit = useCallback((route: string) => {
-    setUserBehavior(prev => ({
-      ...prev,
-      [route]: (prev[route] || 0) + 1
-    }));
-  }, []);
-
-  // Route besuchen und Verhalten tracken
-  const visitRoute = useCallback((route: string) => {
-    trackRouteVisit(route);
-  }, [trackRouteVisit]);
-
-  // Häufig besuchte Routen preloaden
-  const preloadFrequentRoutes = useCallback(() => {
-    const sortedRoutes = Object.entries(userBehavior)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 3) // Top 3 Routen
-      .map(([route]) => route);
-
-    sortedRoutes.forEach(route => {
-      if (!preloadStatus[route]) {
-        preloadRoute(route);
-      }
-    });
-  }, [userBehavior, preloadRoute, preloadStatus]);
-
-  // Automatisches Preloading basierend auf Verhalten
-  useEffect(() => {
-    if (Object.keys(userBehavior).length > 0) {
-      preloadFrequentRoutes();
-    }
-  }, [userBehavior, preloadFrequentRoutes]);
-
-  return {
-    visitRoute,
-    trackRouteVisit,
-    preloadFrequentRoutes,
-    userBehavior,
-    getMostVisitedRoutes: () => 
-      Object.entries(userBehavior)
-        .sort(([, a], [, b]) => b - a)
-        .map(([route]) => route)
-  };
-};
-
-// Hook für Performance-Monitoring
-export const usePreloadPerformance = () => {
-  const [metrics, setMetrics] = useState({
-    totalPreloads: 0,
-    successfulPreloads: 0,
-    failedPreloads: 0,
-    averageLoadTime: 0,
-    lastPreloadTime: 0
+export function usePreload(
+  items: Array<{ id: string; url: string; type: 'image' | 'script' | 'style' | 'data' }>,
+  options: PreloadOptions = {}
+): PreloadState & { preload: () => Promise<void>; cancel: () => void } {
+  const { priority = 'auto', timeout = 30000 } = options;
+  
+  const [state, setState] = useState<PreloadState>({
+    isLoading: false,
+    progress: 0,
+    loaded: 0,
+    total: items.length,
+    error: null
   });
 
-  const trackPreloadAttempt = useCallback((success: boolean, loadTime: number) => {
-    setMetrics(prev => ({
-      totalPreloads: prev.totalPreloads + 1,
-      successfulPreloads: prev.successfulPreloads + (success ? 1 : 0),
-      failedPreloads: prev.failedPreloads + (success ? 0 : 1),
-      averageLoadTime: (prev.averageLoadTime + loadTime) / 2,
-      lastPreloadTime: loadTime
-    }));
+  const [preloadItems, setPreloadItems] = useState<PreloadItem[]>(() =>
+    items.map(item => ({
+      ...item,
+      priority,
+      status: 'pending',
+      progress: 0
+    }))
+  );
+
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const preload = useCallback(async () => {
+    if (state.isLoading) return;
+
+    setState(prev => ({ ...prev, isLoading: true, error: null }));
+    abortControllerRef.current = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+      abortControllerRef.current?.abort();
+      setState(prev => ({ 
+        ...prev, 
+        isLoading: false, 
+        error: new Error('Preload timeout') 
+      }));
+    }, timeout);
+
+    timeoutRef.current = timeoutId;
+
+    try {
+      const promises = preloadItems.map(async (item) => {
+        if (item.status === 'loaded') return;
+
+        setPreloadItems(prev => prev.map(i => 
+          i.id === item.id ? { ...i, status: 'loading' } : i
+        ));
+
+        try {
+          switch (item.type) {
+            case 'image':
+              await preloadImage(item.url, abortControllerRef.current!.signal);
+              break;
+            case 'script':
+              await preloadScript(item.url, abortControllerRef.current!.signal);
+              break;
+            case 'style':
+              await preloadStyle(item.url, abortControllerRef.current!.signal);
+              break;
+            case 'data':
+              await preloadData(item.url, abortControllerRef.current!.signal);
+              break;
+          }
+
+          setPreloadItems(prev => prev.map(i => 
+            i.id === item.id ? { ...i, status: 'loaded', progress: 100 } : i
+          ));
+
+          setState(prev => ({
+            ...prev,
+            loaded: prev.loaded + 1,
+            progress: ((prev.loaded + 1) / prev.total) * 100
+          }));
+
+        } catch (error) {
+          const errorObj = error instanceof Error ? error : new Error('Unknown error');
+          setPreloadItems(prev => prev.map(i => 
+            i.id === item.id ? { ...i, status: 'error', error: errorObj } : i
+          ));
+          throw errorObj;
+        }
+      });
+
+      await Promise.allSettled(promises);
+      setState(prev => ({ ...prev, isLoading: false }));
+
+    } catch (error) {
+      const errorObj = error instanceof Error ? error : new Error('Unknown error');
+      setState(prev => ({ ...prev, isLoading: false, error: errorObj }));
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }, [preloadItems, state.isLoading, timeout]);
+
+  const cancel = useCallback(() => {
+    abortControllerRef.current?.abort();
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setState(prev => ({ ...prev, isLoading: false }));
   }, []);
 
-  const getSuccessRate = useCallback(() => {
-    return metrics.totalPreloads > 0 
-      ? (metrics.successfulPreloads / metrics.totalPreloads) * 100 
-      : 0;
-  }, [metrics]);
+  useEffect(() => {
+    return () => {
+      cancel();
+    };
+  }, [cancel]);
 
   return {
-    metrics,
-    trackPreloadAttempt,
-    getSuccessRate,
-    resetMetrics: () => setMetrics({
-      totalPreloads: 0,
-      successfulPreloads: 0,
-      failedPreloads: 0,
-      averageLoadTime: 0,
-      lastPreloadTime: 0
-    })
+    ...state,
+    preload,
+    cancel
   };
-}; 
+}
+
+// Alias exports für Kompatibilität
+export const usePreloadPerformance = usePreload;
+
+// Helper functions for preloading different types of resources
+async function preloadImage(url: string, signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+    
+    if (signal.aborted) {
+      reject(new Error('Preload cancelled'));
+      return;
+    }
+
+    signal.addEventListener('abort', () => {
+      img.src = '';
+      reject(new Error('Preload cancelled'));
+    });
+
+    img.src = url;
+  });
+}
+
+async function preloadScript(url: string, signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = url;
+    script.async = true;
+    
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+    
+    if (signal.aborted) {
+      reject(new Error('Preload cancelled'));
+      return;
+    }
+
+    signal.addEventListener('abort', () => {
+      script.remove();
+      reject(new Error('Preload cancelled'));
+    });
+
+    document.head.appendChild(script);
+  });
+}
+
+async function preloadStyle(url: string, signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = url;
+    
+    link.onload = () => resolve();
+    link.onerror = () => reject(new Error(`Failed to load style: ${url}`));
+    
+    if (signal.aborted) {
+      reject(new Error('Preload cancelled'));
+      return;
+    }
+
+    signal.addEventListener('abort', () => {
+      link.remove();
+      reject(new Error('Preload cancelled'));
+    });
+
+    document.head.appendChild(link);
+  });
+}
+
+async function preloadData(url: string, signal: AbortSignal): Promise<void> {
+  const response = await fetch(url, { signal });
+  if (!response.ok) {
+    throw new Error(`Failed to load data: ${url}`);
+  }
+  await response.json();
+}
+
+// Hook for preloading with progress tracking
+export function usePreloadWithProgress(
+  items: Array<{ id: string; url: string; type: 'image' | 'script' | 'style' | 'data' }>,
+  options: PreloadOptions = {}
+) {
+  const [progress, setProgress] = useState(0);
+  const [currentItem, setCurrentItem] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, Error>>({});
+
+  const preload = useCallback(async () => {
+    setProgress(0);
+    setErrors({});
+    setCurrentItem(null);
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      setCurrentItem(item.id);
+      
+      try {
+        switch (item.type) {
+          case 'image':
+            await preloadImage(item.url, new AbortController().signal);
+            break;
+          case 'script':
+            await preloadScript(item.url, new AbortController().signal);
+            break;
+          case 'style':
+            await preloadStyle(item.url, new AbortController().signal);
+            break;
+          case 'data':
+            await preloadData(item.url, new AbortController().signal);
+            break;
+        }
+        
+        setProgress(((i + 1) / items.length) * 100);
+      } catch (error) {
+        const errorObj = error instanceof Error ? error : new Error('Unknown error');
+        setErrors(prev => ({ ...prev, [item.id]: errorObj }));
+      }
+    }
+
+    setCurrentItem(null);
+  }, [items]);
+
+  return {
+    progress,
+    currentItem,
+    errors,
+    preload
+  };
+}
+
+// Hook for preloading critical resources
+export function useCriticalPreload(
+  criticalItems: Array<{ id: string; url: string; type: 'image' | 'script' | 'style' | 'data' }>,
+  nonCriticalItems: Array<{ id: string; url: string; type: 'image' | 'script' | 'style' | 'data' }> = []
+) {
+  const [criticalLoaded, setCriticalLoaded] = useState(false);
+  const [nonCriticalLoaded, setNonCriticalLoaded] = useState(false);
+
+  const preloadCritical = useCallback(async () => {
+    const criticalPreload = usePreload(criticalItems, { priority: 'high' });
+    await criticalPreload.preload();
+    setCriticalLoaded(true);
+  }, [criticalItems]);
+
+  const preloadNonCritical = useCallback(async () => {
+    if (nonCriticalItems.length === 0) {
+      setNonCriticalLoaded(true);
+      return;
+    }
+
+    const nonCriticalPreload = usePreload(nonCriticalItems, { priority: 'low' });
+    await nonCriticalPreload.preload();
+    setNonCriticalLoaded(true);
+  }, [nonCriticalItems]);
+
+  const preloadAll = useCallback(async () => {
+    await preloadCritical();
+    await preloadNonCritical();
+  }, [preloadCritical, preloadNonCritical]);
+
+  return {
+    criticalLoaded,
+    nonCriticalLoaded,
+    allLoaded: criticalLoaded && nonCriticalLoaded,
+    preloadCritical,
+    preloadNonCritical,
+    preloadAll
+  };
+} 

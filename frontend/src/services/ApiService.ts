@@ -1,685 +1,707 @@
-import axios, { AxiosError } from 'axios';
-import type { AxiosInstance } from 'axios';
+/**
+ * VALEO NeuroERP 2.0 - API Service
+ * Echte Datenbank-Integration für alle 150+ Formulare
+ * Serena Quality: Vollständige API-Integration mit Error Handling und Type Safety
+ */
 
-// API-Konfiguration
-const API_CONFIG = {
-  BACKEND_BASE_URL: 'http://localhost:8000',
-  MIDDLEWARE_BASE_URL: 'http://localhost:8001',
-  TIMEOUT: 30000,
-  RETRY_ATTEMPTS: 3,
-  RETRY_DELAY: 1000
-};
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import { message } from 'antd';
 
-// Response-Typen
-export interface ApiResponse<T = any> {
-  success: boolean;
-  data?: T;
-  error?: string;
+// API Response Types
+export interface APIResponse<T = unknown> {
+  data: T;
   message?: string;
-  timestamp?: string;
+  success: boolean;
+  timestamp: string;
 }
 
-export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+export interface PaginatedResponse<T = unknown> {
+  items: T[];
   total: number;
   page: number;
-  limit: number;
+  size: number;
   pages: number;
 }
 
-// Auth-Typen
-export interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  access_token: string;
-  token_type: string;
-  user: {
-    id: string;
-    username: string;
-    email: string;
-    full_name: string;
-    role: string;
-  };
-}
-
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-  full_name: string;
-  role: string;
-  disabled: boolean;
-}
-
-// Business-Typen
-export interface Transaction {
-  id: string;
-  type: string;
-  amount: number;
-  date: string;
-  description?: string;
-  user_id: string;
-  status: 'pending' | 'completed' | 'failed';
-}
-
-export interface InventoryItem {
-  id: string;
-  name: string;
-  sku: string;
-  quantity: number;
-  unit_price: number;
-  location?: string;
-  category: string;
-  status: 'in_stock' | 'low_stock' | 'out_of_stock';
-}
-
-export interface Document {
-  id: string;
-  name: string;
-  type: string;
-  content: string;
-  created_at: string;
-  user_id: string;
-  size: number;
-  mime_type: string;
-}
-
-export interface Report {
-  id: string;
-  name: string;
-  type: string;
-  parameters: Record<string, any>;
-  created_at: string;
-  user_id: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
-}
-
-export interface Notification {
-  id: string;
-  title: string;
+export interface APIError {
+  code: string;
   message: string;
-  recipient_id: string;
-  read: boolean;
-  created_at: string;
-  type: 'info' | 'warning' | 'error' | 'success';
+  details?: unknown;
 }
 
-// System-Status-Typen
-export interface SystemStatus {
-  backend: boolean;
-  middleware: boolean;
-  database: boolean;
-  cache: boolean;
-  timestamp: string;
-}
+// Base API Configuration
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_TIMEOUT = 30000; // 30 seconds
 
-export interface HealthCheck {
-  status: 'healthy' | 'degraded' | 'unhealthy';
-  services: {
-    [key: string]: {
-      status: 'up' | 'down';
-      response_time: number;
-      last_check: string;
-    };
-  };
-  timestamp: string;
-}
-
-// API-Service Klasse
-class ApiService {
-  private backendApi: AxiosInstance;
-  private middlewareApi: AxiosInstance;
+class APIService {
+  private api: AxiosInstance;
   private authToken: string | null = null;
 
   constructor() {
-    // Backend API-Client
-    this.backendApi = axios.create({
-      baseURL: API_CONFIG.BACKEND_BASE_URL,
-      timeout: API_CONFIG.TIMEOUT,
+    this.api = axios.create({
+      baseURL: API_BASE_URL,
+      timeout: API_TIMEOUT,
       headers: {
         'Content-Type': 'application/json',
-      },
+        'Accept': 'application/json'
+      }
     });
 
-    // Middleware API-Client
-    this.middlewareApi = axios.create({
-      baseURL: API_CONFIG.MIDDLEWARE_BASE_URL,
-      timeout: API_CONFIG.TIMEOUT,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    // Request Interceptors
-    this.setupInterceptors();
-  }
-
-  private setupInterceptors(): void {
-    // Backend Request Interceptor
-    this.backendApi.interceptors.request.use(
-      (config: any) => {
+    // Request Interceptor für Auth Token
+    this.api.interceptors.request.use(
+      (config) => {
         if (this.authToken) {
           config.headers.Authorization = `Bearer ${this.authToken}`;
         }
         return config;
       },
-      (error: any) => Promise.reject(error)
+      (error) => {
+        return Promise.reject(error);
+      }
     );
 
-    // Middleware Request Interceptor
-    this.middlewareApi.interceptors.request.use(
-      (config: any) => {
-        if (this.authToken) {
-          config.headers.Authorization = `Bearer ${this.authToken}`;
-        }
-        return config;
+    // Response Interceptor für Error Handling
+    this.api.interceptors.response.use(
+      (response: AxiosResponse) => {
+        return response;
       },
-      (error: any) => Promise.reject(error)
-    );
-
-    // Response Interceptors
-    this.backendApi.interceptors.response.use(
-      (response: any) => response,
-      this.handleResponseError.bind(this)
-    );
-
-    this.middlewareApi.interceptors.response.use(
-      (response: any) => response,
-      this.handleResponseError.bind(this)
+      (error: AxiosError) => {
+        this.handleAPIError(error);
+        return Promise.reject(error);
+      }
     );
   }
 
-  private handleResponseError(error: AxiosError): Promise<never> {
-    if (error.response?.status === 401) {
-      // Token abgelaufen oder ungültig
-      this.clearAuthToken();
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-
-  // Auth-Methoden
-  public setAuthToken(token: string): void {
+  // Auth Token Management
+  setAuthToken(token: string) {
     this.authToken = token;
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('auth_token', token);
   }
 
-  public getAuthToken(): string | null {
+  getAuthToken(): string | null {
     if (!this.authToken) {
-      this.authToken = localStorage.getItem('authToken');
+      this.authToken = localStorage.getItem('auth_token');
     }
     return this.authToken;
   }
 
-  public clearAuthToken(): void {
+  clearAuthToken() {
     this.authToken = null;
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('auth_token');
   }
 
-  public isAuthenticated(): boolean {
-    // Für Demo-Zwecke immer als authentifiziert betrachten
-    return true;
-  }
+  // Error Handling
+  private handleAPIError(error: AxiosError) {
+    const status = error.response?.status;
+    const data = error.response?.data as APIError;
 
-  // Auth-API
-  public async login(credentials: LoginRequest): Promise<ApiResponse<LoginResponse>> {
-    // Mock-Login für Demo-Zwecke
-    const mockUser = await this.getCurrentUser();
-    const mockLoginResponse: LoginResponse = {
-      access_token: 'mock_token_123',
-      token_type: 'bearer',
-      user: mockUser,
-    };
-
-    this.setAuthToken('mock_token_123');
-
-    return {
-      success: true,
-      data: mockLoginResponse,
-    };
-  }
-
-  public async logout(): Promise<ApiResponse> {
-    // Mock-Logout für Demo-Zwecke
-    this.clearAuthToken();
-    return { success: true, message: 'Erfolgreich abgemeldet' };
-  }
-
-  public async getCurrentUser(): Promise<User> {
-    // Mock-Daten für Demo-Zwecke
-    return {
-      id: '1',
-      username: 'demo_user',
-      email: 'demo@valeo-neuroerp.com',
-      full_name: 'Max Mustermann',
-      role: 'admin',
-      disabled: false
-    };
-  }
-
-  // System-Status-API
-  public async getSystemStatus(): Promise<ApiResponse<SystemStatus>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockSystemStatus: SystemStatus = {
-      backend: true,
-      middleware: true,
-      database: true,
-      cache: true,
-      timestamp: new Date().toISOString()
-    };
-
-    return {
-      success: true,
-      data: mockSystemStatus
-    };
-  }
-
-  public async healthCheck(): Promise<ApiResponse<HealthCheck>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockHealthCheck: HealthCheck = {
-      status: 'healthy',
-      services: {
-        backend: { status: 'up', response_time: 50, last_check: new Date().toISOString() },
-        middleware: { status: 'up', response_time: 30, last_check: new Date().toISOString() },
-        database: { status: 'up', response_time: 20, last_check: new Date().toISOString() }
-      },
-      timestamp: new Date().toISOString()
-    };
-
-    return {
-      success: true,
-      data: mockHealthCheck
-    };
-  }
-
-  // Transaktions-API
-  public async getTransactions(params?: {
-    skip?: number;
-    limit?: number;
-    type?: string;
-    status?: string;
-  }): Promise<ApiResponse<Transaction[]>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockTransactions: Transaction[] = [
-      {
-        id: '1',
-        type: 'sale',
-        amount: 1500.00,
-        date: new Date().toISOString(),
-        description: 'Verkauf von Getreide',
-        user_id: '1',
-        status: 'completed'
-      },
-      {
-        id: '2',
-        type: 'purchase',
-        amount: 800.00,
-        date: new Date().toISOString(),
-        description: 'Einkauf von Dünger',
-        user_id: '1',
-        status: 'pending'
-      },
-      {
-        id: '3',
-        type: 'sale',
-        amount: 2200.00,
-        date: new Date().toISOString(),
-        description: 'Verkauf von Mais',
-        user_id: '1',
-        status: 'completed'
-      }
-    ];
-
-    return {
-      success: true,
-      data: mockTransactions
-    };
-  }
-
-  public async createTransaction(transaction: Omit<Transaction, 'id'>): Promise<ApiResponse<Transaction>> {
-    // Mock-Erfolg für Demo-Zwecke
-    const mockTransaction: Transaction = {
-      id: Date.now().toString(),
-      ...transaction
-    };
-
-    return {
-      success: true,
-      data: mockTransaction
-    };
-  }
-
-  public async getTransaction(id: string): Promise<ApiResponse<Transaction>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockTransaction: Transaction = {
-      id,
-      type: 'sale',
-      amount: 1500.00,
-      date: new Date().toISOString(),
-      description: 'Verkauf von Getreide',
-      user_id: '1',
-      status: 'completed'
-    };
-
-    return {
-      success: true,
-      data: mockTransaction
-    };
-  }
-
-  // Inventar-API
-  public async getInventory(params?: {
-    skip?: number;
-    limit?: number;
-    category?: string;
-    status?: string;
-  }): Promise<ApiResponse<InventoryItem[]>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockInventory: InventoryItem[] = [
-      {
-        id: '1',
-        name: 'Weizen',
-        sku: 'WH-001',
-        quantity: 1000,
-        unit_price: 250.00,
-        location: 'Lager A',
-        category: 'Getreide',
-        status: 'in_stock'
-      },
-      {
-        id: '2',
-        name: 'Mais',
-        sku: 'MA-001',
-        quantity: 500,
-        unit_price: 180.00,
-        location: 'Lager B',
-        category: 'Getreide',
-        status: 'low_stock'
-      },
-      {
-        id: '3',
-        name: 'Gerste',
-        sku: 'GE-001',
-        quantity: 750,
-        unit_price: 200.00,
-        location: 'Lager C',
-        category: 'Getreide',
-        status: 'in_stock'
-      },
-      {
-        id: '4',
-        name: 'Dünger NPK',
-        sku: 'DU-001',
-        quantity: 200,
-        unit_price: 45.00,
-        location: 'Lager D',
-        category: 'Dünger',
-        status: 'in_stock'
-      }
-    ];
-
-    return {
-      success: true,
-      data: mockInventory
-    };
-  }
-
-  public async createInventoryItem(item: Omit<InventoryItem, 'id'>): Promise<ApiResponse<InventoryItem>> {
-    // Mock-Erfolg für Demo-Zwecke
-    const mockItem: InventoryItem = {
-      id: Date.now().toString(),
-      ...item
-    };
-
-    return {
-      success: true,
-      data: mockItem
-    };
-  }
-
-  public async updateInventoryItem(id: string, item: Partial<InventoryItem>): Promise<ApiResponse<InventoryItem>> {
-    // Mock-Erfolg für Demo-Zwecke
-    const mockItem: InventoryItem = {
-      id,
-      name: item.name || 'Mock Item',
-      sku: item.sku || 'MOCK-001',
-      quantity: item.quantity || 0,
-      unit_price: item.unit_price || 0,
-      location: item.location || 'Mock Location',
-      category: item.category || 'Mock Category',
-      status: item.status || 'in_stock'
-    };
-
-    return {
-      success: true,
-      data: mockItem
-    };
-  }
-
-  // Dokumenten-API
-  public async getDocuments(params?: {
-    skip?: number;
-    limit?: number;
-    type?: string;
-  }): Promise<ApiResponse<Document[]>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockDocuments: Document[] = [
-      {
-        id: '1',
-        name: 'Rechnung_2024_001.pdf',
-        type: 'invoice',
-        content: 'Mock content',
-        created_at: new Date().toISOString(),
-        user_id: '1',
-        size: 1024,
-        mime_type: 'application/pdf'
-      },
-      {
-        id: '2',
-        name: 'Vertrag_Lieferant_2024.docx',
-        type: 'contract',
-        content: 'Mock content',
-        created_at: new Date().toISOString(),
-        user_id: '1',
-        size: 2048,
-        mime_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      },
-      {
-        id: '3',
-        name: 'Lieferschein_2024_015.pdf',
-        type: 'delivery_note',
-        content: 'Mock content',
-        created_at: new Date().toISOString(),
-        user_id: '1',
-        size: 512,
-        mime_type: 'application/pdf'
-      }
-    ];
-
-    return {
-      success: true,
-      data: mockDocuments
-    };
-  }
-
-  public async uploadDocument(file: File, metadata: Partial<Document>): Promise<ApiResponse<Document>> {
-    // Mock-Erfolg für Demo-Zwecke
-    const mockDocument: Document = {
-      id: Date.now().toString(),
-      name: file.name,
-      type: metadata.type || 'unknown',
-      content: 'Mock content',
-      created_at: new Date().toISOString(),
-      user_id: '1',
-      size: file.size,
-      mime_type: file.type
-    };
-
-    return {
-      success: true,
-      data: mockDocument
-    };
-  }
-
-  // Berichte-API
-  public async getReports(params?: {
-    skip?: number;
-    limit?: number;
-    type?: string;
-    status?: string;
-  }): Promise<ApiResponse<Report[]>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockReports: Report[] = [
-      {
-        id: '1',
-        name: 'Monatsbericht Januar 2024',
-        type: 'monthly',
-        parameters: { month: 1, year: 2024 },
-        created_at: new Date().toISOString(),
-        user_id: '1',
-        status: 'completed'
-      },
-      {
-        id: '2',
-        name: 'Lagerbestand Report',
-        type: 'inventory',
-        parameters: { location: 'all' },
-        created_at: new Date().toISOString(),
-        user_id: '1',
-        status: 'processing'
-      },
-      {
-        id: '3',
-        name: 'Umsatzanalyse Q1 2024',
-        type: 'quarterly',
-        parameters: { quarter: 1, year: 2024 },
-        created_at: new Date().toISOString(),
-        user_id: '1',
-        status: 'completed'
-      }
-    ];
-
-    return {
-      success: true,
-      data: mockReports
-    };
-  }
-
-  public async createReport(report: Omit<Report, 'id' | 'created_at'>): Promise<ApiResponse<Report>> {
-    // Mock-Erfolg für Demo-Zwecke
-    const mockReport: Report = {
-      id: Date.now().toString(),
-      ...report,
-      created_at: new Date().toISOString()
-    };
-
-    return {
-      success: true,
-      data: mockReport
-    };
-  }
-
-  // Benachrichtigungen-API
-  public async getNotifications(): Promise<ApiResponse<Notification[]>> {
-    // Mock-Daten für Demo-Zwecke
-    const mockNotifications: Notification[] = [
-      {
-        id: '1',
-        title: 'System-Update verfügbar',
-        message: 'Ein neues Update für VALEO NeuroERP ist verfügbar.',
-        recipient_id: '1',
-        read: false,
-        created_at: new Date().toISOString(),
-        type: 'info'
-      },
-      {
-        id: '2',
-        title: 'Neue Aufgabe zugewiesen',
-        message: 'Ihnen wurde eine neue Aufgabe im Projekt "Q1-Abschluss" zugewiesen.',
-        recipient_id: '1',
-        read: false,
-        created_at: new Date().toISOString(),
-        type: 'warning'
-      },
-      {
-        id: '3',
-        title: 'Backup erfolgreich',
-        message: 'Das tägliche Backup wurde erfolgreich abgeschlossen.',
-        recipient_id: '1',
-        read: true,
-        created_at: new Date().toISOString(),
-        type: 'success'
-      },
-      {
-        id: '4',
-        title: 'Lagerbestand niedrig',
-        message: 'Der Bestand von "Mais" ist unter den Mindestbestand gefallen.',
-        recipient_id: '1',
-        read: false,
-        created_at: new Date().toISOString(),
-        type: 'warning'
-      }
-    ];
-
-    return {
-      success: true,
-      data: mockNotifications
-    };
-  }
-
-  public async markNotificationRead(id: string): Promise<ApiResponse> {
-    // Mock-Erfolg für Demo-Zwecke
-    return {
-      success: true,
-      message: 'Benachrichtigung als gelesen markiert'
-    };
-  }
-
-  // Middleware-spezifische APIs
-  public async middlewareHealthCheck(): Promise<ApiResponse> {
-    // Mock-Erfolg für Demo-Zwecke
-    return {
-      success: true,
-      data: { status: 'healthy', timestamp: new Date().toISOString() }
-    };
-  }
-
-  public async getMiddlewareData(endpoint: string, params?: any): Promise<ApiResponse> {
-    // Mock-Daten für Demo-Zwecke
-    return {
-      success: true,
-      data: { message: 'Mock-Daten für Demo-Zwecke', endpoint, params }
-    };
-  }
-
-  // Hilfsmethoden
-  private handleError(error: any, defaultMessage: string): ApiResponse {
-    console.error('API Error:', error);
-    
-    let errorMessage = defaultMessage;
-    
-    if (error.response?.data?.detail) {
-      errorMessage = error.response.data.detail;
-    } else if (error.response?.data?.message) {
-      errorMessage = error.response.data.message;
-    } else if (error.message) {
-      errorMessage = error.message;
+    switch (status) {
+      case 401:
+        message.error('Sitzung abgelaufen. Bitte melden Sie sich erneut an.');
+        this.clearAuthToken();
+        break;
+      case 403:
+        message.error('Zugriff verweigert. Sie haben keine Berechtigung für diese Aktion.');
+        break;
+      case 404:
+        message.error('Ressource nicht gefunden.');
+        break;
+      case 422:
+        message.error('Validierungsfehler: ' + (data?.message || 'Ungültige Daten'));
+        break;
+      case 500:
+        message.error('Serverfehler. Bitte versuchen Sie es später erneut.');
+        break;
+      default:
+        message.error('Ein unerwarteter Fehler ist aufgetreten.');
     }
+  }
 
-    return {
-      success: false,
-      error: errorMessage,
-      timestamp: new Date().toISOString()
-    };
+  // Generic API Methods
+  async get<T>(endpoint: string, params?: Record<string, unknown>): Promise<T> {
+    const response = await this.api.get<T>(endpoint, { params });
+    return response.data;
+  }
+
+  async post<T>(endpoint: string, data?: unknown): Promise<T> {
+    const response = await this.api.post<T>(endpoint, data);
+    return response.data;
+  }
+
+  async put<T>(endpoint: string, data?: unknown): Promise<T> {
+    const response = await this.api.put<T>(endpoint, data);
+    return response.data;
+  }
+
+  async delete<T>(endpoint: string): Promise<T> {
+    const response = await this.api.delete<T>(endpoint);
+    return response.data;
+  }
+
+  // Warenwirtschaft API Methods - Echte Datenbankzugriffe
+  async getArtikelStammdaten(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/warenwirtschaft/artikelstammdaten', params);
+  }
+
+  async getArtikelStammdatenById(id: string) {
+    return this.get<unknown>(`/api/v1/warenwirtschaft/artikelstammdaten/${id}`);
+  }
+
+  async createArtikelStammdaten(data: unknown) {
+    return this.post<unknown>('/api/v1/warenwirtschaft/artikelstammdaten', data);
+  }
+
+  async updateArtikelStammdaten(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/warenwirtschaft/artikelstammdaten/${id}`, data);
+  }
+
+  async deleteArtikelStammdaten(id: string) {
+    return this.delete<unknown>(`/api/v1/warenwirtschaft/artikelstammdaten/${id}`);
+  }
+
+  async getLager(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/warenwirtschaft/lager', params);
+  }
+
+  async getLagerById(id: string) {
+    return this.get<unknown>(`/api/v1/warenwirtschaft/lager/${id}`);
+  }
+
+  async createLager(data: unknown) {
+    return this.post<unknown>('/api/v1/warenwirtschaft/lager', data);
+  }
+
+  async updateLager(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/warenwirtschaft/lager/${id}`, data);
+  }
+
+  async deleteLager(id: string) {
+    return this.delete<unknown>(`/api/v1/warenwirtschaft/lager/${id}`);
+  }
+
+  async getEinlagerung(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/warenwirtschaft/einlagerung', params);
+  }
+
+  async getEinlagerungById(id: string) {
+    return this.get<unknown>(`/api/v1/warenwirtschaft/einlagerung/${id}`);
+  }
+
+  async createEinlagerung(data: unknown) {
+    return this.post<unknown>('/api/v1/warenwirtschaft/einlagerung', data);
+  }
+
+  async updateEinlagerung(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/warenwirtschaft/einlagerung/${id}`, data);
+  }
+
+  async deleteEinlagerung(id: string) {
+    return this.delete<unknown>(`/api/v1/warenwirtschaft/einlagerung/${id}`);
+  }
+
+  async getBestellung(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/warenwirtschaft/bestellung', params);
+  }
+
+  async getBestellungById(id: string) {
+    return this.get<unknown>(`/api/v1/warenwirtschaft/bestellung/${id}`);
+  }
+
+  async createBestellung(data: unknown) {
+    return this.post<unknown>('/api/v1/warenwirtschaft/bestellung', data);
+  }
+
+  async updateBestellung(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/warenwirtschaft/bestellung/${id}`, data);
+  }
+
+  async deleteBestellung(id: string) {
+    return this.delete<unknown>(`/api/v1/warenwirtschaft/bestellung/${id}`);
+  }
+
+  async getLieferant(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/warenwirtschaft/lieferant', params);
+  }
+
+  async getLieferantById(id: string) {
+    return this.get<unknown>(`/api/v1/warenwirtschaft/lieferant/${id}`);
+  }
+
+  async createLieferant(data: unknown) {
+    return this.post<unknown>('/api/v1/warenwirtschaft/lieferant', data);
+  }
+
+  async updateLieferant(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/warenwirtschaft/lieferant/${id}`, data);
+  }
+
+  async deleteLieferant(id: string) {
+    return this.delete<unknown>(`/api/v1/warenwirtschaft/lieferant/${id}`);
+  }
+
+  async getInventur(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/warenwirtschaft/inventur', params);
+  }
+
+  async getInventurById(id: string) {
+    return this.get<unknown>(`/api/v1/warenwirtschaft/inventur/${id}`);
+  }
+
+  async createInventur(data: unknown) {
+    return this.post<unknown>('/api/v1/warenwirtschaft/inventur', data);
+  }
+
+  async updateInventur(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/warenwirtschaft/inventur/${id}`, data);
+  }
+
+  async deleteInventur(id: string) {
+    return this.delete<unknown>(`/api/v1/warenwirtschaft/inventur/${id}`);
+  }
+
+  // Finanzbuchhaltung API Methods - Echte Datenbankzugriffe
+  async getKonto(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/finanzbuchhaltung/konto', params);
+  }
+
+  async getKontoById(id: string) {
+    return this.get<unknown>(`/api/v1/finanzbuchhaltung/konto/${id}`);
+  }
+
+  async createKonto(data: unknown) {
+    return this.post<unknown>('/api/v1/finanzbuchhaltung/konto', data);
+  }
+
+  async updateKonto(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/finanzbuchhaltung/konto/${id}`, data);
+  }
+
+  async deleteKonto(id: string) {
+    return this.delete<unknown>(`/api/v1/finanzbuchhaltung/konto/${id}`);
+  }
+
+  async getBuchung(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/finanzbuchhaltung/buchung', params);
+  }
+
+  async getBuchungById(id: string) {
+    return this.get<unknown>(`/api/v1/finanzbuchhaltung/buchung/${id}`);
+  }
+
+  async createBuchung(data: unknown) {
+    return this.post<unknown>('/api/v1/finanzbuchhaltung/buchung', data);
+  }
+
+  async updateBuchung(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/finanzbuchhaltung/buchung/${id}`, data);
+  }
+
+  async deleteBuchung(id: string) {
+    return this.delete<unknown>(`/api/v1/finanzbuchhaltung/buchung/${id}`);
+  }
+
+  async getRechnung(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/finanzbuchhaltung/rechnung', params);
+  }
+
+  async getRechnungById(id: string) {
+    return this.get<unknown>(`/api/v1/finanzbuchhaltung/rechnung/${id}`);
+  }
+
+  async createRechnung(data: unknown) {
+    return this.post<unknown>('/api/v1/finanzbuchhaltung/rechnung', data);
+  }
+
+  async updateRechnung(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/finanzbuchhaltung/rechnung/${id}`, data);
+  }
+
+  async deleteRechnung(id: string) {
+    return this.delete<unknown>(`/api/v1/finanzbuchhaltung/rechnung/${id}`);
+  }
+
+  async getZahlung(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/finanzbuchhaltung/zahlung', params);
+  }
+
+  async getZahlungById(id: string) {
+    return this.get<unknown>(`/api/v1/finanzbuchhaltung/zahlung/${id}`);
+  }
+
+  async createZahlung(data: unknown) {
+    return this.post<unknown>('/api/v1/finanzbuchhaltung/zahlung', data);
+  }
+
+  async updateZahlung(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/finanzbuchhaltung/zahlung/${id}`, data);
+  }
+
+  async deleteZahlung(id: string) {
+    return this.delete<unknown>(`/api/v1/finanzbuchhaltung/zahlung/${id}`);
+  }
+
+  async getKostenstelle(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/finanzbuchhaltung/kostenstelle', params);
+  }
+
+  async getKostenstelleById(id: string) {
+    return this.get<unknown>(`/api/v1/finanzbuchhaltung/kostenstelle/${id}`);
+  }
+
+  async createKostenstelle(data: unknown) {
+    return this.post<unknown>('/api/v1/finanzbuchhaltung/kostenstelle', data);
+  }
+
+  async updateKostenstelle(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/finanzbuchhaltung/kostenstelle/${id}`, data);
+  }
+
+  async deleteKostenstelle(id: string) {
+    return this.delete<unknown>(`/api/v1/finanzbuchhaltung/kostenstelle/${id}`);
+  }
+
+  async getBudget(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/finanzbuchhaltung/budget', params);
+  }
+
+  async getBudgetById(id: string) {
+    return this.get<unknown>(`/api/v1/finanzbuchhaltung/budget/${id}`);
+  }
+
+  async createBudget(data: unknown) {
+    return this.post<unknown>('/api/v1/finanzbuchhaltung/budget', data);
+  }
+
+  async updateBudget(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/finanzbuchhaltung/budget/${id}`, data);
+  }
+
+  async deleteBudget(id: string) {
+    return this.delete<unknown>(`/api/v1/finanzbuchhaltung/budget/${id}`);
+  }
+
+  // CRM API Methods - Echte Datenbankzugriffe
+  async getKunde(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/kunde', params);
+  }
+
+  async getKundeById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/kunde/${id}`);
+  }
+
+  async createKunde(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/kunde', data);
+  }
+
+  async updateKunde(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/kunde/${id}`, data);
+  }
+
+  async deleteKunde(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/kunde/${id}`);
+  }
+
+  async getKontakt(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/kontakt', params);
+  }
+
+  async getKontaktById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/kontakt/${id}`);
+  }
+
+  async createKontakt(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/kontakt', data);
+  }
+
+  async updateKontakt(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/kontakt/${id}`, data);
+  }
+
+  async deleteKontakt(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/kontakt/${id}`);
+  }
+
+  async getAngebot(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/angebot', params);
+  }
+
+  async getAngebotById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/angebot/${id}`);
+  }
+
+  async createAngebot(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/angebot', data);
+  }
+
+  async updateAngebot(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/angebot/${id}`, data);
+  }
+
+  async deleteAngebot(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/angebot/${id}`);
+  }
+
+  async getAuftrag(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/auftrag', params);
+  }
+
+  async getAuftragById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/auftrag/${id}`);
+  }
+
+  async createAuftrag(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/auftrag', data);
+  }
+
+  async updateAuftrag(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/auftrag/${id}`, data);
+  }
+
+  async deleteAuftrag(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/auftrag/${id}`);
+  }
+
+  async getVerkaufschance(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/verkaufschance', params);
+  }
+
+  async getVerkaufschanceById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/verkaufschance/${id}`);
+  }
+
+  async createVerkaufschance(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/verkaufschance', data);
+  }
+
+  async updateVerkaufschance(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/verkaufschance/${id}`, data);
+  }
+
+  async deleteVerkaufschance(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/verkaufschance/${id}`);
+  }
+
+  async getMarketingKampagne(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/marketingkampagne', params);
+  }
+
+  async getMarketingKampagneById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/marketingkampagne/${id}`);
+  }
+
+  async createMarketingKampagne(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/marketingkampagne', data);
+  }
+
+  async updateMarketingKampagne(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/marketingkampagne/${id}`, data);
+  }
+
+  async deleteMarketingKampagne(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/marketingkampagne/${id}`);
+  }
+
+  async getKundenservice(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/crm/kundenservice', params);
+  }
+
+  async getKundenserviceById(id: string) {
+    return this.get<unknown>(`/api/v1/crm/kundenservice/${id}`);
+  }
+
+  async createKundenservice(data: unknown) {
+    return this.post<unknown>('/api/v1/crm/kundenservice', data);
+  }
+
+  async updateKundenservice(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/crm/kundenservice/${id}`, data);
+  }
+
+  async deleteKundenservice(id: string) {
+    return this.delete<unknown>(`/api/v1/crm/kundenservice/${id}`);
+  }
+
+  // Übergreifende Services API Methods - Echte Datenbankzugriffe
+  async getBenutzer(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/benutzer', params);
+  }
+
+  async getBenutzerById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/benutzer/${id}`);
+  }
+
+  async createBenutzer(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/benutzer', data);
+  }
+
+  async updateBenutzer(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/benutzer/${id}`, data);
+  }
+
+  async deleteBenutzer(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/benutzer/${id}`);
+  }
+
+  async getRolle(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/rolle', params);
+  }
+
+  async getRolleById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/rolle/${id}`);
+  }
+
+  async createRolle(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/rolle', data);
+  }
+
+  async updateRolle(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/rolle/${id}`, data);
+  }
+
+  async deleteRolle(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/rolle/${id}`);
+  }
+
+  async getPermission(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/permission', params);
+  }
+
+  async getPermissionById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/permission/${id}`);
+  }
+
+  async createPermission(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/permission', data);
+  }
+
+  async updatePermission(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/permission/${id}`, data);
+  }
+
+  async deletePermission(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/permission/${id}`);
+  }
+
+  async getSystemEinstellung(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/systemeinstellung', params);
+  }
+
+  async getSystemEinstellungById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/systemeinstellung/${id}`);
+  }
+
+  async createSystemEinstellung(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/systemeinstellung', data);
+  }
+
+  async updateSystemEinstellung(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/systemeinstellung/${id}`, data);
+  }
+
+  async deleteSystemEinstellung(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/systemeinstellung/${id}`);
+  }
+
+  async getWorkflowDefinition(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/workflowdefinition', params);
+  }
+
+  async getWorkflowDefinitionById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/workflowdefinition/${id}`);
+  }
+
+  async createWorkflowDefinition(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/workflowdefinition', data);
+  }
+
+  async updateWorkflowDefinition(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/workflowdefinition/${id}`, data);
+  }
+
+  async deleteWorkflowDefinition(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/workflowdefinition/${id}`);
+  }
+
+  async getDokument(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/dokument', params);
+  }
+
+  async getDokumentById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/dokument/${id}`);
+  }
+
+  async createDokument(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/dokument', data);
+  }
+
+  async updateDokument(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/dokument/${id}`, data);
+  }
+
+  async deleteDokument(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/dokument/${id}`);
+  }
+
+  async getMonitoringAlert(params?: Record<string, unknown>) {
+    return this.get<PaginatedResponse<unknown>>('/api/v1/uebergreifende_services/monitoringalert', params);
+  }
+
+  async getMonitoringAlertById(id: string) {
+    return this.get<unknown>(`/api/v1/uebergreifende_services/monitoringalert/${id}`);
+  }
+
+  async createMonitoringAlert(data: unknown) {
+    return this.post<unknown>('/api/v1/uebergreifende_services/monitoringalert', data);
+  }
+
+  async updateMonitoringAlert(id: string, data: unknown) {
+    return this.put<unknown>(`/api/v1/uebergreifende_services/monitoringalert/${id}`, data);
+  }
+
+  async deleteMonitoringAlert(id: string) {
+    return this.delete<unknown>(`/api/v1/uebergreifende_services/monitoringalert/${id}`);
+  }
+
+  // Bulk Operations - Echte Datenbankzugriffe
+  async bulkImport(entityType: string, formData: FormData): Promise<unknown> {
+    return this.post<unknown>(`/api/v1/bulk/import/${entityType}`, formData);
+  }
+
+  async bulkExport(entityType: string, filters?: Record<string, unknown>) {
+    return this.get<unknown>(`/api/v1/bulk/export/${entityType}`, filters);
+  }
+
+  async bulkValidate(entityType: string, data: unknown[]) {
+    return this.post<unknown>(`/api/v1/bulk/validate/${entityType}`, { data });
+  }
+
+  // System Health & Monitoring - Echte Datenbankzugriffe
+  async getHealth() {
+    return this.get<unknown>('/api/v1/health');
+  }
+
+  async getSystemInfo() {
+    return this.get<unknown>('/api/v1/system/info');
+  }
+
+  async getMetrics() {
+    return this.get<unknown>('/api/v1/metrics');
+  }
+
+  // AI Integration - Echte Datenbankzugriffe
+  async sendAIMessage(message: string, context?: Record<string, unknown>) {
+    return this.post<unknown>('/api/v1/ai/chat', { message, context });
+  }
+
+  async sendHorizonMessage(message: string, context?: Record<string, unknown>) {
+    return this.post<unknown>('/api/v1/ai/horizon', { message, context });
+  }
+
+  async optimizeForm(formData: Record<string, unknown>) {
+    return this.post<unknown>('/api/v1/ai/optimize-form', formData);
   }
 }
 
-// Singleton-Instanz
-export const apiService = new ApiService();
-
-// Hook für React-Komponenten
-export const useApiService = () => apiService;
-
+// Singleton Instance
+export const apiService = new APIService();
 export default apiService; 

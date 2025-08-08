@@ -106,17 +106,58 @@ const CustomerWhatsAppHistoryTab: React.FC<CustomerWhatsAppHistoryTabProps> = ({
     message.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleReply = () => {
+  const handleReply = async () => {
     if (selectedMessage && replyText.trim()) {
-      // TODO: Implementiere WhatsApp-Reply-Funktionalität
-      console.log('WhatsApp Reply:', {
-        to: selectedMessage.from,
-        content: replyText,
-        originalMessage: selectedMessage
-      });
-      setIsReplyDialogOpen(false);
-      setReplyText('');
-      setSelectedMessage(null);
+      try {
+        const response = await fetch('/api/whatsapp/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          },
+          body: JSON.stringify({
+            to: selectedMessage.from,
+            content: replyText,
+            customerId: customer.id,
+            originalMessageId: selectedMessage.id,
+            type: 'reply'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log('WhatsApp Reply sent successfully:', result);
+        
+        // Add reply to local state
+        const newReply: CustomerCommunication = {
+          id: `reply-${Date.now()}`,
+          customerId: customer.id,
+          type: 'email' as CommunicationType,
+          date: new Date().toISOString(),
+          from: 'user@example.com',
+          to: customer.email,
+          content: replyText,
+          subject: `Antwort auf: ${selectedMessage.subject}`,
+          status: 'sent' as CommunicationStatus,
+          priority: 'medium',
+          outcome: 'delivered' as CommunicationOutcome,
+          createdBy: 'current-user',
+          updatedAt: new Date().toISOString()
+        };
+
+        // Update mock messages (in real app, this would be handled by state management)
+        mockWhatsAppMessages.unshift(newReply);
+        
+        setIsReplyDialogOpen(false);
+        setReplyText('');
+        setSelectedMessage(null);
+      } catch (err) {
+        console.error('Error sending WhatsApp reply:', err);
+        alert('Fehler beim Senden der WhatsApp-Antwort');
+      }
     }
   };
 

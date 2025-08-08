@@ -48,6 +48,8 @@ import {
   Assessment as AssessmentIcon
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { UI_LABELS } from './ui/UIStandardization';
 import { useApi } from '../contexts/ApiContext';
 
 interface LayoutProps {
@@ -75,135 +77,67 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigationItems: NavigationItem[] = [
     {
       id: 'dashboard',
-      title: 'Dashboard',
+      title: UI_LABELS.NAVIGATION.DASHBOARD,
       icon: <DashboardIcon />,
       route: '/dashboard'
     },
     {
       id: 'finance',
-      title: 'Finanzwesen',
+      title: UI_LABELS.NAVIGATION.FINANCE,
       icon: <FinanceIcon />,
       route: '/finance',
       children: [
         { id: 'accounting', title: 'Buchhaltung', icon: <AccountBalanceIcon />, route: '/finance/accounting' },
         { id: 'controlling', title: 'Controlling', icon: <AnalyticsIcon />, route: '/finance/controlling' },
-        { id: 'payroll', title: 'Lohn & Gehalt', icon: <PeopleIcon />, route: '/finance/payroll' }
+        { id: 'payroll', title: UI_LABELS.NAVIGATION.PAYROLL, icon: <PeopleIcon />, route: '/finance/payroll' }
       ]
     },
     {
       id: 'sales',
-      title: 'Vertrieb',
+      title: UI_LABELS.NAVIGATION.SALES,
       icon: <SalesIcon />,
       route: '/sales',
       children: [
-        { id: 'customers', title: 'Kundenmanagement', icon: <PeopleIcon />, route: '/sales/customers' },
-        { id: 'orders', title: 'Aufträge', icon: <ReceiptIcon />, route: '/sales/orders' },
-        { id: 'quotes', title: 'Angebote', icon: <DocumentIcon />, route: '/sales/quotes' }
-      ]
-    },
-    {
-      id: 'belege',
-      title: 'Belege-Erstellung',
-      icon: <ReceiptIcon />,
-      route: '/belege',
-      children: [
-        { id: 'angebote', title: 'Angebote', icon: <DocumentIcon />, route: '/belege?tab=0' },
-        { id: 'auftraege', title: 'Aufträge', icon: <AssignmentIcon />, route: '/belege?tab=1' },
-        { id: 'bestellungen', title: 'Bestellungen', icon: <SalesIcon />, route: '/belege?tab=2' },
-        { id: 'lieferscheine', title: 'Lieferscheine', icon: <LocalShippingIcon />, route: '/belege?tab=3' },
-        { id: 'rechnungen', title: 'Rechnungen', icon: <ReceiptIcon />, route: '/belege?tab=4' }
-      ]
-    },
-    {
-      id: 'warenwirtschaft',
-      title: 'Warenwirtschaft',
-      icon: <InventoryIcon />,
-      route: '/warenwirtschaft',
-      children: [
-        { id: 'bestellungen', title: 'Bestellungen', icon: <SalesIcon />, route: '/warenwirtschaft?tab=0' },
-        { id: 'wareneingang', title: 'Wareneingang', icon: <LocalShippingIcon />, route: '/warenwirtschaft?tab=1' },
-        { id: 'rechnungspruefung', title: 'Rechnungsprüfung', icon: <ReceiptIcon />, route: '/warenwirtschaft?tab=2' },
-        { id: 'lagerbuchungen', title: 'Lagerbuchungen', icon: <InventoryIcon />, route: '/warenwirtschaft?tab=3' },
-        { id: 'lagerbestand', title: 'Lagerbestand', icon: <InventoryIcon />, route: '/warenwirtschaft?tab=4' }
+        { id: 'customers', title: UI_LABELS.NAVIGATION.CUSTOMERS, icon: <PeopleIcon />, route: '/sales/customers' },
+        { id: 'orders', title: UI_LABELS.NAVIGATION.ORDERS, icon: <ReceiptIcon />, route: '/sales/orders' },
+        { id: 'invoices', title: UI_LABELS.NAVIGATION.INVOICES, icon: <DocumentIcon />, route: '/sales/invoices' }
       ]
     },
     {
       id: 'inventory',
-      title: 'Lagerverwaltung',
+      title: UI_LABELS.NAVIGATION.INVENTORY,
       icon: <InventoryIcon />,
       route: '/inventory',
       children: [
-        { id: 'stock', title: 'Bestand', icon: <InventoryIcon />, route: '/inventory/stock' },
-        { id: 'movements', title: 'Bewegungen', icon: <LocalShippingIcon />, route: '/inventory/movements' },
-        { id: 'valuation', title: 'Bewertung', icon: <AnalyticsIcon />, route: '/inventory/valuation' }
+        { id: 'stock', title: UI_LABELS.NAVIGATION.STOCK, icon: <WarehouseIcon />, route: '/inventory/stock' },
+        { id: 'movements', title: UI_LABELS.NAVIGATION.MOVEMENTS, icon: <LocalShippingIcon />, route: '/inventory/movements' }
       ]
     },
     {
       id: 'production',
-      title: 'Produktion',
+      title: UI_LABELS.NAVIGATION.PRODUCTION,
       icon: <ProductionIcon />,
       route: '/production',
       children: [
-        { id: 'planning', title: 'Planung', icon: <AssignmentIcon />, route: '/production/planning' },
-        { id: 'execution', title: 'Ausführung', icon: <BuildIcon />, route: '/production/execution' },
-        { id: 'quality', title: 'Qualität', icon: <AssessmentIcon />, route: '/production/quality' }
-      ]
-    },
-    {
-      id: 'warehouse',
-      title: 'Lager',
-      icon: <WarehouseIcon />,
-      route: '/warehouse',
-      children: [
-        { id: 'locations', title: 'Lagerplätze', icon: <LocalShippingIcon />, route: '/warehouse/locations' },
-        { id: 'picking', title: 'Kommissionierung', icon: <InventoryIcon />, route: '/warehouse/picking' },
-        { id: 'shipping', title: 'Versand', icon: <LocalShippingIcon />, route: '/warehouse/shipping' }
+        { id: 'orders', title: UI_LABELS.NAVIGATION.PRODUCTION_ORDERS, icon: <AssignmentIcon />, route: '/production/orders' },
+        { id: 'planning', title: UI_LABELS.NAVIGATION.PLANNING, icon: <BuildIcon />, route: '/production/planning' }
       ]
     },
     {
       id: 'quality',
-      title: 'Qualitätsmanagement',
+      title: UI_LABELS.NAVIGATION.QUALITY,
       icon: <QualityIcon />,
       route: '/quality',
       children: [
-        { id: 'inspections', title: 'Prüfungen', icon: <AssessmentIcon />, route: '/quality/inspections' },
-        { id: 'certificates', title: 'Zertifikate', icon: <DocumentIcon />, route: '/quality/certificates' },
-        { id: 'reports', title: 'Berichte', icon: <AnalyticsIcon />, route: '/quality/reports' }
+        { id: 'inspections', title: UI_LABELS.NAVIGATION.INSPECTIONS, icon: <AssessmentIcon />, route: '/quality/inspections' },
+        { id: 'reports', title: UI_LABELS.NAVIGATION.REPORTS, icon: <AnalyticsIcon />, route: '/quality/reports' }
       ]
     },
     {
       id: 'projects',
-      title: 'Projektmanagement',
+      title: UI_LABELS.NAVIGATION.PROJECTS,
       icon: <ProjectIcon />,
-      route: '/projects',
-      children: [
-        { id: 'planning', title: 'Projektplanung', icon: <AssignmentIcon />, route: '/projects/planning' },
-        { id: 'execution', title: 'Projektausführung', icon: <BuildIcon />, route: '/projects/execution' },
-        { id: 'monitoring', title: 'Überwachung', icon: <AnalyticsIcon />, route: '/projects/monitoring' }
-      ]
-    },
-    {
-      id: 'hr',
-      title: 'Personalwesen',
-      icon: <PeopleIcon />,
-      route: '/hr',
-      children: [
-        { id: 'employees', title: 'Mitarbeiter', icon: <PeopleIcon />, route: '/hr/employees' },
-        { id: 'attendance', title: 'Zeiterfassung', icon: <AssignmentIcon />, route: '/hr/attendance' },
-        { id: 'development', title: 'Entwicklung', icon: <AnalyticsIcon />, route: '/hr/development' }
-      ]
-    },
-    {
-      id: 'analytics',
-      title: 'Analytics',
-      icon: <AnalyticsIcon />,
-      route: '/analytics'
-    },
-    {
-      id: 'documents',
-      title: 'Dokumente',
-      icon: <DocumentIcon />,
-      route: '/documents'
+      route: '/projects'
     }
   ];
 
@@ -234,19 +168,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleLogout = async () => {
     try {
-    await logout();
-    navigate('/login');
+      await logout();
+      navigate('/login');
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('Logout failed:', error);
     }
     handleUserMenuClose();
   };
 
   const getBreadcrumbs = () => {
+    const breadcrumbs: { title: string; path: string; icon: React.ReactElement }[] = [];
     const pathSegments = location.pathname.split('/').filter(Boolean);
-    const breadcrumbs = [
-      { title: 'Start', path: '/dashboard', icon: <HomeIcon /> }
-    ];
 
     pathSegments.forEach((segment, index) => {
       const path = '/' + pathSegments.slice(0, index + 1).join('/');
@@ -262,35 +194,40 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const unreadNotifications = notifications.filter(n => !n.read).length;
 
   return (
-    <Box className="flex h-screen bg-gray-50">
+    <Box sx={{ display: 'flex', height: '100vh', bgcolor: 'grey.50' }}>
       {/* App Bar */}
       <AppBar 
         position="fixed" 
-        className="z-50 bg-white border-b border-gray-200"
-        elevation={0}
+        sx={{ 
+          zIndex: 50, 
+          bgcolor: 'background.paper',
+          borderBottom: 1,
+          borderColor: 'divider',
+          boxShadow: 0
+        }}
       >
-        <Toolbar className="px-4">
+        <Toolbar sx={{ px: 2 }}>
           <IconButton
             color="inherit"
-            aria-label="Menü öffnen"
+            aria-label={UI_LABELS.NAVIGATION.OPEN_MENU}
             onClick={handleDrawerToggle}
-            className="mr-4 text-gray-700"
+            sx={{ mr: 2, color: 'text.primary' }}
           >
             <MenuIcon />
           </IconButton>
           
-          <Box className="flex items-center flex-1">
-            <BusinessIcon className="mr-2 text-blue-600" />
-            <Typography variant="h6" className="font-bold text-gray-800">
-            VALEO NeuroERP
-          </Typography>
+          <Box display="flex" alignItems="center" flex={1}>
+            <BusinessIcon sx={{ mr: 1, color: 'primary.main' }} />
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+              {UI_LABELS.APP.TITLE}
+            </Typography>
           </Box>
 
           {/* Breadcrumbs */}
-          <Box className="hidden md:flex items-center mr-4">
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', mr: 2 }}>
             <Breadcrumbs 
-              separator={<ChevronRightIcon fontSize="small" className="text-gray-400" />}
-              className="text-gray-600"
+              separator={<ChevronRightIcon fontSize="small" sx={{ color: 'text.secondary' }} />}
+              sx={{ color: 'text.secondary' }}
             >
               {getBreadcrumbs().map((breadcrumb, index) => (
                 <Link
@@ -301,24 +238,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     e.preventDefault();
                     navigate(breadcrumb.path);
                   }}
-                  className="flex items-center hover:text-blue-600"
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    '&:hover': { color: 'primary.main' }
+                  }}
                 >
                   {breadcrumb.icon}
-                  <span className="ml-1">{breadcrumb.title}</span>
+                  <Box component="span" sx={{ ml: 0.5 }}>{breadcrumb.title}</Box>
                 </Link>
               ))}
             </Breadcrumbs>
           </Box>
 
           {/* Notifications */}
-          <Tooltip title="Benachrichtigungen">
+          <Tooltip title={UI_LABELS.NOTIFICATIONS.TITLE}>
             <IconButton
               color="inherit"
               onClick={handleNotificationsOpen}
-              className="mr-2 text-gray-700"
+              sx={{ mr: 1, color: 'text.primary' }}
             >
               <Badge badgeContent={unreadNotifications} color="error">
-              <NotificationsIcon />
+                <NotificationsIcon />
               </Badge>
             </IconButton>
           </Tooltip>
@@ -328,10 +269,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <IconButton
               color="inherit"
               onClick={handleUserMenuOpen}
-              className="text-gray-700"
+              sx={{ color: 'text.primary' }}
             >
-              <Avatar className="w-8 h-8 bg-blue-600">
-                {user?.full_name?.charAt(0) || 'U'}
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+                {user?.name?.charAt(0) || 'U'}
               </Avatar>
             </IconButton>
           </Tooltip>
@@ -343,43 +284,52 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         variant="temporary"
         open={drawerOpen}
         onClose={handleDrawerToggle}
-        className="z-40"
+        sx={{ zIndex: 40 }}
         PaperProps={{
-          className: 'w-64 bg-white border-r border-gray-200'
+          sx: { 
+            width: 256, 
+            bgcolor: 'background.paper',
+            borderRight: 1,
+            borderColor: 'divider'
+          }
         }}
       >
-        <Box className="p-4 border-b border-gray-200">
-          <Box className="flex items-center">
-            <BusinessIcon className="mr-2 text-blue-600" />
-            <Typography variant="h6" className="font-bold text-gray-800">
+        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+          <Box display="flex" alignItems="center">
+            <BusinessIcon sx={{ mr: 1, color: 'primary.main' }} />
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
               VALEO NeuroERP
             </Typography>
           </Box>
-          <Typography variant="body2" className="text-gray-600 mt-1">
-            {user?.full_name || 'Benutzer'}
+          <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+            {user?.name || 'Benutzer'}
           </Typography>
         </Box>
 
-        <List className="flex-1 overflow-y-auto">
-            {navigationItems.map((item) => (
+        <List sx={{ flex: 1, overflowY: 'auto' }}>
+          {navigationItems.map((item) => (
             <React.Fragment key={item.id}>
               <ListItem
                 component="button"
                 onClick={() => handleNavigation(item.route)}
-                className={`${
-                  location.pathname === item.route 
-                    ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                sx={{
+                  backgroundColor: location.pathname === item.route ? 'primary.50' : 'transparent',
+                  color: location.pathname === item.route ? 'primary.main' : 'text.primary',
+                  borderRight: location.pathname === item.route ? 2 : 0,
+                  borderColor: 'primary.main',
+                  '&:hover': {
+                    backgroundColor: location.pathname === item.route ? 'primary.50' : 'action.hover'
+                  }
+                }}
               >
-                <ListItemIcon className={`${
-                  location.pathname === item.route ? 'text-blue-600' : 'text-gray-500'
-                }`}>
+                <ListItemIcon sx={{ 
+                  color: location.pathname === item.route ? 'primary.main' : 'text.secondary'
+                }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText 
                   primary={item.title}
-                  className="font-medium"
+                  sx={{ fontWeight: 'medium' }}
                 />
                 {item.badge && (
                   <Badge badgeContent={item.badge} color="error" />
@@ -394,15 +344,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       key={child.id}
                       component="button"
                       onClick={() => handleNavigation(child.route)}
-                      className={`pl-8 ${
-                        location.pathname === child.route 
-                          ? 'bg-blue-50 text-blue-600' 
-                          : 'text-gray-600 hover:bg-gray-50'
-                      }`}
+                      sx={{
+                        pl: 4,
+                        backgroundColor: location.pathname === child.route ? 'primary.50' : 'transparent',
+                        color: location.pathname === child.route ? 'primary.main' : 'text.secondary',
+                        '&:hover': {
+                          backgroundColor: location.pathname === child.route ? 'primary.50' : 'action.hover'
+                        }
+                      }}
                     >
-                      <ListItemIcon className={`${
-                        location.pathname === child.route ? 'text-blue-600' : 'text-gray-400'
-                      }`}>
+                      <ListItemIcon sx={{ 
+                        color: location.pathname === child.route ? 'primary.main' : 'text.disabled'
+                      }}>
                         {child.icon}
                       </ListItemIcon>
                       <ListItemText primary={child.title} />
@@ -415,28 +368,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </List>
 
         {/* Footer */}
-        <Box className="p-4 border-t border-gray-200">
+        <Box sx={{ p: 2, borderTop: 1, borderColor: 'divider' }}>
           <List>
             <ListItem component="button" onClick={() => navigate('/settings')}>
-              <ListItemIcon className="text-gray-500">
+              <ListItemIcon sx={{ color: 'text.secondary' }}>
                 <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary="Einstellungen" />
+              <ListItemText primary={UI_LABELS.NAVIGATION.SETTINGS} />
             </ListItem>
             <ListItem component="button" onClick={() => navigate('/help')}>
-              <ListItemIcon className="text-gray-500">
+              <ListItemIcon sx={{ color: 'text.secondary' }}>
                 <HelpIcon />
               </ListItemIcon>
-              <ListItemText primary="Hilfe & Support" />
+              <ListItemText primary={UI_LABELS.NAVIGATION.HELP} />
             </ListItem>
           </List>
         </Box>
       </Drawer>
 
       {/* Main Content */}
-      <Box className="flex-1 flex flex-col">
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Toolbar /> {/* Spacer for AppBar */}
-        <Box className="flex-1 overflow-auto">
+        <Box sx={{ flex: 1, overflow: 'auto' }}>
           {children}
         </Box>
       </Box>
@@ -446,16 +399,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         anchorEl={userMenuAnchor}
         open={Boolean(userMenuAnchor)}
         onClose={handleUserMenuClose}
-        className="mt-2"
+        sx={{ mt: 1 }}
         PaperProps={{
-          className: 'min-w-48 shadow-lg border border-gray-200'
+          sx: { 
+            minWidth: 192, 
+            boxShadow: 3,
+            border: 1,
+            borderColor: 'divider'
+          }
         }}
       >
-        <Box className="px-4 py-3 border-b border-gray-200">
-          <Typography variant="subtitle1" className="font-semibold text-gray-800">
-            {user?.full_name || 'Benutzer'}
+        <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'semibold', color: 'text.primary' }}>
+            {user?.name || 'Benutzer'}
           </Typography>
-          <Typography variant="body2" className="text-gray-600">
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {user?.email || 'benutzer@valeo.com'}
           </Typography>
         </Box>
@@ -485,46 +443,56 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         anchorEl={notificationsAnchor}
         open={Boolean(notificationsAnchor)}
         onClose={handleNotificationsClose}
-        className="mt-2"
+        sx={{ mt: 1 }}
         PaperProps={{
-          className: 'min-w-80 max-h-96 shadow-lg border border-gray-200'
+          sx: { 
+            minWidth: 320, 
+            maxHeight: 384, 
+            boxShadow: 3,
+            border: 1,
+            borderColor: 'divider'
+          }
         }}
       >
-        <Box className="px-4 py-3 border-b border-gray-200">
-          <Typography variant="subtitle1" className="font-semibold text-gray-800">
+        <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'semibold', color: 'text.primary' }}>
             Benachrichtigungen
           </Typography>
         </Box>
         {notifications.length > 0 ? (
           notifications.slice(0, 5).map((notification) => (
-            <MenuItem key={notification.id} className="px-4 py-3">
-              <Box className="flex-1">
-                <Typography variant="body2" className="font-medium text-gray-800">
+            <MenuItem key={notification.id} sx={{ px: 2, py: 1.5 }}>
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="body2" sx={{ fontWeight: 'medium', color: 'text.primary' }}>
                   {notification.message}
                 </Typography>
-                <Typography variant="caption" className="text-gray-500">
-                  {new Date(notification.created_at).toLocaleString('de-DE')}
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                  {new Date().toLocaleString('de-DE')}
                 </Typography>
               </Box>
             </MenuItem>
           ))
         ) : (
           <MenuItem disabled>
-            <Typography variant="body2" className="text-gray-500">
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Keine Benachrichtigungen
             </Typography>
           </MenuItem>
         )}
         {notifications.length > 5 && (
-          <Box className="px-4 py-2 border-t border-gray-200">
+          <Box sx={{ px: 2, py: 1, borderTop: 1, borderColor: 'divider' }}>
             <Typography 
               variant="body2" 
-              className="text-blue-600 cursor-pointer hover:text-blue-800"
+              sx={{ 
+                color: 'primary.main', 
+                cursor: 'pointer',
+                '&:hover': { color: 'primary.dark' }
+              }}
               onClick={() => { navigate('/notifications'); handleNotificationsClose(); }}
             >
-              Alle Benachrichtigungen anzeigen
+              Alle anzeigen
             </Typography>
-      </Box>
+          </Box>
         )}
       </Menu>
     </Box>

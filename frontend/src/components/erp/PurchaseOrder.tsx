@@ -99,10 +99,41 @@ const orderSchema = yup.object({
   creditorAccountNumber: yup.string().required('Kreditor-Kontonummer ist erforderlich'),
   branch: yup.string().required('Niederlassung ist erforderlich'),
   costCenter: yup.string().required('Kostenstelle ist erforderlich'),
+  commission: yup.string().required('Kommission ist erforderlich'),
   supplier: yup.string().required('Lieferant ist erforderlich'),
+  latestDeliveryDate: yup.date().required('Spätestes Lieferdatum ist erforderlich'),
+  loadingDeadline: yup.date().required('Lade-Deadline ist erforderlich'),
+  loadingDate: yup.date().required('Ladedatum ist erforderlich'),
   orderNumber: yup.string().required('Bestellnummer ist erforderlich'),
-  operator: yup.string().required('Bearbeiter ist erforderlich')
-});
+  orderDate: yup.date().required('Bestelldatum ist erforderlich'),
+  operator: yup.string().required('Bearbeiter ist erforderlich'),
+  completed: yup.boolean().required(),
+  positions: yup.array().of(yup.object({
+    position: yup.number().required(),
+    articleNumber: yup.string().required(),
+    supplier: yup.string().required(),
+    description: yup.string().required(),
+    quantity: yup.number().required(),
+    packageQuantity: yup.number().required(),
+    packageUnit: yup.string().required(),
+    stock: yup.number().required(),
+    price: yup.number().required(),
+    contract: yup.string().required()
+  })),
+  references: yup.array().of(yup.object({
+    id: yup.string().required(),
+    type: yup.string().required(),
+    number: yup.string().required(),
+    date: yup.string().required(),
+    description: yup.string().required()
+  })),
+  paymentTerms: yup.object({
+    code: yup.string().required(),
+    description: yup.string().required(),
+    days: yup.number().required()
+  }),
+  additionalInfo: yup.string().required('Zusätzliche Informationen sind erforderlich')
+}).required();
 
 // Mock-Daten
 const mockPositions: PurchaseOrderPosition[] = [
@@ -151,19 +182,23 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
   const { control, handleSubmit, formState: { errors }, watch   } = useForm({
     resolver: yupResolver(orderSchema),
     defaultValues: initialData || {
+      creditorAccountNumber: '',
+      branch: '',
+      costCenter: '',
+      commission: '',
+      supplier: '',
+      orderNumber: '',
+      operator: '',
       orderDate: new Date(),
       latestDeliveryDate: new Date(),
       loadingDeadline: new Date(),
       loadingDate: new Date(),
       completed: false,
-      positions: mockPositions,
       references: [],
       paymentTerms: {
-        paymentMethod: 'Überweisung',
-        discountDays: 14,
-        discountPercent: 2,
-        dueDays: 30,
-        bankAccount: 'DE89370400440532013000'
+        code: 'NET30',
+        description: 'Netto 30 Tage',
+        days: 30
       },
       additionalInfo: ''
     }
@@ -688,28 +723,49 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name="paymentTerms.paymentMethod"
+                    name="paymentTerms.code"
                     control={control}
                     render={({ field }) => (
                       <TextField
                         {...field}
                         fullWidth
-                        label="Zahlungsart"
+                        label="Zahlungscode"
                         disabled={mode === 'view'}
+                        value={field.value || ''}
+                        onChange={field.onChange}
                       />
                     )}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name="paymentTerms.bankAccount"
+                    name="paymentTerms.description"
                     control={control}
                     render={({ field }) => (
                       <TextField
                         {...field}
                         fullWidth
-                        label="Bankkonto"
+                        label="Beschreibung"
                         disabled={mode === 'view'}
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name="paymentTerms.days"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        type="number"
+                        label="Zahlungstage"
+                        disabled={mode === 'view'}
+                        value={field.value || 0}
+                        onChange={field.onChange}
                       />
                     )}
                   />

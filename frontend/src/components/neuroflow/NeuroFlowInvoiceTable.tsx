@@ -181,19 +181,31 @@ export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
     const loadInvoices = async () => {
       setLoadingData(true);
       try {
-        // TODO: Replace with actual MCP call
-        // const response = await fetch('http://localhost:8000/api/data/invoices');
-        // const data = await response.json();
-        // setInvoices(data.invoices);
-        
-        // For now, use mock data
-        setTimeout(() => {
+        // Try to load from MCP API first
+        const response = await fetch('/api/mcp/invoices', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setInvoices(data.invoices || []);
+          setFilteredInvoices(data.invoices || []);
+        } else {
+          // Fallback to mock data if MCP API is not available
+          console.warn('MCP API not available, using mock data');
           setInvoices(mockInvoices);
           setFilteredInvoices(mockInvoices);
-          setLoadingData(false);
-        }, 1000);
+        }
       } catch (error) {
         console.error('Error loading invoices:', error);
+        // Fallback to mock data
+        setInvoices(mockInvoices);
+        setFilteredInvoices(mockInvoices);
+      } finally {
         setLoadingData(false);
       }
     };

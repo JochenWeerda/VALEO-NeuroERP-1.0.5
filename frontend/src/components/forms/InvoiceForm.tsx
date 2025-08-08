@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, FieldError } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { 
   Card, 
   CardContent, 
   CardHeader,
-  Button, 
-  TextField, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem, 
-  Alert,
-  CircularProgress,
   Box,
   Typography,
   Divider,
@@ -20,15 +12,21 @@ import {
   InputAdornment
 } from '@mui/material';
 import { 
-  Save as SaveIcon, 
-  Cancel as CancelIcon,
-  Euro as EuroIcon,
-  Person as PersonIcon,
   Assignment as AssignmentIcon,
+  Person as PersonIcon,
   Warning as WarningIcon,
   Info as InfoIcon
 } from '@mui/icons-material';
 import { z } from 'zod';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { 
+  StandardTextField, 
+  StandardSelectField, 
+  StandardButton, 
+  FormActions, 
+  FormMessage 
+} from './FormStandardization';
+import { UI_LABELS, StatusChip, StandardMessage } from '../ui/UIStandardization';
 
 // TypeScript Interfaces
 interface InvoiceFormData {
@@ -69,7 +67,12 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
   const [schemaInfo, setSchemaInfo] = useState<any>(null);
 
   // React Hook Form mit Zod-Validierung
-  const form = useForm<InvoiceFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset
+  } = useForm<InvoiceFormData>({
     resolver: zodResolver(InvoiceFormSchema),
     defaultValues: {
       customer_id: initialData?.customer_id || '',
@@ -99,36 +102,29 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
             delete: false  // Business rule: Invoices cannot be deleted
           }
         });
-        
-        console.log('✅ Mock-Daten geladen');
       } catch (err) {
-        console.error('❌ Fehler beim Laden der Daten:', err);
-        setError('Daten konnten nicht geladen werden');
+        setError('Fehler beim Laden der Kunden');
       }
     };
 
     loadCustomers();
   }, []);
 
-  // Form-Submission
   const handleFormSubmit = async (data: InvoiceFormData) => {
     try {
-      await onSubmit(data);
-      form.reset();
       setError(null);
-    } catch (error) {
-      console.error('Fehler beim Speichern der Rechnung:', error);
-      setError('Fehler beim Speichern der Rechnung');
+      await onSubmit(data);
+      reset();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Fehler beim Speichern der Rechnung');
     }
   };
 
   const handleCancel = () => {
-    form.reset();
+    reset();
     onCancel?.();
-    setError(null);
   };
 
-  // Status-Konfiguration
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'open': return { color: 'warning' as const, label: 'Offen' };
@@ -138,29 +134,37 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
     }
   };
 
-  // RLS-Informationen anzeigen
   const renderRLSInfo = () => {
-    if (!schemaInfo) return null;
+    if (!schemaInfo?.rls) return null;
 
+    const { rls } = schemaInfo;
     return (
-      <Box className="mb-4 p-3 bg-blue-50 rounded-lg">
-        <Typography variant="subtitle2" className="flex items-center mb-2">
-          <InfoIcon className="mr-2" fontSize="small" />
-          RLS-Richtlinien (MCP-Server)
+      <Box className="mb-4">
+        <Typography variant="subtitle2" className="mb-2">
+          Berechtigungen (RLS):
         </Typography>
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div>SELECT: {schemaInfo.rls.select ? '✅' : '❌'}</div>
-          <div>INSERT: {schemaInfo.rls.insert ? '✅' : '❌'}</div>
-          <div>UPDATE: {schemaInfo.rls.update ? '✅' : '❌'}</div>
-          <div>DELETE: {schemaInfo.rls.delete ? '✅' : '❌'}</div>
+        <div className="flex gap-2">
+          <Chip 
+            label={`Lesen: ${rls.select ? '✓' : '✗'}`} 
+            color={rls.select ? 'success' : 'error'} 
+            size="small" 
+          />
+          <Chip 
+            label={`Erstellen: ${rls.insert ? '✓' : '✗'}`} 
+            color={rls.insert ? 'success' : 'error'} 
+            size="small" 
+          />
+          <Chip 
+            label={`Bearbeiten: ${rls.update ? '✓' : '✗'}`} 
+            color={rls.update ? 'success' : 'error'} 
+            size="small" 
+          />
+          <Chip 
+            label={`Löschen: ${rls.delete ? '✓' : '✗'}`} 
+            color={rls.delete ? 'success' : 'error'} 
+            size="small" 
+          />
         </div>
-        {!schemaInfo.rls.update && (
-          <Alert severity="warning" className="mt-2">
-            <Typography variant="caption">
-              ⚠️ Rechnungen können nach dem Erstellen nicht mehr bearbeitet werden
-            </Typography>
-          </Alert>
-        )}
       </Box>
     );
   };
@@ -181,139 +185,73 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
         {/* RLS-Informationen */}
         {renderRLSInfo()}
 
-        {/* Fehler-Anzeige */}
+        {/* ✅ REFAKTORIERT: Fehler-Anzeige mit StandardMessage */}
         {error && (
-          <Alert severity="error" className="mb-4">
-            {error}
-          </Alert>
+          <StandardMessage
+            type="error"
+            message={error}
+          />
         )}
 
-        {/* Formular-Validierungsfehler */}
-        {Object.keys(form.formState.errors).length > 0 && (
-          <Alert severity="warning" className="mb-4">
-            <Typography variant="subtitle2" className="mb-2">
-              <WarningIcon className="mr-1" fontSize="small" />
-              Validierungsfehler:
-            </Typography>
-            {Object.entries(form.formState.errors).map(([field, error]) => (
-              <div key={field} className="text-sm">
-                <strong>{field}:</strong> {error?.message || 'Unbekannter Fehler'}
-              </div>
-            ))}
-          </Alert>
+        {/* ✅ REFAKTORIERT: Formular-Validierungsfehler mit StandardMessage */}
+        {Object.keys(errors).length > 0 && (
+          <StandardMessage
+            type="warning"
+            title="Validierungsfehler:"
+            message={Object.entries(errors)
+              .map(([field, error]) => `${field}: ${error?.message || 'Unbekannter Fehler'}`)
+              .join(', ')}
+          />
         )}
 
-        <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
-          {/* Customer Selection */}
-          <Controller
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+          {/* ✅ REFAKTORIERT: Customer Selection mit StandardSelectField */}
+          <StandardSelectField
             name="customer_id"
-            control={form.control}
-            render={({ field }) => (
-              <FormControl fullWidth error={!!form.formState.errors.customer_id}>
-                <InputLabel>
-                  <PersonIcon className="mr-2" fontSize="small" />
-                  Kunde *
-                </InputLabel>
-                <Select {...field} label="Kunde *">
-                  {customers.map((customer) => (
-                    <MenuItem key={customer.id} value={customer.id}>
-                      <div className="flex flex-col">
-                        <span className="font-medium">{customer.name}</span>
-                        <span className="text-sm text-gray-500">{customer.email}</span>
-                      </div>
-                    </MenuItem>
-                  ))}
-                </Select>
-                {form.formState.errors.customer_id && (
-                  <Typography variant="caption" color="error">
-                    {form.formState.errors.customer_id.message}
-                  </Typography>
-                )}
-              </FormControl>
-            )}
+            label="Kunde"
+            options={customers.map(customer => ({
+              value: customer.id,
+              label: `${customer.name} (${customer.email})`
+            }))}
+            required={true}
+            helperText={errors.customer_id?.message}
           />
 
-          {/* Amount Input */}
-          <Controller
+          {/* ✅ REFAKTORIERT: Amount Input mit StandardTextField */}
+          <StandardTextField
             name="amount"
-            control={form.control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                label="Betrag *"
-                type="number"
-                inputProps={{ 
-                  step: "0.01", 
-                  min: "0.01",
-                  placeholder: "0.00"
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EuroIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                error={!!form.formState.errors.amount}
-                helperText={form.formState.errors.amount?.message || 'Betrag in Euro'}
-              />
-            )}
+            label="Betrag"
+            type="number"
+            required={true}
+            placeholder="0.00"
+            helperText={errors.amount?.message || 'Betrag in Euro'}
+            startAdornment={<InputAdornment position="start">€</InputAdornment>}
           />
 
-          {/* Status Selection */}
-          <Controller
+          {/* ✅ REFAKTORIERT: Status Selection mit StandardSelectField */}
+          <StandardSelectField
             name="status"
-            control={form.control}
-            render={({ field }) => (
-              <FormControl fullWidth error={!!form.formState.errors.status}>
-                <InputLabel>Status *</InputLabel>
-                <Select {...field} label="Status *">
-                  {['open', 'paid', 'overdue'].map((status) => {
-                    const config = getStatusConfig(status);
-                    return (
-                      <MenuItem key={status} value={status}>
-                        <Chip 
-                          label={config.label} 
-                          color={config.color} 
-                          size="small" 
-                          className="mr-2"
-                        />
-                        {status}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                {form.formState.errors.status && (
-                  <Typography variant="caption" color="error">
-                    {form.formState.errors.status.message}
-                  </Typography>
-                )}
-              </FormControl>
-            )}
+            label="Status"
+            options={[
+              { value: 'open', label: 'Offen' },
+              { value: 'paid', label: 'Bezahlt' },
+              { value: 'overdue', label: 'Überfällig' }
+            ]}
+            required={true}
+            helperText={errors.status?.message}
           />
 
           <Divider />
 
-          {/* Action Buttons */}
-          <Box className="flex justify-end space-x-2">
-            <Button
-              variant="outlined"
-              startIcon={<CancelIcon />}
-              onClick={handleCancel}
-              disabled={isLoading}
-            >
-              Abbrechen
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              startIcon={isLoading ? <CircularProgress size={20} /> : <SaveIcon />}
-              disabled={isLoading || form.formState.isSubmitting}
-            >
-              {isLoading ? 'Speichere...' : 'Speichern'}
-            </Button>
-          </Box>
+          {/* ✅ REFAKTORIERT: Action Buttons mit FormActions */}
+          <FormActions
+            onSave={handleSubmit(handleFormSubmit)}
+            onCancel={handleCancel}
+            saveText={isLoading ? 'Speichere...' : UI_LABELS.ACTIONS.SAVE}
+            cancelText={UI_LABELS.ACTIONS.CANCEL}
+            loading={isLoading || isSubmitting}
+            disabled={isLoading || isSubmitting}
+          />
         </form>
 
         {/* Schema-Informationen */}

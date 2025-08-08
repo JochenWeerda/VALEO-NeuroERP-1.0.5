@@ -66,7 +66,7 @@ const filterSchema = yup.object({
   articleGroup: yup.string(),
   branch: yup.string(),
   searchTerm: yup.string()
-});
+}).required();
 
 // Mock-Daten für Demonstration
 const mockSuggestions: OrderSuggestionData[] = [
@@ -112,7 +112,11 @@ const articleGroups = ['Elektronik', 'Bürobedarf', 'Möbel', 'Software'];
 const branches = ['Hauptniederlassung', 'Niederlassung Nord', 'Niederlassung Süd'];
 
 // Temporär auskommentiert - wird später implementiert
-export const OrderSuggestion: React.FC = () => {
+export const OrderSuggestion: React.FC<OrderSuggestionProps> = ({
+  onSuggestionSelect,
+  onOrderCreate,
+  filters
+}) => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Order Suggestion</h1>

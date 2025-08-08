@@ -112,12 +112,34 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        });
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
+          json: async () => ({ data: mockSuggestions })
+        } as Response);
 
       renderWithProviders(
         <AIBarcodeDashboard />
@@ -145,16 +167,34 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        });
+        } as Response);
 
       renderWithProviders(
         <AIBarcodeDashboard />
@@ -174,12 +214,24 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        });
+        } as Response);
     });
 
     it('rendert Header mit Titel und Beschreibung', async () => {
@@ -267,12 +319,24 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        });
+        } as Response);
     });
 
     it('öffnet Detail-Dialog beim Klick auf Details-Button', async () => {
@@ -326,12 +390,24 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        });
+        } as Response);
     });
 
     it('hat korrekte ARIA-Labels', async () => {
@@ -392,8 +468,13 @@ describe('AIBarcodeDashboard', () => {
       mockFetch.mockResolvedValueOnce({
         ok: false,
         status: 500,
-        statusText: 'Internal Server Error'
-      });
+        statusText: 'Internal Server Error',
+        headers: new Headers(),
+        redirected: false,
+        type: 'default',
+        url: '',
+        json: async () => ({ error: 'Internal Server Error' })
+      } as Response);
 
       renderWithProviders(
         <AIBarcodeDashboard />
@@ -407,8 +488,14 @@ describe('AIBarcodeDashboard', () => {
     it('behandelt API-Response-Fehler korrekt', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
+        status: 200,
+        statusText: 'OK',
+        headers: new Headers(),
+        redirected: false,
+        type: 'default',
+        url: '',
         json: async () => ({ error: 'API Error Message' })
-      });
+      } as Response);
 
       renderWithProviders(
         <AIBarcodeDashboard />
@@ -435,12 +522,24 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        });
+        } as Response);
 
       renderWithProviders(
         <AIBarcodeDashboard />
@@ -456,12 +555,24 @@ describe('AIBarcodeDashboard', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockSuggestions })
-        })
+        } as Response)
         .mockResolvedValueOnce({
           ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: new Headers(),
+          redirected: false,
+          type: 'default',
+          url: '',
           json: async () => ({ data: mockStats })
-        });
+        } as Response);
     });
 
     it('hat responsive Layout-Klassen', async () => {

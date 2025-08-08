@@ -1,8 +1,6 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, FieldError } from 'react-hook-form';
 import {
-  TextField,
-  Button,
   Alert,
   Box,
   Typography,
@@ -15,6 +13,15 @@ import {
   Checkbox,
   FormControlLabel
 } from '@mui/material';
+// ✅ NEU: Import der standardisierten UI-Komponenten
+import { 
+  StandardTextField, 
+  StandardSelectField, 
+  StandardButton, 
+  FormActions, 
+  FormMessage 
+} from './FormStandardization';
+import { UI_LABELS, StandardMessage } from '../ui/UIStandardization';
 
 // Simple Form Component für VALEO NeuroERP
 interface FormField {
@@ -47,8 +54,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
   defaultValues = {},
   loading = false,
   error,
-  submitText = 'Speichern',
-  cancelText = 'Abbrechen',
+  submitText = UI_LABELS.ACTIONS.SAVE, // ✅ REFAKTORIERT: Standardisiertes Label
+  cancelText = UI_LABELS.ACTIONS.CANCEL, // ✅ REFAKTORIERT: Standardisiertes Label
   onCancel,
   className = '',
   showCancelButton = true,
@@ -76,8 +83,9 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
     onCancel?.();
   };
 
+  // ✅ REFAKTORIERT: Rendering der Felder mit standardisierten Komponenten
   const renderField = (field: FormField) => {
-    const fieldError = errors[field.name];
+    const fieldError = errors[field.name] as FieldError | undefined;
     const errorMessage = fieldError?.message as string;
 
     switch (field.type) {
@@ -85,126 +93,66 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
       case 'email':
       case 'password':
         return (
-          <Controller
+          <StandardTextField
             name={field.name}
-            control={control}
-            rules={{ required: field.required ? 'Dieses Feld ist erforderlich' : false }}
-            render={({ field: { onChange, value, ref } }) => (
-              <TextField
-                {...field}
-                type={field.type}
-                fullWidth
-                value={value || ''}
-                onChange={onChange}
-                inputRef={ref}
-                error={!!fieldError}
-                helperText={errorMessage}
-                disabled={disabled || field.disabled}
-                placeholder={field.placeholder}
-                className="mb-4"
-              />
-            )}
+            label={field.label}
+            type={field.type}
+            required={field.required}
+            disabled={disabled || field.disabled}
+            placeholder={field.placeholder}
+            helperText={errorMessage}
           />
         );
 
       case 'number':
         return (
-          <Controller
+          <StandardTextField
             name={field.name}
-            control={control}
-            rules={{ required: field.required ? 'Dieses Feld ist erforderlich' : false }}
-            render={({ field: { onChange, value, ref } }) => (
-              <TextField
-                {...field}
-                type="number"
-                fullWidth
-                value={value || ''}
-                onChange={onChange}
-                inputRef={ref}
-                error={!!fieldError}
-                helperText={errorMessage}
-                disabled={disabled || field.disabled}
-                placeholder={field.placeholder}
-                className="mb-4"
-              />
-            )}
-          />
-        );
-
-      case 'textarea':
-        return (
-          <Controller
-            name={field.name}
-            control={control}
-            rules={{ required: field.required ? 'Dieses Feld ist erforderlich' : false }}
-            render={({ field: { onChange, value, ref } }) => (
-              <TextField
-                {...field}
-                multiline
-                rows={4}
-                fullWidth
-                value={value || ''}
-                onChange={onChange}
-                inputRef={ref}
-                error={!!fieldError}
-                helperText={errorMessage}
-                disabled={disabled || field.disabled}
-                placeholder={field.placeholder}
-                className="mb-4"
-              />
-            )}
+            label={field.label}
+            type="number"
+            required={field.required}
+            disabled={disabled || field.disabled}
+            placeholder={field.placeholder}
+            helperText={errorMessage}
           />
         );
 
       case 'select':
         return (
-          <Controller
+          <StandardSelectField
             name={field.name}
-            control={control}
-            rules={{ required: field.required ? 'Dieses Feld ist erforderlich' : false }}
-            render={({ field: { onChange, value, ref } }) => (
-              <FormControl fullWidth error={!!fieldError} className="mb-4">
-                <InputLabel>{field.label}</InputLabel>
-                <Select
-                  value={value || ''}
-                  onChange={onChange}
-                  inputRef={ref}
-                  disabled={disabled || field.disabled}
-                  label={field.label}
-                >
-                  {field.options?.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errorMessage && <FormHelperText>{errorMessage}</FormHelperText>}
-              </FormControl>
-            )}
+            label={field.label}
+            options={field.options || []}
+            required={field.required}
+            disabled={disabled || field.disabled}
+            helperText={errorMessage}
+          />
+        );
+
+      case 'textarea':
+        return (
+          <StandardTextField
+            name={field.name}
+            label={field.label}
+            type="text"
+            required={field.required}
+            disabled={disabled || field.disabled}
+            placeholder={field.placeholder}
+            helperText={errorMessage}
+            multiline={true}
+            rows={4}
           />
         );
 
       case 'date':
         return (
-          <Controller
+          <StandardTextField
             name={field.name}
-            control={control}
-            rules={{ required: field.required ? 'Dieses Feld ist erforderlich' : false }}
-            render={({ field: { onChange, value, ref } }) => (
-              <TextField
-                {...field}
-                type="date"
-                fullWidth
-                value={value || ''}
-                onChange={onChange}
-                inputRef={ref}
-                error={!!fieldError}
-                helperText={errorMessage}
-                disabled={disabled || field.disabled}
-                InputLabelProps={{ shrink: true }}
-                className="mb-4"
-              />
-            )}
+            label={field.label}
+            type="date"
+            required={field.required}
+            disabled={disabled || field.disabled}
+            helperText={errorMessage}
           />
         );
 
@@ -217,10 +165,10 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={!!value}
+                    checked={value || false}
                     onChange={onChange}
-                    inputRef={ref}
                     disabled={disabled || field.disabled}
+                    inputRef={ref}
                   />
                 }
                 label={field.label}
@@ -237,10 +185,12 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
 
   return (
     <Box className={`space-y-6 ${className}`}>
+      {/* ✅ REFAKTORIERT: Error-Message mit StandardMessage */}
       {error && (
-        <Alert severity="error" className="mb-4">
-          {error}
-        </Alert>
+        <StandardMessage
+          type="error"
+          message={error}
+        />
       )}
 
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
@@ -254,29 +204,15 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
           </Box>
         ))}
 
-        <Box className="flex space-x-4 pt-4">
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={loading || isSubmitting || disabled}
-            className="flex-1"
-            startIcon={loading || isSubmitting ? <CircularProgress size={20} /> : null}
-          >
-            {loading || isSubmitting ? 'Wird gespeichert...' : submitText}
-          </Button>
-
-          {showCancelButton && (
-            <Button
-              type="button"
-              variant="outlined"
-              onClick={handleCancel}
-              disabled={loading || isSubmitting}
-              className="flex-1"
-            >
-              {cancelText}
-            </Button>
-          )}
-        </Box>
+        {/* ✅ REFAKTORIERT: FormActions mit standardisierten Labels */}
+        <FormActions
+          onSave={handleSubmit(handleFormSubmit)}
+          onCancel={showCancelButton ? handleCancel : undefined}
+          saveText={loading || isSubmitting ? 'Wird gespeichert...' : submitText}
+          cancelText={cancelText}
+          loading={loading || isSubmitting}
+          disabled={disabled}
+        />
       </form>
     </Box>
   );

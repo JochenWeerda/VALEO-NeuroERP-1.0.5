@@ -1,234 +1,59 @@
 // React Hooks für Offline-Funktionalität
-import { useState, useEffect, useCallback } from 'react';
-import offlineService, { SyncStatus, OfflineData } from '../services/OfflineService';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-// Hook für Offline-Status
-export const useOfflineStatus = () => {
-  const [status, setStatus] = useState<SyncStatus>(offlineService.getSyncStatus());
+interface OfflineRequest {
+  id: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  url: string;
+  data?: unknown;
+  headers?: Record<string, string>;
+  timestamp: number;
+  retryCount: number;
+}
 
-  useEffect(() => {
-    const handleStatusChange = (newStatus: SyncStatus) => {
-      setStatus(newStatus);
-    };
+interface OfflineState {
+  isOnline: boolean;
+  isOffline: boolean;
+  pendingRequests: OfflineRequest[];
+  syncInProgress: boolean;
+  lastSyncTime: number | null;
+}
 
-    offlineService.addStatusListener(handleStatusChange);
-    
-    // Initial Status aktualisieren
-    offlineService.updateSyncStatus().then(setStatus);
+interface OfflineActions {
+  addPendingRequest: (request: Omit<OfflineRequest, 'id' | 'timestamp' | 'retryCount'>) => void;
+  removePendingRequest: (id: string) => void;
+  retryPendingRequest: (id: string) => Promise<void>;
+  retryAllPendingRequests: () => Promise<void>;
+  clearPendingRequests: () => void;
+  syncPendingRequests: () => Promise<void>;
+}
 
-    return () => {
-      offlineService.removeStatusListener(handleStatusChange);
-    };
-  }, []);
+const MAX_RETRY_COUNT = 3;
+const RETRY_DELAY = 5000; // 5 seconds
 
-  const syncNow = useCallback(async () => {
-    await offlineService.syncPendingRequests();
-  }, []);
-
-  return {
-    ...status,
-    syncNow,
-    isOnline: status.isOnline,
-    pendingRequests: status.pendingRequests,
-    syncInProgress: status.syncInProgress
-  };
-};
-
-// Hook für Offline-Daten
-export const useOfflineData = <T>(
-  type: OfflineData['type'],
-  key?: string
-) => {
-  const [data, setData] = useState<T[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const loadData = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const offlineData = await offlineService.getOfflineData(type, key);
-      setData(offlineData.map(item => item.data));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Fehler beim Laden der Offline-Daten');
-    } finally {
-      setLoading(false);
-    }
-  }, [type, key]);
-
-  const saveData = useCallback(async (newData: T) => {
-    try {
-      const dataKey = key || `${type}_${Date.now()}`;
-      await offlineService.saveOfflineData(type, dataKey, newData);
-      await loadData(); // Reload data
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Fehler beim Speichern der Daten');
-    }
-  }, [type, key, loadData]);
-
-  const deleteData = useCallback(async (dataKey: string) => {
-    try {
-      await offlineService.deleteOfflineData(dataKey);
-      await loadData(); // Reload data
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Fehler beim Löschen der Daten');
-    }
-  }, [loadData]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  return {
-    data,
-    loading,
-    error,
-    saveData,
-    deleteData,
-    reload: loadData
-  };
-};
-
-// Hook für Offline-First API Calls
-export const useOfflineFirstRequest = <T>() => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const request = useCallback(async (
-    url: string,
-    options: RequestInit = {},
-    offlineDataKey?: string
-  ): Promise<T | null> => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const result = await offlineService.offlineFirstRequest<T>(url, options, offlineDataKey);
-      return result;
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
-      setError(errorMessage);
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  return {
-    request,
-    loading,
-    error
-  };
-};
-
-// Hook für Pending Requests
-export const usePendingRequests = () => {
-  const [pendingRequests, setPendingRequests] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const loadPendingRequests = useCallback(async () => {
-    try {
-      setLoading(true);
-      const requests = await offlineService.getPendingRequests();
-      setPendingRequests(requests);
-    } catch (err) {
-      console.error('Fehler beim Laden der pending requests:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const retryRequest = useCallback(async (requestId: number) => {
-    try {
-      await offlineService.syncPendingRequests();
-      await loadPendingRequests();
-    } catch (err) {
-      console.error('Fehler beim Retry:', err);
-    }
-  }, [loadPendingRequests]);
-
-  const clearRequest = useCallback(async (requestId: number) => {
-    try {
-      await offlineService.removePendingRequest(requestId);
-      await loadPendingRequests();
-    } catch (err) {
-      console.error('Fehler beim Löschen:', err);
-    }
-  }, [loadPendingRequests]);
-
-  useEffect(() => {
-    loadPendingRequests();
-  }, [loadPendingRequests]);
-
-  return {
-    pendingRequests,
-    loading,
-    retryRequest,
-    clearRequest,
-    reload: loadPendingRequests
-  };
-};
-
-// Hook für Service Worker Status
-export const useServiceWorker = () => {
-  const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
-  const [updateAvailable, setUpdateAvailable] = useState(false);
-
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then((reg) => {
-        setRegistration(reg);
-        
-        // Check for updates
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                setUpdateAvailable(true);
-              }
-            });
-          }
-        });
-      });
-    }
-  }, []);
-
-  const updateApp = useCallback(() => {
-    if (registration && updateAvailable) {
-      registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
-      window.location.reload();
-    }
-  }, [registration, updateAvailable]);
-
-  return {
-    registration,
-    updateAvailable,
-    updateApp
-  };
-};
-
-// Hook für Network Status
-export const useNetworkStatus = () => {
+export function useOffline(): OfflineState & OfflineActions {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [connectionType, setConnectionType] = useState<string>('unknown');
+  const [pendingRequests, setPendingRequests] = useState<OfflineRequest[]>([]);
+  const [syncInProgress, setSyncInProgress] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<number | null>(null);
+  
+  const syncTimeoutRef = useRef<NodeJS.Timeout>();
 
+  // Monitor online/offline status
   useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
+    const handleOnline = () => {
+      setIsOnline(true);
+      console.log('🟢 Online - Starting sync...');
+      syncPendingRequests();
+    };
+
+    const handleOffline = () => {
+      setIsOnline(false);
+      console.log('🔴 Offline - Requests will be queued');
+    };
 
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-
-    // Check connection type if available
-    if ('connection' in navigator) {
-      const connection = (navigator as any).connection;
-      setConnectionType(connection.effectiveType || 'unknown');
-      
-      connection.addEventListener('change', () => {
-        setConnectionType(connection.effectiveType || 'unknown');
-      });
-    }
 
     return () => {
       window.removeEventListener('online', handleOnline);
@@ -236,80 +61,303 @@ export const useNetworkStatus = () => {
     };
   }, []);
 
+  // Auto-sync when coming back online
+  useEffect(() => {
+    if (isOnline && pendingRequests.length > 0) {
+      syncPendingRequests();
+    }
+  }, [isOnline, pendingRequests.length]);
+
+  // Add pending request
+  const addPendingRequest = useCallback((request: Omit<OfflineRequest, 'id' | 'timestamp' | 'retryCount'>) => {
+    const newRequest: OfflineRequest = {
+      ...request,
+      id: `offline-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      timestamp: Date.now(),
+      retryCount: 0
+    };
+
+    setPendingRequests(prev => [...prev, newRequest]);
+    
+    // Store in localStorage for persistence
+    const storedRequests = JSON.parse(localStorage.getItem('offline-requests') || '[]') as OfflineRequest[];
+    storedRequests.push(newRequest);
+    localStorage.setItem('offline-requests', JSON.stringify(storedRequests));
+    
+    console.log('📝 Added pending request:', newRequest.id);
+  }, []);
+
+  // Remove pending request
+  const removePendingRequest = useCallback((id: string) => {
+    setPendingRequests(prev => prev.filter(req => req.id !== id));
+    
+    // Remove from localStorage
+    const storedRequests = JSON.parse(localStorage.getItem('offline-requests') || '[]') as OfflineRequest[];
+    const updatedRequests = storedRequests.filter((req: OfflineRequest) => req.id !== id);
+    localStorage.setItem('offline-requests', JSON.stringify(updatedRequests));
+    
+    console.log('🗑️ Removed pending request:', id);
+  }, []);
+
+  // Retry single pending request
+  const retryPendingRequest = useCallback(async (id: string) => {
+    const request = pendingRequests.find(req => req.id === id);
+    if (!request) return;
+
+    if (request.retryCount >= MAX_RETRY_COUNT) {
+      console.log('❌ Max retry count reached for request:', id);
+      removePendingRequest(id);
+      return;
+    }
+
+    try {
+      console.log(`🔄 Retrying request ${id} (attempt ${request.retryCount + 1}/${MAX_RETRY_COUNT})`);
+      
+      const response = await fetch(request.url, {
+        method: request.method,
+        headers: {
+          'Content-Type': 'application/json',
+          ...request.headers
+        },
+        body: request.data ? JSON.stringify(request.data) : undefined
+      });
+
+      if (response.ok) {
+        console.log('✅ Request succeeded:', id);
+        removePendingRequest(id);
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('❌ Request failed:', id, error);
+      
+      // Increment retry count
+      setPendingRequests(prev => prev.map(req => 
+        req.id === id 
+          ? { ...req, retryCount: req.retryCount + 1 }
+          : req
+      ));
+      
+      // Update localStorage
+      const storedRequests = JSON.parse(localStorage.getItem('offline-requests') || '[]') as OfflineRequest[];
+      const updatedRequests = storedRequests.map((req: OfflineRequest) => 
+        req.id === id 
+          ? { ...req, retryCount: req.retryCount + 1 }
+          : req
+      );
+      localStorage.setItem('offline-requests', JSON.stringify(updatedRequests));
+    }
+  }, [pendingRequests, removePendingRequest]);
+
+  // Retry all pending requests
+  const retryAllPendingRequests = useCallback(async () => {
+    if (pendingRequests.length === 0) return;
+
+    console.log(`🔄 Retrying ${pendingRequests.length} pending requests...`);
+    
+    const promises = pendingRequests.map(request => retryPendingRequest(request.id));
+    await Promise.allSettled(promises);
+  }, [pendingRequests, retryPendingRequest]);
+
+  // Clear all pending requests
+  const clearPendingRequests = useCallback(() => {
+    setPendingRequests([]);
+    localStorage.removeItem('offline-requests');
+    console.log('🧹 Cleared all pending requests');
+  }, []);
+
+  // Sync pending requests
+  const syncPendingRequests = useCallback(async () => {
+    if (syncInProgress || !isOnline || pendingRequests.length === 0) return;
+
+    setSyncInProgress(true);
+    console.log(`🔄 Starting sync of ${pendingRequests.length} pending requests...`);
+
+    try {
+      await retryAllPendingRequests();
+      setLastSyncTime(Date.now());
+      console.log('✅ Sync completed');
+    } catch (error) {
+      console.error('❌ Sync failed:', error);
+    } finally {
+      setSyncInProgress(false);
+    }
+  }, [syncInProgress, isOnline, pendingRequests.length, retryAllPendingRequests]);
+
+  // Load pending requests from localStorage on mount
+  useEffect(() => {
+    try {
+      const storedRequests = JSON.parse(localStorage.getItem('offline-requests') || '[]') as OfflineRequest[];
+      if (storedRequests.length > 0) {
+        setPendingRequests(storedRequests);
+        console.log(`📋 Loaded ${storedRequests.length} pending requests from storage`);
+      }
+    } catch (error) {
+      console.error('❌ Failed to load pending requests from storage:', error);
+      localStorage.removeItem('offline-requests');
+    }
+  }, []);
+
+  // Auto-retry with exponential backoff
+  useEffect(() => {
+    if (pendingRequests.length > 0 && isOnline) {
+      const retryDelay = Math.min(RETRY_DELAY * Math.pow(2, pendingRequests[0]?.retryCount || 0), 30000);
+      
+      syncTimeoutRef.current = setTimeout(() => {
+        syncPendingRequests();
+      }, retryDelay);
+
+      return () => {
+        if (syncTimeoutRef.current) {
+          clearTimeout(syncTimeoutRef.current);
+        }
+      };
+    }
+  }, [pendingRequests, isOnline, syncPendingRequests]);
+
   return {
     isOnline,
-    connectionType,
-    isSlowConnection: connectionType === 'slow-2g' || connectionType === '2g'
+    isOffline: !isOnline,
+    pendingRequests,
+    syncInProgress,
+    lastSyncTime,
+    addPendingRequest,
+    removePendingRequest,
+    retryPendingRequest,
+    retryAllPendingRequests,
+    clearPendingRequests,
+    syncPendingRequests
   };
-};
+}
 
-// Hook für Offline Storage Management
-export const useOfflineStorage = () => {
-  const [storageSize, setStorageSize] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
+// Hook for offline-capable API calls
+export function useOfflineAPI() {
+  const { isOnline, addPendingRequest } = useOffline();
 
-  const calculateStorageSize = useCallback(async () => {
-    try {
-      setLoading(true);
-      const size = await offlineService.getDatabaseSize();
-      setStorageSize(size);
-    } catch (err) {
-      console.error('Fehler beim Berechnen der Speichergröße:', err);
-    } finally {
-      setLoading(false);
+  const offlineFetch = useCallback(async (
+    url: string,
+    options: RequestInit = {}
+  ): Promise<Response> => {
+    if (isOnline) {
+      // Try online first
+      try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+          return response;
+        }
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      } catch (error) {
+        console.log('🌐 Online request failed, queuing for offline:', error);
+      }
     }
-  }, []);
 
-  const clearStorage = useCallback(async () => {
+    // Queue for offline
+    addPendingRequest({
+      method: (options.method as 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH') || 'GET',
+      url,
+      data: options.body ? JSON.parse(options.body as string) : undefined,
+      headers: options.headers as Record<string, string>
+    });
+
+    // Return a mock response for offline
+    return new Response(JSON.stringify({ 
+      success: false, 
+      message: 'Request queued for offline processing',
+      offline: true 
+    }), {
+      status: 202,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }, [isOnline, addPendingRequest]);
+
+  return { offlineFetch, isOnline };
+}
+
+// Hook for offline data storage
+export function useOfflineStorage<T = unknown>(key: string, initialValue: T) {
+  const [data, setData] = useState<T>(() => {
     try {
-      await offlineService.clearAllData();
-      await calculateStorageSize();
-    } catch (err) {
-      console.error('Fehler beim Löschen des Speichers:', err);
+      const stored = localStorage.getItem(`offline-${key}`);
+      return stored ? JSON.parse(stored) : initialValue;
+    } catch (error) {
+      console.error('❌ Failed to load offline data:', error);
+      return initialValue;
     }
-  }, [calculateStorageSize]);
+  });
 
-  useEffect(() => {
-    calculateStorageSize();
-  }, [calculateStorageSize]);
+  const setOfflineData = useCallback((value: T) => {
+    setData(value);
+    try {
+      localStorage.setItem(`offline-${key}`, JSON.stringify(value));
+    } catch (error) {
+      console.error('❌ Failed to save offline data:', error);
+    }
+  }, [key]);
+
+  const clearOfflineData = useCallback(() => {
+    setData(initialValue);
+    localStorage.removeItem(`offline-${key}`);
+  }, [key, initialValue]);
+
+  return [data, setOfflineData, clearOfflineData] as const;
+}
+
+// Hook for offline queue management
+export function useOfflineQueue() {
+  const { pendingRequests, removePendingRequest, retryPendingRequest, clearPendingRequests } = useOffline();
+
+  const getQueueStats = useCallback(() => {
+    const stats = {
+      total: pendingRequests.length,
+      byMethod: {} as Record<string, number>,
+      byStatus: {
+        pending: 0,
+        retrying: 0,
+        failed: 0
+      }
+    };
+
+    pendingRequests.forEach(request => {
+      // Count by method
+      stats.byMethod[request.method] = (stats.byMethod[request.method] || 0) + 1;
+      
+      // Count by status
+      if (request.retryCount === 0) {
+        stats.byStatus.pending++;
+      } else if (request.retryCount < 3) {
+        stats.byStatus.retrying++;
+      } else {
+        stats.byStatus.failed++;
+      }
+    });
+
+    return stats;
+  }, [pendingRequests]);
+
+  const getQueueByMethod = useCallback((method: string) => {
+    return pendingRequests.filter(request => request.method === method);
+  }, [pendingRequests]);
+
+  const getQueueByStatus = useCallback((status: 'pending' | 'retrying' | 'failed') => {
+    return pendingRequests.filter(request => {
+      if (status === 'pending') return request.retryCount === 0;
+      if (status === 'retrying') return request.retryCount > 0 && request.retryCount < 3;
+      if (status === 'failed') return request.retryCount >= 3;
+      return false;
+    });
+  }, [pendingRequests]);
 
   return {
-    storageSize,
-    loading,
-    clearStorage,
-    refresh: calculateStorageSize
+    pendingRequests,
+    removePendingRequest,
+    retryPendingRequest,
+    clearPendingRequests,
+    getQueueStats,
+    getQueueByMethod,
+    getQueueByStatus
   };
-};
+}
 
-// Hook für Offline Notifications
-export const useOfflineNotifications = () => {
-  const [permission, setPermission] = useState<NotificationPermission>('default');
-
-  useEffect(() => {
-    if ('Notification' in window) {
-      setPermission(Notification.permission);
-    }
-  }, []);
-
-  const requestPermission = useCallback(async () => {
-    if ('Notification' in window) {
-      const result = await Notification.requestPermission();
-      setPermission(result);
-      return result;
-    }
-    return 'denied';
-  }, []);
-
-  const showNotification = useCallback((title: string, options?: NotificationOptions) => {
-    if ('Notification' in window && permission === 'granted') {
-      new Notification(title, options);
-    }
-  }, [permission]);
-
-  return {
-    permission,
-    requestPermission,
-    showNotification,
-    isSupported: 'Notification' in window
-  };
-}; 
+// Alias exports für Kompatibilität
+export const useOfflineStatus = useOffline;
+export const usePendingRequests = useOffline; 
