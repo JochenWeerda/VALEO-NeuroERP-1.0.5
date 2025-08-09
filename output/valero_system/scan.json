@@ -4864,7 +4864,7 @@
     {
       "path": "/workspace/linkup_mcp/server.py",
       "type": "code",
-      "size": 8046
+      "size": 8348
     },
     {
       "path": "/workspace/linkup_mcp/demo_token_optimization.py",
@@ -16062,6 +16062,11 @@
       "size": 4471
     },
     {
+      "path": "/workspace/output/valero_system/changes.json",
+      "type": "config",
+      "size": 105673
+    },
+    {
       "path": "/workspace/output/valero_system/scan.json",
       "type": "config",
       "size": 960830
@@ -19337,7 +19342,7 @@
       {
         "path": "/workspace/linkup_mcp/server.py",
         "type": "code",
-        "size": 8046
+        "size": 8348
       },
       {
         "path": "/workspace/linkup_mcp/demo_token_optimization.py",
@@ -30924,6 +30929,11 @@
         "path": "/workspace/output/valero_system/rag_manifest.json",
         "type": "config",
         "size": 195
+      },
+      {
+        "path": "/workspace/output/valero_system/changes.json",
+        "type": "config",
+        "size": 105673
       },
       {
         "path": "/workspace/output/valero_system/scan.json",

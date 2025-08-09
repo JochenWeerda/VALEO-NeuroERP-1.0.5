@@ -6196,6 +6196,11 @@
                 "type": "file"
               },
               {
+                "name": "changes.json",
+                "path": "/workspace/output/valero_system/changes.json",
+                "type": "file"
+              },
+              {
                 "name": "scan.json",
                 "path": "/workspace/output/valero_system/scan.json",
                 "type": "file"
@@ -21861,7 +21866,7 @@
     "code": 1305,
     "test": 142,
     "doc": 798,
-    "config": 385,
+    "config": 386,
     "other": 977
   }
 }

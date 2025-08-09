@@ -1,10 +1,28 @@
 import asyncio
 import os
 from dotenv import load_dotenv
-from linkup import LinkupClient
-from rag import RAGWorkflow
-from mcp.server.fastmcp import FastMCP
-from pymongo import MongoClient
+
+# Optionale Abhängigkeiten robust behandeln
+try:
+    from linkup import LinkupClient  # type: ignore
+except Exception:
+    LinkupClient = None  # type: ignore
+
+try:
+    from rag import RAGWorkflow  # type: ignore
+except Exception:
+    RAGWorkflow = None  # type: ignore
+
+try:
+    from mcp.server.fastmcp import FastMCP
+except Exception as e:
+    raise
+
+try:
+    from pymongo import MongoClient  # type: ignore
+except Exception:
+    MongoClient = None  # type: ignore
+
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 from .memory.rag_manager import RAGMemoryManager
@@ -15,83 +33,89 @@ from .serena.integration import plan_refactors as serena_plan_refactors, apply_r
 load_dotenv()
 
 mcp = FastMCP('linkup-server')
-client = LinkupClient()
-rag_workflow = RAGWorkflow()
+client = LinkupClient() if LinkupClient is not None else None
+rag_workflow = RAGWorkflow() if RAGWorkflow is not None else None
 rag_memory = RAGMemoryManager()
 
-# MongoDB-Verbindung herstellen
+# MongoDB-Verbindung herstellen (optional)
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/")
 MONGODB_DB_NAME = os.getenv("MONGODB_DB_NAME", "valeo_neuroerp")
 
-mongo_client = MongoClient(MONGODB_URI)
-db = mongo_client[MONGODB_DB_NAME]
-search_history_collection = db["search_history"]
-rag_history_collection = db["rag_history"]
+if MongoClient is not None:
+    try:
+        mongo_client = MongoClient(MONGODB_URI)
+        db = mongo_client[MONGODB_DB_NAME]
+        search_history_collection = db.get_collection("search_history")
+        rag_history_collection = db.get_collection("rag_history")
+    except Exception:
+        search_history_collection = None
+        rag_history_collection = None
+else:
+    search_history_collection = None
+    rag_history_collection = None
+
 
 @mcp.tool()
-def web_search(query: str, user_id: Optional[str] = None) -> str:
+def web_search(query: str, user_id: Optional[str] = None) -> Any:
     """
-    Sucht im Web nach Informationen und speichert die Ergebnisse in MongoDB.
-    
-    Args:
-        query: Die Suchanfrage
-        user_id: Optional. Die Benutzer-ID für die Nachverfolgung der Suchhistorie
+    Sucht im Web nach Informationen und speichert die Ergebnisse optional in MongoDB.
     """
+    if client is None:
+        return {"error": "LinkupClient nicht verfügbar"}
+
     start_time = datetime.now()
-    
-    # Suchanfrage ausführen
     search_response = client.search(
         query=query,
-        depth="standard",  # "standard" oder "deep"
-        output_type="sourcedAnswer",  # "searchResults" oder "sourcedAnswer" oder "structured"
-        structured_output_schema=None,  # muss ausgefüllt sein, wenn output_type "structured" ist
+        depth="standard",
+        output_type="sourcedAnswer",
+        structured_output_schema=None,
     )
-    
     end_time = datetime.now()
     response_time_ms = int((end_time - start_time).total_seconds() * 1000)
-    
-    # Ergebnisse in MongoDB speichern
-    search_history_item = {
-        "user_id": user_id,
-        "query": query,
-        "response": search_response,
-        "response_time_ms": response_time_ms,
-        "timestamp": datetime.now()
-    }
-    
-    search_history_collection.insert_one(search_history_item)
-    
+
+    if search_history_collection is not None:
+        try:
+            search_history_collection.insert_one({
+                "user_id": user_id,
+                "query": query,
+                "response": search_response,
+                "response_time_ms": response_time_ms,
+                "timestamp": datetime.now()
+            })
+        except Exception:
+            pass
+
     return search_response
 
+
 @mcp.tool()
-async def rag_query(question: str, user_id: Optional[str] = None) -> str:
+async def rag_query(question: str, user_id: Optional[str] = None) -> Any:
     """
-    Stellt Fragen an lokale Dokumente mit RAG (Retrieval-Augmented Generation) und speichert die Ergebnisse in MongoDB.
-    
-    Args:
-        question: Die Frage zu den Dokumenten
-        user_id: Optional. Die Benutzer-ID für die Nachverfolgung der RAG-Abfragehistorie
+    Stellt Fragen an lokale Dokumente mit RAG (klassischer Workflow) – optional verfügbar.
+    Fällt zurück, wenn RAGWorkflow nicht verfügbar ist.
     """
+    if rag_workflow is None:
+        return {"error": "RAGWorkflow nicht verfügbar. Verwende rag_query_local."}
+
     start_time = datetime.now()
-    
-    # RAG-Abfrage ausführen
     response = await rag_workflow.query(question)
-    
     end_time = datetime.now()
     response_time_ms = int((end_time - start_time).total_seconds() * 1000)
-    
-    # Ergebnisse in MongoDB speichern
-    rag_history_item = {
-        "user_id": user_id,
-        "question": question,
-        "response": str(response),
-        "response_time_ms": response_time_ms,
-        "timestamp": datetime.now()
-    }
-    
-    rag_history_collection.insert_one(rag_history_item)
-    
+
+    if rag_history_collection is not None:
+        try:
+            rag_history_collection.insert_one({
+                "user_id": user_id,
+                "question": question,
+                "response": str(response),
+                "response_time_ms": response_time_ms,
+                "timestamp": datetime.now()
+            })
+        except Exception:
+            pass
+
     return str(response)
+
 
 @mcp.tool()
 def run_full_analysis(paths: list[str] | None = None) -> dict:
@@ -113,13 +137,12 @@ def run_full_analysis(paths: list[str] | None = None) -> dict:
         },
     }
 
+
 @mcp.tool()
 def analysis_overview(limit: int = 10) -> dict:
     """Gibt einen Überblick über Architektur, Qualität und Playbook zurück (Top-N)."""
     import json
-    from pathlib import Path
     base = Path("output/valero_system")
-    data = {}
     try:
         arch = json.loads((base / "architecture.json").read_text(encoding="utf-8"))
         qual = json.loads((base / "quality.json").read_text(encoding="utf-8"))
@@ -137,6 +160,7 @@ def analysis_overview(limit: int = 10) -> dict:
         "playbook_top": play.get("items", [])[:limit],
     }
 
+
 @mcp.tool()
 def build_rag_index(paths: list[str] | None = None) -> dict:
     """Baut oder erweitert den RAG-Index aus den gegebenen Pfaden."""
@@ -145,56 +169,45 @@ def build_rag_index(paths: list[str] | None = None) -> dict:
     rag_memory.build_index(paths)
     return rag_memory.export_manifest()
 
+
 @mcp.tool()
 def rag_query_local(question: str, top_k: int = 6) -> list[dict]:
     """Fragt den lokalen RAG-Speicher ab und liefert Top-K Treffer mit Scores."""
     return rag_memory.query(question, top_k=top_k)
 
+
 @mcp.tool()
 def get_search_history(user_id: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
     """
-    Ruft die Suchhistorie aus MongoDB ab.
-    
-    Args:
-        user_id: Optional. Die Benutzer-ID zur Filterung der Suchhistorie
-        limit: Die maximale Anzahl der zurückzugebenden Historieneinträge
+    Ruft die Suchhistorie aus MongoDB ab (falls verfügbar).
     """
+    if search_history_collection is None:
+        return []
     query = {}
     if user_id:
         query["user_id"] = user_id
-    
-    history = list(search_history_collection.find(
-        query, 
-        {"_id": 0}
-    ).sort("timestamp", -1).limit(limit))
-    
+    history = list(search_history_collection.find(query, {"_id": 0}).sort("timestamp", -1).limit(limit))
     return history
+
 
 @mcp.tool()
 def get_rag_history(user_id: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
     """
-    Ruft die RAG-Abfragehistorie aus MongoDB ab.
-    
-    Args:
-        user_id: Optional. Die Benutzer-ID zur Filterung der RAG-Abfragehistorie
-        limit: Die maximale Anzahl der zurückzugebenden Historieneinträge
+    Ruft die RAG-Abfragehistorie aus MongoDB ab (falls verfügbar).
     """
+    if rag_history_collection is None:
+        return []
     query = {}
     if user_id:
         query["user_id"] = user_id
-    
-    history = list(rag_history_collection.find(
-        query, 
-        {"_id": 0}
-    ).sort("timestamp", -1).limit(limit))
-    
+    history = list(rag_history_collection.find(query, {"_id": 0}).sort("timestamp", -1).limit(limit))
     return history
+
 
 @mcp.tool()
 def serena_plan(limit: int = 1000) -> dict:
     """Erstellt ein Refactoring-Playbook aus der letzten Qualitätsanalyse."""
     import json
-    from pathlib import Path
     base = Path("output/valero_system")
     try:
         quality = json.loads((base / "quality.json").read_text(encoding="utf-8"))
@@ -204,11 +217,11 @@ def serena_plan(limit: int = 1000) -> dict:
     (base / "playbook.json").write_text(json.dumps(playbook, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"count": len(playbook.get("items", []))}
 
+
 @mcp.tool()
 def serena_apply(dry_run: bool = True) -> dict:
     """Wendet Refactoring-Playbook sicher an (standard dry-run) und gibt Change-Report zurück."""
     import json
-    from pathlib import Path
     base = Path("output/valero_system")
     try:
         playbook = json.loads((base / "playbook.json").read_text(encoding="utf-8"))
@@ -218,9 +231,11 @@ def serena_apply(dry_run: bool = True) -> dict:
     (base / "changes.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"applied": not dry_run, "change_count": len(result.get("changes", []))}
 
+
 if __name__ == "__main__":
-    # Dokumente für RAG laden
-    asyncio.run(rag_workflow.ingest_documents("data"))
+    # Dokumente für klassischen RAG-Workflow nur laden, wenn verfügbar
+    if rag_workflow is not None:
+        asyncio.run(rag_workflow.ingest_documents("data"))
     mcp.run(transport="stdio")
 
 
