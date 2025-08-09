@@ -6,11 +6,12 @@ Funktionen:
 - Scannen von Verzeichnissen nach relevanten Dateien (Code, Markdown, Texte)
 - Chunking in semantische Abschnitte
 - Embeddings (HuggingFace standard, optional OpenAI) – optional
-- Persistenter Vectorstore unter data/faiss_db (wenn verfügbar)
+- Persistenter Vectorstore (FAISS/Chroma/Qdrant, wenn verfügbar)
 - Fallback: einfacher Keyword-Scorer ohne Abhängigkeiten
 """
 from __future__ import annotations
 
+import os
 import json
 import logging
 from pathlib import Path
@@ -30,7 +31,8 @@ class RAGMemoryManager:
     def __init__(self,
                  db_dir: Optional[Path] = None,
                  embedding_backend: str = "hf",
-                 hf_model: str = "sentence-transformers/all-MiniLM-L6-v2") -> None:
+                 hf_model: str = "sentence-transformers/all-MiniLM-L6-v2",
+                 vector_backend: Optional[str] = None) -> None:
         project_root = Path(__file__).parent.parent.parent
         default_db = project_root / "data" / "faiss_db"
         self.db_dir: Path = db_dir or default_db
@@ -38,6 +40,8 @@ class RAGMemoryManager:
 
         self.embedding_backend = embedding_backend
         self.hf_model = hf_model
+        # Backend-Auswahl (auto | faiss | chroma | qdrant | fallback)
+        self.vector_backend = (vector_backend or os.getenv("VECTOR_BACKEND", "auto")).lower()
 
         # Lazy-Import von LangChain-Komponenten
         self._has_langchain = False
@@ -68,14 +72,23 @@ class RAGMemoryManager:
                 except Exception:
                     self._embeddings = None
 
+            # Prüfe, ob mind. ein Vectorstore nutzbar ist
             if self._embeddings is not None:
-                # Vectorstore (FAISS) optional
                 try:
                     from langchain_community.vectorstores import FAISS  # noqa: F401
                     self._has_langchain = True
-                    logger.info("RAGMemoryManager: LangChain/FAISS verfügbar.")
                 except Exception:
-                    logger.warning("RAGMemoryManager: FAISS nicht verfügbar – Fallback-Suche wird genutzt.")
+                    # evtl. Chroma/Qdrant
+                    try:
+                        from langchain_community.vectorstores import Chroma  # noqa: F401
+                        self._has_langchain = True
+                    except Exception:
+                        try:
+                            from langchain_community.vectorstores import Qdrant  # noqa: F401
+                            self._has_langchain = True
+                        except Exception:
+                            self._has_langchain = False
+            logger.info("RAGMemoryManager: LangChain=%s, Backend=%s", self._has_langchain, self.vector_backend)
         except Exception:
             logger.warning("RAGMemoryManager: LangChain nicht verfügbar – Fallback-Suche wird genutzt.")
 
@@ -115,6 +128,76 @@ class RAGMemoryManager:
             return chunks
         return self._text_splitter.split_text(text)
 
+    def _init_vectorstore(self, documents: List[str], metadatas: List[Dict[str, Any]]):
+        """Initialisiert Vectorstore je nach Backend-Auswahl."""
+        if not self._has_langchain or self._embeddings is None:
+            return None
+
+        # Helper: safe import
+        def try_import(name: str):
+            try:
+                module = __import__(name, fromlist=["*"])
+                return module
+            except Exception:
+                return None
+
+        backend = self.vector_backend
+        if backend == "auto":
+            # Bevorzugung: FAISS -> Chroma -> Qdrant
+            for cand in ("faiss", "chroma", "qdrant"):
+                vs = self._try_build_vectorstore(cand, documents, metadatas)
+                if vs is not None:
+                    self.vector_backend = cand
+                    return vs
+            return None
+        else:
+            return self._try_build_vectorstore(backend, documents, metadatas)
+
+    def _try_build_vectorstore(self, backend: str, documents: List[str], metadatas: List[Dict[str, Any]]):
+        try:
+            if backend == "faiss":
+                from langchain_community.vectorstores import FAISS  # type: ignore
+                try:
+                    vs = FAISS.load_local(str(self.db_dir), self._embeddings, allow_dangerous_deserialization=True)
+                    vs.add_texts(documents, metadatas=metadatas)
+                except Exception:
+                    vs = FAISS.from_texts(documents, self._embeddings, metadatas=metadatas)
+                try:
+                    vs.save_local(str(self.db_dir))
+                except Exception:
+                    pass
+                return vs
+            if backend == "chroma":
+                from langchain_community.vectorstores import Chroma  # type: ignore
+                persist_dir = str(self.db_dir / "chroma")
+                vs = Chroma.from_texts(documents, self._embeddings, metadatas=metadatas, persist_directory=persist_dir)
+                try:
+                    vs.persist()
+                except Exception:
+                    pass
+                return vs
+            if backend == "qdrant":
+                from langchain_community.vectorstores import Qdrant  # type: ignore
+                from qdrant_client import QdrantClient  # type: ignore
+                url = os.getenv("QDRANT_URL")
+                host = os.getenv("QDRANT_HOST", "localhost")
+                port = int(os.getenv("QDRANT_PORT", "6333"))
+                collection = os.getenv("QDRANT_COLLECTION", "valero_repo")
+                client = QdrantClient(url=url) if url else QdrantClient(host=host, port=port)
+                vs = Qdrant.from_texts(
+                    texts=documents,
+                    embedding=self._embeddings,
+                    metadatas=metadatas,
+                    url=url if url else None,
+                    host=None if url else host,
+                    port=None if url else port,
+                    collection_name=collection,
+                )
+                return vs
+        except Exception as e:
+            logger.warning("Vectorstore '%s' konnte nicht aufgebaut werden: %s", backend, str(e))
+            return None
+
     def build_index(self, root_paths: List[str]) -> Dict[str, Any]:
         files = list(self._iter_files(Path(p) for p in root_paths))
         logger.info("Indexiere %d Dateien...", len(files))
@@ -132,25 +215,8 @@ class RAGMemoryManager:
         if not documents:
             raise ValueError("Keine dokumentierbaren Inhalte gefunden.")
 
-        if self._has_langchain and self._embeddings is not None:
-            # Versuche FAISS zu laden/erstellen
-            try:
-                from langchain_community.vectorstores import FAISS  # type: ignore
-                try:
-                    self._vectorstore = FAISS.load_local(str(self.db_dir), self._embeddings, allow_dangerous_deserialization=True)  # type: ignore
-                    self._vectorstore.add_texts(documents, metadatas=metadatas)  # type: ignore
-                    logger.info("Existierenden Vectorstore erweitert.")
-                except Exception:
-                    self._vectorstore = FAISS.from_texts(documents, self._embeddings, metadatas=metadatas)  # type: ignore
-                    logger.info("Neuen Vectorstore erstellt.")
-                # Persistieren, falls möglich
-                try:
-                    self._vectorstore.save_local(str(self.db_dir))  # type: ignore
-                except Exception:
-                    pass
-            except Exception:
-                logger.warning("FAISS konnte nicht genutzt werden – Fallback-Suche wird verwendet.")
-                self._vectorstore = None
+        # Versuche ausgewähltes Backend
+        self._vectorstore = self._init_vectorstore(documents, metadatas)
 
         # Fallback-Index (einfach): speichere Texte + Metadaten
         if self._vectorstore is None:
@@ -185,9 +251,9 @@ class RAGMemoryManager:
                 output: List[Dict[str, Any]] = []
                 for doc, score in results:
                     output.append({
-                        "text": doc.page_content,
-                        "metadata": doc.metadata or {},
-                        "score": float(score)
+                        "text": getattr(doc, "page_content", getattr(doc, "text", "")),
+                        "metadata": getattr(doc, "metadata", {}) or {},
+                        "score": float(score) if not isinstance(score, dict) else float(score.get("score", 0.0))
                     })
                 return output
             except Exception as e:
@@ -211,5 +277,6 @@ class RAGMemoryManager:
             "backend": self.embedding_backend,
             "hf_model": self.hf_model,
             "vectorstore": self._vectorstore is not None,
+            "vector_backend": self.vector_backend,
             "fallback_docs": len(self._docs_fallback),
         }
