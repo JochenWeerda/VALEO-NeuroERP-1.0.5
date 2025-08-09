@@ -41,7 +41,7 @@ class RAGMemoryManager:
         self.embedding_backend = embedding_backend
         self.hf_model = hf_model
         # Backend-Auswahl (auto | faiss | chroma | qdrant | fallback)
-        self.vector_backend = (vector_backend or os.getenv("VECTOR_BACKEND", "auto")).lower()
+        self.vector_backend = (vector_backend or os.getenv("VECTOR_BACKEND", "fallback")).lower()
 
         # Lazy-Import von LangChain-Komponenten
         self._has_langchain = False

@@ -1,6 +1,6 @@
 # VALERO Makefile – einfache Startbefehle
 
-.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma
+.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma rag-build-dir rag-query-dir rag-build-chroma-dir rag-query-chroma-dir
 
 help:
 	@echo "VALERO – einfache Befehle:"
@@ -80,3 +80,21 @@ rag-build-chroma:
 rag-query-chroma:
 	@if [ -z "$(Q)" ]; then echo "Bitte Frage mit Q=\"...\" angeben"; exit 1; fi
 	VECTOR_BACKEND=chroma $(MAKE) rag-query Q="$(Q)" K=$(K) 
+
+# Ordner-spezifisch (BM25/Default)
+rag-build-dir:
+	@if [ -z "$(DIR)" ]; then echo "Bitte Verzeichnis mit DIR=pfad angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.memory.rag_manager import RAGMemoryManager; m=RAGMemoryManager(); m.build_index(['$(DIR)']); print(m.export_manifest())"
+
+rag-query-dir:
+	@if [ -z "$(Q)" ] || [ -z "$(DIR)" ]; then echo "Bitte DIR=pfad und Q=\"...\" angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.memory.rag_manager import RAGMemoryManager; m=RAGMemoryManager(); m.build_index(['$(DIR)']); import json; print(json.dumps(m.query('$(Q)', top_k=$(K)), ensure_ascii=False, indent=2))"
+
+# Ordner-spezifisch (Chroma)
+rag-build-chroma-dir:
+	@if [ -z "$(DIR)" ]; then echo "Bitte Verzeichnis mit DIR=pfad angeben"; exit 1; fi
+	VECTOR_BACKEND=chroma $(MAKE) rag-build-dir DIR=$(DIR)
+
+rag-query-chroma-dir:
+	@if [ -z "$(Q)" ] || [ -z "$(DIR)" ]; then echo "Bitte DIR=pfad und Q=\"...\" angeben"; exit 1; fi
+	VECTOR_BACKEND=chroma $(MAKE) rag-query-dir DIR=$(DIR) Q="$(Q)" K=$(K) 
