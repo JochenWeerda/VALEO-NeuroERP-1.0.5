@@ -9,6 +9,7 @@ from datetime import datetime
 from typing import List, Dict, Any, Optional
 from .memory.rag_manager import RAGMemoryManager
 from pathlib import Path
+from .pipelines.valero_full_analysis import run_valero_full_analysis
 
 load_dotenv()
 
@@ -90,6 +91,50 @@ async def rag_query(question: str, user_id: Optional[str] = None) -> str:
     rag_history_collection.insert_one(rag_history_item)
     
     return str(response)
+
+@mcp.tool()
+def run_full_analysis(paths: list[str] | None = None) -> dict:
+    """Führt die vollständige Systemanalyse aus und gibt eine kurze Übersicht zurück."""
+    root = paths[0] if paths else "."
+    result = run_valero_full_analysis(root)
+    return {
+        "files": {
+            "scan": "output/valero_system/scan.json",
+            "architecture": "output/valero_system/architecture.json",
+            "quality": "output/valero_system/quality.json",
+            "playbook": "output/valero_system/playbook.json",
+            "report": "output/valero_system/report.md",
+        },
+        "counts": {
+            "code_files": len(result.get("scan", {}).get("by_type", {}).get("code", [])),
+            "issues": sum(len(f.get("findings", [])) for f in result.get("quality", [])),
+            "playbook_items": len(result.get("playbook", {}).get("items", [])),
+        },
+    }
+
+@mcp.tool()
+def analysis_overview(limit: int = 10) -> dict:
+    """Gibt einen Überblick über Architektur, Qualität und Playbook zurück (Top-N)."""
+    import json
+    from pathlib import Path
+    base = Path("output/valero_system")
+    data = {}
+    try:
+        arch = json.loads((base / "architecture.json").read_text(encoding="utf-8"))
+        qual = json.loads((base / "quality.json").read_text(encoding="utf-8"))
+        play = json.loads((base / "playbook.json").read_text(encoding="utf-8"))
+    except Exception:
+        return {"error": "Noch keine Analyse-Artefakte gefunden. Bitte run_full_analysis ausführen."}
+
+    qual_sorted = sorted(qual, key=lambda x: x.get("score", 0))[:limit]
+    return {
+        "summary": arch.get("summary", {}),
+        "quality_top": [
+            {"path": q.get("path"), "score": q.get("score"), "findings": q.get("findings", [])[:3]}
+            for q in qual_sorted
+        ],
+        "playbook_top": play.get("items", [])[:limit],
+    }
 
 @mcp.tool()
 def build_rag_index(paths: list[str] | None = None) -> dict:
