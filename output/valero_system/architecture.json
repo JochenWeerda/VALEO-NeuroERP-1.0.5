@@ -990,6 +990,11 @@
         "type": "file"
       },
       {
+        "name": ".env.example",
+        "path": "/workspace/.env.example",
+        "type": "file"
+      },
+      {
         "name": "server_fastmcp_mongodb.py",
         "path": "/workspace/server_fastmcp_mongodb.py",
         "type": "file"
@@ -17046,6 +17051,11 @@
             "type": "file"
           },
           {
+            "name": "docker-compose.rag.yml",
+            "path": "/workspace/docker/docker-compose.rag.yml",
+            "type": "file"
+          },
+          {
             "name": "frontend-server.Dockerfile",
             "path": "/workspace/docker/frontend-server.Dockerfile",
             "type": "file"
@@ -21851,7 +21861,7 @@
     "code": 1305,
     "test": 142,
     "doc": 798,
-    "config": 384,
-    "other": 976
+    "config": 385,
+    "other": 977
   }
 }

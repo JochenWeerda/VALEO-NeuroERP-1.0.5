@@ -76,6 +76,15 @@ def build_valero_graph() -> Any:
     try:
         from langgraph.graph import StateGraph
         from typing import TypedDict
+        # Optionales Checkpointing
+        checkpointer = None
+        try:
+            from langgraph.checkpoint.sqlite import SqliteSaver  # type: ignore
+            cp_dir = Path(__file__).parent.parent.parent / "data" / "checkpoints"
+            cp_dir.mkdir(parents=True, exist_ok=True)
+            checkpointer = SqliteSaver(str(cp_dir / "langgraph.db"))
+        except Exception:
+            checkpointer = None
 
         class GState(TypedDict):
             state: ValeroState
@@ -156,6 +165,12 @@ def build_valero_graph() -> Any:
         graph.add_edge("playbook", "rag")
         graph.add_edge("rag", "report")
 
+        # compile/return graph, optional checkpointer
+        try:
+            if checkpointer is not None:
+                return graph.compile(checkpointer=checkpointer)
+        except Exception:
+            pass
         return graph
     except Exception:
         # Fallback: Sequenzielle Orchestrierung

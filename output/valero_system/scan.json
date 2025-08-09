@@ -987,6 +987,11 @@
       "size": 5035
     },
     {
+      "path": "/workspace/.env.example",
+      "type": "other",
+      "size": 354
+    },
+    {
       "path": "/workspace/server_fastmcp_mongodb.py",
       "type": "code",
       "size": 15348
@@ -5004,7 +5009,7 @@
     {
       "path": "/workspace/linkup_mcp/README.md",
       "type": "doc",
-      "size": 7681
+      "size": 1684
     },
     {
       "path": "/workspace/linkup_mcp/warenwirtschaft_sdk.py",
@@ -5024,7 +5029,7 @@
     {
       "path": "/workspace/linkup_mcp/api.py",
       "type": "code",
-      "size": 1646
+      "size": 2515
     },
     {
       "path": "/workspace/linkup_mcp/main.py",
@@ -5145,6 +5150,11 @@
       "path": "/workspace/docker/nginx.conf",
       "type": "other",
       "size": 313
+    },
+    {
+      "path": "/workspace/docker/docker-compose.rag.yml",
+      "type": "config",
+      "size": 399
     },
     {
       "path": "/workspace/docker/frontend-server.Dockerfile",
@@ -9014,7 +9024,7 @@
     {
       "path": "/workspace/linkup_mcp/memory/rag_manager.py",
       "type": "code",
-      "size": 8727
+      "size": 11739
     },
     {
       "path": "/workspace/linkup_mcp/tests/test_workflow_manager.py",
@@ -9044,7 +9054,7 @@
     {
       "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
       "type": "code",
-      "size": 6654
+      "size": 7288
     },
     {
       "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
@@ -16039,12 +16049,12 @@
     {
       "path": "/workspace/output/valero_system/playbook.json",
       "type": "config",
-      "size": 113982
+      "size": 114007
     },
     {
       "path": "/workspace/output/valero_system/rag_manifest.json",
       "type": "config",
-      "size": 167
+      "size": 195
     },
     {
       "path": "/workspace/output/valero_system/report.md",
@@ -16054,17 +16064,17 @@
     {
       "path": "/workspace/output/valero_system/scan.json",
       "type": "config",
-      "size": 957940
+      "size": 960830
     },
     {
       "path": "/workspace/output/valero_system/architecture.json",
       "type": "config",
-      "size": 859226
+      "size": 861707
     },
     {
       "path": "/workspace/output/valero_system/quality.json",
       "type": "config",
-      "size": 191987
+      "size": 192349
     },
     {
       "path": "/workspace/finance-microservice/src/main.py",
@@ -19457,7 +19467,7 @@
       {
         "path": "/workspace/linkup_mcp/api.py",
         "type": "code",
-        "size": 1646
+        "size": 2515
       },
       {
         "path": "/workspace/linkup_mcp/main.py",
@@ -19612,12 +19622,12 @@
       {
         "path": "/workspace/linkup_mcp/memory/rag_manager.py",
         "type": "code",
-        "size": 8727
+        "size": 11739
       },
       {
         "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
         "type": "code",
-        "size": 6654
+        "size": 7288
       },
       {
         "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
@@ -26861,7 +26871,7 @@
       {
         "path": "/workspace/linkup_mcp/README.md",
         "type": "doc",
-        "size": 7681
+        "size": 1684
       },
       {
         "path": "/workspace/linkup_mcp/APM_Stabilitaetsbewertung_Final.md",
@@ -30021,6 +30031,11 @@
         "size": 7150
       },
       {
+        "path": "/workspace/docker/docker-compose.rag.yml",
+        "type": "config",
+        "size": 399
+      },
+      {
         "path": "/workspace/config/version.yaml",
         "type": "config",
         "size": 899
@@ -30903,27 +30918,27 @@
       {
         "path": "/workspace/output/valero_system/playbook.json",
         "type": "config",
-        "size": 113982
+        "size": 114007
       },
       {
         "path": "/workspace/output/valero_system/rag_manifest.json",
         "type": "config",
-        "size": 167
+        "size": 195
       },
       {
         "path": "/workspace/output/valero_system/scan.json",
         "type": "config",
-        "size": 957940
+        "size": 960830
       },
       {
         "path": "/workspace/output/valero_system/architecture.json",
         "type": "config",
-        "size": 859226
+        "size": 861707
       },
       {
         "path": "/workspace/output/valero_system/quality.json",
         "type": "config",
-        "size": 191987
+        "size": 192349
       },
       {
         "path": "/workspace/memory-bank/context/system_analysis.json",
@@ -31496,6 +31511,11 @@
         "path": "/workspace/check-services.ps1",
         "type": "other",
         "size": 5035
+      },
+      {
+        "path": "/workspace/.env.example",
+        "type": "other",
+        "size": 354
       },
       {
         "path": "/workspace/nginx.conf",

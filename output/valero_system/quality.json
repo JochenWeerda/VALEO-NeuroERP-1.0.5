@@ -1860,7 +1860,7 @@
   },
   {
     "path": "/workspace/linkup_mcp/api.py",
-    "lines": 54,
+    "lines": 77,
     "findings": [],
     "score": 100
   },
@@ -2032,13 +2032,13 @@
   },
   {
     "path": "/workspace/linkup_mcp/memory/rag_manager.py",
-    "lines": 215,
+    "lines": 282,
     "findings": [],
     "score": 100
   },
   {
     "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
-    "lines": 173,
+    "lines": 188,
     "findings": [
       "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen."
     ],
