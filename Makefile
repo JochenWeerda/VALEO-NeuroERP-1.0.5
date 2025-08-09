@@ -26,8 +26,8 @@ rag-build:
 	python3 -m linkup_mcp.cli rag-build $(ROOT)
 
 rag-query:
-	@if [ -z $(Q) ]; then echo "Bitte Frage mit Q=\"...\" angeben"; exit 1; fi
-	python3 -m linkup_mcp.cli rag-query $(Q) --top-k $(K)
+	@if [ -z "$(Q)" ]; then echo "Bitte Frage mit Q=\"...\" angeben"; exit 1; fi
+	python3 -m linkup_mcp.cli rag-query "$(Q)" --top-k $(K)
 
 serena-plan:
 	python3 -m linkup_mcp.cli serena-plan

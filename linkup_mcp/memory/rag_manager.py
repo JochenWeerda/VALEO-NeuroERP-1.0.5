@@ -49,6 +49,14 @@ class RAGMemoryManager:
         self._embeddings = None
         self._vectorstore = None
         self._docs_fallback: List[Dict[str, Any]] = []  # Für Fallback-Suche
+        # BM25-Fallback-Index
+        self._bm25_enabled: bool = os.getenv("BM25_FALLBACK", "1") == "1"
+        self._bm25_inv_index: Dict[str, List[tuple]] = {}
+        self._bm25_doc_len: List[int] = []
+        self._bm25_avg_dl: float = 0.0
+        self._bm25_df: Dict[str, int] = {}
+        self._bm25_texts: List[str] = []
+        self._bm25_metadatas: List[Dict[str, Any]] = []
 
         try:
             from langchain.text_splitter import RecursiveCharacterTextSplitter  # type: ignore
@@ -127,6 +135,82 @@ class RAGMemoryManager:
                 chunks.append("\n".join(current))
             return chunks
         return self._text_splitter.split_text(text)
+
+    def _tokenize(self, text: str) -> List[str]:
+        token = []
+        out: List[str] = []
+        for ch in text.lower():
+            if "a" <= ch <= "z" or "0" <= ch <= "9" or ch in "äöüß":
+                token.append(ch)
+            else:
+                if token:
+                    out.append("".join(token))
+                    token = []
+        if token:
+            out.append("".join(token))
+        return out
+
+    def _build_bm25(self, documents: List[str], metadatas: List[Dict[str, Any]]):
+        if not self._bm25_enabled:
+            return
+        inv: Dict[str, List[tuple]] = {}
+        df: Dict[str, int] = {}
+        doc_len: List[int] = []
+        texts: List[str] = []
+        metas: List[Dict[str, Any]] = []
+        for doc_id, text in enumerate(documents):
+            toks = self._tokenize(text)
+            texts.append(text)
+            metas.append(metadatas[doc_id])
+            doc_len.append(len(toks))
+            # term frequencies per doc
+            freqs: Dict[str, int] = {}
+            for t in toks:
+                freqs[t] = freqs.get(t, 0) + 1
+            for t, f in freqs.items():
+                inv.setdefault(t, []).append((doc_id, f))
+                df[t] = df.get(t, 0) + 1
+        avg_dl = (sum(doc_len) / len(doc_len)) if doc_len else 0.0
+        self._bm25_inv_index = inv
+        self._bm25_df = df
+        self._bm25_doc_len = doc_len
+        self._bm25_avg_dl = avg_dl
+        self._bm25_texts = texts
+        self._bm25_metadatas = metas
+
+    def _bm25_query(self, query: str, top_k: int = 6) -> List[Dict[str, Any]]:
+        # BM25 parameters
+        k1 = 1.5
+        b = 0.75
+        N = len(self._bm25_doc_len)
+        if N == 0:
+            return []
+        q_terms = self._tokenize(query)
+        scores: Dict[int, float] = {}
+        for qt in q_terms:
+            df = self._bm25_df.get(qt, 0)
+            if df == 0:
+                continue
+            # idf with +0.5 smoothing
+            idf = max(0.0, ( (N - df + 0.5) / (df + 0.5) ))
+            # use log
+            import math
+            idf = math.log(idf + 1.0)
+            for doc_id, tf in self._bm25_inv_index.get(qt, []):
+                dl = self._bm25_doc_len[doc_id]
+                denom = tf + k1 * (1 - b + b * (dl / (self._bm25_avg_dl or 1.0)))
+                score = idf * ((tf * (k1 + 1)) / (denom or 1.0))
+                scores[doc_id] = scores.get(doc_id, 0.0) + score
+        # top-k
+        ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
+        results: List[Dict[str, Any]] = []
+        for doc_id, sc in ranked:
+            results.append({
+                "text": self._bm25_texts[doc_id],
+                "metadata": self._bm25_metadatas[doc_id],
+                "score": float(sc)
+            })
+        return results
 
     def _init_vectorstore(self, documents: List[str], metadatas: List[Dict[str, Any]]):
         """Initialisiert Vectorstore je nach Backend-Auswahl."""
@@ -218,13 +302,15 @@ class RAGMemoryManager:
         # Versuche ausgewähltes Backend
         self._vectorstore = self._init_vectorstore(documents, metadatas)
 
-        # Fallback-Index (einfach): speichere Texte + Metadaten
+        # Fallback-Index (einfach/BM25): speichere Texte + Metadaten
         if self._vectorstore is None:
             self._docs_fallback = [
                 {"text": t, "metadata": m}
                 for t, m in zip(documents, metadatas)
             ]
-            # Persistiere als JSON für Transparenz
+            # BM25-Index aufbauen
+            self._build_bm25(documents, metadatas)
+            # Persistiere als JSON für Transparenz (nur Texte/Metadaten)
             fallback_path = self.db_dir / "fallback_store.json"
             try:
                 fallback_path.write_text(json.dumps(self._docs_fallback)[:2_000_000], encoding="utf-8")
@@ -259,7 +345,10 @@ class RAGMemoryManager:
             except Exception as e:
                 logger.warning("Fehler bei Vector-Query, weiche auf Fallback aus: %s", str(e))
 
-        # Fallback: einfache Keyword-Suche
+        # BM25 bevorzugt, wenn verfügbar
+        if self._bm25_enabled and self._bm25_inv_index:
+            return self._bm25_query(query_text, top_k=top_k)
+        # Einfacher Keyword-Fallback
         scored = [
             {
                 "text": d["text"],
