@@ -17,6 +17,7 @@ from pathlib import Path
 
 from .pipelines.valero_full_analysis import run_valero_full_analysis
 from .memory.rag_manager import RAGMemoryManager
+from .serena.integration import plan_refactors as serena_plan_refactors, apply_refactors as serena_apply_refactors
 
 
 @click.group()
@@ -115,6 +116,10 @@ def main() -> None:
     p_rag_q.add_argument("question")
     p_rag_q.add_argument("--top-k", type=int, default=6)
 
+    p_ser_p = sub.add_parser("serena-plan", help="Refactoring-Playbook erzeugen")
+    p_ser_a = sub.add_parser("serena-apply", help="Refactoring-Playbook anwenden (safe)")
+    p_ser_a.add_argument("--apply", action="store_true", help="Tatsächlich anwenden (riskanter)")
+
     args = parser.parse_args()
 
     if args.cmd == "analyze":
@@ -134,6 +139,18 @@ def main() -> None:
         # Falls bereits Index existiert, wird Fallback/Vectorstore geladen
         res = mm.query(args.question, top_k=args.top_k)
         print(json.dumps(res, ensure_ascii=False, indent=2))
+    elif args.cmd == "serena-plan":
+        base = Path("output/valero_system")
+        quality = json.loads((base / "quality.json").read_text(encoding="utf-8"))
+        playbook = serena_plan_refactors(quality)
+        (base / "playbook.json").write_text(json.dumps(playbook, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps({"count": len(playbook.get("items", []))}, ensure_ascii=False, indent=2))
+    elif args.cmd == "serena-apply":
+        base = Path("output/valero_system")
+        playbook = json.loads((base / "playbook.json").read_text(encoding="utf-8"))
+        result = serena_apply_refactors(playbook, apply=bool(args.apply))
+        (base / "changes.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps({"applied": bool(args.apply), "change_count": len(result.get("changes", []))}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

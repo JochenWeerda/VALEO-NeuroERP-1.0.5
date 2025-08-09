@@ -10,6 +10,7 @@ from typing import List, Dict, Any, Optional
 from .memory.rag_manager import RAGMemoryManager
 from pathlib import Path
 from .pipelines.valero_full_analysis import run_valero_full_analysis
+from .serena.integration import plan_refactors as serena_plan_refactors, apply_refactors as serena_apply_refactors
 
 load_dotenv()
 
@@ -188,6 +189,34 @@ def get_rag_history(user_id: Optional[str] = None, limit: int = 10) -> List[Dict
     ).sort("timestamp", -1).limit(limit))
     
     return history
+
+@mcp.tool()
+def serena_plan(limit: int = 1000) -> dict:
+    """Erstellt ein Refactoring-Playbook aus der letzten Qualitätsanalyse."""
+    import json
+    from pathlib import Path
+    base = Path("output/valero_system")
+    try:
+        quality = json.loads((base / "quality.json").read_text(encoding="utf-8"))
+    except Exception:
+        return {"error": "Keine quality.json gefunden. Bitte run_full_analysis zuerst ausführen."}
+    playbook = serena_plan_refactors(quality)
+    (base / "playbook.json").write_text(json.dumps(playbook, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"count": len(playbook.get("items", []))}
+
+@mcp.tool()
+def serena_apply(dry_run: bool = True) -> dict:
+    """Wendet Refactoring-Playbook sicher an (standard dry-run) und gibt Change-Report zurück."""
+    import json
+    from pathlib import Path
+    base = Path("output/valero_system")
+    try:
+        playbook = json.loads((base / "playbook.json").read_text(encoding="utf-8"))
+    except Exception:
+        return {"error": "Keine playbook.json gefunden. Bitte serena_plan ausführen."}
+    result = serena_apply_refactors(playbook, apply=not dry_run)
+    (base / "changes.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"applied": not dry_run, "change_count": len(result.get("changes", []))}
 
 if __name__ == "__main__":
     # Dokumente für RAG laden
