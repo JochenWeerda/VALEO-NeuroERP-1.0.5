@@ -64,7 +64,7 @@
     {
       "path": "/workspace/Makefile",
       "type": "other",
-      "size": 4400
+      "size": 1531
     },
     {
       "path": "/workspace/phase1_infrastructure_setup.py",
@@ -16069,12 +16069,12 @@
     {
       "path": "/workspace/output/valero_system/scan.json",
       "type": "config",
-      "size": 960830
+      "size": 961080
     },
     {
       "path": "/workspace/output/valero_system/architecture.json",
       "type": "config",
-      "size": 861707
+      "size": 861883
     },
     {
       "path": "/workspace/output/valero_system/quality.json",
@@ -30938,12 +30938,12 @@
       {
         "path": "/workspace/output/valero_system/scan.json",
         "type": "config",
-        "size": 960830
+        "size": 961080
       },
       {
         "path": "/workspace/output/valero_system/architecture.json",
         "type": "config",
-        "size": 861707
+        "size": 861883
       },
       {
         "path": "/workspace/output/valero_system/quality.json",
@@ -31210,7 +31210,7 @@
       {
         "path": "/workspace/Makefile",
         "type": "other",
-        "size": 4400
+        "size": 1531
       },
       {
         "path": "/workspace/setup-n8n.ps1",
