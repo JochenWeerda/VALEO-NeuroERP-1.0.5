@@ -54,3 +54,30 @@
 
 - Tools: `run_full_analysis`, `analysis_overview`, `build_rag_index`, `rag_query_local`, `serena_plan`, `serena_apply`.
 - Hinweis: `linkup` und `MongoDB` optional erforderlich; sonst CLI nutzen. 
+
+## Testdaten (SQL) einspielen
+
+- CRM: `database/testdata_crm.sql`
+- Lager: `database/testdata_warehouse.sql`
+- FiBu: `database/testdata_finance.sql`
+
+Mit psql oder in deiner DB-Konsole ausführen, nachdem die zugehörigen Schemas angelegt wurden (siehe `database/*_schema.sql`).
+
+## Business-Tools (Makefile)
+
+- Dispo-Vorschlag aus JSON:
+  ```bash
+  make biz-reorder FILE=demo_data/stock.json
+  ```
+- Leads-Dubletten clustern:
+  ```bash
+  make biz-dedupe FILE=demo_data/leads.json
+  ```
+- Zahlungseingänge matchen:
+  ```bash
+  make biz-match INV=demo_data/invoices.json PAY=demo_data/payments.json
+  ```
+- Mahnwesen generieren:
+  ```bash
+  make biz-dunning INV=demo_data/invoices.json
+  ``` 
