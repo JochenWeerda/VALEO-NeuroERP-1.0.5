@@ -2,7 +2,7 @@
   "db_dir": "/workspace/data/faiss_db",
   "backend": "hf",
   "hf_model": "sentence-transformers/all-MiniLM-L6-v2",
-  "vectorstore": false,
-  "vector_backend": "auto",
-  "fallback_docs": 44586
+  "vectorstore": true,
+  "vector_backend": "chroma",
+  "fallback_docs": 0
 }
