@@ -6170,6 +6170,42 @@
             "name": "handover.md",
             "path": "/workspace/output/handover.md",
             "type": "file"
+          },
+          {
+            "name": "valero_system",
+            "path": "/workspace/output/valero_system",
+            "children": [
+              {
+                "name": "playbook.json",
+                "path": "/workspace/output/valero_system/playbook.json",
+                "type": "file"
+              },
+              {
+                "name": "rag_manifest.json",
+                "path": "/workspace/output/valero_system/rag_manifest.json",
+                "type": "file"
+              },
+              {
+                "name": "report.md",
+                "path": "/workspace/output/valero_system/report.md",
+                "type": "file"
+              },
+              {
+                "name": "scan.json",
+                "path": "/workspace/output/valero_system/scan.json",
+                "type": "file"
+              },
+              {
+                "name": "architecture.json",
+                "path": "/workspace/output/valero_system/architecture.json",
+                "type": "file"
+              },
+              {
+                "name": "quality.json",
+                "path": "/workspace/output/valero_system/quality.json",
+                "type": "file"
+              }
+            ]
           }
         ]
       },
@@ -8627,6 +8663,11 @@
               {
                 "name": "index.faiss",
                 "path": "/workspace/data/faiss_db/index.faiss",
+                "type": "file"
+              },
+              {
+                "name": "fallback_store.json",
+                "path": "/workspace/data/faiss_db/fallback_store.json",
                 "type": "file"
               }
             ]
@@ -16121,6 +16162,11 @@
             "type": "file"
           },
           {
+            "name": "api.py",
+            "path": "/workspace/linkup_mcp/api.py",
+            "type": "file"
+          },
+          {
             "name": "main.py",
             "path": "/workspace/linkup_mcp/main.py",
             "type": "file"
@@ -16283,6 +16329,17 @@
             ]
           },
           {
+            "name": "workflows",
+            "path": "/workspace/linkup_mcp/workflows",
+            "children": [
+              {
+                "name": "langgraph_valero.py",
+                "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
+                "type": "file"
+              }
+            ]
+          },
+          {
             "name": "agents",
             "path": "/workspace/linkup_mcp/agents",
             "children": [
@@ -16359,6 +16416,17 @@
               {
                 "name": "executor_agents.py",
                 "path": "/workspace/linkup_mcp/agents/executor_agents.py",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "serena",
+            "path": "/workspace/linkup_mcp/serena",
+            "children": [
+              {
+                "name": "integration.py",
+                "path": "/workspace/linkup_mcp/serena/integration.py",
                 "type": "file"
               }
             ]
@@ -21780,10 +21848,10 @@
     ]
   },
   "summary": {
-    "code": 1302,
+    "code": 1305,
     "test": 142,
-    "doc": 797,
-    "config": 378,
+    "doc": 798,
+    "config": 384,
     "other": 976
   }
 }

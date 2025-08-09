@@ -404,6 +404,12 @@
       "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
     },
     {
+      "file": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
+      "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
+      "priority": 1,
+      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
+    },
+    {
       "file": "/workspace/tools/valero-codegraph/src/agents/TypeSuggestor.ts",
       "issue": "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen.",
       "priority": 1,
@@ -2175,12 +2181,6 @@
     },
     {
       "file": "/workspace/linkup_mcp/system_controller.py",
-      "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
-      "priority": 3,
-      "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."
-    },
-    {
-      "file": "/workspace/linkup_mcp/cli.py",
       "issue": "Enthält TODO/FIXME – offene Aufgaben dokumentiert.",
       "priority": 3,
       "suggestion": "Extrahiere Funktionen, reduziere Komplexität, dokumentiere Entscheidungen."

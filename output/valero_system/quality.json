@@ -1692,7 +1692,7 @@
   },
   {
     "path": "/workspace/linkup_mcp/server.py",
-    "lines": 160,
+    "lines": 234,
     "findings": [],
     "score": 100
   },
@@ -1784,11 +1784,9 @@
   },
   {
     "path": "/workspace/linkup_mcp/cli.py",
-    "lines": 96,
-    "findings": [
-      "Enthält TODO/FIXME – offene Aufgaben dokumentiert."
-    ],
-    "score": 90
+    "lines": 70,
+    "findings": [],
+    "score": 100
   },
   {
     "path": "/workspace/linkup_mcp/development_pipeline_manager.py",
@@ -1857,6 +1855,12 @@
   {
     "path": "/workspace/linkup_mcp/multi_agent_framework.py",
     "lines": 381,
+    "findings": [],
+    "score": 100
+  },
+  {
+    "path": "/workspace/linkup_mcp/api.py",
+    "lines": 54,
     "findings": [],
     "score": 100
   },
@@ -2033,6 +2037,14 @@
     "score": 100
   },
   {
+    "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
+    "lines": 173,
+    "findings": [
+      "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen."
+    ],
+    "score": 90
+  },
+  {
     "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
     "lines": 60,
     "findings": [],
@@ -2111,6 +2123,12 @@
   {
     "path": "/workspace/linkup_mcp/agents/executor_agents.py",
     "lines": 204,
+    "findings": [],
+    "score": 100
+  },
+  {
+    "path": "/workspace/linkup_mcp/serena/integration.py",
+    "lines": 30,
     "findings": [],
     "score": 100
   },

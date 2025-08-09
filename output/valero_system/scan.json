@@ -4859,7 +4859,7 @@
     {
       "path": "/workspace/linkup_mcp/server.py",
       "type": "code",
-      "size": 4634
+      "size": 8046
     },
     {
       "path": "/workspace/linkup_mcp/demo_token_optimization.py",
@@ -4944,7 +4944,7 @@
     {
       "path": "/workspace/linkup_mcp/cli.py",
       "type": "code",
-      "size": 3487
+      "size": 3098
     },
     {
       "path": "/workspace/linkup_mcp/APM_Framework_Dokumentation.md",
@@ -5020,6 +5020,11 @@
       "path": "/workspace/linkup_mcp/multi_agent_framework.py",
       "type": "code",
       "size": 14243
+    },
+    {
+      "path": "/workspace/linkup_mcp/api.py",
+      "type": "code",
+      "size": 1646
     },
     {
       "path": "/workspace/linkup_mcp/main.py",
@@ -9037,6 +9042,11 @@
       "size": 8524
     },
     {
+      "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
+      "type": "code",
+      "size": 6654
+    },
+    {
       "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
       "type": "code",
       "size": 2014
@@ -9110,6 +9120,11 @@
       "path": "/workspace/linkup_mcp/agents/executor_agents.py",
       "type": "code",
       "size": 7746
+    },
+    {
+      "path": "/workspace/linkup_mcp/serena/integration.py",
+      "type": "code",
+      "size": 1055
     },
     {
       "path": "/workspace/linkup_mcp/data/transaktionsverarbeitung.txt",
@@ -14752,6 +14767,11 @@
       "size": 10797
     },
     {
+      "path": "/workspace/data/faiss_db/fallback_store.json",
+      "type": "config",
+      "size": 2000000
+    },
+    {
       "path": "/workspace/data/reports/pipeline_results/metrics_definition_20250701_204103.json",
       "type": "config",
       "size": 5090
@@ -16015,6 +16035,36 @@
       "path": "/workspace/memory/sessions/README.md",
       "type": "doc",
       "size": 1284
+    },
+    {
+      "path": "/workspace/output/valero_system/playbook.json",
+      "type": "config",
+      "size": 113982
+    },
+    {
+      "path": "/workspace/output/valero_system/rag_manifest.json",
+      "type": "config",
+      "size": 167
+    },
+    {
+      "path": "/workspace/output/valero_system/report.md",
+      "type": "doc",
+      "size": 4471
+    },
+    {
+      "path": "/workspace/output/valero_system/scan.json",
+      "type": "config",
+      "size": 957940
+    },
+    {
+      "path": "/workspace/output/valero_system/architecture.json",
+      "type": "config",
+      "size": 859226
+    },
+    {
+      "path": "/workspace/output/valero_system/quality.json",
+      "type": "config",
+      "size": 191987
     },
     {
       "path": "/workspace/finance-microservice/src/main.py",
@@ -19277,7 +19327,7 @@
       {
         "path": "/workspace/linkup_mcp/server.py",
         "type": "code",
-        "size": 4634
+        "size": 8046
       },
       {
         "path": "/workspace/linkup_mcp/demo_token_optimization.py",
@@ -19347,7 +19397,7 @@
       {
         "path": "/workspace/linkup_mcp/cli.py",
         "type": "code",
-        "size": 3487
+        "size": 3098
       },
       {
         "path": "/workspace/linkup_mcp/development_pipeline_manager.py",
@@ -19403,6 +19453,11 @@
         "path": "/workspace/linkup_mcp/multi_agent_framework.py",
         "type": "code",
         "size": 14243
+      },
+      {
+        "path": "/workspace/linkup_mcp/api.py",
+        "type": "code",
+        "size": 1646
       },
       {
         "path": "/workspace/linkup_mcp/main.py",
@@ -19560,6 +19615,11 @@
         "size": 8727
       },
       {
+        "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
+        "type": "code",
+        "size": 6654
+      },
+      {
         "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
         "type": "code",
         "size": 2014
@@ -19623,6 +19683,11 @@
         "path": "/workspace/linkup_mcp/agents/executor_agents.py",
         "type": "code",
         "size": 7746
+      },
+      {
+        "path": "/workspace/linkup_mcp/serena/integration.py",
+        "type": "code",
+        "size": 1055
       },
       {
         "path": "/workspace/linkup_mcp/tools/implementation_tool.py",
@@ -28079,6 +28144,11 @@
         "size": 1284
       },
       {
+        "path": "/workspace/output/valero_system/report.md",
+        "type": "doc",
+        "size": 4471
+      },
+      {
         "path": "/workspace/memory-bank/planning/implementation-plan-template.md",
         "type": "doc",
         "size": 5033
@@ -30496,6 +30566,11 @@
         "size": 129
       },
       {
+        "path": "/workspace/data/faiss_db/fallback_store.json",
+        "type": "config",
+        "size": 2000000
+      },
+      {
         "path": "/workspace/data/reports/pipeline_results/metrics_definition_20250701_204103.json",
         "type": "config",
         "size": 5090
@@ -30824,6 +30899,31 @@
         "path": "/workspace/.github/workflows/ci_cd.yml",
         "type": "config",
         "size": 7010
+      },
+      {
+        "path": "/workspace/output/valero_system/playbook.json",
+        "type": "config",
+        "size": 113982
+      },
+      {
+        "path": "/workspace/output/valero_system/rag_manifest.json",
+        "type": "config",
+        "size": 167
+      },
+      {
+        "path": "/workspace/output/valero_system/scan.json",
+        "type": "config",
+        "size": 957940
+      },
+      {
+        "path": "/workspace/output/valero_system/architecture.json",
+        "type": "config",
+        "size": 859226
+      },
+      {
+        "path": "/workspace/output/valero_system/quality.json",
+        "type": "config",
+        "size": 191987
       },
       {
         "path": "/workspace/memory-bank/context/system_analysis.json",

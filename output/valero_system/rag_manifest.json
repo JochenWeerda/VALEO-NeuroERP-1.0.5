@@ -3,5 +3,5 @@
   "backend": "hf",
   "hf_model": "sentence-transformers/all-MiniLM-L6-v2",
   "vectorstore": false,
-  "fallback_docs": 44457
+  "fallback_docs": 44481
 }
