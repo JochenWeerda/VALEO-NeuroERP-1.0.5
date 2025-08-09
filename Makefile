@@ -1,6 +1,6 @@
 # VALERO Makefile – einfache Startbefehle
 
-.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp
+.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning
 
 help:
 	@echo "VALERO – einfache Befehle:"
@@ -47,3 +47,19 @@ vector-down:
 
 mcp:
 	python3 -m linkup_mcp.server 
+
+biz-reorder:
+	@if [ -z "$(FILE)" ]; then echo "Bitte Lagerdatei mit FILE=pfad.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import suggest_reorder_from_file; import json; print(json.dumps(suggest_reorder_from_file('$(FILE)'), ensure_ascii=False, indent=2))"
+
+biz-dedupe:
+	@if [ -z "$(FILE)" ]; then echo "Bitte Leadsdatei mit FILE=pfad.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import dedupe_leads_from_file; import json; print(json.dumps(dedupe_leads_from_file('$(FILE)'), ensure_ascii=False, indent=2))"
+
+biz-match:
+	@if [ -z "$(INV)" ] || [ -z "$(PAY)" ]; then echo "Bitte Rechnungen und Zahlungen mit INV=inv.json PAY=pay.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import match_payments_from_files; import json; print(json.dumps(match_payments_from_files('$(INV)','$(PAY)'), ensure_ascii=False, indent=2))"
+
+biz-dunning:
+	@if [ -z "$(INV)" ]; then echo "Bitte Rechnungsdatei mit INV=pfad.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import generate_dunning_from_file; import json, os; print(json.dumps(generate_dunning_from_file('$(INV)'), ensure_ascii=False, indent=2))" 
