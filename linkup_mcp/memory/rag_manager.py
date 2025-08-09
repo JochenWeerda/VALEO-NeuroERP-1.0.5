@@ -254,7 +254,21 @@ class RAGMemoryManager:
             if backend == "chroma":
                 from langchain_community.vectorstores import Chroma  # type: ignore
                 persist_dir = str(self.db_dir / "chroma")
-                vs = Chroma.from_texts(documents, self._embeddings, metadatas=metadatas, persist_directory=persist_dir)
+                # Erstelle/leite Collection
+                try:
+                    vs = Chroma(collection_name="valero_repo", embedding_function=self._embeddings, persist_directory=persist_dir)
+                    # In Batches hinzufügen, um Max-Batch-Limit zu vermeiden
+                    batch_size = 10000
+                    for i in range(0, len(documents), batch_size):
+                        j = min(i + batch_size, len(documents))
+                        vs.add_texts(texts=documents[i:j], metadatas=metadatas[i:j])
+                except Exception:
+                    # Fallback: from_texts mit kleinerem Batch
+                    batch_size = 10000
+                    vs = Chroma(collection_name="valero_repo", embedding_function=self._embeddings, persist_directory=persist_dir)
+                    for i in range(0, len(documents), batch_size):
+                        j = min(i + batch_size, len(documents))
+                        vs.add_texts(texts=documents[i:j], metadatas=metadatas[i:j])
                 try:
                     vs.persist()
                 except Exception:
