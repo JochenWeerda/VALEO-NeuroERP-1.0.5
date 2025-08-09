@@ -64,7 +64,7 @@
     {
       "path": "/workspace/Makefile",
       "type": "other",
-      "size": 1531
+      "size": 3506
     },
     {
       "path": "/workspace/phase1_infrastructure_setup.py",
@@ -2407,6 +2407,11 @@
       "size": 6906
     },
     {
+      "path": "/workspace/scripts/run_valero_cycle.sh",
+      "type": "other",
+      "size": 612
+    },
+    {
       "path": "/workspace/scripts/migrate.py",
       "type": "code",
       "size": 1436
@@ -2497,9 +2502,29 @@
       "size": 784
     },
     {
+      "path": "/workspace/demo_data/leads.json",
+      "type": "config",
+      "size": 632
+    },
+    {
+      "path": "/workspace/demo_data/stock.json",
+      "type": "config",
+      "size": 403
+    },
+    {
       "path": "/workspace/demo_data/README.md",
       "type": "doc",
       "size": 1494
+    },
+    {
+      "path": "/workspace/demo_data/payments.json",
+      "type": "config",
+      "size": 213
+    },
+    {
+      "path": "/workspace/demo_data/invoices.json",
+      "type": "config",
+      "size": 268
     },
     {
       "path": "/workspace/nginx/nginx.conf",
@@ -5009,7 +5034,7 @@
     {
       "path": "/workspace/linkup_mcp/README.md",
       "type": "doc",
-      "size": 1684
+      "size": 2378
     },
     {
       "path": "/workspace/linkup_mcp/warenwirtschaft_sdk.py",
@@ -5417,6 +5442,11 @@
       "size": 25326
     },
     {
+      "path": "/workspace/database/testdata_warehouse.sql",
+      "type": "other",
+      "size": 1374
+    },
+    {
       "path": "/workspace/database/finance_schema.sql",
       "type": "other",
       "size": 22368
@@ -5430,6 +5460,11 @@
       "path": "/workspace/database/crm_schema.sql",
       "type": "other",
       "size": 41181
+    },
+    {
+      "path": "/workspace/database/testdata_finance.sql",
+      "type": "other",
+      "size": 1459
     },
     {
       "path": "/workspace/database/production_schema.sql",
@@ -5470,6 +5505,11 @@
       "path": "/workspace/database/purchasing_schema.sql",
       "type": "other",
       "size": 22811
+    },
+    {
+      "path": "/workspace/database/testdata_crm.sql",
+      "type": "other",
+      "size": 1793
     },
     {
       "path": "/workspace/database/neuroflow_migration.sql",
@@ -9024,7 +9064,7 @@
     {
       "path": "/workspace/linkup_mcp/memory/rag_manager.py",
       "type": "code",
-      "size": 11739
+      "size": 17900
     },
     {
       "path": "/workspace/linkup_mcp/tests/test_workflow_manager.py",
@@ -9055,6 +9095,11 @@
       "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
       "type": "code",
       "size": 7288
+    },
+    {
+      "path": "/workspace/linkup_mcp/apps/business_tools.py",
+      "type": "code",
+      "size": 9342
     },
     {
       "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
@@ -14782,6 +14827,36 @@
       "size": 2000000
     },
     {
+      "path": "/workspace/data/faiss_db/chroma/chroma.sqlite3",
+      "type": "other",
+      "size": 469839872
+    },
+    {
+      "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/header.bin",
+      "type": "other",
+      "size": 100
+    },
+    {
+      "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/data_level0.bin",
+      "type": "other",
+      "size": 87152000
+    },
+    {
+      "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/index_metadata.pickle",
+      "type": "other",
+      "size": 3014685
+    },
+    {
+      "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/length.bin",
+      "type": "other",
+      "size": 208000
+    },
+    {
+      "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/link_lists.bin",
+      "type": "other",
+      "size": 434848
+    },
+    {
       "path": "/workspace/data/reports/pipeline_results/metrics_definition_20250701_204103.json",
       "type": "config",
       "size": 5090
@@ -19627,12 +19702,17 @@
       {
         "path": "/workspace/linkup_mcp/memory/rag_manager.py",
         "type": "code",
-        "size": 11739
+        "size": 17900
       },
       {
         "path": "/workspace/linkup_mcp/workflows/langgraph_valero.py",
         "type": "code",
         "size": 7288
+      },
+      {
+        "path": "/workspace/linkup_mcp/apps/business_tools.py",
+        "type": "code",
+        "size": 9342
       },
       {
         "path": "/workspace/linkup_mcp/agents/structure_mapper.py",
@@ -26876,7 +26956,7 @@
       {
         "path": "/workspace/linkup_mcp/README.md",
         "type": "doc",
-        "size": 1684
+        "size": 2378
       },
       {
         "path": "/workspace/linkup_mcp/APM_Stabilitaetsbewertung_Final.md",
@@ -29661,6 +29741,26 @@
         "size": 784
       },
       {
+        "path": "/workspace/demo_data/leads.json",
+        "type": "config",
+        "size": 632
+      },
+      {
+        "path": "/workspace/demo_data/stock.json",
+        "type": "config",
+        "size": 403
+      },
+      {
+        "path": "/workspace/demo_data/payments.json",
+        "type": "config",
+        "size": 213
+      },
+      {
+        "path": "/workspace/demo_data/invoices.json",
+        "type": "config",
+        "size": 268
+      },
+      {
         "path": "/workspace/valeoflow-enterprise/package-lock.json",
         "type": "config",
         "size": 792563
@@ -31210,7 +31310,7 @@
       {
         "path": "/workspace/Makefile",
         "type": "other",
-        "size": 1531
+        "size": 3506
       },
       {
         "path": "/workspace/setup-n8n.ps1",
@@ -31823,6 +31923,11 @@
         "size": 4072
       },
       {
+        "path": "/workspace/scripts/run_valero_cycle.sh",
+        "type": "other",
+        "size": 612
+      },
+      {
         "path": "/workspace/scripts/start_system_improved.ps1",
         "type": "other",
         "size": 21799
@@ -32358,6 +32463,11 @@
         "size": 25326
       },
       {
+        "path": "/workspace/database/testdata_warehouse.sql",
+        "type": "other",
+        "size": 1374
+      },
+      {
         "path": "/workspace/database/finance_schema.sql",
         "type": "other",
         "size": 22368
@@ -32371,6 +32481,11 @@
         "path": "/workspace/database/crm_schema.sql",
         "type": "other",
         "size": 41181
+      },
+      {
+        "path": "/workspace/database/testdata_finance.sql",
+        "type": "other",
+        "size": 1459
       },
       {
         "path": "/workspace/database/production_schema.sql",
@@ -32406,6 +32521,11 @@
         "path": "/workspace/database/purchasing_schema.sql",
         "type": "other",
         "size": 22811
+      },
+      {
+        "path": "/workspace/database/testdata_crm.sql",
+        "type": "other",
+        "size": 1793
       },
       {
         "path": "/workspace/database/neuroflow_migration.sql",
@@ -35861,6 +35981,36 @@
         "path": "/workspace/data/faiss_db/index.faiss",
         "type": "other",
         "size": 10797
+      },
+      {
+        "path": "/workspace/data/faiss_db/chroma/chroma.sqlite3",
+        "type": "other",
+        "size": 469839872
+      },
+      {
+        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/header.bin",
+        "type": "other",
+        "size": 100
+      },
+      {
+        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/data_level0.bin",
+        "type": "other",
+        "size": 87152000
+      },
+      {
+        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/index_metadata.pickle",
+        "type": "other",
+        "size": 3014685
+      },
+      {
+        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/length.bin",
+        "type": "other",
+        "size": 208000
+      },
+      {
+        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/link_lists.bin",
+        "type": "other",
+        "size": 434848
       },
       {
         "path": "/workspace/data/db/journal/WiredTigerPreplog.0000000002",

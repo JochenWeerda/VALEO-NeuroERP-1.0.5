@@ -2032,7 +2032,7 @@
   },
   {
     "path": "/workspace/linkup_mcp/memory/rag_manager.py",
-    "lines": 282,
+    "lines": 412,
     "findings": [],
     "score": 100
   },
@@ -2043,6 +2043,12 @@
       "Sehr lange Funktion (>80 Zeilen). Refactoring erwägen."
     ],
     "score": 90
+  },
+  {
+    "path": "/workspace/linkup_mcp/apps/business_tools.py",
+    "lines": 246,
+    "findings": [],
+    "score": 100
   },
   {
     "path": "/workspace/linkup_mcp/agents/structure_mapper.py",

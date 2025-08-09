@@ -2458,6 +2458,11 @@
             "type": "file"
           },
           {
+            "name": "run_valero_cycle.sh",
+            "path": "/workspace/scripts/run_valero_cycle.sh",
+            "type": "file"
+          },
+          {
             "name": "migrate.py",
             "path": "/workspace/scripts/migrate.py",
             "type": "file"
@@ -2679,8 +2684,28 @@
         "path": "/workspace/demo_data",
         "children": [
           {
+            "name": "leads.json",
+            "path": "/workspace/demo_data/leads.json",
+            "type": "file"
+          },
+          {
+            "name": "stock.json",
+            "path": "/workspace/demo_data/stock.json",
+            "type": "file"
+          },
+          {
             "name": "README.md",
             "path": "/workspace/demo_data/README.md",
+            "type": "file"
+          },
+          {
+            "name": "payments.json",
+            "path": "/workspace/demo_data/payments.json",
+            "type": "file"
+          },
+          {
+            "name": "invoices.json",
+            "path": "/workspace/demo_data/invoices.json",
             "type": "file"
           }
         ]
@@ -8679,6 +8704,48 @@
                 "name": "fallback_store.json",
                 "path": "/workspace/data/faiss_db/fallback_store.json",
                 "type": "file"
+              },
+              {
+                "name": "chroma",
+                "path": "/workspace/data/faiss_db/chroma",
+                "children": [
+                  {
+                    "name": "chroma.sqlite3",
+                    "path": "/workspace/data/faiss_db/chroma/chroma.sqlite3",
+                    "type": "file"
+                  },
+                  {
+                    "name": "a0feab6a-85aa-4378-93ee-301cc4eee7a0",
+                    "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0",
+                    "children": [
+                      {
+                        "name": "header.bin",
+                        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/header.bin",
+                        "type": "file"
+                      },
+                      {
+                        "name": "data_level0.bin",
+                        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/data_level0.bin",
+                        "type": "file"
+                      },
+                      {
+                        "name": "index_metadata.pickle",
+                        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/index_metadata.pickle",
+                        "type": "file"
+                      },
+                      {
+                        "name": "length.bin",
+                        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/length.bin",
+                        "type": "file"
+                      },
+                      {
+                        "name": "link_lists.bin",
+                        "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/link_lists.bin",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -16350,6 +16417,17 @@
             ]
           },
           {
+            "name": "apps",
+            "path": "/workspace/linkup_mcp/apps",
+            "children": [
+              {
+                "name": "business_tools.py",
+                "path": "/workspace/linkup_mcp/apps/business_tools.py",
+                "type": "file"
+              }
+            ]
+          },
+          {
             "name": "agents",
             "path": "/workspace/linkup_mcp/agents",
             "children": [
@@ -21142,6 +21220,11 @@
             "type": "file"
           },
           {
+            "name": "testdata_warehouse.sql",
+            "path": "/workspace/database/testdata_warehouse.sql",
+            "type": "file"
+          },
+          {
             "name": "finance_schema.sql",
             "path": "/workspace/database/finance_schema.sql",
             "type": "file"
@@ -21154,6 +21237,11 @@
           {
             "name": "crm_schema.sql",
             "path": "/workspace/database/crm_schema.sql",
+            "type": "file"
+          },
+          {
+            "name": "testdata_finance.sql",
+            "path": "/workspace/database/testdata_finance.sql",
             "type": "file"
           },
           {
@@ -21194,6 +21282,11 @@
           {
             "name": "purchasing_schema.sql",
             "path": "/workspace/database/purchasing_schema.sql",
+            "type": "file"
+          },
+          {
+            "name": "testdata_crm.sql",
+            "path": "/workspace/database/testdata_crm.sql",
             "type": "file"
           },
           {
@@ -21863,10 +21956,10 @@
     ]
   },
   "summary": {
-    "code": 1305,
+    "code": 1306,
     "test": 142,
     "doc": 798,
-    "config": 386,
-    "other": 977
+    "config": 390,
+    "other": 987
   }
 }
