@@ -1,0 +1,6 @@
+[
+  {"sku": "A-100", "stock": 25, "min": 40, "max": 200, "lead_time_days": 7, "avg_daily_demand": 6},
+  {"sku": "B-200", "stock": 120, "min": 50, "max": 300, "lead_time_days": 3, "avg_daily_demand": 8},
+  {"sku": "C-300", "stock": 5, "min": 20, "max": 120, "lead_time_days": 10, "avg_daily_demand": 4},
+  {"sku": "D-400", "stock": 75, "min": 30, "max": 180, "lead_time_days": 2, "avg_daily_demand": 3}
+]

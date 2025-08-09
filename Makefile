@@ -1,181 +1,129 @@
-# VALEO NeuroERP Makefile
-# Vereinfacht die Ausführung häufiger DevOps-Tasks
+# VALERO Makefile – einfache Startbefehle
 
-.PHONY: help install start stop restart status logs health backup build test clean deploy
+.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma rag-build-dir rag-query-dir rag-build-chroma-dir rag-query-chroma-dir set-local-llm start-ollama start-openwebui voice-demo voice
 
-# Standardziel
 help:
-	@echo "VALEO NeuroERP - Verfügbare Kommandos:"
-	@echo ""
-	@echo "  install    - Installiere alle Dependencies"
-	@echo "  start      - Starte alle Services"
-	@echo "  stop       - Stoppe alle Services"
-	@echo "  restart    - Starte Services neu"
-	@echo "  status     - Zeige Service-Status"
-	@echo "  logs       - Zeige Logs"
-	@echo "  health     - Führe Health Check durch"
-	@echo "  backup     - Erstelle Backup"
-	@echo "  build      - Baue Docker Images"
-	@echo "  test       - Führe Tests aus"
-	@echo "  clean      - Führe Cleanup durch"
-	@echo "  deploy     - Vollständiges Deployment"
-	@echo ""
+	@echo "VALERO – einfache Befehle:"
+	@echo "  make analyze                 # Vollanalyse (Root=.)"
+	@echo "  make rag-build               # RAG-Index aufbauen (Root=.)"
+	@echo "  make rag-query Q='Frage' K=5 # RAG-Query mit Top-K"
+	@echo "  make serena-plan             # Playbook erzeugen"
+	@echo "  make serena-apply            # Playbook anwenden (dry)"
+	@echo "  make api                     # API starten (uvicorn benötigt)"
+	@echo "  make vector-up               # Qdrant/Chroma starten (Docker)"
+	@echo "  make vector-down             # Qdrant/Chroma stoppen"
+	@echo "  make mcp                     # MCP-Server starten (Abhängigk.)"
 
-# Dependencies installieren
-install:
-	@echo "Installiere Frontend Dependencies..."
-	cd frontend && npm install
-	@echo "Installiere Backend Dependencies..."
-	cd backend && pip install -r requirements.txt
-	@echo "Dependencies installiert!"
+# Parameter: ROOT (Standard .), Q (Frage), K (Top-K)
+ROOT ?= .
+Q ?= ""
+K ?= 6
 
-# Services starten
-start:
-	@echo "Starte Services..."
-	./deploy.sh start
+analyze:
+	python3 -m linkup_mcp.cli analyze $(ROOT)
 
-# Services stoppen
-stop:
-	@echo "Stoppe Services..."
-	./deploy.sh stop
+rag-build:
+	python3 -m linkup_mcp.cli rag-build $(ROOT)
 
-# Services neu starten
-restart:
-	@echo "Starte Services neu..."
-	./deploy.sh restart
+rag-query:
+	@if [ -z "$(Q)" ]; then echo "Bitte Frage mit Q=\"...\" angeben"; exit 1; fi
+	python3 -m linkup_mcp.cli rag-query "$(Q)" --top-k $(K)
 
-# Service-Status anzeigen
-status:
-	@echo "Service-Status:"
-	./deploy.sh status
+serena-plan:
+	python3 -m linkup_mcp.cli serena-plan
 
-# Logs anzeigen
-logs:
-	@echo "Zeige Logs..."
-	./deploy.sh logs
+serena-apply:
+	python3 -m linkup_mcp.cli serena-apply
 
-# Health Check
-health:
-	@echo "Führe Health Check durch..."
-	./deploy.sh health
+api:
+	@echo "Starte API auf :8080 (falls fastapi/uvicorn installiert)"
+	uvicorn linkup_mcp.api:app --host 0.0.0.0 --port 8080
 
-# Backup erstellen
-backup:
-	@echo "Erstelle Backup..."
-	./deploy.sh backup
+vector-up:
+	docker compose -f docker/docker-compose.rag.yml up -d
 
-# Docker Images bauen
-build:
-	@echo "Baue Docker Images..."
-	./deploy.sh build
+vector-down:
+	docker compose -f docker/docker-compose.rag.yml down
 
-# Tests ausführen
-test:
-	@echo "Führe Tests aus..."
-	./deploy.sh test
+mcp:
+	python3 -m linkup_mcp.server 
 
-# Cleanup
-clean:
-	@echo "Führe Cleanup durch..."
-	./deploy.sh cleanup
+biz-reorder:
+	@if [ -z "$(FILE)" ]; then echo "Bitte Lagerdatei mit FILE=pfad.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import suggest_reorder_from_file; import json; print(json.dumps(suggest_reorder_from_file('$(FILE)'), ensure_ascii=False, indent=2))"
 
-# Vollständiges Deployment
-deploy: install build start health
-	@echo "Deployment abgeschlossen!"
+biz-dedupe:
+	@if [ -z "$(FILE)" ]; then echo "Bitte Leadsdatei mit FILE=pfad.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import dedupe_leads_from_file; import json; print(json.dumps(dedupe_leads_from_file('$(FILE)'), ensure_ascii=False, indent=2))"
 
-# Frontend-spezifische Kommandos
-frontend-install:
-	@echo "Installiere Frontend Dependencies..."
-	cd frontend && npm install
+biz-match:
+	@if [ -z "$(INV)" ] || [ -z "$(PAY)" ]; then echo "Bitte Rechnungen und Zahlungen mit INV=inv.json PAY=pay.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import match_payments_from_files; import json; print(json.dumps(match_payments_from_files('$(INV)','$(PAY)'), ensure_ascii=False, indent=2))"
 
-frontend-dev:
-	@echo "Starte Frontend Development Server..."
-	cd frontend && npm run dev
+biz-dunning:
+	@if [ -z "$(INV)" ]; then echo "Bitte Rechnungsdatei mit INV=pfad.json angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.apps.business_tools import generate_dunning_from_file; import json, os; print(json.dumps(generate_dunning_from_file('$(INV)'), ensure_ascii=False, indent=2))" 
 
-frontend-build:
-	@echo "Baue Frontend..."
-	cd frontend && npm run build
+setup-chroma:
+	pip3 install --user --break-system-packages -q \
+	  langchain==0.2.16 langchain-community==0.2.16 langchain-text-splitters==0.2.2 \
+	  langchain-huggingface==0.0.3 chromadb==0.5.3 qdrant-client==1.10.0
+	@echo "Chroma/Qdrant-Client + LangChain installiert (User-Scope)."
 
-frontend-test:
-	@echo "Führe Frontend Tests aus..."
-	cd frontend && npm test
+setup-qdrant:
+	pip3 install --user --break-system-packages -q qdrant-client==1.10.0
+	@echo "Qdrant-Client installiert. Nutze 'make vector-up' für Docker-Start."
 
-# Backend-spezifische Kommandos
-backend-install:
-	@echo "Installiere Backend Dependencies..."
-	cd backend && pip install -r requirements.txt
+rag-build-chroma:
+	VECTOR_BACKEND=chroma $(MAKE) rag-build
 
-backend-dev:
-	@echo "Starte Backend Development Server..."
-	cd backend && python main.py
+rag-query-chroma:
+	@if [ -z "$(Q)" ]; then echo "Bitte Frage mit Q=\"...\" angeben"; exit 1; fi
+	VECTOR_BACKEND=chroma $(MAKE) rag-query Q="$(Q)" K=$(K) 
 
-backend-test:
-	@echo "Führe Backend Tests aus..."
-	cd backend && python -m pytest
+# Ordner-spezifisch (BM25/Default)
+rag-build-dir:
+	@if [ -z "$(DIR)" ]; then echo "Bitte Verzeichnis mit DIR=pfad angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.memory.rag_manager import RAGMemoryManager; m=RAGMemoryManager(); m.build_index(['$(DIR)']); print(m.export_manifest())"
 
-# Datenbank-Kommandos
-db-migrate:
-	@echo "Führe Datenbank-Migrationen aus..."
-	cd backend && python -m alembic upgrade head
+rag-query-dir:
+	@if [ -z "$(Q)" ] || [ -z "$(DIR)" ]; then echo "Bitte DIR=pfad und Q=\"...\" angeben"; exit 1; fi
+	python3 -c "from linkup_mcp.memory.rag_manager import RAGMemoryManager; m=RAGMemoryManager(); m.build_index(['$(DIR)']); import json; print(json.dumps(m.query('$(Q)', top_k=$(K)), ensure_ascii=False, indent=2))"
 
-db-seed:
-	@echo "Seede Datenbank mit Test-Daten..."
-	cd backend && python seed_data.py
+# Ordner-spezifisch (Chroma)
+rag-build-chroma-dir:
+	@if [ -z "$(DIR)" ]; then echo "Bitte Verzeichnis mit DIR=pfad angeben"; exit 1; fi
+	VECTOR_BACKEND=chroma $(MAKE) rag-build-dir DIR=$(DIR)
 
-# Monitoring-Kommandos
-monitoring-start:
-	@echo "Starte Monitoring Services..."
-	docker-compose up -d prometheus grafana
+rag-query-chroma-dir:
+	@if [ -z "$(Q)" ] || [ -z "$(DIR)" ]; then echo "Bitte DIR=pfad und Q=\"...\" angeben"; exit 1; fi
+	VECTOR_BACKEND=chroma $(MAKE) rag-query-dir DIR=$(DIR) Q="$(Q)" K=$(K) 
 
-monitoring-stop:
-	@echo "Stoppe Monitoring Services..."
-	docker-compose stop prometheus grafana
+set-local-llm:
+	@echo "LLM_BASE_URL=http://localhost:11434" > .env.local
+	@echo "LLM_MODEL=gpt-oss-20b-small" >> .env.local
+	@echo "VECTOR_BACKEND=fallback" >> .env.local
+	@echo "LANGCHAIN_TRACING_V2=false" >> .env.local
+	@echo "CHROMA_TELEMETRY_DISABLED=1" >> .env.local
+	@echo "ANONYMIZED_TELEMETRY=false" >> .env.local
+	@echo "Lokale LLM-Defaults in .env.local geschrieben."
 
-monitoring-logs:
-	@echo "Zeige Monitoring Logs..."
-	docker-compose logs prometheus grafana
+start-ollama:
+	@echo "Bitte stelle sicher, dass Ollama installiert ist. Starte dann den Dienst und lade das Modell:"
+	@echo "  ollama pull gpt-oss:20b"
+	@echo "Optional Modelfile (kleiner Ressourcenbedarf) und create:"
+	@echo "  ollama create gpt-oss-20b-small -f Modelfile"
 
-# Development-Kommandos
-dev-setup: frontend-install backend-install
-	@echo "Development Setup abgeschlossen!"
+start-openwebui:
+	@echo "Starte OpenWebUI auf Port 8501:"
+	@echo "  DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve --host 0.0.0.0 --port 8501" 
 
-dev-start:
-	@echo "Starte Development Services..."
-	cd frontend && npm run dev &
-	cd backend && python main.py &
-	@echo "Development Services gestartet!"
+voice-demo:
+	@echo "Lokaler Voice-Agent (Beispiel):"
+	@echo "  git clone https://github.com/everlastconsulting/gpt-oss-local-voice-agent-demo"
+	@echo "  cd gpt-oss-local-voice-agent-demo"
+	@echo "  # .env: OLLAMA_BASE_URL=http://localhost:11434 ; MODEL=gpt-oss-20b-small"
+	@echo "  # Starten gemäß README; Audioausgabe über Systemlautsprecher/Headset" 
 
-# Production-Kommandos
-prod-deploy: clean build start health
-	@echo "Production Deployment abgeschlossen!"
-
-prod-backup:
-	@echo "Erstelle Production Backup..."
-	./deploy.sh backup
-
-# Utility-Kommandos
-check-deps:
-	@echo "Prüfe Dependencies..."
-	@command -v docker >/dev/null 2>&1 || { echo "Docker ist nicht installiert!"; exit 1; }
-	@command -v docker-compose >/dev/null 2>&1 || { echo "Docker Compose ist nicht installiert!"; exit 1; }
-	@command -v node >/dev/null 2>&1 || { echo "Node.js ist nicht installiert!"; exit 1; }
-	@command -v python3 >/dev/null 2>&1 || { echo "Python 3 ist nicht installiert!"; exit 1; }
-	@echo "Alle Dependencies sind verfügbar!"
-
-update:
-	@echo "Update alle Services..."
-	git pull
-	./deploy.sh restart
-
-# Debug-Kommandos
-debug-logs:
-	@echo "Zeige Debug-Logs..."
-	docker-compose logs --tail=100
-
-debug-shell:
-	@echo "Öffne Shell in Backend Container..."
-	docker-compose exec backend /bin/bash
-
-debug-frontend:
-	@echo "Öffne Shell in Frontend Container..."
-	docker-compose exec frontend /bin/sh 
+voice:
+	python3 scripts/voice_assistant.py 

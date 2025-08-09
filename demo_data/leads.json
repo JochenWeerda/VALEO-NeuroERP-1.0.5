@@ -1,0 +1,7 @@
+[
+  {"company": "Muster Maschinenbau GmbH", "name": "Sabine Müller", "email": "s.mueller@muster-maschinenbau.de", "phone": "+49 711 123456"},
+  {"company": "Muster Maschinenbau", "name": "Sabine Mueller", "email": "s.mueller@muster-maschinenbau.de", "phone": "+49 711 123456"},
+  {"company": "Alpha Retail AG", "name": "Tom Schneider", "email": "t.schneider@alpharetail.com", "phone": "+49 30 987654"},
+  {"company": "Alpha Retail", "name": "Thomas Schneider", "email": null, "phone": "+49 30 987654"},
+  {"company": "Beta Consulting UG", "name": "Elena Kraus", "email": "elena.kraus@betaconsulting.de", "phone": "+49 89 111222"}
+]
