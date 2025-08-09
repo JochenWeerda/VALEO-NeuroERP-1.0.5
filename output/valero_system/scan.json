@@ -14829,7 +14829,7 @@
     {
       "path": "/workspace/data/faiss_db/chroma/chroma.sqlite3",
       "type": "other",
-      "size": 469839872
+      "size": 528490496
     },
     {
       "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/header.bin",
@@ -14839,22 +14839,22 @@
     {
       "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/data_level0.bin",
       "type": "other",
-      "size": 87152000
+      "size": 103912000
     },
     {
       "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/index_metadata.pickle",
       "type": "other",
-      "size": 3014685
+      "size": 3594826
     },
     {
       "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/length.bin",
       "type": "other",
-      "size": 208000
+      "size": 248000
     },
     {
       "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/link_lists.bin",
       "type": "other",
-      "size": 434848
+      "size": 518708
     },
     {
       "path": "/workspace/data/reports/pipeline_results/metrics_definition_20250701_204103.json",
@@ -16144,17 +16144,17 @@
     {
       "path": "/workspace/output/valero_system/scan.json",
       "type": "config",
-      "size": 961080
+      "size": 965028
     },
     {
       "path": "/workspace/output/valero_system/architecture.json",
       "type": "config",
-      "size": 861883
+      "size": 865337
     },
     {
       "path": "/workspace/output/valero_system/quality.json",
       "type": "config",
-      "size": 192349
+      "size": 192473
     },
     {
       "path": "/workspace/finance-microservice/src/main.py",
@@ -31038,17 +31038,17 @@
       {
         "path": "/workspace/output/valero_system/scan.json",
         "type": "config",
-        "size": 961080
+        "size": 965028
       },
       {
         "path": "/workspace/output/valero_system/architecture.json",
         "type": "config",
-        "size": 861883
+        "size": 865337
       },
       {
         "path": "/workspace/output/valero_system/quality.json",
         "type": "config",
-        "size": 192349
+        "size": 192473
       },
       {
         "path": "/workspace/memory-bank/context/system_analysis.json",
@@ -35985,7 +35985,7 @@
       {
         "path": "/workspace/data/faiss_db/chroma/chroma.sqlite3",
         "type": "other",
-        "size": 469839872
+        "size": 528490496
       },
       {
         "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/header.bin",
@@ -35995,22 +35995,22 @@
       {
         "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/data_level0.bin",
         "type": "other",
-        "size": 87152000
+        "size": 103912000
       },
       {
         "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/index_metadata.pickle",
         "type": "other",
-        "size": 3014685
+        "size": 3594826
       },
       {
         "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/length.bin",
         "type": "other",
-        "size": 208000
+        "size": 248000
       },
       {
         "path": "/workspace/data/faiss_db/chroma/a0feab6a-85aa-4378-93ee-301cc4eee7a0/link_lists.bin",
         "type": "other",
-        "size": 434848
+        "size": 518708
       },
       {
         "path": "/workspace/data/db/journal/WiredTigerPreplog.0000000002",
