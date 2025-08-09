@@ -1,0 +1,4 @@
+[
+  {"id": "pay-1", "amount": 595.00, "booking_date": "2025-08-03", "reference": "Rechnungsnr R-2025-0002"},
+  {"id": "pay-2", "amount": 1190.00, "booking_date": "2025-08-02", "reference": "Überweisung Muster"}
+]
