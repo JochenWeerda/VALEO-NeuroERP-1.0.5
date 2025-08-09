@@ -345,6 +345,34 @@ class RAGMemoryManager:
         return min(1.0, count / max(3, len(t) / max(10, len(q))))
 
     def query(self, query_text: str, top_k: int = 6) -> List[Dict[str, Any]]:
+        # Falls noch kein Vectorstore im Speicher: versuchen zu laden
+        if self._vectorstore is None and self._has_langchain and self._embeddings is not None:
+            try:
+                if self.vector_backend == "faiss":
+                    from langchain_community.vectorstores import FAISS  # type: ignore
+                    self._vectorstore = FAISS.load_local(str(self.db_dir), self._embeddings, allow_dangerous_deserialization=True)
+                elif self.vector_backend == "chroma":
+                    from langchain_community.vectorstores import Chroma  # type: ignore
+                    persist_dir = str(self.db_dir / "chroma")
+                    self._vectorstore = Chroma(collection_name="valero_repo", embedding_function=self._embeddings, persist_directory=persist_dir)
+                elif self.vector_backend == "qdrant":
+                    from langchain_community.vectorstores import Qdrant  # type: ignore
+                    from qdrant_client import QdrantClient  # type: ignore
+                    url = os.getenv("QDRANT_URL")
+                    host = os.getenv("QDRANT_HOST", "localhost")
+                    port = int(os.getenv("QDRANT_PORT", "6333"))
+                    collection = os.getenv("QDRANT_COLLECTION", "valero_repo")
+                    client = QdrantClient(url=url) if url else QdrantClient(host=host, port=port)
+                    # Laden per Client + Collection
+                    self._vectorstore = Qdrant(
+                        client=client,
+                        collection_name=collection,
+                        embeddings=self._embeddings,
+                    )
+            except Exception as e:
+                logger.warning("Konnte persistente Vektordaten nicht laden: %s", str(e))
+                self._vectorstore = None
+
         if self._vectorstore is not None:
             try:
                 results = self._vectorstore.similarity_search_with_score(query_text, k=top_k)  # type: ignore
@@ -358,7 +386,6 @@ class RAGMemoryManager:
                 return output
             except Exception as e:
                 logger.warning("Fehler bei Vector-Query, weiche auf Fallback aus: %s", str(e))
-
         # BM25 bevorzugt, wenn verfügbar
         if self._bm25_enabled and self._bm25_inv_index:
             return self._bm25_query(query_text, top_k=top_k)
