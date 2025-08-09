@@ -1,6 +1,6 @@
 # VALERO Makefile – einfache Startbefehle
 
-.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma rag-build-dir rag-query-dir rag-build-chroma-dir rag-query-chroma-dir
+.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma rag-build-dir rag-query-dir rag-build-chroma-dir rag-query-chroma-dir set-local-llm start-ollama start-openwebui
 
 help:
 	@echo "VALERO – einfache Befehle:"
@@ -98,3 +98,22 @@ rag-build-chroma-dir:
 rag-query-chroma-dir:
 	@if [ -z "$(Q)" ] || [ -z "$(DIR)" ]; then echo "Bitte DIR=pfad und Q=\"...\" angeben"; exit 1; fi
 	VECTOR_BACKEND=chroma $(MAKE) rag-query-dir DIR=$(DIR) Q="$(Q)" K=$(K) 
+
+set-local-llm:
+	@echo "LLM_BASE_URL=http://localhost:11434" > .env.local
+	@echo "LLM_MODEL=gpt-oss-20b-small" >> .env.local
+	@echo "VECTOR_BACKEND=fallback" >> .env.local
+	@echo "LANGCHAIN_TRACING_V2=false" >> .env.local
+	@echo "CHROMA_TELEMETRY_DISABLED=1" >> .env.local
+	@echo "ANONYMIZED_TELEMETRY=false" >> .env.local
+	@echo "Lokale LLM-Defaults in .env.local geschrieben."
+
+start-ollama:
+	@echo "Bitte stelle sicher, dass Ollama installiert ist. Starte dann den Dienst und lade das Modell:"
+	@echo "  ollama pull gpt-oss:20b"
+	@echo "Optional Modelfile (kleiner Ressourcenbedarf) und create:"
+	@echo "  ollama create gpt-oss-20b-small -f Modelfile"
+
+start-openwebui:
+	@echo "Starte OpenWebUI auf Port 8501:"
+	@echo "  DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve --host 0.0.0.0 --port 8501" 

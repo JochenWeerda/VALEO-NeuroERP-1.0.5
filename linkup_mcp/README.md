@@ -81,3 +81,28 @@ Mit psql oder in deiner DB-Konsole ausführen, nachdem die zugehörigen Schemas 
   ```bash
   make biz-dunning INV=demo_data/invoices.json
   ``` 
+
+## Lokales LLM (Ollama + OpenWebUI)
+
+- Lokale ENV setzen:
+  ```bash
+  make set-local-llm
+  ```
+- Ollama/Modell:
+  ```bash
+  make start-ollama
+  # dann im Terminal:
+  # ollama pull gpt-oss:20b
+  # optional: ollama create gpt-oss-20b-small -f Modelfile
+  ```
+- OpenWebUI (Port 8501):
+  ```bash
+  make start-openwebui
+  ```
+
+## DSGVO kompakt
+- Datenminimierung/Zweckbindung, Lösch-/Aufbewahrungsfristen
+- TOMs: Verschlüsselung, RBAC, Netzwerkhärtung; nur interne Ports
+- Telemetrie aus: `CHROMA_TELEMETRY_DISABLED=1`, `ANONYMIZED_TELEMETRY=false`, LangChain Tracing off
+- Verzeichnis der Verarbeitungstätigkeiten, Rechtsgrundlage (berechtigtes Interesse/vertraglich)
+- Anonymisierung/Pseudonymisierung sensibler Daten vor Indexierung 
