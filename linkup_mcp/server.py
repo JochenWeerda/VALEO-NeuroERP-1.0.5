@@ -29,6 +29,7 @@ from .memory.rag_manager import RAGMemoryManager
 from pathlib import Path
 from .pipelines.valero_full_analysis import run_valero_full_analysis
 from .serena.integration import plan_refactors as serena_plan_refactors, apply_refactors as serena_apply_refactors
+from .rag_answer import synthesize_local_ollama
 
 load_dotenv()
 
@@ -174,6 +175,29 @@ def build_rag_index(paths: list[str] | None = None) -> dict:
 def rag_query_local(question: str, top_k: int = 6) -> list[dict]:
     """Fragt den lokalen RAG-Speicher ab und liefert Top-K Treffer mit Scores."""
     return rag_memory.query(question, top_k=top_k)
+
+
+@mcp.tool()
+def rag_answer(question: str, top_k: int = 5, base_url: Optional[str] = None, model: Optional[str] = None, directory: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Synthesisiert eine Antwort mit lokalem LLM (Ollama) auf Basis von RAG-Treffern.
+    Optional kann vorab ein Verzeichnis indexiert werden (directory), um gezielt zu arbeiten.
+    """
+    try:
+        # Falls spezifisches Verzeichnis angegeben, lokales Memory dafür verwenden
+        memory = rag_memory
+        if directory:
+            memory = RAGMemoryManager()
+            memory.build_index([directory])
+        chunks = memory.query(question, top_k=top_k)
+        answer = synthesize_local_ollama(question, chunks, base_url=base_url, model=model)
+        return {
+            "question": question,
+            "answer": answer,
+            "num_chunks": len(chunks)
+        }
+    except Exception as e:
+        return {"error": f"rag_answer fehlgeschlagen: {str(e)}"}
 
 
 @mcp.tool()

@@ -1,6 +1,6 @@
 # VALERO Makefile – einfache Startbefehle
 
-.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma rag-build-dir rag-query-dir rag-build-chroma-dir rag-query-chroma-dir set-local-llm start-ollama start-openwebui
+.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma rag-build-dir rag-query-dir rag-build-chroma-dir rag-query-chroma-dir set-local-llm start-ollama start-openwebui voice-demo
 
 help:
 	@echo "VALERO – einfache Befehle:"
@@ -117,3 +117,10 @@ start-ollama:
 start-openwebui:
 	@echo "Starte OpenWebUI auf Port 8501:"
 	@echo "  DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve --host 0.0.0.0 --port 8501" 
+
+voice-demo:
+	@echo "Lokaler Voice-Agent (Beispiel):"
+	@echo "  git clone https://github.com/everlastconsulting/gpt-oss-local-voice-agent-demo"
+	@echo "  cd gpt-oss-local-voice-agent-demo"
+	@echo "  # .env: OLLAMA_BASE_URL=http://localhost:11434 ; MODEL=gpt-oss-20b-small"
+	@echo "  # Starten gemäß README; Audioausgabe über Systemlautsprecher/Headset" 
