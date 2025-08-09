@@ -1,6 +1,6 @@
 # VALERO Makefile – einfache Startbefehle
 
-.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning
+.PHONY: help analyze rag-build rag-query serena-plan serena-apply api vector-up vector-down mcp biz-reorder biz-dedupe biz-match biz-dunning setup-chroma setup-qdrant rag-build-chroma rag-query-chroma
 
 help:
 	@echo "VALERO – einfache Befehle:"
@@ -63,3 +63,20 @@ biz-match:
 biz-dunning:
 	@if [ -z "$(INV)" ]; then echo "Bitte Rechnungsdatei mit INV=pfad.json angeben"; exit 1; fi
 	python3 -c "from linkup_mcp.apps.business_tools import generate_dunning_from_file; import json, os; print(json.dumps(generate_dunning_from_file('$(INV)'), ensure_ascii=False, indent=2))" 
+
+setup-chroma:
+	pip3 install --user --break-system-packages -q \
+	  langchain==0.2.16 langchain-community==0.2.16 langchain-text-splitters==0.2.2 \
+	  langchain-huggingface==0.0.3 chromadb==0.5.3 qdrant-client==1.10.0
+	@echo "Chroma/Qdrant-Client + LangChain installiert (User-Scope)."
+
+setup-qdrant:
+	pip3 install --user --break-system-packages -q qdrant-client==1.10.0
+	@echo "Qdrant-Client installiert. Nutze 'make vector-up' für Docker-Start."
+
+rag-build-chroma:
+	VECTOR_BACKEND=chroma $(MAKE) rag-build
+
+rag-query-chroma:
+	@if [ -z "$(Q)" ]; then echo "Bitte Frage mit Q=\"...\" angeben"; exit 1; fi
+	VECTOR_BACKEND=chroma $(MAKE) rag-query Q="$(Q)" K=$(K) 
