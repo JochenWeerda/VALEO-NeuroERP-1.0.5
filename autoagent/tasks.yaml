@@ -1,0 +1,19 @@
+objectives:
+  - "Domaenenmodell Inventory/Lot: Warehouse, Location, StockItem, Lot, StockMove, Reservation, Hold (QS)."
+  - "REST/GraphQL API: CRUD und Prozesse (GRN, GI, Transfer, InventoryCount)."
+  - "Eventing: StockMoved, LotCreated, LotHoldChanged via Kafka Outbox."
+  - "QS-Sperre/Release Workflow mit Belegbezug (Wareneingang/Analyse)."
+  - "Tests: Unit + Property + Integration (DB, Outbox) inkl. Benchmarks."
+acceptance:
+  - "ruff, black --check, mypy ohne Fehler"
+  - "pytest --maxfail=1 gruen; Coverage >= 85%"
+  - "Benchmark: 10k StockMoves in < 60s (Profiling/Test)"
+  - "Alembic Migration vorwaerts/rueckwaerts"
+constraints:
+  - "Keine Breaking-Changes an vorhandener API ohne Migrationspfad"
+  - "PostgreSQL IDs als ULID, Timestamps mit TZ"
+  - "Events idempotent; Outbox-Pattern"
+notes:
+  - "Nutze README, docs und memory-bank fuer Kontext."
+  - "Aktualisiere Dokumentation bei neuen Endpunkten."
+  - "Koordiniere mit CI-Workflow (evaluator.py)."
