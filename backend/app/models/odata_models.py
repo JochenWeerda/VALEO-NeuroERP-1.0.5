@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from backend.app.models.base import Base
-from app.schemas.odata_schemas import TourStatus, PicklisteStatus, AuftragStatus, AuftragArt, TourMode
+from backend.app.schemas.odata_schemas import TourStatus, PicklisteStatus, AuftragStatus, AuftragArt, TourMode
 
 # Nur EINMALIGE Definitionen, keine Duplikate!
 

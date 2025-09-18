@@ -11,6 +11,8 @@ const StreckengeschaeftPage = lazy(() => import('../pages/StreckengeschaeftPage'
 const POSPage = lazy(() => import('../pages/POS/POSPage'));
 const DailyReportPage = lazy(() => import('../pages/POS/DailyReportPage'));
 const EInvoicingPage = lazy(() => import('./e-invoicing/EInvoicingPage'));
+const SettingsDashboard = lazy(() => import('../pages/SettingsDashboard').then(m => ({ default: m.SettingsDashboard })));
+const FirstRun = lazy(() => import('../pages/FirstRun').then(m => ({ default: m.FirstRun })));
 
 // Loading Component für Routen
 const RouteLoader: React.FC<{ routeName: string }> = ({ routeName }) => (
@@ -86,6 +88,28 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD} />}>
                 <Dashboard />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.SETTINGS} />}>
+                <SettingsDashboard />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/first-run"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Suspense fallback={<RouteLoader routeName="Ersteinrichtung" />}>
+                <FirstRun />
               </Suspense>
             </ProtectedRoute>
           }

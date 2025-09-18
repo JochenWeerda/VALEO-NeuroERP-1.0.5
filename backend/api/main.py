@@ -1,41 +1,95 @@
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
+from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from typing import List, Optional, Dict, Any
 import uvicorn
 import logging
 from datetime import datetime, timedelta
+import re
+from pydantic import BaseModel
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from contextlib import asynccontextmanager
 
 # Import CRM models and services
-from models.crm_models import (
+from backend.models.crm_models import (
     Customer, ContactPerson, CustomerCommunication, Offer, Order, Invoice,
     CustomerDocument, DirectBusiness, ExternalStock, Deal, Supplier
 )
-from services.crm_service import CRMService
-from services.whatsapp_service import WhatsAppWebService
+from backend.services.crm_service import CRMService
+from backend.services.whatsapp_service import WhatsAppWebService
+from backend.database.database import init_database
 
 # Import WhatsApp routes
-from api.whatsapp_routes import router as whatsapp_router
+from backend.api.whatsapp_routes import router as whatsapp_router
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize FastAPI app
+# Initialize FastAPI app with lifespan
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # DB-Init temporarily disabled due to SQLite issues
+    # await init_database()
+    yield
+
 app = FastAPI(
     title="VALEO NeuroERP CRM API",
     description="CRM-System mit WhatsApp-Integration für VALEO NeuroERP",
-    version="2.0.0"
+    version="2.0.0",
+    lifespan=lifespan
 )
+
+# Security Headers Middleware
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer-when-downgrade"
+    response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+    # Strikte CSP für API-JSON (Frontend setzt eigene CSP)
+    response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
+    return response
+
+PII_PATTERNS = [
+    re.compile(r"[\w\.-]+@[\w\.-]+\.[A-Za-z]{2,}"),  # E-Mail
+    re.compile(r"\b\+?[0-9][0-9\s\-\(\)]{7,}\b"),   # Telefonnummer schlicht
+]
+
+# PII-Redaction Middleware (nur für JSONResponse Bodies als Text)
+@app.middleware("http")
+async def pii_redaction_middleware(request: Request, call_next):
+    response = await call_next(request)
+    try:
+        if isinstance(response, JSONResponse) and isinstance(response.body, (bytes, bytearray)):
+            body_text = response.body.decode("utf-8", errors="ignore")
+            redacted = body_text
+            for pat in PII_PATTERNS:
+                redacted = pat.sub("<redacted>", redacted)
+            if redacted != body_text:
+                response.body = redacted.encode("utf-8")
+                response.headers["Content-Length"] = str(len(response.body))
+    except Exception:
+        # Fallback: unverändert ausliefern, aber keine PII hinzufügen
+        pass
+    return response
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:3001", "http://localhost:3002", "http://127.0.0.1:3002", "http://localhost:3003", "http://localhost:8080", "http://localhost:3004", "http://127.0.0.1:3004", "http://localhost:4173", "http://127.0.0.1:4173", "http://localhost:9090"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# WhatsApp Security Middleware (optional)
+try:
+    from backend.api.whatsapp_routes import WhatsAppSecurityHeadersMiddleware
+    app.add_middleware(WhatsAppSecurityHeadersMiddleware)
+except Exception:
+    pass
 
 # Initialize services
 crm_service = CRMService()
@@ -44,16 +98,95 @@ whatsapp_service = WhatsAppWebService()
 # Include WhatsApp routes
 app.include_router(whatsapp_router, prefix="/api/whatsapp", tags=["WhatsApp"])
 
-# Health check endpoint
-@app.get("/api/health")
-async def health_check():
+# Include AI-Workflow routes
+from backend.api.ai_workflow_api import router as ai_workflow_router
+app.include_router(ai_workflow_router)
+
+# ===== Einfache Auth (Option B, Dev/Test) =====
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+class RegisterPayload(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    password: str
+    role: Optional[str] = "user"
+
+class PublicUser(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    role: Optional[str] = "user"
+    disabled: Optional[bool] = False
+
+_users: Dict[str, Dict[str, Any]] = {}
+
+@app.post("/api/v1/auth/register")
+async def register_user(payload: RegisterPayload) -> Dict[str, Any]:
+    username = payload.username.strip().lower()
+    if not username:
+        raise HTTPException(status_code=400, detail="username required")
+    if username in _users:
+        raise HTTPException(status_code=409, detail="user already exists")
+    _users[username] = {
+        "username": username,
+        "email": payload.email,
+        "full_name": payload.full_name,
+        "password": payload.password,  # Hinweis: nur Dev, kein Hash
+        "role": payload.role or "user",
+        "disabled": False,
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    return {"ok": True, "user": {k: v for k, v in _users[username].items() if k != "password"}}
+
+@app.post("/token")
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()) -> Dict[str, Any]:
+    username = (form_data.username or "").strip().lower()
+    user = _users.get(username)
+    if not user or user.get("password") != form_data.password:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    token = f"token_{username}"
     return {
-        "status": "healthy",
-        "timestamp": datetime.now().isoformat(),
-        "version": "2.0.0",
-        "services": {
-            "crm": "running",
-            "whatsapp": "running"
+        "access_token": token, 
+        "token_type": "bearer",
+        "user": {
+            "id": username,
+            "username": username,
+            "email": user.get("email"),
+            "full_name": user.get("full_name"),
+            "role": user.get("role", "user")
+        }
+    }
+
+@app.get("/users/me", response_model=PublicUser)
+async def read_users_me(token: str = Depends(oauth2_scheme)) -> Any:
+    if not token.startswith("token_"):
+        raise HTTPException(status_code=401, detail="Invalid token")
+    username = token.split("token_", 1)[-1]
+    user = _users.get(username)
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    return PublicUser(**{k: v for k, v in user.items() if k != "password"})
+
+# ===== Ende einfache Auth =====
+
+# Health check endpoint
+@app.get("/health")
+async def health_root() -> Dict[str, Any]:
+    return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
+
+@app.get("/api/health")
+async def health_api() -> Dict[str, Any]:
+    return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
+
+@app.get("/api/settings")
+async def get_settings() -> Dict[str, Any]:
+    """Get application settings"""
+    return {
+        "data": {
+            "firstRunCompleted": True,
+            "version": "2.0.0",
+            "environment": "development"
         }
     }
 
@@ -309,6 +442,67 @@ async def internal_error_handler(request, exc):
         status_code=500,
         content={"detail": "Internal server error"}
     )
+
+class AgentProgressItem(BaseModel):
+    name: str
+    percent: int
+    status: str
+
+class AgentProgressPayload(BaseModel):
+    total_percent: int
+    items: list[AgentProgressItem]
+
+# In-Memory Progress (kann später aus DB/Metrics gespeist werden)
+_agent_progress: AgentProgressPayload = AgentProgressPayload(
+    total_percent=68,
+    items=[
+        AgentProgressItem(name="Docker/Nginx-Agent", percent=55, status="running"),
+        AgentProgressItem(name="E2E-Agenten", percent=70, status="running"),
+        AgentProgressItem(name="Sicherheits-Agent", percent=75, status="running"),
+        AgentProgressItem(name="CI-Agent", percent=45, status="pending"),
+        AgentProgressItem(name="Workflow-Agent", percent=60, status="running"),
+        AgentProgressItem(name="Predictive-Agent", percent=35, status="pending"),
+        AgentProgressItem(name="BI-Export-Agent", percent=55, status="running"),
+        AgentProgressItem(name="Doku/Runbook-Agent", percent=80, status="running"),
+    ],
+)
+
+@app.get("/api/agents/progress")
+async def get_agents_progress() -> Dict[str, Any]:
+    return {
+        "total_percent": _agent_progress.total_percent,
+        "items": [i.dict() for i in _agent_progress.items],
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+@app.post("/api/agents/progress")
+async def set_agents_progress(payload: AgentProgressPayload) -> Dict[str, Any]:
+    global _agent_progress
+    _agent_progress = payload
+    return {"ok": True, "updated": datetime.utcnow().isoformat()}
+
+@app.get("/api/voice/status")
+async def voice_status() -> Dict[str, Any]:
+    return {
+        "online": False,
+        "message": "Voice service stub (offline)",
+        "timestamp": datetime.utcnow().isoformat()
+    }
+
+@app.get("/api/barcode/health")
+async def barcode_health() -> Dict[str, Any]:
+    try:
+        return {"status": "healthy", "service": "Barcode API"}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+
+@app.get("/api/ai/barcode/health")
+async def ai_barcode_health() -> Dict[str, Any]:
+    try:
+        # Minimaler Stub; echte Integration erfolgt separat
+        return {"status": "healthy", "service": "AI Barcode API", "models_trained": False}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
 
 if __name__ == "__main__":
     uvicorn.run(

@@ -28,7 +28,9 @@ import {
   Person as PersonIcon,
   Refresh as RefreshIcon,
   ContentCopy as CopyIcon,
-  Download as DownloadIcon
+  Download as DownloadIcon,
+  Mic as MicIcon,
+  MicOff as MicOffIcon
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 
@@ -64,7 +66,9 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamingMessage, setStreamingMessage] = useState('');
-  
+  const [voiceRunning, setVoiceRunning] = useState<boolean>(false);
+  const apiBase: string = (window as any).__VALEO_API_BASE__ || '';
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -81,6 +85,34 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  const fetchVoiceStatus = async () => {
+    try {
+      const res = await fetch(`${apiBase}/voice/status`);
+      if (!res.ok) return;
+      const data = await res.json();
+      setVoiceRunning(Boolean(data.running));
+    } catch {}
+  };
+
+  useEffect(() => {
+    fetchVoiceStatus();
+    const id = setInterval(fetchVoiceStatus, 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  const handleToggleVoice = async () => {
+    try {
+      if (voiceRunning) {
+        await fetch(`${apiBase}/voice/stop`, { method: 'POST' });
+        setVoiceRunning(false);
+      } else {
+        await fetch(`${apiBase}/voice/start`, { method: 'POST' });
+        // leichte Verzögerung und Status prüfen
+        setTimeout(fetchVoiceStatus, 800);
+      }
+    } catch {}
+  };
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -294,6 +326,18 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
           </Box>
           
           <Box sx={{ display: 'flex', gap: 1 }}>
+            <Chip 
+              label={voiceRunning ? 'Sprachassistent: AN' : 'Sprachassistent: AUS'}
+              size="small"
+              sx={{ backgroundColor: voiceRunning ? 'rgba(76,175,80,0.3)' : 'rgba(255,255,255,0.2)', color: 'white' }}
+            />
+            <IconButton 
+              size="small" 
+              onClick={handleToggleVoice}
+              sx={{ color: 'white' }}
+            >
+              {voiceRunning ? <MicOffIcon /> : <MicIcon />}
+            </IconButton>
             <IconButton 
               size="small" 
               onClick={clearChat}

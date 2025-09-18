@@ -1,0 +1,8 @@
+{
+  "status": "stored",
+  "num_chunks": 78614,
+  "vectorstore": "chromadb",
+  "persist_dir": "/app/output/ai-workflow/chroma_store",
+  "collection": "valero_code",
+  "added": 78614
+}

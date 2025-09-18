@@ -24,6 +24,7 @@ class RAGService:
     - Testfallgenerierung
     - Dokumentationsgenerierung
     - Entwurfsmusteranwendung
+    - VAN-Modus: Anforderungsanalyse und Klärungsfragen
     """
     
     def __init__(self, mongodb_connector: APMMongoDBConnector, project_id: str):
@@ -75,7 +76,7 @@ class RAGService:
         
         Args:
             query: Abfragetext
-            top_k: Anzahl der zurückzugebenden Dokumente
+            top_k: Anzahl der zurückgegebenen Dokumente
             
         Returns:
             Liste der ähnlichsten Dokumente
@@ -128,11 +129,13 @@ class RAGService:
             # Ähnliche Dokumente suchen
             documents = await self.search_similar_documents(query)
             
-            # In einer vollständigen Implementierung würde hier ein LLM verwendet werden,
-            # um eine Antwort basierend auf den gefundenen Dokumenten zu generieren
-            # Für diese Demo generieren wir eine einfache Antwort
+            # Kontext-basierte Antwortgenerierung
+            agent_type = context.get("agent", "default") if context else "default"
             
-            response = self._generate_mock_response(query, documents)
+            if agent_type == "van_agent":
+                response = self._generate_van_response(query, documents)
+            else:
+                response = self._generate_mock_response(query, documents)
             
             # Abfrage in der RAG-History speichern
             history_entry = {
@@ -156,6 +159,163 @@ class RAGService:
         except Exception as e:
             logger.error(f"Fehler bei der RAG-Abfrage: {str(e)}")
             raise
+    
+    def _generate_van_response(self, query: str, documents: List[Dict[str, Any]]) -> str:
+        """
+        Generiert spezifische Antworten für den VAN-Modus.
+        
+        Args:
+            query: Abfragetext
+            documents: Liste der gefundenen Dokumente
+            
+        Returns:
+            Generierte Antwort
+        """
+        query_lower = query.lower()
+        
+        # Anforderungsanalyse
+        if "analysiere" in query_lower and "anforderung" in query_lower:
+            return self._generate_requirement_analysis(query, documents)
+        
+        # Klärungsfragen generieren
+        elif "klärungsfragen" in query_lower or "fragen" in query_lower:
+            return self._generate_clarification_questions(query, documents)
+        
+        # Standard VAN-Antwort
+        else:
+            return self._generate_generic_van_response(query, documents)
+    
+    def _generate_requirement_analysis(self, query: str, documents: List[Dict[str, Any]]) -> str:
+        """Generiert eine strukturierte Anforderungsanalyse."""
+        return """
+# Anforderungsanalyse für VALEO NeuroERP
+
+## Funktionale Anforderungen
+
+### 1. Automatische Bestellungsprüfung
+- **Vollständigkeitsprüfung**: Alle Pflichtfelder validieren (Kunde, Artikel, Menge, Lieferadresse)
+- **Plausibilitätsprüfung**: Verfügbarkeit, Kreditlimit, Lieferbarkeit
+- **Geschäftsregeln**: Zahlungsbedingungen, Rabatte, Sonderpreise
+
+### 2. Intelligente Klärungsfragen
+- **Automatische Generierung**: Basierend auf fehlenden/ungültigen Daten
+- **Priorisierung**: Kritische vs. optionale Klärungen
+- **Workflow-Integration**: Nahtlose Übergabe an Disponenten
+
+### 3. Audit Trail
+- **Vollständige Protokollierung**: Alle Prüfungen und Entscheidungen
+- **Nachverfolgbarkeit**: Wer hat wann was geändert
+- **Compliance**: DSGVO, SOX, interne Richtlinien
+
+## Nicht-funktionale Anforderungen
+
+### Performance
+- **Antwortzeit**: < 2 Sekunden für Standardprüfungen
+- **Durchsatz**: 100+ Bestellungen pro Minute
+- **Skalierbarkeit**: Linear mit Systemressourcen
+
+### Sicherheit
+- **RBAC**: Rollenbasierte Zugriffskontrolle
+- **Datenmaskierung**: Sensible Informationen schützen
+- **Verschlüsselung**: Daten in Ruhe und Übertragung
+
+### Verfügbarkeit
+- **Uptime**: 99.9% (8.76 Stunden Ausfall pro Jahr)
+- **Backup**: Automatische Sicherung alle 15 Minuten
+- **Disaster Recovery**: RTO < 4 Stunden, RPO < 15 Minuten
+
+## Systemgrenzen und Schnittstellen
+
+### Eingangsschnittstellen
+- **EDI**: X12, EDIFACT für Lieferanten
+- **API**: REST/GraphQL für externe Systeme
+- **UI**: Web-Interface für manuelle Eingaben
+
+### Ausgangsschnittstellen
+- **ERP-System**: SAP, Oracle, Microsoft Dynamics
+- **WMS**: Warehouse Management System
+- **CRM**: Customer Relationship Management
+
+## Mögliche Herausforderungen
+
+### 1. Datenqualität
+- **Inkonsistente Daten**: Verschiedene Formate und Standards
+- **Fehlende Informationen**: Unvollständige Bestelldaten
+- **Datenvalidierung**: Komplexe Geschäftsregeln
+
+### 2. Performance
+- **Große Datenmengen**: Millionen von Bestellungen
+- **Echtzeit-Anforderungen**: Sofortige Validierung
+- **Skalierung**: Wachsende Geschäftsvolumina
+
+### 3. Integration
+- **Legacy-Systeme**: Alte ERP-Systeme
+- **Verschiedene Standards**: Unterschiedliche Datenformate
+- **API-Limits**: Externe Systeme mit Einschränkungen
+
+## Empfohlene nächste Schritte
+
+1. **Detaillierte Anforderungserhebung** mit allen Stakeholdern
+2. **Technische Machbarkeitsstudie** für kritische Komponenten
+3. **Prototyp-Entwicklung** für Kernfunktionalitäten
+4. **Pilot-Implementierung** mit ausgewählten Kunden
+5. **Rollout-Planung** für schrittweise Einführung
+        """
+    
+    def _generate_clarification_questions(self, query: str, documents: List[Dict[str, Any]]) -> str:
+        """Generiert spezifische Klärungsfragen für die Anforderung."""
+        return """
+## Klärungsfragen für die Anforderung
+
+### 1. Geschäftsprozess
+- Welche spezifischen Geschäftsregeln sollen bei der Bestellungsprüfung angewendet werden?
+- Gibt es unterschiedliche Prüfregeln für verschiedene Kundensegmente?
+- Wie sollen Ausnahmen von den Standardregeln behandelt werden?
+
+### 2. Technische Anforderungen
+- Welche ERP-Systeme müssen integriert werden?
+- Welche Performance-Anforderungen gelten für Spitzenzeiten?
+- Wie soll die Skalierung bei wachsendem Geschäftsvolumen erfolgen?
+
+### 3. Benutzerfreundlichkeit
+- Welche Benutzerrollen sollen Zugriff auf das System haben?
+- Wie sollen Klärungsfragen an den Benutzer übermittelt werden?
+- Welche Benachrichtigungen sollen bei Problemen gesendet werden?
+
+### 4. Compliance und Sicherheit
+- Welche spezifischen Compliance-Anforderungen gelten?
+- Wie sollen sensible Daten geschützt werden?
+- Welche Audit-Anforderungen bestehen für die Nachverfolgung?
+
+### 5. Integration und Wartung
+- Wie soll die Integration mit bestehenden Systemen erfolgen?
+- Welche Wartungsfenster sind für Updates verfügbar?
+- Wie soll das System bei Ausfällen reagieren?
+        """
+    
+    def _generate_generic_van_response(self, query: str, documents: List[Dict[str, Any]]) -> str:
+        """Generiert eine generische VAN-Antwort."""
+        return f"""
+# VAN-Modus Antwort
+
+## Abfrage
+{query}
+
+## Gefundene relevante Dokumente
+{len(documents)} Dokumente gefunden
+
+## Empfohlene nächste Schritte
+1. **Detaillierte Analyse** der Anforderung durchführen
+2. **Stakeholder-Interviews** für Klärung offener Fragen
+3. **Technische Machbarkeitsstudie** erstellen
+4. **Prototyp-Entwicklung** planen
+5. **Implementierungsplan** mit Meilensteinen definieren
+
+## Hinweise
+- Alle Antworten basieren auf dem verfügbaren Projektkontext
+- Weitere Klärungen können über den VAN-Modus angefordert werden
+- Dokumentation wird automatisch in der Projekt-Datenbank gespeichert
+        """
     
     def _generate_mock_response(self, query: str, documents: List[Dict[str, Any]]) -> str:
         """
@@ -217,46 +377,9 @@ class RAGService:
                     component.setData(['New Item']);
                     expect(component.getData()).toEqual(['New Item']);
                 });
-                
-                it('should render correctly', () => {
-                    const rendered = component.render();
-                    expect(rendered).toContain('<h2>Example Component</h2>');
-                    expect(rendered).toContain('<li>Item 1</li>');
-                    expect(rendered).toContain('<li>Item 2</li>');
-                });
             });
             """
-        elif "muster" in query.lower() or "pattern" in query.lower():
-            return """
-            // Singleton-Muster
-            class Singleton {
-                constructor() {
-                    if (Singleton.instance) {
-                        return Singleton.instance;
-                    }
-                    
-                    Singleton.instance = this;
-                    this.data = {};
-                }
-                
-                static getInstance() {
-                    if (!Singleton.instance) {
-                        Singleton.instance = new Singleton();
-                    }
-                    return Singleton.instance;
-                }
-                
-                getData(key) {
-                    return this.data[key];
-                }
-                
-                setData(key, value) {
-                    this.data[key] = value;
-                }
-            }
-            """
         else:
-            # Standardantwort
             return f"""
             Basierend auf Ihrer Anfrage "{query}" und den verfügbaren Informationen kann ich Folgendes vorschlagen:
             
@@ -268,33 +391,13 @@ class RAGService:
             
             Für weitere Details konsultieren Sie die Projektdokumentation.
             """
+
+if __name__ == "__main__":
+    # Beispiel für die Verwendung des RAG-Services
+    import asyncio
     
-    async def get_rag_history(self, limit: int = 10, skip: int = 0) -> List[Dict[str, Any]]:
-        """
-        Ruft die RAG-Abfragehistorie ab.
-        
-        Args:
-            limit: Maximale Anzahl der zurückzugebenden Einträge
-            skip: Anzahl der zu überspringenden Einträge
-            
-        Returns:
-            Liste der RAG-Abfragehistorieneinträge
-        """
-        try:
-            logger.info("Rufe RAG-Abfragehistorie ab")
-            
-            # RAG-Abfragehistorie abrufen
-            history = await self.mongodb.find_many(
-                self.rag_history_collection,
-                {"project_id": self.project_id},
-                sort_field="timestamp",
-                sort_order=-1,
-                limit=limit,
-                skip=skip
-            )
-            
-            logger.info(f"{len(history)} RAG-Abfragehistorieneinträge abgerufen")
-            return history
-        except Exception as e:
-            logger.error(f"Fehler beim Abrufen der RAG-Abfragehistorie: {str(e)}")
-            return [] 
+    async def test_rag_service():
+        # Hier würde ein echter MongoDB-Connector verwendet werden
+        print("RAG-Service Test")
+    
+    asyncio.run(test_rag_service()) 

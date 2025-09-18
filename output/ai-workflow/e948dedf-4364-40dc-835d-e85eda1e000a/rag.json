@@ -1,0 +1,5 @@
+{
+  "status": "stored",
+  "num_chunks": 5000,
+  "vectorstore": "chromadb"
+}

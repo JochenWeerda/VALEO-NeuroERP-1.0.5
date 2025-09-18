@@ -1,80 +1,188 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box, Paper, Typography, Button, FormControlLabel, Switch, Select, MenuItem, Divider, Chip, CircularProgress, Alert } from '@mui/material';
+
+interface SettingsData {
+  mode: 'development' | 'demo' | 'production' | 'training';
+  assistants: {
+    voice: boolean;
+    rag: boolean;
+    vector_backend: 'fallback' | 'faiss' | 'chroma' | 'qdrant';
+    dir_scoped_index: boolean;
+    chroma_enabled: boolean;
+    qdrant_enabled: boolean;
+  };
+  llm: { provider: string; model: string };
+  privacy: { telemetry: boolean };
+}
 
 export const SettingsDashboard: React.FC = () => {
+  const [settings, setSettings] = useState<SettingsData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [hw, setHw] = useState<any>(null);
+  const [suggested, setSuggested] = useState<SettingsData | null>(null);
+  const apiBase: string = (window as any).__VALEO_API_BASE__ || '';
+
+  const loadSettings = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${apiBase}/settings`);
+      const data = await res.json();
+      setSettings(data.data as SettingsData);
+    } catch (e: any) {
+      setError(e?.message || 'Fehler beim Laden');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveSettings = async () => {
+    if (!settings) return;
+    setSaving(true);
+    setError(null);
+    try {
+      await fetch(`${apiBase}/settings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: settings })
+      });
+    } catch (e: any) {
+      setError(e?.message || 'Fehler beim Speichern');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const runAutoConfig = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${apiBase}/autoconfig`);
+      const data = await res.json();
+      setHw(data.hardware);
+      setSuggested(data.suggested);
+      setSettings(data.suggested);
+    } catch (e: any) {
+      setError(e?.message || 'Fehler bei Auto-Konfiguration');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Einstellungen</h1>
-          <p className="text-gray-600">Systemkonfiguration und Benutzerverwaltung</p>
-        </div>
-        <button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
-          <i className="fas fa-save"></i>
-          <span>Speichern</span>
-        </button>
-      </div>
+    <Box sx={{ p: 3 }}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+        <Box>
+          <Typography variant="h5">Programm Einstellungen</Typography>
+          <Typography variant="body2" color="text.secondary">Assistenten, Modi und Auto-Konfiguration</Typography>
+        </Box>
+        <Button variant="contained" onClick={saveSettings} disabled={saving || !settings}>Speichern</Button>
+      </Box>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-              <i className="fas fa-users text-gray-600 text-xl"></i>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900">24</div>
-              <div className="text-sm text-gray-600">Aktive Benutzer</div>
-            </div>
-          </div>
-        </div>
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <i className="fas fa-shield-alt text-blue-600 text-xl"></i>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900">100%</div>
-              <div className="text-sm text-gray-600">Sicherheits-Score</div>
-            </div>
-          </div>
-        </div>
+      {loading && (
+        <Box display="flex" alignItems="center" gap={1} mb={2}>
+          <CircularProgress size={18} />
+          <Typography variant="body2">Lade…</Typography>
+        </Box>
+      )}
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <i className="fas fa-server text-green-600 text-xl"></i>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900">Online</div>
-              <div className="text-sm text-gray-600">System-Status</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {settings && (
+        <Box display="grid" gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }} gap={2}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant="subtitle1">Modus</Typography>
+            <Typography variant="body2" color="text.secondary" mb={1}>Wählen Sie einen Betriebsmodus:</Typography>
+            <Select
+              fullWidth
+              size="small"
+              value={settings.mode}
+              onChange={(e) => setSettings({ ...settings, mode: e.target.value as SettingsData['mode'] })}
+            >
+              <MenuItem value="development">Entwicklung</MenuItem>
+              <MenuItem value="demo">Demonstration (Pitches, Testdaten)</MenuItem>
+              <MenuItem value="production">Produktivsystem (Guided Setup)</MenuItem>
+              <MenuItem value="training">Lern- und Übungsplattform</MenuItem>
+            </Select>
+            <Box mt={1}>
+              <Chip label={settings.mode.toUpperCase()} size="small" />
+            </Box>
+          </Paper>
 
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">System-Informationen</h3>
-        <div className="space-y-4">
-          <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
-            <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-              <i className="fas fa-info-circle text-gray-600"></i>
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">VALEO NeuroERP v2.0</p>
-              <p className="text-xs text-gray-500">Aktuelle Version - Build 2024.12.20</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
-            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-              <i className="fas fa-check-circle text-green-600"></i>
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Alle Module aktiv</p>
-              <p className="text-xs text-gray-500">8 von 8 Modulen sind online</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant="subtitle1">Assistenten</Typography>
+            <FormControlLabel 
+              control={<Switch checked={settings.assistants.voice} onChange={(_, v) => setSettings({ ...settings, assistants: { ...settings.assistants, voice: v } })} />} 
+              label="Sprachassistent aktivieren" 
+            />
+            <FormControlLabel 
+              control={<Switch checked={settings.assistants.rag} onChange={(_, v) => setSettings({ ...settings, assistants: { ...settings.assistants, rag: v } })} />} 
+              label="RAG aktivieren" 
+            />
+            <Divider sx={{ my: 1 }} />
+            <Typography variant="body2" color="text.secondary" mb={1}>Vektor-Backend</Typography>
+            <Select
+              fullWidth
+              size="small"
+              value={settings.assistants.vector_backend}
+              onChange={(e) => setSettings({ ...settings, assistants: { ...settings.assistants, vector_backend: e.target.value as any } })}
+            >
+              <MenuItem value="fallback">BM25 Fallback (Standard)</MenuItem>
+              <MenuItem value="faiss">FAISS (on-demand)</MenuItem>
+              <MenuItem value="chroma">Chroma (on-demand)</MenuItem>
+              <MenuItem value="qdrant">Qdrant (Docker)</MenuItem>
+            </Select>
+            <FormControlLabel 
+              control={<Switch checked={settings.assistants.dir_scoped_index} onChange={(_, v) => setSettings({ ...settings, assistants: { ...settings.assistants, dir_scoped_index: v } })} />} 
+              label="Nur ausgewählte Ordner indizieren" 
+            />
+            <FormControlLabel 
+              control={<Switch checked={settings.assistants.chroma_enabled} onChange={(_, v) => setSettings({ ...settings, assistants: { ...settings.assistants, chroma_enabled: v } })} />} 
+              label="Chroma aktivieren" 
+            />
+            <FormControlLabel 
+              control={<Switch checked={settings.assistants.qdrant_enabled} onChange={(_, v) => setSettings({ ...settings, assistants: { ...settings.assistants, qdrant_enabled: v } })} />} 
+              label="Qdrant aktivieren" 
+            />
+          </Paper>
+
+          <Paper sx={{ p: 2 }}>
+            <Typography variant="subtitle1">LLM</Typography>
+            <Typography variant="body2" color="text.secondary" mb={1}>Modell</Typography>
+            <Select
+              fullWidth
+              size="small"
+              value={settings.llm.model}
+              onChange={(e) => setSettings({ ...settings, llm: { ...settings.llm, model: e.target.value as string } })}
+            >
+              <MenuItem value="gpt-oss-20b-small">gpt-oss-20b-small (empfohlen lokal)</MenuItem>
+            </Select>
+            <Typography variant="caption" color="text.secondary">Provider: {settings.llm.provider}</Typography>
+          </Paper>
+
+          <Paper sx={{ p: 2 }}>
+            <Typography variant="subtitle1">Auto-Konfiguration</Typography>
+            <Typography variant="body2" color="text.secondary" mb={1}>Hardware prüfen und optimale Einstellungen vorschlagen</Typography>
+            <Box display="flex" gap={1}>
+              <Button variant="outlined" onClick={runAutoConfig}>Hardware Check</Button>
+              <Button variant="contained" disabled={!suggested} onClick={saveSettings}>Vorschläge übernehmen</Button>
+            </Box>
+            {hw && (
+              <Box mt={2}>
+                <Typography variant="body2">CPU: {hw.cpu_count} • RAM: {hw.ram_gb ?? '?'} GB • GPU: {hw.has_nvidia ? 'NVIDIA' : 'Nein'}</Typography>
+                <Typography variant="body2">Audio In/Out: {hw.audio_input_available ? 'Ja' : 'Nein'} / {hw.audio_output_available ? 'Ja' : 'Nein'}</Typography>
+                <Typography variant="body2">ffmpeg: {hw.ffmpeg_present ? 'gefunden' : 'fehlt'}</Typography>
+              </Box>
+            )}
+          </Paper>
+        </Box>
+      )}
+    </Box>
   );
 }; 

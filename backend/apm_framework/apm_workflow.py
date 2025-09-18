@@ -70,6 +70,7 @@ class APMWorkflow:
         """
         self.rag_service = rag_service
         self.create_mode.set_rag_service(rag_service)
+        self.van_mode.set_rag_service(rag_service)
         logger.info("RAG-Service für APM-Workflow gesetzt")
     
     async def switch_mode(self, mode: APMMode) -> bool:
@@ -177,12 +178,12 @@ class APMWorkflow:
             logger.error(f"Fehler im IMPLEMENTATION-Modus: {str(e)}")
             raise
     
-    async def run_van(self, implementation_result_id: str) -> Dict[str, Any]:
+    async def run_van(self, requirement_text: str) -> Dict[str, Any]:
         """
         Führt den VAN-Modus aus.
         
         Args:
-            implementation_result_id: ID des IMPLEMENTATION-Ergebnisses
+            requirement_text: Text der Anforderung
             
         Returns:
             Ergebnis des VAN-Modus
@@ -194,7 +195,7 @@ class APMWorkflow:
             await self.switch_mode(APMMode.VAN)
             
             # VAN-Modus ausführen
-            result = await self.van_mode.run(implementation_result_id)
+            result = await self.van_mode.run(requirement_text)
             
             logger.info("VAN-Modus abgeschlossen")
             return result
@@ -218,10 +219,12 @@ class APMWorkflow:
             
             if workflow_data and "current_mode" in workflow_data:
                 mode_value = workflow_data["current_mode"]
-                self.current_mode = APMMode(mode_value)
-                return self.current_mode
-            
-            return self.current_mode
+                try:
+                    return APMMode(mode_value)
+                except Exception:
+                    logger.warning(f"Unbekannter Moduswert in DB: {mode_value}")
+                    return None
+            return None
         except Exception as e:
             logger.error(f"Fehler beim Abrufen des aktuellen Modus: {str(e)}")
             return None 

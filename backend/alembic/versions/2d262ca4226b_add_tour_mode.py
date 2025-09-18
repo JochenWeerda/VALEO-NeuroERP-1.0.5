@@ -9,7 +9,7 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-from app.schemas.odata_schemas import TourMode
+from backend.app.schemas.odata_schemas import TourMode
 
 # revision identifiers, used by Alembic.
 revision: str = '2d262ca4226b'

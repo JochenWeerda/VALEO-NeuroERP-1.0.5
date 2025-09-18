@@ -1,7 +1,20 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Card, Typography, Button, Alert, Box, CircularProgress } from '@mui/material';
 import { CameraAlt as CameraIcon, QrCode as QrCodeIcon } from '@mui/icons-material';
-import Quagga from 'quagga';
+// Quagga Import mit Fallback für ES6-Module
+let Quagga: any = {
+  init: () => Promise.reject(new Error('Quagga nicht verfügbar')),
+  start: () => Promise.reject(new Error('Quagga nicht verfügbar')),
+  stop: () => {},
+  onDetected: () => {}
+};
+
+// Dynamischer Import für ES6-Module
+import('quagga').then(module => {
+  Quagga = module.default || module;
+}).catch(() => {
+  console.warn('Quagga nicht verfügbar - Mock verwendet');
+});
 
 interface BarcodeScannerProps {
   onBarcodeDetected: (barcode: string) => void;

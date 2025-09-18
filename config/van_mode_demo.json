@@ -1,0 +1,5 @@
+{
+  "requirement_text": "Als Disponent im VALEO NeuroERP möchte ich, dass eingehende Kundenbestellungen automatisch auf Vollständigkeit und Plausibilität geprüft werden (z. B. Verfügbarkeit, Lieferadresse, Zahlungsbedingungen). Bei Unklarheiten sollen automatisch präzise Klärungsfragen generiert werden, damit die Bearbeitung ohne manuelle Verzögerungen fortgesetzt werden kann. Zusätzlich sollen nicht-funktionale Anforderungen wie Performance (Antwort < 2s), Nachvollziehbarkeit (Audit Trail) und Sicherheit (RBAC, Maskierung sensibler Daten) berücksichtigt werden."
+}
+
+

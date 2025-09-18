@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Box, CircularProgress } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import { Navigation } from './components/Navigation';
 import { PreloadIndicator } from './components/Navigation';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import OfflineStatusBar from './components/OfflineStatusBar';
+import { ChatSidebar } from './components/ChatSidebar';
 
 // Query Client erstellen
 const queryClient = new QueryClient({
@@ -85,20 +86,47 @@ const theme = createTheme({
   }
 });
 
-const AppContent: React.FC = () => {
-  const { isAuthenticated, loading, logout } = useAuth();
+const AppContentInner: React.FC = () => {
+  const { isAuthenticated, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkFirstRun = async () => {
+      if (!isAuthenticated) return;
+      try {
+        const apiBase: string = (window as any).__VALEO_API_BASE__ || '';
+        const res = await fetch(`${apiBase}/settings`);
+        if (!res.ok) return;
+        const json = await res.json();
+        const s = json?.data || {};
+        if (s.firstRunCompleted === false) {
+          navigate('/first-run', { replace: true });
+        }
+      } catch {
+        // ignore
+      }
+    };
+    checkFirstRun();
+  }, [isAuthenticated, navigate]);
 
   if (loading) {
     return <LoadingSpinner />;
   }
 
   return (
-    <Router>
+    <div data-testid="app-shell">
       <Navigation />
       <PreloadRouter isAuthenticated={isAuthenticated} />
       <PreloadIndicator />
       <OfflineStatusBar />
-    </Router>
+      <ChatSidebar />
+    </div>
+  );
+};
+
+const AppContent: React.FC = () => {
+  return (
+    <AppContentInner />
   );
 };
 

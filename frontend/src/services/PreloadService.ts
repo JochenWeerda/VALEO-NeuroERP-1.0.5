@@ -72,6 +72,13 @@ export const CRITICAL_ROUTES: Record<string, PreloadConfig> = {
     estimatedSize: 65,
     loadTime: 180
   },
+  // NEU: Lieferschein-Route kritisch vorladen
+  '/erp/delivery-note': {
+    priority: 'critical',
+    preloadTrigger: 'immediate',
+    estimatedSize: 40,
+    loadTime: 120
+  },
   '/crm': {
     priority: 'low',
     preloadTrigger: 'intersection',

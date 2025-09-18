@@ -4,17 +4,26 @@ FROM python:3.11-slim
 # Arbeitsverzeichnis setzen
 WORKDIR /app
 
-# System-Abhängigkeiten installieren
+# Systemabhängigkeiten (schlank halten)
 RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Python-Abhängigkeiten kopieren und installieren
-COPY requirements.txt .
+# Logs-Verzeichnis für FileHandler sicherstellen
+RUN mkdir -p /app/logs
+
+# Requirements kopieren und installieren
+COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Anwendungscode kopieren
-COPY . .
+# Anwendungen kopieren (gesamter Build-Kontext ./backend → /app/backend)
+COPY . ./backend
+
+# Env
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
 
 # Port freigeben
 EXPOSE 8000
@@ -24,4 +33,4 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Anwendung starten
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"] 
+CMD ["uvicorn", "backend.api.main:app", "--host", "0.0.0.0", "--port", "8000"] 

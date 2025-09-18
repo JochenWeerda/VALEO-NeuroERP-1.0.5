@@ -11,7 +11,7 @@ from datetime import datetime
 import asyncio
 import logging
 
-from ..services.whatsapp_service import WhatsAppWebService, WhatsAppConfig, WhatsAppAPI
+from backend.services.whatsapp_service import WhatsAppWebService, WhatsAppConfig, WhatsAppAPI
 
 # Router erstellen
 router = APIRouter(prefix="/api/whatsapp", tags=["WhatsApp Integration"])
@@ -473,14 +473,16 @@ async def get_whatsapp_stats(
         )
 
 # Rechtssichere Middleware
-@router.middleware("http")
-async def add_security_headers(request, call_next):
-    """Fügt rechtssichere HTTP-Header hinzu"""
-    response = await call_next(request)
-    
-    # DSGVO-konforme Header
-    response.headers["X-Data-Protection"] = "DSGVO-konform"
-    response.headers["X-Consent-Required"] = "true"
-    response.headers["X-Opt-Out-Enabled"] = "true"
-    
-    return response 
+from starlette.middleware.base import BaseHTTPMiddleware
+from typing import Tuple, Dict, Any, Type
+
+class WhatsAppSecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        response = await call_next(request)
+        response.headers["X-Data-Protection"] = "DSGVO-konform"
+        response.headers["X-Consent-Required"] = "true"
+        response.headers["X-Opt-Out-Enabled"] = "true"
+        return response
+
+def get_whatsapp_security_middleware() -> Tuple[Type[BaseHTTPMiddleware], Dict[str, Any]]:
+    return (WhatsAppSecurityHeadersMiddleware, {}) 

@@ -164,22 +164,24 @@ export const DeliveryNotePage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl" className="py-6">
-      <Typography variant="h4" className="mb-6 text-gray-800">
+    <Container maxWidth="xl" className="py-6" data-testid="delivery-note-page">
+      <Typography variant="h4" className="mb-6 text-gray-800" data-testid="delivery-note-title">
         Lieferanten-Lieferschein
       </Typography>
       
-      <DeliveryNoteForm
-        masterData={masterData}
-        positions={positions}
-        suppliers={mockSuppliers}
-        loading={loading}
-        error={error}
-        onChangeMasterData={handleMasterDataChange}
-        onChangePositions={handlePositionsChange}
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-      />
+      <div data-testid="delivery-note-form-root">
+        <DeliveryNoteForm
+          masterData={masterData}
+          positions={positions}
+          suppliers={mockSuppliers}
+          loading={loading}
+          error={error}
+          onChangeMasterData={handleMasterDataChange}
+          onChangePositions={handlePositionsChange}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+        />
+      </div>
 
       {/* Success Message */}
       <Snackbar

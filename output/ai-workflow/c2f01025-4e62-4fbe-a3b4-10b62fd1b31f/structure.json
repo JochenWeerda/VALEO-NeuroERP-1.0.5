@@ -1,0 +1,3096 @@
+{
+  "architecture_tree": {
+    "requirements.txt": {
+      "__file__": true,
+      "ext": ".txt",
+      "size": 383
+    },
+    "logs": {
+      "backend.log": {
+        "__file__": true,
+        "ext": ".log",
+        "size": 825
+      }
+    },
+    "backend": {
+      "alembic.ini": {
+        "__file__": true,
+        "ext": ".ini",
+        "size": 3843
+      },
+      "ai_backend_test_results.json": {
+        "__file__": true,
+        "ext": ".json",
+        "size": 2017
+      },
+      "start_ip_manager.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1431
+      },
+      "test_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 4702
+      },
+      "observer.log": {
+        "__file__": true,
+        "ext": ".log",
+        "size": 0
+      },
+      "settings.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 2421
+      },
+      "demo_server_celery.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 5261
+      },
+      "start_mcp_server.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1613
+      },
+      "0.104.0": {
+        "__file__": true,
+        "ext": ".0",
+        "size": 1841
+      },
+      "start_observer.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 6725
+      },
+      "valeo_neuroerp.db": {
+        "__file__": true,
+        "ext": ".db",
+        "size": 163840
+      },
+      "ui_metadata_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 21036
+      },
+      "simple_http_finance.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 9672
+      },
+      "quick-update-results.json": {
+        "__file__": true,
+        "ext": ".json",
+        "size": 917
+      },
+      "pytest.ini": {
+        "__file__": true,
+        "ext": ".ini",
+        "size": 538
+      },
+      "test_auth.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 2451
+      },
+      "performance_test.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 9220
+      },
+      "start_erp_system.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 21652
+      },
+      "run_tests.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 14375
+      },
+      "pyproject.toml": {
+        "__file__": true,
+        "ext": ".toml",
+        "size": 2334
+      },
+      "config.env": {
+        "__file__": true,
+        "ext": ".env",
+        "size": 1447
+      },
+      "start_backend.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 7354
+      },
+      "observer_metrics.json": {
+        "__file__": true,
+        "ext": ".json",
+        "size": 681643
+      },
+      "server.log": {
+        "__file__": true,
+        "ext": ".log",
+        "size": 0
+      },
+      "start_observer.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1636
+      },
+      "start_ip_manager_demo.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 2947
+      },
+      "minimal_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 4375
+      },
+      "create_test_user.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 1192
+      },
+      "quick-update-report.md": {
+        "__file__": true,
+        "ext": ".md",
+        "size": 816
+      },
+      "test_ai_apis.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 3413
+      },
+      "theme_service_health_example.js": {
+        "__file__": true,
+        "ext": ".js",
+        "size": 4375
+      },
+      "start_minimal_server_ip.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 2167
+      },
+      "2.9.0": {
+        "__file__": true,
+        "ext": ".0",
+        "size": 134
+      },
+      "observer_requirements.txt": {
+        "__file__": true,
+        "ext": ".txt",
+        "size": 359
+      },
+      "monitor_dashboard.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 24504
+      },
+      "package.json": {
+        "__file__": true,
+        "ext": ".json",
+        "size": 2218
+      },
+      "genxais_integration.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 6924
+      },
+      "env.example": {
+        "__file__": true,
+        "ext": ".example",
+        "size": 1467
+      },
+      "simple_test.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 2225
+      },
+      "simple_mcp_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 11607
+      },
+      "simple_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 3522
+      },
+      "Dockerfile": {
+        "__file__": true,
+        "ext": "",
+        "size": 871
+      },
+      "ip_manager.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 22084
+      },
+      "minimal_server_ip_enabled.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 6301
+      },
+      "dashboard_requirements.txt": {
+        "__file__": true,
+        "ext": ".txt",
+        "size": 303
+      },
+      "observer_service.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 33277
+      },
+      "0.24.0": {
+        "__file__": true,
+        "ext": ".0",
+        "size": 564
+      },
+      "config.env.example": {
+        "__file__": true,
+        "ext": ".example",
+        "size": 736
+      },
+      "start_observer_simple.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 7245
+      },
+      "watchdog.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 12641
+      },
+      "import_handler_template.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 1655
+      },
+      "2.0.0": {
+        "__file__": true,
+        "ext": ".0",
+        "size": 4789
+      },
+      "README_CACHE.md": {
+        "__file__": true,
+        "ext": ".md",
+        "size": 6248
+      },
+      "Dockerfile.middleware": {
+        "__file__": true,
+        "ext": ".middleware",
+        "size": 712
+      },
+      "start_all_services.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 2882
+      },
+      "2.5.0": {
+        "__file__": true,
+        "ext": ".0",
+        "size": 757
+      },
+      "optimizer.log": {
+        "__file__": true,
+        "ext": ".log",
+        "size": 1000
+      },
+      "ip_manager_api.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 8380
+      },
+      "mongodb_connector.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 10494
+      },
+      "start_observer_311_fixed.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 8068
+      },
+      "demo_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 638
+      },
+      "enhanced_cache_manager.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 11935
+      },
+      "start_optimized_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 7257
+      },
+      "modular_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 12615
+      },
+      "performance_benchmark.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 17426
+      },
+      "server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 2109
+      },
+      "start_beleg_service_311.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1499
+      },
+      "init_test_data.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 2363
+      },
+      "mcp_ui_metadata_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 29397
+      },
+      "watchdog_logger.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 6443
+      },
+      "Dockerfile.prod": {
+        "__file__": true,
+        "ext": ".prod",
+        "size": 1578
+      },
+      "simple_finance_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 8962
+      },
+      "ai_test_data.db": {
+        "__file__": true,
+        "ext": ".db",
+        "size": 110592
+      },
+      "mcp_supabase_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 23404
+      },
+      "README_IMPORT_HANDLER.md": {
+        "__file__": true,
+        "ext": ".md",
+        "size": 4003
+      },
+      "__init__.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 353
+      },
+      "simple_auth.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 3009
+      },
+      "README.md": {
+        "__file__": true,
+        "ext": ".md",
+        "size": 2924
+      },
+      "Dockerfile.mcp": {
+        "__file__": true,
+        "ext": ".mcp",
+        "size": 665
+      },
+      "setup_valeo_supabase.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 10099
+      },
+      "observer_config.json": {
+        "__file__": true,
+        "ext": ".json",
+        "size": 1305
+      },
+      "simple_optimizer.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 12878
+      },
+      "1.0.0": {
+        "__file__": true,
+        "ext": ".0",
+        "size": 3421
+      },
+      "libreoffice_processor.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 14425
+      },
+      "start_minimal_server.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1497
+      },
+      "mongodb_restart_manager.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 19497
+      },
+      "van_phase_api.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 6965
+      },
+      "main.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 25735
+      },
+      "setup.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 5962
+      },
+      "start_finance_311.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1518
+      },
+      "cache_manager.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 6911
+      },
+      "start_server.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 805
+      },
+      "requirements.txt": {
+        "__file__": true,
+        "ext": ".txt",
+        "size": 383
+      },
+      "demo_server_celery_enhanced.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 12935
+      },
+      "main_enterprise.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 9020
+      },
+      "observer_starter.log": {
+        "__file__": true,
+        "ext": ".log",
+        "size": 0
+      },
+      "celery_app.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 511
+      },
+      "requirements-jose-33.txt": {
+        "__file__": true,
+        "ext": ".txt",
+        "size": 141
+      },
+      "start_observer.sh": {
+        "__file__": true,
+        "ext": ".sh",
+        "size": 804
+      },
+      "start_observer.bat": {
+        "__file__": true,
+        "ext": ".bat",
+        "size": 819
+      },
+      "tox.ini": {
+        "__file__": true,
+        "ext": ".ini",
+        "size": 2038
+      },
+      "performance_optimizer.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 16068
+      },
+      "start_modular_server.ps1": {
+        "__file__": true,
+        "ext": ".ps1",
+        "size": 1865
+      },
+      "start_middleware.py": {
+        "__file__": true,
+        "ext": ".py",
+        "size": 3420
+      },
+      "data": {
+        "init_finance_data.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6614
+        },
+        "kontenplan.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7312
+        }
+      },
+      "modules": {
+        "thermal_printer_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 22063
+        },
+        "ai_voucher_optimization.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 42896
+        },
+        "tse_integration.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13441
+        },
+        "pos_system.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 25404
+        },
+        "ai_inventory_suggestions.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 31412
+        },
+        "ai_barcode_suggestions.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 22367
+        },
+        "stock_opname_system.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 20330
+        },
+        "voucher_system.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1
+        },
+        "barcode_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12214
+        },
+        "users": {
+          "user_service.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 7986
+          }
+        }
+      },
+      "services": {
+        "rag_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12843
+        },
+        "base_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6898
+        },
+        "transaction_monitoring_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11794
+        },
+        "anomaly_detection_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10299
+        },
+        "emergency_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 33743
+        },
+        "circuit_breaker.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6510
+        },
+        "custom_finance_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3828
+        },
+        "zvoove_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 29832
+        },
+        "report_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12212
+        },
+        "auth_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 15299
+        },
+        "analytics_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9349
+        },
+        "email_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14110
+        },
+        "redis_cluster_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9435
+        },
+        "customer_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12299
+        },
+        "excel_export_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5437
+        },
+        "service_config.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3776
+        },
+        "service_layer.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11242
+        },
+        "sms_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12664
+        },
+        "document_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 17154
+        },
+        "task_queue.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10027
+        },
+        "transaction_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8853
+        },
+        "whatsapp_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 20123
+        },
+        "bulk_processor.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8975
+        },
+        "failover_monitor.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9765
+        },
+        "search_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8525
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 294
+        },
+        "frontend_integration.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9517
+        },
+        "crm_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 25402
+        },
+        "system_monitor_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5686
+        },
+        "faiss_metadata_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9502
+        },
+        "api_gateway.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 15010
+        },
+        "mongodb_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9355
+        },
+        "cache_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13999
+        },
+        "notification_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 33657
+        },
+        "l3_connect.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9957
+        },
+        "ecommerce_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 26221
+        },
+        "beleg_service": {
+          "api.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 14498
+          },
+          "db.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 3912
+          },
+          "models.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 7360
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1
+          },
+          "main.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 163
+          }
+        },
+        "collectors": {
+          "metrics_collector.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 7544
+          }
+        },
+        "ai": {
+          "ai_service.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 8248
+          }
+        },
+        "inventory": {
+          "inventory_service.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 10523
+          }
+        },
+        "diagnosis": {
+          "root_cause_analyzer.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 13775
+          }
+        },
+        "edge_resilience": {
+          "offline_manager.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 10228
+          },
+          "sync_queue.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 27417
+          },
+          "edge_network_resilience.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 12269
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 509
+          },
+          "README.md": {
+            "__file__": true,
+            "ext": ".md",
+            "size": 3816
+          },
+          "tests": {
+            "test_offline_manager.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 6420
+            },
+            "test_edge_network_resilience.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 9378
+            },
+            "__init__.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 115
+            },
+            "test_sync_queue.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 11621
+            }
+          },
+          "examples": {
+            "example_usage.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 4575
+            },
+            "README.md": {
+              "__file__": true,
+              "ext": ".md",
+              "size": 1882
+            }
+          }
+        },
+        "finance": {
+          "finance_service.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 10188
+          }
+        },
+        "detectors": {
+          "anomaly_detector.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 9314
+          }
+        },
+        "consul": {
+          "consul_service.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 9292
+          }
+        }
+      },
+      "utils": {
+        "microservice_register.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14609
+        },
+        "import_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4374
+        },
+        "module_optimizer.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 18296
+        },
+        "module_analyzer.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12290
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1578
+        }
+      },
+      "schemas": {
+        "user.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3311
+        },
+        "reports.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5197
+        },
+        "token.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 151
+        },
+        "partner.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5147
+        },
+        "transaction.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6396
+        },
+        "emergency.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9277
+        },
+        "safety.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3200
+        },
+        "notification.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4079
+        },
+        "qs_futtermittel_schema.json": {
+          "__file__": true,
+          "ext": ".json",
+          "size": 9545
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 271
+        },
+        "zvoove_schemas.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13811
+        },
+        "landhandel.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12530
+        }
+      },
+      "static": {
+        "swagger": {
+          "index.html": {
+            "__file__": true,
+            "ext": ".html",
+            "size": 2038
+          }
+        }
+      },
+      "routers": {
+        "dokumente.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16519
+        }
+      },
+      "models": {
+        "chargen_lager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3665
+        },
+        "user.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2742
+        },
+        "settings.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3575
+        },
+        "qs_futtermittel.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13043
+        },
+        "reports.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3554
+        },
+        "tenant.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3065
+        },
+        "artikel.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19988
+        },
+        "ecommerce.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7027
+        },
+        "partner.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7210
+        },
+        "customer.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4571
+        },
+        "emergency.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11363
+        },
+        "zvoove_models.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4706
+        },
+        "safety.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5111
+        },
+        "search_history.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4154
+        },
+        "notification.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3005
+        },
+        "artikel_stammdaten.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14052
+        },
+        "lager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19115
+        },
+        "finanzen.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12891
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 487
+        },
+        "document.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8071
+        },
+        "crm_models.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10774
+        },
+        "async_task.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8705
+        },
+        "base.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 628
+        },
+        "landhandel.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8708
+        },
+        "transaction_processing": {
+          "transaction_processor.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 12968
+          },
+          "transaction_result.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 3788
+          },
+          "events.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6591
+          },
+          "transaction.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 4648
+          },
+          "models.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 7819
+          },
+          "transaction_status.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 3429
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 557
+          },
+          "batch_processor.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 8464
+          }
+        },
+        "produktion": {
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 21
+          }
+        },
+        "reports": {
+          "mongodb_schemas.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 4287
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 0
+          }
+        },
+        "notfall": {
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 21
+          }
+        }
+      },
+      "db": {
+        "database.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1247
+        },
+        "query_optimizer.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12818
+        },
+        "init_landhandel_data.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7832
+        },
+        "performance_monitor.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19225
+        },
+        "db_optimization.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10440
+        },
+        "init_db.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1662
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 319
+        },
+        "materialized_views.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9682
+        },
+        "base.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1295
+        }
+      },
+      "features": {
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1595
+        }
+      },
+      "search": {
+        "hybrid_search.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7756
+        },
+        "database.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3561
+        },
+        "api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 15474
+        },
+        "security.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8815
+        },
+        "mongodb_setup.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5396
+        },
+        "workflow_config.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5220
+        },
+        "monitoring.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8122
+        },
+        "schemas.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3295
+        },
+        "vector_search.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5749
+        },
+        "config.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3339
+        },
+        "performance.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5370
+        },
+        "main.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2254
+        },
+        "requirements.txt": {
+          "__file__": true,
+          "ext": ".txt",
+          "size": 614
+        },
+        "tests": {
+          "test_api.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 5561
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 46
+          },
+          "test_vector_search.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 4252
+          }
+        }
+      },
+      "venv-jose-33": {
+        "pyvenv.cfg": {
+          "__file__": true,
+          "ext": ".cfg",
+          "size": 343
+        }
+      },
+      "config": {
+        "database.ts": {
+          "__file__": true,
+          "ext": ".ts",
+          "size": 1177
+        }
+      },
+      ".pytest_cache": {
+        ".gitignore": {
+          "__file__": true,
+          "ext": "",
+          "size": 39
+        },
+        "README.md": {
+          "__file__": true,
+          "ext": ".md",
+          "size": 310
+        },
+        "CACHEDIR.TAG": {
+          "__file__": true,
+          "ext": ".tag",
+          "size": 191
+        },
+        "v": {
+          "cache": {
+            "nodeids": {
+              "__file__": true,
+              "ext": "",
+              "size": 10305
+            },
+            "lastfailed": {
+              "__file__": true,
+              "ext": "",
+              "size": 594
+            },
+            "stepwise": {
+              "__file__": true,
+              "ext": "",
+              "size": 2
+            }
+          }
+        }
+      },
+      "components": {
+        "TransactionProcessingComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1334
+        },
+        "DocumentManagementComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1622
+        },
+        "NotificationComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1786
+        },
+        "ReportGenerationComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5693
+        },
+        "UserAuthenticationComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2059
+        },
+        "InventoryManagementComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1530
+        },
+        "DataAnalysisComponent.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4677
+        },
+        "compliance_engine": {
+          "engine.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 9330
+          },
+          "monitoring.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 17530
+          },
+          "validators.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 24043
+          },
+          "models.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 8605
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 425
+          }
+        }
+      },
+      "api": {
+        "inventory_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 15083
+        },
+        "chargen_lager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 30366
+        },
+        "multi_agent_orchestrator.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14761
+        },
+        "ai_inventory_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12419
+        },
+        "users_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 17084
+        },
+        "qs_futtermittel.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 46298
+        },
+        "pos_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 17045
+        },
+        "batch_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9228
+        },
+        "performance_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6804
+        },
+        "purchasing_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16760
+        },
+        "performance_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7873
+        },
+        "safety_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13936
+        },
+        "barcode_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10415
+        },
+        "partner_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14674
+        },
+        "transaction.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5207
+        },
+        "notification_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 21512
+        },
+        "realtime_dashboard_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19620
+        },
+        "production_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19755
+        },
+        "system_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6002
+        },
+        "urls.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 491
+        },
+        "whatsapp_routes.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 15684
+        },
+        "task_endpoints.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2946
+        },
+        "database_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 26248
+        },
+        "health.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6786
+        },
+        "emergency_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 17510
+        },
+        "monitoring.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3281
+        },
+        "crm_routes.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 18187
+        },
+        "chargen_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 82
+        },
+        "ai_voucher_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14523
+        },
+        "autocomplete.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 22575
+        },
+        "anomaly_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11649
+        },
+        "produktion.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 18645
+        },
+        "ai_barcode_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6523
+        },
+        "async_transaction.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7118
+        },
+        "qs_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 82
+        },
+        "quality_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 17138
+        },
+        "admin.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9207
+        },
+        "articles_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 17795
+        },
+        "ai_workflow_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3909
+        },
+        "transaction_processing.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7154
+        },
+        "user_management_routes.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8715
+        },
+        "erp_integration.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19570
+        },
+        "server.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5251
+        },
+        "metrics.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7209
+        },
+        "__init__.py.full_backup": {
+          "__file__": true,
+          "ext": ".full_backup",
+          "size": 2742
+        },
+        "stock_charges_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 20070
+        },
+        "charge_management.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 26188
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 439
+        },
+        "__init__.py.backup": {
+          "__file__": true,
+          "ext": ".backup",
+          "size": 3588
+        },
+        "charges_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 24561
+        },
+        "notifications_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 82
+        },
+        "main.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12552
+        },
+        "auth_routes.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8360
+        },
+        "analytics_routes.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2903
+        },
+        "scanner.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13077
+        },
+        "thermal_printer_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 21605
+        },
+        "database_mapping.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 41986
+        },
+        "v1": {
+          "reports.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 5949
+          },
+          "erp_endpoints.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 7770
+          },
+          "compliance.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 13421
+          },
+          "alerts.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6466
+          },
+          "rag_endpoints.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 5878
+          },
+          "landhandel.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 20955
+          },
+          "endpoints": {
+            "optimized_endpoints.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 9632
+            },
+            "customers.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 13721
+            },
+            "ecommerce.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 13802
+            },
+            "documents.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 7782
+            },
+            "van_phase.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2174
+            },
+            "document_search.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 4862
+            },
+            "workflow.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 13719
+            }
+          }
+        },
+        "demo_data": {
+          "produktions_data.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6959
+          },
+          "chargen_lager_data.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 4718
+          }
+        },
+        "routes": {
+          "external.ts": {
+            "__file__": true,
+            "ext": ".ts",
+            "size": 16835
+          },
+          "reporting.ts": {
+            "__file__": true,
+            "ext": ".ts",
+            "size": 15798
+          },
+          "index.ts": {
+            "__file__": true,
+            "ext": ".ts",
+            "size": 2961
+          }
+        }
+      },
+      "src": {
+        "server.ts": {
+          "__file__": true,
+          "ext": ".ts",
+          "size": 4480
+        }
+      },
+      "monitoring": {
+        "prometheus_exporter.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2483
+        },
+        "metrics.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9869
+        },
+        "middleware.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1229
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 518
+        },
+        "handlers.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1701
+        },
+        "dashboard.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6456
+        }
+      },
+      "auth": {
+        "enterprise_security.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14731
+        },
+        "auth.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3824
+        }
+      },
+      "tests": {
+        "test_basic.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1740
+        },
+        "DocumentManagementComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "ReportGenerationComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "test_compliance_engine.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10363
+        },
+        "test_failover_monitor.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7627
+        },
+        "test_auth_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12531
+        },
+        "test_excel_export_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4753
+        },
+        "NotificationComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "test_crm_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 26181
+        },
+        "test_api_gateway.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11233
+        },
+        "test_app.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 29
+        },
+        "test_cache_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8338
+        },
+        "test_service_integration.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16064
+        },
+        "DataAnalysisComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "test_mcp_mongodb_integration.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9030
+        },
+        "test_transaction_processing.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7434
+        },
+        "test_service_layer.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7084
+        },
+        "test_mongodb_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11427
+        },
+        "test_rag_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8612
+        },
+        "InventoryManagementComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "test_uebergreifende_services_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 28264
+        },
+        "README.md": {
+          "__file__": true,
+          "ext": ".md",
+          "size": 2418
+        },
+        "TransactionProcessingComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "test_finanzbuchhaltung_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 23590
+        },
+        "run_mongodb_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14197
+        },
+        "test_warenwirtschaft_api.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19077
+        },
+        "conftest.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16869
+        },
+        "test_mongodb_integration.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12379
+        },
+        "test_create_mode.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 15040
+        },
+        "UserAuthenticationComponent_test.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 863
+        },
+        "api": {
+          "test_artikel_stammdaten.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 9922
+          },
+          "test_inventory_api.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 7176
+          },
+          "test_inventory_api.md": {
+            "__file__": true,
+            "ext": ".md",
+            "size": 5216
+          }
+        }
+      },
+      "database": {
+        "erp_test_data.sql": {
+          "__file__": true,
+          "ext": ".sql",
+          "size": 11896
+        },
+        "database.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1309
+        },
+        "zvoove_test_data.sql": {
+          "__file__": true,
+          "ext": ".sql",
+          "size": 13886
+        },
+        "models.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5591
+        },
+        "connection_pool.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10261
+        },
+        "migrations": {
+          "pos_system_migration.sql": {
+            "__file__": true,
+            "ext": ".sql",
+            "size": 13667
+          }
+        }
+      },
+      "e-invoicing": {
+        "pom.xml": {
+          "__file__": true,
+          "ext": ".xml",
+          "size": 5868
+        },
+        "src": {
+          "test": {
+            "java": {
+              "com": {
+                "valeo": {
+                  "einvoicing": {
+                    "ComplianceTestSuite.java": {
+                      "__file__": true,
+                      "ext": ".java",
+                      "size": 27165
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "main": {
+            "java": {
+              "com": {
+                "valeo": {
+                  "einvoicing": {
+                    "EInvoicingApplication.java": {
+                      "__file__": true,
+                      "ext": ".java",
+                      "size": 964
+                    },
+                    "controller": {
+                      "EInvoicingController.java": {
+                        "__file__": true,
+                        "ext": ".java",
+                        "size": 10022
+                      }
+                    },
+                    "service": {
+                      "EInvoicingService.java": {
+                        "__file__": true,
+                        "ext": ".java",
+                        "size": 28388
+                      },
+                      "ClaudeFlowService.java": {
+                        "__file__": true,
+                        "ext": ".java",
+                        "size": 27508
+                      }
+                    },
+                    "dto": {
+                      "InvoiceRequest.java": {
+                        "__file__": true,
+                        "ext": ".java",
+                        "size": 4749
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "logs": {
+        "backend.log": {
+          "__file__": true,
+          "ext": ".log",
+          "size": 11260
+        }
+      },
+      "core": {
+        "import_handler.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8535
+        },
+        "routing.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5523
+        },
+        "cache.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1092
+        },
+        "logging_config.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2437
+        },
+        "van_phase_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9840
+        },
+        "exceptions.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1164
+        },
+        "path_registry.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8206
+        },
+        "db.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1339
+        },
+        "error_handling.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1888
+        },
+        "health.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4130
+        },
+        "simple_logging.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 353
+        },
+        "init_system.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3324
+        },
+        "config.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5366
+        },
+        "server.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3426
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1045
+        },
+        "profiling.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4655
+        },
+        "batch_processor.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5097
+        },
+        "celeryconfig.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1033
+        }
+      },
+      "middleware": {
+        "security.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9026
+        },
+        "auth.ts": {
+          "__file__": true,
+          "ext": ".ts",
+          "size": 4382
+        },
+        "errorHandler.ts": {
+          "__file__": true,
+          "ext": ".ts",
+          "size": 2112
+        },
+        "api_gateway.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 13613
+        },
+        "requirements.txt": {
+          "__file__": true,
+          "ext": ".txt",
+          "size": 200
+        }
+      },
+      "scripts": {
+        "test_ai_backend.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16801
+        },
+        "quick_update_check.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8747
+        },
+        "create_ai_test_data.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 18120
+        },
+        "update_matrix.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 10695
+        },
+        "load_erp_test_data.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 19504
+        },
+        "load_zvoove_test_data.ps1": {
+          "__file__": true,
+          "ext": ".ps1",
+          "size": 5487
+        }
+      },
+      "apm_framework": {
+        "erp_workflow.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8008
+        },
+        "rag_service.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11237
+        },
+        "demo.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9118
+        },
+        "core.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8951
+        },
+        "plan_mode.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 30069
+        },
+        "implementation_mode.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 24743
+        },
+        "handover_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 20252
+        },
+        "van_mode.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9402
+        },
+        "reflect_archive_data_loader.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 20159
+        },
+        "create_mode.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 18714
+        },
+        "models.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 6027
+        },
+        "mongodb_connector.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 18869
+        },
+        "rag_service_server.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14014
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1416
+        },
+        "requirements.txt": {
+          "__file__": true,
+          "ext": ".txt",
+          "size": 202
+        },
+        "workflow.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16580
+        },
+        "apm_workflow.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7756
+        }
+      },
+      "backend": {
+        "features": {
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 96
+          },
+          "test_feature": {
+            "__init__.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 32
+            },
+            "services": {
+              "__init__.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 44
+              }
+            },
+            "models": {
+              "__init__.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 42
+              }
+            },
+            "api": {
+              "__init__.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 39
+              }
+            },
+            "tests": {
+              "__init__.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 41
+              }
+            }
+          }
+        }
+      },
+      "alembic": {
+        "env.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2545
+        },
+        "script.py.mako": {
+          "__file__": true,
+          "ext": ".mako",
+          "size": 717
+        },
+        "README": {
+          "__file__": true,
+          "ext": "",
+          "size": 38
+        },
+        "versions": {
+          "000b7ee48002_migration_20250522_090538.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 792
+          },
+          "2d262ca4226b_add_tour_mode.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1124
+          },
+          "e77c8a185a46_migration_20250522_084428.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 15913
+          },
+          "9c70cf8e643c_initial_migration.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 4524
+          }
+        }
+      },
+      "restart_scripts": {
+        "restart_beleg_service.ps1": {
+          "__file__": true,
+          "ext": ".ps1",
+          "size": 2496
+        },
+        "restart_finance_service.ps1": {
+          "__file__": true,
+          "ext": ".ps1",
+          "size": 2557
+        },
+        "restart_observer_service.ps1": {
+          "__file__": true,
+          "ext": ".ps1",
+          "size": 3088
+        }
+      },
+      "migrations": {
+        "versions": {
+          "add_notification_system.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 5483
+          },
+          "add_escalation_management.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 2825
+          }
+        }
+      },
+      "observer_data": {
+        "registered_services.json": {
+          "__file__": true,
+          "ext": ".json",
+          "size": 984
+        }
+      },
+      "workflow": {
+        "core_implementations.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2019
+        },
+        "task_graph.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8559
+        },
+        "task_executor.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3002
+        },
+        "test_implementations.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3028
+        },
+        "agent_communication.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 7408
+        },
+        "feature_implementations.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2984
+        },
+        "manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 5199
+        },
+        "parallel_execution_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 9079
+        },
+        "documentation_implementations.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3273
+        },
+        "agent_manager.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4476
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 335
+        },
+        "optimization_implementations.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 2438
+        },
+        "task_implementations": {
+          "security.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 3246
+          },
+          "monitoring.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 3624
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1050
+          },
+          "performance.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 2762
+          },
+          "workflow.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 3425
+          }
+        }
+      },
+      "app": {
+        "dependencies.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1006
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 1615
+        },
+        "main.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 8815
+        },
+        "docs": {
+          "swagger_ui.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 18296
+          },
+          "openapi_generator.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 34609
+          }
+        },
+        "ai": {
+          "openrouter_client.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 12644
+          },
+          "assistant.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 29365
+          }
+        },
+        "services": {
+          "ai_service.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 15785
+          }
+        },
+        "schemas": {
+          "odata_schemas.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6277
+          },
+          "inventory.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 2921
+          },
+          "auth.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1969
+          },
+          "artikel_stammdaten.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 10538
+          },
+          "crm.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 17908
+          },
+          "uebergreifende_services.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 17153
+          },
+          "finanzen.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6462
+          },
+          "wws.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 4907
+          },
+          "finanzbuchhaltung.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 14975
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1
+          },
+          "warenwirtschaft.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 12776
+          }
+        },
+        "models": {
+          "odata_models.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 2647
+          },
+          "erp.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6381
+          },
+          "crm.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 15812
+          },
+          "uebergreifende_services.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 26538
+          },
+          "finanzen.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 5433
+          },
+          "finanzbuchhaltung.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 16483
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 11390
+          },
+          "wws_models.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 5507
+          },
+          "warenwirtschaft.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 17489
+          },
+          "base.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 601
+          },
+          "uebergreifende_services": {
+            "enums.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 1103
+            },
+            "systemeinstellungen.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 1700
+            },
+            "workflow_engine.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 3073
+            },
+            "benutzerverwaltung.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 5386
+            },
+            "dokumentenverwaltung.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2876
+            },
+            "berichte_analytics.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2628
+            },
+            "monitoring.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2334
+            },
+            "api_management.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2761
+            },
+            "__init__.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 1423
+            },
+            "integration.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2030
+            },
+            "backup_wiederherstellung.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 2065
+            }
+          }
+        },
+        "db": {
+          "database.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 563
+          },
+          "init_test_data.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 17911
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1
+          },
+          "session.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 374
+          },
+          "base.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 438
+          }
+        },
+        "api": {
+          "ai_routes.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 10760
+          },
+          "odata_router.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 11114
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1
+          },
+          "v1": {
+            "api.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 1343
+            },
+            "mcp.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 1618
+            },
+            "endpoints": {
+              "waage.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 5242
+              },
+              "inventory.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 12958
+              },
+              "auth.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 3362
+              },
+              "tse.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 3777
+              },
+              "artikel_stammdaten.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 23492
+              },
+              "crm.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 30202
+              },
+              "uebergreifende_services.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 32369
+              },
+              "finanzen.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 27032
+              },
+              "wws.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 7625
+              },
+              "finanzbuchhaltung.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 25592
+              },
+              "warenwirtschaft.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 25177
+              },
+              "status.py": {
+                "__file__": true,
+                "ext": ".py",
+                "size": 4087
+              }
+            }
+          }
+        },
+        "core": {
+          "security.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1359
+          },
+          "mcp.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 2236
+          },
+          "config.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 800
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1
+          },
+          "llm": {
+            "service.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 3846
+            }
+          },
+          "mcp": {
+            "models.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 986
+            },
+            "service.py": {
+              "__file__": true,
+              "ext": ".py",
+              "size": 3865
+            }
+          }
+        }
+      },
+      "tasks": {
+        "reports.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 12114
+        },
+        "email_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 22476
+        },
+        "report_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 22114
+        },
+        "media_processing_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 23471
+        },
+        "transaction_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 24604
+        },
+        "demo_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 11415
+        },
+        "report_endpoints.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 3800
+        },
+        "periodic_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 35259
+        },
+        "data_import_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 16960
+        },
+        "__init__.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 537
+        },
+        "data_analysis_tasks.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 14094
+        },
+        "celery_app.py": {
+          "__file__": true,
+          "ext": ".py",
+          "size": 4061
+        },
+        "report_tasks": {
+          "report_utils.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 6980
+          },
+          "scheduled_reports.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 33249
+          },
+          "data_visualization.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 28727
+          },
+          "pdf_reports.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 20520
+          },
+          "__init__.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 1969
+          },
+          "excel_exports.py": {
+            "__file__": true,
+            "ext": ".py",
+            "size": 19425
+          }
+        }
+      }
+    }
+  }
+}

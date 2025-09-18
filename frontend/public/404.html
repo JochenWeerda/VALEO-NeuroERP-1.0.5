@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weiterleitung…</title>
+    <script>
+      (function() {
+        try {
+          var target = '/';
+          if (location && location.pathname) {
+            // Optional: Deep-Link-Ziel in Session speichern, damit der Router dorthin navigieren kann
+            sessionStorage.setItem('spa:fallback:path', location.pathname + location.search + location.hash);
+          }
+          window.location.replace(target);
+        } catch (e) {
+          window.location.href = '/';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <a href="/">Zur Startseite</a>
+    </noscript>
+  </body>
+</html>

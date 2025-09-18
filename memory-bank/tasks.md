@@ -1,127 +1,46 @@
-# VALEO-NeuroERP Tasks
+# Aufgabenliste (PLAN)
 
-## VAN (Validierung & Analyse)
+Stand: 2025-08-12
+Modus: PLAN
 
-### Hochpriorität
-- [ ] Performance-Analyse des Compliance-Systems durchführen
-  - Kontext: Aktuelle Latenzzeiten über 2s bei hoher Last
-  - Quelle: Performance-Monitoring
-  - Unteraufgaben:
-    - [ ] Bottleneck-Analyse
-    - [ ] Caching-Strategie entwickeln
-    - [ ] Load-Testing durchführen
+## Priorität P0 – Produktionsreife & Stabilität
+- [ ] Settings-Propagation umsetzen (Backend/Runtime)
+  - **Akzeptanz**: Umschalter (Voice/RAG/Vector-Backend/LLM) wirken konsistent; Status-UI korrekt; ggf. Neustart-Hinweis.
+  - Owner: T.B.D.
+- [ ] RAG-Frontend (Build/Query/Answer) mit Progress & Ordnerauswahl
+  - **Akzeptanz**: Build auf `linkup_mcp` liefert Treffer; Trefferliste inkl. Datei/Zeilen; `/rag/answer` zeigt Antwort.
+  - Owner: T.B.D.
+- [ ] Tests/QA (Unit/Integration/E2E)
+  - **Akzeptanz**: API-Tests für /voice, /settings, /autoconfig, /rag, /biz; E2E: First-Run → Settings → RAG/Voice grün.
+  - Owner: T.B.D.
+- [ ] Sicherheit/DSGVO-Härtung
+  - **Akzeptanz**: API-Key/CORS sauber; Logging minimal; RBAC für sensible Endpunkte.
+  - Owner: T.B.D.
 
-- [ ] Sicherheitsaudit der API-Endpunkte
-  - Kontext: Vorbereitung auf ISO 27001
-  - Quelle: Security-Team
-  - Unteraufgaben:
-    - [ ] Penetrationstests
-    - [ ] OWASP Top 10 Check
-    - [ ] Auth-Flow-Analyse
+## Priorität P1 – Demo & Training
+- [ ] Demo-Daten (SQL + JSON) erweitern und UI-Buttons „Testdaten laden“
+  - **Akzeptanz**: Klick lädt Daten, Dashboard zeigt KPIs.
+  - Owner: T.B.D.
+- [ ] Trainingspfad (Übungen/Walkthrough)
+  - **Akzeptanz**: 2–3 Aufgaben mit Anleitung und Auswertung.
+  - Owner: T.B.D.
 
-### Normalpriorität
-- [ ] Code-Qualitätsanalyse Frontend-Module
-- [ ] Datenbank-Performance-Monitoring
-- [ ] UX-Analyse der neuen Benutzeroberfläche
+## Priorität P1 – Memory-Bank Integration
+- [ ] „Memory Bank aktivieren“ in Einstellungen (init + optional Mongo-Import)
+  - **Akzeptanz**: Struktur erstellt, Status sichtbar; RAG-Build optional über `memory-bank/`.
+  - Owner: T.B.D.
 
-## PLAN (Planung)
+## Priorität P2 – Kommunikation & Refactoring
+- [ ] Tabs „Interner Chat“ und „WhatsApp“ inhaltlich anbinden (Mock → echte Daten)
+  - **Akzeptanz**: Historien sichtbar oder klarer Mock mit Roadmap.
+  - Owner: T.B.D.
+- [ ] Serena/Workflow erweitern (Playbook, Dry-Run-Diffs, selektive Apply)
+  - **Akzeptanz**: Playbook im UI, sichere Teilanwendung möglich.
+  - Owner: T.B.D.
 
-### Hochpriorität
-- [ ] Microservices-Architektur optimieren
-  - Kontext: Service-Mesh Implementierung
-  - Quelle: Architecture Review
-  - Unteraufgaben:
-    - [ ] Service-Boundaries definieren
-    - [ ] API-Gateway-Konzept
-    - [ ] Monitoring-Strategie
+## Abhängigkeiten
+- RAG-Frontend ↔ RAG-API stabil; Settings-Propagation vor E2E-Tests abschließen.
 
-- [ ] Skalierungsstrategie entwickeln
-  - Kontext: Wachstum auf 10k+ Nutzer
-  - Quelle: Product Management
-  - Unteraufgaben:
-    - [ ] Load-Balancing-Konzept
-    - [ ] Caching-Strategie
-    - [ ] Database-Sharding-Plan
-
-### Normalpriorität
-- [ ] CI/CD-Pipeline erweitern
-- [ ] Backup-Strategie überarbeiten
-- [ ] Dokumentations-Framework planen
-
-## CREATE (Entwicklung)
-
-### Hochpriorität
-- [ ] Neue Compliance-Engine-Features
-  - Kontext: Erweiterung für DSGVO
-  - Quelle: Legal Team
-  - Unteraufgaben:
-    - [ ] Regelwerk-Parser
-    - [ ] Validierungs-Pipeline
-    - [ ] Reporting-Module
-
-- [ ] Real-time Notification System
-  - Kontext: Event-driven Architecture
-  - Quelle: Product Backlog
-  - Unteraufgaben:
-    - [ ] WebSocket-Integration
-    - [ ] Message-Queue-Setup
-    - [ ] Client-Side-Handler
-
-### Normalpriorität
-- [ ] Analytics Dashboard erweitern
-- [ ] Mobile-App Prototyp
-- [ ] API-Dokumentation Generator
-
-## IMPLEMENT (Implementierung)
-
-### Hochpriorität
-- [ ] Error-Handling-System implementieren
-  - Kontext: Robustheit verbessern
-  - Quelle: Support-Tickets
-  - Unteraufgaben:
-    - [ ] Global Error Handler
-    - [ ] Retry-Mechanismen
-    - [ ] Logging-Enhancement
-
-- [ ] User-Service Integration
-  - Kontext: SSO-Implementation
-  - Quelle: Auth-Team
-  - Unteraufgaben:
-    - [ ] OAuth2-Flow
-    - [ ] User-Management-API
-    - [ ] Permission-System
-
-### Normalpriorität
-- [ ] Test-Coverage erhöhen
-- [ ] Performance-Optimierungen
-- [ ] Deployment-Automation
-
-## REVIEW (Überprüfung)
-
-### Hochpriorität
-- [ ] Security-Review neuer Features
-  - Kontext: Pre-Release Check
-  - Quelle: Security-Team
-  - Unteraufgaben:
-    - [ ] Code-Review
-    - [ ] Vulnerability-Scan
-    - [ ] Compliance-Check
-
-- [ ] System-Integration-Tests
-  - Kontext: Q4 Release
-  - Quelle: QA-Team
-  - Unteraufgaben:
-    - [ ] E2E-Tests
-    - [ ] Load-Tests
-    - [ ] Regression-Tests
-
-### Normalpriorität
-- [ ] Code-Review-Guidelines aktualisieren
-- [ ] Performance-Benchmark-Review
-- [ ] Documentation-Review
-
-## Workflow-Status
-
-Aktuelle Phase: IMPLEMENT
-Nächste Review: 15.12.2023
-Letzte Aktualisierung: 10.12.2023
+## Hinweise
+- Ressourcen-schonend: BM25 default; Vektordienste on-demand.
+- Voice: Geräte/ffmpeg prüfen; Textmodus-Fallback.

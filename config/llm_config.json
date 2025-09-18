@@ -1,0 +1,79 @@
+{
+  "providers": {
+    "mock": {
+      "name": "Mock LLM",
+      "description": "Für Tests und Entwicklung",
+      "enabled": true,
+      "config": {}
+    },
+    "ollama": {
+      "name": "Ollama (Lokale LLMs)",
+      "description": "Lokale LLMs über Ollama (kostenlos, privat)",
+      "enabled": true,
+      "config": {
+        "base_url": "http://localhost:11434",
+        "default_model": "llama3.2:3b",
+        "available_models": [
+          "llama3.2:3b",
+          "llama3.2:8b", 
+          "llama3.2:70b",
+          "mistral:7b",
+          "codellama:7b",
+          "deepseek-coder:6.7b"
+        ],
+        "api_key_env": "OLLAMA_API_KEY"
+      }
+    },
+    "openai": {
+      "name": "OpenAI GPT-4",
+      "description": "GPT-4 für hochwertige Analysen",
+      "enabled": false,
+      "config": {
+        "model": "gpt-4",
+        "max_tokens": 2000,
+        "temperature": 0.3,
+        "api_key_env": "OPENAI_API_KEY"
+      }
+    },
+    "claude": {
+      "name": "Anthropic Claude",
+      "description": "Claude 3 Sonnet für strukturierte Analysen",
+      "enabled": false,
+      "config": {
+        "model": "claude-3-sonnet-20240229",
+        "max_tokens": 2000,
+        "api_key_env": "ANTHROPIC_API_KEY"
+      }
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "description": "DeepSeek für kostengünstige Analysen",
+      "enabled": false,
+      "config": {
+        "model": "deepseek-chat",
+        "max_tokens": 2000,
+        "temperature": 0.3,
+        "api_key_env": "DEEPSEEK_API_KEY"
+      }
+    }
+  },
+  "default_provider": "ollama",
+  "fallback_to_mock": true,
+  "logging": {
+    "level": "INFO",
+    "log_api_calls": true,
+    "log_responses": false
+  },
+  "rate_limiting": {
+    "requests_per_minute": 60,
+    "requests_per_hour": 1000
+  },
+  "ollama": {
+    "auto_pull_models": true,
+    "model_cache_dir": "~/.ollama/models",
+    "preferred_models": [
+      "llama3.2:3b",
+      "mistral:7b"
+    ]
+  }
+}

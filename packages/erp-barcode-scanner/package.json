@@ -1,0 +1,42 @@
+{
+  "name": "@valeo/erp-barcode-scanner",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Wiederverwendbares ERP-Frontend-Modul für Barcode-Scanning mit QuaggaJS (React + TypeScript)",
+  "type": "module",
+  "sideEffects": false,
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\""
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "optionalDependencies": {
+    "@ericblade/quagga2": "^0.0.21",
+    "quagga": "^0.12.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0"
+  },
+  "keywords": ["barcode", "quagga", "quagga2", "react", "erp", "scanner", "ean-13", "code128"],
+  "license": "MIT"
+}

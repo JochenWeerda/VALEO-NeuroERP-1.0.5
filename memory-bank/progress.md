@@ -1,4 +1,26 @@
-# Fortschrittsverfolgung
+# Fortschritt
+
+Datum: 2025-08-12
+Modus: PLAN (Start)
+
+## Erledigt
+- Voice-Assistent (Intents, Entwurf→Enter buchen, Auto-Modus, API Start/Stop)
+- KI-Chat + Voice-Toggle in rechter Sidebar
+- RAG-API (Build/Query/Answer) + BM25 default
+- Einstellungen (Assistenten/Modus/Vector-Backend/Auto-Config)
+- First-Run Wizard (Auto-Konfig übernehmen)
+- Business-Tools API (Wawi/CRM/FiBu)
+- Vector DB docker-compose (Chroma/Qdrant)
+
+## In Arbeit
+- Settings-Propagation (Runtime-Wirkung)
+- RAG-Frontend (Build/Query/Answer UI)
+- Tests/QA + E2E
+
+## Nächste Schritte
+- Sicherheit/DSGVO-Härtung (CORS, API-Key, RBAC, Logs)
+- Demo-/Trainingsmodus UI-Buttons
+- Memory-Bank-Aktivierung in UI + optional Mongo-Import
 
 ## Gesamtfortschritt
 - **Status:** Implementierung von Kernfunktionen

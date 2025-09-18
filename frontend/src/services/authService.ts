@@ -9,10 +9,10 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   access_token: string;
-  refresh_token: string;
+  refresh_token?: string;
   token_type: string;
-  expires_in: number;
-  user: {
+  expires_in?: number;
+  user?: {
     id: string;
     username: string;
     email: string;
@@ -37,13 +37,25 @@ class AuthService {
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, credentials);
-      const data = response.data;
-      
-      // Tokens speichern
-      localStorage.setItem(this.tokenKey, data.access_token);
-      localStorage.setItem(this.refreshTokenKey, data.refresh_token);
-      
+      // Laufender Server erwartet OAuth2-Form an /token
+      const params = new URLSearchParams();
+      params.append('username', credentials.username);
+      params.append('password', credentials.password);
+
+      const response = await axios.post(`${API_BASE_URL}/token`, params, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+
+      const data: LoginResponse = response.data;
+
+      // Tokens speichern (falls vorhanden)
+      if (data.access_token) {
+        localStorage.setItem(this.tokenKey, data.access_token);
+      }
+      if (data.refresh_token) {
+        localStorage.setItem(this.refreshTokenKey, data.refresh_token);
+      }
+
       return data;
     } catch (error) {
       throw this.handleError(error);
@@ -91,7 +103,7 @@ class AuthService {
   async getCurrentUser(): Promise<User> {
     try {
       const token = this.getAccessToken();
-      const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+      const response = await axios.get(`${API_BASE_URL}/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return response.data;
@@ -109,7 +121,7 @@ class AuthService {
   }
 
   private handleError(error: any): Error {
-    if (error.response?.data?.detail) {
+    if (error?.response?.data?.detail) {
       return new Error(error.response.data.detail);
     }
     return new Error('Ein Fehler ist aufgetreten');

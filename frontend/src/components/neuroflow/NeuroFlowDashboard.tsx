@@ -65,7 +65,7 @@ import { trackComponentLoad } from '../../utils/performance';
 // Lazy Loading für alle Subkomponenten
 const NeuroFlowSupplierForm = lazy(() => import('./NeuroFlowSupplierForm').then(module => ({ default: module.NeuroFlowSupplierForm })));
 const NeuroFlowChargenverwaltung = lazy(() => import('./NeuroFlowChargenverwaltung').then(module => ({ default: module.NeuroFlowChargenverwaltung })));
-const NeuroFlowAutocomplete = lazy(() => import('./NeuroFlowAutocomplete').then(module => ({ default: module.NeuroFlowAutocomplete })));
+import { NeuroFlowAutocomplete } from './NeuroFlowAutocomplete';
 const StreckengeschaeftPage = lazy(() => import('../../pages/StreckengeschaeftPage').then(module => ({ default: module.StreckengeschaeftPage })));
 const EInvoicingPage = lazy(() => import('../e-invoicing/EInvoicingPage'));
 const POSPage = lazy(() => import('../../pages/POS/POSPage'));
@@ -297,7 +297,7 @@ export const NeuroFlowDashboard: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh' }} data-testid="dashboard-root">
       {/* Sidebar */}
       <Box
         sx={{
@@ -389,9 +389,53 @@ export const NeuroFlowDashboard: React.FC = () => {
           </Tabs>
         </Box>
 
-        {/* Tab Content */}
+        {/* App Launcher (Fiori/Odoo Stil) */}
         {activeTab === 0 && (
-          <Grid container spacing={3}>
+          <>
+            <Grid container spacing={2} sx={{ mb: 3 }} data-testid="app-launcher">
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Card data-testid="app-lieferschein" className="hover:shadow-md transition-shadow">
+                  <CardContent onClick={() => (window.location.href = '/erp/delivery-note')} className="flex items-center gap-3 cursor-pointer">
+                    <DescriptionIcon color="primary" />
+                    <Typography variant="h6">Lieferschein</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Card data-testid="app-barcode" className="hover:shadow-md transition-shadow">
+                  <CardContent onClick={() => (window.location.href = '/ai-barcode')} className="flex items-center gap-3 cursor-pointer">
+                    <QrCodeIcon color="primary" />
+                    <Typography variant="h6">Barcode-Scanner</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Card data-testid="app-inventur" className="hover:shadow-md transition-shadow">
+                  <CardContent onClick={() => (window.location.href = '/inventory')} className="flex items-center gap-3 cursor-pointer">
+                    <ShippingIcon color="primary" />
+                    <Typography variant="h6">Inventur & Lager</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Card data-testid="app-dokumente" className="hover:shadow-md transition-shadow">
+                  <CardContent onClick={() => (window.location.href = '/dokumente')} className="flex items-center gap-3 cursor-pointer">
+                    <DescriptionIcon color="primary" />
+                    <Typography variant="h6">Dokumente</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Card data-testid="app-ki" className="hover:shadow-md transition-shadow">
+                  <CardContent onClick={() => (window.location.href = '/ai-dashboard')} className="flex items-center gap-3 cursor-pointer">
+                    <AutoGraphIcon color="primary" />
+                    <Typography variant="h6">KI-Dashboard</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={3}>
             {/* Stats Cards */}
             <Grid item xs={12} md={3}>
               <DashboardCard>
@@ -600,6 +644,7 @@ export const NeuroFlowDashboard: React.FC = () => {
               </DashboardCard>
             </Grid>
           </Grid>
+          </>
         )}
 
         {activeTab === 1 && (
