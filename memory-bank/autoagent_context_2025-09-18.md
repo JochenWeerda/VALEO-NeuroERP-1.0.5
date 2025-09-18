@@ -53,3 +53,4 @@
 - 2025-09-18: Versuch echter Agent-Lauf (python -m autoagent.agent --max-iterations 1), fiel auf Dry-Run zurueck (OPENAI_API_KEY nicht fuer Prozess gesetzt).
 - 2025-09-18: Inventory-/Lot-Coremodelle & Migration (ackend/models/inventory.py, Alembic 1e6d2f80f5a1) umgesetzt; Tests unter ackend/tests_inventory/test_inventory_models.py erfolgreich (7 passed).
 - 2025-09-18: Evaluator auf Inventar-Scopes eingeschränkt (ruff/black/mypy/pytest), alle Checks grün (Coverage 100%).
+- 2025-09-18: Branch bereinigt (output/ und app.db entfernt); force push auf feature/auto-agent erfolgreich.
