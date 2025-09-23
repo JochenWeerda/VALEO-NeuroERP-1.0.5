@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   TextField,
@@ -23,10 +23,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Divider,
-  FormControl,
-  InputLabel,
-  Select,
   MenuItem
 } from '@mui/material';
 import {
@@ -42,10 +38,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useErpStore } from '../../store/erpStore';
-import { 
-  PurchaseOrderData, 
-  PurchaseOrderPosition, 
-  DocumentReference,
+import {
+  PurchaseOrderData,
+  PurchaseOrderPosition,
   PaymentTerms,
   UnitType,
   PaymentMethod
@@ -117,14 +112,10 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
   onCancel
 }) => {
   const {
-    currentPurchaseOrder,
     purchaseOrderLoading,
     purchaseOrderError,
     createPurchaseOrder,
-    updatePurchaseOrder,
-    addPurchaseOrderPosition,
-    updatePurchaseOrderPosition,
-    deletePurchaseOrderPosition
+    updatePurchaseOrder
   } = useErpStore();
 
   const [tabValue, setTabValue] = useState(0);
@@ -144,8 +135,6 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
   const {
     control,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
     reset
   } = useForm<PurchaseOrderData>({
@@ -190,7 +179,6 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
   const handleAddPosition = () => {
     setEditingPosition(null);
     resetPosition({
-      position: positions.length + 1,
       articleNumber: '',
       supplier: '',
       description: '',
@@ -199,9 +187,8 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
       packageUnit: UnitType.PIECE,
       stock: 0,
       price: 0,
-      contract: '',
-      netAmount: 0
-    } as any);
+      contract: ''
+    });
     setPositionDialogOpen(true);
   };
 
@@ -233,19 +220,6 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
     }
     setPositionDialogOpen(false);
     setEditingPosition(null);
-  };
-
-  // Gesamtbeträge berechnen
-  const calculateTotals = () => {
-    const netAmount = positions.reduce((sum, pos) => sum + (pos.quantity * pos.price), 0);
-    const vatAmount = netAmount * 0.19; // 19% MwSt
-    const totalAmount = netAmount + vatAmount;
-    
-    // Diese Felder sind nicht Teil des Hauptforms, daher verwenden wir setValue nicht
-    // Stattdessen speichern wir sie im State
-    (setValue as any)('netAmount', netAmount);
-    (setValue as any)('vatAmount', vatAmount);
-    (setValue as any)('totalAmount', totalAmount);
   };
 
   // Bestellung speichern
@@ -291,7 +265,7 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
       positions: positions.map(pos => ({ ...pos, id: `pos-${Date.now()}-${Math.random()}` }))
     };
     // Verwende die reset Funktion aus dem useForm Hook
-    (reset as any)(copiedOrder as PurchaseOrderData);
+    reset(copiedOrder as PurchaseOrderData);
   };
 
   return (
@@ -638,7 +612,7 @@ export const PurchaseOrder: React.FC<PurchaseOrderProps> = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {positions.map((position, index) => (
+                  {positions.map((position) => (
                     <TableRow key={position.id} className="hover:bg-gray-50">
                       <TableCell>{position.position}</TableCell>
                       <TableCell className="font-mono">{position.articleNumber}</TableCell>
