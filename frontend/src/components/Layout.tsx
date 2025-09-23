@@ -52,6 +52,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { UI_LABELS } from './ui/UIStandardization';
 import { useApi } from '../contexts/ApiContext';
 
+// Hilfstyp und Funktion für flexible Zeitstempel in Benachrichtigungen
+type NotificationLike = {
+  createdAt?: string | number;
+  created_at?: string | number;
+  timestamp?: string | number;
+};
+
+const getNotificationDateText = (n: NotificationLike): string => {
+  const ts = n.createdAt ?? n.created_at ?? n.timestamp ?? Date.now();
+  return new Date(ts).toLocaleString('de-DE');
+};
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -265,7 +277,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Tooltip>
             
           {/* User Menu */}
-          <Tooltip title="Benutzermenü">
+          <Tooltip title={UI_LABELS.NAVIGATION.USER_MENU}>
             <IconButton
               color="inherit"
               onClick={handleUserMenuOpen}
@@ -298,11 +310,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Box display="flex" alignItems="center">
             <BusinessIcon sx={{ mr: 1, color: 'primary.main' }} />
             <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-              VALEO NeuroERP
+              {UI_LABELS.APP.TITLE}
             </Typography>
           </Box>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
-            {user?.name || 'Benutzer'}
+            {user?.name || UI_LABELS.NAVIGATION.USER}
           </Typography>
         </Box>
 
@@ -411,7 +423,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 'semibold', color: 'text.primary' }}>
-            {user?.name || 'Benutzer'}
+            {user?.name || UI_LABELS.NAVIGATION.USER}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {user?.email || 'benutzer@valeo.com'}
@@ -421,20 +433,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Profil" />
+          <ListItemText primary={UI_LABELS.NAVIGATION.PROFILE} />
         </MenuItem>
         <MenuItem onClick={() => { navigate('/settings'); handleUserMenuClose(); }}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <ListItemText primary="Einstellungen" />
+          <ListItemText primary={UI_LABELS.NAVIGATION.SETTINGS} />
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
-          <ListItemText primary="Abmelden" />
+          <ListItemText primary={UI_LABELS.NAVIGATION.LOGOUT} />
         </MenuItem>
       </Menu>
 
@@ -456,7 +468,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 'semibold', color: 'text.primary' }}>
-            Benachrichtigungen
+            {UI_LABELS.NOTIFICATIONS.TITLE}
           </Typography>
         </Box>
         {notifications.length > 0 ? (
@@ -467,7 +479,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   {notification.message}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  {new Date((notification as any).createdAt ?? (notification as any).timestamp ?? Date.now()).toLocaleString('de-DE')}
+                  {getNotificationDateText(notification as NotificationLike)}
                 </Typography>
               </Box>
             </MenuItem>
@@ -475,7 +487,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         ) : (
           <MenuItem disabled>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Keine Benachrichtigungen
+              {UI_LABELS.NOTIFICATIONS.NO_NOTIFICATIONS}
             </Typography>
           </MenuItem>
         )}
@@ -490,7 +502,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               }}
               onClick={() => { navigate('/notifications'); handleNotificationsClose(); }}
             >
-              Alle anzeigen
+              {UI_LABELS.NOTIFICATIONS.VIEW_ALL}
             </Typography>
           </Box>
         )}
