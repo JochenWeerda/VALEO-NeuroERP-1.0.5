@@ -60,13 +60,13 @@ const NavigationContent: React.FC = () => {
     },
     {
       path: '/ai-dashboard',
-      label: 'KI-Dashboard',
+      label: UI_LABELS.NAVIGATION.AI_DASHBOARD,
       icon: AutoAwesomeIcon,
       priority: 'high'
     },
     {
       path: '/dokumente',
-      label: 'Dokumente',
+      label: UI_LABELS.NAVIGATION.DOCUMENTS,
       icon: DescriptionIcon,
       priority: 'high'
     },
@@ -84,7 +84,7 @@ const NavigationContent: React.FC = () => {
     },
     {
       path: '/pos',
-      label: 'POS-System',
+      label: UI_LABELS.NAVIGATION.POS,
       icon: ShoppingCartIcon,
       priority: 'high'
     },
@@ -187,7 +187,7 @@ const NavigationContent: React.FC = () => {
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="Menü öffnen"
+            aria-label={UI_LABELS.NAVIGATION.OPEN_MENU}
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { md: 'none' } }}
@@ -196,7 +196,7 @@ const NavigationContent: React.FC = () => {
           </IconButton>
 
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            VALEO NeuroERP
+            {UI_LABELS.APP.TITLE}
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
