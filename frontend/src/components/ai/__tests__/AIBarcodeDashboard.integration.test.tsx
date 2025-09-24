@@ -324,7 +324,7 @@ describe('AIBarcodeDashboard Integration Tests', () => {
     it('zeigt Offline-Status bei fehlender Verbindung', async () => {
       (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
-      const offlineHooks = require('../../../hooks/useOffline');
+      const offlineHooks = await import('../../../hooks/useOffline');
       offlineHooks.useOffline.mockReturnValue({
         isOnline: false,
         isOffline: true,

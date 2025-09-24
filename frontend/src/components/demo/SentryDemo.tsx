@@ -18,7 +18,7 @@ export const SentryDemo: React.FC = () => {
   const [lastAction, setLastAction] = useState<string>('');
 
   // Demo-Funktionen
-  const triggerJavaScriptError = (...args[]) => {
+  const triggerJavaScriptError = () => {
     addBreadcrumb('Benutzer hat JavaScript-Fehler ausgelöst', 'user-action');
     setLastAction('JavaScript-Fehler ausgelöst');
     

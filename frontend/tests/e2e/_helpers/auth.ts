@@ -85,9 +85,9 @@ export async function login(page: Page, email: string, password: string) {
 
   // Quagga-Stub: falls im Browser nicht vorhanden, bereitstellen
   await page.addInitScript(() => {
-    // @ts-ignore
+    // @ts-expect-error - Quagga is a browser library
     if (!(window as any).Quagga) {
-      // @ts-ignore
+      // @ts-expect-error - Adding Quagga to window object
       (window as any).Quagga = {
         init: (_cfg: any, cb?: (err?: any) => void) => { cb && cb(); },
         start: () => {},
@@ -103,7 +103,7 @@ export async function login(page: Page, email: string, password: string) {
   if (useRealApi) {
     // Frontend-API-Basis für echte Requests
     await page.addInitScript((apiBase: string) => {
-      // @ts-ignore
+      // @ts-expect-error - Setting global API base
       (window as any).__VALEO_API_BASE__ = apiBase;
     }, PW_API_BASE);
 
@@ -112,7 +112,9 @@ export async function login(page: Page, email: string, password: string) {
       await page.request.post(`${PW_API_URL}/api/v1/auth/register`, {
         data: { username: email, email, full_name: 'Test User', password, role: 'admin' }
       });
-    } catch {}
+    } catch {
+      // User registration failed, continue with login attempt
+    }
     try {
       const resp = await page.request.post(`${PW_API_URL}/token`, {
         form: { username: email, password }
