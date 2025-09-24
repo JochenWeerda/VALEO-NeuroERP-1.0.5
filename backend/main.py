@@ -8,6 +8,8 @@ import os
 import sys
 import logging
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.responses import Response, FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import List, Dict, Any, Optional
@@ -92,6 +94,14 @@ except ImportError:
 AI_APIS_AVAILABLE = True
 logger.info("KI-APIs werden direkt implementiert")
 
+# AI-Workflow Router importieren
+try:
+    from api.ai_workflow_api import router as ai_workflow_router
+    AI_WORKFLOW_AVAILABLE = True
+except Exception as e:
+    AI_WORKFLOW_AVAILABLE = False
+    logger.warning("AI-Workflow Router nicht verfügbar: %s", e)
+
 # Anwendung erstellen
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -126,6 +136,15 @@ app.add_middleware(
     max_age=settings.CORS_MAX_AGE
 )
 
+# Statische Dateien (optional): bediene öffentliche Assets, falls vorhanden
+try:
+    if os.path.isdir("public"):
+        app.mount("/static", StaticFiles(directory="public"), name="public")
+    if os.path.isdir("frontend/public"):
+        app.mount("/frontend-static", StaticFiles(directory="frontend/public"), name="frontend_public")
+except Exception as _e:
+    logger.warning("Static files mount fehlgeschlagen: %s", _e)
+
 # Auth Routes hinzufügen
 if AUTH_ROUTES_AVAILABLE:
     app.include_router(auth_router, prefix="/auth", tags=["authentication"])
@@ -140,6 +159,11 @@ if USER_MANAGEMENT_AVAILABLE:
 if CRM_ROUTES_AVAILABLE:
     app.include_router(crm_router, tags=["Customer Management"])
     logger.info("CRM Routes hinzugefügt")
+
+# AI-Workflow Router hinzufügen
+if AI_WORKFLOW_AVAILABLE:
+    app.include_router(ai_workflow_router)
+    logger.info("AI-Workflow Router hinzugefügt")
 
 # VAN Phase API Router hinzufügen
 if VAN_PHASE_AVAILABLE:
@@ -244,6 +268,19 @@ def get_current_active_user(current_user: User = Depends(get_current_user)):
 @app.get("/")
 async def root():
     return {"message": "Willkommen bei der VALEO-NeuroERP API"}
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    """Favicon bereitstellen (falls vorhanden); sonst 204 zurückgeben, um 404 zu vermeiden."""
+    candidates = [
+        os.path.join("public", "favicon.ico"),
+        os.path.join("frontend", "public", "favicon.ico"),
+        os.path.join("frontend", "dist", "favicon.ico"),
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return FileResponse(path, media_type="image/x-icon")
+    return Response(status_code=204)
 
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):

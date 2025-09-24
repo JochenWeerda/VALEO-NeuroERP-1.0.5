@@ -23,8 +23,10 @@ services:
       - TZ=Europe/Berlin
       - PYTHONPATH=/app
       - ENVIRONMENT=production
+      - USE_MOCK_DATA=true
+      - DATABASE_URL=sqlite+aiosqlite:///tmp/valeo.db
     volumes:
-      - ./backend:/app
+      - ./:/app
       - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:

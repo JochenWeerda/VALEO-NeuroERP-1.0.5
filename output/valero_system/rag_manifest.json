@@ -1,0 +1,8 @@
+{
+  "db_dir": "C:\\Users\\Jochen\\VALEO-NeuroERP-2.0\\data\\faiss_db",
+  "backend": "hf",
+  "hf_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "vectorstore": false,
+  "vector_backend": "fallback",
+  "fallback_docs": 821120
+}

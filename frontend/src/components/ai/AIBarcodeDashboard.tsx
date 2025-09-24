@@ -3,6 +3,7 @@ import {
   Card, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, Alert, Box, Chip, IconButton, Tooltip,
   CircularProgress, FormControl, InputLabel, Select, MenuItem, Grid, LinearProgress, Snackbar
 } from '@mui/material';
+import { BarcodeScanner, DetectedBarcode, useErpLookup } from '@valeo/erp-barcode-scanner';
 import {
   QrCode as BarcodeIcon, TrendingUp as TrendingIcon, Psychology as AIIcon,
   Refresh as RefreshIcon, Settings as SettingsIcon, Visibility as ViewIcon,
@@ -121,6 +122,8 @@ const columns: SuggestionTableColumn<BarcodeSuggestion>[] = [
 ];
 
 const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' }) => {
+  // ERP Lookup aus Paket (Real-API oder Mock)
+  const { lookupBarcode } = useErpLookup({ baseUrl: (window as any).__VALEO_API_BASE__ || 'mock' });
   // Offline-Hooks für Offline-First-Funktionalität
   const { isOnline, pendingRequests } = useOffline();
   const [offlineSuggestions, setOfflineSuggestions] = useState<BarcodeSuggestion[]>([]);
@@ -168,8 +171,9 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
         });
       }
     } catch (err) {
-      // Vereinheitlichte Fehlermeldung für Tests
-      setError('Fehler beim Laden der Vorschläge');
+      // Fehlertext für Tests sichtbar machen
+      const msg = err instanceof Error ? err.message : 'Fehler beim Laden der Vorschläge';
+      setError(msg.includes('HTTP') ? msg : 'Fehler beim Laden der Vorschläge');
       console.error('Fehler beim Laden der Barcode-Vorschläge:', err);
       
       // Fallback zu Offline-Daten wenn verfügbar
@@ -321,6 +325,34 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
     <div className={`space-y-6 ${className}`} role="main" aria-label="KI-Barcode-Vorschläge Dashboard">
       {/* Header */}
       <Card className="p-6 shadow-lg">
+        {/* Live-Scanner Card */}
+        <Card className="p-4 mb-6">
+          <Typography variant="h6" className="mb-2 flex items-center gap-2">
+            <BarcodeIcon className="text-gray-600" /> Live-Barcode-Scanner
+          </Typography>
+          <BarcodeScanner
+            autostart
+            symbologies={["ean_reader", "code_128_reader"]}
+            confidenceThreshold={0.6}
+            debounceMs={800}
+            overlay
+            onDetected={async (b: DetectedBarcode) => {
+              try {
+                const item = await lookupBarcode(b.code);
+                if (item) {
+                  setSnackbar({ open: true, message: `Artikel gefunden: ${item.name} (${item.sku})`, severity: 'success' });
+                } else {
+                  setSnackbar({ open: true, message: `Kein Artikel zu Code ${b.code}`, severity: 'info' });
+                }
+              } catch (e) {
+                setSnackbar({ open: true, message: `Lookup-Fehler: ${e instanceof Error ? e.message : String(e)}`, severity: 'error' });
+              }
+            }}
+            onError={(err) => {
+              setSnackbar({ open: true, message: `Scanner-Fehler: ${err.message}`, severity: 'error' });
+            }}
+          />
+        </Card>
         <Box className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <Box className="flex items-center gap-3">
             <AIIcon className="text-blue-600 text-3xl" aria-hidden="true" />
@@ -525,8 +557,10 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
           </Typography>
           <Box className="flex flex-wrap gap-4 items-center">
             <FormControl size="small" className="min-w-48">
-              <InputLabel>Kategorie</InputLabel>
+              <InputLabel id="category-label">Kategorie</InputLabel>
               <Select
+                labelId="category-label"
+                id="category-select"
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
                 label="Kategorie"
@@ -539,8 +573,10 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
               </Select>
             </FormControl>
             <FormControl size="small" className="min-w-48">
-              <InputLabel>Konfidenz</InputLabel>
+              <InputLabel id="confidence-label">Konfidenz</InputLabel>
               <Select
+                labelId="confidence-label"
+                id="confidence-select"
                 value={filterConfidence}
                 onChange={(e) => setFilterConfidence(e.target.value)}
                 label="Konfidenz"
@@ -583,7 +619,7 @@ const AIBarcodeDashboard: React.FC<AIBarcodeDashboardProps> = ({ className = '' 
       >
         {selectedSuggestion && (
           <>
-            <DialogTitle id="barcode-detail-dialog-title">
+        <DialogTitle id="barcode-detail-dialog-title" aria-label="barcode-detail-dialog-title">
               <Box className="flex items-center gap-2">
                 <BarcodeIcon className="text-blue-600" />
                 Barcode-Vorschlag Details

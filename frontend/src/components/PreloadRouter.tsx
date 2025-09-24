@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useMemo } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
 // ✅ NEU: Import der standardisierten UI-Komponenten
 import { UI_LABELS } from './ui/UIStandardization';
@@ -56,6 +56,12 @@ const AIDashboard = lazyWithPreload(
 const DokumentePage = lazyWithPreload(
   () => import('../pages/DokumentePage'),
   '/dokumente'
+);
+
+// NEU: Delivery Note Page (Lieferschein)
+const DeliveryNotePage = lazyWithPreload(
+  () => import('../pages/erp/DeliveryNotePage').then(m => ({ default: m.DeliveryNotePage })),
+  '/erp/delivery-note'
 );
 
 // Loading Component für Routen mit Preload-Status
@@ -239,13 +245,20 @@ export const PreloadRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => 
       routeName: UI_LABELS.NAVIGATION.DOCUMENTS,
       protected: true,
       route: '/dokumente'
+    },
+    // NEU: Lieferschein/Delivery Note Route
+    {
+      path: '/erp/delivery-note',
+      component: DeliveryNotePage.Component,
+      routeName: 'Lieferschein',
+      protected: true,
+      route: '/erp/delivery-note'
     }
   ], []);
 
   return (
-    <Router>
-      <NavigationObserver>
-        <Routes>
+    <NavigationObserver>
+      <Routes>
           {routes.map(({ path, component: Component, routeName, protected: isProtected, route }) => (
             <Route
               key={path}
@@ -278,7 +291,6 @@ export const PreloadRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => 
           />
         </Routes>
       </NavigationObserver>
-    </Router>
   );
 };
 

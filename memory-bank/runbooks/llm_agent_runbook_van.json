@@ -1,0 +1,53 @@
+{
+  "objective": "Stabile, fehlerfreie UI/UX, E2E-Tests, BI-Export und Predictive-Economy-MVP für VALEO NeuroERP (VAN)",
+  "constraints": {
+    "priority": ["bugfix-first", "e2e-coverage", "export-verification"],
+    "providers": {"default": "ollama", "compare": ["openai"], "modelHints": {"openai": "gpt-5"}},
+    "tokenBudget": {"default": 4000, "subagents": 2000}
+  },
+  "env": {
+    "MONGODB_URI": "mongodb://localhost:27017/",
+    "MONGODB_DB": "valeo_neuroerp",
+    "APM_PROJECT_ID": "demo-project-van",
+    "LLM_PROVIDER": "ollama",
+    "OLLAMA_MODEL": "llama3.2:3b"
+  },
+  "phases": [
+    {"name": "phase-0", "tasks": [
+      "Setup Playwright, seeds/fixtures, baseline a11y & responsive",
+      "Export-Helper CSV/PNG + LibreOffice call"
+    ]},
+    {"name": "phase-1", "tasks": [
+      "Navigation-Journeys (Belegfolge) implement + E2E",
+      "Breadcrumbs, back/forward stabilisieren, guards"
+    ]},
+    {"name": "phase-2", "tasks": [
+      "CRUD-Harness + optimistic update/rollback",
+      "Validation & error feedback"
+    ]},
+    {"name": "phase-3", "tasks": [
+      "BI chart regression (screenshots)",
+      "Export CSV/PNG + LibreOffice automation"
+    ]},
+    {"name": "phase-4", "tasks": [
+      "Predictive economy heuristic + eval",
+      "UI recommendations widget"
+    ]},
+    {"name": "phase-5", "tasks": [
+      "CI gates, RBAC negative tests, docs"
+    ]}
+  ],
+  "subagents": [
+    {"name": "nav-tester", "role": "E2E navigation & workflow", "budget": 2000},
+    {"name": "crud-tester", "role": "Form CRUD + optimistic", "budget": 2000},
+    {"name": "bi-tester", "role": "Charts, export, perf", "budget": 2000},
+    {"name": "a11y-tester", "role": "Accessibility & responsive", "budget": 1000},
+    {"name": "predictor", "role": "Predictive economy heuristics", "budget": 2000}
+  ],
+  "successCriteria": {
+    "e2ePassRate": ">=95%",
+    "noHighSeverityBugs": true,
+    "exportVerified": true,
+    "predictiveMvp": true
+  }
+}

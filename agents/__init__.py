@@ -184,7 +184,7 @@ class DeveloperAgent(BaseAgent):
     async def _review_code(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Review code for quality and issues."""
         # Simulate code review
-        code = task.get('code', '')
+        _code = task.get('code', '')
         
         return {
             'status': 'completed',
@@ -196,8 +196,8 @@ class DeveloperAgent(BaseAgent):
     async def _debug_code(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Debug code and identify issues."""
         # Simulate debugging
-        code = task.get('code', '')
-        error = task.get('error', '')
+        _code = task.get('code', '')
+        _error = task.get('error', '')
         
         return {
             'status': 'completed',

@@ -30,6 +30,8 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+        // Lokales Paket im Dev-Modus direkt aus src auflösen (keine Publish-Erfordernis)
+        '@valeo/erp-barcode-scanner': path.resolve(__dirname, '../packages/erp-barcode-scanner/src')
       },
     },
     build: {

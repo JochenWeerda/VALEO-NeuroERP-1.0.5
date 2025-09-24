@@ -1,9 +1,5 @@
-"""
-LinkUP MCP (Model-Controller-Pipeline) Framework für VALEO-NeuroERP
-
-Dieses Framework stellt die Grundlage für die Pipeline-basierte Verarbeitung
-im VALEO-NeuroERP-System bereit.
-"""
+# -*- coding: utf-8 -*-
+"""VALERO linkup_mcp package initializer."""
 
 __version__ = "1.8.1"
 __author__ = "VALEO-NeuroERP Team"

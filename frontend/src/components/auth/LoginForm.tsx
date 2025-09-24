@@ -68,12 +68,13 @@ const LoginForm: React.FC = () => {
               margin="normal"
               required
               disabled={loading}
+              autoComplete="username"
             />
 
             <TextField
               fullWidth
               label="Passwort"
-              type="password"
+              type="password" autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               margin="normal"

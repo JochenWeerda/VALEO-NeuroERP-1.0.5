@@ -3,34 +3,49 @@ import logging
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timedelta
 import uuid
+import os
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 from sqlalchemy.orm import sessionmaker
 
 # Import models
-from models.crm_models import (
+from backend.models.crm_models import (
     Customer, ContactPerson, CustomerCommunication, Offer, Order, Invoice,
     CustomerDocument, DirectBusiness, ExternalStock, Deal, Supplier,
     CustomerSegment, CommunicationType, CommunicationStatus, CommunicationOutcome
 )
 
+# Import ORM models
+from backend.database.orm_models import CustomerORM, ContactPersonORM, CustomerCommunicationORM
+
 # Import database
-from database.database import get_database_session
+from backend.database.database import AsyncSessionLocal
 
 logger = logging.getLogger(__name__)
 
 class CRMService:
     def __init__(self):
-        self.db_session = get_database_session()
+        # Umschaltung: Mock-Daten nur wenn explizit aktiviert
+        self.use_mocks = os.getenv("USE_MOCK_DATA", "false").strip().lower() == "true"
         
-        # Mock data for development
-        self._mock_customers = self._create_mock_customers()
-        self._mock_contacts = self._create_mock_contacts()
-        self._mock_communications = self._create_mock_communications()
-        self._mock_offers = self._create_mock_offers()
-        self._mock_orders = self._create_mock_orders()
-        self._mock_invoices = self._create_mock_invoices()
-        self._mock_documents = self._create_mock_documents()
+        if self.use_mocks:
+            # Mock data for development
+            self._mock_customers = self._create_mock_customers()
+            self._mock_contacts = self._create_mock_contacts()
+            self._mock_communications = self._create_mock_communications()
+            self._mock_offers = self._create_mock_offers()
+            self._mock_orders = self._create_mock_orders()
+            self._mock_invoices = self._create_mock_invoices()
+            self._mock_documents = self._create_mock_documents()
+        else:
+            # In Produktion/realem Betrieb keine Mocks laden
+            self._mock_customers: List[Customer] = []
+            self._mock_contacts: List[ContactPerson] = []
+            self._mock_communications: List[CustomerCommunication] = []
+            self._mock_offers: List[Offer] = []
+            self._mock_orders: List[Order] = []
+            self._mock_invoices: List[Invoice] = []
+            self._mock_documents: List[CustomerDocument] = []
 
     def _create_mock_customers(self) -> List[Customer]:
         """Create mock customer data for development"""
@@ -133,7 +148,7 @@ class CRMService:
                 email="hans.mueller@musterfirma.de",
                 whatsapp="+49 123 456789",
                 isPrimary=True,
-                contactWeekdays=["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
+                contactWeekdays=["monday", "tuesday", "wednesday", "thursday", "friday"],
                 notes="Hauptansprechpartner für alle geschäftlichen Angelegenheiten",
                 createdAt="2023-01-01",
                 updatedAt="2024-01-20"
@@ -149,7 +164,7 @@ class CRMService:
                 email="maria.schmidt@musterfirma.de",
                 whatsapp="+49 123 456790",
                 isPrimary=False,
-                contactWeekdays=["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
+                contactWeekdays=["monday", "tuesday", "wednesday", "thursday", "friday"],
                 notes="Zuständig für alle Einkaufsentscheidungen",
                 createdAt="2023-02-01",
                 updatedAt="2024-01-20"
@@ -169,7 +184,7 @@ class CRMService:
                 status=CommunicationStatus.DELIVERED,
                 outcome=CommunicationOutcome.POSITIVE,
                 attachments=[],
-                from_="System",
+                **{"from": "System"},
                 to="Musterfirma GmbH",
                 priority="medium",
                 createdBy="System",
@@ -185,7 +200,7 @@ class CRMService:
                 status=CommunicationStatus.SENT,
                 outcome=CommunicationOutcome.NEUTRAL,
                 attachments=[],
-                from_="vertrieb@valeo.de",
+                **{"from": "vertrieb@valeo.de"},
                 to="hans.mueller@musterfirma.de",
                 priority="low",
                 createdBy="Max Mustermann",
@@ -204,7 +219,7 @@ class CRMService:
                 description="Komplette Maschinenausstattung für die Produktionshalle",
                 totalAmount=50000,
                 currency="EUR",
-                status="DRAFT",
+                status="draft",
                 validUntil="2024-02-20",
                 createdAt="2024-01-15",
                 updatedAt="2024-01-15"
@@ -222,7 +237,7 @@ class CRMService:
                 description="Bestellung der angebotenen Maschinenausstattung",
                 totalAmount=50000,
                 currency="EUR",
-                status="CONFIRMED",
+                status="confirmed",
                 orderDate="2024-01-20",
                 deliveryDate="2024-02-15",
                 createdAt="2024-01-20",
@@ -241,7 +256,7 @@ class CRMService:
                 description="Rechnung für die gelieferte Maschinenausstattung",
                 totalAmount=50000,
                 currency="EUR",
-                status="PAID",
+                status="paid",
                 invoiceDate="2024-02-01",
                 dueDate="2024-03-01",
                 paidDate="2024-02-15",
@@ -261,8 +276,8 @@ class CRMService:
                 fileName="vertrag_maschinenausstattung.pdf",
                 fileSize=1024000,
                 mimeType="application/pdf",
-                category="CONTRACT",
-                status="ACTIVE",
+                category="contract",
+                status="active",
                 uploadDate="2024-01-15",
                 createdAt="2024-01-15",
                 updatedAt="2024-01-15"
@@ -279,28 +294,97 @@ class CRMService:
     ) -> List[Customer]:
         """Get customers with optional filtering"""
         try:
-            # For now, return mock data
-            # TODO: Implement database queries
-            customers = self._mock_customers.copy()
+            if self.use_mocks:
+                # Mock implementation
+                customers = self._mock_customers.copy()
+                
+                # Apply filters
+                if search:
+                    search_lower = search.lower()
+                    customers = [
+                        c for c in customers
+                        if search_lower in c.name.lower() or
+                           search_lower in c.customerNumber.lower() or
+                           search_lower in (c.email or "").lower()
+                    ]
+                
+                if status:
+                    customers = [c for c in customers if c.status == status]
+                
+                if segment:
+                    customers = [c for c in customers if c.customerSegment == segment]
+                
+                # Apply pagination
+                return customers[skip:skip + limit]
             
-            # Apply filters
-            if search:
-                search_lower = search.lower()
-                customers = [
-                    c for c in customers
-                    if search_lower in c.name.lower() or
-                       search_lower in c.customerNumber.lower() or
-                       search_lower in c.email.lower()
-                ]
-            
-            if status:
-                customers = [c for c in customers if c.status == status]
-            
-            if segment:
-                customers = [c for c in customers if c.customerSegment == segment]
-            
-            # Apply pagination
-            return customers[skip:skip + limit]
+            else:
+                # Real database implementation
+                async with AsyncSessionLocal() as session:
+                    query = select(CustomerORM)
+                    
+                    # Apply filters
+                    if search:
+                        search_lower = f"%{search.lower()}%"
+                        query = query.where(
+                            CustomerORM.name.ilike(search_lower) |
+                            CustomerORM.customerNumber.ilike(search_lower) |
+                            CustomerORM.email.ilike(search_lower)
+                        )
+                    
+                    if status:
+                        query = query.where(CustomerORM.status == status)
+                    
+                    if segment:
+                        query = query.where(CustomerORM.customerSegment == segment)
+                    
+                    # Apply pagination
+                    query = query.offset(skip).limit(limit)
+                    
+                    result = await session.execute(query)
+                    orm_customers = result.scalars().all()
+                    
+                    # Convert ORM to Pydantic models
+                    customers = []
+                    for orm_customer in orm_customers:
+                        customer_dict = {
+                            "id": orm_customer.id,
+                            "customerNumber": orm_customer.customerNumber,
+                            "debtorAccount": orm_customer.debtorAccount or "",
+                            "customerGroup": orm_customer.customerGroup or "",
+                            "salesRep": orm_customer.salesRep or "",
+                            "dispatcher": orm_customer.dispatcher or "",
+                            "creditLimit": orm_customer.creditLimit or 0.0,
+                            "name": orm_customer.name,
+                            "address": orm_customer.address or {},
+                            "phone": orm_customer.phone or "",
+                            "email": orm_customer.email,
+                            "whatsapp": orm_customer.whatsapp,
+                            "status": orm_customer.status or "active",
+                            "priority": orm_customer.priority or "medium",
+                            "createdAt": orm_customer.createdAt,
+                            "updatedAt": orm_customer.updatedAt,
+                            "totalRevenue": orm_customer.totalRevenue or 0.0,
+                            "openInvoices": orm_customer.openInvoices or 0.0,
+                            "creditUsed": orm_customer.creditUsed or 0.0,
+                            "paymentTerms": orm_customer.paymentTerms or "",
+                            "customerSegment": CustomerSegment(orm_customer.customerSegment or "regular"),
+                            "riskScore": orm_customer.riskScore or 0,
+                            "contactPersons": [],
+                            "offers": [],
+                            "orders": [],
+                            "invoices": [],
+                            "documents": [],
+                            "communications": [],
+                            "directBusinesses": [],
+                            "externalStocks": [],
+                            "deals": [],
+                            "reminders": [],
+                            "purchaseOffers": [],
+                            "externalInventory": []
+                        }
+                        customers.append(Customer(**customer_dict))
+                    
+                    return customers
             
         except Exception as e:
             logger.error(f"Error getting customers: {e}")
@@ -309,12 +393,60 @@ class CRMService:
     async def get_customer(self, customer_id: str) -> Optional[Customer]:
         """Get a specific customer by ID"""
         try:
-            # For now, return mock data
-            # TODO: Implement database query
-            for customer in self._mock_customers:
-                if customer.id == customer_id:
-                    return customer
-            return None
+            if self.use_mocks:
+                for customer in self._mock_customers:
+                    if customer.id == customer_id:
+                        return customer
+                return None
+            
+            else:
+                async with AsyncSessionLocal() as session:
+                    result = await session.execute(
+                        select(CustomerORM).where(CustomerORM.id == customer_id)
+                    )
+                    orm_customer = result.scalar_one_or_none()
+                    
+                    if not orm_customer:
+                        return None
+                    
+                    # Convert ORM to Pydantic
+                    customer_dict = {
+                        "id": orm_customer.id,
+                        "customerNumber": orm_customer.customerNumber,
+                        "debtorAccount": orm_customer.debtorAccount or "",
+                        "customerGroup": orm_customer.customerGroup or "",
+                        "salesRep": orm_customer.salesRep or "",
+                        "dispatcher": orm_customer.dispatcher or "",
+                        "creditLimit": orm_customer.creditLimit or 0.0,
+                        "name": orm_customer.name,
+                        "address": orm_customer.address or {},
+                        "phone": orm_customer.phone or "",
+                        "email": orm_customer.email,
+                        "whatsapp": orm_customer.whatsapp,
+                        "status": orm_customer.status or "active",
+                        "priority": orm_customer.priority or "medium",
+                        "createdAt": orm_customer.createdAt,
+                        "updatedAt": orm_customer.updatedAt,
+                        "totalRevenue": orm_customer.totalRevenue or 0.0,
+                        "openInvoices": orm_customer.openInvoices or 0.0,
+                        "creditUsed": orm_customer.creditUsed or 0.0,
+                        "paymentTerms": orm_customer.paymentTerms or "",
+                        "customerSegment": CustomerSegment(orm_customer.customerSegment or "regular"),
+                        "riskScore": orm_customer.riskScore or 0,
+                        "contactPersons": [],
+                        "offers": [],
+                        "orders": [],
+                        "invoices": [],
+                        "documents": [],
+                        "communications": [],
+                        "directBusinesses": [],
+                        "externalStocks": [],
+                        "deals": [],
+                        "reminders": [],
+                        "purchaseOffers": [],
+                        "externalInventory": []
+                    }
+                    return Customer(**customer_dict)
             
         except Exception as e:
             logger.error(f"Error getting customer {customer_id}: {e}")
@@ -323,14 +455,56 @@ class CRMService:
     async def create_customer(self, customer_data: Customer) -> Customer:
         """Create a new customer"""
         try:
-            # For now, add to mock data
-            # TODO: Implement database insert
-            customer_data.id = str(uuid.uuid4())
-            customer_data.createdAt = datetime.now().isoformat()
-            customer_data.updatedAt = datetime.now().isoformat()
+            if self.use_mocks:
+                # Mock implementation
+                customer_data.id = str(uuid.uuid4())
+                customer_data.createdAt = datetime.now().isoformat()
+                customer_data.updatedAt = datetime.now().isoformat()
+                
+                self._mock_customers.append(customer_data)
+                return customer_data
             
-            self._mock_customers.append(customer_data)
-            return customer_data
+            else:
+                # Real database implementation
+                async with AsyncSessionLocal() as session:
+                    customer_id = str(uuid.uuid4())
+                    now = datetime.now().isoformat()
+                    
+                    orm_customer = CustomerORM(
+                        id=customer_id,
+                        customerNumber=customer_data.customerNumber,
+                        debtorAccount=customer_data.debtorAccount,
+                        customerGroup=customer_data.customerGroup,
+                        salesRep=customer_data.salesRep,
+                        dispatcher=customer_data.dispatcher,
+                        creditLimit=customer_data.creditLimit,
+                        name=customer_data.name,
+                        address=customer_data.address if hasattr(customer_data.address, '__dict__') else customer_data.address,
+                        phone=customer_data.phone,
+                        email=customer_data.email,
+                        whatsapp=customer_data.whatsapp,
+                        status=customer_data.status,
+                        priority=customer_data.priority,
+                        createdAt=now,
+                        updatedAt=now,
+                        totalRevenue=customer_data.totalRevenue,
+                        openInvoices=customer_data.openInvoices,
+                        creditUsed=customer_data.creditUsed,
+                        paymentTerms=customer_data.paymentTerms,
+                        customerSegment=customer_data.customerSegment.value if hasattr(customer_data.customerSegment, 'value') else customer_data.customerSegment,
+                        riskScore=customer_data.riskScore
+                    )
+                    
+                    session.add(orm_customer)
+                    await session.commit()
+                    await session.refresh(orm_customer)
+                    
+                    # Update original model
+                    customer_data.id = customer_id
+                    customer_data.createdAt = now
+                    customer_data.updatedAt = now
+                    
+                    return customer_data
             
         except Exception as e:
             logger.error(f"Error creating customer: {e}")

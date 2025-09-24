@@ -1,0 +1,4302 @@
+{
+  "timestamp": "2025-09-23T11:32:14.305Z",
+  "summary": {
+    "total_processed": 429,
+    "successfully_fixed": 0,
+    "failed_fixes": 429,
+    "success_rate": 0
+  },
+  "fixed_issues": [],
+  "failed_fixes": [
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/AgentProcessingOverlay.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/BundleAnalysis.tsx",
+      "line": 16,
+      "column": 24,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Button.tsx",
+      "line": 24,
+      "column": 21,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard_MCP_NEW.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataDogTest.tsx",
+      "line": 36,
+      "column": 22,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Input.tsx",
+      "line": 21,
+      "column": 74,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Layout.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Modal.tsx",
+      "line": 26,
+      "column": 83,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Navigation.tsx",
+      "line": 24,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/PreloadOptimizer.tsx",
+      "line": 50,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/PreloadRouter.tsx",
+      "line": 125,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Sidebar.tsx",
+      "line": 129,
+      "column": 67,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/TrustIndicator.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/Button.test.tsx",
+      "line": 6,
+      "column": 27,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/DataCard.test.tsx",
+      "line": 6,
+      "column": 29,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/DeliveryNoteForm.test.tsx",
+      "line": 211,
+      "column": 27,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/Input.test.tsx",
+      "line": 16,
+      "column": 26,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/Layout.test.tsx",
+      "line": 23,
+      "column": 27,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/Modal.test.tsx",
+      "line": 16,
+      "column": 26,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/__tests__/SimpleTest.test.tsx",
+      "line": 8,
+      "column": 22,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/admin/FormRegistryTable.tsx",
+      "line": 50,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/AIBarcodeDashboard.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/AIInventoryDashboard.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/AIVoucherDashboard.tsx",
+      "line": 34,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/BarcodeAI.tsx",
+      "line": 17,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/HorizonBetaChat.tsx",
+      "line": 26,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/__tests__/AIBarcodeDashboard.integration.test.tsx",
+      "line": 49,
+      "column": 47,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/__tests__/AIBarcodeDashboard.test.tsx",
+      "line": 118,
+      "column": 29,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/shared/ConfidenceIndicator.tsx",
+      "line": 16,
+      "column": 44,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ai/shared/SuggestionTable.tsx",
+      "line": 14,
+      "column": 32,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/barcode/BarcodeScanner.tsx",
+      "line": 23,
+      "column": 65,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/CRMContextMenu.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/CRMMainView.tsx",
+      "line": 61,
+      "column": 54,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/CRMRibbon.tsx",
+      "line": 16,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/contacts/ContactForm.tsx",
+      "line": 40,
+      "column": 68,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/contacts/ContactList.tsx",
+      "line": 18,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/customers/CustomerContactCard.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/reporting/CRMReportingAnalytics.tsx",
+      "line": 35,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerGeneralTab.tsx",
+      "line": 17,
+      "column": 22,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerWhatsAppHistoryTab.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerWhatsAppWebTab.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/demo/SentryDemo.tsx",
+      "line": 14,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingForm.tsx",
+      "line": 54,
+      "column": 79,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingList.tsx",
+      "line": 48,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingStatistics.tsx",
+      "line": 18,
+      "column": 40,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingValidation.tsx",
+      "line": 31,
+      "column": 69,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/DeliveryNoteForm.tsx",
+      "line": 40,
+      "column": 78,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/FreightOrderForm.tsx",
+      "line": 35,
+      "column": 54,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestionForm.tsx",
+      "line": 36,
+      "column": 58,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/PurchaseOrder.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/SupplierOffer.tsx",
+      "line": 14,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/CRMForms.tsx",
+      "line": 33,
+      "column": 106,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/CentralFormTable.tsx",
+      "line": 39,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/CrossCuttingForms.tsx",
+      "line": 33,
+      "column": 106,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/ExampleOptimizedForm.tsx",
+      "line": 10,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/FiBuForms.tsx",
+      "line": 33,
+      "column": 106,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/FormManager.tsx",
+      "line": 81,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/FormStandardization.tsx",
+      "line": 20,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/InvoiceForm.tsx",
+      "line": 15,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/ModernERPForm.tsx",
+      "line": 53,
+      "column": 35,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/ModernERPFormWithDB.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/OptimizedSimpleForm.tsx",
+      "line": 35,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/WaWiForms.tsx",
+      "line": 34,
+      "column": 106,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/__tests__/FormStandardization.test.tsx",
+      "line": 33,
+      "column": 31,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/inventory/StockOpnameInterface.tsx",
+      "line": 26,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/messaging/NachrichtenFormular.tsx",
+      "line": 37,
+      "column": 72,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowArticleForm.tsx",
+      "line": 175,
+      "column": 77,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowArticleTable.tsx",
+      "line": 41,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowAutocomplete.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowChargenverwaltung.tsx",
+      "line": 46,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowCustomerForm.tsx",
+      "line": 32,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowDashboard.tsx",
+      "line": 195,
+      "column": 48,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowInvoiceForm.tsx",
+      "line": 30,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowInvoiceTable.tsx",
+      "line": 40,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/neuroflow/NeuroFlowSupplierForm.tsx",
+      "line": 35,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftExportPanel.tsx",
+      "line": 87,
+      "column": 35,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftFilterPanel.tsx",
+      "line": 42,
+      "column": 60,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftForm.tsx",
+      "line": 49,
+      "column": 77,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/tables/InvoiceTable.tsx",
+      "line": 27,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/tables/InvoiceTable_MCP.tsx",
+      "line": 29,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/tables/InvoiceTable_MCP_NEW.tsx",
+      "line": 29,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/ModernComponents.tsx",
+      "line": 20,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/NeuroFlowComponents.tsx",
+      "line": 227,
+      "column": 50,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/UIStandardization.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/__tests__/UIStandardization.test.tsx",
+      "line": 21,
+      "column": 29,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/voucher/VoucherManagement.tsx",
+      "line": 32,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/contexts/ApiContext.tsx",
+      "line": 271,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/contexts/AuthContext.tsx",
+      "line": 34,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/contexts/__tests__/ApiContext.test.tsx",
+      "line": 134,
+      "column": 21,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/design-system/NeuroFlowComponents.tsx",
+      "line": 26,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/design-system/NeuroFlowLayout.tsx",
+      "line": 33,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/examples/mcpIntegrationExample.tsx",
+      "line": 24,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/examples/testMCPIntegration.tsx",
+      "line": 146,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/bi/BiDashboard.tsx",
+      "line": 19,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/crm/CrmDashboard.tsx",
+      "line": 48,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/fibu/FibuDashboard.tsx",
+      "line": 49,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/lager/LagerDashboard.tsx",
+      "line": 19,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/components/Kassensystem.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/components/L3App.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/components/L3Connect.tsx",
+      "line": 72,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/components/Streckenhandel.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/types/WarenwirtschaftTypes.ts",
+      "line": 9,
+      "column": 16,
+      "severity": "error",
+      "message": "Parsing error: ';' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useApiData.ts",
+      "line": 39,
+      "column": 39,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useDebounce.ts",
+      "line": 7,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useDualMCP.ts",
+      "line": 34,
+      "column": 43,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useLocalStorage.ts",
+      "line": 23,
+      "column": 53,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useMCPForm.ts",
+      "line": 77,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useOffline.ts",
+      "line": 46,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/usePreload.ts",
+      "line": 56,
+      "column": 37,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/AIAnalyticsDashboard.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/AIDashboard.tsx",
+      "line": 14,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/AnalyticsPage.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ApiCommunicationDemo.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/AssetManagement.tsx",
+      "line": 42,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/AssetManagement_MCP_NEW.tsx",
+      "line": 43,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/BelegeErstellung.tsx",
+      "line": 41,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/CRMPage.tsx",
+      "line": 19,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/CentralFormTableDemo.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/CompleteFormDemo.tsx",
+      "line": 42,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/CrmDashboard.tsx",
+      "line": 17,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/CustomerManagement.tsx",
+      "line": 39,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/Dashboard.tsx",
+      "line": 17,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/DatabaseIntegrationDemo.tsx",
+      "line": 33,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/DocumentManagement.tsx",
+      "line": 46,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/DocumentsPage.tsx",
+      "line": 27,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/DokumentePage.tsx",
+      "line": 32,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ERPDemo.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/FinanceManagement.tsx",
+      "line": 42,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/FinanzFormular.tsx",
+      "line": 46,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/IntegrationPage.tsx",
+      "line": 20,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/InventoryPage.tsx",
+      "line": 32,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/InvoicesPage_MCP_NEW.tsx",
+      "line": 15,
+      "column": 27,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/KundenFormular.tsx",
+      "line": 41,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/LandingPage.tsx",
+      "line": 51,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/LieferantenFormular.tsx",
+      "line": 32,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/LoginPage.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/MitarbeiterFormular.tsx",
+      "line": 37,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/NeuroFlowDemo.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/POS/DailyReportPage.tsx",
+      "line": 31,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/POS/POSPage.tsx",
+      "line": 25,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/PersonalManagement.tsx",
+      "line": 33,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/PersonalizedDashboard.tsx",
+      "line": 23,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ProductionManagement.tsx",
+      "line": 33,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ProduktFormular.tsx",
+      "line": 44,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ProjectManagement.tsx",
+      "line": 37,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ProjektFormular.tsx",
+      "line": 46,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/PurchasingManagement.tsx",
+      "line": 36,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/QualityManagement.tsx",
+      "line": 38,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/ReportingAnalytics.tsx",
+      "line": 37,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/SalesManagement.tsx",
+      "line": 33,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/SapFioriDashboard.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/StreckengeschaeftPage.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/TransactionsPage.tsx",
+      "line": 32,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/TrustAwareDashboard.tsx",
+      "line": 4,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/UserManagement.tsx",
+      "line": 48,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/WarehouseManagement.tsx",
+      "line": 35,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/WarenwirtschaftFormular.tsx",
+      "line": 84,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/__tests__/SapFioriDashboard.test.tsx",
+      "line": 42,
+      "column": 28,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/neuroflow/NeuroFlowArticlesPage.tsx",
+      "line": 22,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/pages/neuroflow/NeuroFlowInvoicesPage.tsx",
+      "line": 21,
+      "column": 22,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/security/FormSecurityManager.ts",
+      "line": 361,
+      "column": 40,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/security/MCPSecurityManager.ts",
+      "line": 532,
+      "column": 6,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/security/SecurityReport.tsx",
+      "line": 38,
+      "column": 2,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/services/OfflineService.ts",
+      "line": 88,
+      "column": 36,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/services/PreloadService.ts",
+      "line": 387,
+      "column": 47,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/services/streckengeschaeftApi.ts",
+      "line": 95,
+      "column": 50,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/setupTests.ts",
+      "line": 38,
+      "column": 11,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/store/appStore.ts",
+      "line": 132,
+      "column": 34,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/store/notificationStore.ts",
+      "line": 66,
+      "column": 22,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/tests/accessibility/AccessibilityTests.test.tsx",
+      "line": 57,
+      "column": 50,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/tests/e2e/UserFlow.test.tsx",
+      "line": 85,
+      "column": 19,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/tests/integration/ApiIntegration.test.tsx",
+      "line": 53,
+      "column": 50,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/tests/performance/PerformanceTests.test.tsx",
+      "line": 57,
+      "column": 50,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/tests/visual/VisualRegression.test.tsx",
+      "line": 267,
+      "column": 14,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/types/forms.ts",
+      "line": 69,
+      "column": 10,
+      "severity": "error",
+      "message": "Parsing error: ';' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/utils/cursorPrompts.ts",
+      "line": 406,
+      "column": 49,
+      "severity": "error",
+      "message": "Parsing error: ',' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/utils/dualMCPClient.ts",
+      "line": 16,
+      "column": 10,
+      "severity": "error",
+      "message": "Parsing error: ';' expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/utils/lazyImports.ts",
+      "line": 29,
+      "column": 27,
+      "severity": "error",
+      "message": "Parsing error: Argument expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/utils/performance.ts",
+      "line": 273,
+      "column": 28,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/utils/preloading.ts",
+      "line": 61,
+      "column": 13,
+      "severity": "error",
+      "message": "Parsing error: Expression expected",
+      "category": "parsing",
+      "timestamp": "2025-09-23T11:32:14.182Z",
+      "priority": "critical"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/OrderSuggestion.tsx",
+      "line": 13,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormControl' is defined but never used. Allowed unused vars must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.177Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/OrderSuggestion.tsx",
+      "line": 14,
+      "column": 3,
+      "severity": "warning",
+      "message": "'InputLabel' is defined but never used. Allowed unused vars must match /^_/u                       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/OrderSuggestion.tsx",
+      "line": 15,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Select' is defined but never used. Allowed unused vars must match /^_/u                           @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/OrderSuggestion.tsx",
+      "line": 16,
+      "column": 3,
+      "severity": "warning",
+      "message": "'MenuItem' is defined but never used. Allowed unused vars must match /^_/u                         @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/OrderSuggestion.tsx",
+      "line": 55,
+      "column": 5,
+      "severity": "warning",
+      "message": "'orderSuggestionFilters' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 1,
+      "column": 27,
+      "severity": "warning",
+      "message": "'useEffect' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 26,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Divider' is defined but never used. Allowed unused vars must match /^_/u                               @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 27,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormControl' is defined but never used. Allowed unused vars must match /^_/u                           @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 28,
+      "column": 3,
+      "severity": "warning",
+      "message": "'InputLabel' is defined but never used. Allowed unused vars must match /^_/u                            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 29,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Select' is defined but never used. Allowed unused vars must match /^_/u                                @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 48,
+      "column": 3,
+      "severity": "warning",
+      "message": "'DocumentReference' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 129,
+      "column": 5,
+      "severity": "warning",
+      "message": "'currentPurchaseOrder' is assigned a value but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 134,
+      "column": 5,
+      "severity": "warning",
+      "message": "'addPurchaseOrderPosition' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 135,
+      "column": 5,
+      "severity": "warning",
+      "message": "'updatePurchaseOrderPosition' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 136,
+      "column": 5,
+      "severity": "warning",
+      "message": "'deletePurchaseOrderPosition' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 157,
+      "column": 5,
+      "severity": "warning",
+      "message": "'watch' is assigned a value but never used. Allowed unused vars must match /^_/u                        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 248,
+      "column": 9,
+      "severity": "warning",
+      "message": "'calculateTotals' is assigned a value but never used. Allowed unused vars must match /^_/u              @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 648,
+      "column": 45,
+      "severity": "warning",
+      "message": "'index' is defined but never used. Allowed unused args must match /^_/u                                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ContactOverview.tsx",
+      "line": 318,
+      "column": 19,
+      "severity": "warning",
+      "message": "'record' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 15,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Divider' is defined but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 137,
+      "column": 40,
+      "severity": "warning",
+      "message": "'isValid' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 137,
+      "column": 49,
+      "severity": "warning",
+      "message": "'isDirty' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 138,
+      "column": 5,
+      "severity": "warning",
+      "message": "'watch' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 140,
+      "column": 5,
+      "severity": "warning",
+      "message": "'reset' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 401,
+      "column": 43,
+      "severity": "warning",
+      "message": "'index' is defined but never used. Allowed unused args must match /^_/u             @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ZvooveContactOverview.tsx",
+      "line": 318,
+      "column": 19,
+      "severity": "warning",
+      "message": "'record' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ZvooveOrderForm.tsx",
+      "line": 15,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Divider' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ZvooveOrderForm.tsx",
+      "line": 335,
+      "column": 43,
+      "severity": "warning",
+      "message": "'index' is defined but never used. Allowed unused args must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/__tests__/ContactOverview.test.tsx",
+      "line": 2,
+      "column": 26,
+      "severity": "warning",
+      "message": "'fireEvent' is defined but never used. Allowed unused vars must match /^_/u      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/__tests__/ContactOverview.test.tsx",
+      "line": 2,
+      "column": 37,
+      "severity": "warning",
+      "message": "'waitFor' is defined but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/__tests__/ContactOverview.test.tsx",
+      "line": 133,
+      "column": 13,
+      "severity": "warning",
+      "message": "'user' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/__tests__/ContactOverview.test.tsx",
+      "line": 142,
+      "column": 13,
+      "severity": "warning",
+      "message": "'user' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/__tests__/UIIntegration.test.tsx",
+      "line": 9,
+      "column": 10,
+      "severity": "warning",
+      "message": "'zvooveApiService' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/__tests__/UIIntegration.test.tsx",
+      "line": 10,
+      "column": 10,
+      "severity": "warning",
+      "message": "'useZvooveStore' is defined but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/pages/IntegrationPage.tsx",
+      "line": 74,
+      "column": 6,
+      "severity": "warning",
+      "message": "'NavigationTab' is defined but never used. Allowed unused vars must match /^_/u                                                       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/pages/IntegrationPage.tsx",
+      "line": 99,
+      "column": 67,
+      "severity": "warning",
+      "message": "'initialTab' is assigned a value but never used. Allowed unused args must match /^_/u                                                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 14,
+      "column": 3,
+      "severity": "warning",
+      "message": "'InquiryPosition' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 29,
+      "column": 3,
+      "severity": "warning",
+      "message": "'UnitType' is defined but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 30,
+      "column": 3,
+      "severity": "warning",
+      "message": "'PaymentMethod' is defined but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 31,
+      "column": 3,
+      "severity": "warning",
+      "message": "'OrderStatusEnum' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 32,
+      "column": 3,
+      "severity": "warning",
+      "message": "'OfferStatusEnum' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 586,
+      "column": 14,
+      "severity": "warning",
+      "message": "'error' is defined but never used. Allowed unused caught errors must match /^_/u   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/zvooveApi.ts",
+      "line": 4,
+      "column": 17,
+      "severity": "warning",
+      "message": "'credentials' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/App.tsx",
+      "line": 88,
+      "column": 37,
+      "severity": "warning",
+      "message": "'logout' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/AgentSuggestion.tsx",
+      "line": 3,
+      "column": 54,
+      "severity": "warning",
+      "message": "'Chip' is defined but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/AgentSuggestion.tsx",
+      "line": 18,
+      "column": 15,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/AgentSuggestion.tsx",
+      "line": 19,
+      "column": 28,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/AgentSuggestion.tsx",
+      "line": 23,
+      "column": 28,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 2,
+      "column": 46,
+      "severity": "warning",
+      "message": "'Chip' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 5,
+      "column": 10,
+      "severity": "warning",
+      "message": "'StatusChip' is defined but never used. Allowed unused vars must match /^_/u               @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 6,
+      "column": 10,
+      "severity": "warning",
+      "message": "'UI_LABELS' is defined but never used. Allowed unused vars must match /^_/u                @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 22,
+      "column": 10,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u                  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 24,
+      "column": 9,
+      "severity": "warning",
+      "message": "'getTrendStatus' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 24,
+      "column": 30,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/DataCard.tsx",
+      "line": 35,
+      "column": 28,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ErrorBoundary.tsx",
+      "line": 2,
+      "column": 10,
+      "severity": "warning",
+      "message": "'Alert' is defined but never used. Allowed unused vars must match /^_/u   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ErrorBoundary.tsx",
+      "line": 2,
+      "column": 17,
+      "severity": "warning",
+      "message": "'Button' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ModuleCard.tsx",
+      "line": 2,
+      "column": 46,
+      "severity": "warning",
+      "message": "'Chip' is defined but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ModuleCard.tsx",
+      "line": 5,
+      "column": 10,
+      "severity": "warning",
+      "message": "'UI_LABELS' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ModuleCard.tsx",
+      "line": 51,
+      "column": 65,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 6,
+      "column": 10,
+      "severity": "warning",
+      "message": "'StatusChip' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 7,
+      "column": 10,
+      "severity": "warning",
+      "message": "'UI_LABELS' is defined but never used. Allowed unused vars must match /^_/u   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 19,
+      "column": 18,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 27,
+      "column": 27,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 31,
+      "column": 27,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 35,
+      "column": 39,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 43,
+      "column": 35,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/NotificationDropdown.tsx",
+      "line": 59,
+      "column": 33,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 14,
+      "column": 10,
+      "severity": "warning",
+      "message": "'StatusChip' is defined but never used. Allowed unused vars must match /^_/u                    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 15,
+      "column": 10,
+      "severity": "warning",
+      "message": "'UI_LABELS' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 26,
+      "column": 38,
+      "severity": "warning",
+      "message": "'syncInProgress' is assigned a value but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 27,
+      "column": 28,
+      "severity": "warning",
+      "message": "'pendingRequestsList' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 29,
+      "column": 30,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                          @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 35,
+      "column": 29,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                          @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 41,
+      "column": 29,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                          @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/OfflineStatusBar.tsx",
+      "line": 47,
+      "column": 31,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                          @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Router.tsx",
+      "line": 50,
+      "column": 68,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/SentryErrorBoundary.tsx",
+      "line": 3,
+      "column": 10,
+      "severity": "warning",
+      "message": "'Alert' is defined but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/SentryErrorBoundary.tsx",
+      "line": 3,
+      "column": 17,
+      "severity": "warning",
+      "message": "'Button' is defined but never used. Allowed unused vars must match /^_/u      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/SentryErrorBoundary.tsx",
+      "line": 3,
+      "column": 30,
+      "severity": "warning",
+      "message": "'Typography' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/StatusCard.tsx",
+      "line": 19,
+      "column": 10,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/StatusCard.tsx",
+      "line": 21,
+      "column": 31,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Table.tsx",
+      "line": 17,
+      "column": 10,
+      "severity": "warning",
+      "message": "'UI_LABELS' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/TrustAwareLayout.tsx",
+      "line": 41,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/TrustAwareLayout.tsx",
+      "line": 45,
+      "column": 35,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/TrustAwareLayout.tsx",
+      "line": 49,
+      "column": 35,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/common/TabPanel.tsx",
+      "line": 15,
+      "column": 38,
+      "severity": "warning",
+      "message": "'other' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/contacts/ContactWeekdaysEditor.tsx",
+      "line": 29,
+      "column": 20,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/contacts/ContactWeekdaysEditor.tsx",
+      "line": 33,
+      "column": 40,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/contacts/ContactWeekdaysEditor.tsx",
+      "line": 40,
+      "column": 32,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/contacts/ContactWeekdaysEditor.tsx",
+      "line": 47,
+      "column": 33,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/customers/CustomerAddressCard.tsx",
+      "line": 14,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/customers/CustomerBasicInfoCard.tsx",
+      "line": 14,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerAnalysisTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "line": 2,
+      "column": 46,
+      "severity": "warning",
+      "message": "'Tabs' is defined but never used. Allowed unused vars must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "line": 2,
+      "column": 52,
+      "severity": "warning",
+      "message": "'Tab' is defined but never used. Allowed unused vars must match /^_/u                       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "line": 14,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u                   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "line": 17,
+      "column": 9,
+      "severity": "warning",
+      "message": "'handleTabChange' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "line": 17,
+      "column": 31,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerCommunicationsTab.tsx",
+      "line": 39,
+      "column": 32,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerContactsTab.tsx",
+      "line": 4,
+      "column": 20,
+      "severity": "warning",
+      "message": "'ContactPerson' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerContactsTab.tsx",
+      "line": 11,
+      "column": 35,
+      "severity": "warning",
+      "message": "'mapFormDataToApiContact' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerContactsTab.tsx",
+      "line": 34,
+      "column": 32,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerContactsTab.tsx",
+      "line": 39,
+      "column": 33,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerContactsTab.tsx",
+      "line": 78,
+      "column": 31,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerDirectBusinessTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerDocumentsTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerExternalStocksTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerInvoicesTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerOrdersTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/CustomerSalesTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/crm/tabs/SupplierManagementTab.tsx",
+      "line": 13,
+      "column": 13,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingPage.tsx",
+      "line": 1,
+      "column": 27,
+      "severity": "warning",
+      "message": "'useEffect' is defined but never used. Allowed unused vars must match /^_/u              @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingPage.tsx",
+      "line": 16,
+      "column": 10,
+      "severity": "warning",
+      "message": "'isLoading' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingPage.tsx",
+      "line": 16,
+      "column": 21,
+      "severity": "warning",
+      "message": "'setIsLoading' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/e-invoicing/EInvoicingPage.tsx",
+      "line": 18,
+      "column": 31,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/DeliveryNote.tsx",
+      "line": 30,
+      "column": 21,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderConfirmation.tsx",
+      "line": 32,
+      "column": 25,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 1,
+      "column": 17,
+      "severity": "warning",
+      "message": "'useState' is defined but never used. Allowed unused vars must match /^_/u                  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 1,
+      "column": 27,
+      "severity": "warning",
+      "message": "'useMemo' is defined but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 3,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Card' is defined but never used. Allowed unused vars must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 4,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Typography' is defined but never used. Allowed unused vars must match /^_/u                @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 5,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Grid' is defined but never used. Allowed unused vars must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 6,
+      "column": 3,
+      "severity": "warning",
+      "message": "'TextField' is defined but never used. Allowed unused vars must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 7,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormControl' is defined but never used. Allowed unused vars must match /^_/u               @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 8,
+      "column": 3,
+      "severity": "warning",
+      "message": "'InputLabel' is defined but never used. Allowed unused vars must match /^_/u                @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 9,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Select' is defined but never used. Allowed unused vars must match /^_/u                    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 10,
+      "column": 3,
+      "severity": "warning",
+      "message": "'MenuItem' is defined but never used. Allowed unused vars must match /^_/u                  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 11,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Button' is defined but never used. Allowed unused vars must match /^_/u                    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 12,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Box' is defined but never used. Allowed unused vars must match /^_/u                       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 13,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Alert' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 14,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Chip' is defined but never used. Allowed unused vars must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 16,
+      "column": 10,
+      "severity": "warning",
+      "message": "'Table' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 16,
+      "column": 17,
+      "severity": "warning",
+      "message": "'Input' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 16,
+      "column": 24,
+      "severity": "warning",
+      "message": "'Space' is defined but never used. Allowed unused vars must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 16,
+      "column": 31,
+      "severity": "warning",
+      "message": "'Tag' is defined but never used. Allowed unused vars must match /^_/u                       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 17,
+      "column": 10,
+      "severity": "warning",
+      "message": "'SearchOutlined' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 17,
+      "column": 26,
+      "severity": "warning",
+      "message": "'FilterOutlined' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 17,
+      "column": 42,
+      "severity": "warning",
+      "message": "'ShoppingCartOutlined' is defined but never used. Allowed unused vars must match /^_/u      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 18,
+      "column": 10,
+      "severity": "warning",
+      "message": "'useForm' is defined but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 18,
+      "column": 19,
+      "severity": "warning",
+      "message": "'Controller' is defined but never used. Allowed unused vars must match /^_/u                @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 19,
+      "column": 10,
+      "severity": "warning",
+      "message": "'yupResolver' is defined but never used. Allowed unused vars must match /^_/u               @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 69,
+      "column": 7,
+      "severity": "warning",
+      "message": "'filterSchema' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 78,
+      "column": 7,
+      "severity": "warning",
+      "message": "'mockSuggestions' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 117,
+      "column": 7,
+      "severity": "warning",
+      "message": "'articleGroups' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 118,
+      "column": 7,
+      "severity": "warning",
+      "message": "'branches' is assigned a value but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/erp/OrderSuggestion.tsx",
+      "line": 122,
+      "column": 23,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u                   @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 4,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Alert' is defined but never used. Allowed unused vars must match /^_/u             @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 7,
+      "column": 3,
+      "severity": "warning",
+      "message": "'CircularProgress' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 8,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormControl' is defined but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 9,
+      "column": 3,
+      "severity": "warning",
+      "message": "'InputLabel' is defined but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 10,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Select' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 11,
+      "column": 3,
+      "severity": "warning",
+      "message": "'MenuItem' is defined but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 12,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormHelperText' is defined but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 20,
+      "column": 3,
+      "severity": "warning",
+      "message": "'StandardButton' is defined but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 22,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormMessage' is defined but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 83,
+      "column": 28,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u              @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 89,
+      "column": 27,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u              @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 10,
+      "column": 3,
+      "severity": "warning",
+      "message": "'StandardizedFormConfig' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 11,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormTab' is defined but never used. Allowed unused vars must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 12,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormTimeline' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 13,
+      "column": 3,
+      "severity": "warning",
+      "message": "'TimelineStep' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 14,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Belegfolge' is defined but never used. Allowed unused vars must match /^_/u              @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 15,
+      "column": 3,
+      "severity": "warning",
+      "message": "'WorkflowStep' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 16,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormLayout' is defined but never used. Allowed unused vars must match /^_/u              @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/index.ts",
+      "line": 17,
+      "column": 3,
+      "severity": "warning",
+      "message": "'FormTemplate' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 39,
+      "column": 3,
+      "severity": "warning",
+      "message": "'calculateGewinn' is defined but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 40,
+      "column": 3,
+      "severity": "warning",
+      "message": "'calculateGewinnmarge' is defined but never used. Allowed unused vars must match /^_/u      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 41,
+      "column": 3,
+      "severity": "warning",
+      "message": "'calculateDeckungsbeitrag' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 272,
+      "column": 18,
+      "severity": "warning",
+      "message": "'id' is defined but never used. Allowed unused args must match /^_/u                        @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 283,
+      "column": 28,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 288,
+      "column": 26,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 293,
+      "column": 28,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/streckengeschaeft/StreckengeschaeftList.tsx",
+      "line": 304,
+      "column": 32,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                      @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 19,
+      "column": 27,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 25,
+      "column": 37,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 55,
+      "column": 27,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 131,
+      "column": 81,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 132,
+      "column": 27,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 143,
+      "column": 30,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/DataCard.tsx",
+      "line": 157,
+      "column": 32,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/ui/TabPanel.tsx",
+      "line": 11,
+      "column": 63,
+      "severity": "warning",
+      "message": "'unknown' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/config/sentry.ts",
+      "line": 4,
+      "column": 37,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/examples/DualMCPExample.tsx",
+      "line": 14,
+      "column": 3,
+      "severity": "warning",
+      "message": "'Divider' is defined but never used. Allowed unused vars must match /^_/u                  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/examples/DualMCPExample.tsx",
+      "line": 64,
+      "column": 31,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/examples/DualMCPExample.tsx",
+      "line": 184,
+      "column": 57,
+      "severity": "warning",
+      "message": "'refetch' is assigned a value but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/examples/DualMCPExample.tsx",
+      "line": 455,
+      "column": 26,
+      "severity": "warning",
+      "message": "'enhancedFields' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/components/EdiSchnittstellen.tsx",
+      "line": 48,
+      "column": 30,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 7,
+      "column": 3,
+      "severity": "warning",
+      "message": "'CustomerFilter' is defined but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 8,
+      "column": 3,
+      "severity": "warning",
+      "message": "'ContactPersonFilter' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 10,
+      "column": 3,
+      "severity": "warning",
+      "message": "'CustomerFormData' is defined but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 14,
+      "column": 33,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 21,
+      "column": 32,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 29,
+      "column": 38,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 42,
+      "column": 38,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 50,
+      "column": 37,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 58,
+      "column": 43,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 69,
+      "column": 43,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useCRM.ts",
+      "line": 81,
+      "column": 43,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u                 @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/hooks/useSentry.ts",
+      "line": 7,
+      "column": 30,
+      "severity": "warning",
+      "message": "'args' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars",
+      "category": "unused",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "cleanup"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/OrderSuggestion.tsx",
+      "line": 46,
+      "column": 27,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                           @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 213,
+      "column": 10,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 255,
+      "column": 19,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 256,
+      "column": 19,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 257,
+      "column": 19,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/erp/PurchaseOrder.tsx",
+      "line": 303,
+      "column": 16,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ContactOverview.tsx",
+      "line": 162,
+      "column": 19,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ContactOverview.tsx",
+      "line": 162,
+      "column": 32,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/OrderForm.tsx",
+      "line": 200,
+      "column": 74,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ZvooveContactOverview.tsx",
+      "line": 162,
+      "column": 19,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ZvooveContactOverview.tsx",
+      "line": 162,
+      "column": 32,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/components/zvoove-integration/ZvooveOrderForm.tsx",
+      "line": 164,
+      "column": 74,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/pages/IntegrationPage.tsx",
+      "line": 39,
+      "column": 22,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                                              @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/pages/IntegrationPage.tsx",
+      "line": 39,
+      "column": 31,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                                              @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/pages/IntegrationPage.tsx",
+      "line": 142,
+      "column": 40,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                                                                              @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 574,
+      "column": 34,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/erpApi.ts",
+      "line": 575,
+      "column": 47,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/services/zvooveApi.ts",
+      "line": 20,
+      "column": 34,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                       @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/SentryErrorBoundary.tsx",
+      "line": 55,
+      "column": 53,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/SentryErrorBoundary.tsx",
+      "line": 56,
+      "column": 19,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/StatusCard.tsx",
+      "line": 68,
+      "column": 58,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Table.tsx",
+      "line": 124,
+      "column": 47,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                     @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/Table.tsx",
+      "line": 125,
+      "column": 33,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                     @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.179Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/components/forms/SimpleForm.tsx",
+      "line": 41,
+      "column": 34,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/config/sentry.ts",
+      "line": 86,
+      "column": 57,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/components/EdiSchnittstellen.tsx",
+      "line": 162,
+      "column": 66,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/EdiService.ts",
+      "line": 2,
+      "column": 48,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/EdiService.ts",
+      "line": 8,
+      "column": 57,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/KassensystemService.ts",
+      "line": 2,
+      "column": 55,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/WarenwirtschaftService.ts",
+      "line": 147,
+      "column": 51,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/WarenwirtschaftService.ts",
+      "line": 148,
+      "column": 20,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/WarenwirtschaftService.ts",
+      "line": 151,
+      "column": 54,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/WarenwirtschaftService.ts",
+      "line": 152,
+      "column": 20,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/WarenwirtschaftService.ts",
+      "line": 155,
+      "column": 55,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/features/warenwirtschaft/services/WarenwirtschaftService.ts",
+      "line": 156,
+      "column": 20,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/lib/schemas.ts",
+      "line": 321,
+      "column": 31,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/lib/utils.ts",
+      "line": 42,
+      "column": 60,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/lib/utils.ts",
+      "line": 54,
+      "column": 60,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/lib/utils.ts",
+      "line": 76,
+      "column": 48,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/src/lib/utils.ts",
+      "line": 172,
+      "column": 32,
+      "severity": "warning",
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any",
+      "category": "any-type",
+      "timestamp": "2025-09-23T11:32:14.180Z",
+      "priority": "types"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/ApiCommunicationDemo.tsx",
+      "line": 78,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has missing dependencies: 'checkMiddleware' and 'loadData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/DataCard_MCP_NEW.tsx",
+      "line": 127,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/DataCard_MCP_NEW.tsx",
+      "line": 135,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/DocumentsPage.tsx",
+      "line": 64,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'loadDocuments'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/InventoryPage.tsx",
+      "line": 77,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'loadInventory'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/LandingPage.tsx",
+      "line": 399,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'mockBIParameters'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/PersonalizedDashboard.tsx",
+      "line": 289,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'loadUserDashboard'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/legacy/TransactionsPage.tsx",
+      "line": 69,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has a missing dependency: 'loadTransactions'. Either include it or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    },
+    {
+      "file": "c:/Users/Jochen/VALEO-NeuroERP-2.0/frontend/pages/IntegrationPage.tsx",
+      "line": 127,
+      "column": 6,
+      "severity": "warning",
+      "message": "React Hook useEffect has missing dependencies: 'fetchContacts' and 'fetchOrders'. Either include them or remove the dependency array  react-hooks/exhaustive-deps",
+      "category": "react-hooks",
+      "timestamp": "2025-09-23T11:32:14.178Z",
+      "priority": "hooks"
+    }
+  ]
+}

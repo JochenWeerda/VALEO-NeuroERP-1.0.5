@@ -1,0 +1,10 @@
+node_modules
+.dist
+coverage
+playwright-report
+npm-debug.log*
+yarn-error.log*
+.git
+.DS_Store
+dist-analysis
+*.map

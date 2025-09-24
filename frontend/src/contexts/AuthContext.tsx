@@ -30,6 +30,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
+        // E2E-Testmodus: sofort authentifizieren, ohne Backend-Call
+        // Aktiviert durch VITE_E2E=true
+        // Hinweis: Nur für Tests verwenden
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (import.meta.env?.VITE_E2E === 'true') {
+          setUser({
+            id: 'e2e',
+            username: 'e2e',
+            email: 'e2e@example.com',
+            full_name: 'E2E User',
+            role: 'admin',
+            disabled: false
+          });
+          setLoading(false);
+          return;
+        }
+
         if (authService.isAuthenticated()) {
           const currentUser = await authService.getCurrentUser();
           setUser(currentUser);

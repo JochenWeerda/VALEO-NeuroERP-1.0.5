@@ -63,14 +63,22 @@ export function SuggestionTable<T extends { id: string }>({
                   <div className="flex gap-1 justify-center">
                     {onView && (
                       <Tooltip title="Details anzeigen">
-                        <IconButton size="small" onClick={() => onView(row)}>
+                        <IconButton
+                          size="small"
+                          aria-label="Details anzeigen"
+                          onClick={() => onView(row)}
+                        >
                           <ViewIcon />
                         </IconButton>
                       </Tooltip>
                     )}
                     {onOptimize && (
                       <Tooltip title="Optimieren">
-                        <IconButton size="small" onClick={() => onOptimize(row)}>
+                        <IconButton
+                          size="small"
+                          aria-label="Optimieren"
+                          onClick={() => onOptimize(row)}
+                        >
                           <SettingsIcon />
                         </IconButton>
                       </Tooltip>

@@ -46,6 +46,7 @@ export const Input: React.FC<InputProps> = ({
       error={!!error}
       helperText={error || helperText}
       inputProps={props}
+      className={className}
     />
   );
 }; 

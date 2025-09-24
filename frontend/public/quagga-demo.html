@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuaggaJS Barcode-Scanner – EAN-13 & Code128</title>
+    <style>
+      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #0b1020; color: #e8eefc; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
+      h1 { font-size: 20px; margin: 12px 0 16px; }
+      #scanner { position: relative; width: 100%; aspect-ratio: 16/9; background: #111827; border-radius: 8px; overflow: hidden; box-shadow: 0 6px 30px rgba(0,0,0,0.35); }
+      #result { margin-top: 12px; padding: 10px 12px; background: #111827; border: 1px solid #24324a; border-radius: 8px; font-size: 14px; }
+      .pill { display: inline-block; padding: 4px 8px; background: #1f2a44; border: 1px solid #2c3e66; border-radius: 999px; margin-right: 8px; font-size: 12px; color: #b8cdfd; }
+      .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+      .hint { color: #9fb1e5; font-size: 12px; opacity: 0.9; }
+      button { background: #2f73ff; color: white; border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+      button:active { transform: translateY(1px); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="row">
+        <h1>QuaggaJS Demo – EAN-13 & Code128</h1>
+        <div>
+          <span class="pill">LiveStream</span>
+          <span class="pill">EAN-13</span>
+          <span class="pill">Code128</span>
+        </div>
+      </div>
+      <div id="scanner"></div>
+      <div id="result">Kein Barcode erkannt</div>
+      <p class="hint">Tipp: Auf Smartphones die Rückkamera verwenden. Auf Desktop ggf. Kamera-Zugriff erlauben.</p>
+      <div class="row" style="margin-top:8px;">
+        <button id="btn-restart">Neu starten</button>
+        <button id="btn-stop">Stop</button>
+      </div>
+    </div>
+
+    <!-- QuaggaJS von CDN laden -->
+    <script src="https://serratus.github.io/quaggaJS/dist/quagga.min.js"></script>
+    <script>
+      const resultEl = document.getElementById('result');
+      const scannerRoot = document.getElementById('scanner');
+      const btnRestart = document.getElementById('btn-restart');
+      const btnStop = document.getElementById('btn-stop');
+
+      function startScanner() {
+        if (!window.Quagga) {
+          console.error('Quagga nicht geladen');
+          resultEl.textContent = 'Fehler: Quagga nicht geladen';
+          return;
+        }
+
+        // YOLO: Kleine, schnelle Konfiguration
+        Quagga.init({
+          inputStream: {
+            type: 'LiveStream',
+            constraints: {
+              facingMode: 'environment',
+              width: { ideal: 1280 },
+              height: { ideal: 720 }
+            },
+            target: scannerRoot
+          },
+          locator: { patchSize: 'medium', halfSample: true },
+          numOfWorkers: navigator.hardwareConcurrency ? Math.max(1, Math.min(4, navigator.hardwareConcurrency - 1)) : 2,
+          frequency: 10,
+          decoder: {
+            // EAN-13 & Code128
+            readers: [ 'ean_reader', 'ean_13_reader', 'code_128_reader' ]
+          }
+        }, (err) => {
+          if (err) {
+            console.error('Quagga init error', err);
+            resultEl.textContent = 'Kamera-Start fehlgeschlagen: ' + (err && err.message ? err.message : err);
+            return;
+          }
+          Quagga.start();
+          resultEl.textContent = 'Scanner aktiv – bitte Barcode vor die Kamera halten…';
+        });
+
+        Quagga.offDetected();
+        Quagga.onDetected((data) => {
+          const code = data && data.codeResult && data.codeResult.code;
+          const fmt = data && data.codeResult && data.codeResult.format;
+          if (code) {
+            console.log('Barcode erkannt:', code, 'Format:', fmt);
+            resultEl.textContent = `Erkannt: ${code} (${fmt || 'unbekannt'})`;
+          }
+        });
+      }
+
+      function stopScanner() {
+        try { Quagga && Quagga.stop && Quagga.stop(); } catch(_) {}
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startScanner);
+      } else {
+        startScanner();
+      }
+
+      btnRestart.addEventListener('click', () => {
+        stopScanner();
+        setTimeout(startScanner, 200);
+      });
+      btnStop.addEventListener('click', () => {
+        stopScanner();
+        resultEl.textContent = 'Scanner gestoppt';
+      });
+    </script>
+  </body>
+  </html>
+
+

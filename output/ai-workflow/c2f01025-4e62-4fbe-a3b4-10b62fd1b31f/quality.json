@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "large_files": 1,
+    "complexity_candidates": 0
+  },
+  "findings": [
+    {
+      "type": "size",
+      "path": "backend/observer_metrics.json",
+      "size": 681643,
+      "severity": "medium"
+    }
+  ]
+}

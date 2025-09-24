@@ -67,6 +67,43 @@ load_testing_results/
 test_data/
 documentation/
 
+# Große Ordner vom Build-Context ausschließen (Backend-Image braucht sie nicht)
+frontend/
+mobile/
+public/
+ai-engineering-hub/
+claude-flow/
+claude-flow-alpha/
+valeoflow-enterprise/
+GENXAIS-Framework/
+examples/
+research/
+output/
+backup/
+backup-cursor/
+metrics/
+resources/
+assets/
+node_modules/
+
+# Große Binärdateien
+**/*.mp4
+**/*.mp3
+**/*.wav
+**/*.zip
+**/*.tar
+**/*.gz
+**/*.7z
+**/*.jar
+**/*.iso
+**/*.png
+**/*.jpg
+**/*.jpeg
+
+# Sicherstellen, dass Backend-Dateien inkludiert bleiben
+!backend/
+!backend/requirements.txt
+
 # Temporäre Dateien
 tmp/
 temp/

@@ -38,6 +38,7 @@ import {
 import { UI_LABELS } from './ui/UIStandardization';
 import { useAuth } from '../contexts/AuthContext';
 import { preloadService } from '../services/PreloadService';
+import { AgentProgressPanel } from './AgentProgressPanel';
 
 // Navigation-Komponente ohne Router-Hooks
 const NavigationContent: React.FC = () => {
@@ -67,6 +68,13 @@ const NavigationContent: React.FC = () => {
     {
       path: '/dokumente',
       label: 'Dokumente',
+      icon: DescriptionIcon,
+      priority: 'high'
+    },
+    // NEU: Lieferschein direkt erreichbar
+    {
+      path: '/erp/delivery-note',
+      label: 'Lieferschein',
       icon: DescriptionIcon,
       priority: 'high'
     },
@@ -183,6 +191,9 @@ const NavigationContent: React.FC = () => {
 
   return (
     <>
+      <Box sx={{ px: 2, pt: 1 }}>
+        <AgentProgressPanel />
+      </Box>
       <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <IconButton

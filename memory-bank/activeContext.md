@@ -1,4 +1,20 @@
-﻿# Aktiver Kontext: GENXAIS-Zyklus v1.7
+﻿# Aktiver Kontext
+
+- Modus: PLAN (Startdatum: 2025-08-12)
+- Fokus: Produktionsreife (Settings-Propagation, RAG-Frontend, Tests, Sicherheit)
+- Kontext: Voice-/RAG-/Business-Tools-/Einstellungen-/Onboarding-Basis vorhanden; jetzt UI/Runtime konsistent schalten und testen.
+
+## Nächste Schritte (konkret)
+1) Backend Settings-Propagation implementieren (Lesen/Wirken, Neustart-Hinweis wenn nötig)
+2) RAG-Frontend Panel (Build/Query/Answer) mit Progress und Ordnerauswahl
+3) API-Tests (voice/settings/autoconfig/rag/biz) + E2E First-Run → Settings → RAG/Voice
+4) CORS/API-Key/RBAC feinsetzen, Logs minimieren
+
+## Offene Fragen
+- Owner-Zuordnung/Verantwortung
+- WhatsApp/Interner Chat Datenquelle
+
+# Aktiver Kontext: GENXAIS-Zyklus v1.7
 
 ## Aktueller Status
 - **Version:** v1.7
