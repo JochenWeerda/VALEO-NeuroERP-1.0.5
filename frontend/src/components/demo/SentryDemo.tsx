@@ -69,7 +69,7 @@ export const SentryDemo: React.FC = () => {
     }
   };
 
-  const simulateSlowOperation = (...args[]) => {
+  const simulateSlowOperation = () => {
     addBreadcrumb('Benutzer hat langsame Operation gestartet', 'user-action');
     setLastAction('Langsame Operation simuliert');
     
@@ -111,7 +111,7 @@ export const SentryDemo: React.FC = () => {
     addBreadcrumb('Custom Tags wurden gesetzt', 'configuration');
   };
 
-  const clearLastAction = (...args[]) => {
+  const clearLastAction = () => {
     setLastAction('');
   };
 
