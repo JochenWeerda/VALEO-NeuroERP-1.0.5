@@ -14,10 +14,39 @@ neuroflow-next/.next/server-reference-manifest.json
 neuroflow-next/.next/webpack-runtime.js
 neuroflow-next/.next/webpack-runtime.js.map
 
+# Python Cache & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+agents/__pycache__/
+autoagent/__pycache__/
+alembic/__pycache__/
+config/__pycache__/
+core/__pycache__/
+error_handling/__pycache__/
+finance-microservice/src/**/__pycache__/
+linkup_mcp/__pycache__/
+linkup_mcp/**/__pycache__/
+pipelines/__pycache__/
+scripts/__pycache__/
+temp_tests/__pycache__/
+templates/__pycache__/
+tests/__pycache__/
+
 # Database Files
 *.db
 *.sqlite3
 *.sqlite
+data/db/
+data/faiss_db/
 
 # Build Outputs
 dist/
@@ -48,6 +77,18 @@ pids/
 
 # Coverage directory used by tools like istanbul
 coverage/
+
+# Backup Files
+*.bak
+*.backup
+*.orig
+
+# Environment Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.lcov
 
 # nyc test coverage
