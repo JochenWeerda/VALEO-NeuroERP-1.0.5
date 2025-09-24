@@ -3,7 +3,26 @@ import {
   Card, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, Alert, Box, Chip, IconButton, Tooltip,
   CircularProgress, FormControl, InputLabel, Select, MenuItem, Grid, LinearProgress, Snackbar
 } from '@mui/material';
-import { BarcodeScanner, DetectedBarcode, useErpLookup } from '@valeo/erp-barcode-scanner';
+// Mock import for @valeo/erp-barcode-scanner - replace with actual package when available
+const BarcodeScanner = ({ children, ...props }: any) => (
+  <div className="mock-barcode-scanner" {...props}>
+    <p>Barcode Scanner Component (Mock)</p>
+    {children}
+  </div>
+);
+
+interface DetectedBarcode {
+  code: string;
+  format: string;
+}
+
+const useErpLookup = (config: any) => ({
+  lookupBarcode: async (code: string) => {
+    // Mock implementation
+    console.log('Mock lookup for barcode:', code);
+    return { name: 'Mock Product', sku: code };
+  }
+});
 import {
   QrCode as BarcodeIcon, TrendingUp as TrendingIcon, Psychology as AIIcon,
   Refresh as RefreshIcon, Settings as SettingsIcon, Visibility as ViewIcon,

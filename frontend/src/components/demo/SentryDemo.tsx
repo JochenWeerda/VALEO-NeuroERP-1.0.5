@@ -6,7 +6,7 @@ import { Card,
   Box, 
   Alert,
   Chip, Grid, Paper } from '@mui/material';
-import { Api as ApiIcon, BugReport as BugIcon, Person, Speed as SpeedIcon , Bug , Speed , Person , Api  } from '@mui/icons-material';
+import { Api as ApiIcon, BugReport as BugIcon, Person, Speed as SpeedIcon } from '@mui/icons-material';
 import { useSentry } from '../../hooks/useSentry';
 
 /**
@@ -24,9 +24,9 @@ export const SentryDemo: React.FC = () => {
     
     try {
       // Bewusst einen Fehler auslösen
-      (null as unknown).someProperty.that.does.not.exist();
+      (null as any).someProperty.that.does.not.exist();
     } catch (_error) {
-      captureError(error as Error, {
+      captureError(_error as Error, {
         tags: { 
           component: 'SentryDemo',
           errorType: 'javascript-error',
@@ -53,8 +53,8 @@ export const SentryDemo: React.FC = () => {
         }, 1000);
       });
     } catch (_error) {
-      captureError(error as Error, {
-        tags: { 
+      captureError(_error as Error, {
+        tags: {
           component: 'SentryDemo',
           errorType: 'async-error',
           demo: 'true'
@@ -86,7 +86,7 @@ export const SentryDemo: React.FC = () => {
     });
   };
 
-  const setDemoUser = (...args[]) => {
+  const setDemoUser = () => {
     const demoUser = {
       id: 'demo-user-123',
       email: 'demo@valeo-neuroerp.de',
@@ -98,12 +98,12 @@ export const SentryDemo: React.FC = () => {
     addBreadcrumb(`Benutzer-Kontext gesetzt für: ${demoUser.email}`, 'user-context');
   };
 
-  const addCustomBreadcrumb = (...args[]) => {
+  const addCustomBreadcrumb = () => {
     addBreadcrumb('Benutzer hat benutzerdefinierten Breadcrumb hinzugefügt', 'custom-action', 'info');
     setLastAction('Benutzerdefinierter Breadcrumb hinzugefügt');
   };
 
-  const setCustomTags = (...args[]) => {
+  const setCustomTags = () => {
     setTag('feature', 'sentry-demo');
     setTag('environment', 'development');
     setTag('version', '1.0.0');
@@ -185,7 +185,7 @@ export const SentryDemo: React.FC = () => {
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <PersonIcon color="success" sx={{ mr: 1 }} />
+                <Person color="success" sx={{ mr: 1 }} />
                 <Typography variant="h6">User Context</Typography>
               </Box>
               

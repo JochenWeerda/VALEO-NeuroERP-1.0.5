@@ -46,7 +46,7 @@ export const initializeSentry = () => {
     // Filtere bestimmte Fehler
     if (event?.exception) {
       // const _error = event.exception.values?.[0];
-      if (error?.value?.includes('Non-Error promise rejection')) {
+      if (event?.exception?.values?.[0]?.value?.includes('Non-Error promise rejection')) {
         return null; // Ignoriere bestimmte Promise-Rejections
       }
     }
@@ -68,26 +68,26 @@ export const initializeSentry = () => {
   const userInfo = localStorage.getItem('userInfo');
   if (userInfo) {
     try {
-      const ___user = JSON.parse(userInfo);
+      const user = JSON.parse(userInfo);
       Sentry.setUser({
         id: user.id,
         email: user.email,
         username: user.username
       });
-    } catch (_error) {
+    } catch (error) {
       console.warn('Fehler beim Parsen der Benutzerinformationen für Sentry:', error);
     }
   }
 };
 
 // Utility-Funktionen für Error Tracking
-export const _sentryUtils = {
+export const sentryUtils = {
   // Manuelle Fehler-Meldung
-  captureError: (error: Error, context?: Record<string, _unknown>) => {
+  captureError: (error: Error, context?: Record<string, unknown>) => {
     Sentry.captureException(error, {
-      tags: context?.tags,
-      extra: context?.extra,
-      level: context?.level || 'error'
+      tags: context?.tags as Record<string, string>,
+      extra: context?.extra as Record<string, unknown>,
+      level: (context?.level as Sentry.SeverityLevel) || 'error'
     });
   },
 
@@ -129,7 +129,7 @@ export const _sentryUtils = {
   },
 
   // Kontext setzen
-  setContext: (key: string, context: Record<string, _unknown>) => {
+  setContext: (key: string, context: Record<string, unknown>) => {
     Sentry.setContext(key, context);
   },
 
@@ -140,9 +140,9 @@ export const _sentryUtils = {
 };
 
 // Error Boundary für React-Komponenten
-export const _____SentryErrorBoundary = Sentry.withErrorBoundary;
+export const SentryErrorBoundary = Sentry.withErrorBoundary;
 
 // Profiler für Performance-Monitoring
-export const _____SentryProfiler = Sentry.withProfiler;
+export const SentryProfiler = Sentry.withProfiler;
 
 export default Sentry;

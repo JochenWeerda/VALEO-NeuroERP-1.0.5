@@ -39,7 +39,10 @@ if (typeof window !== 'undefined') {
         // Nur umleiten, wenn wir gerade auf der Root sind
         window.history.replaceState({}, '', pendingPath);
       }
-    } catch {}
+    } catch (error) {
+      // Ignore navigation errors during SPA fallback
+      console.warn('SPA fallback navigation failed:', error);
+    }
   }
 }
 

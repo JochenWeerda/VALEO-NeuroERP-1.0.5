@@ -33,7 +33,7 @@ export const useSentry = () => {
     sentryUtils.setTag(key, value);
   }, []);
 
-  const setContext = useCallback((key: string, context: Record<string, _unknown>) => {
+  const setContext = useCallback((key: string, context: Record<string, unknown>) => {
     sentryUtils.setContext(key, context);
   }, []);
 

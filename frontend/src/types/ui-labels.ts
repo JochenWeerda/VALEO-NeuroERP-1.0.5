@@ -362,7 +362,7 @@ export const getLabel = (path: string, fallback?: string): string => {
 }
 
 export const formatLabel = (label: string, params: Record<string, unknown>): string => {
-  return label.replace(/\{(\w+)\}/g, (_match, key) => {
-    return params[key] !== undefined ? String(params[key]) : match
+  return label.replace(/\{(\w+)\}/g, (match, key) => {
+    return params[key] !== undefined ? String(params[key]) : `{${key}}`
   })
 }

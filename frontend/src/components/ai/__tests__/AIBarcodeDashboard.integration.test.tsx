@@ -325,7 +325,7 @@ describe('AIBarcodeDashboard Integration Tests', () => {
       (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
       const offlineHooks = await import('../../../hooks/useOffline');
-      offlineHooks.useOffline.mockReturnValue({
+      (offlineHooks.useOffline as jest.Mock).mockReturnValue({
         isOnline: false,
         isOffline: true,
         pendingRequests: [{ id: 'p1' }, { id: 'p2' }],
@@ -338,14 +338,14 @@ describe('AIBarcodeDashboard Integration Tests', () => {
         clearPendingRequests: jest.fn(),
         syncPendingRequests: jest.fn(),
       });
-      offlineHooks.useOfflineStatus.mockReturnValue({
+      (offlineHooks.useOfflineStatus as jest.Mock).mockReturnValue({
         isOnline: false,
         pendingRequests: 2,
         syncInProgress: false,
         lastSync: Date.now(),
         error: null
       });
-      offlineHooks.useOfflineData.mockReturnValue({
+      (offlineHooks.useOffline as jest.Mock).mockReturnValue({
         data: [
           {
             id: '1',
