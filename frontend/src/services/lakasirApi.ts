@@ -1,11 +1,10 @@
 /**
  * VALEO NeuroERP - Lakasir Features API Service
  * API-Kommunikation für die adaptierten Lakasir-Features
- */
-
+ */;
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-// API Response Interface
+// API Response Interface;
 interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
@@ -15,10 +14,10 @@ interface ApiResponse<T = any> {
 
 // Barcode Service
 export const barcodeApi = {
-  // Barcode suchen
+  // Barcode suchen,
   async lookupBarcode(barcode: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/barcode/lookup/${barcode}`);
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/barcode/lookup/${barcode, }`);
       return await response.json();
     } catch (error) {
       return {
@@ -30,11 +29,9 @@ export const barcodeApi = {
 
   // Barcode registrieren
   async registerBarcode(productId: string, barcode: string, type: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/barcode/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ product_id: productId, barcode, type })
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/barcode/register`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: productId, barcode, type })
       });
       return await response.json();
     } catch (error) {
@@ -47,8 +44,8 @@ export const barcodeApi = {
 
   // Barcode-Vorschläge
   async getSuggestions(partialBarcode: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/barcode/suggestions?q=${encodeURIComponent(partialBarcode)}`);
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/barcode/suggestions?q=${encodeURIComponent(partialBarcode),}`);
       return await response.json();
     } catch (error) {
       return {
@@ -61,10 +58,10 @@ export const barcodeApi = {
 
 // Stock Opname Service
 export const stockOpnameApi = {
-  // Alle Stock Opnames laden
+  // Alle Stock Opnames laden,
   async getAll(): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/stock-opname`);
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/stock-opname`);
       return await response.json();
     } catch (error) {
       return {
@@ -79,11 +76,9 @@ export const stockOpnameApi = {
     responsible_person: string;
     date: string;
   }): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/stock-opname`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/stock-opname`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
       });
       return await response.json();
     } catch (error) {
@@ -96,8 +91,8 @@ export const stockOpnameApi = {
 
   // Stock Opname Items laden
   async getItems(stockOpnameId: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/stock-opname/${stockOpnameId}/items`);
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/stock-opname/${stockOpnameId, }/items`);
       return await response.json();
     } catch (error) {
       return {
@@ -112,11 +107,9 @@ export const stockOpnameApi = {
     actual_quantity: number;
     notes?: string;
   }): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/stock-opname/items/${itemId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/stock-opname/items/${itemId, }`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
       });
       return await response.json();
     } catch (error) {
@@ -129,8 +122,8 @@ export const stockOpnameApi = {
 
   // Stock Opname abschließen
   async close(stockOpnameId: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/stock-opname/${stockOpnameId}/close`, {
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/stock-opname/${stockOpnameId, }/close`, {
         method: 'POST'
       });
       return await response.json();
@@ -145,10 +138,10 @@ export const stockOpnameApi = {
 
 // Voucher Service
 export const voucherApi = {
-  // Alle Vouchers laden
+  // Alle Vouchers laden,
   async getAll(): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers`);
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers`);
       return await response.json();
     } catch (error) {
       return {
@@ -161,8 +154,8 @@ export const voucherApi = {
   // Voucher erstellen
   async create(data: {
     name: string;
-    code: string;
-    type: 'prozent' | 'betrag' | 'versandkosten';
+    code: string;;
+type: 'prozent' | 'betrag' | 'versandkosten';
     nominal: number;
     kuota: number;
     start_date: string;
@@ -170,11 +163,9 @@ export const voucherApi = {
     minimal_buying: number;
     is_active: boolean;
   }): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
       });
       return await response.json();
     } catch (error) {
@@ -188,8 +179,8 @@ export const voucherApi = {
   // Voucher aktualisieren
   async update(voucherId: string, data: {
     name: string;
-    code: string;
-    type: 'prozent' | 'betrag' | 'versandkosten';
+    code: string;;
+type: 'prozent' | 'betrag' | 'versandkosten';
     nominal: number;
     kuota: number;
     start_date: string;
@@ -197,11 +188,9 @@ export const voucherApi = {
     minimal_buying: number;
     is_active: boolean;
   }): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers/${voucherId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers/${voucherId, }`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
       });
       return await response.json();
     } catch (error) {
@@ -214,8 +203,8 @@ export const voucherApi = {
 
   // Voucher löschen
   async delete(voucherId: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers/${voucherId}`, {
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers/${voucherId, }`, {
         method: 'DELETE'
       });
       return await response.json();
@@ -229,11 +218,9 @@ export const voucherApi = {
 
   // Voucher validieren
   async validate(code: string, amount: number): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers/validate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, amount })
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers/validate`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, amount, })
       });
       return await response.json();
     } catch (error) {
@@ -250,11 +237,9 @@ export const voucherApi = {
     customer_id?: string;
     amount: number;
   }): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers/${voucherId}/use`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers/${voucherId, }/use`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
       });
       return await response.json();
     } catch (error) {
@@ -267,8 +252,8 @@ export const voucherApi = {
 
   // Voucher-Nutzung laden
   async getUsage(voucherId: string): Promise<ApiResponse> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/vouchers/${voucherId}/usage`);
+    try {;
+const response = await fetch(`${API_BASE_URL, }/api/vouchers/${voucherId, }/usage`);
       return await response.json();
     } catch (error) {
       return {
@@ -281,33 +266,32 @@ export const voucherApi = {
 
 // Utility Functions
 export const lakasirUtils = {
-  // Format currency
+  // Format currency,
   formatCurrency(amount: number): string {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR'
+      style: 'currency', currency: 'EUR'
     }).format(amount);
   },
 
   // Format date
   formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('de-DE');
+    return new Date(date).toLocaleDateString('de-DE');,
   },
 
   // Generate random code
   generateCode(prefix: string = 'VALE'): string {
-    return prefix + Math.random().toString(36).substr(2, 8).toUpperCase();
+    return prefix + Math.random().toString(36).substr(2, 8).toUpperCase();,
   },
 
   // Validate barcode format
   validateBarcode(barcode: string): boolean {
-    // Basic validation for common barcode formats
-    const patterns = {
+    // Basic validation for common barcode formats,;
+const patterns = {
       ean13: /^[0-9]{13}$/,
-      ean8: /^[0-9]{8}$/,
-      code128: /^[A-Z0-9]{1,48}$/,
-      code39: /^[0-9A-Z\-\.\/\+\s]{1,43}$/,
-      upc: /^[0-9]{12}$/
+      ean8: /^[0-9]{8,}$/,
+      code128: /^[A-Z0-9]{1,48,}$/,
+      code39: /^[0-9A-Z\-./+\s]{1,43,}$/,
+      upc: /^[0-9]{12,}$/
     };
 
     return Object.values(patterns).some(pattern => pattern.test(barcode));

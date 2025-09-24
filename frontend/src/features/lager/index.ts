@@ -1,2 +1,2 @@
 // Lager Feature Export
-export { default as LagerDashboard } from './LagerDashboard'; 
+export { default as LagerDashboard ,} from './LagerDashboard'; 

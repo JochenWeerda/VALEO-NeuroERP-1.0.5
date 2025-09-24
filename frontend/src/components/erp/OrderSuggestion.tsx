@@ -1,27 +1,15 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo ,} from 'react';
 import {
-  Card,
-  Typography,
-  Grid,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button,
-  Box,
-  Alert,
-  Chip
-} from '@mui/material';
-import { Table, Input, Space, Tag } from 'antd';
-import { SearchOutlined, FilterOutlined, ShoppingCartOutlined } from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+  Card, Typography, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Button, Box, Alert, Chip} from '@mui/material';
+import { Table, Input, Space, Tag} from 'antd';
+import { SearchOutlined, FilterOutlined, ShoppingCartOutlined} from '@mui/icons-material';
+import { useForm, Controller} from 'react-hook-form';
+import { yupResolver ,} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 // TypeScript Interfaces
 export interface OrderSuggestionData {
-  // Kopfbereich
+  // Kopfbereich,
   articleGroup: string;
   branch: string;
   articleNumber: string;
@@ -36,7 +24,7 @@ export interface OrderSuggestionData {
   sales: number;
   suggestion: number;
   
-  // Tabellendaten
+  // Tabellendaten,
   warehouse: string;
   stock: number;
   purchase: number;
@@ -49,8 +37,8 @@ export interface OrderSuggestionFilters {
 }
 
 export interface OrderSuggestionProps {
-  onSuggestionSelect: (suggestion: OrderSuggestionData) => void;
-  onOrderCreate: (order: OrderData) => void;
+  onSuggestionSelect: (suggestion: _OrderSuggestionData) => void;
+  onOrderCreate: (order: _OrderData) => void;
   filters: OrderSuggestionFilters;
 }
 
@@ -61,14 +49,14 @@ export interface OrderData {
   createdAt: Date;
 }
 
-// Validierungsschema
+// Validierungsschema;
 const filterSchema = yup.object({
   articleGroup: yup.string(),
   branch: yup.string(),
   searchTerm: yup.string()
 }).required();
 
-// Mock-Daten für Demonstration
+// Mock-Daten für Demonstration;
 const mockSuggestions: OrderSuggestionData[] = [
   {
     articleGroup: 'Elektronik',
@@ -106,23 +94,14 @@ const mockSuggestions: OrderSuggestionData[] = [
     stock: 2,
     purchase: 15
   }
-];
-
-const articleGroups = ['Elektronik', 'Bürobedarf', 'Möbel', 'Software'];
+];;
+const articleGroups = ['Elektronik', 'Bürobedarf', 'Möbel', 'Software'];;
 const branches = ['Hauptniederlassung', 'Niederlassung Nord', 'Niederlassung Süd'];
 
 // Temporär auskommentiert - wird später implementiert
 export const OrderSuggestion: React.FC<OrderSuggestionProps> = ({
-  onSuggestionSelect,
-  onOrderCreate,
-  filters
-}) => {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Order Suggestion</h1>
-      <p className="text-gray-600">Diese Komponente wird später implementiert.</p>
-    </div>
-  );
+  onSuggestionSelect, onOrderCreate, filters, }) => {
+  return (<div className="p-6">, <h1 className="text-2xl font-bold mb-4">Order Suggestion</h1>, <p className="text-gray-600">Diese Komponente wird später implementiert.</p>, </div>);,
 };
 
 export default OrderSuggestion; 

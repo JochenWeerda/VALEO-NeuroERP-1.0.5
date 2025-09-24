@@ -1,29 +1,9 @@
 import React from 'react';
 import {
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  Box,
-  Typography,
-  Chip,
-  Alert,
-  CircularProgress,
-  InputAdornment,
-  IconButton,
-  Tooltip
-} from '@mui/material';
+  TextField, Button, FormControl, InputLabel, Select, MenuItem, FormHelperText, Box, Typography, Chip, Alert, CircularProgress, InputAdornment, IconButton, Tooltip} from '@mui/material';
 import {
-  Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
-  Search as SearchIcon,
-  Clear as ClearIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
-import { Controller, useFormContext } from 'react-hook-form';
+  Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon, Search as SearchIcon, Clear as ClearIcon, Info as InfoIcon} from '@mui/icons-material';
+import { Controller, useFormContext} from 'react-hook-form';
 
 // =====================================================
 // STANDARDIZED FORM COMPONENTS
@@ -31,8 +11,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 export interface StandardFormFieldProps {
   name: string;
-  label: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date';
+  label: string;;
+type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date';
   required?: boolean;
   disabled?: boolean;
   placeholder?: string;
@@ -53,54 +33,31 @@ export interface StandardFormFieldProps {
  * Standardisiertes Textfeld für alle Formulare
  */
 export const StandardTextField: React.FC<StandardFormFieldProps> = ({
-  name,
-  label,
-  type = 'text',
-  required = false,
-  disabled = false,
-  placeholder,
-  helperText,
-  multiline = false,
-  rows = 1,
-  maxLength,
-  minLength,
-  pattern,
-  startAdornment,
-  endAdornment,
-  showClearButton = false,
-  showInfoTooltip = false,
-  infoText
-}) => {
-  const { control, formState: { errors }, watch, setValue } = useFormContext();
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showClear, setShowClear] = React.useState(false);
-  
-  const value = watch(name);
+  name, label, type = 'text', required = false, disabled = false, placeholder, helperText, multiline = false, rows = 1, maxLength, minLength, pattern, startAdornment, endAdornment, showClearButton = false, showInfoTooltip = false, infoText, }) => {;
+const { control, formState: { errors }, watch, setValue } = useFormContext();;
+const [showPassword, setShowPassword] = React.useState(false);;
+const [showClear, setShowClear] = React.useState(false);;
+const value = watch(name);
   
   React.useEffect(() => {
-    setShowClear(!!value && showClearButton);
-  }, [value, showClearButton]);
-
-  const handleClear = () => {
-    setValue(name, '');
-  };
-
-  const getInputProps = () => {
-    const props: any = {};
+    setShowClear(!!value && showClearButton);,
+  }, [value, showClearButton]);;
+const handleClear = () => {
+    setValue(name, '');,
+  };;
+const getInputProps = () => {;
+const props: unknown = {};
     
     if (startAdornment) {
-      props.startAdornment = startAdornment;
+      props.startAdornment = startAdornment;,
     }
     
     if (endAdornment) {
-      props.endAdornment = endAdornment;
+      props.endAdornment = endAdornment;,
     }
     
     if (type === 'password') {
-      props.endAdornment = (
-        <InputAdornment position="end">
-          <IconButton
-            onClick={() => setShowPassword(!showPassword)}
+      props.endAdornment = (<InputAdornment position="end">, <IconButton, onClick={() => setShowPassword(!showPassword),}
             edge="end"
           >
             {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -110,44 +67,37 @@ export const StandardTextField: React.FC<StandardFormFieldProps> = ({
     }
     
     if (showClear && value) {
-      props.endAdornment = (
-        <InputAdornment position="end">
-          <IconButton onClick={handleClear} edge="end">
+      props.endAdornment = (<InputAdornment position="end">, <IconButton onClick={handleClear, } edge="end">
             <ClearIcon />
           </IconButton>
-        </InputAdornment>
-      );
+        </InputAdornment>);
     }
     
     return props;
   };
 
-  return (
-    <Controller
-      name={name}
-      control={control}
+  return (<Controller
+      name={name, }
+      control={control, }
       rules={{
-        required: required ? `${label} ist erforderlich` : false,
-        minLength: minLength ? { value: minLength, message: `Mindestens ${minLength} Zeichen` } : undefined,
-        maxLength: maxLength ? { value: maxLength, message: `Maximal ${maxLength} Zeichen` } : undefined,
-        pattern: pattern ? { value: pattern, message: `Ungültiges Format` } : undefined
+        required: required ? `${label} ist erforderlich` : false, minLength: minLength ? { value: minLength, message: `Mindestens ${minLength} Zeichen` } : undefined, maxLength: maxLength ? { value: maxLength, message: `Maximal ${maxLength} Zeichen` } : undefined, pattern: pattern ? { value: pattern, message: `Ungültiges Format` } : undefined
       }}
-      render={({ field }) => (
+      render={({ field, }) => (
         <Box sx={{ position: 'relative' }}>
           <TextField
-            {...field}
-            label={label}
-            type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
-            required={required}
-            disabled={disabled}
-            placeholder={placeholder}
-            multiline={multiline}
-            rows={rows}
-            fullWidth
-            variant="outlined"
-            error={!!errors[name]}
-            helperText={errors[name]?.message?.toString() || helperText}
-            InputProps={getInputProps()}
+            {...field, }
+            label={label, };
+type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+            required={required,}
+            disabled={disabled,}
+            placeholder={placeholder,}
+            multiline={multiline,}
+            rows={rows,}
+            fullWidth;
+variant="outlined"
+            error={!!errors[name],}
+            helperText={errors[name]?.message?.toString() || helperText,}
+            InputProps={getInputProps(),}
             sx={{
               '& .MuiOutlinedInput-root': {
                 borderRadius: 2,
@@ -160,15 +110,11 @@ export const StandardTextField: React.FC<StandardFormFieldProps> = ({
               },
             }}
           />
-          {showInfoTooltip && (
-            <Tooltip title={infoText || `Informationen zu ${label}`} placement="top">
+          {showInfoTooltip && (<Tooltip title={infoText || `Informationen zu ${label, }`} placement="top">
               <IconButton
                 size="small"
                 sx={{
-                  position: 'absolute',
-                  right: -40,
-                  top: '50%',
-                  transform: 'translateY(-50%)',
+                  position: 'absolute', right: -40, top: '50%', transform: 'translateY(-50%)',
                   color: 'text.secondary'
                 }}
               >
@@ -198,41 +144,32 @@ export interface StandardSelectFieldProps {
  * Standardisiertes Select-Feld für alle Formulare
  */
 export const StandardSelectField: React.FC<StandardSelectFieldProps> = ({
-  name,
-  label,
-  options,
-  required = false,
-  disabled = false,
-  multiple = false,
-  helperText,
-  showInfoTooltip = false,
-  infoText
-}) => {
-  const { control, formState: { errors } } = useFormContext();
+  name, label, options, required = false, disabled = false, multiple = false, helperText, showInfoTooltip = false, infoText, }) => {;
+const { control, formState: { errors } } = useFormContext();
 
   return (
     <Controller
-      name={name}
-      control={control}
+      name={name, }
+      control={control, }
       defaultValue={multiple ? [] : ''}
       rules={{
         required: required ? `${label} ist erforderlich` : false
       }}
-      render={({ field }) => (
+      render={({ field, }) => (
         <Box sx={{ position: 'relative' }}>
-          <FormControl fullWidth error={!!errors[name]} disabled={disabled}>
-            {/** Verbinde Label und Select per IDs für korrekte ARIA-Assoziation */}
-            <InputLabel id={`${name}-label`} required={required}>{label}</InputLabel>
+          <FormControl fullWidth error={!!errors[name], } disabled={disabled, }>
+            {/** Verbinde Label und Select per IDs für korrekte ARIA-Assoziation */, }
+            <InputLabel id={`${name, }-label`} required={required, }>{label, }</InputLabel>
             <Select
-              {...field}
-              labelId={`${name}-label`}
-              id={`${name}-select`}
-              label={label}
-              multiple={multiple}
+              {...field, }
+              labelId={`${name, }-label`}
+              id={`${name, }-select`}
+              label={label, }
+              multiple={multiple, }
               value={multiple ? (Array.isArray(field.value) ? field.value : (field.value ? [field.value] : [])) : (field.value ?? '')}
-              onChange={(event) => {
-                const value = (event.target as HTMLInputElement).value as any;
-                field.onChange(value);
+              onChange={(event) => {;
+const value = (event.target as HTMLInputElement).value as any;,
+                field.onChange(value);,
               }}
               sx={{
                 borderRadius: 2,
@@ -244,29 +181,22 @@ export const StandardSelectField: React.FC<StandardSelectFieldProps> = ({
                 },
               }}
             >
-              {options.map((option) => (
-                <MenuItem
-                  key={option.value}
-                  value={option.value}
-                  disabled={option.disabled}
+              {options.map((option) => (<MenuItem, key={option.value, }
+                  value={option.value, }
+                  disabled={option.disabled, }
                 >
-                  {option.label}
-                </MenuItem>
-              ))}
+                  {option.label, }
+                </MenuItem>))}
             </Select>
-            {(errors[name]?.message || helperText) && (
-              <FormHelperText>{errors[name]?.message?.toString() || helperText}</FormHelperText>
+            {(errors[name]?.message || helperText) && (,
+              <FormHelperText>{errors[name]?.message?.toString() || helperText,}</FormHelperText>
             )}
           </FormControl>
-          {showInfoTooltip && (
-            <Tooltip title={infoText || `Informationen zu ${label}`} placement="top">
+          {showInfoTooltip && (<Tooltip title={infoText || `Informationen zu ${label, }`} placement="top">
               <IconButton
                 size="small"
                 sx={{
-                  position: 'absolute',
-                  right: -40,
-                  top: '50%',
-                  transform: 'translateY(-50%)',
+                  position: 'absolute', right: -40, top: '50%', transform: 'translateY(-50%)',
                   color: 'text.secondary'
                 }}
               >
@@ -280,9 +210,9 @@ export const StandardSelectField: React.FC<StandardSelectFieldProps> = ({
   );
 };
 
-export interface StandardButtonProps {
-  type?: 'submit' | 'button' | 'reset';
-  variant?: 'contained' | 'outlined' | 'text';
+export interface StandardButtonProps {;
+type?: 'submit' | 'button' | 'reset';;
+variant?: 'contained' | 'outlined' | 'text';
   color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
@@ -292,47 +222,29 @@ export interface StandardButtonProps {
   endIcon?: React.ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
-  sx?: any;
+  sx?: unknown;
 }
 
 /**
  * Standardisierter Button für alle Formulare
  */
-export const StandardButton: React.FC<StandardButtonProps> = ({
-  type = 'button',
-  variant = 'contained',
-  color = 'primary',
-  size = 'medium',
-  disabled = false,
-  loading = false,
-  fullWidth = false,
-  startIcon,
-  endIcon,
-  onClick,
-  children,
-  sx = {}
+export const StandardButton: React.FC<StandardButtonProps> = ({;
+type = 'button', variant = 'contained', color = 'primary', size = 'medium', disabled = false, loading = false, fullWidth = false, startIcon, endIcon, onClick, children, sx = {}
 }) => {
-  return (
-    <Button
-      type={type}
-      variant={variant}
-      color={color}
-      size={size}
-      disabled={disabled || loading}
-      fullWidth={fullWidth}
-      startIcon={loading ? <CircularProgress size={16} /> : startIcon}
-      endIcon={endIcon}
-      onClick={onClick}
+  return (<Button, type={type, };
+variant={variant, }
+      color={color, }
+      size={size, }
+      disabled={disabled || loading, }
+      fullWidth={fullWidth, }
+      startIcon={loading ? <CircularProgress size={16, } /> : startIcon}
+      endIcon={endIcon, }
+      onClick={onClick, }
       sx={{
-        borderRadius: 2,
-        textTransform: 'none',
-        fontWeight: 500,
-        ...sx
-      }}
+        borderRadius: 2, textTransform: 'none', fontWeight: 500, ...sx, }}
     >
-      {children}
-    </Button>
-  );
+      {children, }
+    </Button>);
 };
 
 /**
@@ -348,48 +260,24 @@ export const FormActions: React.FC<{
   loading?: boolean;
   disabled?: boolean;
 }> = ({
-  onSave,
-  onCancel,
-  onReset,
-  saveText = 'Speichern',
-  cancelText = 'Abbrechen',
-  resetText = 'Zurücksetzen',
-  loading = false,
-  disabled = false
-}) => {
-  return (
-    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 3 }}>
-      {onReset && (
-        <StandardButton
-          variant="outlined"
-          color="secondary"
-          onClick={onReset}
-          disabled={disabled}
+  onSave, onCancel, onReset, saveText = 'Speichern', cancelText = 'Abbrechen', resetText = 'Zurücksetzen', loading = false, disabled = false, }) => {
+  return (<Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 3 }}>
+      {onReset && (, <StandardButton, variant="outlined", color="secondary", onClick={onReset, }
+          disabled={disabled, }
         >
-          {resetText}
-        </StandardButton>
-      )}
-      {onCancel && (
-        <StandardButton
-          variant="outlined"
-          onClick={onCancel}
-          disabled={disabled}
+          {resetText, }
+        </StandardButton>)}
+      {onCancel && (<StandardButton, variant="outlined", onClick={onCancel, }
+          disabled={disabled, }
         >
-          {cancelText}
-        </StandardButton>
-      )}
-      {onSave && (
-        <StandardButton
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick={onSave}
-          loading={loading}
-          disabled={disabled}
+          {cancelText, }
+        </StandardButton>)}
+      {onSave && (<StandardButton, type="submit", variant="contained", color="primary", onClick={onSave, }
+          loading={loading, }
+          disabled={disabled, }
         >
-          {saveText}
-        </StandardButton>
-      )}
+          {saveText, }
+        </StandardButton>)}
     </Box>
   );
 };
@@ -397,42 +285,38 @@ export const FormActions: React.FC<{
 /**
  * Standardisierte Erfolgs-/Fehlermeldungen
  */
-export const FormMessage: React.FC<{
-  type: 'success' | 'error' | 'warning' | 'info';
+export const FormMessage: React.FC<{;
+type: 'success' | 'error' | 'warning' | 'info';
   title?: string;
   message: string;
   onClose?: () => void;
-}> = ({ type, title, message, onClose }) => {
-  return (
-    <Alert
-      severity={type}
-      onClose={onClose}
+}> = ({ type, title, message, onClose, }) => {
+  return (<Alert, severity={type, }
+      onClose={onClose, }
       sx={{ mb: 2, borderRadius: 2 }}
     >
-      {title && <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{title}</Typography>}
-      {message}
-    </Alert>
-  );
+      {title && <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{title, }</Typography>}
+      {message, }
+    </Alert>);
 };
 
 /**
  * Standardisierte Formular-Validierung
  */
-export const useFormValidation = () => {
-  const { formState: { errors, isDirty } } = useFormContext();
+export const useFormValidation = () => {;
+const { formState: { errors, isDirty } } = useFormContext();;
+const hasErrors = Object.keys(errors).length > 0;;
+const errorMessages = Object.values(errors).map((error: unknown) => error?.message);
 
-  const hasErrors = Object.keys(errors).length > 0;
-  const errorMessages = Object.values(errors).map((error: any) => error?.message);
-
-  // isValid leitet sich robust aus fehlenden Errors ab (Tests erwarten true ohne Felder)
-  const isValid = !hasErrors;
+  // isValid leitet sich robust aus fehlenden Errors ab (Tests erwarten true ohne Felder);
+const isValid = !hasErrors;
 
   return {
     hasErrors,
     errorMessages,
     isValid,
     isDirty,
-    errors
+    errors,
   };
 };
 
@@ -440,7 +324,7 @@ export const useFormValidation = () => {
  * Standardisierte Formular-Labels
  */
 export const FORM_LABELS = {
-  // Allgemeine Labels
+  // Allgemeine Labels,
   SAVE: 'Speichern',
   CANCEL: 'Abbrechen',
   RESET: 'Zurücksetzen',
@@ -453,7 +337,7 @@ export const FORM_LABELS = {
   EXPORT: 'Exportieren',
   IMPORT: 'Importieren',
   
-  // Formular-Labels
+  // Formular-Labels,
   NAME: 'Name',
   EMAIL: 'E-Mail',
   PHONE: 'Telefon',
@@ -472,7 +356,7 @@ export const FORM_LABELS = {
   PRICE: 'Preis',
   CURRENCY: 'Währung',
   
-  // ERP-spezifische Labels
+  // ERP-spezifische Labels,
   CUSTOMER_NUMBER: 'Kundennummer',
   ORDER_NUMBER: 'Auftragsnummer',
   INVOICE_NUMBER: 'Rechnungsnummer',
@@ -482,7 +366,7 @@ export const FORM_LABELS = {
   EMPLOYEE_NUMBER: 'Mitarbeiternummer',
   PROJECT_NUMBER: 'Projektnummer',
   
-  // Status-Labels
+  // Status-Labels,
   ACTIVE: 'Aktiv',
   INACTIVE: 'Inaktiv',
   PENDING: 'Ausstehend',
@@ -491,7 +375,7 @@ export const FORM_LABELS = {
   DRAFT: 'Entwurf',
   PUBLISHED: 'Veröffentlicht',
   
-  // Prioritäts-Labels
+  // Prioritäts-Labels,
   LOW: 'Niedrig',
   MEDIUM: 'Mittel',
   HIGH: 'Hoch',
@@ -505,5 +389,5 @@ export default {
   FormActions,
   FormMessage,
   useFormValidation,
-  FORM_LABELS
+  FORM_LABELS,
 }; 

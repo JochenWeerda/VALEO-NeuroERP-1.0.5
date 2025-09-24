@@ -1,4 +1,4 @@
-import type { TrustLevel } from '../../../lib/schemas';
+import type { TrustLevel ,} from '../../../lib/schemas';
 
 export type BelegType = 
   | 'wareneingang'

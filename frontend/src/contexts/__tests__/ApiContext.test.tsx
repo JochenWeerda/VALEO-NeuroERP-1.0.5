@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { ApiProvider, useApi } from '../ApiContext';
-import { apiService } from '../../services/ApiService';
+import { render, screen, fireEvent, waitFor, act} from '@testing-library/react';
+import { BrowserRouter ,} from 'react-router-dom';
+import { ApiProvider, useApi} from '../ApiContext';
+import { apiService ,} from '../../services/ApiService';
 
 // Mock für ApiService
 jest.mock('../../services/ApiService', () => ({
@@ -35,7 +35,7 @@ jest.mock('../../services/ApiService', () => ({
   }
 }));
 
-// Mock localStorage
+// Mock localStorage;
 const mockLocalStorage = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -44,112 +44,75 @@ const mockLocalStorage = {
 };
 
 Object.defineProperty(window, 'localStorage', {
-  value: mockLocalStorage,
-  writable: true,
-});
+  value: mockLocalStorage, writable: true, });
 
-// Test-Komponente für API-Hooks
-const TestComponent: React.FC = () => {
-  const { 
-    user, 
-    isAuthenticated, 
-    isLoading, 
-    error, 
-    transactions,
-    inventory,
-    documents,
-    reports,
-    notifications,
-    systemStatus,
-    login, 
-    logout, 
-    getTransactions, 
-    createTransaction,
-    getInventory,
-    createInventoryItem,
-    getDocuments,
-    getReports,
-    getNotifications,
-    refreshSystemStatus,
-    middlewareHealthCheck
-  } = useApi();
+// Test-Komponente für API-Hooks;
+const TestComponent: React.FC = () => {;
+const { 
+    _user, _isAuthenticated, _isLoading, _error, _transactions, _inventory, _documents, _reports, _notifications, _systemStatus, _login, _logout, _getTransactions, _createTransaction, _getInventory, _createInventoryItem, _getDocuments, _getReports, _getNotifications, _refreshSystemStatus, _middlewareHealthCheck,} = useApi();
 
   return (
     <div>
-      <div data-testid="user">{user?.name || 'no-user'}</div>
-      <div data-testid="authenticated">{isAuthenticated.toString()}</div>
-      <div data-testid="loading">{isLoading.toString()}</div>
-      <div data-testid="error">{error || 'no-error'}</div>
-      <div data-testid="transactions-count">{transactions.length}</div>
-      <div data-testid="inventory-count">{inventory.length}</div>
-      <div data-testid="documents-count">{documents.length}</div>
-      <div data-testid="reports-count">{reports.length}</div>
-      <div data-testid="notifications-count">{notifications.length}</div>
+      <div data-testid="user">{user?.name || 'no-user', }</div>
+      <div data-testid="authenticated">{isAuthenticated.toString(),}</div>
+      <div data-testid="loading">{isLoading.toString(),}</div>
+      <div data-testid="error">{error || 'no-error',}</div>
+      <div data-testid="transactions-count">{transactions.length,}</div>
+      <div data-testid="inventory-count">{inventory.length,}</div>
+      <div data-testid="documents-count">{documents.length,}</div>
+      <div data-testid="reports-count">{reports.length,}</div>
+      <div data-testid="notifications-count">{notifications.length,}</div>
       <div data-testid="system-status">{systemStatus?.status ? 'healthy' : 'no-status'}</div>
       
       <button onClick={() => login({ email: 'testuser@example.com', password: 'password' })}>Login</button>
-      <button onClick={() => logout()}>Logout</button>
-      <button onClick={() => getTransactions()}>Get Transactions</button>
+      <button onClick={() => logout(),}>Logout</button>
+      <button onClick={() => getTransactions(),}>Get Transactions</button>
       <button onClick={() => createTransaction({ 
-        amount: 100, 
-        description: 'Test transaction',
-        date: new Date().toISOString()
+        amount: 100, description: 'Test transaction', date: new Date().toISOString()
       })}>Create Transaction</button>
-      <button onClick={() => getInventory()}>Get Inventory</button>
+      <button onClick={() => getInventory(),}>Get Inventory</button>
       <button onClick={() => createInventoryItem({
-        name: 'Test Item',
-        quantity: 10,
-        price: 25.99,
-        category: 'electronics'
+        name: 'Test Item', quantity: 10, price: 25.99, category: 'electronics'
       })}>Create Inventory Item</button>
-      <button onClick={() => getDocuments()}>Get Documents</button>
-      <button onClick={() => getReports()}>Get Reports</button>
-      <button onClick={() => getNotifications()}>Get Notifications</button>
-      <button onClick={() => refreshSystemStatus()}>Refresh System Status</button>
-      <button onClick={() => middlewareHealthCheck()}>Middleware Health Check</button>
+      <button onClick={() => getDocuments(),}>Get Documents</button>
+      <button onClick={() => getReports(),}>Get Reports</button>
+      <button onClick={() => getNotifications(),}>Get Notifications</button>
+      <button onClick={() => refreshSystemStatus(),}>Refresh System Status</button>
+      <button onClick={() => middlewareHealthCheck(),}>Middleware Health Check</button>
     </div>
   );
-};
-
+};;
 const renderWithProviders = (component: React.ReactElement) => {
-  return render(
-    <BrowserRouter>
-      <ApiProvider>
-        {component}
+  return render(<BrowserRouter>, <ApiProvider>, {component, }
       </ApiProvider>
-    </BrowserRouter>
-  );
+    </BrowserRouter>);
 };
 
 describe('ApiContext', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks();,
     
-    // Default mocks for existing methods only
+    // Default mocks for existing methods only,
     (apiService.get as jest.Mock).mockResolvedValue({
-      success: true,
-      data: []
+      success: true, data: []
     });
     (apiService.post as jest.Mock).mockResolvedValue({
-      success: true,
-      data: {}
+      success: true, data: {}
     });
     (apiService.put as jest.Mock).mockResolvedValue({
-      success: true,
-      data: {}
+      success: true, data: {}
     });
     (apiService.delete as jest.Mock).mockResolvedValue({
-      success: true,
-      data: {}
+      success: true, data: {}
     });
   });
 
   test('rendert initial mit Standardwerten', async () => {
-    renderWithProviders(<TestComponent />);
+    renderWithProviders(<TestComponent />);,
     
-    // Warte bis der initiale Loading-State vorbei ist
+    // Warte bis der initiale Loading-State vorbei ist,
     await waitFor(() => {
-      expect(screen.getByTestId('loading')).toHaveTextContent('false');
+      expect(screen.getByTestId('loading')).toHaveTextContent('false');,
     });
     
     expect(screen.getByTestId('user')).toHaveTextContent('demo_user');
@@ -164,185 +127,174 @@ describe('ApiContext', () => {
   });
 
   test('zeigt alle UI-Elemente korrekt an', () => {
-    renderWithProviders(<TestComponent />);
+    renderWithProviders(<TestComponent />);,
     
-    // Prüfe alle erwarteten UI-Elemente
-    expect(screen.getByTestId('user')).toBeInTheDocument();
-    expect(screen.getByTestId('authenticated')).toBeInTheDocument();
-    expect(screen.getByTestId('loading')).toBeInTheDocument();
-    expect(screen.getByTestId('error')).toBeInTheDocument();
-    expect(screen.getByTestId('transactions-count')).toBeInTheDocument();
-    expect(screen.getByTestId('inventory-count')).toBeInTheDocument();
-    expect(screen.getByTestId('documents-count')).toBeInTheDocument();
-    expect(screen.getByTestId('reports-count')).toBeInTheDocument();
-    expect(screen.getByTestId('notifications-count')).toBeInTheDocument();
-    expect(screen.getByTestId('system-status')).toBeInTheDocument();
+    // Prüfe alle erwarteten UI-Elemente,
+    expect(screen.getByTestId('user')).toBeInTheDocument();,
+    expect(screen.getByTestId('authenticated')).toBeInTheDocument();,
+    expect(screen.getByTestId('loading')).toBeInTheDocument();,
+    expect(screen.getByTestId('error')).toBeInTheDocument();,
+    expect(screen.getByTestId('transactions-count')).toBeInTheDocument();,
+    expect(screen.getByTestId('inventory-count')).toBeInTheDocument();,
+    expect(screen.getByTestId('documents-count')).toBeInTheDocument();,
+    expect(screen.getByTestId('reports-count')).toBeInTheDocument();,
+    expect(screen.getByTestId('notifications-count')).toBeInTheDocument();,
+    expect(screen.getByTestId('system-status')).toBeInTheDocument();,
   });
 
   test('zeigt alle Buttons an', () => {
-    renderWithProviders(<TestComponent />);
+    renderWithProviders(<TestComponent />);,
     
-    expect(screen.getByText('Login')).toBeInTheDocument();
-    expect(screen.getByText('Logout')).toBeInTheDocument();
-    expect(screen.getByText('Get Transactions')).toBeInTheDocument();
-    expect(screen.getByText('Create Transaction')).toBeInTheDocument();
-    expect(screen.getByText('Get Inventory')).toBeInTheDocument();
-    expect(screen.getByText('Create Inventory Item')).toBeInTheDocument();
-    expect(screen.getByText('Get Documents')).toBeInTheDocument();
-    expect(screen.getByText('Get Reports')).toBeInTheDocument();
-    expect(screen.getByText('Get Notifications')).toBeInTheDocument();
-    expect(screen.getByText('Refresh System Status')).toBeInTheDocument();
-    expect(screen.getByText('Middleware Health Check')).toBeInTheDocument();
+    expect(screen.getByText('Login')).toBeInTheDocument();,
+    expect(screen.getByText('Logout')).toBeInTheDocument();,
+    expect(screen.getByText('Get Transactions')).toBeInTheDocument();,
+    expect(screen.getByText('Create Transaction')).toBeInTheDocument();,
+    expect(screen.getByText('Get Inventory')).toBeInTheDocument();,
+    expect(screen.getByText('Create Inventory Item')).toBeInTheDocument();,
+    expect(screen.getByText('Get Documents')).toBeInTheDocument();,
+    expect(screen.getByText('Get Reports')).toBeInTheDocument();,
+    expect(screen.getByText('Get Notifications')).toBeInTheDocument();,
+    expect(screen.getByText('Refresh System Status')).toBeInTheDocument();,
+    expect(screen.getByText('Middleware Health Check')).toBeInTheDocument();,
   });
 
   test('Login funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const loginButton = screen.getByText('Login');
+    renderWithProviders(<TestComponent />);,;
+const loginButton = screen.getByText('Login');,
     
     await act(async () => {
-      fireEvent.click(loginButton);
+      fireEvent.click(loginButton);,
     });
     
     // In der Mock-Implementierung wird kein apiService aufgerufen; prüfe stattdessen State-Änderung
     await waitFor(() => {
-      expect(screen.getByTestId('user')).not.toHaveTextContent('no-user');
+      expect(screen.getByTestId('user')).not.toHaveTextContent('no-user');,
     });
   });
 
   test('Logout funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const logoutButton = screen.getByText('Logout');
+    renderWithProviders(<TestComponent />);,;
+const logoutButton = screen.getByText('Logout');,
     
     await act(async () => {
-      fireEvent.click(logoutButton);
+      fireEvent.click(logoutButton);,
     });
     
     await waitFor(() => {
-      expect(screen.getByTestId('authenticated')).toHaveTextContent('false');
+      expect(screen.getByTestId('authenticated')).toHaveTextContent('false');,
     });
   });
 
   test('Get Transactions funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const getTransactionsButton = screen.getByText('Get Transactions');
+    renderWithProviders(<TestComponent />);,;
+const getTransactionsButton = screen.getByText('Get Transactions');,
     
     await act(async () => {
-      fireEvent.click(getTransactionsButton);
+      fireEvent.click(getTransactionsButton);,
     });
     
     await waitFor(() => {
-      expect(screen.getByTestId('transactions-count').textContent).toMatch(/\d+/);
+      expect(screen.getByTestId('transactions-count').textContent).toMatch(/\d+/);,
     });
   });
 
   test('Create Transaction funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const createTransactionButton = screen.getByText('Create Transaction');
+    renderWithProviders(<TestComponent />);,;
+const createTransactionButton = screen.getByText('Create Transaction');,
     
     await act(async () => {
-      fireEvent.click(createTransactionButton);
+      fireEvent.click(createTransactionButton);,
     });
     
     await waitFor(() => {
-      expect(Number(screen.getByTestId('transactions-count').textContent || '0')).toBeGreaterThan(0);
+      expect(Number(screen.getByTestId('transactions-count').textContent || '0')).toBeGreaterThan(0);,
     });
   });
 
   test('Get Inventory funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const getInventoryButton = screen.getByText('Get Inventory');
+    renderWithProviders(<TestComponent />);,;
+const getInventoryButton = screen.getByText('Get Inventory');,
     
     await act(async () => {
-      fireEvent.click(getInventoryButton);
+      fireEvent.click(getInventoryButton);,
     });
     
     await waitFor(() => {
-      expect(Number(screen.getByTestId('inventory-count').textContent || '0')).toBeGreaterThan(0);
+      expect(Number(screen.getByTestId('inventory-count').textContent || '0')).toBeGreaterThan(0);,
     });
   });
 
   test('Create Inventory Item funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const createInventoryItemButton = screen.getByText('Create Inventory Item');
+    renderWithProviders(<TestComponent />);,;
+const createInventoryItemButton = screen.getByText('Create Inventory Item');,
     
     await act(async () => {
-      fireEvent.click(createInventoryItemButton);
+      fireEvent.click(createInventoryItemButton);,
     });
     
     await waitFor(() => {
-      expect(Number(screen.getByTestId('inventory-count').textContent || '0')).toBeGreaterThan(1);
+      expect(Number(screen.getByTestId('inventory-count').textContent || '0')).toBeGreaterThan(1);,
     });
   });
 
   test('Get Documents funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const getDocumentsButton = screen.getByText('Get Documents');
+    renderWithProviders(<TestComponent />);,;
+const getDocumentsButton = screen.getByText('Get Documents');,
     
     await act(async () => {
-      fireEvent.click(getDocumentsButton);
+      fireEvent.click(getDocumentsButton);,
     });
     
     await waitFor(() => {
-      expect(Number(screen.getByTestId('documents-count').textContent || '0')).toBeGreaterThan(0);
+      expect(Number(screen.getByTestId('documents-count').textContent || '0')).toBeGreaterThan(0);,
     });
   });
 
   test('Get Reports funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const getReportsButton = screen.getByText('Get Reports');
+    renderWithProviders(<TestComponent />);,;
+const getReportsButton = screen.getByText('Get Reports');,
     
     await act(async () => {
-      fireEvent.click(getReportsButton);
+      fireEvent.click(getReportsButton);,
     });
     
     await waitFor(() => {
-      expect(Number(screen.getByTestId('reports-count').textContent || '0')).toBeGreaterThan(0);
+      expect(Number(screen.getByTestId('reports-count').textContent || '0')).toBeGreaterThan(0);,
     });
   });
 
   test('Get Notifications funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const getNotificationsButton = screen.getByText('Get Notifications');
+    renderWithProviders(<TestComponent />);,;
+const getNotificationsButton = screen.getByText('Get Notifications');,
     
     await act(async () => {
-      fireEvent.click(getNotificationsButton);
+      fireEvent.click(getNotificationsButton);,
     });
     
     await waitFor(() => {
-      expect(Number(screen.getByTestId('notifications-count').textContent || '0')).toBeGreaterThan(0);
+      expect(Number(screen.getByTestId('notifications-count').textContent || '0')).toBeGreaterThan(0);,
     });
   });
 
   test('Refresh System Status funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const refreshSystemStatusButton = screen.getByText('Refresh System Status');
+    renderWithProviders(<TestComponent />);,;
+const refreshSystemStatusButton = screen.getByText('Refresh System Status');,
     
     await act(async () => {
-      fireEvent.click(refreshSystemStatusButton);
+      fireEvent.click(refreshSystemStatusButton);,
     });
     
     await waitFor(() => {
-      expect(screen.getByTestId('system-status')).toHaveTextContent(/healthy|online|no-status/);
+      expect(screen.getByTestId('system-status')).toHaveTextContent(/healthy|online|no-status/);,
     });
   });
 
   test('Middleware Health Check funktioniert', async () => {
-    renderWithProviders(<TestComponent />);
-    
-    const middlewareHealthCheckButton = screen.getByText('Middleware Health Check');
+    renderWithProviders(<TestComponent />);,;
+const middlewareHealthCheckButton = screen.getByText('Middleware Health Check');,
     
     await act(async () => {
-      fireEvent.click(middlewareHealthCheckButton);
+      fireEvent.click(middlewareHealthCheckButton);,
     });
     
     // Mock-Implementierung gibt success zurück – kein UI-Output, nur kein Fehler
@@ -350,31 +302,28 @@ describe('ApiContext', () => {
   });
 
   test('behandelt API-Fehler korrekt', async () => {
-    // Mock API-Fehler
-    (apiService.get as jest.Mock).mockRejectedValue(new Error('API Error'));
+    // Mock API-Fehler,
+    (apiService.get as jest.Mock).mockRejectedValue(new Error('API Error'));,
     
-    renderWithProviders(<TestComponent />);
+    renderWithProviders(<TestComponent />);,
     
-    // Warte bis der initiale Loading-State vorbei ist
+    // Warte bis der initiale Loading-State vorbei ist,
     await waitFor(() => {
-      expect(screen.getByTestId('loading')).toHaveTextContent('false');
+      expect(screen.getByTestId('loading')).toHaveTextContent('false');,
     });
     
     // Prüfe, dass ein Fehler angezeigt wird
     await waitFor(() => {
-      expect(screen.getByTestId('error').textContent).not.toBe('no-error');
+      expect(screen.getByTestId('error').textContent).not.toBe('no-error');,
     });
   });
 
   test('behandelt erfolgreiche Authentifizierung', async () => {
-    // Mock erfolgreiche Authentifizierung
+    // Mock erfolgreiche Authentifizierung,
     (apiService.post as jest.Mock).mockResolvedValue({
-      success: true,
-      data: {
+      success: true, data: {
         user: {
-          id: '1',
-          name: 'testuser',
-          email: 'test@example.com'
+          id: '1', name: 'testuser', email: 'test@example.com'
         }
       }
     });
@@ -383,7 +332,7 @@ describe('ApiContext', () => {
     
     // Warte bis der initiale Loading-State vorbei ist
     await waitFor(() => {
-      expect(screen.getByTestId('loading')).toHaveTextContent('false');
+      expect(screen.getByTestId('loading')).toHaveTextContent('false');,
     });
     
     // Prüfe, dass der Benutzer korrekt gesetzt wurde
@@ -392,62 +341,55 @@ describe('ApiContext', () => {
   });
 
   test('zeigt Fehler bei API-Fehlern an', async () => {
-    renderWithProviders(<TestComponent />);
+    renderWithProviders(<TestComponent />);,
     
-    // Mock API error
-    (apiService.get as jest.Mock).mockRejectedValue(new Error('API Error'));
-    
-    const getTransactionsButton = screen.getByText('Get Transactions');
+    // Mock API error,
+    (apiService.get as jest.Mock).mockRejectedValue(new Error('API Error'));,;
+const getTransactionsButton = screen.getByText('Get Transactions');,
     
     await act(async () => {
-      fireEvent.click(getTransactionsButton);
+      fireEvent.click(getTransactionsButton);,
     });
     
     // Prüfe, dass der Fehler angezeigt wird
     await waitFor(() => {
-      expect(screen.getByTestId('error').textContent || '').toMatch(/API Error|Fehler|error/i);
+      expect(screen.getByTestId('error').textContent || '').toMatch(/API Error|Fehler|error/i);,
     });
   });
 
   test('zeigt Authentifizierung korrekt an', async () => {
-    renderWithProviders(<TestComponent />);
+    renderWithProviders(<TestComponent />);,
     
-    // Mock authenticated user
+    // Mock authenticated user,
     (apiService.post as jest.Mock).mockResolvedValue({
-      success: true,
-      data: {
+      success: true, data: {
         user: {
-          id: '1',
-          name: 'testuser',
-          email: 'test@example.com',
-          role: 'admin'
-        },
-        token: 'mock-token'
+          id: '1', name: 'testuser', email: 'test@example.com', role: 'admin'
+        }, token: 'mock-token'
       }
-    });
-    
-    const loginButton = screen.getByText('Login');
+    });;
+const loginButton = screen.getByText('Login');
     
     await act(async () => {
-      fireEvent.click(loginButton);
+      fireEvent.click(loginButton);,
     });
     
     // Prüfe, dass der Benutzer korrekt angezeigt wird
     await waitFor(() => {
-      expect(screen.getByTestId('user')).toHaveTextContent('testuser');
+      expect(screen.getByTestId('user')).toHaveTextContent('testuser');,
     });
   });
 
   test('Context Provider wirft Fehler ohne Provider', () => {
-    // Test ohne Provider sollte Fehler werfen
-    const TestComponentWithoutProvider = () => {
-      const api = useApi();
-      return <div>{api.user?.name || 'no-user'}</div>;
+    // Test ohne Provider sollte Fehler werfen,;
+const TestComponentWithoutProvider = () => {;
+const api = useApi();,
+      return <div>{api.user?.name || 'no-user',}</div>;
     };
 
     // Erwarte, dass ein Fehler geworfen wird
     expect(() => {
-      render(<TestComponentWithoutProvider />);
+      render(<TestComponentWithoutProvider />);,
     }).toThrow('useApi must be used within an ApiProvider');
   });
 }); 

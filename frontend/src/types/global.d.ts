@@ -100,8 +100,8 @@ export interface Address {
 }
 
 export interface Contact extends BaseEntity {
-  customerId: string;
-  type: ContactType;
+  customerId: string;;
+type: ContactType;
   subject: string;
   description: string;
   date: Date;
@@ -141,8 +141,8 @@ export interface InvoiceItem {
 }
 
 // Notification Types
-export interface Notification extends BaseEntity {
-  type: NotificationType;
+export interface Notification extends BaseEntity {;
+type: NotificationType;
   title: string;
   message: string;
   duration?: number;
@@ -160,8 +160,8 @@ export interface NotificationAction {
 // Form Types
 export interface FormField {
   name: string;
-  label: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'select' | 'textarea' | 'date' | 'checkbox';
+  label: string;;
+type: 'text' | 'email' | 'password' | 'number' | 'select' | 'textarea' | 'date' | 'checkbox';
   required?: boolean;
   validation?: ValidationRule[];
   options?: SelectOption[];
@@ -169,9 +169,9 @@ export interface FormField {
   disabled?: boolean;
 }
 
-export interface ValidationRule {
-  type: 'required' | 'min' | 'max' | 'pattern' | 'email' | 'custom';
-  value?: any;
+export interface ValidationRule {;
+type: 'required' | 'min' | 'max' | 'pattern' | 'email' | 'custom';
+  value?: unknown;
   message: string;
 }
 
@@ -189,12 +189,12 @@ export interface TableColumn<T = any> {
   width?: number | string;
   sortable?: boolean;
   filterable?: boolean;
-  render?: (value: any, record: T, index: number) => React.ReactNode;
+  render?: (value: unknown, record: T, index: number) => React.ReactNode;
 }
 
 export interface TableFilter {
   key: string;
-  value: any;
+  value: unknown;
   operator: 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'greaterThan' | 'lessThan' | 'in' | 'notIn';
 }
 
@@ -222,7 +222,7 @@ export interface ChartDataset {
 export interface ApiError {
   code: string;
   message: string;
-  details?: any;
+  details?: unknown;
   timestamp: string;
 }
 
@@ -230,7 +230,7 @@ export interface ApiError {
 export interface LoadingState {
   loading: boolean;
   error: string | null;
-  data: any | null;
+  data: unknown | null;
 }
 
 // Filter Types
@@ -294,8 +294,8 @@ export interface ThemeColors {
 }
 
 // Component Props Types
-export interface BaseComponentProps {
-  className?: string;
+export interface BaseComponentProps {;
+className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }
@@ -314,8 +314,8 @@ export interface DataCardProps extends BaseComponentProps {
 }
 
 export interface StatusBadgeProps extends BaseComponentProps {
-  status: string;
-  variant?: 'default' | 'outlined' | 'filled';
+  status: string;;
+variant?: 'default' | 'outlined' | 'filled';
   size?: 'small' | 'medium' | 'large';
 }
 

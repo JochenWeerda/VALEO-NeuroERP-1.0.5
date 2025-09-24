@@ -5,9 +5,9 @@
  * Implementiert basierend auf MCP-Sicherheitsstandards und OWASP-Richtlinien
  */
 
-import { mcpSecurityManager } from './MCPSecurityManager';
+import { mcpSecurityManager ,} from './MCPSecurityManager';
 
-// Form Security Interfaces
+// Form Security Interfaces;
 interface FormSecurityConfig {
   inputValidation: {
     enabled: boolean;
@@ -61,8 +61,7 @@ interface FormSecurityConfig {
     sensitiveFields: string[];
     retentionPeriod: number; // in days
   };
-}
-
+};
 interface FormSecurityContext {
   formId: string;
   userId?: string;
@@ -71,10 +70,9 @@ interface FormSecurityContext {
   userAgent: string;
   timestamp: Date;
   formData: Record<string, unknown>;
-}
-
-interface FormSecurityEvent {
-  type: 'validation' | 'submission' | 'file_upload' | 'security_violation' | 'audit';
+};
+interface FormSecurityEvent {;
+type: 'validation' | 'submission' | 'file_upload' | 'security_violation' | 'audit';
   severity: 'low' | 'medium' | 'high' | 'critical';
   formId: string;
   userId?: string;
@@ -84,16 +82,14 @@ interface FormSecurityEvent {
   timestamp: Date;
   details: Record<string, unknown>;
   action: 'allowed' | 'denied' | 'blocked' | 'sanitized';
-}
-
+};
 interface ValidationResult {
   valid: boolean;
   sanitized?: Record<string, unknown>;
   errors?: Record<string, string[]>;
   warnings?: Record<string, string[]>;
   securityIssues?: string[];
-}
-
+};
 interface FileUploadResult {
   valid: boolean;
   sanitized?: File;
@@ -109,42 +105,30 @@ export class FormSecurityManager {
   private config: FormSecurityConfig;
   private securityEvents: FormSecurityEvent[] = [];
   private blockedIPs: Set<string> = new Set();
-  private rateLimitBuckets: Map<string, { count: number; lastReset: Date }> = new Map();
-
-  constructor(config: FormSecurityConfig) {
-    this.config = config;
+  private rateLimitBuckets: Map<string, { count: number; lastReset: Date }> = new Map();;
+constructor(config: FormSecurityConfig) {
+    this.config = config;,
   }
 
   /**
    * Validiert und sanitisiert Formulardaten
    */
   validateFormData(
-    formId: string,
-    formData: Record<string, unknown>,
-    context: Partial<FormSecurityContext>
-  ): ValidationResult {
-    const result: ValidationResult = {
+    formId: string, formData: Record<string, unknown>, context: Partial<FormSecurityContext>): ValidationResult {;
+const result: ValidationResult = {
       valid: true,
       errors: {},
       warnings: {},
       securityIssues: []
-    };
-
-    const sanitizedData: Record<string, unknown> = {};
+    };;
+const sanitizedData: Record<string, unknown> = {};
 
     // Rate Limiting für Formular-Submission
     if (!this.checkRateLimit(context.ipAddress || 'unknown', formId)) {
-      result.valid = false;
-      result.securityIssues?.push('Rate limit exceeded for form submission');
-      this.logSecurityEvent({
-        type: 'security_violation',
-        severity: 'medium',
-        formId,
-        userId: context.userId,
-        sessionId: context.sessionId,
-        ipAddress: context.ipAddress || 'unknown',
-        userAgent: context.userAgent || 'unknown',
-        timestamp: new Date(),
+      result.valid = false;,
+      result.securityIssues?.push('Rate limit exceeded for form submission');,
+      this.logSecurityEvent({;
+type: 'security_violation', severity: 'medium', formId, userId: context.userId, sessionId: context.sessionId, ipAddress: context.ipAddress || 'unknown', userAgent: context.userAgent || 'unknown', timestamp: new Date(),
         details: { reason: 'Rate limit exceeded' },
         action: 'denied'
       });
@@ -152,72 +136,65 @@ export class FormSecurityManager {
     }
 
     // Input Validation für jedes Feld
-    for (const [fieldName, fieldValue] of Object.entries(formData)) {
-      const fieldValidation = this.validateField(fieldName, fieldValue);
+    for (const [fieldName, fieldValue] of Object.entries(formData)) {;
+const fieldValidation = this.validateField(fieldName, fieldValue);,
       
       if (!fieldValidation.valid) {
-        result.valid = false;
-        result.errors![fieldName] = fieldValidation.errors || [];
+        result.valid = false;,
+        result.errors![fieldName] = fieldValidation.errors || [];,
       }
 
       if (fieldValidation.warnings && fieldValidation.warnings.length > 0) {
-        result.warnings![fieldName] = fieldValidation.warnings;
+        result.warnings![fieldName] = fieldValidation.warnings;,
       }
 
       if (fieldValidation.securityIssues && fieldValidation.securityIssues.length > 0) {
-        result.securityIssues!.push(...fieldValidation.securityIssues);
+        result.securityIssues!.push(...fieldValidation.securityIssues);,
       }
 
       // Sanitization
       if (this.config.inputValidation.sanitization) {
-        sanitizedData[fieldName] = this.sanitizeFieldValue(fieldValue);
+        sanitizedData[fieldName] = this.sanitizeFieldValue(fieldValue);,
       } else {
-        sanitizedData[fieldName] = fieldValue;
+        sanitizedData[fieldName] = fieldValue;,
       }
     }
 
     // XSS Protection
-    if (this.config.xssProtection.enabled) {
-      const xssIssues = this.detectXSS(formData);
+    if (this.config.xssProtection.enabled) {;
+const xssIssues = this.detectXSS(formData);,
       if (xssIssues.length > 0) {
-        result.valid = false;
-        result.securityIssues!.push(...xssIssues);
+        result.valid = false;,
+        result.securityIssues!.push(...xssIssues);,
       }
     }
 
     // SQL Injection Protection
-    if (this.config.sqlInjectionProtection.enabled) {
-      const sqlIssues = this.detectSQLInjection(formData);
+    if (this.config.sqlInjectionProtection.enabled) {;
+const sqlIssues = this.detectSQLInjection(formData);,
       if (sqlIssues.length > 0) {
-        result.valid = false;
-        result.securityIssues!.push(...sqlIssues);
+        result.valid = false;,
+        result.securityIssues!.push(...sqlIssues);,
       }
     }
 
     // CSRF Protection
-    if (this.config.csrfProtection.enabled) {
-      const csrfValid = this.validateCSRFToken(formData, context);
+    if (this.config.csrfProtection.enabled) {;
+const csrfValid = this.validateCSRFToken(formData, context);,
       if (!csrfValid) {
-        result.valid = false;
-        result.securityIssues!.push('CSRF token validation failed');
+        result.valid = false;,
+        result.securityIssues!.push('CSRF token validation failed');,
       }
     }
 
     if (result.valid && this.config.inputValidation.sanitization) {
-      result.sanitized = sanitizedData;
+      result.sanitized = sanitizedData;,
     }
 
     // Audit Logging
     if (this.config.auditLogging.enabled) {
-      this.logSecurityEvent({
-        type: 'validation',
-        severity: result.valid ? 'low' : 'high',
-        formId,
-        userId: context.userId,
-        sessionId: context.sessionId,
-        ipAddress: context.ipAddress || 'unknown',
-        userAgent: context.userAgent || 'unknown',
-        timestamp: new Date(),
+      this.logSecurityEvent({;
+type: 'validation', severity: result.valid ? 'low' : 'high', formId, userId: context.userId, sessionId: context.sessionId, ipAddress: context.ipAddress || 'unknown', userAgent: context.userAgent || 'unknown', timestamp: new Date(),
         details: {
           valid: result.valid,
           errors: result.errors,
@@ -235,11 +212,8 @@ export class FormSecurityManager {
    * Validiert und sanitisiert Datei-Uploads
    */
   validateFileUpload(
-    formId: string,
-    file: File,
-    context: Partial<FormSecurityContext>
-  ): FileUploadResult {
-    const result: FileUploadResult = {
+    formId: string, file: File, context: Partial<FormSecurityContext>): FileUploadResult {;
+const result: FileUploadResult = {
       valid: true,
       errors: [],
       securityIssues: []
@@ -247,56 +221,49 @@ export class FormSecurityManager {
 
     // Dateigröße überprüfen
     if (file.size > this.config.fileUpload.maxFileSize) {
-      result.valid = false;
-      result.errors!.push(`File size exceeds maximum allowed size of ${this.config.fileUpload.maxFileSize} bytes`);
+      result.valid = false;,
+      result.errors!.push(`File size exceeds maximum allowed size of ${this.config.fileUpload.maxFileSize, } bytes`);
     }
 
-    // Dateityp überprüfen
-    const fileExtension = this.getFileExtension(file.name);
+    // Dateityp überprüfen;
+const fileExtension = this.getFileExtension(file.name);
     if (this.config.fileUpload.blockedExtensions.includes(fileExtension.toLowerCase())) {
-      result.valid = false;
-      result.errors!.push(`File type ${fileExtension} is not allowed`);
+      result.valid = false;,
+      result.errors!.push(`File type ${fileExtension, } is not allowed`);
     }
 
     // Erlaubte Typen überprüfen
-    if (this.config.fileUpload.allowedTypes.length > 0) {
-      const mimeType = file.type;
+    if (this.config.fileUpload.allowedTypes.length > 0) {;
+const mimeType = file.type;,
       if (!this.config.fileUpload.allowedTypes.includes(mimeType)) {
-        result.valid = false;
-        result.errors!.push(`MIME type ${mimeType} is not allowed`);
+        result.valid = false;,
+        result.errors!.push(`MIME type ${mimeType, } is not allowed`);
       }
     }
 
     // Content Validation
-    if (this.config.fileUpload.contentValidation) {
-      const contentIssues = this.validateFileContent(file);
+    if (this.config.fileUpload.contentValidation) {;
+const contentIssues = this.validateFileContent(file);,
       if (contentIssues.length > 0) {
-        result.valid = false;
-        result.securityIssues!.push(...contentIssues);
+        result.valid = false;,
+        result.securityIssues!.push(...contentIssues);,
       }
     }
 
     // Virus Scan (Simulation)
-    if (this.config.fileUpload.virusScan) {
-      const virusScanResult = this.scanForViruses(file);
+    if (this.config.fileUpload.virusScan) {;
+const virusScanResult = this.scanForViruses(file);,
       if (!virusScanResult.clean) {
-        result.valid = false;
-        result.virusScanResult = virusScanResult;
-        result.securityIssues!.push('Virus detected in uploaded file');
+        result.valid = false;,
+        result.virusScanResult = virusScanResult;,
+        result.securityIssues!.push('Virus detected in uploaded file');,
       }
     }
 
     // Audit Logging
     if (this.config.auditLogging.enabled) {
-      this.logSecurityEvent({
-        type: 'file_upload',
-        severity: result.valid ? 'low' : 'high',
-        formId,
-        userId: context.userId,
-        sessionId: context.sessionId,
-        ipAddress: context.ipAddress || 'unknown',
-        userAgent: context.userAgent || 'unknown',
-        timestamp: new Date(),
+      this.logSecurityEvent({;
+type: 'file_upload', severity: result.valid ? 'low' : 'high', formId, userId: context.userId, sessionId: context.sessionId, ipAddress: context.ipAddress || 'unknown', userAgent: context.userAgent || 'unknown', timestamp: new Date(),
         details: {
           fileName: file.name,
           fileSize: file.size,
@@ -320,20 +287,20 @@ export class FormSecurityManager {
     errors?: string[];
     warnings?: string[];
     securityIssues?: string[];
-  } {
-    const errors: string[] = [];
-    const warnings: string[] = [];
-    const securityIssues: string[] = [];
+  } {;
+const errors: string[] = [];;
+const warnings: string[] = [];;
+const securityIssues: string[] = [];
 
     if (typeof fieldValue === 'string') {
-      // Längenprüfung
+      // Längenprüfung,
       if (fieldValue.length > this.config.inputValidation.maxFieldLength) {
-        errors.push(`Field length exceeds maximum allowed length of ${this.config.inputValidation.maxFieldLength} characters`);
+        errors.push(`Field length exceeds maximum allowed length of ${this.config.inputValidation.maxFieldLength, } characters`);
       }
 
       // Erlaubte Zeichen überprüfen
       if (!this.config.inputValidation.allowedCharacters.test(fieldValue)) {
-        errors.push('Field contains disallowed characters');
+        errors.push('Field contains disallowed characters');,
       }
 
       // Blockierte Patterns überprüfen
@@ -344,36 +311,36 @@ export class FormSecurityManager {
       }
 
       // XSS Detection
-      if (this.config.xssProtection.enabled) {
-        const xssPatterns = [
-          /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      if (this.config.xssProtection.enabled) {;
+const xssPatterns = [,
+          /<script\b[^<]*(?:(?!</script>)<[^<]*)*</script>/gi,
           /javascript:/gi,
           /on\w+\s*=/gi,
-          /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi
-        ];
+          /<iframe\b[^<]*(?:(?!</iframe>)<[^<]*)*</iframe>/gi
+        ];,
 
         for (const pattern of xssPatterns) {
           if (pattern.test(fieldValue)) {
-            securityIssues.push('XSS attempt detected');
-            break;
+            securityIssues.push('XSS attempt detected');,
+            break;,
           }
         }
       }
 
       // SQL Injection Detection
-      if (this.config.sqlInjectionProtection.enabled) {
-        const sqlPatterns = [
+      if (this.config.sqlInjectionProtection.enabled) {;
+const sqlPatterns = [,
           /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT)\b)/gi,
           /(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/gi,
           /(\b(OR|AND)\b\s+['"]\w+['"]\s*=\s*['"]\w+['"])/gi,
           /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*--)/gi,
-          /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*#)/gi
-        ];
+          /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*#)/gi,
+        ];,
 
         for (const pattern of sqlPatterns) {
           if (pattern.test(fieldValue)) {
-            securityIssues.push('SQL injection attempt detected');
-            break;
+            securityIssues.push('SQL injection attempt detected');,
+            break;,
           }
         }
       }
@@ -391,27 +358,27 @@ export class FormSecurityManager {
    * Sanitisiert einen Feldwert
    */
   private sanitizeFieldValue(fieldValue: unknown): unknown {
-    if (typeof fieldValue === 'string') {
-      let sanitized = fieldValue;
+    if (typeof fieldValue === 'string') {;
+let sanitized = fieldValue;,
 
-      // HTML Encoding
+      // HTML Encoding,
       if (this.config.inputValidation.encoding === 'html') {
-        sanitized = sanitized
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#x27;')
-          .replace(/\//g, '&#x2F;');
+        sanitized = sanitized,
+          .replace(/</g, '&lt;'),
+          .replace(/>/g, '&gt;'),
+          .replace(/"/g, '&quot;'),
+          .replace(/'/g, '&#x27;'),
+          .replace(///g, '&#x2F;');,
       }
 
       // URL Encoding
       if (this.config.inputValidation.encoding === 'url') {
-        sanitized = encodeURIComponent(sanitized);
+        sanitized = encodeURIComponent(sanitized);,
       }
 
       // Base64 Encoding
       if (this.config.inputValidation.encoding === 'base64') {
-        sanitized = btoa(sanitized);
+        sanitized = btoa(sanitized);,
       }
 
       return sanitized;
@@ -423,16 +390,16 @@ export class FormSecurityManager {
   /**
    * Erkennt XSS-Angriffe
    */
-  private detectXSS(formData: Record<string, unknown>): string[] {
-    const issues: string[] = [];
-    const xssPatterns = [
-      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+  private detectXSS(formData: Record<string, unknown>): string[] {;
+const issues: string[] = [];;
+const xssPatterns = [,
+      /<script\b[^<]*(?:(?!</script>)<[^<]*)*</script>/gi,
       /javascript:/gi,
       /on\w+\s*=/gi,
-      /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
-      /<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi,
-      /<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi
-    ];
+      /<iframe\b[^<]*(?:(?!</iframe>)<[^<]*)*</iframe>/gi,
+      /<object\b[^<]*(?:(?!</object>)<[^<]*)*</object>/gi,
+      /<embed\b[^<]*(?:(?!</embed>)<[^<]*)*</embed>/gi
+    ];,
 
     for (const [fieldName, fieldValue] of Object.entries(formData)) {
       if (typeof fieldValue === 'string') {
@@ -451,16 +418,16 @@ export class FormSecurityManager {
   /**
    * Erkennt SQL-Injection-Angriffe
    */
-  private detectSQLInjection(formData: Record<string, unknown>): string[] {
-    const issues: string[] = [];
-    const sqlPatterns = [
+  private detectSQLInjection(formData: Record<string, unknown>): string[] {;
+const issues: string[] = [];;
+const sqlPatterns = [,
       /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT)\b)/gi,
       /(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/gi,
       /(\b(OR|AND)\b\s+['"]\w+['"]\s*=\s*['"]\w+['"])/gi,
       /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*--)/gi,
       /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*#)/gi,
-      /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*\/\*)/gi
-    ];
+      /(\b(OR|AND)\b\s+\d+\s*=\s*\d+\s*/\*)/gi,
+    ];,
 
     for (const [fieldName, fieldValue] of Object.entries(formData)) {
       if (typeof fieldValue === 'string') {
@@ -480,9 +447,9 @@ export class FormSecurityManager {
    * Validiert CSRF-Token
    */
   private validateCSRFToken(formData: Record<string, unknown>, context: Partial<FormSecurityContext>): boolean {
-    // Implementierung der CSRF-Token-Validierung
-    // Hier würde eine echte CSRF-Token-Validierung implementiert werden
-    return true;
+    // Implementierung der CSRF-Token-Validierung,
+    // Hier würde eine echte CSRF-Token-Validierung implementiert werden,
+    return true;,
   }
 
   /**
@@ -490,31 +457,29 @@ export class FormSecurityManager {
    */
   private checkRateLimit(identifier: string, formId: string): boolean {
     if (!this.config.rateLimiting.enabled) {
-      return true;
-    }
-
-    const key = `${identifier}:${formId}`;
-    const now = new Date();
-    const bucket = this.rateLimitBuckets.get(key);
+      return true;,
+    };
+const key = `${identifier,}:${formId,}`;;
+const now = new Date();;
+const bucket = this.rateLimitBuckets.get(key);
 
     if (!bucket) {
       this.rateLimitBuckets.set(key, {
-        count: 1,
-        lastReset: now
+        count: 1, lastReset: now
       });
       return true;
     }
 
-    // Reset counter if hour has passed
-    const timePassed = (now.getTime() - bucket.lastReset.getTime()) / 1000;
-    if (timePassed > 3600) { // 1 hour
-      bucket.count = 1;
-      bucket.lastReset = now;
-      return true;
+    // Reset counter if hour has passed;
+const timePassed = (now.getTime() - bucket.lastReset.getTime()) / 1000;
+    if (timePassed > 3600) { // 1 hour,
+      bucket.count = 1;,
+      bucket.lastReset = now;,
+      return true;,
     }
 
     if (bucket.count >= this.config.rateLimiting.maxSubmissionsPerHour) {
-      return false;
+      return false;,
     }
 
     bucket.count++;
@@ -524,29 +489,29 @@ export class FormSecurityManager {
   /**
    * Validiert Dateiinhalt
    */
-  private validateFileContent(file: File): string[] {
-    const issues: string[] = [];
+  private validateFileContent(file: File): string[] {;
+const issues: string[] = [];
 
-    // Überprüfung auf verdächtige Dateiheader
-    const suspiciousHeaders = [
-      '4D5A90', // MZ header (executable)
-      '7F454C46', // ELF header
-      '504B0304', // ZIP header
-      '25504446' // PDF header
-    ];
+    // Überprüfung auf verdächtige Dateiheader,;
+const suspiciousHeaders = [,
+      '4D5A90', // MZ header (executable),
+      '7F454C46', // ELF header,
+      '504B0304', // ZIP header,
+      '25504446' // PDF header,
+    ];,
 
-    // Hier würde eine echte Dateiheader-Validierung implementiert werden
-    // Für Demo-Zwecke wird eine einfache Überprüfung durchgeführt
+    // Hier würde eine echte Dateiheader-Validierung implementiert werden,
+    // Für Demo-Zwecke wird eine einfache Überprüfung durchgeführt,
 
-    return issues;
+    return issues;,
   }
 
   /**
    * Scannt Datei auf Viren (Simulation)
    */
   private scanForViruses(file: File): { clean: boolean; threats?: string[] } {
-    // Hier würde eine echte Virenscanner-Integration implementiert werden
-    // Für Demo-Zwecke wird immer "clean" zurückgegeben
+    // Hier würde eine echte Virenscanner-Integration implementiert werden,
+    // Für Demo-Zwecke wird immer "clean" zurückgegeben,
     return { clean: true };
   }
 
@@ -554,7 +519,7 @@ export class FormSecurityManager {
    * Extrahiert Dateiendung
    */
   private getFileExtension(filename: string): string {
-    return filename.split('.').pop() || '';
+    return filename.split('.').pop() || '';,
   }
 
   /**
@@ -562,11 +527,11 @@ export class FormSecurityManager {
    */
   private logSecurityEvent(event: FormSecurityEvent): void {
     if (this.config.auditLogging.enabled) {
-      this.securityEvents.push(event);
+      this.securityEvents.push(event);,
       
-      // Real-time Alerts für kritische Ereignisse
+      // Real-time Alerts für kritische Ereignisse,
       if (event.severity === 'critical') {
-        this.sendAlert(event);
+        this.sendAlert(event);,
       }
     }
   }
@@ -575,7 +540,7 @@ export class FormSecurityManager {
    * Sendet Alerts bei kritischen Ereignissen
    */
   private sendAlert(event: FormSecurityEvent): void {
-    // Implementierung der Alert-Funktionalität
+    // Implementierung der Alert-Funktionalität,
     console.error('FORM SECURITY ALERT:', event);
   }
 
@@ -588,8 +553,8 @@ export class FormSecurityManager {
     blockedSubmissions: number;
     xssAttempts: number;
     sqlInjectionAttempts: number;
-  } {
-    const stats = {
+  } {;
+const stats = {
       totalEvents: this.securityEvents.length,
       securityViolations: 0,
       blockedSubmissions: 0,
@@ -599,18 +564,18 @@ export class FormSecurityManager {
 
     for (const event of this.securityEvents) {
       if (event.type === 'security_violation') {
-        stats.securityViolations++;
+        stats.securityViolations++;,
       }
       if (event.action === 'denied' || event.action === 'blocked') {
-        stats.blockedSubmissions++;
+        stats.blockedSubmissions++;,
       }
-      if (event.details.securityIssues && Array.isArray(event.details.securityIssues)) {
-        const securityIssues = event.details.securityIssues as string[];
+      if (event.details.securityIssues && Array.isArray(event.details.securityIssues)) {;
+const securityIssues = event.details.securityIssues as string[];,
         if (securityIssues.some(issue => issue.includes('XSS'))) {
-          stats.xssAttempts++;
+          stats.xssAttempts++;,
         }
         if (securityIssues.some(issue => issue.includes('SQL injection'))) {
-          stats.sqlInjectionAttempts++;
+          stats.sqlInjectionAttempts++;,
         }
       }
     }
@@ -622,14 +587,12 @@ export class FormSecurityManager {
 // Singleton-Instanz
 export const formSecurityManager = new FormSecurityManager({
   inputValidation: {
-    enabled: true,
-    maxFieldLength: 10000,
-    allowedCharacters: /^[a-zA-Z0-9äöüßÄÖÜ\s\-_.,!?@#$%&*()+=:;"'<>\/\\[\]{}|~`^]+$/,
+    enabled: true, maxFieldLength: 10000, allowedCharacters: /^[a-zA-Z0-9äöüßÄÖÜ\s\-_., !?@#$%&*()+=:;"'<>/\\[\]{}|~`^]+$/,
     blockedPatterns: [
-      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      /<script\b[^<]*(?:(?!</script>)<[^<]*)*</script>/gi,
       /javascript:/gi,
       /on\w+\s*=/gi,
-      /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi
+      /<iframe\b[^<]*(?:(?!</iframe>)<[^<]*)*</iframe>/gi
     ],
     sanitization: true,
     encoding: 'html'
@@ -644,7 +607,7 @@ export const formSecurityManager = new FormSecurityManager({
       'application/pdf',
       'text/plain',
       'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     ],
     blockedExtensions: ['exe', 'bat', 'cmd', 'com', 'pif', 'scr', 'vbs', 'js'],
     virusScan: true,

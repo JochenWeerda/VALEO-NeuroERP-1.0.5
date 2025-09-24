@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create ,} from 'zustand';
+import { devtools ,} from 'zustand/middleware';
 
-// TypeScript Interfaces für Benutzer-Management
+// TypeScript Interfaces für Benutzer-Management;
 interface User {
   id: string;
   name: string;
@@ -12,8 +12,7 @@ interface User {
   lastLogin?: Date;
   isActive: boolean;
   permissions: string[];
-}
-
+};
 interface UserProfile {
   id: string;
   firstName: string;
@@ -28,52 +27,43 @@ interface UserProfile {
     language: 'de' | 'en';
     notifications: boolean;
   };
-}
-
+};
 interface UserStore {
-  // State
+  // State,
   currentUser: User | null;
   userProfile: UserProfile | null;
   users: User[];
   loading: boolean;
   error: string | null;
   
-  // Actions
-  setCurrentUser: (user: User | null) => void;
-  setUserProfile: (profile: UserProfile | null) => void;
+  // Actions,
+  setCurrentUser: (user: User | _null) => void;
+  setUserProfile: (profile: UserProfile | _null) => void;
   updateUserProfile: (updates: Partial<UserProfile>) => void;
   fetchUsers: () => Promise<void>;
-  addUser: (userData: Omit<User, 'id'>) => Promise<void>;
-  updateUser: (id: string, userData: Partial<User>) => Promise<void>;
-  deleteUser: (id: string) => Promise<void>;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
+  addUser: (userData: Omit<_User, 'id'>) => Promise<void>;
+  updateUser: (id: _string, userData: Partial<User>) => Promise<void>;
+  deleteUser: (id: _string) => Promise<void>;
+  setLoading: (loading: _boolean) => void;
+  setError: (error: string | _null) => void;
   clearError: () => void;
 }
 
-export const useUserStore = create<UserStore>()(
-  devtools(
+export const useUserStore = create<UserStore>()(devtools(
     (set, get) => ({
-      // Initial State
-      currentUser: null,
-      userProfile: null,
-      users: [],
-      loading: false,
-      error: null,
-      
-      // Actions
-      setCurrentUser: (user) => {
+      // Initial State, currentUser: null, userProfile: null, users: [], loading: false, error: null, // Actions
+      setCurrentUser: (_user) => {
         set({ currentUser: user });
       },
       
-      setUserProfile: (profile) => {
+      setUserProfile: (_profile) => {
         set({ userProfile: profile });
       },
       
-      updateUserProfile: (updates) => {
+      updateUserProfile: (_updates) => {
         set((state) => ({
           userProfile: state.userProfile 
-            ? { ...state.userProfile, ...updates }
+            ? { ...state.userProfile, ...updates, }
             : null
         }));
       },
@@ -81,57 +71,50 @@ export const useUserStore = create<UserStore>()(
       fetchUsers: async () => {
         set({ loading: true, error: null });
         try {
-          // TODO: Implementiere API-Aufruf
-          const response = await fetch('/api/users');
+          // TODO: Implementiere API-Aufruf;
+const response = await fetch('/api/users');,
           if (!response.ok) {
-            throw new Error('Fehler beim Laden der Benutzer');
-          }
-          const users = await response.json();
+            throw new Error('Fehler beim Laden der Benutzer');,
+          };
+const users = await response.json();
           set({ users, loading: false });
         } catch (error) {
           set({ 
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler', 
-            loading: false 
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false 
           });
         }
       },
       
       addUser: async (userData) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch('/api/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
+        try {;
+const response = await fetch('/api/users', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userData)
           });
           if (!response.ok) {
-            throw new Error('Fehler beim Erstellen des Benutzers');
-          }
-          const newUser = await response.json();
+            throw new Error('Fehler beim Erstellen des Benutzers');,
+          };
+const newUser = await response.json();
           set((state) => ({ 
-            users: [...state.users, newUser], 
-            loading: false 
+            users: [...state.users, newUser], loading: false 
           }));
         } catch (error) {
           set({ 
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler', 
-            loading: false 
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false 
           });
         }
       },
       
       updateUser: async (id, userData) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/users/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
+        try {;
+const response = await fetch(`/api/users/${id, }`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userData)
           });
           if (!response.ok) {
-            throw new Error('Fehler beim Aktualisieren des Benutzers');
-          }
-          const updatedUser = await response.json();
+            throw new Error('Fehler beim Aktualisieren des Benutzers');,
+          };
+const updatedUser = await response.json();
           set((state) => ({
             users: state.users.map(user => 
               user.id === id ? updatedUser : user
@@ -140,20 +123,19 @@ export const useUserStore = create<UserStore>()(
           }));
         } catch (error) {
           set({ 
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler', 
-            loading: false 
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false 
           });
         }
       },
       
       deleteUser: async (id) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/users/${id}`, { 
+        try {;
+const response = await fetch(`/api/users/${id, }`, { 
             method: 'DELETE' 
           });
           if (!response.ok) {
-            throw new Error('Fehler beim Löschen des Benutzers');
+            throw new Error('Fehler beim Löschen des Benutzers');,
           }
           set((state) => ({
             users: state.users.filter(user => user.id !== id),
@@ -161,18 +143,17 @@ export const useUserStore = create<UserStore>()(
           }));
         } catch (error) {
           set({ 
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler', 
-            loading: false 
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false 
           });
         }
       },
       
-      setLoading: (loading) => {
-        set({ loading });
+      setLoading: (_loading) => {
+        set({ loading, });
       },
       
-      setError: (error) => {
-        set({ error });
+      setError: (_error) => {
+        set({ error, });
       },
       
       clearError: () => {

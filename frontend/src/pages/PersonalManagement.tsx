@@ -1,46 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Typography,
-  Card,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  Alert,
-  CircularProgress,
-  Tooltip,
-  Avatar,
-  Divider
-} from '@mui/material';
+  Box, Typography, Card, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, Grid, Alert, CircularProgress, Tooltip, Avatar, Divider} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  Person as PersonIcon,
-  Work as WorkIcon,
-  AttachMoney as SalaryIcon,
-  Event as EventIcon,
-  Business as DepartmentIcon
-} from '@mui/icons-material';
-
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, Person as PersonIcon, Work as WorkIcon, AttachMoney as SalaryIcon, Event as EventIcon, Business as DepartmentIcon} from '@mui/icons-material';;
 interface Employee {
   id: string;
   personalnummer: string;
@@ -62,42 +24,25 @@ interface Employee {
   ort: string;
   created_at: string;
   updated_at: string;
-}
-
-const PersonalManagement: React.FC = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
-  const [formData, setFormData] = useState<Partial<Employee>>({
-    personalnummer: '',
-    vorname: '',
-    nachname: '',
-    geburtsdatum: '',
-    eintrittsdatum: '',
-    abteilung: '',
-    position: '',
-    gehalt: 0,
-    urlaubstage: 30,
-    krankheitstage: 0,
-    status: 'aktiv',
-    email: '',
-    telefon: '',
-    adresse: '',
-    plz: '',
-    ort: ''
+};
+const PersonalManagement: React.FC = () => {;
+const [employees, setEmployees] = useState<Employee[]>([]);,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,;
+const [dialogOpen, setDialogOpen] = useState(false);,;
+const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);,;
+const [formData, setFormData] = useState<Partial<Employee>>({
+    personalnummer: '', vorname: '', nachname: '', geburtsdatum: '', eintrittsdatum: '', abteilung: '', position: '', gehalt: 0, urlaubstage: 30, krankheitstage: 0, status: 'aktiv', email: '', telefon: '', adresse: '', plz: '', ort: ''
   });
 
   useEffect(() => {
-    loadEmployees();
-  }, []);
-
-  const loadEmployees = async () => {
-    setLoading(true);
+    loadEmployees();,
+  }, []);;
+const loadEmployees = async () => {
+    setLoading(true);,
     try {
-      // Mock-Daten für Demo
-      const mockEmployees: Employee[] = [
+      // Mock-Daten für Demo,;
+const mockEmployees: Employee[] = [
         {
           id: '1',
           personalnummer: 'P001',
@@ -165,52 +110,32 @@ const PersonalManagement: React.FC = () => {
       ];
       setEmployees(mockEmployees);
     } catch (err) {
-      setError('Fehler beim Laden der Mitarbeiter');
+      setError('Fehler beim Laden der Mitarbeiter');,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const handleAddEmployee = () => {
-    setEditingEmployee(null);
+  };;
+const handleAddEmployee = () => {
+    setEditingEmployee(null);,
     setFormData({
-      personalnummer: '',
-      vorname: '',
-      nachname: '',
-      geburtsdatum: '',
-      eintrittsdatum: '',
-      abteilung: '',
-      position: '',
-      gehalt: 0,
-      urlaubstage: 30,
-      krankheitstage: 0,
-      status: 'aktiv',
-      email: '',
-      telefon: '',
-      adresse: '',
-      plz: '',
-      ort: ''
+      personalnummer: '', vorname: '', nachname: '', geburtsdatum: '', eintrittsdatum: '', abteilung: '', position: '', gehalt: 0, urlaubstage: 30, krankheitstage: 0, status: 'aktiv', email: '', telefon: '', adresse: '', plz: '', ort: ''
     });
     setDialogOpen(true);
-  };
-
-  const handleEditEmployee = (employee: Employee) => {
-    setEditingEmployee(employee);
-    setFormData(employee);
-    setDialogOpen(true);
-  };
-
-  const handleSaveEmployee = async () => {
+  };;
+const handleEditEmployee = (employee: Employee) => {
+    setEditingEmployee(employee);,
+    setFormData(employee);,
+    setDialogOpen(true);,
+  };;
+const handleSaveEmployee = async () => {
     try {
       if (editingEmployee) {
-        // Update existing employee
-        const updatedEmployees = employees.map(e => 
-          e.id === editingEmployee.id ? { ...e, ...formData } : e
-        );
+        // Update existing employee,;
+const updatedEmployees = employees.map(e =>, e.id === editingEmployee.id ? { ...e, ...formData, } : e);
         setEmployees(updatedEmployees);
       } else {
-        // Add new employee
-        const newEmployee: Employee = {
+        // Add new employee,;
+const newEmployee: Employee = {
           id: Date.now().toString(),
           ...formData as Employee,
           created_at: new Date().toISOString(),
@@ -220,28 +145,25 @@ const PersonalManagement: React.FC = () => {
       }
       setDialogOpen(false);
     } catch (err) {
-      setError('Fehler beim Speichern des Mitarbeiters');
+      setError('Fehler beim Speichern des Mitarbeiters');,
     }
-  };
-
-  const handleDeleteEmployee = async (employeeId: string) => {
+  };;
+const handleDeleteEmployee = async (employeeId: string) => {
     try {
-      setEmployees(employees.filter(e => e.id !== employeeId));
+      setEmployees(employees.filter(e => e.id !== employeeId));,
     } catch (err) {
-      setError('Fehler beim Löschen des Mitarbeiters');
+      setError('Fehler beim Löschen des Mitarbeiters');,
     }
-  };
-
-  const getStatusColor = (status: string) => {
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'aktiv': return 'success';
       case 'inaktiv': return 'default';
       case 'beurlaubt': return 'warning';
       default: return 'default';
     }
-  };
-
-  const getStatusText = (status: string) => {
+  };;
+const getStatusText = (status: string) => {
     switch (status) {
       case 'aktiv': return 'Aktiv';
       case 'inaktiv': return 'Inaktiv';
@@ -251,11 +173,9 @@ const PersonalManagement: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+    return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
   }
 
   return (
@@ -265,57 +185,55 @@ const PersonalManagement: React.FC = () => {
           <PersonIcon sx={{ color: 'primary.main' }} />
           Personal-Management
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleAddEmployee}
+        <Button;
+variant="contained"
+          startIcon={<AddIcon />, }
+          onClick={handleAddEmployee, }
         >
           Neuer Mitarbeiter
         </Button>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+      {error && (, <Alert severity="error" sx={{ mb: 3 }}>
+          {error, }
+        </Alert>)}
 
-      {/* Statistiken */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      {/* Statistiken */,}
+      <Grid container spacing={3,} sx={{ mb: 3 }}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card sx={{ p: 2, textAlign: 'center' }}>
             <Typography variant="h4" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
-              {employees.length}
+              {employees.length,}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Mitarbeiter gesamt
             </Typography>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card sx={{ p: 2, textAlign: 'center' }}>
             <Typography variant="h4" sx={{ color: 'success.main', fontWeight: 'bold' }}>
-              {employees.filter(e => e.status === 'aktiv').length}
+              {employees.filter(e => e.status === 'aktiv').length,}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Aktive Mitarbeiter
             </Typography>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card sx={{ p: 2, textAlign: 'center' }}>
             <Typography variant="h4" sx={{ color: 'warning.main', fontWeight: 'bold' }}>
-              {employees.reduce((sum, e) => sum + e.krankheitstage, 0)}
+              {employees.reduce((sum, e) => sum + e.krankheitstage, 0),}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Krankheitstage
             </Typography>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card sx={{ p: 2, textAlign: 'center' }}>
             <Typography variant="h4" sx={{ color: 'info.main', fontWeight: 'bold' }}>
-              {employees.reduce((sum, e) => sum + e.gehalt, 0).toLocaleString()}€
+              {employees.reduce((sum, e) => sum + e.gehalt, 0).toLocaleString(),}€
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Gehaltssumme
@@ -325,7 +243,7 @@ const PersonalManagement: React.FC = () => {
       </Grid>
 
       <Card>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -339,22 +257,21 @@ const PersonalManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {employees.map((employee) => (
-                <TableRow key={employee.id}>
+              {employees.map((employee) => (<TableRow key={employee.id, }>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                       <Avatar sx={{ bgcolor: 'primary.main' }}>
-                        {employee.vorname.charAt(0)}{employee.nachname.charAt(0)}
+                        {employee.vorname.charAt(0),}{employee.nachname.charAt(0),}
                       </Avatar>
                       <Box>
                         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                          {employee.vorname} {employee.nachname}
+                          {employee.vorname,} {employee.nachname,}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                          {employee.personalnummer}
+                          {employee.personalnummer,}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                          {employee.email}
+                          {employee.email,}
                         </Typography>
                       </Box>
                     </Box>
@@ -363,7 +280,7 @@ const PersonalManagement: React.FC = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <DepartmentIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="body2">
-                        {employee.abteilung}
+                        {employee.abteilung,}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -371,7 +288,7 @@ const PersonalManagement: React.FC = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <WorkIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="body2">
-                        {employee.position}
+                        {employee.position,}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -379,14 +296,14 @@ const PersonalManagement: React.FC = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <SalaryIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="body2">
-                        {employee.gehalt.toLocaleString()}€
+                        {employee.gehalt.toLocaleString(),}€
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={getStatusText(employee.status)}
-                      color={getStatusColor(employee.status) as any}
+                      label={getStatusText(employee.status),}
+                      color={getStatusColor(employee.status) as any,}
                       size="small"
                     />
                   </TableCell>
@@ -394,7 +311,7 @@ const PersonalManagement: React.FC = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <EventIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="body2">
-                        {new Date(employee.eintrittsdatum).toLocaleDateString('de-DE')}
+                        {new Date(employee.eintrittsdatum).toLocaleDateString('de-DE'),}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -406,7 +323,7 @@ const PersonalManagement: React.FC = () => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Bearbeiten">
-                        <IconButton size="small" onClick={() => handleEditEmployee(employee)}>
+                        <IconButton size="small" onClick={() => handleEditEmployee(employee),}>
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
@@ -414,7 +331,7 @@ const PersonalManagement: React.FC = () => {
                         <IconButton 
                           size="small" 
                           color="error"
-                          onClick={() => handleDeleteEmployee(employee.id)}
+                          onClick={() => handleDeleteEmployee(employee.id),}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -428,124 +345,124 @@ const PersonalManagement: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Dialog für Mitarbeiter-Formular */}
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="md" fullWidth>
+      {/* Dialog für Mitarbeiter-Formular */,}
+      <Dialog open={dialogOpen,} onClose={() => setDialogOpen(false),} maxWidth="md" fullWidth>
         <DialogTitle>
           {editingEmployee ? 'Mitarbeiter bearbeiten' : 'Neuen Mitarbeiter erstellen'}
         </DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} md={6}>
+          <Grid container spacing={2,} sx={{ mt: 1 }}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Personalnummer"
-                value={formData.personalnummer}
+                value={formData.personalnummer,}
                 onChange={(e) => setFormData({ ...formData, personalnummer: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="E-Mail"
-                type="email"
-                value={formData.email}
+                label="E-Mail";
+type="email"
+                value={formData.email,}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Vorname"
-                value={formData.vorname}
+                value={formData.vorname,}
                 onChange={(e) => setFormData({ ...formData, vorname: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Nachname"
-                value={formData.nachname}
+                value={formData.nachname,}
                 onChange={(e) => setFormData({ ...formData, nachname: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="Geburtsdatum"
-                type="date"
-                value={formData.geburtsdatum}
+                label="Geburtsdatum";
+type="date"
+                value={formData.geburtsdatum,}
                 onChange={(e) => setFormData({ ...formData, geburtsdatum: e.target.value })}
                 margin="normal"
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="Eintrittsdatum"
-                type="date"
-                value={formData.eintrittsdatum}
+                label="Eintrittsdatum";
+type="date"
+                value={formData.eintrittsdatum,}
                 onChange={(e) => setFormData({ ...formData, eintrittsdatum: e.target.value })}
                 margin="normal"
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Abteilung"
-                value={formData.abteilung}
+                value={formData.abteilung,}
                 onChange={(e) => setFormData({ ...formData, abteilung: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Position"
-                value={formData.position}
+                value={formData.position,}
                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="Gehalt (€)"
-                type="number"
-                value={formData.gehalt}
+                label="Gehalt (€)";
+type="number"
+                value={formData.gehalt,}
                 onChange={(e) => setFormData({ ...formData, gehalt: parseFloat(e.target.value) || 0 })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="Urlaubstage"
-                type="number"
-                value={formData.urlaubstage}
+                label="Urlaubstage";
+type="number"
+                value={formData.urlaubstage,}
                 onChange={(e) => setFormData({ ...formData, urlaubstage: parseInt(e.target.value) || 0 })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Telefon"
-                value={formData.telefon}
+                value={formData.telefon,}
                 onChange={(e) => setFormData({ ...formData, telefon: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <FormControl fullWidth margin="normal">
                 <InputLabel>Status</InputLabel>
                 <Select
-                  value={formData.status}
+                  value={formData.status,}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                   label="Status"
                 >
@@ -555,31 +472,31 @@ const PersonalManagement: React.FC = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12,}>
               <TextField
                 fullWidth
                 label="Adresse"
                 multiline
-                rows={2}
-                value={formData.adresse}
+                rows={2,}
+                value={formData.adresse,}
                 onChange={(e) => setFormData({ ...formData, adresse: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="PLZ"
-                value={formData.plz}
+                value={formData.plz,}
                 onChange={(e) => setFormData({ ...formData, plz: e.target.value })}
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
                 label="Ort"
-                value={formData.ort}
+                value={formData.ort,}
                 onChange={(e) => setFormData({ ...formData, ort: e.target.value })}
                 margin="normal"
               />
@@ -587,8 +504,8 @@ const PersonalManagement: React.FC = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Abbrechen</Button>
-          <Button onClick={handleSaveEmployee} variant="contained">
+          <Button onClick={() => setDialogOpen(false),}>Abbrechen</Button>
+          <Button onClick={handleSaveEmployee,} variant="contained">
             {editingEmployee ? 'Aktualisieren' : 'Erstellen'}
           </Button>
         </DialogActions>

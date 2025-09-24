@@ -1,252 +1,131 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  Chip,
-  IconButton,
-  Fab,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Tabs,
-  Tab,
-  LinearProgress,
-  Avatar,
-  Alert,
-  Badge,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Switch,
-  FormControlLabel,
-  Rating,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  Tooltip,
-  Menu,
-  MenuItem as MenuItemComponent
-} from '@mui/material';
+  Box, Card, CardContent, Typography, Grid, Chip, IconButton, Fab, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tabs, Tab, LinearProgress, Avatar, Alert, Badge, FormControl, InputLabel, Select, MenuItem, Switch, FormControlLabel, Rating, Divider, List, ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Tooltip, Menu, MenuItem as MenuItemComponent} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  People as PeopleIcon,
-  Business as BusinessIcon,
-  Phone as PhoneIcon,
-  Email as EmailIcon,
-  LocationOn as LocationIcon,
-  Star as StarIcon,
-  TrendingUp as TrendingUpIcon,
-  Assignment as AssignmentIcon,
-  ContactPhone as ContactPhoneIcon,
-  PersonAdd as PersonAddIcon,
-  Assessment as AssessmentIcon,
-  Timeline as TimelineIcon,
-  Chat as ChatIcon,
-  Feedback as FeedbackIcon,
-  Group as GroupIcon,
-  AttachMoney as MoneyIcon,
-  Schedule as ScheduleIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
-  Description as DescriptionIcon,
-  MoreVert as MoreVertIcon,
-  AdminPanelSettings as AdminIcon,
-  SupervisorAccount as ManagerIcon,
-  Person as UserIcon,
-  Visibility as ViewerIcon,
-  Security as SecurityIcon,
-  Settings as SettingsIcon
-} from '@mui/icons-material';
-import { userManagementService, type User, type UserCreateRequest, type UserUpdateRequest, type UserStatistics } from '../services/userManagementService';
-
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, People as PeopleIcon, Business as BusinessIcon, Phone as PhoneIcon, Email as EmailIcon, LocationOn as LocationIcon, Star as StarIcon, TrendingUp as TrendingUpIcon, Assignment as AssignmentIcon, ContactPhone as ContactPhoneIcon, PersonAdd as PersonAddIcon, Assessment as AssessmentIcon, Timeline as TimelineIcon, Chat as ChatIcon, Feedback as FeedbackIcon, Group as GroupIcon, AttachMoney as MoneyIcon, Schedule as ScheduleIcon, CheckCircle as CheckCircleIcon, Warning as WarningIcon, Error as ErrorIcon, Description as DescriptionIcon, MoreVert as MoreVertIcon, AdminPanelSettings as AdminIcon, SupervisorAccount as ManagerIcon, Person as UserIcon, Visibility as ViewerIcon, Security as SecurityIcon, Settings as SettingsIcon} from '@mui/icons-material';
+import { userManagementService, type User, type UserCreateRequest, type UserUpdateRequest, type UserStatistics} from '../services/userManagementService';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`user-tabpanel-${index}`}
-      aria-labelledby={`user-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`user-tabpanel-${index, }`}
+      aria-labelledby={`user-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
+      {value === index && <Box sx={{ p: 3 }}>{children, }</Box>}
+    </div>);
+};
+const UserManagement: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [dialogType, setDialogType] = useState<'create' | 'edit' | 'view'>('create');,;
+const [selectedUser, setSelectedUser] = useState<User | null>(null);,;
+const [users, setUsers] = useState<User[]>([]);,;
+const [statistics, setStatistics] = useState<UserStatistics | null>(null);,;
+const [loading, setLoading] = useState(false);,;
+const [error, setError] = useState<string | null>(null);,;
+const [page, setPage] = useState(1);,;
+const [limit] = useState(20);,;
+const [total, setTotal] = useState(0);,
 
-const UserManagement: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<'create' | 'edit' | 'view'>('create');
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
-  const [statistics, setStatistics] = useState<UserStatistics | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const [limit] = useState(20);
-  const [total, setTotal] = useState(0);
-
-  // Form states
-  const [formData, setFormData] = useState<UserCreateRequest>({
-    username: '',
-    email: '',
-    full_name: '',
-    password: '',
-    role: 'user',
-    department: '',
-    position: '',
-    phone: '',
-    notes: ''
+  // Form states,;
+const [formData, setFormData] = useState<UserCreateRequest>({
+    username: '', email: '', full_name: '', password: '', role: 'user', department: '', position: '', phone: '', notes: ''
   });
 
-  // Filter states
-  const [roleFilter, setRoleFilter] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
-  const [departmentFilter, setDepartmentFilter] = useState<string>('');
+  // Filter states;
+const [roleFilter, setRoleFilter] = useState<string>('');;
+const [statusFilter, setStatusFilter] = useState<string>('');;
+const [departmentFilter, setDepartmentFilter] = useState<string>('');
 
-  // Menu states
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  // Menu states;
+const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);;
+const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    loadUsers();
-    loadStatistics();
-  }, [page, roleFilter, statusFilter, departmentFilter]);
-
-  const loadUsers = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await userManagementService.getUsers({
-        page,
-        limit,
-        role_filter: roleFilter || undefined,
-        status_filter: statusFilter || undefined,
-        department_filter: departmentFilter || undefined
+    loadUsers();,
+    loadStatistics();,
+  }, [page, roleFilter, statusFilter, departmentFilter]);;
+const loadUsers = async () => {
+    setLoading(true);,
+    setError(null);,
+    try {;
+const response = await userManagementService.getUsers({
+        page, limit, role_filter: roleFilter || undefined, status_filter: statusFilter || undefined, department_filter: departmentFilter || undefined
       });
       
       if (response.success && response.data) {
-        setUsers(response.data.users);
-        setTotal(response.data.total);
+        setUsers(response.data.users);,
+        setTotal(response.data.total);,
       } else {
-        setError('Fehler beim Laden der Benutzer');
+        setError('Fehler beim Laden der Benutzer');,
       }
     } catch (err) {
-      setError('Fehler beim Laden der Benutzer');
+      setError('Fehler beim Laden der Benutzer');,
       console.error('Error loading users:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const loadStatistics = async () => {
-    try {
-      const response = await userManagementService.getUserStatistics();
+  };;
+const loadStatistics = async () => {
+    try {;
+const response = await userManagementService.getUserStatistics();,
       if (response.success && response.data) {
-        setStatistics(response.data);
+        setStatistics(response.data);,
       }
     } catch (err) {
       console.error('Error loading statistics:', err);
     }
-  };
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleOpenDialog = (type: 'create' | 'edit' | 'view', user?: User) => {
-    setDialogType(type);
-    setSelectedUser(user || null);
+  };;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (type: 'create' | 'edit' | 'view', user?: User) => {
+    setDialogType(type);,
+    setSelectedUser(user || null);,
     
     if (type === 'create') {
       setFormData({
-        username: '',
-        email: '',
-        full_name: '',
-        password: '',
-        role: 'user',
-        department: '',
-        position: '',
-        phone: '',
-        notes: ''
+        username: '', email: '', full_name: '', password: '', role: 'user', department: '', position: '', phone: '', notes: ''
       });
     } else if (user) {
       setFormData({
-        username: user.username,
-        email: user.email,
-        full_name: user.full_name,
-        password: '',
-        role: user.role,
-        department: user.department || '',
-        position: user.position || '',
-        phone: user.phone || '',
-        notes: ''
+        username: user.username, email: user.email, full_name: user.full_name, password: '', role: user.role, department: user.department || '', position: user.position || '', phone: user.phone || '', notes: ''
       });
     }
     
     setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setSelectedUser(null);
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
+    setSelectedUser(null);,
     setFormData({
-      username: '',
-      email: '',
-      full_name: '',
-      password: '',
-      role: 'user',
-      department: '',
-      position: '',
-      phone: '',
-      notes: ''
+      username: '', email: '', full_name: '', password: '', role: 'user', department: '', position: '', phone: '', notes: ''
     });
-  };
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError(null);
+  };;
+const handleSubmit = async () => {
+    setLoading(true);,
+    setError(null);,
     
     try {
-      if (dialogType === 'create') {
-        const response = await userManagementService.createUser(formData);
+      if (dialogType === 'create') {;
+const response = await userManagementService.createUser(formData);,
         if (response.success) {
-          handleCloseDialog();
-          loadUsers();
+          handleCloseDialog();,
+          loadUsers();,
         } else {
-          setError('Fehler beim Erstellen des Benutzers');
+          setError('Fehler beim Erstellen des Benutzers');,
         }
-      } else if (dialogType === 'edit' && selectedUser) {
-        const updateData: UserUpdateRequest = {
+      } else if (dialogType === 'edit' && selectedUser) {;
+const updateData: UserUpdateRequest = {
           full_name: formData.full_name,
           email: formData.email,
           role: formData.role,
@@ -254,56 +133,51 @@ const UserManagement: React.FC = () => {
           position: formData.position,
           phone: formData.phone,
           notes: formData.notes
-        };
-        
-        const response = await userManagementService.updateUser(selectedUser.id, updateData);
+        };;
+const response = await userManagementService.updateUser(selectedUser.id, updateData);
         if (response.success) {
-          handleCloseDialog();
-          loadUsers();
+          handleCloseDialog();,
+          loadUsers();,
         } else {
-          setError('Fehler beim Aktualisieren des Benutzers');
+          setError('Fehler beim Aktualisieren des Benutzers');,
         }
       }
     } catch (err) {
-      setError('Fehler beim Speichern des Benutzers');
+      setError('Fehler beim Speichern des Benutzers');,
       console.error('Error saving user:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const handleDeleteUser = async (userId: string) => {
+  };;
+const handleDeleteUser = async (userId: string) => {
     if (!window.confirm('Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?')) {
-      return;
+      return;,
     }
     
     setLoading(true);
-    try {
-      const response = await userManagementService.deleteUser(userId);
+    try {;
+const response = await userManagementService.deleteUser(userId);,
       if (response.success) {
-        loadUsers();
+        loadUsers();,
       } else {
-        setError('Fehler beim Löschen des Benutzers');
+        setError('Fehler beim Löschen des Benutzers');,
       }
     } catch (err) {
-      setError('Fehler beim Löschen des Benutzers');
+      setError('Fehler beim Löschen des Benutzers');,
       console.error('Error deleting user:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, userId: string) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedUserId(userId);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setSelectedUserId(null);
-  };
-
-  const getRoleIcon = (role: string) => {
+  };;
+const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, userId: string) => {
+    setAnchorEl(event.currentTarget);,
+    setSelectedUserId(userId);,
+  };;
+const handleMenuClose = () => {
+    setAnchorEl(null);,
+    setSelectedUserId(null);,
+  };;
+const getRoleIcon = (role: string) => {
     switch (role) {
       case 'admin': return <AdminIcon />;
       case 'manager': return <ManagerIcon />;
@@ -311,35 +185,31 @@ const UserManagement: React.FC = () => {
       case 'viewer': return <ViewerIcon />;
       default: return <UserIcon />;
     }
+  };;
+const getRoleColor = (role: string) => {
+    return userManagementService.getRoleColor(role);,
+  };;
+const getStatusColor = (status: string) => {
+    return userManagementService.getStatusColor(status);,
+  };;
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('de-DE');,
   };
 
-  const getRoleColor = (role: string) => {
-    return userManagementService.getRoleColor(role);
-  };
-
-  const getStatusColor = (status: string) => {
-    return userManagementService.getStatusColor(status);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('de-DE');
-  };
-
-  return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
+  return (<Box sx={{ flexGrow: 1, p: 3 }}>
       <Typography variant="h4" gutterBottom>
         Benutzer-Management
       </Typography>
 
-      {/* KPI Cards */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      {/* KPI Cards */, }
+      <Grid container spacing={3, } sx={{ mb: 3 }}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <PeopleIcon sx={{ fontSize: 40, color: 'primary.main', mr: 2 }} />
                 <Box>
-                  <Typography variant="h4">{statistics?.total_users || 0}</Typography>
+                  <Typography variant="h4">{statistics?.total_users || 0, }</Typography>
                   <Typography variant="body2" color="text.secondary">
                     Gesamt Benutzer
                   </Typography>
@@ -349,13 +219,13 @@ const UserManagement: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <CheckCircleIcon sx={{ fontSize: 40, color: 'success.main', mr: 2 }} />
                 <Box>
-                  <Typography variant="h4">{statistics?.active_users || 0}</Typography>
+                  <Typography variant="h4">{statistics?.active_users || 0, }</Typography>
                   <Typography variant="body2" color="text.secondary">
                     Aktive Benutzer
                   </Typography>
@@ -365,13 +235,13 @@ const UserManagement: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <AdminIcon sx={{ fontSize: 40, color: 'error.main', mr: 2 }} />
                 <Box>
-                  <Typography variant="h4">{statistics?.role_distribution?.admin || 0}</Typography>
+                  <Typography variant="h4">{statistics?.role_distribution?.admin || 0, }</Typography>
                   <Typography variant="body2" color="text.secondary">
                     Administratoren
                   </Typography>
@@ -381,13 +251,13 @@ const UserManagement: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <ManagerIcon sx={{ fontSize: 40, color: 'info.main', mr: 2 }} />
                 <Box>
-                  <Typography variant="h4">{statistics?.role_distribution?.manager || 0}</Typography>
+                  <Typography variant="h4">{statistics?.role_distribution?.manager || 0, }</Typography>
                   <Typography variant="body2" color="text.secondary">
                     Manager
                   </Typography>
@@ -398,25 +268,25 @@ const UserManagement: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Main Content */}
+      {/* Main Content */, }
       <Card>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={tabValue} onChange={handleTabChange}>
+          <Tabs value={tabValue, } onChange={handleTabChange, }>
             <Tab label="Benutzer-Liste" />
             <Tab label="Statistiken" />
             <Tab label="Berechtigungen" />
           </Tabs>
         </Box>
 
-        <TabPanel value={tabValue} index={0}>
-          {/* Filters */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={4}>
+        <TabPanel value={tabValue, } index={0, }>
+          {/* Filters */, }
+          <Grid container spacing={2, } sx={{ mb: 3 }}>
+            <Grid item xs={12, } sm={4, }>
               <FormControl fullWidth>
                 <InputLabel>Rolle</InputLabel>
                 <Select
-                  value={roleFilter}
-                  onChange={(e) => setRoleFilter(e.target.value)}
+                  value={roleFilter, }
+                  onChange={(e) => setRoleFilter(e.target.value),}
                   label="Rolle"
                 >
                   <MenuItem value="">Alle Rollen</MenuItem>
@@ -428,12 +298,12 @@ const UserManagement: React.FC = () => {
               </FormControl>
             </Grid>
             
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12,} sm={4,}>
               <FormControl fullWidth>
                 <InputLabel>Status</InputLabel>
                 <Select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
+                  value={statusFilter,}
+                  onChange={(e) => setStatusFilter(e.target.value),}
                   label="Status"
                 >
                   <MenuItem value="">Alle Status</MenuItem>
@@ -444,19 +314,19 @@ const UserManagement: React.FC = () => {
               </FormControl>
             </Grid>
             
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12,} sm={4,}>
               <TextField
                 fullWidth
                 label="Abteilung"
-                value={departmentFilter}
-                onChange={(e) => setDepartmentFilter(e.target.value)}
+                value={departmentFilter,}
+                onChange={(e) => setDepartmentFilter(e.target.value),}
                 placeholder="Abteilung filtern..."
               />
             </Grid>
           </Grid>
 
-          {/* Users Table */}
-          <TableContainer component={Paper}>
+          {/* Users Table */,}
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -470,30 +340,26 @@ const UserManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={7}>
+                {loading ? (<TableRow>, <TableCell colSpan={7, }>
                       <LinearProgress />
                     </TableCell>
-                  </TableRow>
-                ) : users.length === 0 ? (
+                  </TableRow>) : users.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} align="center">
+                    <TableCell colSpan={7, } align="center">
                       Keine Benutzer gefunden
                     </TableCell>
-                  </TableRow>
-                ) : (
+                  </TableRow>) : (
                   users.map((user) => (
-                    <TableRow key={user.id}>
+                    <TableRow key={user.id, }>
                       <TableCell>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                           <Avatar sx={{ mr: 2 }}>
-                            {user.full_name.charAt(0).toUpperCase()}
+                            {user.full_name.charAt(0).toUpperCase(),}
                           </Avatar>
                           <Box>
-                            <Typography variant="subtitle2">{user.full_name}</Typography>
+                            <Typography variant="subtitle2">{user.full_name,}</Typography>
                             <Typography variant="body2" color="text.secondary">
-                              {user.email}
+                              {user.email,}
                             </Typography>
                           </Box>
                         </Box>
@@ -501,8 +367,8 @@ const UserManagement: React.FC = () => {
                       
                       <TableCell>
                         <Chip
-                          icon={getRoleIcon(user.role)}
-                          label={userManagementService.getRoleDisplayName(user.role)}
+                          icon={getRoleIcon(user.role),}
+                          label={userManagementService.getRoleDisplayName(user.role),}
                           sx={{
                             backgroundColor: getRoleColor(user.role),
                             color: 'white'
@@ -513,7 +379,7 @@ const UserManagement: React.FC = () => {
                       
                       <TableCell>
                         <Chip
-                          label={userManagementService.getStatusDisplayName(user.status)}
+                          label={userManagementService.getStatusDisplayName(user.status),}
                           sx={{
                             backgroundColor: getStatusColor(user.status),
                             color: 'white'
@@ -522,18 +388,18 @@ const UserManagement: React.FC = () => {
                         />
                       </TableCell>
                       
-                      <TableCell>{user.department || '-'}</TableCell>
+                      <TableCell>{user.department || '-',}</TableCell>
                       <TableCell>{user.last_login ? formatDate(user.last_login) : '-'}</TableCell>
-                      <TableCell>{formatDate(user.created_at)}</TableCell>
+                      <TableCell>{formatDate(user.created_at),}</TableCell>
                       
                       <TableCell align="right">
-                        <IconButton onClick={() => handleOpenDialog('view', user)}>
+                        <IconButton onClick={() => handleOpenDialog('view', user),}>
                           <ViewIcon />
                         </IconButton>
-                        <IconButton onClick={() => handleOpenDialog('edit', user)}>
+                        <IconButton onClick={() => handleOpenDialog('edit', user),}>
                           <EditIcon />
                         </IconButton>
-                        <IconButton onClick={(e) => handleMenuOpen(e, user.id)}>
+                        <IconButton onClick={(e) => handleMenuOpen(e, user.id),}>
                           <MoreVertIcon />
                         </IconButton>
                       </TableCell>
@@ -545,30 +411,28 @@ const UserManagement: React.FC = () => {
           </TableContainer>
         </TabPanel>
 
-        <TabPanel value={tabValue} index={1}>
+        <TabPanel value={tabValue,} index={1,}>
           <Typography variant="h6" gutterBottom>
             Benutzer-Statistiken
           </Typography>
           
-          {statistics && (
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
+          {statistics && (<Grid container spacing={3, }>
+              <Grid item xs={12, } md={6, }>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
                       Rollen-Verteilung
                     </Typography>
                     <List>
-                      {Object.entries(statistics.role_distribution).map(([role, count]) => (
-                        <ListItem key={role}>
+                      {Object.entries(statistics.role_distribution).map(([role, count]) => (<ListItem key={role, }>
                           <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: getRoleColor(role) }}>
-                              {getRoleIcon(role)}
+                              {getRoleIcon(role),}
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText
-                            primary={userManagementService.getRoleDisplayName(role)}
-                            secondary={`${count} Benutzer`}
+                            primary={userManagementService.getRoleDisplayName(role),}
+                            secondary={`${count,} Benutzer`}
                           />
                         </ListItem>
                       ))}
@@ -577,26 +441,24 @@ const UserManagement: React.FC = () => {
                 </Card>
               </Grid>
               
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
                       Abteilungs-Verteilung
                     </Typography>
                     <List>
-                      {Object.entries(statistics.department_distribution).map(([dept, count]) => (
-                        <ListItem key={dept}>
+                      {Object.entries(statistics.department_distribution).map(([dept, count]) => (<ListItem key={dept, }>
                           <ListItemAvatar>
                             <Avatar>
                               <BusinessIcon />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText
-                            primary={dept}
-                            secondary={`${count} Benutzer`}
+                            primary={dept, }
+                            secondary={`${count, } Benutzer`}
                           />
-                        </ListItem>
-                      ))}
+                        </ListItem>))}
                     </List>
                   </CardContent>
                 </Card>
@@ -605,13 +467,13 @@ const UserManagement: React.FC = () => {
           )}
         </TabPanel>
 
-        <TabPanel value={tabValue} index={2}>
+        <TabPanel value={tabValue,} index={2,}>
           <Typography variant="h6" gutterBottom>
             Berechtigungssystem
           </Typography>
           
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+          <Grid container spacing={3,}>
+            <Grid item xs={12,} md={6,}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -635,7 +497,7 @@ const UserManagement: React.FC = () => {
               </Card>
             </Grid>
             
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -662,74 +524,73 @@ const UserManagement: React.FC = () => {
         </TabPanel>
       </Card>
 
-      {/* FAB */}
+      {/* FAB */,}
       <Fab
         color="primary"
         aria-label="add"
         sx={{ position: 'fixed', bottom: 16, right: 16 }}
-        onClick={() => handleOpenDialog('create')}
+        onClick={() => handleOpenDialog('create'),}
       >
         <AddIcon />
       </Fab>
 
-      {/* User Dialog */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      {/* User Dialog */,}
+      <Dialog open={openDialog,} onClose={handleCloseDialog,} maxWidth="md" fullWidth>
         <DialogTitle>
           {dialogType === 'create' ? 'Neuen Benutzer erstellen' : 
            dialogType === 'edit' ? 'Benutzer bearbeiten' : 'Benutzer-Details'}
         </DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} sm={6}>
+          <Grid container spacing={2,} sx={{ mt: 1 }}>
+            <Grid item xs={12,} sm={6,}>
               <TextField
                 fullWidth
                 label="Benutzername"
-                value={formData.username}
+                value={formData.username,}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                disabled={dialogType === 'edit'}
+                disabled={dialogType === 'edit',}
                 required
               />
             </Grid>
             
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12,} sm={6,}>
               <TextField
                 fullWidth
-                label="E-Mail"
-                type="email"
-                value={formData.email}
+                label="E-Mail";
+type="email"
+                value={formData.email,}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
             </Grid>
             
-            <Grid item xs={12}>
+            <Grid item xs={12,}>
               <TextField
                 fullWidth
                 label="Vollständiger Name"
-                value={formData.full_name}
+                value={formData.full_name,}
                 onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                 required
               />
             </Grid>
             
-            {dialogType === 'create' && (
-              <Grid item xs={12}>
+            {dialogType === 'create' && (<Grid item xs={12, }>
                 <TextField
                   fullWidth
-                  label="Passwort"
-                  type="password"
-                  value={formData.password}
+                  label="Passwort";
+type="password"
+                  value={formData.password, }
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                 />
               </Grid>
             )}
             
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12,} sm={6,}>
               <FormControl fullWidth>
                 <InputLabel>Rolle</InputLabel>
                 <Select
-                  value={formData.role}
+                  value={formData.role,}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   label="Rolle"
                 >
@@ -741,64 +602,62 @@ const UserManagement: React.FC = () => {
               </FormControl>
             </Grid>
             
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12,} sm={6,}>
               <TextField
                 fullWidth
                 label="Telefon"
-                value={formData.phone}
+                value={formData.phone,}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               />
             </Grid>
             
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12,} sm={6,}>
               <TextField
                 fullWidth
                 label="Abteilung"
-                value={formData.department}
+                value={formData.department,}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
               />
             </Grid>
             
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12,} sm={6,}>
               <TextField
                 fullWidth
                 label="Position"
-                value={formData.position}
+                value={formData.position,}
                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
               />
             </Grid>
             
-            <Grid item xs={12}>
+            <Grid item xs={12,}>
               <TextField
                 fullWidth
                 label="Notizen"
                 multiline
-                rows={3}
-                value={formData.notes}
+                rows={3,}
+                value={formData.notes,}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          {dialogType !== 'view' && (
-            <Button onClick={handleSubmit} variant="contained" disabled={loading}>
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          {dialogType !== 'view' && (<Button onClick={handleSubmit, } variant="contained" disabled={loading, }>
               {loading ? 'Speichern...' : 'Speichern'}
-            </Button>
-          )}
+            </Button>)}
         </DialogActions>
       </Dialog>
 
-      {/* Action Menu */}
+      {/* Action Menu */,}
       <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
+        anchorEl={anchorEl,}
+        open={Boolean(anchorEl),}
+        onClose={handleMenuClose,}
       >
         <MenuItemComponent onClick={() => {
           if (selectedUserId) {
-            handleDeleteUser(selectedUserId);
+            handleDeleteUser(selectedUserId);,
           }
           handleMenuClose();
         }}>
@@ -807,12 +666,10 @@ const UserManagement: React.FC = () => {
         </MenuItemComponent>
       </Menu>
 
-      {/* Error Alert */}
-      {error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      )}
+      {/* Error Alert */,}
+      {error && (<Alert severity="error" sx={{ mt: 2 }}>
+          {error, }
+        </Alert>)}
     </Box>
   );
 };

@@ -1,41 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import { 
-  Box, 
-  Card, 
-  Typography, 
-  Button,
-  Chip,
-  Tabs,
-  Tab,
-  CircularProgress
-} from '@mui/material';
+  Box, Card, Typography, Button, Chip, Tabs, Tab, CircularProgress} from '@mui/material';
 import {
-  Home as HomeIcon,
-  People as PeopleIcon,
-  Analytics as AnalyticsIcon,
-  Assignment as AssignmentIcon,
-  ShoppingCart as ShoppingCartIcon,
-  Star as StarIcon,
-  Visibility as VisibilityIcon,
-  Inventory as InventoryIcon,
-  Mail as MailIcon,
-  Warning as WarningIcon,
-  TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
-  Schedule as ScheduleIcon,
-  LocalShipping as LocalShippingIcon,
-  Block as BlockIcon,
-  Group as GroupIcon,
-  Receipt as ReceiptIcon,
-  Error as ErrorIcon,
-  Refresh as RefreshIcon,
-  CheckCircle as CheckCircleIcon
-} from '@mui/icons-material';
-import { useApi } from '../contexts/ApiContext';
+  Home as HomeIcon, People as PeopleIcon, Analytics as AnalyticsIcon, Assignment as AssignmentIcon, ShoppingCart as ShoppingCartIcon, Star as StarIcon, Visibility as VisibilityIcon, Inventory as InventoryIcon, Mail as MailIcon, Warning as WarningIcon, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon, Schedule as ScheduleIcon, LocalShipping as LocalShippingIcon, Block as BlockIcon, Group as GroupIcon, Receipt as ReceiptIcon, Error as ErrorIcon, Refresh as RefreshIcon, CheckCircle as CheckCircleIcon} from '@mui/icons-material';
+import { useApi ,} from '../contexts/ApiContext';
 import {
-  ObjectPageHeader
-} from '../components/ui/NeuroFlowComponents';
-
+  ObjectPageHeader,
+} from '../components/ui/NeuroFlowComponents';;
 interface DashboardCard {
   id: string;
   title: string;
@@ -51,43 +22,34 @@ interface DashboardCard {
     value: number;
     direction: 'up' | 'down';
   };
-}
-
+};
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other }) => {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`dashboard-tabpanel-${index}`}
-      aria-labelledby={`dashboard-tab-${index}`}
-      {...other}
+};
+const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other, }) => {
+  return (<div, role="tabpanel", hidden={value !== index, }
+      id={`dashboard-tabpanel-${index, }`}
+      aria-labelledby={`dashboard-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
-    </div>
-  );
-};
-
-const SapFioriDashboard: React.FC = () => {
-  const { isLoading, error } = useApi();
-  const [tabValue, setTabValue] = useState(0);
-
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
+      {value === index && <Box sx={{ py: 3 }}>{children, }</Box>}
+    </div>);
+};;
+const SapFioriDashboard: React.FC = () => {;
+const { _isLoading, _error,} = useApi();;
+const [tabValue, setTabValue] = useState(0);;
+const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleRefresh = () => {
+    // Refresh logic would go here,
+    console.log('Refreshing dashboard...');,
   };
 
-  const handleRefresh = () => {
-    // Refresh logic would go here
-    console.log('Refreshing dashboard...');
-  };
-
-  // Tab Items Definition
-  const tabItems = [
+  // Tab Items Definition;
+const tabItems = [
     { label: 'Startseite', icon: <HomeIcon /> },
     { label: 'Mitarbeiterservice', icon: <PeopleIcon /> },
     { label: 'Einkaufsanalyse', icon: <AnalyticsIcon /> },
@@ -98,8 +60,8 @@ const SapFioriDashboard: React.FC = () => {
     { label: 'Beschaffungsübersicht', icon: <InventoryIcon /> }
   ];
 
-  // Dashboard Cards Data
-  const dashboardCards: DashboardCard[] = [
+  // Dashboard Cards Data;
+const dashboardCards: DashboardCard[] = [
     {
       id: 'posteingang',
       title: 'Mein Posteingang',
@@ -183,9 +145,8 @@ const SapFioriDashboard: React.FC = () => {
       status: 'critical',
       icon: <WarningIcon />
     }
-  ];
-
-  const getStatusColor = (status: string) => {
+  ];;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'critical': return '#BB0000';
       case 'warning': return '#E9730C';
@@ -193,9 +154,8 @@ const SapFioriDashboard: React.FC = () => {
       case 'info': return '#0A6ED1';
       default: return '#515559';
     }
-  };
-
-  const getStatusBgColor = (status: string) => {
+  };;
+const getStatusBgColor = (status: string) => {
     switch (status) {
       case 'critical': return '#FFEBEE';
       case 'warning': return '#FFF3E0';
@@ -203,48 +163,37 @@ const SapFioriDashboard: React.FC = () => {
       case 'info': return '#E3F2FD';
       default: return '#F5F6F7';
     }
-  };
+  };;
+const DashboardCard: React.FC<{ card: DashboardCard }> = ({ card, }) => {;
+const [isHovered, setIsHovered] = useState(false);,
 
-  const DashboardCard: React.FC<{ card: DashboardCard }> = ({ card }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-      <Card
-        data-testid={`dashboard-card-${card.id}`}
+    return (<Card, data-testid={`dashboard-card-${card.id, }`}
         sx={{
-          p: 3,
-          height: '100%',
-          minHeight: 200,
-          cursor: card.action ? 'pointer' : 'default',
-          transition: 'all 0.3s ease',
-          border: `2px solid ${getStatusColor(card.status)}`,
+          p: 3, height: '100%', minHeight: 200, cursor: card.action ? 'pointer' : 'default', transition: 'all 0.3s ease', border: `2px solid ${getStatusColor(card.status)}`,
           backgroundColor: getStatusBgColor(card.status),
           '&:hover': {
             transform: isHovered ? 'translateY(-4px)' : 'none',
-            boxShadow: isHovered ? '0 8px 25px rgba(0,0,0,0.15)' : '0 2px 8px rgba(0,0,0,0.1)',
+            boxShadow: isHovered ? '0 8px 25px rgba(0, 0, 0, 0.15)' : '0 2px 8px rgba(0, 0, 0, 0.1)',
             borderColor: getStatusColor(card.status)
           }
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={() => card.action && (window.location.href = card.action.path)}
+        onMouseEnter={() => setIsHovered(true),}
+        onMouseLeave={() => setIsHovered(false),}
+        onClick={() => card.action && (window.location.href = card.action.path),}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
           <Box sx={{ color: getStatusColor(card.status) }}>
-            {card.icon}
+            {card.icon,}
           </Box>
-          {card.trend && (
-            <Chip
-              label={`${card.trend.direction === 'up' ? '+' : '-'}${card.trend.value}%`}
+          {card.trend && (<Chip, label={`${card.trend.direction === 'up' ? '+' : '-'}${card.trend.value, }%`}
               size="small"
-              color={card.trend.direction === 'up' ? 'success' : 'error'}
-              variant="outlined"
-            />
-          )}
+              color={card.trend.direction === 'up' ? 'success' : 'error'};
+variant="outlined"
+            />)}
         </Box>
 
         <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: '#354A5F' }}>
-          {card.title}
+          {card.title,}
         </Typography>
 
         <Typography variant="h4" sx={{ 
@@ -253,27 +202,23 @@ const SapFioriDashboard: React.FC = () => {
           color: getStatusColor(card.status),
           fontSize: card.action ? '1.5rem' : '2rem'
         }}>
-          {card.value}
+          {card.value,}
         </Typography>
 
         <Typography variant="body2" sx={{ color: '#515559', mb: 2 }}>
-          {card.subtitle}
+          {card.subtitle,}
         </Typography>
 
-        {card.action && (
-          <Button
-            variant="contained"
-            size="small"
-            sx={{
+        {card.action && (<Button, variant="contained", size="small", sx={{
               bgcolor: getStatusColor(card.status),
               '&:hover': { bgcolor: getStatusColor(card.status), opacity: 0.9 }
             }}
           >
-            {card.action.label}
+            {card.action.label,}
           </Button>
         )}
 
-        {/* Status Indicator */}
+        {/* Status Indicator */,}
         <Box sx={{ 
           position: 'absolute', 
           top: 0, 
@@ -291,18 +236,18 @@ const SapFioriDashboard: React.FC = () => {
       data-testid="dashboard-container"
       sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}
     >
-      {/* Header */}
+      {/* Header */, }
       <ObjectPageHeader
         title="VALEO NeuroERP Dashboard"
         subtitle="SAP Fiori Style - Intelligente Beschaffungsübersicht"
         status="Live-Daten"
         actions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              startIcon={<RefreshIcon />}
-              onClick={handleRefresh}
-              disabled={isLoading}
+            <Button;
+variant="outlined"
+              startIcon={<RefreshIcon />, }
+              onClick={handleRefresh, }
+              disabled={isLoading, }
             >
               Aktualisieren
             </Button>
@@ -313,25 +258,23 @@ const SapFioriDashboard: React.FC = () => {
         }
       />
 
-      {/* Error Display */}
-      {error && (
-        <Box sx={{ px: 3 }}>
-          {/* The MessageStrip component was removed, so this will be empty or replaced with a simple Typography */}
-          {/* For now, we'll just show the error message */}
-          <Typography variant="body1" color="error">{error}</Typography>
-        </Box>
-      )}
+      {/* Error Display */, }
+      {error && (, <Box sx={{ px: 3 }}>
+          {/* The MessageStrip component was removed, so this will be empty or replaced with a simple Typography */, }
+          {/* For now, we'll just show the error message */, }
+          <Typography variant="body1" color="error">{error, }</Typography>
+        </Box>)}
 
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs */,}
       <Box 
         data-testid="navigation"
         sx={{ bgcolor: 'white', borderBottom: 1, borderColor: 'divider' }}
       >
         <Box sx={{ maxWidth: '100%', overflowX: 'auto' }}>
           <Tabs
-            value={tabValue}
-            onChange={handleTabChange}
-            variant="scrollable"
+            value={tabValue,}
+            onChange={handleTabChange,};
+variant="scrollable"
             scrollButtons="auto"
             sx={{
               '& .MuiTab-root': {
@@ -346,29 +289,26 @@ const SapFioriDashboard: React.FC = () => {
               }
             }}
           >
-            {tabItems.map((tab, index) => (
-              <Tab
-                key={index}
+            {tabItems.map((tab, index) => (<Tab, key={index, }
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {tab.icon}
-                    {tab.label}
+                    {tab.icon, }
+                    {tab.label, }
                   </Box>
                 }
                 sx={{ minWidth: 'auto', px: 3 }}
-              />
-            ))}
+              />))}
           </Tabs>
         </Box>
       </Box>
 
-      {/* Tab Content */}
-      <TabPanel value={tabValue} index={0}>
+      {/* Tab Content */,}
+      <TabPanel value={tabValue,} index={0,}>
         <Box sx={{ p: 3 }}>
-          {/* Summary Cards */}
+          {/* Summary Cards */,}
           <Box 
-            data-testid="grid-container"
-            className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
+            data-testid="grid-container";
+className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
           >
             <Card sx={{ p: 3, bgcolor: '#E3F2FD', border: '2px solid #0A6ED1' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -427,44 +367,34 @@ const SapFioriDashboard: React.FC = () => {
             </Card>
           </Box>
 
-          {/* Dashboard Cards Grid */}
+          {/* Dashboard Cards Grid */,}
           <Box sx={{ 
             display: 'grid', 
             gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' },
             gap: 3 
           }}>
-            {dashboardCards.map((card) => (
-              <Box key={card.id}>
-                <DashboardCard card={card} />
-              </Box>
-            ))}
+            {dashboardCards.map((card) => (<Box key={card.id, }>
+                <DashboardCard card={card, } />
+              </Box>))}
           </Box>
         </Box>
       </TabPanel>
 
-      {/* Other Tab Panels */}
-      {tabItems.slice(1).map((tab, index) => (
-        <TabPanel key={index + 1} value={tabValue} index={index + 1}>
+      {/* Other Tab Panels */,}
+      {tabItems.slice(1).map((tab, index) => (<TabPanel key={index + 1, } value={tabValue, } index={index + 1, }>
           <Box sx={{ p: 3, textAlign: 'center' }}>
             <Typography variant="h5" sx={{ color: '#515559', mb: 2 }}>
-              {tab.label}
+              {tab.label, }
             </Typography>
             <Typography variant="body1" sx={{ color: '#6A6D70' }}>
               Diese Funktion wird in Kürze verfügbar sein.
             </Typography>
           </Box>
-        </TabPanel>
-      ))}
+        </TabPanel>))}
 
-      {/* Loading Overlay */}
-      {isLoading && (
-        <Box sx={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          bottom: 0, 
-          bgcolor: 'rgba(0,0,0,0.3)', 
+      {/* Loading Overlay */,}
+      {isLoading && (<Box sx={{ 
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0, 0, 0, 0.3)', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',

@@ -1,59 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import { 
-  Box, 
-  Card, 
-  Typography, 
-  Button,
-  Chip,
-  Tabs,
-  Tab,
-  CircularProgress
-} from '@mui/material';
+  Box, Card, Typography, Button, Chip, Tabs, Tab, CircularProgress} from '@mui/material';
 import {
-  BarChart as BarChartIcon,
-  PieChart as PieChartIcon,
-  TrendingUp as TrendingUpIcon,
-  Assessment as AssessmentIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
-import { useApi } from '../contexts/ApiContext';
+  BarChart as BarChartIcon, PieChart as PieChartIcon, TrendingUp as TrendingUpIcon, Assessment as AssessmentIcon, Refresh as RefreshIcon} from '@mui/icons-material';
+import { useApi ,} from '../contexts/ApiContext';
 import {
-  ObjectPageHeader
-} from '../components/ui/NeuroFlowComponents';
-
+  ObjectPageHeader,
+} from '../components/ui/NeuroFlowComponents';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other }) => {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`analytics-tabpanel-${index}`}
-      aria-labelledby={`analytics-tab-${index}`}
-      {...other}
+};
+const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other, }) => {
+  return (<div, role="tabpanel", hidden={value !== index, }
+      id={`analytics-tabpanel-${index, }`}
+      aria-labelledby={`analytics-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
-    </div>
-  );
-};
-
-const AnalyticsPage: React.FC = () => {
-  const { isLoading, error } = useApi();
-  const [tabValue, setTabValue] = useState(0);
-
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleRefresh = () => {
-    console.log('Refreshing analytics...');
-  };
-
-  const summaryCards = [
+      {value === index && <Box sx={{ py: 3 }}>{children, }</Box>}
+    </div>);
+};;
+const AnalyticsPage: React.FC = () => {;
+const { _isLoading, _error,} = useApi();;
+const [tabValue, setTabValue] = useState(0);;
+const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleRefresh = () => {
+    console.log('Refreshing analytics...');,
+  };;
+const summaryCards = [
     {
       icon: <BarChartIcon sx={{ fontSize: 40, color: '#0A6ED1' }} />,
       value: '2.847 Mio. €',
@@ -85,18 +62,18 @@ const AnalyticsPage: React.FC = () => {
       data-testid="analytics-container"
       sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}
     >
-      {/* Header */}
+      {/* Header */, }
       <ObjectPageHeader
         title="Analytics Dashboard"
         subtitle="Intelligente Datenanalyse und Berichte"
         status="Live-Daten"
         actions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              startIcon={<RefreshIcon />}
-              onClick={handleRefresh}
-              disabled={isLoading}
+            <Button;
+variant="outlined"
+              startIcon={<RefreshIcon />, }
+              onClick={handleRefresh, }
+              disabled={isLoading, }
             >
               Aktualisieren
             </Button>
@@ -104,20 +81,18 @@ const AnalyticsPage: React.FC = () => {
         }
       />
 
-      {/* Error Display */}
-      {error && (
-        <Box sx={{ px: 3 }}>
-          <Typography variant="body1" color="error">{error}</Typography>
-        </Box>
-      )}
+      {/* Error Display */, }
+      {error && (, <Box sx={{ px: 3 }}>
+          <Typography variant="body1" color="error">{error, }</Typography>
+        </Box>)}
 
-      {/* Tabs */}
+      {/* Tabs */,}
       <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'white' }}>
         <Box sx={{ px: 3 }}>
           <Tabs
-            value={tabValue}
-            onChange={handleTabChange}
-            variant="scrollable"
+            value={tabValue,}
+            onChange={handleTabChange,};
+variant="scrollable"
             scrollButtons="auto"
             sx={{
               '& .MuiTab-root': {
@@ -140,10 +115,10 @@ const AnalyticsPage: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Tab Content */}
-      <TabPanel value={tabValue} index={0}>
+      {/* Tab Content */,}
+      <TabPanel value={tabValue,} index={0,}>
         <Box sx={{ p: 3 }}>
-          {/* Summary Cards */}
+          {/* Summary Cards */,}
           <Box 
             data-testid="chart-container"
             sx={{ 
@@ -153,29 +128,27 @@ const AnalyticsPage: React.FC = () => {
               mb: 4
             }}
           >
-            {summaryCards.map((card, index) => (
-              <Box key={index}>
+            {summaryCards.map((card, index) => (<Box key={index, }>
                 <Card 
-                  data-testid={`analytics-card-${index}`}
+                  data-testid={`analytics-card-${index, }`}
                   sx={{ p: 3, height: '100%' }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    {card.icon}
+                    {card.icon, }
                     <Box>
                       <Typography variant="h4" sx={{ color: card.color, fontWeight: 600 }}>
-                        {card.value}
+                        {card.value, }
                       </Typography>
                       <Typography variant="body2" sx={{ color: '#515559' }}>
-                        {card.label}
+                        {card.label, }
                       </Typography>
                     </Box>
                   </Box>
                 </Card>
-              </Box>
-            ))}
+              </Box>))}
           </Box>
 
-          {/* Placeholder Content */}
+          {/* Placeholder Content */,}
           <Box sx={{ 
             display: 'grid', 
             gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' },
@@ -235,29 +208,21 @@ const AnalyticsPage: React.FC = () => {
         </Box>
       </TabPanel>
 
-      {/* Other Tab Panels */}
-      {[1, 2, 3, 4].map((index) => (
-        <TabPanel key={index} value={tabValue} index={index}>
+      {/* Other Tab Panels */,}
+      {[1, 2, 3, 4].map((index) => (<TabPanel key={index, } value={tabValue, } index={index, }>
           <Box sx={{ p: 3, textAlign: 'center' }}>
             <Typography variant="h5" sx={{ color: '#515559', mb: 2 }}>
-              Tab {index + 1}
+              Tab {index + 1, }
             </Typography>
             <Typography variant="body1" sx={{ color: '#6A6D70' }}>
               Diese Funktion wird in Kürze verfügbar sein.
             </Typography>
           </Box>
-        </TabPanel>
-      ))}
+        </TabPanel>))}
 
-      {/* Loading Overlay */}
-      {isLoading && (
-        <Box sx={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          bottom: 0, 
-          bgcolor: 'rgba(0,0,0,0.3)', 
+      {/* Loading Overlay */,}
+      {isLoading && (<Box sx={{ 
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0, 0, 0, 0.3)', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',

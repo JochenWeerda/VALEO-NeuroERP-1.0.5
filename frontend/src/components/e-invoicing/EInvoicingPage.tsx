@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Tabs, Tab, Typography, Paper, Container } from '@mui/material';
-import { TabPanel } from '../../components/common/TabPanel';
+import React, { useState, useEffect ,} from 'react';
+import { Box, Tabs, Tab, Typography, Paper, Container} from '@mui/material';
+import { TabPanel ,} from '../../components/common/TabPanel';
 import EInvoicingList from './EInvoicingList';
 import EInvoicingForm from './EInvoicingForm';
 import EInvoicingStatistics from './EInvoicingStatistics';
-import EInvoicingValidation from './EInvoicingValidation';
-
+import EInvoicingValidation from './EInvoicingValidation';;
 interface EInvoicingPageProps {
-  // Props für die e-Invoicing-Seite
+  // Props für die e-Invoicing-Seite,
 }
 
-export const EInvoicingPage: React.FC<EInvoicingPageProps> = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
+export const EInvoicingPage: React.FC<EInvoicingPageProps> = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [isLoading, setIsLoading] = useState(false);,;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
   };
 
-  return (
-    <Container maxWidth="xl">
+  return (<Container maxWidth="xl">
       <Box sx={{ width: '100%', mt: 2 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           E-Invoicing Management
@@ -30,11 +27,11 @@ export const EInvoicingPage: React.FC<EInvoicingPageProps> = () => {
 
         <Paper sx={{ width: '100%', mt: 3 }}>
           <Tabs
-            value={tabValue}
-            onChange={handleTabChange}
+            value={tabValue, }
+            onChange={handleTabChange, }
             indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
+            textColor="primary";
+variant="scrollable"
             scrollButtons="auto"
           >
             <Tab label="E-Rechnungen" />
@@ -43,21 +40,21 @@ export const EInvoicingPage: React.FC<EInvoicingPageProps> = () => {
             <Tab label="Statistiken" />
           </Tabs>
 
-          <TabPanel value={tabValue} index={0}>
+          <TabPanel value={tabValue, } index={0, }>
             <EInvoicingList />
           </TabPanel>
 
-          <TabPanel value={tabValue} index={1}>
+          <TabPanel value={tabValue, } index={1, }>
             <EInvoicingForm 
               onSubmit={async (data) => {
                 console.log('Neue Rechnung:', data);
-                // Hier würde die API-Integration erfolgen
+                // Hier würde die API-Integration erfolgen,
               }}
-              onCancel={() => setTabValue(0)}
+              onCancel={() => setTabValue(0),}
             />
           </TabPanel>
 
-          <TabPanel value={tabValue} index={2}>
+          <TabPanel value={tabValue,} index={2,}>
             <EInvoicingValidation 
               validationResult={{
                 isValid: true,
@@ -67,7 +64,7 @@ export const EInvoicingPage: React.FC<EInvoicingPageProps> = () => {
             />
           </TabPanel>
 
-          <TabPanel value={tabValue} index={3}>
+          <TabPanel value={tabValue,} index={3,}>
             <EInvoicingStatistics 
               statistics={{
                 monthly: [],

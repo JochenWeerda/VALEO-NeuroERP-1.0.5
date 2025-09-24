@@ -1,44 +1,20 @@
 import React from 'react';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Chip,
-  Avatar,
-  Tooltip,
-  Typography,
-  Box
-} from '@mui/material';
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Chip, Avatar, Tooltip, Typography, Box} from '@mui/material';
 import {
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Phone as PhoneIcon,
-  Email as EmailIcon,
-  WhatsApp as WhatsAppIcon,
-  Person as PersonIcon
-} from '@mui/icons-material';
-import { ContactPerson } from '../../../types/crm';
-
+  Edit as EditIcon, Delete as DeleteIcon, Phone as PhoneIcon, Email as EmailIcon, WhatsApp as WhatsAppIcon, Person as PersonIcon} from '@mui/icons-material';
+import { ContactPerson ,} from '../../../types/crm';;
 interface ContactListProps {
   contacts: ContactPerson[];
-  onEdit: (contact: ContactPerson) => void;
-  onDelete: (contactId: string) => void;
+  onEdit: (contact: _ContactPerson) => void;
+  onDelete: (contactId: _string) => void;
   isLoading?: boolean;
 }
 
 export const ContactList: React.FC<ContactListProps> = ({
-  contacts,
-  onEdit,
-  onDelete,
-  isLoading = false
-}) => {
-  const getPositionColor = (position: string) => {
-    const colors: Record<string, string> = {
+  contacts, onEdit, onDelete, isLoading = false, }) => {;
+const getPositionColor = (position: string) => {;
+const colors: Record<string, string> = {
       'Geschäftsführer': '#1976d2',
       'Einkauf': '#388e3c',
       'Technik': '#f57c00',
@@ -47,9 +23,8 @@ export const ContactList: React.FC<ContactListProps> = ({
       'default': '#757575'
     };
     return colors[position] || colors.default;
-  };
-
-  const getContactIcon = (contact: ContactPerson) => {
+  };;
+const getContactIcon = (contact: ContactPerson) => {
     if (contact.isMainContact) {
       return <PersonIcon sx={{ color: '#1976d2' }} />;
     }
@@ -57,25 +32,21 @@ export const ContactList: React.FC<ContactListProps> = ({
   };
 
   if (isLoading) {
-    return (
-      <Box display="flex" justifyContent="center" p={3}>
+    return (<Box display="flex" justifyContent="center" p={3, }>
         <Typography>Lade Kontakte...</Typography>
-      </Box>
-    );
+      </Box>);
   }
 
   if (contacts.length === 0) {
-    return (
-      <Box display="flex" justifyContent="center" p={3}>
+    return (<Box display="flex" justifyContent="center" p={3, }>
         <Typography variant="body2" color="textSecondary">
           Keine Kontakte gefunden
         </Typography>
-      </Box>
-    );
+      </Box>);
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper, }>
       <Table>
         <TableHead>
           <TableRow>
@@ -89,28 +60,24 @@ export const ContactList: React.FC<ContactListProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {contacts.map((contact) => (
-            <TableRow key={contact.id} hover>
+          {contacts.map((contact) => (<TableRow key={contact.id, } hover>
               <TableCell>
-                <Box display="flex" alignItems="center" gap={1}>
+                <Box display="flex" alignItems="center" gap={1, }>
                   <Avatar sx={{ width: 32, height: 32 }}>
-                    {getContactIcon(contact)}
+                    {getContactIcon(contact),}
                   </Avatar>
                   <Box>
                     <Typography variant="body2" fontWeight="medium">
-                      {contact.salutation} {contact.firstName} {contact.lastName}
+                      {contact.salutation,} {contact.firstName,} {contact.lastName,}
                     </Typography>
-                    {contact.department && (
-                      <Typography variant="caption" color="textSecondary">
-                        {contact.department}
-                      </Typography>
-                    )}
+                    {contact.department && (<Typography variant="caption" color="textSecondary">, {contact.department, }
+                      </Typography>)}
                   </Box>
                 </Box>
               </TableCell>
               <TableCell>
                 <Chip
-                  label={contact.position}
+                  label={contact.position,}
                   size="small"
                   sx={{
                     backgroundColor: getPositionColor(contact.position),
@@ -120,30 +87,22 @@ export const ContactList: React.FC<ContactListProps> = ({
                 />
               </TableCell>
               <TableCell>
-                <Box display="flex" alignItems="center" gap={0.5}>
-                  {contact.phone1 && (
-                    <Tooltip title={contact.phone1}>
+                <Box display="flex" alignItems="center" gap={0.5,}>
+                  {contact.phone1 && (<Tooltip title={contact.phone1, }>
                       <PhoneIcon fontSize="small" color="primary" />
-                    </Tooltip>
-                  )}
-                  {contact.mobile && (
-                    <Tooltip title={contact.mobile}>
+                    </Tooltip>)}
+                  {contact.mobile && (<Tooltip title={contact.mobile, }>
                       <PhoneIcon fontSize="small" color="secondary" />
-                    </Tooltip>
-                  )}
-                  {contact.whatsapp && (
-                    <Tooltip title={contact.whatsapp}>
+                    </Tooltip>)}
+                  {contact.whatsapp && (<Tooltip title={contact.whatsapp, }>
                       <WhatsAppIcon fontSize="small" sx={{ color: '#25D366' }} />
-                    </Tooltip>
-                  )}
+                    </Tooltip>)}
                 </Box>
               </TableCell>
               <TableCell>
-                {contact.email && (
-                  <Tooltip title={contact.email}>
+                {contact.email && (<Tooltip title={contact.email, }>
                     <EmailIcon fontSize="small" color="primary" />
-                  </Tooltip>
-                )}
+                  </Tooltip>)}
               </TableCell>
               <TableCell>
                 <Chip
@@ -151,26 +110,20 @@ export const ContactList: React.FC<ContactListProps> = ({
                   size="small"
                   color={contact.isActive ? 'success' : 'default'}
                 />
-                {contact.isMainContact && (
-                  <Chip
-                    label="Hauptkontakt"
-                    size="small"
-                    color="primary"
-                    sx={{ ml: 0.5 }}
-                  />
-                )}
+                {contact.isMainContact && (<Chip, label="Hauptkontakt", size="small", color="primary", sx={{ ml: 0.5 }}
+                  />)}
               </TableCell>
               <TableCell>
                 <Typography variant="caption">
-                  {contact.role}
+                  {contact.role,}
                 </Typography>
               </TableCell>
               <TableCell align="center">
-                <Box display="flex" gap={0.5}>
+                <Box display="flex" gap={0.5,}>
                   <Tooltip title="Bearbeiten">
                     <IconButton
                       size="small"
-                      onClick={() => onEdit(contact)}
+                      onClick={() => onEdit(contact),}
                       color="primary"
                     >
                       <EditIcon fontSize="small" />
@@ -179,7 +132,7 @@ export const ContactList: React.FC<ContactListProps> = ({
                   <Tooltip title="Löschen">
                     <IconButton
                       size="small"
-                      onClick={() => onDelete(contact.id)}
+                      onClick={() => onDelete(contact.id),}
                       color="error"
                     >
                       <DeleteIcon fontSize="small" />

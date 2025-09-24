@@ -1,17 +1,17 @@
 // Temporär auskommentiert - wird später implementiert
 /*
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
-import { createTheme } from '@mui/material/styles';
-import { DeliveryNoteForm } from '../erp/DeliveryNoteForm';
-import { DeliveryNoteMasterData, DeliveryNotePosition } from '../../types/erp';
-import { Supplier } from '../../types/crm';
+import { render, screen, fireEvent, waitFor} from '@testing-library/react';
+import { ThemeProvider ,} from '@mui/material/styles';
+import { createTheme ,} from '@mui/material/styles';
+import { DeliveryNoteForm ,} from '../erp/DeliveryNoteForm';
+import { DeliveryNoteMasterData, DeliveryNotePosition} from '../../types/erp';
+import { Supplier ,} from '../../types/crm';
 
-// Theme für Tests
+// Theme für Tests;
 const theme = createTheme();
 
-// Mock-Daten für Tests
+// Mock-Daten für Tests;
 const mockSuppliers: Supplier[] = [
   {
     id: '1',
@@ -36,8 +36,7 @@ const mockSuppliers: Supplier[] = [
     updatedAt: '2024-01-01',
     createdBy: 'system'
   }
-];
-
+];;
 const mockMasterData: DeliveryNoteMasterData = {
   lieferant: mockSuppliers[0],
   zwHaendler: 'Test Händler',
@@ -47,8 +46,7 @@ const mockMasterData: DeliveryNoteMasterData = {
   erledigt: false,
   lsNr: 'LS-001',
   bestellungImportieren: false
-};
-
+};;
 const mockPositions: DeliveryNotePosition[] = [
   {
     posNr: 1,
@@ -69,36 +67,30 @@ const mockPositions: DeliveryNotePosition[] = [
     preiscode: 'PC-001',
     masterNr: 'MN-001'
   }
-];
-
+];;
 const renderWithTheme = (component: React.ReactElement) => {
-  return render(
-    <ThemeProvider theme={theme}>
-      {component}
-    </ThemeProvider>
-  );
+  return render(<ThemeProvider theme={theme, }>
+      {component, }
+    </ThemeProvider>);
 };
 
 describe('DeliveryNoteForm', () => {
-  it('rendert das Formular korrekt', () => {
-    const mockOnChangeMasterData = jest.fn();
-    const mockOnChangePositions = jest.fn();
-    const mockOnSubmit = jest.fn();
-    const mockOnCancel = jest.fn();
+  it('rendert das Formular korrekt', () => {;
+const mockOnChangeMasterData = jest.fn();,;
+const mockOnChangePositions = jest.fn();,;
+const mockOnSubmit = jest.fn();,;
+const mockOnCancel = jest.fn();,
 
-    renderWithTheme(
-      <DeliveryNoteForm
-        masterData={mockMasterData}
-        positions={mockPositions}
-        suppliers={mockSuppliers}
-        loading={false}
-        error={null}
-        onChangeMasterData={mockOnChangeMasterData}
-        onChangePositions={mockOnChangePositions}
-        onSubmit={mockOnSubmit}
-        onCancel={mockOnCancel}
-      />
-    );
+    renderWithTheme(<DeliveryNoteForm, masterData={mockMasterData, }
+        positions={mockPositions, }
+        suppliers={mockSuppliers, }
+        loading={false, }
+        error={null, }
+        onChangeMasterData={mockOnChangeMasterData, }
+        onChangePositions={mockOnChangePositions, }
+        onSubmit={mockOnSubmit, }
+        onCancel={mockOnCancel, }
+      />);
 
     expect(screen.getByText('Lieferanten-Lieferschein')).toBeInTheDocument();
     expect(screen.getByText('Stammdaten')).toBeInTheDocument();
@@ -106,101 +98,87 @@ describe('DeliveryNoteForm', () => {
     expect(screen.getByText('Test Lieferant 1')).toBeInTheDocument();
   });
 
-  it('zeigt Loading-State korrekt an', () => {
-    const mockOnChangeMasterData = jest.fn();
-    const mockOnChangePositions = jest.fn();
-    const mockOnSubmit = jest.fn();
-    const mockOnCancel = jest.fn();
+  it('zeigt Loading-State korrekt an', () => {;
+const mockOnChangeMasterData = jest.fn();,;
+const mockOnChangePositions = jest.fn();,;
+const mockOnSubmit = jest.fn();,;
+const mockOnCancel = jest.fn();,
 
-    renderWithTheme(
-      <DeliveryNoteForm
-        masterData={mockMasterData}
-        positions={mockPositions}
-        suppliers={mockSuppliers}
-        loading={true}
-        error={null}
-        onChangeMasterData={mockOnChangeMasterData}
-        onChangePositions={mockOnChangePositions}
-        onSubmit={mockOnSubmit}
-        onCancel={mockOnCancel}
-      />
-    );
+    renderWithTheme(<DeliveryNoteForm, masterData={mockMasterData, }
+        positions={mockPositions, }
+        suppliers={mockSuppliers, }
+        loading={true, }
+        error={null, }
+        onChangeMasterData={mockOnChangeMasterData, }
+        onChangePositions={mockOnChangePositions, }
+        onSubmit={mockOnSubmit, }
+        onCancel={mockOnCancel, }
+      />);
 
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('zeigt Fehler korrekt an', () => {
-    const mockOnChangeMasterData = jest.fn();
-    const mockOnChangePositions = jest.fn();
-    const mockOnSubmit = jest.fn();
-    const mockOnCancel = jest.fn();
+  it('zeigt Fehler korrekt an', () => {;
+const mockOnChangeMasterData = jest.fn();,;
+const mockOnChangePositions = jest.fn();,;
+const mockOnSubmit = jest.fn();,;
+const mockOnCancel = jest.fn();,
 
-    renderWithTheme(
-      <DeliveryNoteForm
-        masterData={mockMasterData}
-        positions={mockPositions}
-        suppliers={mockSuppliers}
-        loading={false}
+    renderWithTheme(<DeliveryNoteForm, masterData={mockMasterData, }
+        positions={mockPositions, }
+        suppliers={mockSuppliers, }
+        loading={false, }
         error="Test Fehler"
-        onChangeMasterData={mockOnChangeMasterData}
-        onChangePositions={mockOnChangePositions}
-        onSubmit={mockOnSubmit}
-        onCancel={mockOnCancel}
-      />
-    );
+        onChangeMasterData={mockOnChangeMasterData, }
+        onChangePositions={mockOnChangePositions, }
+        onSubmit={mockOnSubmit, }
+        onCancel={mockOnCancel, }
+      />);
 
     expect(screen.getByText('Test Fehler')).toBeInTheDocument();
   });
 
-  it('ruft onSubmit auf, wenn Speichern-Button geklickt wird', async () => {
-    const mockOnChangeMasterData = jest.fn();
-    const mockOnChangePositions = jest.fn();
-    const mockOnSubmit = jest.fn();
-    const mockOnCancel = jest.fn();
+  it('ruft onSubmit auf, wenn Speichern-Button geklickt wird', async () => {;
+const mockOnChangeMasterData = jest.fn();,;
+const mockOnChangePositions = jest.fn();,;
+const mockOnSubmit = jest.fn();,;
+const mockOnCancel = jest.fn();,
 
-    renderWithTheme(
-      <DeliveryNoteForm
-        masterData={mockMasterData}
-        positions={mockPositions}
-        suppliers={mockSuppliers}
-        loading={false}
-        error={null}
-        onChangeMasterData={mockOnChangeMasterData}
-        onChangePositions={mockOnChangePositions}
-        onSubmit={mockOnSubmit}
-        onCancel={mockOnCancel}
-      />
-    );
-
-    const saveButton = screen.getByText('Speichern');
+    renderWithTheme(<DeliveryNoteForm, masterData={mockMasterData, }
+        positions={mockPositions, }
+        suppliers={mockSuppliers, }
+        loading={false, }
+        error={null, }
+        onChangeMasterData={mockOnChangeMasterData, }
+        onChangePositions={mockOnChangePositions, }
+        onSubmit={mockOnSubmit, }
+        onCancel={mockOnCancel, }
+      />);;
+const saveButton = screen.getByText('Speichern');
     fireEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalled();
+      expect(mockOnSubmit).toHaveBeenCalled();,
     });
   });
 
-  it('ruft onCancel auf, wenn Abbrechen-Button geklickt wird', () => {
-    const mockOnChangeMasterData = jest.fn();
-    const mockOnChangePositions = jest.fn();
-    const mockOnSubmit = jest.fn();
-    const mockOnCancel = jest.fn();
+  it('ruft onCancel auf, wenn Abbrechen-Button geklickt wird', () => {;
+const mockOnChangeMasterData = jest.fn();,;
+const mockOnChangePositions = jest.fn();,;
+const mockOnSubmit = jest.fn();,;
+const mockOnCancel = jest.fn();,
 
-    renderWithTheme(
-      <DeliveryNoteForm
-        masterData={mockMasterData}
-        positions={mockPositions}
-        suppliers={mockSuppliers}
-        loading={false}
-        error={null}
-        onChangeMasterData={mockOnChangeMasterData}
-        onChangePositions={mockOnChangePositions}
-        onSubmit={mockOnSubmit}
-        onCancel={mockOnCancel}
-      />
-    );
-
-    const cancelButton = screen.getByText('Abbrechen');
+    renderWithTheme(<DeliveryNoteForm, masterData={mockMasterData, }
+        positions={mockPositions, }
+        suppliers={mockSuppliers, }
+        loading={false, }
+        error={null, }
+        onChangeMasterData={mockOnChangeMasterData, }
+        onChangePositions={mockOnChangePositions, }
+        onSubmit={mockOnSubmit, }
+        onCancel={mockOnCancel, }
+      />);;
+const cancelButton = screen.getByText('Abbrechen');
     fireEvent.click(cancelButton);
 
     expect(mockOnCancel).toHaveBeenCalled();
@@ -210,6 +188,6 @@ describe('DeliveryNoteForm', () => {
 
 describe('DeliveryNoteForm', () => {
   it('wird später implementiert', () => {
-    expect(true).toBe(true);
+    expect(true).toBe(true);,
   });
 }); 

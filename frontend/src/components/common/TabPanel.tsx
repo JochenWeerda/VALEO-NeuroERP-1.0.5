@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, BoxProps } from '@mui/material';
-
+import { Box, BoxProps} from '@mui/material';;
 interface TabPanelProps extends BoxProps {
   children?: React.ReactNode;
   index: number;
@@ -11,21 +10,19 @@ interface TabPanelProps extends BoxProps {
  * TabPanel Komponente für Tab-Navigation
  * Zeigt den Inhalt des aktiven Tabs an
  */
-export const TabPanel: React.FC<TabPanelProps> = (props) => {
-  const { children, value, index, ...other } = props;
+export const TabPanel: React.FC<TabPanelProps> = (props) => {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      hidden={value !== index, }
+      id={`simple-tabpanel-${index, }`}
+      aria-labelledby={`simple-tab-${index, }`}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && (, <Box sx={{ p: 3 }}>
+          {children, }
+        </Box>)}
     </div>
   );
 };

@@ -1,29 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import { 
-  Box, 
-  Typography, 
-  Card, 
-  Alert, 
-  Chip,
-  CircularProgress,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@mui/material';
+  Box, Typography, Card, Alert, Chip, CircularProgress, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import { 
-  Inventory as InventoryIcon,
-  LocalShipping as LocalShippingIcon,
-  Warehouse as WarehouseIcon,
-  TrendingUp as TrendingUpIcon,
-  Add as AddIcon,
-  Search as SearchIcon
-} from '@mui/icons-material';
-
+  Inventory as InventoryIcon, LocalShipping as LocalShippingIcon, Warehouse as WarehouseIcon, TrendingUp as TrendingUpIcon, Add as AddIcon, Search as SearchIcon} from '@mui/icons-material';;
 interface InventoryItem {
   id: string;
   name: string;
@@ -35,32 +14,29 @@ interface InventoryItem {
   location: string;
   status: 'in_stock' | 'low_stock' | 'out_of_stock';
   lastUpdated: Date;
-}
-
+};
 interface WarehouseLocation {
   id: string;
-  name: string;
-  type: 'storage' | 'picking' | 'shipping';
+  name: string;;
+type: 'storage' | 'picking' | 'shipping';
   capacity: number;
   used: number;
   status: 'active' | 'maintenance' | 'inactive';
-}
-
-const LagerDashboard: React.FC = () => {
-  const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [locations, setLocations] = useState<WarehouseLocation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+};
+const LagerDashboard: React.FC = () => {;
+const [inventory, setInventory] = useState<InventoryItem[]>([]);,;
+const [locations, setLocations] = useState<WarehouseLocation[]>([]);,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,
 
   useEffect(() => {
-    loadLagerData();
-  }, []);
-
-  const loadLagerData = async () => {
-    setLoading(true);
+    loadLagerData();,
+  }, []);;
+const loadLagerData = async () => {
+    setLoading(true);,
     try {
-      // Simuliere API-Aufruf für Lager-Daten
-      const mockInventory: InventoryItem[] = [
+      // Simuliere API-Aufruf für Lager-Daten,;
+const mockInventory: InventoryItem[] = [
         {
           id: '1',
           name: 'Laptop Dell XPS 13',
@@ -97,29 +73,28 @@ const LagerDashboard: React.FC = () => {
           status: 'out_of_stock',
           lastUpdated: new Date(Date.now() - 172800000)
         }
-      ];
-
-      const mockLocations: WarehouseLocation[] = [
+      ];;
+const mockLocations: WarehouseLocation[] = [
         {
           id: '1',
-          name: 'Lager A - Regal 1',
-          type: 'storage',
+          name: 'Lager A - Regal 1',;
+type: 'storage',
           capacity: 1000,
           used: 750,
           status: 'active'
         },
         {
           id: '2',
-          name: 'Kommissionierung Zone',
-          type: 'picking',
+          name: 'Kommissionierung Zone',;
+type: 'picking',
           capacity: 500,
           used: 300,
           status: 'active'
         },
         {
           id: '3',
-          name: 'Versand Zone',
-          type: 'shipping',
+          name: 'Versand Zone',;
+type: 'shipping',
           capacity: 200,
           used: 150,
           status: 'active'
@@ -129,49 +104,43 @@ const LagerDashboard: React.FC = () => {
       setInventory(mockInventory);
       setLocations(mockLocations);
     } catch (err) {
-      setError('Fehler beim Laden der Lager-Daten');
+      setError('Fehler beim Laden der Lager-Daten');,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const getStatusColor = (status: string) => {
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'in_stock': return 'success';
       case 'low_stock': return 'warning';
       case 'out_of_stock': return 'error';
       default: return 'default';
     }
-  };
-
-  const getLocationTypeColor = (type: string) => {
+  };;
+const getLocationTypeColor = (type: string) => {
     switch (type) {
       case 'storage': return 'primary';
       case 'picking': return 'secondary';
       case 'shipping': return 'success';
       default: return 'default';
     }
-  };
-
-  const getLocationStatusColor = (status: string) => {
+  };;
+const getLocationStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'success';
       case 'maintenance': return 'warning';
       case 'inactive': return 'error';
       default: return 'default';
     }
-  };
-
-  const calculateUtilization = (used: number, capacity: number) => {
-    return Math.round((used / capacity) * 100);
+  };;
+const calculateUtilization = (used: number, capacity: number) => {
+    return Math.round((used / capacity) * 100);,
   };
 
   if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+    return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
   }
 
   return (
@@ -184,13 +153,11 @@ const LagerDashboard: React.FC = () => {
         Lagerverwaltung und Bestandsüberwachung
       </Typography>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+      {error && (, <Alert severity="error" sx={{ mb: 3 }}>
+          {error, }
+        </Alert>)}
 
-      {/* Inventory Overview */}
+      {/* Inventory Overview */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Bestandsübersicht
@@ -200,47 +167,47 @@ const LagerDashboard: React.FC = () => {
             <InventoryIcon className="text-blue-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-blue-800">Artikel</Typography>
             <Typography variant="h4" className="text-blue-600">
-              {inventory.length}
+              {inventory.length,}
             </Typography>
           </Box>
           <Box className="text-center p-4 bg-green-50 rounded-lg">
             <TrendingUpIcon className="text-green-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-green-800">Verfügbar</Typography>
             <Typography variant="h4" className="text-green-600">
-              {inventory.filter(item => item.status === 'in_stock').length}
+              {inventory.filter(item => item.status === 'in_stock').length,}
             </Typography>
           </Box>
           <Box className="text-center p-4 bg-orange-50 rounded-lg">
             <LocalShippingIcon className="text-orange-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-orange-800">Niedrig</Typography>
             <Typography variant="h4" className="text-orange-600">
-              {inventory.filter(item => item.status === 'low_stock').length}
+              {inventory.filter(item => item.status === 'low_stock').length,}
             </Typography>
           </Box>
           <Box className="text-center p-4 bg-red-50 rounded-lg">
             <InventoryIcon className="text-red-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-red-800">Ausverkauft</Typography>
             <Typography variant="h4" className="text-red-600">
-              {inventory.filter(item => item.status === 'out_of_stock').length}
+              {inventory.filter(item => item.status === 'out_of_stock').length,}
             </Typography>
           </Box>
         </Box>
       </Card>
 
-      {/* Inventory Table */}
+      {/* Inventory Table */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Box className="flex justify-between items-center mb-4">
           <Typography variant="h6">
             Bestand
           </Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
           >
             Neuer Artikel
           </Button>
         </Box>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow className="bg-gray-50">
@@ -254,51 +221,50 @@ const LagerDashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventory.map((item) => (
-                <TableRow key={item.id} className="hover:bg-gray-50">
+              {inventory.map((item) => (<TableRow key={item.id, } className="hover:bg-gray-50">
                   <TableCell>
                     <Typography variant="body1" className="font-medium">
-                      {item.sku}
+                      {item.sku, }
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{item.name}</Typography>
+                    <Typography variant="body2">{item.name, }</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{item.category}</Typography>
+                    <Typography variant="body2">{item.category, }</Typography>
                   </TableCell>
                   <TableCell>
                     <div>
                       <Typography variant="body2" className="font-medium">
-                        {item.quantity}
+                        {item.quantity, }
                       </Typography>
                       <Typography variant="caption" className="text-gray-600">
-                        Min: {item.minQuantity} | Max: {item.maxQuantity}
+                        Min: {item.minQuantity, } | Max: {item.maxQuantity, }
                       </Typography>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{item.location}</Typography>
+                    <Typography variant="body2">{item.location, }</Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
                       label={item.status === 'in_stock' ? 'Verfügbar' : 
                              item.status === 'low_stock' ? 'Niedrig' : 'Ausverkauft'}
                       size="small"
-                      color={getStatusColor(item.status) as any}
+                      color={getStatusColor(item.status) as any,}
                     />
                   </TableCell>
                   <TableCell>
                     <Box className="flex gap-1">
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Details
                       </Button>
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Bewegung
                       </Button>
@@ -311,12 +277,12 @@ const LagerDashboard: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Warehouse Locations */}
+      {/* Warehouse Locations */,}
       <Card sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
           Lagerplätze
         </Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow className="bg-gray-50">
@@ -329,11 +295,10 @@ const LagerDashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {locations.map((location) => (
-                <TableRow key={location.id} className="hover:bg-gray-50">
+              {locations.map((location) => (<TableRow key={location.id, } className="hover:bg-gray-50">
                   <TableCell>
                     <Typography variant="body1" className="font-medium">
-                      {location.name}
+                      {location.name, }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -341,22 +306,22 @@ const LagerDashboard: React.FC = () => {
                       label={location.type === 'storage' ? 'Lagerung' :
                              location.type === 'picking' ? 'Kommissionierung' : 'Versand'}
                       size="small"
-                      color={getLocationTypeColor(location.type) as any}
+                      color={getLocationTypeColor(location.type) as any,}
                     />
                   </TableCell>
                   <TableCell>
                     <div>
                       <Typography variant="body2" className="font-medium">
-                        {location.used} / {location.capacity}
+                        {location.used,} / {location.capacity,}
                       </Typography>
                       <Typography variant="caption" className="text-gray-600">
-                        {calculateUtilization(location.used, location.capacity)}% ausgelastet
+                        {calculateUtilization(location.used, location.capacity),}% ausgelastet
                       </Typography>
                     </div>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {location.capacity} Einheiten
+                      {location.capacity,} Einheiten
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -364,20 +329,20 @@ const LagerDashboard: React.FC = () => {
                       label={location.status === 'active' ? 'Aktiv' :
                              location.status === 'maintenance' ? 'Wartung' : 'Inaktiv'}
                       size="small"
-                      color={getLocationStatusColor(location.status) as any}
+                      color={getLocationStatusColor(location.status) as any,}
                     />
                   </TableCell>
                   <TableCell>
                     <Box className="flex gap-1">
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Details
                       </Button>
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Inventur
                       </Button>
@@ -390,16 +355,16 @@ const LagerDashboard: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Actions */}
+      {/* Actions */,}
       <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-        <Button
-          variant="contained"
-          onClick={loadLagerData}
-          disabled={loading}
+        <Button;
+variant="contained"
+          onClick={loadLagerData,}
+          disabled={loading,}
         >
           Daten aktualisieren
         </Button>
-        <Button variant="outlined" startIcon={<SearchIcon />}>
+        <Button variant="outlined" startIcon={<SearchIcon />,}>
           Artikel suchen
         </Button>
         <Button variant="outlined">

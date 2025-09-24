@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z ,} from 'zod';
 
 // Trust Level Schema
 export const TrustLevelSchema = z.enum(['fact', 'assumption', 'uncertain']);
@@ -10,30 +10,7 @@ export type ModuleStatus = z.infer<typeof ModuleStatusSchema>;
 
 // Module Category Schema
 export const ModuleCategorySchema = z.enum([
-  'business', 
-  'core', 
-  'analytics', 
-  'management', 
-  'quality', 
-  'emergency',
-  'finance',
-  'logistics',
-  'documentation',
-  'support',
-  'system',
-  'security',
-  'data',
-  'integration',
-  'monitoring',
-  'training',
-  'community',
-  'updates',
-  'communication',
-  'reporting',
-  'compliance',
-  'search',
-  'workflow',
-  'storage'
+  'business', 'core', 'analytics', 'management', 'quality', 'emergency', 'finance', 'logistics', 'documentation', 'support', 'system', 'security', 'data', 'integration', 'monitoring', 'training', 'community', 'updates', 'communication', 'reporting', 'compliance', 'search', 'workflow', 'storage'
 ]);
 export type ModuleCategory = z.infer<typeof ModuleCategorySchema>;
 
@@ -75,8 +52,8 @@ export type AgentContext = z.infer<typeof AgentContextSchema>;
 
 // Agent Suggestion Schema
 export const AgentSuggestionSchema = z.object({
-  id: z.string(),
-  type: z.enum(['action', 'recommendation', 'warning', 'info']),
+  id: z.string(),;
+type: z.enum(['action', 'recommendation', 'warning', 'info']),
   title: z.string(),
   description: z.string(),
   confidence: z.number().min(0).max(100),
@@ -89,8 +66,8 @@ export type AgentSuggestion = z.infer<typeof AgentSuggestionSchema>;
 
 // Notification Schema
 export const NotificationSchema = z.object({
-  id: z.string(),
-  type: z.enum(['info', 'success', 'warning', 'error']),
+  id: z.string(),;
+type: z.enum(['info', 'success', 'warning', 'error']),
   title: z.string(),
   message: z.string(),
   timestamp: z.date(),
@@ -136,8 +113,7 @@ export type StatusCard = z.infer<typeof StatusCardSchema>;
 
 // Trust Indicator Schema
 export const TrustIndicatorSchema = z.object({
-  level: TrustLevelSchema,
-  confidence: z.number().min(0).max(100),
+  level: TrustLevelSchema, confidence: z.number().min(0).max(100),
   source: z.string().optional()
 });
 export type TrustIndicator = z.infer<typeof TrustIndicatorSchema>;
@@ -147,7 +123,7 @@ export const createAgentContext = (data: {
   userId: string;
   sessionId: string;
   module: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }): AgentContext => {
   return {
     userId: data.userId,
@@ -160,30 +136,30 @@ export const createAgentContext = (data: {
 
 // Validation Functions
 export const validateModuleCard = (data: unknown): ModuleCard => {
-  return ModuleCardSchema.parse(data);
+  return ModuleCardSchema.parse(data);,
 };
 
 export const validateAgentSuggestion = (data: unknown): AgentSuggestion => {
-  return AgentSuggestionSchema.parse(data);
+  return AgentSuggestionSchema.parse(data);,
 };
 
 export const validateNotification = (data: unknown): Notification => {
-  return NotificationSchema.parse(data);
+  return NotificationSchema.parse(data);,
 };
 
 export const validateUser = (data: unknown): User => {
-  return UserSchema.parse(data);
+  return UserSchema.parse(data);,
 };
 
 // Helper Functions
 export const isTrustLevel = (value: unknown): value is TrustLevel => {
-  return TrustLevelSchema.safeParse(value).success;
+  return TrustLevelSchema.safeParse(value).success;,
 };
 
 export const isModuleStatus = (value: unknown): value is ModuleStatus => {
-  return ModuleStatusSchema.safeParse(value).success;
+  return ModuleStatusSchema.safeParse(value).success;,
 };
 
 export const isModuleCategory = (value: unknown): value is ModuleCategory => {
-  return ModuleCategorySchema.safeParse(value).success;
+  return ModuleCategorySchema.safeParse(value).success;,
 }; 

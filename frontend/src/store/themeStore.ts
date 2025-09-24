@@ -1,24 +1,22 @@
-import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { create ,} from 'zustand';
+import { devtools, persist} from 'zustand/middleware';
 
-// Theme Types für VALEO NeuroERP
-type ThemeMode = 'neural' | 'neural-light' | 'neural-dark';
-
+// Theme Types für VALEO NeuroERP;
+type ThemeMode = 'neural' | 'neural-light' | 'neural-dark';;
 interface ThemePreferences {
   mode: ThemeMode;
   language: 'de' | 'en';
   compactMode: boolean;
   highContrast: boolean;
   fontSize: 'small' | 'medium' | 'large';
-}
-
+};
 interface ThemeStore {
-  // State
+  // State,
   themeMode: ThemeMode;
   preferences: ThemePreferences;
   
-  // Actions
-  setThemeMode: (mode: ThemeMode) => void;
+  // Actions,
+  setThemeMode: (mode: _ThemeMode) => void;
   setLanguage: (language: 'de' | 'en') => void;
   toggleCompactMode: () => void;
   toggleHighContrast: () => void;
@@ -26,7 +24,7 @@ interface ThemeStore {
   resetPreferences: () => void;
 }
 
-// Default Theme Preferences
+// Default Theme Preferences;
 const defaultPreferences: ThemePreferences = {
   mode: 'neural',
   language: 'de',
@@ -35,23 +33,18 @@ const defaultPreferences: ThemePreferences = {
   fontSize: 'medium'
 };
 
-export const useThemeStore = create<ThemeStore>()(
-  devtools(
+export const useThemeStore = create<ThemeStore>()(devtools(
     persist(
       (set, get) => ({
-        // Initial State
-        themeMode: 'neural',
-        preferences: defaultPreferences,
-        
-        // Actions
-        setThemeMode: (mode) => {
+        // Initial State, themeMode: 'neural', preferences: defaultPreferences, // Actions
+        setThemeMode: (_mode) => {
           set({ themeMode: mode });
           set((state) => ({
             preferences: { ...state.preferences, mode }
           }));
         },
         
-        setLanguage: (language) => {
+        setLanguage: (_language) => {
           set((state) => ({
             preferences: { ...state.preferences, language }
           }));
@@ -60,8 +53,7 @@ export const useThemeStore = create<ThemeStore>()(
         toggleCompactMode: () => {
           set((state) => ({
             preferences: { 
-              ...state.preferences, 
-              compactMode: !state.preferences.compactMode 
+              ...state.preferences, compactMode: !state.preferences.compactMode 
             }
           }));
         },
@@ -69,13 +61,12 @@ export const useThemeStore = create<ThemeStore>()(
         toggleHighContrast: () => {
           set((state) => ({
             preferences: { 
-              ...state.preferences, 
-              highContrast: !state.preferences.highContrast 
+              ...state.preferences, highContrast: !state.preferences.highContrast 
             }
           }));
         },
         
-        setFontSize: (fontSize) => {
+        setFontSize: (_fontSize) => {
           set((state) => ({
             preferences: { ...state.preferences, fontSize }
           }));
@@ -83,16 +74,14 @@ export const useThemeStore = create<ThemeStore>()(
         
         resetPreferences: () => {
           set({ 
-            themeMode: 'neural',
-            preferences: defaultPreferences 
+            themeMode: 'neural', preferences: defaultPreferences 
           });
         }
       }),
       {
         name: 'theme-store',
-        partialize: (state) => ({
-          themeMode: state.themeMode,
-          preferences: state.preferences
+        partialize: (_state) => ({
+          themeMode: state.themeMode, preferences: state.preferences
         })
       }
     ),

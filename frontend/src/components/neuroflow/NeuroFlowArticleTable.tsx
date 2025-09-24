@@ -4,83 +4,25 @@
  * Fehlerfreier TypeScript-Code mit vollständiger Funktionalität
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo ,} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  IconButton,
-  Tooltip,
-  Chip,
-  TextField,
-  InputAdornment,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TablePagination,
-  Paper,
-  Stack,
-  Menu,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-  Alert,
-  Skeleton,
-  CircularProgress,
-  Badge,
-  Avatar,
-  Grid,
-} from '@mui/material';
+  Box, Card, CardContent, Typography, Button, IconButton, Tooltip, Chip, TextField, InputAdornment, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, Paper, Stack, Menu, MenuItem, FormControl, InputLabel, Select, Alert, Skeleton, CircularProgress, Badge, Avatar, Grid} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  Search as SearchIcon,
-  FilterList as FilterIcon,
-  Refresh as RefreshIcon,
-  Download as DownloadIcon,
-  Inventory as InventoryIcon,
-  Category as CategoryIcon,
-  Euro as EuroIcon,
-  Storage as StorageIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Error as ErrorIcon,
-  Info as InfoIcon,
-} from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, Search as SearchIcon, FilterList as FilterIcon, Refresh as RefreshIcon, Download as DownloadIcon, Inventory as InventoryIcon, Category as CategoryIcon, Euro as EuroIcon, Storage as StorageIcon, Warning as WarningIcon, CheckCircle as CheckCircleIcon, Error as ErrorIcon, Info as InfoIcon} from '@mui/icons-material';
+import { styled ,} from '@mui/material/styles';
 
-// Styled Components
-const NeuroFlowCard = styled(Card)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[1],
-  border: `1px solid ${theme.palette.divider}`,
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
-    boxShadow: theme.shadows[4],
-  },
-}));
-
-const NeuroFlowButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 1.5,
-  textTransform: 'none',
-  fontWeight: 600,
-  padding: '0.75rem 1.5rem',
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
+// Styled Components;
+const NeuroFlowCard = styled(Card)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 2, boxShadow: theme.shadows[1], border: `1px solid ${theme.palette.divider}`, transition: 'all 0.3s ease-in-out', '&:hover': {
+    boxShadow: theme.shadows[4], }, }));;
+const NeuroFlowButton = styled(Button)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 1.5, textTransform: 'none', fontWeight: 600, padding: '0.75rem 1.5rem', transition: 'all 0.3s ease-in-out', '&:hover': {
     transform: 'translateY(-1px)',
     boxShadow: theme.shadows[3],
   },
 }));
 
-// TypeScript Interfaces
+// TypeScript Interfaces;
 interface Article {
   id: string;
   article_number: string;
@@ -103,8 +45,7 @@ interface Article {
   supplier_name?: string;
   created_at: string;
   updated_at: string;
-}
-
+};
 interface NeuroFlowArticleTableProps {
   articles?: Article[];
   loading?: boolean;
@@ -116,7 +57,7 @@ interface NeuroFlowArticleTableProps {
   onExport?: () => void;
 }
 
-// Mock Data
+// Mock Data;
 const mockArticles: Article[] = [
   {
     id: '1',
@@ -231,47 +172,38 @@ const mockArticles: Article[] = [
 
 // NeuroFlow Article Table Component
 export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
-  articles = mockArticles,
-  loading = false,
-  onAdd,
-  onEdit,
-  onDelete,
-  onView,
-  onRefresh,
-  onExport,
-}) => {
-  // State Management
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
-  const [sortBy, setSortBy] = useState<keyof Article>('name');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  articles = mockArticles, loading = false, onAdd, onEdit, onDelete, onView, onRefresh, onExport, }) => {
+  // State Management,;
+const [page, setPage] = useState(0);,;
+const [rowsPerPage, setRowsPerPage] = useState(10);,;
+const [searchTerm, setSearchTerm] = useState('');,;
+const [categoryFilter, setCategoryFilter] = useState<string>('');,;
+const [statusFilter, setStatusFilter] = useState<string>('');,;
+const [sortBy, setSortBy] = useState<keyof Article>('name');,;
+const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');,
 
-  // Filter and Sort Logic
-  const filteredAndSortedArticles = useMemo(() => {
-    const filtered = articles.filter((article) => {
-      const matchesSearch = 
-        article.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.article_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.brand?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.description?.toLowerCase().includes(searchTerm.toLowerCase());
+  // Filter and Sort Logic,;
+const filteredAndSortedArticles = useMemo(() => {;
+const filtered = articles.filter((article) => {;
+const matchesSearch = ,
+        article.name.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+        article.article_number.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+        article.brand?.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+        article.description?.toLowerCase().includes(searchTerm.toLowerCase());,;
+const matchesCategory = !categoryFilter || article.category === categoryFilter;,;
+const matchesStatus = !statusFilter || article.status === statusFilter;,
       
-      const matchesCategory = !categoryFilter || article.category === categoryFilter;
-      const matchesStatus = !statusFilter || article.status === statusFilter;
-      
-      return matchesSearch && matchesCategory && matchesStatus;
+      return matchesSearch && matchesCategory && matchesStatus;,
     });
 
     // Sorting
-    filtered.sort((a, b) => {
-      const aValue = a[sortBy];
-      const bValue = b[sortBy];
+    filtered.sort((a, b) => {;
+const aValue = a[sortBy];,;
+const bValue = b[sortBy];,
       
       if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sortOrder === 'asc' 
-          ? aValue.localeCompare(bValue)
+        return sortOrder === 'asc' ,
+          ? aValue.localeCompare(bValue),
           : bValue.localeCompare(aValue);
       }
       
@@ -285,14 +217,12 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
     return filtered;
   }, [articles, searchTerm, categoryFilter, statusFilter, sortBy, sortOrder]);
 
-  // Pagination
-  const paginatedArticles = filteredAndSortedArticles.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+  // Pagination;
+const paginatedArticles = filteredAndSortedArticles.slice(
+    page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  // Utility Functions
-  const getStatusColor = (status: Article['status']) => {
+  // Utility Functions;
+const getStatusColor = (status: Article['status']) => {
     switch (status) {
       case 'active': return 'success';
       case 'inactive': return 'default';
@@ -300,9 +230,8 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
       case 'new': return 'primary';
       default: return 'default';
     }
-  };
-
-  const getStatusLabel = (status: Article['status']) => {
+  };;
+const getStatusLabel = (status: Article['status']) => {
     switch (status) {
       case 'active': return 'Aktiv';
       case 'inactive': return 'Inaktiv';
@@ -310,61 +239,52 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
       case 'new': return 'Neu';
       default: return status;
     }
-  };
-
-  const getStockStatus = (current: number, min: number) => {
+  };;
+const getStockStatus = (current: number, min: number) => {
     if (current <= 0) return { color: 'error', icon: <ErrorIcon />, label: 'Nicht verfügbar' };
     if (current <= min) return { color: 'warning', icon: <WarningIcon />, label: 'Niedrig' };
     return { color: 'success', icon: <CheckCircleIcon />, label: 'Verfügbar' };
-  };
-
-  const formatCurrency = (amount: number) => {
+  };;
+const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount);
+      style: 'currency', currency: 'EUR', }).format(amount);
+  };;
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('de-DE');,
+  };;
+const getCategories = () => {;
+const categories = Array.from(new Set(articles.map(a => a.category)));,
+    return categories.sort();,
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('de-DE');
-  };
-
-  const getCategories = () => {
-    const categories = Array.from(new Set(articles.map(a => a.category)));
-    return categories.sort();
-  };
-
-  // Event Handlers
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleSort = (property: keyof Article) => {
-    const isAsc = sortBy === property && sortOrder === 'asc';
+  // Event Handlers;
+const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);,
+  };;
+const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));,
+    setPage(0);,
+  };;
+const handleSort = (property: keyof Article) => {;
+const isAsc = sortBy === property && sortOrder === 'asc';,
     setSortOrder(isAsc ? 'desc' : 'asc');
-    setSortBy(property);
-  };
-
-  const handleDelete = (article: Article) => {
-    if (window.confirm(`Artikel "${article.name}" wirklich löschen?`)) {
-      onDelete?.(article);
+    setSortBy(property);,
+  };;
+const handleDelete = (article: Article) => {
+    if (window.confirm(`Artikel "${article.name, }" wirklich löschen?`)) {
+      onDelete?.(article);,
     }
   };
 
   return (
     <NeuroFlowCard>
       <CardContent>
-        {/* Header */}
-        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-          <Box display="flex" alignItems="center" gap={2}>
+        {/* Header */, }
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3, }>
+          <Box display="flex" alignItems="center" gap={2, }>
             <InventoryIcon color="primary" sx={{ fontSize: 32 }} />
             <Box>
-              <Typography variant="h5" fontWeight={600} color="text.primary">
+              <Typography variant="h5" fontWeight={600, } color="text.primary">
                 Artikelverwaltung
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -373,68 +293,63 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
             </Box>
           </Box>
           
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1, }>
             <Tooltip title="Aktualisieren">
-              <IconButton onClick={onRefresh} color="primary" disabled={loading}>
+              <IconButton onClick={onRefresh, } color="primary" disabled={loading, }>
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Exportieren">
-              <IconButton onClick={onExport} color="primary">
+              <IconButton onClick={onExport, } color="primary">
                 <DownloadIcon />
               </IconButton>
             </Tooltip>
-            <NeuroFlowButton
-              variant="contained"
-              onClick={onAdd}
-              startIcon={<AddIcon />}
+            <NeuroFlowButton;
+variant="contained"
+              onClick={onAdd, }
+              startIcon={<AddIcon />, }
             >
               Neuer Artikel
             </NeuroFlowButton>
           </Stack>
         </Box>
 
-        {/* Filters */}
-        <Box mb={3}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={4}>
+        {/* Filters */, }
+        <Box mb={3, }>
+          <Grid container spacing={2, } alignItems="center">
+            <Grid item xs={12, } md={4, }>
               <TextField
                 fullWidth
                 placeholder="Artikel suchen..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm, }
+                onChange={(e) => setSearchTerm(e.target.value),}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
+                    <InputAdornment position="start">, <SearchIcon />, </InputAdornment>),
                 }}
               />
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12,} md={3,}>
               <FormControl fullWidth>
                 <InputLabel>Kategorie</InputLabel>
                 <Select
-                  value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  value={categoryFilter,}
+                  onChange={(e) => setCategoryFilter(e.target.value),}
                   label="Kategorie"
                 >
                   <MenuItem value="">Alle Kategorien</MenuItem>
-                  {getCategories().map((category) => (
-                    <MenuItem key={category} value={category}>
-                      {category}
-                    </MenuItem>
-                  ))}
+                  {getCategories().map((category) => (<MenuItem key={category, } value={category, }>
+                      {category, }
+                    </MenuItem>))}
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12,} md={3,}>
               <FormControl fullWidth>
                 <InputLabel>Status</InputLabel>
                 <Select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
+                  value={statusFilter,}
+                  onChange={(e) => setStatusFilter(e.target.value),}
                   label="Status"
                 >
                   <MenuItem value="">Alle Status</MenuItem>
@@ -445,25 +360,25 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={2}>
-              <Box display="flex" gap={1}>
+            <Grid item xs={12,} md={2,}>
+              <Box display="flex" gap={1,}>
                 <Chip 
-                  label={`${filteredAndSortedArticles.length} Artikel`} 
-                  color="primary" 
-                  variant="outlined"
+                  label={`${filteredAndSortedArticles.length,} Artikel`} 
+                  color="primary" ;
+variant="outlined"
                 />
               </Box>
             </Grid>
           </Grid>
         </Box>
 
-        {/* Table */}
-        <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
+        {/* Table */,}
+        <TableContainer component={Paper,} sx={{ borderRadius: 2 }}>
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: 'grey.50' }}>
                 <TableCell>
-                  <Box display="flex" alignItems="center" gap={1}>
+                  <Box display="flex" alignItems="center" gap={1,}>
                     <InventoryIcon sx={{ fontSize: 20 }} />
                     Artikel
                   </Box>
@@ -471,7 +386,7 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
                 <TableCell>Kategorie</TableCell>
                 <TableCell>Preise</TableCell>
                 <TableCell>
-                  <Box display="flex" alignItems="center" gap={1}>
+                  <Box display="flex" alignItems="center" gap={1,}>
                     <StorageIcon sx={{ fontSize: 20 }} />
                     Bestand
                   </Box>
@@ -483,130 +398,114 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading ? (
-                // Loading Skeletons
-                Array.from({ length: rowsPerPage }).map((_, index) => (
-                  <TableRow key={`skeleton-${index}`}>
+              {loading ? (// Loading Skeletons, Array.from({ length: rowsPerPage }).map((_, index) => (
+                  <TableRow key={`skeleton-${index, }`}>
                     <TableCell>
-                      <Box display="flex" alignItems="center" gap={2}>
-                        <Skeleton variant="circular" width={40} height={40} />
+                      <Box display="flex" alignItems="center" gap={2, }>
+                        <Skeleton variant="circular" width={40, } height={40, } />
                         <Box>
-                          <Skeleton variant="text" width={120} height={20} />
-                          <Skeleton variant="text" width={80} height={16} />
+                          <Skeleton variant="text" width={120, } height={20, } />
+                          <Skeleton variant="text" width={80, } height={16, } />
                         </Box>
                       </Box>
                     </TableCell>
-                    <TableCell><Skeleton variant="text" width={80} /></TableCell>
-                    <TableCell><Skeleton variant="text" width={60} /></TableCell>
-                    <TableCell><Skeleton variant="text" width={40} /></TableCell>
-                    <TableCell><Skeleton variant="text" width={60} /></TableCell>
-                    <TableCell><Skeleton variant="text" width={80} /></TableCell>
-                    <TableCell><Skeleton variant="text" width={60} /></TableCell>
+                    <TableCell><Skeleton variant="text" width={80, } /></TableCell>
+                    <TableCell><Skeleton variant="text" width={60, } /></TableCell>
+                    <TableCell><Skeleton variant="text" width={40, } /></TableCell>
+                    <TableCell><Skeleton variant="text" width={60, } /></TableCell>
+                    <TableCell><Skeleton variant="text" width={80, } /></TableCell>
+                    <TableCell><Skeleton variant="text" width={60, } /></TableCell>
                     <TableCell align="right">
-                      <Skeleton variant="rectangular" width={80} height={32} />
+                      <Skeleton variant="rectangular" width={80, } height={32, } />
                     </TableCell>
-                  </TableRow>
-                ))
+                  </TableRow>))
               ) : paginatedArticles.length === 0 ? (
                 // Empty State
                 <TableRow>
-                  <TableCell colSpan={8}>
-                    <Box textAlign="center" py={4}>
+                  <TableCell colSpan={8, }>
+                    <Box textAlign="center" py={4, }>
                       <InfoIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
-                      <Typography variant="h6" color="text.secondary" mb={1}>
+                      <Typography variant="h6" color="text.secondary" mb={1, }>
                         Keine Artikel gefunden
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {searchTerm || categoryFilter || statusFilter 
-                          ? 'Versuchen Sie andere Suchkriterien'
-                          : 'Erstellen Sie Ihren ersten Artikel'
+                        {searchTerm || categoryFilter || statusFilter, ? 'Versuchen Sie andere Suchkriterien', : 'Erstellen Sie Ihren ersten Artikel'
                         }
                       </Typography>
                     </Box>
                   </TableCell>
-                </TableRow>
-              ) : (
+                </TableRow>) : (
                 // Article Rows
-                paginatedArticles.map((article) => {
-                  const stockStatus = getStockStatus(article.current_stock, article.min_stock);
+                paginatedArticles.map((article) => {;
+const stockStatus = getStockStatus(article.current_stock, article.min_stock);,
                   
-                  return (
-                    <TableRow key={article.id} hover>
+                  return (<TableRow key={article.id, } hover>
                       <TableCell>
-                        <Box display="flex" alignItems="center" gap={2}>
+                        <Box display="flex" alignItems="center" gap={2, }>
                           <Avatar sx={{ bgcolor: 'primary.main' }}>
                             <InventoryIcon />
                           </Avatar>
                           <Box>
-                            <Typography variant="subtitle2" fontWeight={600}>
-                              {article.name}
+                            <Typography variant="subtitle2" fontWeight={600, }>
+                              {article.name, }
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
-                              {article.article_number}
+                              {article.article_number, }
                             </Typography>
-                            {article.brand && (
-                              <Typography variant="caption" color="text.secondary" display="block">
-                                {article.brand}
-                              </Typography>
-                            )}
+                            {article.brand && (, <Typography variant="caption" color="text.secondary" display="block">, {article.brand, }
+                              </Typography>)}
                           </Box>
                         </Box>
                       </TableCell>
                       
                       <TableCell>
                         <Chip 
-                          label={article.category} 
-                          size="small" 
-                          variant="outlined"
-                          icon={<CategoryIcon />}
+                          label={article.category,} 
+                          size="small" ;
+variant="outlined"
+                          icon={<CategoryIcon />,}
                         />
                       </TableCell>
                       
                       <TableCell>
                         <Box>
-                          <Typography variant="body2" fontWeight={600}>
-                            {formatCurrency(article.selling_price)}
+                          <Typography variant="body2" fontWeight={600,}>
+                            {formatCurrency(article.selling_price),}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
-                            EK: {formatCurrency(article.purchase_price)}
+                            EK: {formatCurrency(article.purchase_price),}
                           </Typography>
                         </Box>
                       </TableCell>
                       
                       <TableCell>
-                        <Box display="flex" alignItems="center" gap={1}>
-                          <Tooltip title={stockStatus.label}>
-                            <IconButton size="small" color={stockStatus.color as any}>
-                              {stockStatus.icon}
+                        <Box display="flex" alignItems="center" gap={1,}>
+                          <Tooltip title={stockStatus.label,}>
+                            <IconButton size="small" color={stockStatus.color as any,}>
+                              {stockStatus.icon,}
                             </IconButton>
                           </Tooltip>
                           <Box>
-                            <Typography variant="body2" fontWeight={600}>
-                              {article.current_stock} {article.unit}
+                            <Typography variant="body2" fontWeight={600,}>
+                              {article.current_stock,} {article.unit,}
                             </Typography>
-                            {article.current_stock <= article.min_stock && (
-                              <Typography variant="caption" color="warning.main">
-                                Min: {article.min_stock}
-                              </Typography>
-                            )}
+                            {article.current_stock <= article.min_stock && (<Typography variant="caption" color="warning.main">, Min: {article.min_stock}
+                              </Typography>)}
                           </Box>
                         </Box>
                       </TableCell>
                       
                       <TableCell>
                         <Chip 
-                          label={getStatusLabel(article.status)}
-                          color={getStatusColor(article.status) as any}
+                          label={getStatusLabel(article.status),}
+                          color={getStatusColor(article.status) as any,}
                           size="small"
                         />
                       </TableCell>
                       
                       <TableCell>
-                        {article.supplier_name ? (
-                          <Typography variant="body2">
-                            {article.supplier_name}
-                          </Typography>
-                        ) : (
+                        {article.supplier_name ? (<Typography variant="body2">, {article.supplier_name, }
+                          </Typography>) : (
                           <Typography variant="body2" color="text.secondary">
                             -
                           </Typography>
@@ -614,25 +513,25 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
                       </TableCell>
                       
                       <TableCell>
-                        <Stack direction="row" spacing={0.5}>
-                          {article.is_service && (
-                            <Chip label="Service" size="small" color="info" />
-                          )}
-                          {article.is_digital && (
-                            <Chip label="Digital" size="small" color="secondary" />
-                          )}
-                          {article.is_hazardous && (
-                            <Chip label="Gefahrgut" size="small" color="error" />
-                          )}
+                        <Stack direction="row" spacing={0.5,}>
+                          {article.is_service && (,
+                            <Chip label="Service" size="small" color="info" />,
+                          ),}
+                          {article.is_digital && (,
+                            <Chip label="Digital" size="small" color="secondary" />,
+                          ),}
+                          {article.is_hazardous && (,
+                            <Chip label="Gefahrgut" size="small" color="error" />,
+                          ),}
                         </Stack>
                       </TableCell>
                       
                       <TableCell align="right">
-                        <Stack direction="row" spacing={0.5}>
+                        <Stack direction="row" spacing={0.5,}>
                           <Tooltip title="Anzeigen">
                             <IconButton 
                               size="small" 
-                              onClick={() => onView?.(article)}
+                              onClick={() => onView?.(article),}
                               color="primary"
                             >
                               <ViewIcon />
@@ -641,7 +540,7 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
                           <Tooltip title="Bearbeiten">
                             <IconButton 
                               size="small" 
-                              onClick={() => onEdit?.(article)}
+                              onClick={() => onEdit?.(article),}
                               color="primary"
                             >
                               <EditIcon />
@@ -650,7 +549,7 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
                           <Tooltip title="Löschen">
                             <IconButton 
                               size="small" 
-                              onClick={() => handleDelete(article)}
+                              onClick={() => handleDelete(article),}
                               color="error"
                             >
                               <DeleteIcon />
@@ -666,18 +565,18 @@ export const NeuroFlowArticleTable: React.FC<NeuroFlowArticleTableProps> = ({
           </Table>
         </TableContainer>
 
-        {/* Pagination */}
+        {/* Pagination */,}
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50]}
+          rowsPerPageOptions={[5, 10, 25, 50],}
           component="div"
-          count={filteredAndSortedArticles.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          count={filteredAndSortedArticles.length,}
+          rowsPerPage={rowsPerPage,}
+          page={page,}
+          onPageChange={handleChangePage,}
+          onRowsPerPageChange={handleChangeRowsPerPage,}
           labelRowsPerPage="Zeilen pro Seite:"
-          labelDisplayedRows={({ from, to, count }) => 
-            `${from}-${to} von ${count !== -1 ? count : `mehr als ${to}`}`
+          labelDisplayedRows={({ from, to, count, }) => 
+            `${from,}-${to,} von ${count !== -1 ? count : `mehr als ${to}`}`
           }
         />
       </CardContent>

@@ -1,23 +1,10 @@
 import React from 'react';
 import { 
-  Box, 
-  Typography, 
-  Card, 
-  Button, 
-  TextField,
-  Chip,
-  Alert,
-  CircularProgress
-} from '@mui/material';
+  Box, Typography, Card, Button, TextField, Chip, Alert, CircularProgress} from '@mui/material';
 import { 
-  Palette as PaletteIcon,
-  Code as CodeIcon,
-  ViewModule as ViewModuleIcon
-} from '@mui/icons-material';
-
+  Palette as PaletteIcon, Code as CodeIcon, ViewModule as ViewModuleIcon} from '@mui/icons-material';;
 const ComponentLibrary: React.FC = () => {
-  return (
-    <Box sx={{ p: 3 }}>
+  return (<Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom className="flex items-center gap-2">
         <PaletteIcon className="text-purple-600" />
         VALEO Component Library
@@ -26,7 +13,7 @@ const ComponentLibrary: React.FC = () => {
         Übersicht aller verfügbaren UI-Komponenten und Design-System
       </Typography>
 
-      {/* Buttons Section */}
+      {/* Buttons Section */, }
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom className="flex items-center gap-2">
           <CodeIcon className="text-blue-600" />
@@ -51,7 +38,7 @@ const ComponentLibrary: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Cards Section */}
+      {/* Cards Section */, }
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom className="flex items-center gap-2">
           <ViewModuleIcon className="text-green-600" />
@@ -81,7 +68,7 @@ const ComponentLibrary: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Form Elements */}
+      {/* Form Elements */, }
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Form Elements
@@ -114,7 +101,7 @@ const ComponentLibrary: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Chips */}
+      {/* Chips */, }
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Chips
@@ -130,7 +117,7 @@ const ComponentLibrary: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Alerts */}
+      {/* Alerts */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Alerts
@@ -151,28 +138,28 @@ const ComponentLibrary: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Loading States */}
+      {/* Loading States */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Loading States
         </Typography>
         <Box className="flex items-center gap-4">
           <Box className="flex items-center gap-2">
-            <CircularProgress size={20} />
+            <CircularProgress size={20,} />
             <Typography>Kleiner Spinner</Typography>
           </Box>
           <Box className="flex items-center gap-2">
-            <CircularProgress size={40} />
+            <CircularProgress size={40,} />
             <Typography>Mittlerer Spinner</Typography>
           </Box>
           <Box className="flex items-center gap-2">
-            <CircularProgress size={60} />
+            <CircularProgress size={60,} />
             <Typography>Großer Spinner</Typography>
           </Box>
         </Box>
       </Card>
 
-      {/* Custom VALEO Components */}
+      {/* Custom VALEO Components */,}
       <Card sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
           VALEO Custom Components

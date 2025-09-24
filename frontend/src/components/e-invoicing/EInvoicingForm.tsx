@@ -1,25 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Box,
-  Alert,
-  Divider
-} from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+  Card, CardContent, Typography, TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, Box, Alert, Divider} from '@mui/material';
+import { useForm, Controller} from 'react-hook-form';
+import { yupResolver ,} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { formatCurrency } from '../../utils/formatters';
-import { EInvoicingFormData, InvoiceItem } from '../../types/invoices';
-
+import { formatCurrency ,} from '../../utils/formatters';
+import { EInvoicingFormData, InvoiceItem} from '../../types/invoices';;
 const schema = yup.object({
   customerId: yup.string().required('Kunde ist erforderlich'),
   customerName: yup.string().required('Kundenname ist erforderlich'),
@@ -30,11 +16,10 @@ const schema = yup.object({
   currency: yup.string().required('Währung ist erforderlich'),
   description: yup.string().required('Beschreibung ist erforderlich'),
   dueDate: yup.string().required('Fälligkeitsdatum ist erforderlich')
-});
-
+});;
 interface EInvoicingFormProps {
   initialData?: Partial<EInvoicingFormData>;
-  onSubmit: (data: EInvoicingFormData) => Promise<void>;
+  onSubmit: (data: _EInvoicingFormData) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
 }
@@ -44,15 +29,10 @@ interface EInvoicingFormProps {
  * Erstellt und bearbeitet elektronische Rechnungen
  */
 export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
-  initialData,
-  onSubmit,
-  onCancel,
-  isLoading = false
-}) => {
-  const [items, setItems] = useState<InvoiceItem[]>(initialData?.items || []);
-  const [error, setError] = useState<string | null>(null);
-
-  const {
+  initialData, onSubmit, onCancel, isLoading = false, }) => {;
+const [items, setItems] = useState<InvoiceItem[]>(initialData?.items || []);,;
+const [error, setError] = useState<string | null>(null);,;
+const {
     control,
     handleSubmit,
     formState: { errors },
@@ -72,31 +52,26 @@ export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
       dueDate: initialData?.dueDate || new Date().toISOString().split('T')[0],
       // items: initialData?.items || []
     }
-  });
-
-  const watchedAmount = watch('amount');
-  const watchedTaxAmount = watch('taxAmount');
+  });;
+const watchedAmount = watch('amount');;
+const watchedTaxAmount = watch('taxAmount');
 
   // Berechne Gesamtbetrag automatisch
-  React.useEffect(() => {
-    const total = watchedAmount + watchedTaxAmount;
-    setValue('totalAmount', total);
-  }, [watchedAmount, watchedTaxAmount, setValue]);
-
-  const handleFormSubmit = async (data: any) => {
+  React.useEffect(() => {;
+const total = watchedAmount + watchedTaxAmount;,
+    setValue('totalAmount', total);,
+  }, [watchedAmount, watchedTaxAmount, setValue]);;
+const handleFormSubmit = async (data: unknown) => {
     try {
-      setError(null);
+      setError(null);,
       await onSubmit({
-        ...data,
-        items
-      });
+        ...data, items, });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Fehler beim Speichern der Rechnung');
     }
-  };
-
-  const addItem = () => {
-    const newItem: InvoiceItem = {
+  };;
+const addItem = () => {;
+const newItem: InvoiceItem = {
       id: Date.now().toString(),
       name: '',
       quantity: 1,
@@ -106,23 +81,21 @@ export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
       taxAmount: 0
     };
     setItems([...items, newItem]);
-  };
-
-  const removeItem = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
-  const updateItem = (id: string, field: keyof InvoiceItem, value: any) => {
+  };;
+const removeItem = (id: string) => {
+    setItems(items.filter(item => item.id !== id));,
+  };;
+const updateItem = (id: string, field: keyof InvoiceItem, value: unknown) => {
     setItems(items.map(item => {
-      if (item.id === id) {
-        const updatedItem = { ...item, [field]: value };
+      if (item.id === id) {;
+const updatedItem = { ...item, [field]: value };
         // Berechne abgeleitete Werte
         if (field === 'quantity' || field === 'unitPrice') {
-          updatedItem.totalPrice = updatedItem.quantity * updatedItem.unitPrice;
-          updatedItem.taxAmount = updatedItem.totalPrice * (updatedItem.taxRate / 100);
+          updatedItem.totalPrice = updatedItem.quantity * updatedItem.unitPrice;,
+          updatedItem.taxAmount = updatedItem.totalPrice * (updatedItem.taxRate / 100);,
         }
         if (field === 'taxRate') {
-          updatedItem.taxAmount = updatedItem.totalPrice * (value / 100);
+          updatedItem.taxAmount = updatedItem.totalPrice * (value / 100);,
         }
         return updatedItem;
       }
@@ -137,48 +110,43 @@ export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
           {initialData ? 'Rechnung bearbeiten' : 'Neue Rechnung erstellen'}
         </Typography>
 
-        {error && (
-          <Alert severity="error" className="mb-4">
-            {error}
-          </Alert>
-        )}
+        {error && (, <Alert severity="error" className="mb-4">, {error, }
+          </Alert>)}
 
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-          {/* Kundeninformationen */}
+        <form onSubmit={handleSubmit(handleFormSubmit),} className="space-y-6">
+          {/* Kundeninformationen */,}
           <Box>
             <Typography variant="h6" className="mb-3 text-gray-700">
               Kundeninformationen
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={3,}>
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="customerName"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
+                      {...field, }
                       label="Kundenname"
                       fullWidth
-                      error={!!errors.customerName}
-                      helperText={errors.customerName?.message}
-                    />
-                  )}
+                      error={!!errors.customerName, }
+                      helperText={errors.customerName?.message, }
+                    />)}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="customerEmail"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="E-Mail"
-                      type="email"
+                      {...field, }
+                      label="E-Mail";
+type="email"
                       fullWidth
-                      error={!!errors.customerEmail}
-                      helperText={errors.customerEmail?.message}
-                    />
-                  )}
+                      error={!!errors.customerEmail, }
+                      helperText={errors.customerEmail?.message, }
+                    />)}
                 />
               </Grid>
             </Grid>
@@ -186,44 +154,42 @@ export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
 
           <Divider />
 
-          {/* Rechnungsdetails */}
+          {/* Rechnungsdetails */,}
           <Box>
             <Typography variant="h6" className="mb-3 text-gray-700">
               Rechnungsdetails
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={3,}>
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="description"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
+                      {...field, }
                       label="Beschreibung"
                       multiline
-                      rows={3}
+                      rows={3, }
                       fullWidth
-                      error={!!errors.description}
-                      helperText={errors.description?.message}
-                    />
-                  )}
+                      error={!!errors.description, }
+                      helperText={errors.description?.message, }
+                    />)}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="dueDate"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Fälligkeitsdatum"
-                      type="date"
+                      {...field, }
+                      label="Fälligkeitsdatum";
+type="date"
                       fullWidth
                       InputLabelProps={{ shrink: true }}
-                      error={!!errors.dueDate}
-                      helperText={errors.dueDate?.message}
-                    />
-                  )}
+                      error={!!errors.dueDate, }
+                      helperText={errors.dueDate?.message, }
+                    />)}
                 />
               </Grid>
             </Grid>
@@ -231,77 +197,76 @@ export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
 
           <Divider />
 
-          {/* Rechnungspositionen */}
+          {/* Rechnungspositionen */,}
           <Box>
             <div className="flex justify-between items-center mb-3">
               <Typography variant="h6" className="text-gray-700">
                 Rechnungspositionen
               </Typography>
-              <Button
-                type="button"
-                variant="outlined"
-                onClick={addItem}
-                className="text-blue-600 border-blue-600 hover:bg-blue-50"
+              <Button;
+type="button";
+variant="outlined"
+                onClick={addItem,};
+className="text-blue-600 border-blue-600 hover:bg-blue-50"
               >
                 Position hinzufügen
               </Button>
             </div>
 
-            {items.map((item, index) => (
-              <Card key={item.id} className="mb-3 p-4 border border-gray-200">
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={12} md={4}>
+            {items.map((item, index) => (<Card key={item.id, } className="mb-3 p-4 border border-gray-200">
+                <Grid container spacing={2, } alignItems="center">
+                  <Grid item xs={12, } md={4, }>
                     <TextField
                       label="Bezeichnung"
-                      value={item.name}
-                      onChange={(e) => updateItem(item.id, 'name', e.target.value)}
+                      value={item.name, }
+                      onChange={(e) => updateItem(item.id, 'name', e.target.value),}
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} md={2}>
+                  <Grid item xs={6,} md={2,}>
                     <TextField
-                      label="Menge"
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => updateItem(item.id, 'quantity', Number(e.target.value))}
+                      label="Menge";
+type="number"
+                      value={item.quantity,}
+                      onChange={(e) => updateItem(item.id, 'quantity', Number(e.target.value)),}
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} md={2}>
+                  <Grid item xs={6,} md={2,}>
                     <TextField
-                      label="Einzelpreis"
-                      type="number"
-                      value={item.unitPrice}
-                      onChange={(e) => updateItem(item.id, 'unitPrice', Number(e.target.value))}
+                      label="Einzelpreis";
+type="number"
+                      value={item.unitPrice,}
+                      onChange={(e) => updateItem(item.id, 'unitPrice', Number(e.target.value)),}
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} md={2}>
+                  <Grid item xs={6,} md={2,}>
                     <TextField
-                      label="Steuersatz (%)"
-                      type="number"
-                      value={item.taxRate}
-                      onChange={(e) => updateItem(item.id, 'taxRate', Number(e.target.value))}
+                      label="Steuersatz (%)";
+type="number"
+                      value={item.taxRate,}
+                      onChange={(e) => updateItem(item.id, 'taxRate', Number(e.target.value)),}
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} md={2}>
+                  <Grid item xs={6,} md={2,}>
                     <div className="text-right">
                       <Typography variant="body2" className="text-gray-600">
-                        Gesamt: {formatCurrency(item.totalPrice)}
+                        Gesamt: {formatCurrency(item.totalPrice),}
                       </Typography>
                       <Typography variant="body2" className="text-gray-500">
-                        Steuer: {formatCurrency(item.taxAmount)}
+                        Steuer: {formatCurrency(item.taxAmount),}
                       </Typography>
                     </div>
                   </Grid>
-                  <Grid item xs={12} md={1}>
-                    <Button
-                      type="button"
-                      variant="outlined"
+                  <Grid item xs={12,} md={1,}>
+                    <Button;
+type="button";
+variant="outlined"
                       color="error"
-                      onClick={() => removeItem(item.id)}
-                      className="w-full"
+                      onClick={() => removeItem(item.id),};
+className="w-full"
                     >
                       Löschen
                     </Button>
@@ -313,81 +278,73 @@ export const EInvoicingForm: React.FC<EInvoicingFormProps> = ({
 
           <Divider />
 
-          {/* Beträge */}
+          {/* Beträge */,}
           <Box>
             <Typography variant="h6" className="mb-3 text-gray-700">
               Beträge
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={4}>
+            <Grid container spacing={3,}>
+              <Grid item xs={12,} md={4,}>
                 <Controller
                   name="amount"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Nettobetrag"
-                      type="number"
+                      {...field, }
+                      label="Nettobetrag";
+type="number"
                       fullWidth
-                      error={!!errors.amount}
-                      helperText={errors.amount?.message}
-                    />
-                  )}
+                      error={!!errors.amount, }
+                      helperText={errors.amount?.message, }
+                    />)}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <Controller
                   name="taxAmount"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Steuerbetrag"
-                      type="number"
+                      {...field, }
+                      label="Steuerbetrag";
+type="number"
                       fullWidth
-                      error={!!errors.taxAmount}
-                      helperText={errors.taxAmount?.message}
-                    />
-                  )}
+                      error={!!errors.taxAmount, }
+                      helperText={errors.taxAmount?.message, }
+                    />)}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <Controller
                   name="totalAmount"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Gesamtbetrag"
-                      type="number"
+                      {...field, }
+                      label="Gesamtbetrag";
+type="number"
                       fullWidth
                       disabled
-                      error={!!errors.totalAmount}
-                      helperText={errors.totalAmount?.message}
-                    />
-                  )}
+                      error={!!errors.totalAmount, }
+                      helperText={errors.totalAmount?.message, }
+                    />)}
                 />
               </Grid>
             </Grid>
           </Box>
 
-          {/* Aktionen */}
+          {/* Aktionen */,}
           <Box className="flex justify-end space-x-3 pt-4">
-            {onCancel && (
-              <Button
-                type="button"
-                variant="outlined"
-                onClick={onCancel}
-                disabled={isLoading}
+            {onCancel && (<Button, type="button", variant="outlined", onClick={onCancel, }
+                disabled={isLoading, }
               >
                 Abbrechen
-              </Button>
-            )}
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isLoading}
-              className="bg-blue-600 hover:bg-blue-700"
+              </Button>)}
+            <Button;
+type="submit";
+variant="contained"
+              disabled={isLoading,};
+className="bg-blue-600 hover:bg-blue-700"
             >
               {isLoading ? 'Speichere...' : (initialData ? 'Aktualisieren' : 'Erstellen')}
             </Button>

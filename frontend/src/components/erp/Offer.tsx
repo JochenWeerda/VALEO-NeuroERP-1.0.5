@@ -24,7 +24,7 @@ export interface OfferData {
 }
 
 export interface OfferProps {
-  onOfferCreate: (offer: OfferData) => void;
-  onOfferUpdate: (id: string, offer: Partial<OfferData>) => void;
-  onOfferDelete: (id: string) => void;
+  onOfferCreate: (offer: _OfferData) => void;
+  onOfferUpdate: (id: _string, offer: Partial<OfferData>) => void;
+  onOfferDelete: (id: _string) => void;
 } 

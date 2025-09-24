@@ -1,32 +1,12 @@
 import React from 'react';
 import { 
-  Card, 
-  CardContent, 
-  Typography, 
-  Button, 
-  Box,
-  Chip,
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Divider
-} from '@mui/material';
+  Card, CardContent, Typography, Button, Box, Chip, Avatar, List, ListItem, ListItemAvatar, ListItemText, Divider} from '@mui/material';
 import { 
-  Add as AddIcon,
-  People as PeopleIcon,
-  PersonAdd as PersonAddIcon,
-  Assignment as AssignmentIcon,
-  TrendingUp as TrendingUpIcon,
-  Email as EmailIcon,
-  Phone as PhoneIcon
-} from '@mui/icons-material';
+  Add as AddIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, Assignment as AssignmentIcon, TrendingUp as TrendingUpIcon, Email as EmailIcon, Phone as PhoneIcon} from '@mui/icons-material';
 
 export const CrmDashboard: React.FC = () => {
-  return (
-    <Box sx={{ p: 3, spacing: 3 }}>
-      {/* Header */}
+  return (<Box sx={{ p: 3, spacing: 3 }}>
+      {/* Header */, }
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box>
           <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
@@ -36,19 +16,18 @@ export const CrmDashboard: React.FC = () => {
             Kundenbeziehungsmanagement
           </Typography>
         </Box>
-        <Button 
-          variant="contained" 
-          startIcon={<AddIcon />}
+        <Button ;
+variant="contained" 
+          startIcon={<AddIcon />, }
           sx={{ 
-            bgcolor: 'primary.main',
-            '&:hover': { bgcolor: 'primary.dark' }
+            bgcolor: 'primary.main', '&:hover': { bgcolor: 'primary.dark' }
           }}
         >
           Neuer Kontakt
         </Button>
       </Box>
 
-      {/* Key Metrics */}
+      {/* Key Metrics */, }
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 3, mb: 3 }}>
         <Card sx={{ height: '100%' }}>
           <CardContent>
@@ -69,7 +48,7 @@ export const CrmDashboard: React.FC = () => {
               label="+12% diese Woche" 
               color="success" 
               size="small" 
-              icon={<TrendingUpIcon />}
+              icon={<TrendingUpIcon />,}
             />
           </CardContent>
         </Card>
@@ -121,7 +100,7 @@ export const CrmDashboard: React.FC = () => {
         </Card>
       </Box>
 
-      {/* Recent Activities */}
+      {/* Recent Activities */,}
       <Card>
         <CardContent>
           <Typography variant="h6" component="h3" sx={{ mb: 2, fontWeight: 'semibold' }}>

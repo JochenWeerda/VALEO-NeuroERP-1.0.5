@@ -13,98 +13,98 @@
 export const UI_DECISION_MATRIX = {
   // MATERIAL-UI VERWENDEN für:
   materialUI: {
-    // Komplexe Formulare und Eingabefelder
+    // Komplexe Formulare und Eingabefelder,
     forms: [
       'Validierungslogik',
       'Komplexe Formulare',
       'Datei-Upload',
       'Rich Text Editor',
       'Datum/Zeit-Picker',
-      'Autocomplete-Felder'
+      'Autocomplete-Felder',
     ],
     
-    // Datenvisualisierung und Tabellen
+    // Datenvisualisierung und Tabellen,
     dataDisplay: [
       'DataGrid mit Sortierung/Filterung',
       'Charts und Diagramme',
       'Paginierung',
       'Virtuelle Scrolling',
       'Export-Funktionen',
-      'Bulk-Aktionen'
+      'Bulk-Aktionen',
     ],
     
-    // Navigation und Layout
+    // Navigation und Layout,
     navigation: [
       'Breadcrumbs',
       'Tabs',
       'Stepper',
       'Drawer/Sidebar',
       'App Bar',
-      'Bottom Navigation'
+      'Bottom Navigation',
     ],
     
-    // Feedback und Interaktion
+    // Feedback und Interaktion,
     feedback: [
       'Snackbars/Toasts',
       'Progress Indicators',
       'Skeletons',
       'Tooltips',
       'Popover',
-      'Modal/Dialog'
+      'Modal/Dialog',
     ],
     
-    // Enterprise-spezifische Komponenten
+    // Enterprise-spezifische Komponenten,
     enterprise: [
       'Benutzerverwaltung',
       'Berechtigungssystem',
       'Audit-Logs',
       'System-Einstellungen',
       'Backup/Restore',
-      'Monitoring-Dashboards'
-    ]
+      'Monitoring-Dashboards',
+    ],
   },
   
   // TAILWIND CSS VERWENDEN für:
   tailwind: {
-    // Layout und Spacing
+    // Layout und Spacing,
     layout: [
       'Container-Layouts',
       'Grid-System',
       'Spacing und Padding',
       'Responsive Breakpoints',
       'Flexbox-Layouts',
-      'Positioning'
+      'Positioning',
     ],
     
-    // Einfache UI-Elemente
+    // Einfache UI-Elemente,
     simpleUI: [
       'Einfache Buttons',
       'Badges/Labels',
       'Cards (einfach)',
       'Icons mit FontAwesome',
       'Status-Indikatoren',
-      'Loading-Spinner'
+      'Loading-Spinner',
     ],
     
-    // Custom Styling
+    // Custom Styling,
     custom: [
       'Brand-spezifische Farben',
       'Custom Animations',
       'Gradient-Hintergründe',
       'Custom Borders',
       'Shadow-Effekte',
-      'Hover-States'
+      'Hover-States',
     ],
     
-    // Performance-kritische Bereiche
+    // Performance-kritische Bereiche,
     performance: [
       'Liste mit vielen Items',
       'Dashboard-Widgets',
       'Statistik-Karten',
       'Aktivitäts-Feeds',
       'Notification-Badges',
-      'Quick-Actions'
-    ]
+      'Quick-Actions',
+    ],
   }
 } as const;
 
@@ -113,7 +113,7 @@ export const UI_DECISION_MATRIX = {
 // ============================================================================
 
 export const COMPONENT_CATEGORIES = {
-  // Enterprise-Kernkomponenten (Material-UI)
+  // Enterprise-Kernkomponenten (Material-UI),
   enterprise: {
     description: 'Kritische Business-Funktionen mit hoher Komplexität',
     styling: 'material-ui',
@@ -123,8 +123,8 @@ export const COMPONENT_CATEGORIES = {
       'AuditTrail',
       'SystemSettings',
       'DataExport',
-      'BackupRestore'
-    ]
+      'BackupRestore',
+    ],
   },
   
   // Datenvisualisierung (Material-UI)
@@ -137,8 +137,8 @@ export const COMPONENT_CATEGORIES = {
       'Reports',
       'Analytics',
       'KPI-Dashboards',
-      'Trend-Analysis'
-    ]
+      'Trend-Analysis',
+    ],
   },
   
   // Formulare (Material-UI)
@@ -151,8 +151,8 @@ export const COMPONENT_CATEGORIES = {
       'DataEntryForms',
       'SearchForms',
       'FilterForms',
-      'SettingsForms'
-    ]
+      'SettingsForms',
+    ],
   },
   
   // Navigation (Material-UI)
@@ -165,8 +165,8 @@ export const COMPONENT_CATEGORIES = {
       'Tabs',
       'Sidebar',
       'Pagination',
-      'BreadcrumbNavigation'
-    ]
+      'BreadcrumbNavigation',
+    ],
   },
   
   // Dashboard-Widgets (Tailwind)
@@ -179,8 +179,8 @@ export const COMPONENT_CATEGORIES = {
       'QuickActions',
       'RecentActivity',
       'NotificationCards',
-      'SummaryWidgets'
-    ]
+      'SummaryWidgets',
+    ],
   },
   
   // Layout-Komponenten (Tailwind)
@@ -193,8 +193,8 @@ export const COMPONENT_CATEGORIES = {
       'GridLayout',
       'FlexLayout',
       'ResponsiveContainer',
-      'SectionContainer'
-    ]
+      'SectionContainer',
+    ],
   },
   
   // Utility-Komponenten (Tailwind)
@@ -207,8 +207,8 @@ export const COMPONENT_CATEGORIES = {
       'IconButton',
       'SimpleCard',
       'Divider',
-      'Spacer'
-    ]
+      'Spacer',
+    ],
   }
 } as const;
 
@@ -217,7 +217,7 @@ export const COMPONENT_CATEGORIES = {
 // ============================================================================
 
 export const DESIGN_SYSTEM = {
-  // Farben (VALEO Brand)
+  // Farben (VALEO Brand),
   colors: {
     primary: {
       50: '#eff6ff',
@@ -333,49 +333,40 @@ export const DESIGN_SYSTEM = {
 // ============================================================================
 
 export const COMPONENT_TEMPLATES = {
-  // Material-UI Template
+  // Material-UI Template,
   materialUI: `
-import React from 'react';
+import React from 'react';,
 import { 
-  // Material-UI Komponenten hier importieren
+  // Material-UI Komponenten hier importieren,
 } from '@mui/material';
 import { 
-  // Material-UI Icons hier importieren
-} from '@mui/icons-material';
-
+  // Material-UI Icons hier importieren,
+} from '@mui/icons-material';;
 interface ComponentNameProps {
-  // Props definieren
+  // Props definieren,
 }
 
 export const ComponentName: React.FC<ComponentNameProps> = ({ 
-  // Props destructuring
-}) => {
-  return (
-    // Material-UI Komponenten verwenden
-  );
+  // Props destructuring, }) => {
+  return (,
+    // Material-UI Komponenten verwenden,
+  );,
 };
 `,
   
   // Tailwind Template
   tailwind: `
 import React from 'react';
-import { cn } from '../lib/utils';
-
+import { cn ,} from '../lib/utils';;
 interface ComponentNameProps {
-  // Props definieren
-  className?: string;
+  // Props definieren,;
+className?: string;
 }
 
-export const ComponentName: React.FC<ComponentNameProps> = ({ 
-  className,
-  // Weitere Props
-}) => {
-  return (
-    <div className={cn(
-      // Tailwind-Klassen hier
-      className
-    )}>
-      {/* Komponenten-Inhalt */}
+export const ComponentName: React.FC<ComponentNameProps> = ({ ;
+className, // Weitere Props, }) => {
+  return (<div className={cn(, // Tailwind-Klassen hier, className),}>
+      {/* Komponenten-Inhalt */,}
     </div>
   );
 };
@@ -385,26 +376,19 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
   hybrid: `
 import React from 'react';
 import { 
-  // Material-UI für komplexe Teile
+  // Material-UI für komplexe Teile,
 } from '@mui/material';
-import { cn } from '../lib/utils';
-
+import { cn ,} from '../lib/utils';;
 interface ComponentNameProps {
-  // Props definieren
-  className?: string;
+  // Props definieren,;
+className?: string;
 }
 
-export const ComponentName: React.FC<ComponentNameProps> = ({ 
-  className,
-  // Weitere Props
-}) => {
-  return (
-    <div className={cn(
-      // Tailwind für Layout
-      className
-    )}>
-      {/* Material-UI für komplexe Komponenten */}
-      {/* Tailwind für einfache Elemente */}
+export const ComponentName: React.FC<ComponentNameProps> = ({ ;
+className, // Weitere Props, }) => {
+  return (<div className={cn(, // Tailwind für Layout, className),}>
+      {/* Material-UI für komplexe Komponenten */,}
+      {/* Tailwind für einfache Elemente */,}
     </div>
   );
 };
@@ -416,47 +400,47 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 // ============================================================================
 
 export const QUALITY_GUIDELINES = {
-  // Konsistenz
+  // Konsistenz,
   consistency: [
     'Verwende immer die gleichen Farben aus dem Design-System',
     'Halte Typography-Hierarchien konsistent',
     'Verwende einheitliche Spacing-Werte',
-    'Beachte die Komponenten-Kategorien'
+    'Beachte die Komponenten-Kategorien',
   ],
   
-  // Accessibility
+  // Accessibility,
   accessibility: [
     'Alle interaktiven Elemente müssen fokussierbar sein',
     'Verwende semantische HTML-Elemente',
     'Stelle ausreichenden Farbkontrast sicher',
     'Füge ARIA-Labels hinzu wo nötig',
-    'Teste mit Screen-Readern'
+    'Teste mit Screen-Readern',
   ],
   
-  // Performance
+  // Performance,
   performance: [
     'Lazy-load Material-UI Komponenten bei Bedarf',
     'Verwende Tailwind für Performance-kritische Bereiche',
     'Optimiere Bundle-Größe durch Tree-Shaking',
-    'Verwende React.memo für teure Komponenten'
+    'Verwende React.memo für teure Komponenten',
   ],
   
-  // Responsive Design
+  // Responsive Design,
   responsive: [
     'Mobile-First Ansatz',
     'Teste auf verschiedenen Bildschirmgrößen',
     'Verwende responsive Breakpoints konsistent',
-    'Optimiere Touch-Targets für Mobile'
+    'Optimiere Touch-Targets für Mobile',
   ],
   
-  // Enterprise-Anforderungen
+  // Enterprise-Anforderungen,
   enterprise: [
     'Hohe Verfügbarkeit und Stabilität',
     'Skalierbarkeit für große Datenmengen',
     'Sicherheit und Datenschutz',
     'Audit-Trail für wichtige Aktionen',
-    'Backup und Recovery-Funktionen'
-  ]
+    'Backup und Recovery-Funktionen',
+  ],
 } as const;
 
 // ============================================================================
@@ -466,52 +450,51 @@ export const QUALITY_GUIDELINES = {
 /**
  * Entscheidungsfunktion: Welche UI-Bibliothek für eine Komponente verwenden?
  */
-export function getUILibrary(componentType: string, complexity: 'low' | 'medium' | 'high'): 'material-ui' | 'tailwind' | 'hybrid' {
-  const materialUITypes = [
+export function getUILibrary(componentType: string, complexity: 'low' | 'medium' | 'high'): 'material-ui' | 'tailwind' | 'hybrid' {;
+const materialUITypes = [,
     'form', 'table', 'chart', 'navigation', 'dialog', 'stepper',
-    'dataGrid', 'complexForm', 'userManagement', 'settings'
-  ];
-  
-  const tailwindTypes = [
+    'dataGrid', 'complexForm', 'userManagement', 'settings',
+  ];,;
+const tailwindTypes = [,
     'layout', 'simpleCard', 'badge', 'button', 'icon', 'spinner',
-    'metricCard', 'statusIndicator', 'quickAction'
-  ];
+    'metricCard', 'statusIndicator', 'quickAction',
+  ];,
   
   if (materialUITypes.includes(componentType) || complexity === 'high') {
-    return 'material-ui';
+    return 'material-ui';,
   } else if (tailwindTypes.includes(componentType) || complexity === 'low') {
-    return 'tailwind';
+    return 'tailwind';,
   } else {
-    return 'hybrid';
+    return 'hybrid';,
   }
 }
 
 /**
  * Validiere Komponenten-Design gegen Konventionen
  */
-export function validateComponentDesign(component: {
-  type: string;
+export function validateComponentDesign(component: {;
+type: string;
   complexity: 'low' | 'medium' | 'high';
   styling: 'material-ui' | 'tailwind' | 'hybrid';
-}): { valid: boolean; issues: string[] } {
-  const issues: string[] = [];
-  const recommendedLibrary = getUILibrary(component.type, component.complexity);
+}): { valid: boolean; issues: string[] } {;
+const issues: string[] = [];;
+const recommendedLibrary = getUILibrary(component.type, component.complexity);,
   
   if (component.styling !== recommendedLibrary) {
-    issues.push(`Empfohlene UI-Bibliothek: ${recommendedLibrary}, verwendet: ${component.styling}`);
+    issues.push(`Empfohlene UI-Bibliothek: ${recommendedLibrary}, verwendet: ${component.styling, }`);
   }
   
   return {
     valid: issues.length === 0,
-    issues
+    issues,
   };
 }
 
 /**
  * Generiere CSS-Klassen für konsistente Styling
  */
-export function generateConsistentClasses(category: keyof typeof COMPONENT_CATEGORIES): string {
-  const baseClasses = {
+export function generateConsistentClasses(category: keyof typeof COMPONENT_CATEGORIES): string {;
+const baseClasses = {
     enterprise: 'bg-white shadow-lg rounded-lg border border-gray-200',
     dataVisualization: 'bg-white shadow-md rounded-lg p-4',
     forms: 'bg-white shadow-sm rounded-lg p-6',
@@ -532,5 +515,5 @@ export default {
   QUALITY_GUIDELINES,
   getUILibrary,
   validateComponentDesign,
-  generateConsistentClasses
+  generateConsistentClasses,
 }; 

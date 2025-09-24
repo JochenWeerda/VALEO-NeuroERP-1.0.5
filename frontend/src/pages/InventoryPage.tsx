@@ -1,52 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import { 
-  Box, 
-  Card, 
-  Typography, 
-  Button,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  IconButton,
-  Tooltip,
-  CircularProgress,
-  TablePagination,
-  InputAdornment,
-  LinearProgress
-} from '@mui/material';
+  Box, Card, Typography, Button, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, IconButton, Tooltip, CircularProgress, TablePagination, InputAdornment, LinearProgress} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Search as SearchIcon,
-  Refresh as RefreshIcon,
-  Inventory as InventoryIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Error as ErrorIcon,
-  LocationOn as LocationIcon
-} from '@mui/icons-material';
-import { useApi } from '../contexts/ApiContext';
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Search as SearchIcon, Refresh as RefreshIcon, Inventory as InventoryIcon, Warning as WarningIcon, CheckCircle as CheckCircleIcon, Error as ErrorIcon, LocationOn as LocationIcon} from '@mui/icons-material';
+import { useApi ,} from '../contexts/ApiContext';
 import {
-  ObjectPageHeader,
-  ActionBar,
-  MessageStrip
-} from '../components/ui/NeuroFlowComponents';
-
+  ObjectPageHeader, ActionBar, MessageStrip} from '../components/ui/NeuroFlowComponents';;
 interface InventoryFormData {
   name: string;
   sku: string;
@@ -54,50 +13,34 @@ interface InventoryFormData {
   unit_price: number;
   location: string;
   category: string;
-}
-
-const InventoryPage: React.FC = () => {
-  const {
-    inventory,
-    getInventory,
-    createInventoryItem,
-    updateInventoryItem,
-    isLoading,
-    error
-  } = useApi();
-
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editingItem, setEditingItem] = useState<any>(null);
-  const [formData, setFormData] = useState<InventoryFormData>({
-    name: '',
-    sku: '',
-    quantity: 0,
-    unit_price: 0,
-    location: '',
-    category: 'general'
-  });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [filterCategory, setFilterCategory] = useState('all');
-  const [filterStatus, setFilterStatus] = useState('all');
+};
+const InventoryPage: React.FC = () => {;
+const {
+    _inventory, _getInventory, _createInventoryItem, _updateInventoryItem, _isLoading, _error,} = useApi();;
+const [openDialog, setOpenDialog] = useState(false);;
+const [editingItem, setEditingItem] = useState<any>(null);;
+const [formData, setFormData] = useState<InventoryFormData>({
+    name: '', sku: '', quantity: 0, unit_price: 0, location: '', category: 'general'
+  });;
+const [searchTerm, setSearchTerm] = useState('');;
+const [page, setPage] = useState(0);;
+const [rowsPerPage, setRowsPerPage] = useState(10);;
+const [filterCategory, setFilterCategory] = useState('all');;
+const [filterStatus, setFilterStatus] = useState('all');
 
   useEffect(() => {
-    loadInventory();
-  }, []);
-
-  const loadInventory = async () => {
-    await getInventory();
-  };
-
-  const handleSubmit = async () => {
+    loadInventory();,
+  }, []);;
+const loadInventory = async () => {
+    await getInventory();,
+  };;
+const handleSubmit = async () => {
     try {
       if (editingItem) {
-        await updateInventoryItem(editingItem.id, formData);
+        await updateInventoryItem(editingItem.id, formData);,
       } else {
         await createInventoryItem({
-          ...formData,
-          price: formData.unit_price, // Map unit_price to price
+          ...formData, price: formData.unit_price, // Map unit_price to price
           status: 'in_stock'
         });
       }
@@ -107,107 +50,85 @@ const InventoryPage: React.FC = () => {
     } catch (err) {
       console.error('Error saving inventory item:', err);
     }
-  };
-
-  const handleDeleteItem = (id: string) => {
-    // Mock-Implementation für das Löschen
+  };;
+const handleDeleteItem = (id: string) => {
+    // Mock-Implementation für das Löschen,
     console.log('Deleting inventory item:', id);
-    // In einer echten Implementierung würde hier die API aufgerufen werden
-    // und dann der lokale State aktualisiert werden
-  };
-
-  const handleEdit = (item: any) => {
-    setEditingItem(item);
+    // In einer echten Implementierung würde hier die API aufgerufen werden,
+    // und dann der lokale State aktualisiert werden,
+  };;
+const handleEdit = (item: unknown) => {
+    setEditingItem(item);,
     setFormData({
-      name: item.name,
-      sku: item.sku,
-      quantity: item.quantity,
-      unit_price: item.unit_price,
-      location: item.location || '',
-      category: item.category
+      name: item.name, sku: item.sku, quantity: item.quantity, unit_price: item.unit_price, location: item.location || '', category: item.category
     });
     setOpenDialog(true);
-  };
-
-  const resetForm = () => {
+  };;
+const resetForm = () => {
     setFormData({
-      name: '',
-      sku: '',
-      quantity: 0,
-      unit_price: 0,
-      location: '',
-      category: 'general'
+      name: '', sku: '', quantity: 0, unit_price: 0, location: '', category: 'general'
     });
     setEditingItem(null);
-  };
-
-  const filteredInventory = inventory.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (item.sku?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
-                         (item.location?.toLowerCase().includes(searchTerm.toLowerCase()) || false);
-    const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
-    const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
-    return matchesSearch && matchesCategory && matchesStatus;
-  });
-
-  const paginatedInventory = filteredInventory.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
-
-  const getStatusColor = (status: string) => {
+  };;
+const filteredInventory = inventory.filter(item => {;
+const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+                         (item.sku?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||,
+                         (item.location?.toLowerCase().includes(searchTerm.toLowerCase()) || false);,;
+const matchesCategory = filterCategory === 'all' || item.category === filterCategory;,;
+const matchesStatus = filterStatus === 'all' || item.status === filterStatus;,
+    return matchesSearch && matchesCategory && matchesStatus;,
+  });;
+const paginatedInventory = filteredInventory.slice(
+    page * rowsPerPage, page * rowsPerPage + rowsPerPage);;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'in_stock': return 'success';
       case 'low_stock': return 'warning';
       case 'out_of_stock': return 'error';
       default: return 'default';
     }
-  };
-
-  const getStatusIcon = (status: string) => {
+  };;
+const getStatusIcon = (status: string) => {
     switch (status) {
       case 'in_stock': return <CheckCircleIcon color="success" />;
       case 'low_stock': return <WarningIcon color="warning" />;
       case 'out_of_stock': return <ErrorIcon color="error" />;
       default: return <InventoryIcon />;
     }
-  };
-
-  const getStatusText = (status: string) => {
+  };;
+const getStatusText = (status: string) => {
     switch (status) {
       case 'in_stock': return 'Verfügbar';
       case 'low_stock': return 'Niedrig';
       case 'out_of_stock': return 'Nicht verfügbar';
       default: return status;
     }
-  };
+  };;
+const totalValue = filteredInventory.reduce((sum, item) => sum + (item.quantity * (item.unit_price || item.price || 0)), 0);;
+const totalItems = filteredInventory.reduce((sum, item) => sum + item.quantity, 0);;
+const lowStockItems = filteredInventory.filter(item => item.status === 'low_stock').length;;
+const outOfStockItems = filteredInventory.filter(item => item.status === 'out_of_stock').length;
 
-  const totalValue = filteredInventory.reduce((sum, item) => sum + (item.quantity * (item.unit_price || item.price || 0)), 0);
-  const totalItems = filteredInventory.reduce((sum, item) => sum + item.quantity, 0);
-  const lowStockItems = filteredInventory.filter(item => item.status === 'low_stock').length;
-  const outOfStockItems = filteredInventory.filter(item => item.status === 'out_of_stock').length;
-
-  return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
-      {/* Header */}
+  return (<Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
+      {/* Header */, }
       <ObjectPageHeader
         title="Inventar"
         subtitle="Verwaltung aller Lagerbestände"
-        status={`${filteredInventory.length} Artikel`}
+        status={`${filteredInventory.length, } Artikel`}
         actions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => setOpenDialog(true)}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />, }
+              onClick={() => setOpenDialog(true),}
             >
               Neuer Artikel
             </Button>
-            <Button
-              variant="outlined"
-              startIcon={<RefreshIcon />}
-              onClick={loadInventory}
-              disabled={isLoading}
+            <Button;
+variant="outlined"
+              startIcon={<RefreshIcon />,}
+              onClick={loadInventory,}
+              disabled={isLoading,}
             >
               Aktualisieren
             </Button>
@@ -215,40 +136,38 @@ const InventoryPage: React.FC = () => {
         }
       />
 
-      {/* Error Display */}
-      {error && (
-        <Box sx={{ px: 3 }}>
+      {/* Error Display */,}
+      {error && (<Box sx={{ px: 3 }}>
           <MessageStrip type="error" title="Fehler">
-            {error}
+            {error, }
           </MessageStrip>
-        </Box>
-      )}
+        </Box>)}
 
-      {/* Action Bar */}
+      {/* Action Bar */,}
       <ActionBar
         title="Inventarverwaltung"
-        actions={[
+        actions={[,
           {
             label: 'Filter zurücksetzen',
             onClick: () => {
-              setSearchTerm('');
-              setFilterCategory('all');
-              setFilterStatus('all');
-            },
-            variant: 'outlined'
+              setSearchTerm('');,
+              setFilterCategory('all');,
+              setFilterStatus('all');,
+            },;
+variant: 'outlined'
           }
         ]}
       />
 
       <Box sx={{ p: 3 }}>
-        {/* Summary Cards */}
+        {/* Summary Cards */,}
         <Box className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           <Card sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <InventoryIcon sx={{ fontSize: 40, color: '#0A6ED1' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#0A6ED1', fontWeight: 600 }}>
-                  {filteredInventory.length}
+                  {filteredInventory.length,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Artikel
@@ -262,7 +181,7 @@ const InventoryPage: React.FC = () => {
               <CheckCircleIcon sx={{ fontSize: 40, color: '#107C41' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#107C41', fontWeight: 600 }}>
-                  {totalItems}
+                  {totalItems,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Gesamtbestand
@@ -276,7 +195,7 @@ const InventoryPage: React.FC = () => {
               <WarningIcon sx={{ fontSize: 40, color: '#E9730C' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#E9730C', fontWeight: 600 }}>
-                  {lowStockItems}
+                  {lowStockItems,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Niedriger Bestand
@@ -290,7 +209,7 @@ const InventoryPage: React.FC = () => {
               <ErrorIcon sx={{ fontSize: 40, color: '#BB0000' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#BB0000', fontWeight: 600 }}>
-                  {outOfStockItems}
+                  {outOfStockItems,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Nicht verfügbar
@@ -300,27 +219,24 @@ const InventoryPage: React.FC = () => {
           </Card>
         </Box>
 
-        {/* Filters */}
+        {/* Filters */,}
         <Card sx={{ p: 3, mb: 3 }}>
           <Box className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <TextField
               fullWidth
               label="Suchen"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={searchTerm,}
+              onChange={(e) => setSearchTerm(e.target.value),}
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
+                  <InputAdornment position="start">, <SearchIcon />, </InputAdornment>),
               }}
             />
             <FormControl fullWidth>
               <InputLabel>Kategorie</InputLabel>
               <Select
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
+                value={filterCategory,}
+                onChange={(e) => setFilterCategory(e.target.value),}
                 label="Kategorie"
               >
                 <MenuItem value="all">Alle</MenuItem>
@@ -333,8 +249,8 @@ const InventoryPage: React.FC = () => {
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
+                value={filterStatus,}
+                onChange={(e) => setFilterStatus(e.target.value),}
                 label="Status"
               >
                 <MenuItem value="all">Alle</MenuItem>
@@ -345,15 +261,15 @@ const InventoryPage: React.FC = () => {
             </FormControl>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography variant="h6" sx={{ color: '#0A6ED1' }}>
-                Gesamtwert: {totalValue.toFixed(2)}€
+                Gesamtwert: {totalValue.toFixed(2),}€
               </Typography>
             </Box>
           </Box>
         </Card>
 
-        {/* Data Table */}
+        {/* Data Table */,}
         <Card>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow sx={{ bgcolor: '#F5F6F7' }}>
@@ -368,32 +284,28 @@ const InventoryPage: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paginatedInventory.map((item) => (
-                  <TableRow key={item.id} hover>
+                {paginatedInventory.map((item) => (<TableRow key={item.id, } hover>
                     <TableCell>
                       <Box>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          {item.name}
+                          {item.name, }
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          {item.category}
+                          {item.category, }
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
-                        {item.sku || 'N/A'}
+                        {item.sku || 'N/A', }
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          {item.quantity}
+                          {item.quantity, }
                         </Typography>
-                        {item.status === 'low_stock' && (
-                          <LinearProgress 
-                            variant="determinate" 
-                            value={Math.min((item.quantity / 10) * 100, 100)} 
+                        {item.status === 'low_stock' && (, <LinearProgress, variant="determinate", value={Math.min((item.quantity / 10) * 100, 100),} 
                             sx={{ width: 50, height: 4 }}
                           />
                         )}
@@ -401,29 +313,29 @@ const InventoryPage: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2">
-                        {(item.unit_price || item.price || 0).toFixed(2)}€
+                        {(item.unit_price || item.price || 0).toFixed(2),}€
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontWeight: 600, color: '#0A6ED1' }}>
-                        {(item.quantity * (item.unit_price || item.price || 0)).toFixed(2)}€
+                        {(item.quantity * (item.unit_price || item.price || 0)).toFixed(2),}€
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <LocationIcon fontSize="small" color="action" />
                         <Typography variant="body2">
-                          {item.location || '-'}
+                          {item.location || '-',}
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {getStatusIcon(item.status || 'unknown')}
+                        {getStatusIcon(item.status || 'unknown'),}
                         <Chip
-                          label={getStatusText(item.status || 'unknown')}
+                          label={getStatusText(item.status || 'unknown'),}
                           size="small"
-                          color={getStatusColor(item.status || 'unknown') as any}
+                          color={getStatusColor(item.status || 'unknown') as any,}
                         />
                       </Box>
                     </TableCell>
@@ -432,7 +344,7 @@ const InventoryPage: React.FC = () => {
                         <Tooltip title="Bearbeiten">
                           <IconButton
                             size="small"
-                            onClick={() => handleEdit(item)}
+                            onClick={() => handleEdit(item),}
                           >
                             <EditIcon />
                           </IconButton>
@@ -441,7 +353,7 @@ const InventoryPage: React.FC = () => {
                           <IconButton
                             size="small"
                             color="error"
-                            onClick={() => handleDeleteItem(item.id)}
+                            onClick={() => handleDeleteItem(item.id),}
                           >
                             <DeleteIcon />
                           </IconButton>
@@ -450,37 +362,34 @@ const InventoryPage: React.FC = () => {
                     </TableCell>
                   </TableRow>
                 ))}
-                {paginatedInventory.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
+                {paginatedInventory.length === 0 && (<TableRow>, <TableCell colSpan={8, } align="center" sx={{ py: 4 }}>
                       <Typography variant="body2" color="text.secondary">
                         Keine Artikel gefunden
                       </Typography>
                     </TableCell>
-                  </TableRow>
-                )}
+                  </TableRow>)}
               </TableBody>
             </Table>
           </TableContainer>
           
           <TablePagination
             component="div"
-            count={filteredInventory.length}
-            page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            rowsPerPage={rowsPerPage}
+            count={filteredInventory.length,}
+            page={page,}
+            onPageChange={(_, newPage) => setPage(newPage),}
+            rowsPerPage={rowsPerPage,}
             onRowsPerPageChange={(e) => {
-              setRowsPerPage(parseInt(e.target.value, 10));
-              setPage(0);
+              setRowsPerPage(parseInt(e.target.value, 10));,
+              setPage(0);,
             }}
             labelRowsPerPage="Zeilen pro Seite:"
-            labelDisplayedRows={({ from, to, count }) => `${from}-${to} von ${count}`}
+            labelDisplayedRows={({ from, to, count, }) => `${from,}-${to,} von ${count,}`}
           />
         </Card>
       </Box>
 
-      {/* Create/Edit Dialog */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
+      {/* Create/Edit Dialog */,}
+      <Dialog open={openDialog,} onClose={() => setOpenDialog(false),} maxWidth="sm" fullWidth>
         <DialogTitle>
           {editingItem ? 'Artikel bearbeiten' : 'Neuer Artikel'}
         </DialogTitle>
@@ -489,7 +398,7 @@ const InventoryPage: React.FC = () => {
             <TextField
               fullWidth
               label="Artikelname"
-              value={formData.name}
+              value={formData.name,}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               margin="normal"
               required
@@ -498,7 +407,7 @@ const InventoryPage: React.FC = () => {
             <TextField
               fullWidth
               label="SKU"
-              value={formData.sku}
+              value={formData.sku,}
               onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
               margin="normal"
               required
@@ -507,9 +416,9 @@ const InventoryPage: React.FC = () => {
             <Box className="grid grid-cols-2 gap-4">
               <TextField
                 fullWidth
-                label="Menge"
-                type="number"
-                value={formData.quantity}
+                label="Menge";
+type="number"
+                value={formData.quantity,}
                 onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
                 margin="normal"
                 required
@@ -517,9 +426,9 @@ const InventoryPage: React.FC = () => {
 
               <TextField
                 fullWidth
-                label="Einzelpreis"
-                type="number"
-                value={formData.unit_price}
+                label="Einzelpreis";
+type="number"
+                value={formData.unit_price,}
                 onChange={(e) => setFormData({ ...formData, unit_price: parseFloat(e.target.value) || 0 })}
                 margin="normal"
                 required
@@ -532,7 +441,7 @@ const InventoryPage: React.FC = () => {
             <TextField
               fullWidth
               label="Standort"
-              value={formData.location}
+              value={formData.location,}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
               margin="normal"
             />
@@ -540,7 +449,7 @@ const InventoryPage: React.FC = () => {
             <FormControl fullWidth margin="normal">
               <InputLabel>Kategorie</InputLabel>
               <Select
-                value={formData.category}
+                value={formData.category,}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 label="Kategorie"
               >
@@ -553,22 +462,16 @@ const InventoryPage: React.FC = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Abbrechen</Button>
-          <Button onClick={handleSubmit} variant="contained">
+          <Button onClick={() => setOpenDialog(false),}>Abbrechen</Button>
+          <Button onClick={handleSubmit,} variant="contained">
             {editingItem ? 'Aktualisieren' : 'Erstellen'}
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Loading Overlay */}
-      {isLoading && (
-        <Box sx={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          bottom: 0, 
-          bgcolor: 'rgba(0,0,0,0.3)', 
+      {/* Loading Overlay */,}
+      {isLoading && (<Box sx={{ 
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0, 0, 0, 0.3)', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',

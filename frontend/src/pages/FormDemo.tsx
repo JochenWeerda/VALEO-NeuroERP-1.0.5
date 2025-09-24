@@ -1,35 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Container,
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  Button,
-  Box,
-  Chip,
-  Alert,
-  Divider
-} from '@mui/material';
+  Container, Typography, Card, CardContent, Grid, Button, Box, Chip, Alert, Divider} from '@mui/material';
 import {
-  FormManager,
-  FormFactory,
-  FormUtils,
-  ExtendedFormRegistryService
-} from '../components/forms';
+  FormManager, FormFactory, FormUtils, ExtendedFormRegistryService} from '../components/forms';
 
 /**
  * Demo-Seite für die Formular-Verwaltung
  * 
  * Diese Seite demonstriert alle erstellten Formular-Komponenten
  * und bietet eine Test-Umgebung für die Formular-Verwaltung.
- */
-
-const FormDemo: React.FC = () => {
-  const [selectedDemo, setSelectedDemo] = useState<string>('manager');
-  const [formStats, setFormStats] = useState(FormUtils.getFormStatistics());
-
-  const demos = [
+ */;
+const FormDemo: React.FC = () => {;
+const [selectedDemo, setSelectedDemo] = useState<string>('manager');,;
+const [formStats, setFormStats] = useState(FormUtils.getFormStatistics());,;
+const demos = [,
     {
       id: 'manager',
       title: 'Formular-Manager',
@@ -65,83 +49,72 @@ const FormDemo: React.FC = () => {
         Demonstration der erweiterten Formular-Verwaltung für VALEO NeuroERP
       </Typography>
 
-      {/* Demo-Navigation */}
+      {/* Demo-Navigation */, }
       <Box className="mb-6">
-        <Grid container spacing={2}>
-          {demos.map((demo) => (
-            <Grid item key={demo.id}>
-              <Button
-                variant={selectedDemo === demo.id ? 'contained' : 'outlined'}
-                onClick={() => setSelectedDemo(demo.id)}
-                className="min-w-[200px]"
+        <Grid container spacing={2, }>
+          {demos.map((demo) => (<Grid item key={demo.id, }>
+              <Button;
+variant={selectedDemo === demo.id ? 'contained' : 'outlined'}
+                onClick={() => setSelectedDemo(demo.id),};
+className="min-w-[200px]"
               >
-                {demo.title}
+                {demo.title,}
               </Button>
             </Grid>
           ))}
         </Grid>
       </Box>
 
-      {/* Demo-Content */}
+      {/* Demo-Content */,}
       <Card>
         <CardContent>
-          {demos.find(d => d.id === selectedDemo)?.component}
+          {demos.find(d => d.id === selectedDemo)?.component,}
         </CardContent>
       </Card>
     </Container>
   );
 };
 
-// Formular-Statistiken Demo
-const FormStatisticsDemo: React.FC = () => {
-  const formRegistry = ExtendedFormRegistryService.getInstance();
-  const allForms = formRegistry.getAllForms();
-  const moduleCounts = formRegistry.getModuleCounts();
+// Formular-Statistiken Demo;
+const FormStatisticsDemo: React.FC = () => {;
+const formRegistry = ExtendedFormRegistryService.getInstance();,;
+const allForms = formRegistry.getAllForms();,;
+const moduleCounts = formRegistry.getModuleCounts();,
 
-  return (
-    <div>
-      <Typography variant="h5" gutterBottom>
-        Formular-Statistiken
-      </Typography>
-      
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+  return (<div>, <Typography variant="h5" gutterBottom>, Formular-Statistiken, </Typography>, <Grid container spacing={3, }>
+        <Grid item xs={12, } md={6, }>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Modul-Übersicht
               </Typography>
               <div className="space-y-2">
-                {Object.entries(moduleCounts).map(([module, count]) => (
-                  <div key={module} className="flex justify-between items-center">
+                {Object.entries(moduleCounts).map(([module, count]) => (<div key={module, } className="flex justify-between items-center">
                     <Typography variant="body2" className="capitalize">
-                      {module}
+                      {module, }
                     </Typography>
-                    <Chip label={count} color="primary" size="small" />
-                  </div>
-                ))}
+                    <Chip label={count, } color="primary" size="small" />
+                  </div>))}
               </div>
             </CardContent>
           </Card>
         </Grid>
         
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12,} md={6,}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Formular-Liste
               </Typography>
               <div className="max-h-96 overflow-y-auto space-y-1">
-                {allForms.map((form) => (
-                  <div key={form.id} className="p-2 border rounded">
+                {allForms.map((form) => (<div key={form.id, } className="p-2 border rounded">
                     <Typography variant="body2" className="font-medium">
-                      {form.metadata.name}
+                      {form.metadata.name, }
                     </Typography>
                     <Typography variant="body2" color="textSecondary" className="mb-2">
-                      {form.id} • v{form.metadata.version} • {form.module}
+                      {form.id, } • v{form.metadata.version, } • {form.module, }
                     </Typography>
-                  </div>
-                ))}
+                  </div>))}
               </div>
             </CardContent>
           </Card>
@@ -151,28 +124,24 @@ const FormStatisticsDemo: React.FC = () => {
   );
 };
 
-// Formular-Factory Demo
-const FormFactoryDemo: React.FC = () => {
-  const [selectedFormId, setSelectedFormId] = useState<string>('');
-  const [formMode, setFormMode] = useState<'create' | 'edit' | 'view'>('view');
-  const [showForm, setShowForm] = useState(false);
-
-  const formRegistry = ExtendedFormRegistryService.getInstance();
-  const allForms = formRegistry.getAllForms();
-
-  const handleCreateForm = () => {
+// Formular-Factory Demo;
+const FormFactoryDemo: React.FC = () => {;
+const [selectedFormId, setSelectedFormId] = useState<string>('');,;
+const [formMode, setFormMode] = useState<'create' | 'edit' | 'view'>('view');,;
+const [showForm, setShowForm] = useState(false);,;
+const formRegistry = ExtendedFormRegistryService.getInstance();,;
+const allForms = formRegistry.getAllForms();,;
+const handleCreateForm = () => {
     if (selectedFormId) {
-      setShowForm(true);
+      setShowForm(true);,
     }
-  };
-
-  const handleFormSave = async (data: any) => {
+  };;
+const handleFormSave = async (data: unknown) => {
     console.log('Formular gespeichert:', data);
-    setShowForm(false);
-  };
-
-  const handleFormCancel = () => {
-    setShowForm(false);
+    setShowForm(false);,
+  };;
+const handleFormCancel = () => {
+    setShowForm(false);,
   };
 
   return (
@@ -181,8 +150,8 @@ const FormFactoryDemo: React.FC = () => {
         Formular-Factory Demo
       </Typography>
       
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
+      <Grid container spacing={3, }>
+        <Grid item xs={12, } md={4, }>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -191,39 +160,35 @@ const FormFactoryDemo: React.FC = () => {
               
               <div className="space-y-2 mb-4">
                 <select
-                  value={selectedFormId}
-                  onChange={(e) => setSelectedFormId(e.target.value)}
-                  className="w-full p-2 border rounded"
+                  value={selectedFormId, }
+                  onChange={(e) => setSelectedFormId(e.target.value),};
+className="w-full p-2 border rounded"
                 >
                   <option value="">Formular auswählen...</option>
-                  {allForms.map((form) => (
-                    <option key={form.id} value={form.id}>
-                      {form.metadata.name}
-                    </option>
-                  ))}
+                  {allForms.map((form) => (<option key={form.id, } value={form.id, }>
+                      {form.metadata.name, }
+                    </option>))}
                 </select>
               </div>
 
               <div className="space-y-2 mb-4">
                 <Typography variant="body2">Modus:</Typography>
                 <div className="flex space-x-2">
-                  {(['create', 'edit', 'view'] as const).map((mode) => (
-                    <Button
-                      key={mode}
-                      variant={formMode === mode ? 'contained' : 'outlined'}
+                  {(['create', 'edit', 'view'] as const).map((mode) => (<Button, key={mode, };
+variant={formMode === mode ? 'contained' : 'outlined'}
                       size="small"
-                      onClick={() => setFormMode(mode)}
+                      onClick={() => setFormMode(mode),}
                     >
-                      {mode}
+                      {mode,}
                     </Button>
                   ))}
                 </div>
               </div>
 
-              <Button
-                variant="contained"
-                onClick={handleCreateForm}
-                disabled={!selectedFormId}
+              <Button;
+variant="contained"
+                onClick={handleCreateForm,}
+                disabled={!selectedFormId,}
                 fullWidth
               >
                 Formular erstellen
@@ -232,17 +197,9 @@ const FormFactoryDemo: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid item xs={12} md={8}>
-          {showForm && selectedFormId && (
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Dynamisch erstelltes Formular
-                </Typography>
-                {FormFactory.createForm(selectedFormId, {
-                  mode: formMode,
-                  onSave: handleFormSave,
-                  onCancel: handleFormCancel
+        <Grid item xs={12,} md={8,}>
+          {showForm && selectedFormId && (<Card>, <CardContent>, <Typography variant="h6" gutterBottom>, Dynamisch erstelltes Formular, </Typography>, {FormFactory.createForm(selectedFormId, {
+                  mode: formMode, onSave: handleFormSave, onCancel: handleFormCancel
                 })}
               </CardContent>
             </Card>
@@ -253,19 +210,17 @@ const FormFactoryDemo: React.FC = () => {
   );
 };
 
-// Formular-Validierung Demo
-const FormValidationDemo: React.FC = () => {
-  const [testData, setTestData] = useState<any>({});
-  const [validationResult, setValidationResult] = useState<any>(null);
-  const [selectedFormId, setSelectedFormId] = useState<string>('');
-
-  const formRegistry = ExtendedFormRegistryService.getInstance();
-  const allForms = formRegistry.getAllForms();
-
-  const handleValidation = () => {
-    if (selectedFormId) {
-      const result = FormUtils.validateFormData(selectedFormId, testData);
-      setValidationResult(result);
+// Formular-Validierung Demo;
+const FormValidationDemo: React.FC = () => {;
+const [testData, setTestData] = useState<any>({});;
+const [validationResult, setValidationResult] = useState<any>(null);;
+const [selectedFormId, setSelectedFormId] = useState<string>('');;
+const formRegistry = ExtendedFormRegistryService.getInstance();;
+const allForms = formRegistry.getAllForms();;
+const handleValidation = () => {
+    if (selectedFormId) {;
+const result = FormUtils.validateFormData(selectedFormId, testData);,
+      setValidationResult(result);,
     }
   };
 
@@ -275,8 +230,8 @@ const FormValidationDemo: React.FC = () => {
         Formular-Validierung Demo
       </Typography>
       
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={3, }>
+        <Grid item xs={12, } md={6, }>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -289,16 +244,14 @@ const FormValidationDemo: React.FC = () => {
                     Formular auswählen:
                   </Typography>
                   <select
-                    value={selectedFormId}
-                    onChange={(e) => setSelectedFormId(e.target.value)}
-                    className="w-full p-2 border rounded"
+                    value={selectedFormId, }
+                    onChange={(e) => setSelectedFormId(e.target.value),};
+className="w-full p-2 border rounded"
                   >
                     <option value="">Formular auswählen...</option>
-                    {allForms.map((form) => (
-                      <option key={form.id} value={form.id}>
-                        {form.metadata.name}
-                      </option>
-                    ))}
+                    {allForms.map((form) => (<option key={form.id, } value={form.id, }>
+                        {form.metadata.name, }
+                      </option>))}
                   </select>
                 </div>
 
@@ -307,24 +260,24 @@ const FormValidationDemo: React.FC = () => {
                     Test-Daten (JSON):
                   </Typography>
                   <textarea
-                    value={JSON.stringify(testData, null, 2)}
+                    value={JSON.stringify(testData, null, 2),}
                     onChange={(e) => {
                       try {
-                        setTestData(JSON.parse(e.target.value));
+                        setTestData(JSON.parse(e.target.value));,
                       } catch {
-                        // Ignore invalid JSON
+                        // Ignore invalid JSON,
                       }
-                    }}
-                    className="w-full p-2 border rounded"
-                    rows={6}
+                    }};
+className="w-full p-2 border rounded"
+                    rows={6,}
                     placeholder='{"field1": "value1", "field2": "value2"}'
                   />
                 </div>
 
-                <Button
-                  variant="contained"
-                  onClick={handleValidation}
-                  disabled={!selectedFormId}
+                <Button;
+variant="contained"
+                  onClick={handleValidation,}
+                  disabled={!selectedFormId,}
                   fullWidth
                 >
                   Validieren
@@ -334,31 +287,23 @@ const FormValidationDemo: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12,} md={6,}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Validierungs-Ergebnis
               </Typography>
               
-              {validationResult && (
-                <div>
-                  <Alert 
-                    severity={validationResult.valid ? 'success' : 'error'}
-                    className="mb-4"
+              {validationResult && (<div>, <Alert, severity={validationResult.valid ? 'success' : 'error'};
+className="mb-4"
                   >
                     {validationResult.valid ? 'Validierung erfolgreich' : 'Validierung fehlgeschlagen'}
                   </Alert>
                   
-                  {!validationResult.valid && validationResult.errors && (
-                    <div>
-                      <Typography variant="body2" gutterBottom>
-                        Fehler:
-                      </Typography>
-                      <ul className="list-disc list-inside space-y-1">
-                        {validationResult.errors.map((error: any, index: number) => (
-                          <li key={index} className="text-red-600">
-                            {error.path.join('.')}: {error.message}
+                  {!validationResult.valid && validationResult.errors && (, <div>, <Typography variant="body2" gutterBottom>, Fehler:
+                      </Typography>, <ul className="list-disc list-inside space-y-1">, {validationResult.errors.map((error: unknown, index: number) => (
+                          <li key={index, } className="text-red-600">
+                            {error.path.join('.'),}: {error.message,}
                           </li>
                         ))}
                       </ul>

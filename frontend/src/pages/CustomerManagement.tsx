@@ -1,110 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  Chip,
-  IconButton,
-  Fab,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Tabs,
-  Tab,
-  LinearProgress,
-  Avatar,
-  Alert,
-  Badge,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Switch,
-  FormControlLabel,
-  Rating
-} from '@mui/material';
+  Box, Card, CardContent, Typography, Grid, Chip, IconButton, Fab, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tabs, Tab, LinearProgress, Avatar, Alert, Badge, FormControl, InputLabel, Select, MenuItem, Switch, FormControlLabel, Rating} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  People as PeopleIcon,
-  Business as BusinessIcon,
-  Phone as PhoneIcon,
-  Email as EmailIcon,
-  LocationOn as LocationIcon,
-  Star as StarIcon,
-  TrendingUp as TrendingUpIcon,
-  Assignment as AssignmentIcon,
-  ContactPhone as ContactPhoneIcon,
-  PersonAdd as PersonAddIcon,
-  Assessment as AssessmentIcon,
-  Timeline as TimelineIcon,
-  Chat as ChatIcon,
-  Feedback as FeedbackIcon,
-  Group as GroupIcon,
-  AttachMoney as MoneyIcon,
-  Schedule as ScheduleIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
-  Description as DescriptionIcon
-} from '@mui/icons-material';
-
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, People as PeopleIcon, Business as BusinessIcon, Phone as PhoneIcon, Email as EmailIcon, LocationOn as LocationIcon, Star as StarIcon, TrendingUp as TrendingUpIcon, Assignment as AssignmentIcon, ContactPhone as ContactPhoneIcon, PersonAdd as PersonAddIcon, Assessment as AssessmentIcon, Timeline as TimelineIcon, Chat as ChatIcon, Feedback as FeedbackIcon, Group as GroupIcon, AttachMoney as MoneyIcon, Schedule as ScheduleIcon, CheckCircle as CheckCircleIcon, Warning as WarningIcon, Error as ErrorIcon, Description as DescriptionIcon} from '@mui/icons-material';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`crm-tabpanel-${index}`}
-      aria-labelledby={`crm-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`crm-tabpanel-${index, }`}
+      aria-labelledby={`crm-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
+      {value === index && <Box sx={{ p: 3 }}>{children, }</Box>}
+    </div>);
+};
+const CustomerManagement: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [dialogType, setDialogType] = useState<'kunde' | 'lead' | 'aktivitaet' | 'chance' | 'kontakt' | 'protokoll' | 'eintrag'>('kunde');,;
+const [customers, setCustomers] = useState<any[]>([]);,;
+const [statistics, setStatistics] = useState<any>(null);,;
+const [loading, setLoading] = useState(false);,;
+const [error, setError] = useState<string | null>(null);,;
+const [page, setPage] = useState(1);,;
+const [limit] = useState(20);,;
+const [total, setTotal] = useState(0);,
 
-const CustomerManagement: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<'kunde' | 'lead' | 'aktivitaet' | 'chance' | 'kontakt' | 'protokoll' | 'eintrag'>('kunde');
-  const [customers, setCustomers] = useState<any[]>([]);
-  const [statistics, setStatistics] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const [limit] = useState(20);
-  const [total, setTotal] = useState(0);
-
-  // Import the new CRM service
+  // Import the new CRM service,
   useEffect(() => {
-    // Load customers and statistics when component mounts
-    // This will be implemented with the new API
+    // Load customers and statistics when component mounts,
+    // This will be implemented with the new API,
   }, []);
 
-  // Mock-Daten für KPI-Cards
-  const kpiData = {
+  // Mock-Daten für KPI-Cards;
+const kpiData = {
     gesamtKunden: 156,
     aktiveKunden: 142,
     neueKunden: 12,
@@ -118,8 +55,8 @@ const CustomerManagement: React.FC = () => {
     durchgefuehrteAktivitaeten: 67
   };
 
-  // Mock-Daten für Kunden
-  const kunden = [
+  // Mock-Daten für Kunden;
+const kunden = [
         {
           id: '1',
       kunden_nr: 'K-2024-0001',
@@ -137,8 +74,8 @@ const CustomerManagement: React.FC = () => {
       email: 'info@agrarhof-mueller.de',
       anzahl_kontakte: 3,
       anzahl_aktivitaeten: 12,
-      anzahl_chancen: 2,
-      letzte_aktivitaet: '2024-01-15'
+      anzahl_chancen: 2,;
+letzte_aktivitaet: '2024-01-15'
         },
         {
           id: '2',
@@ -157,8 +94,8 @@ const CustomerManagement: React.FC = () => {
       email: 'schmidt@bauernhof.de',
       anzahl_kontakte: 1,
       anzahl_aktivitaeten: 8,
-      anzahl_chancen: 1,
-      letzte_aktivitaet: '2024-01-16'
+      anzahl_chancen: 1,;
+letzte_aktivitaet: '2024-01-16'
         },
         {
           id: '3',
@@ -177,13 +114,13 @@ const CustomerManagement: React.FC = () => {
       email: 'info@lwg.de',
       anzahl_kontakte: 2,
       anzahl_aktivitaeten: 15,
-      anzahl_chancen: 3,
-      letzte_aktivitaet: '2024-01-17'
+      anzahl_chancen: 3,;
+letzte_aktivitaet: '2024-01-17'
     }
   ];
 
-  // Mock-Daten für Leads
-  const leads = [
+  // Mock-Daten für Leads;
+const leads = [
     {
       id: '1',
       lead_nr: 'L-2024-0001',
@@ -197,8 +134,8 @@ const CustomerManagement: React.FC = () => {
       wert: 50000,
       verantwortlicher_name: 'Dr. Hans Weber',
       naechster_kontakt: '2024-01-20',
-      anzahl_aktivitaeten: 2,
-      letzte_aktivitaet: '2024-01-17'
+      anzahl_aktivitaeten: 2,;
+letzte_aktivitaet: '2024-01-17'
     },
     {
       id: '2',
@@ -213,8 +150,8 @@ const CustomerManagement: React.FC = () => {
       wert: 30000,
       verantwortlicher_name: 'Maria Schmidt',
       naechster_kontakt: '2024-01-22',
-      anzahl_aktivitaeten: 3,
-      letzte_aktivitaet: '2024-01-16'
+      anzahl_aktivitaeten: 3,;
+letzte_aktivitaet: '2024-01-16'
     },
     {
       id: '3',
@@ -229,13 +166,13 @@ const CustomerManagement: React.FC = () => {
       wert: 15000,
       verantwortlicher_name: 'Peter Müller',
       naechster_kontakt: '2024-01-25',
-      anzahl_aktivitaeten: 1,
-      letzte_aktivitaet: '2024-01-15'
+      anzahl_aktivitaeten: 1,;
+letzte_aktivitaet: '2024-01-15'
     }
   ];
 
-  // Mock-Daten für Verkaufsaktivitäten
-  const aktivitaeten = [
+  // Mock-Daten für Verkaufsaktivitäten;
+const aktivitaeten = [
     {
       id: '1',
       aktivitaet_nr: 'VA-2024-0001',
@@ -283,8 +220,8 @@ const CustomerManagement: React.FC = () => {
     }
   ];
 
-  // Mock-Daten für Verkaufschancen
-  const chancen = [
+  // Mock-Daten für Verkaufschancen;
+const chancen = [
     {
       id: '1',
       chance_nr: 'VC-2024-0001',
@@ -323,8 +260,8 @@ const CustomerManagement: React.FC = () => {
     }
   ];
 
-  // Mock-Daten für Kontakte
-  const kontakte = [
+  // Mock-Daten für Kontakte;
+const kontakte = [
     {
       id: '1',
       kontakt_nr: 'KT-2024-0001',
@@ -363,8 +300,8 @@ const CustomerManagement: React.FC = () => {
     }
   ];
 
-  // Mock-Daten für Tagesprotokolle
-  const mockTagesprotokolle = [
+  // Mock-Daten für Tagesprotokolle;
+const mockTagesprotokolle = [
     {
       id: '1',
       protokollNr: 'TP-2024-05-001',
@@ -391,9 +328,8 @@ const CustomerManagement: React.FC = () => {
       anzahlEintraege: 8,
       gesamtZeitaufwandMinuten: 320
     }
-  ];
-
-  const mockTagesprotokollEintraege = [
+  ];;
+const mockTagesprotokollEintraege = [
     {
       id: '1',
       protokollNr: 'TP-2024-05-001',
@@ -457,9 +393,8 @@ const CustomerManagement: React.FC = () => {
       kundenspezifischeAbsprachen: 'Albert Koopmann hat Futter bestellt',
       zeitaufwandMinuten: 30
     }
-  ];
-
-  const mockTagesprotokollVorlagen = [
+  ];;
+const mockTagesprotokollVorlagen = [
     {
       id: '1',
       vorlagenName: 'Betriebsbesuch - Standard',
@@ -490,84 +425,75 @@ const CustomerManagement: React.FC = () => {
       standardErgebnis: 'Lieferung erfolgreich',
       standardNaechsteAktion: 'Rechnung erstellen'
     }
-  ];
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleOpenDialog = (type: 'kunde' | 'lead' | 'aktivitaet' | 'chance' | 'kontakt' | 'protokoll' | 'eintrag') => {
-    setDialogType(type);
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const getStatusColor = (status: string) => {
+  ];;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (type: 'kunde' | 'lead' | 'aktivitaet' | 'chance' | 'kontakt' | 'protokoll' | 'eintrag') => {
+    setDialogType(type);,
+    setOpenDialog(true);,
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'AKTIV':
       case 'DURCHGEFÜHRT':
       case 'GEWONNEN':
-        return 'success';
+        return 'success';,
       case 'IN_BEARBEITUNG':
       case 'VERHANDLUNG':
       case 'ANGEBOT':
-        return 'warning';
+        return 'warning';,
       case 'INAKTIV':
       case 'VERLOREN':
       case 'ABGESAGT':
-        return 'error';
+        return 'error';,
       default:
-        return 'default';
+        return 'default';,
     }
-  };
-
-  const getPrioritaetColor = (prioritaet: string) => {
+  };;
+const getPrioritaetColor = (prioritaet: string) => {
     switch (prioritaet) {
       case 'KRITISCH':
-        return 'error';
+        return 'error';,
       case 'HOCH':
-        return 'warning';
+        return 'warning';,
       case 'NORMAL':
-        return 'info';
+        return 'info';,
       case 'NIEDRIG':
-        return 'default';
+        return 'default';,
       default:
-        return 'default';
+        return 'default';,
     }
-  };
-
-  const getKundenseitColor = (seit: string) => {
+  };;
+const getKundenseitColor = (seit: string) => {
     switch (seit) {
       case 'A':
-        return 'success';
+        return 'success';,
       case 'B':
-        return 'info';
+        return 'info';,
       case 'C':
-        return 'warning';
+        return 'warning';,
       case 'D':
-        return 'error';
+        return 'error';,
       default:
-        return 'default';
+        return 'default';,
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('de-DE');
-  };
-
-  const formatCurrency = (amount: number) => {
+  };;
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('de-DE');,
+  };;
+const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR'
+      style: 'currency', currency: 'EUR'
     }).format(amount);
   };
 
     return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
-      {/* Header */}
+      {/* Header */, }
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Kundenverwaltung (CRM)
@@ -577,9 +503,9 @@ const CustomerManagement: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* KPI Dashboard */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      {/* KPI Dashboard */,}
+      <Grid container spacing={3,} sx={{ mb: 4 }}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -588,10 +514,10 @@ const CustomerManagement: React.FC = () => {
                     Aktive Kunden
         </Typography>
                   <Typography variant="h5" component="div">
-                    {kpiData.aktiveKunden}
+                    {kpiData.aktiveKunden,}
                   </Typography>
                   <Typography variant="body2" color="success.main">
-                    +{kpiData.neueKunden} neu
+                    +{kpiData.neueKunden,} neu
                   </Typography>
       </Box>
                 <Avatar sx={{ bgcolor: 'success.main' }}>
@@ -602,7 +528,7 @@ const CustomerManagement: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -611,10 +537,10 @@ const CustomerManagement: React.FC = () => {
                     Konversionsrate
                   </Typography>
                   <Typography variant="h5" component="div">
-                    {kpiData.konversionsrate}%
+                    {kpiData.konversionsrate,}%
                   </Typography>
                   <Typography variant="body2" color="info.main">
-                    {kpiData.gewonneneLeads} von {kpiData.gesamtLeads}
+                    {kpiData.gewonneneLeads,} von {kpiData.gesamtLeads,}
                   </Typography>
                 </Box>
                 <Avatar sx={{ bgcolor: 'info.main' }}>
@@ -625,7 +551,7 @@ const CustomerManagement: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
       <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -634,10 +560,10 @@ const CustomerManagement: React.FC = () => {
                     Bewertung (Ø)
                   </Typography>
                   <Typography variant="h5" component="div">
-                    {kpiData.durchschnittlicheBewertung}
+                    {kpiData.durchschnittlicheBewertung,}
                   </Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Rating value={kpiData.durchschnittlicheBewertung} readOnly size="small" />
+                    <Rating value={kpiData.durchschnittlicheBewertung,} readOnly size="small" />
                   </Box>
                 </Box>
                 <Avatar sx={{ bgcolor: 'warning.main' }}>
@@ -648,7 +574,7 @@ const CustomerManagement: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -657,10 +583,10 @@ const CustomerManagement: React.FC = () => {
                     Aktivitäten
                   </Typography>
                   <Typography variant="h5" component="div">
-                    {kpiData.durchgefuehrteAktivitaeten}
+                    {kpiData.durchgefuehrteAktivitaeten,}
                   </Typography>
                   <Typography variant="body2" color="primary.main">
-                    von {kpiData.gesamtAktivitaeten}
+                    von {kpiData.gesamtAktivitaeten,}
                   </Typography>
                 </Box>
                 <Avatar sx={{ bgcolor: 'primary.main' }}>
@@ -672,22 +598,22 @@ const CustomerManagement: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation */,}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabValue} onChange={handleTabChange} aria-label="CRM Tabs">
-          <Tab label="Kunden" icon={<PeopleIcon />} iconPosition="start" />
-          <Tab label="Leads" icon={<PersonAddIcon />} iconPosition="start" />
-          <Tab label="Aktivitäten" icon={<AssignmentIcon />} iconPosition="start" />
-          <Tab label="Verkaufschancen" icon={<TrendingUpIcon />} iconPosition="start" />
-          <Tab label="Kontakte" icon={<ContactPhoneIcon />} iconPosition="start" />
-          <Tab label="Statistiken" icon={<AssessmentIcon />} iconPosition="start" />
-          <Tab label="Tagesprotokolle" icon={<DescriptionIcon />} iconPosition="start" />
+        <Tabs value={tabValue,} onChange={handleTabChange,} aria-label="CRM Tabs">
+          <Tab label="Kunden" icon={<PeopleIcon />,} iconPosition="start" />
+          <Tab label="Leads" icon={<PersonAddIcon />,} iconPosition="start" />
+          <Tab label="Aktivitäten" icon={<AssignmentIcon />,} iconPosition="start" />
+          <Tab label="Verkaufschancen" icon={<TrendingUpIcon />,} iconPosition="start" />
+          <Tab label="Kontakte" icon={<ContactPhoneIcon />,} iconPosition="start" />
+          <Tab label="Statistiken" icon={<AssessmentIcon />,} iconPosition="start" />
+          <Tab label="Tagesprotokolle" icon={<DescriptionIcon />,} iconPosition="start" />
         </Tabs>
       </Box>
 
-      {/* Tab Panels */}
-      <TabPanel value={tabValue} index={0}>
-        <TableContainer component={Paper}>
+      {/* Tab Panels */,}
+      <TabPanel value={tabValue,} index={0,}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -705,51 +631,50 @@ const CustomerManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {kunden.map((kunde) => (
-                <TableRow key={kunde.id}>
-                  <TableCell>{kunde.kunden_nr}</TableCell>
+              {kunden.map((kunde) => (<TableRow key={kunde.id, }>
+                  <TableCell>{kunde.kunden_nr, }</TableCell>
                   <TableCell>
                     <Box>
                       <Typography variant="body2" fontWeight="bold">
-                        {kunde.firmenname}
+                        {kunde.firmenname, }
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {kunde.strasse}, {kunde.plz} {kunde.ort}
+                        {kunde.strasse, }, {kunde.plz, } {kunde.ort, }
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Chip label={kunde.kundentyp} size="small" />
+                    <Chip label={kunde.kundentyp, } size="small" />
                   </TableCell>
                   <TableCell>
                     <Chip 
-                      label={kunde.kundenstatus} 
-                      color={getStatusColor(kunde.kundenstatus) as any}
+                      label={kunde.kundenstatus, } 
+                      color={getStatusColor(kunde.kundenstatus) as any,}
                       size="small" 
                     />
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Rating value={kunde.kundenbewertung} readOnly size="small" />
+                      <Rating value={kunde.kundenbewertung,} readOnly size="small" />
                     </Box>
                   </TableCell>
                   <TableCell>
                     <Chip 
-                      label={kunde.kundenseit} 
-                      color={getKundenseitColor(kunde.kundenseit) as any}
+                      label={kunde.kundenseit,} 
+                      color={getKundenseitColor(kunde.kundenseit) as any,}
                       size="small" 
                     />
                   </TableCell>
                   <TableCell>
-                    <Chip label={kunde.umsatzklasse} size="small" />
+                    <Chip label={kunde.umsatzklasse,} size="small" />
                   </TableCell>
-                  <TableCell>{kunde.kundenbetreuer_name}</TableCell>
+                  <TableCell>{kunde.kundenbetreuer_name,}</TableCell>
                   <TableCell>
-                    <Badge badgeContent={kunde.anzahl_kontakte} color="primary">
+                    <Badge badgeContent={kunde.anzahl_kontakte,} color="primary">
                       <ContactPhoneIcon />
                     </Badge>
                   </TableCell>
-                  <TableCell>{formatDate(kunde.letzte_aktivitaet)}</TableCell>
+                  <TableCell>{formatDate(kunde.letzte_aktivitaet),}</TableCell>
                   <TableCell>
                     <IconButton size="small">
                       <ViewIcon />
@@ -768,8 +693,8 @@ const CustomerManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={1}>
-        <TableContainer component={Paper}>
+      <TabPanel value={tabValue,} index={1,}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -786,40 +711,39 @@ const CustomerManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {leads.map((lead) => (
-                <TableRow key={lead.id}>
-                  <TableCell>{lead.lead_nr}</TableCell>
+              {leads.map((lead) => (<TableRow key={lead.id, }>
+                  <TableCell>{lead.lead_nr, }</TableCell>
                   <TableCell>
                     <Box>
                       <Typography variant="body2" fontWeight="bold">
-                        {lead.firmenname}
+                        {lead.firmenname, }
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {lead.email} | {lead.telefon}
+                        {lead.email, } | {lead.telefon, }
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{lead.ansprechpartner}</TableCell>
+                  <TableCell>{lead.ansprechpartner, }</TableCell>
                   <TableCell>
-                    <Chip label={lead.quelle} size="small" />
+                    <Chip label={lead.quelle, } size="small" />
                   </TableCell>
                   <TableCell>
                     <Chip 
-                      label={lead.status} 
-                      color={getStatusColor(lead.status) as any}
+                      label={lead.status, } 
+                      color={getStatusColor(lead.status) as any,}
                       size="small" 
                     />
                   </TableCell>
                   <TableCell>
                     <Chip 
-                      label={lead.prioritaet} 
-                      color={getPrioritaetColor(lead.prioritaet) as any}
+                      label={lead.prioritaet,} 
+                      color={getPrioritaetColor(lead.prioritaet) as any,}
                       size="small" 
                     />
                   </TableCell>
-                  <TableCell>{formatCurrency(lead.wert)}</TableCell>
-                  <TableCell>{lead.verantwortlicher_name}</TableCell>
-                  <TableCell>{formatDate(lead.naechster_kontakt)}</TableCell>
+                  <TableCell>{formatCurrency(lead.wert),}</TableCell>
+                  <TableCell>{lead.verantwortlicher_name,}</TableCell>
+                  <TableCell>{formatDate(lead.naechster_kontakt),}</TableCell>
                   <TableCell>
                     <IconButton size="small">
                       <ViewIcon />
@@ -838,8 +762,8 @@ const CustomerManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={2}>
-        <TableContainer component={Paper}>
+      <TabPanel value={tabValue,} index={2,}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -856,36 +780,35 @@ const CustomerManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {aktivitaeten.map((aktivitaet) => (
-                <TableRow key={aktivitaet.id}>
-                  <TableCell>{aktivitaet.aktivitaet_nr}</TableCell>
+              {aktivitaeten.map((aktivitaet) => (<TableRow key={aktivitaet.id, }>
+                  <TableCell>{aktivitaet.aktivitaet_nr, }</TableCell>
                   <TableCell>
-                    <Chip label={aktivitaet.aktivitaet_typ} size="small" />
+                    <Chip label={aktivitaet.aktivitaet_typ, } size="small" />
                   </TableCell>
-                  <TableCell>{aktivitaet.titel}</TableCell>
+                  <TableCell>{aktivitaet.titel, }</TableCell>
                   <TableCell>
                     <Box>
                       <Typography variant="body2">
-                        {formatDate(aktivitaet.datum)}
+                        {formatDate(aktivitaet.datum),}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {aktivitaet.uhrzeit}
+                        {aktivitaet.uhrzeit,}
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{aktivitaet.kunde_name || aktivitaet.lead_name}</TableCell>
+                  <TableCell>{aktivitaet.kunde_name || aktivitaet.lead_name,}</TableCell>
                   <TableCell>
                     <Chip 
-                      label={aktivitaet.status} 
-                      color={getStatusColor(aktivitaet.status) as any}
+                      label={aktivitaet.status,} 
+                      color={getStatusColor(aktivitaet.status) as any,}
                       size="small" 
                     />
                   </TableCell>
-                  <TableCell>{aktivitaet.dauer} Min</TableCell>
-                  <TableCell>{aktivitaet.verantwortlicher_name}</TableCell>
+                  <TableCell>{aktivitaet.dauer,} Min</TableCell>
+                  <TableCell>{aktivitaet.verantwortlicher_name,}</TableCell>
                   <TableCell>
                     <Typography variant="body2" noWrap sx={{ maxWidth: 200 }}>
-                      {aktivitaet.ergebnis}
+                      {aktivitaet.ergebnis,}
                       </Typography>
                   </TableCell>
                   <TableCell>
@@ -906,8 +829,8 @@ const CustomerManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={3}>
-        <TableContainer component={Paper}>
+      <TabPanel value={tabValue,} index={3,}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -924,40 +847,39 @@ const CustomerManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {chancen.map((chance) => (
-                <TableRow key={chance.id}>
-                  <TableCell>{chance.chance_nr}</TableCell>
-                  <TableCell>{chance.titel}</TableCell>
-                  <TableCell>{chance.kunde_name}</TableCell>
+              {chancen.map((chance) => (<TableRow key={chance.id, }>
+                  <TableCell>{chance.chance_nr, }</TableCell>
+                  <TableCell>{chance.titel, }</TableCell>
+                  <TableCell>{chance.kunde_name, }</TableCell>
                   <TableCell>
-                    <Chip label={chance.phase} size="small" />
+                    <Chip label={chance.phase, } size="small" />
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <Box sx={{ width: '100%', mr: 1 }}>
-                        <LinearProgress 
-                          variant="determinate" 
-                          value={chance.wahrscheinlichkeit} 
+                        <LinearProgress ;
+variant="determinate" 
+                          value={chance.wahrscheinlichkeit, } 
                           sx={{ height: 8, borderRadius: 5 }}
                         />
                       </Box>
                       <Box sx={{ minWidth: 35 }}>
                         <Typography variant="body2" color="text.secondary">
-                          {chance.wahrscheinlichkeit}%
+                          {chance.wahrscheinlichkeit, }%
                         </Typography>
                       </Box>
                     </Box>
                   </TableCell>
-                  <TableCell>{formatCurrency(chance.wert)}</TableCell>
-                  <TableCell>{formatDate(chance.erwarteter_abschluss)}</TableCell>
+                  <TableCell>{formatCurrency(chance.wert),}</TableCell>
+                  <TableCell>{formatDate(chance.erwarteter_abschluss),}</TableCell>
                   <TableCell>
                     <Chip 
-                      label={chance.status} 
-                      color={getStatusColor(chance.status) as any}
+                      label={chance.status,} 
+                      color={getStatusColor(chance.status) as any,}
                       size="small" 
                     />
                   </TableCell>
-                  <TableCell>{chance.verantwortlicher_name}</TableCell>
+                  <TableCell>{chance.verantwortlicher_name,}</TableCell>
                   <TableCell>
                     <IconButton size="small">
                       <ViewIcon />
@@ -976,8 +898,8 @@ const CustomerManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={4}>
-        <TableContainer component={Paper}>
+      <TabPanel value={tabValue,} index={4,}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -992,36 +914,33 @@ const CustomerManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {kontakte.map((kontakt) => (
-                <TableRow key={kontakt.id}>
-                  <TableCell>{kontakt.kontakt_nr}</TableCell>
+              {kontakte.map((kontakt) => (<TableRow key={kontakt.id, }>
+                  <TableCell>{kontakt.kontakt_nr, }</TableCell>
                   <TableCell>
                     <Box>
                       <Typography variant="body2" fontWeight="bold">
-                        {kontakt.anrede} {kontakt.vorname} {kontakt.nachname}
+                        {kontakt.anrede, } {kontakt.vorname, } {kontakt.nachname, }
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{kontakt.position}</TableCell>
-                  <TableCell>{kontakt.kunde_name}</TableCell>
+                  <TableCell>{kontakt.position, }</TableCell>
+                  <TableCell>{kontakt.kunde_name, }</TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <PhoneIcon sx={{ mr: 1, fontSize: 16 }} />
-                      {kontakt.telefon}
+                      {kontakt.telefon, }
                     </Box>
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <EmailIcon sx={{ mr: 1, fontSize: 16 }} />
-                      {kontakt.email}
+                      {kontakt.email, }
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {kontakt.ist_hauptkontakt ? (
-                      <Chip label="Hauptkontakt" color="primary" size="small" />
-                    ) : (
-                      <Chip label="Kontakt" size="small" />
-                    )}
+                    {kontakt.ist_hauptkontakt ? (, <Chip label="Hauptkontakt" color="primary" size="small" />) : (
+                      <Chip label="Kontakt" size="small" />,
+                    ),}
                   </TableCell>
                   <TableCell>
                     <IconButton size="small">
@@ -1044,9 +963,9 @@ const CustomerManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={5}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+      <TabPanel value={tabValue,} index={5,}>
+        <Grid container spacing={3,}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -1060,7 +979,7 @@ const CustomerManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -1074,47 +993,47 @@ const CustomerManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   CRM-Statistiken
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={3}>
+                <Grid container spacing={2,}>
+                  <Grid item xs={12,} sm={3,}>
                     <Box sx={{ textAlign: 'center' }}>
                       <Typography variant="h4" color="success.main">
-                        {kpiData.aktiveKunden}
+                        {kpiData.aktiveKunden,}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Aktive Kunden
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} sm={3}>
+                  <Grid item xs={12,} sm={3,}>
                     <Box sx={{ textAlign: 'center' }}>
                       <Typography variant="h4" color="info.main">
-                        {kpiData.konversionsrate}%
+                        {kpiData.konversionsrate,}%
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Konversionsrate
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} sm={3}>
+                  <Grid item xs={12,} sm={3,}>
                     <Box sx={{ textAlign: 'center' }}>
                       <Typography variant="h4" color="warning.main">
-                        {kpiData.durchschnittlicheBewertung}
+                        {kpiData.durchschnittlicheBewertung,}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Bewertung (Ø)
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} sm={3}>
+                  <Grid item xs={12,} sm={3,}>
                     <Box sx={{ textAlign: 'center' }}>
                       <Typography variant="h4" color="primary.main">
-                        {kpiData.durchgefuehrteAktivitaeten}
+                        {kpiData.durchgefuehrteAktivitaeten,}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Aktivitäten (Monat)
@@ -1128,29 +1047,29 @@ const CustomerManagement: React.FC = () => {
         </Grid>
       </TabPanel>
 
-      {/* Tagesprotokolle Tab */}
-      <TabPanel value={tabValue} index={6}>
+      {/* Tagesprotokolle Tab */,}
+      <TabPanel value={tabValue,} index={6,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Tagesprotokolle</Typography>
           <div className="flex space-x-2">
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('protokoll')}
+            <Button;
+variant="outlined"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('protokoll'),}
             >
               Neues Protokoll
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('eintrag')}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('eintrag'),}
             >
               Neuer Eintrag
             </Button>
           </div>
         </div>
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -1166,42 +1085,38 @@ const CustomerManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {mockTagesprotokolle.map((protokoll) => (
-                <TableRow key={protokoll.id}>
+              {mockTagesprotokolle.map((protokoll) => (<TableRow key={protokoll.id, }>
                   <TableCell>
                     <Typography variant="subtitle2" className="font-semibold">
-                      {protokoll.protokollNr}
+                      {protokoll.protokollNr, }
                     </Typography>
                   </TableCell>
-                  <TableCell>{formatDate(protokoll.protokollDatum)}</TableCell>
+                  <TableCell>{formatDate(protokoll.protokollDatum),}</TableCell>
                   <TableCell>
-                    {protokoll.zeitraumStart === protokoll.zeitraumEnde 
-                      ? formatDate(protokoll.zeitraumStart)
-                      : `${formatDate(protokoll.zeitraumStart)} - ${formatDate(protokoll.zeitraumEnde)}`
+                    {protokoll.zeitraumStart === protokoll.zeitraumEnde ,
+                      ? formatDate(protokoll.zeitraumStart),
+                      : `${formatDate(protokoll.zeitraumStart)} - ${formatDate(protokoll.zeitraumEnde),}`
                     }
                   </TableCell>
-                  <TableCell>{protokoll.mitarbeiterName}</TableCell>
+                  <TableCell>{protokoll.mitarbeiterName,}</TableCell>
                   <TableCell>
                     <Chip
-                      label={protokoll.status}
+                      label={protokoll.status,}
                       color={protokoll.status === 'freigegeben' ? 'success' : 'warning'}
                       size="small"
                     />
                   </TableCell>
                   <TableCell>
-                    <Badge badgeContent={protokoll.anzahlEintraege} color="primary">
+                    <Badge badgeContent={protokoll.anzahlEintraege,} color="primary">
                       <AssignmentIcon />
                     </Badge>
                   </TableCell>
-                  <TableCell>{Math.round(protokoll.gesamtZeitaufwandMinuten / 60 * 10) / 10}h</TableCell>
+                  <TableCell>{Math.round(protokoll.gesamtZeitaufwandMinuten / 60 * 10) / 10,}h</TableCell>
                   <TableCell>
-                    {protokoll.freigegebenVonName ? (
-                      <div>
-                        <Typography variant="caption" display="block">
-                          {protokoll.freigegebenVonName}
+                    {protokoll.freigegebenVonName ? (<div>, <Typography variant="caption" display="block">, {protokoll.freigegebenVonName, }
                         </Typography>
                         <Typography variant="caption" color="textSecondary">
-                          {formatDate(protokoll.freigegebenAm?.split(' ')[0])}
+                          {formatDate(protokoll.freigegebenAm?.split(' ')[0]),}
                         </Typography>
                       </div>
                     ) : (
@@ -1232,10 +1147,10 @@ const CustomerManagement: React.FC = () => {
           </Table>
         </TableContainer>
 
-        {/* Tagesprotokoll-Einträge */}
+        {/* Tagesprotokoll-Einträge */,}
         <div className="mt-6">
           <Typography variant="h6" className="mb-4">Protokoll-Einträge</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -1252,74 +1167,70 @@ const CustomerManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockTagesprotokollEintraege.map((eintrag) => (
-                  <TableRow key={eintrag.id}>
+                {mockTagesprotokollEintraege.map((eintrag) => (<TableRow key={eintrag.id, }>
                     <TableCell>
                       <div>
                         <Typography variant="body2" className="font-semibold">
-                          {eintrag.protokollNr}
+                          {eintrag.protokollNr, }
                         </Typography>
                         <Typography variant="caption" className="text-gray-600">
-                          {eintrag.mitarbeiterName}
+                          {eintrag.mitarbeiterName, }
                         </Typography>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2" className="font-semibold">
-                          {eintrag.kundeName}
+                          {eintrag.kundeName, }
                         </Typography>
                         <Typography variant="caption" className="text-gray-600">
-                          {eintrag.kontaktName}
+                          {eintrag.kontaktName, }
                         </Typography>
                       </div>
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={eintrag.eintragTyp}
-                        color={getStatusColor(eintrag.eintragTyp.toLowerCase())}
+                        label={eintrag.eintragTyp, }
+                        color={getStatusColor(eintrag.eintragTyp.toLowerCase()),}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={eintrag.kontaktRichtung}
+                        label={eintrag.kontaktRichtung,}
                         color={eintrag.kontaktRichtung === 'EINGEHEND' ? 'info' : 'primary'}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" className="font-semibold">
-                        {eintrag.titel}
+                        {eintrag.titel,}
                       </Typography>
                       <Typography variant="caption" className="text-gray-600">
-                        {eintrag.beschreibung}
+                        {eintrag.beschreibung,}
                       </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                        {eintrag.ergebnis}
+                        {eintrag.ergebnis,}
                       </Typography>
                       <Typography variant="caption" className="text-gray-600">
-                        {eintrag.naechsteAktion}
+                        {eintrag.naechsteAktion,}
                     </Typography>
                   </TableCell>
                   <TableCell>
                       {eintrag.terminVereinbarung ? formatDate(eintrag.terminVereinbarung) : '-'}
                     </TableCell>
                     <TableCell>
-                      {eintrag.mengeVereinbarung && eintrag.preisVereinbarung ? (
-                        <div>
-                          <Typography variant="body2">
-                            {eintrag.mengeVereinbarung} {eintrag.einheitVereinbarung}
+                      {eintrag.mengeVereinbarung && eintrag.preisVereinbarung ? (<div>, <Typography variant="body2">, {eintrag.mengeVereinbarung, } {eintrag.einheitVereinbarung, }
                           </Typography>
                           <Typography variant="caption" className="text-gray-600">
-                            {formatCurrency(eintrag.preisVereinbarung)}/{eintrag.einheitVereinbarung}
+                            {formatCurrency(eintrag.preisVereinbarung),}/{eintrag.einheitVereinbarung,}
                           </Typography>
                         </div>
                       ) : '-'}
                     </TableCell>
-                    <TableCell>{eintrag.zeitaufwandMinuten}min</TableCell>
+                    <TableCell>{eintrag.zeitaufwandMinuten,}min</TableCell>
                     <TableCell>
                       <div className="flex space-x-1">
                         <IconButton size="small" color="primary">
@@ -1340,10 +1251,10 @@ const CustomerManagement: React.FC = () => {
           </TableContainer>
         </div>
 
-        {/* Tagesprotokoll-Vorlagen */}
+        {/* Tagesprotokoll-Vorlagen */,}
         <div className="mt-6">
           <Typography variant="h6" className="mb-4">Protokoll-Vorlagen</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -1357,27 +1268,26 @@ const CustomerManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockTagesprotokollVorlagen.map((vorlage) => (
-                  <TableRow key={vorlage.id}>
+                {mockTagesprotokollVorlagen.map((vorlage) => (<TableRow key={vorlage.id, }>
                     <TableCell>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {vorlage.vorlagenName}
+                        {vorlage.vorlagenName, }
                       </Typography>
                       <Typography variant="caption" className="text-gray-600">
-                        {vorlage.beschreibung}
+                        {vorlage.beschreibung, }
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={vorlage.eintragTyp}
-                        color={getStatusColor(vorlage.eintragTyp.toLowerCase())}
+                        label={vorlage.eintragTyp, }
+                        color={getStatusColor(vorlage.eintragTyp.toLowerCase()),}
                           size="small" 
                       />
                     </TableCell>
-                    <TableCell>{vorlage.standardTitel}</TableCell>
-                    <TableCell>{vorlage.standardBeschreibung}</TableCell>
-                    <TableCell>{vorlage.standardErgebnis}</TableCell>
-                    <TableCell>{vorlage.standardNaechsteAktion}</TableCell>
+                    <TableCell>{vorlage.standardTitel,}</TableCell>
+                    <TableCell>{vorlage.standardBeschreibung,}</TableCell>
+                    <TableCell>{vorlage.standardErgebnis,}</TableCell>
+                    <TableCell>{vorlage.standardNaechsteAktion,}</TableCell>
                     <TableCell>
                       <div className="flex space-x-1">
                         <IconButton size="small" color="primary">
@@ -1399,39 +1309,39 @@ const CustomerManagement: React.FC = () => {
         </div>
       </TabPanel>
 
-      {/* Floating Action Button */}
+      {/* Floating Action Button */,}
       <Fab
         color="primary"
         aria-label="add"
         sx={{ position: 'fixed', bottom: 16, right: 16 }}
-        onClick={() => handleOpenDialog('kunde')}
+        onClick={() => handleOpenDialog('kunde'),}
       >
         <AddIcon />
       </Fab>
 
-      {/* Generic Dialog */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      {/* Generic Dialog */,}
+      <Dialog open={openDialog,} onClose={handleCloseDialog,} maxWidth="md" fullWidth>
         <DialogTitle>
-          {dialogType === 'kunde' && 'Neuen Kunden erstellen'}
-          {dialogType === 'lead' && 'Neuen Lead erstellen'}
-          {dialogType === 'aktivitaet' && 'Neue Verkaufsaktivität'}
-          {dialogType === 'chance' && 'Neue Verkaufschance'}
-          {dialogType === 'kontakt' && 'Neuen Kontakt erstellen'}
-          {dialogType === 'protokoll' && 'Neues Tagesprotokoll erstellen'}
-          {dialogType === 'eintrag' && 'Neuen Protokoll-Eintrag erstellen'}
+          {dialogType === 'kunde' && 'Neuen Kunden erstellen',}
+          {dialogType === 'lead' && 'Neuen Lead erstellen',}
+          {dialogType === 'aktivitaet' && 'Neue Verkaufsaktivität',}
+          {dialogType === 'chance' && 'Neue Verkaufschance',}
+          {dialogType === 'kontakt' && 'Neuen Kontakt erstellen',}
+          {dialogType === 'protokoll' && 'Neues Tagesprotokoll erstellen',}
+          {dialogType === 'eintrag' && 'Neuen Protokoll-Eintrag erstellen',}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid container spacing={2,}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="Firmenname"
-                  variant="outlined"
+                label="Firmenname";
+variant="outlined"
                   size="small"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
                 <FormControl fullWidth size="small">
                   <InputLabel>Kundentyp</InputLabel>
                   <Select label="Kundentyp">
@@ -1442,34 +1352,34 @@ const CustomerManagement: React.FC = () => {
                   </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="E-Mail"
-                  variant="outlined"
+                label="E-Mail";
+variant="outlined"
                   size="small"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <TextField
                 fullWidth
-                label="Telefon"
-                  variant="outlined"
+                label="Telefon";
+variant="outlined"
                   size="small"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12,}>
               <TextField
                 fullWidth
-                label="Adresse"
-                  variant="outlined"
+                label="Adresse";
+variant="outlined"
                 multiline
-                  rows={3}
+                  rows={3,}
               />
             </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12,}>
                 <FormControlLabel
-                  control={<Switch />}
+                  control={<Switch />,}
                   label="Aktiv"
               />
             </Grid>
@@ -1477,8 +1387,8 @@ const CustomerManagement: React.FC = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          <Button onClick={handleCloseDialog} variant="contained">
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          <Button onClick={handleCloseDialog,} variant="contained">
             Speichern
           </Button>
         </DialogActions>

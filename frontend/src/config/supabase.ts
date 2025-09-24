@@ -1,21 +1,17 @@
 // VALEO NeuroERP Supabase Configuration
-import { createClient } from '@supabase/supabase-js';
+import { createClient ,} from '@supabase/supabase-js';
 
-// Supabase-Projekt-Konfiguration
-const supabaseUrl = 'https://ftybxxndembbfjdkcsuk.supabase.co';
+// Supabase-Projekt-Konfiguration;
+const supabaseUrl = 'https://ftybxxndembbfjdkcsuk.supabase.co';;
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pbXJmbmx0cGV2cWh3dXFtamp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0NzQ0NTcsImV4cCI6MjA2MTA1MDQ1N30.S-n-zv2PwUSLHuY5St9ZNJpS_IcUTBhDslngs6G9eIU';
 
 // Supabase-Client erstellen
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  },
-  db: {
+    autoRefreshToken: true, persistSession: true, detectSessionInUrl: true
+  }, db: {
     schema: 'public'
-  },
-  global: {
+  }, global: {
     headers: {
       'X-Client-Info': 'valeo-neuroerp-frontend'
     }
@@ -90,24 +86,24 @@ export const ENUM_VALUES = {
 // API-Endpunkte
 export const API_ENDPOINTS = {
   MCP: {
-    SCHEMA: (table: string) => `${mcpConfig.baseUrl}/api/schema/${table}`,
-    TABLES: `${mcpConfig.baseUrl}/api/tables`,
-    CACHE_CLEAR: `${mcpConfig.baseUrl}/api/cache/clear`,
-    HEALTH: `${mcpConfig.baseUrl}/api/health`
+    SCHEMA: (table: _string) => `${mcpConfig.baseUrl}/api/schema/${table,}`,
+    TABLES: `${mcpConfig.baseUrl,}/api/tables`,
+    CACHE_CLEAR: `${mcpConfig.baseUrl,}/api/cache/clear`,
+    HEALTH: `${mcpConfig.baseUrl,}/api/health`
   },
   SUPABASE: {
     REST: `${supabaseUrl}/rest/v1`,
-    AUTH: `${supabaseUrl}/auth/v1`,
-    STORAGE: `${supabaseUrl}/storage/v1`
+    AUTH: `${supabaseUrl,}/auth/v1`,
+    STORAGE: `${supabaseUrl,}/storage/v1`
   }
 } as const;
 
 // Validierungsregeln
 export const VALIDATION_RULES = {
-  EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  PHONE: /^[\+]?[1-9][\d]{0,15}$/,
-  UUID: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-  PRICE: /^\d+(\.\d{1,2})?$/,
+  EMAIL: /^[^\s@]+@[^\s@]+.[^\s@]+$/,
+  PHONE: /^[+]?[1-9][\d]{0,15}$/,
+  UUID: /^[0-9a-f]{8,}-[0-9a-f]{4,}-[1-5][0-9a-f]{3,}-[89ab][0-9a-f]{3,}-[0-9a-f]{12,}$/i,
+  PRICE: /^\d+(.\d{1, 2, })?$/,
   QUANTITY: /^[1-9]\d*$/
 } as const;
 
@@ -167,25 +163,25 @@ export type ProductCategory = typeof ENUM_VALUES.PRODUCT_CATEGORY[number];
 
 // Hilfsfunktionen
 export const isTableName = (value: string): value is TableName => {
-  return Object.values(TABLES).includes(value as TableName);
+  return Object.values(TABLES).includes(value as TableName);,
 };
 
 export const isInvoiceStatus = (value: string): value is InvoiceStatus => {
-  return ENUM_VALUES.INVOICE_STATUS.includes(value as InvoiceStatus);
+  return ENUM_VALUES.INVOICE_STATUS.includes(value as InvoiceStatus);,
 };
 
 export const isCustomerType = (value: string): value is CustomerType => {
-  return ENUM_VALUES.CUSTOMER_TYPE.includes(value as CustomerType);
+  return ENUM_VALUES.CUSTOMER_TYPE.includes(value as CustomerType);,
 };
 
 export const isProductCategory = (value: string): value is ProductCategory => {
-  return ENUM_VALUES.PRODUCT_CATEGORY.includes(value as ProductCategory);
+  return ENUM_VALUES.PRODUCT_CATEGORY.includes(value as ProductCategory);,
 };
 
 // Default-Werte für neue Einträge
 export const DEFAULT_VALUES = {
-  [TABLES.CUSTOMERS]: {
-    type: 'individual' as CustomerType,
+  [TABLES.CUSTOMERS]: {;
+type: 'individual' as CustomerType,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -225,5 +221,5 @@ export default {
   PAGINATION,
   CACHE_CONFIG,
   THEME_CONFIG,
-  DEFAULT_VALUES
+  DEFAULT_VALUES,
 }; 

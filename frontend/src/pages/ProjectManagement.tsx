@@ -1,78 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Tabs,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-  LinearProgress,
-  Avatar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Switch,
-  FormControlLabel,
-  Rating,
-  Badge,
-  IconButton,
-  Box
-} from '@mui/material';
+  Grid, Card, CardContent, Typography, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, LinearProgress, Avatar, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, InputLabel, Select, MenuItem, Switch, FormControlLabel, Rating, Badge, IconButton, Box} from '@mui/material';
 import {
-  Assignment as AssignmentIcon,
-  Schedule as ScheduleIcon,
-  TrendingUp as TrendingUpIcon,
-  People as PeopleIcon,
-  AttachMoney as MoneyIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  Timer as TimerIcon,
-  Folder as FolderIcon,
-  Description as DescriptionIcon
-} from '@mui/icons-material';
-
+  Assignment as AssignmentIcon, Schedule as ScheduleIcon, TrendingUp as TrendingUpIcon, People as PeopleIcon, AttachMoney as MoneyIcon, CheckCircle as CheckCircleIcon, Warning as WarningIcon, Error as ErrorIcon, Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, Timer as TimerIcon, Folder as FolderIcon, Description as DescriptionIcon} from '@mui/icons-material';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`project-tabpanel-${index}`}
-      aria-labelledby={`project-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`project-tabpanel-${index, }`}
+      aria-labelledby={`project-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
+      {value === index && <Box sx={{ p: 3 }}>{children, }</Box>}
+    </div>);
 }
 
-// Mock-Daten für das Projektmanagement
+// Mock-Daten für das Projektmanagement;
 const mockProjectStats = {
   totalProjects: 12,
   activeProjects: 8,
@@ -82,8 +32,7 @@ const mockProjectStats = {
   totalHoursActual: 1850,
   totalBudgetPlanned: 850000,
   totalBudgetActual: 620000
-};
-
+};;
 const mockProjects = [
   {
     id: '1',
@@ -139,8 +88,7 @@ const mockProjects = [
     progressPercent: 100,
     deadlineStatus: 'pünktlich'
   }
-];
-
+];;
 const mockTasks = [
   {
     id: '1',
@@ -193,8 +141,7 @@ const mockTasks = [
     progressPercent: 0,
     deadlineStatus: 'pünktlich'
   }
-];
-
+];;
 const mockTimeTracking = [
   {
     id: '1',
@@ -224,8 +171,7 @@ const mockTimeTracking = [
     description: 'Tabellen-Design und Beziehungen',
     status: 'offen'
   }
-];
-
+];;
 const mockResources = [
   {
     id: '1',
@@ -247,8 +193,7 @@ const mockResources = [
     assignedHours: 800,
     totalHours: 2000
   }
-];
-
+];;
 const mockMilestones = [
   {
     id: '1',
@@ -274,8 +219,7 @@ const mockMilestones = [
     date: '2024-05-15',
     status: 'offen'
   }
-];
-
+];;
 const mockDocuments = [
   {
     id: '1',
@@ -299,7 +243,7 @@ const mockDocuments = [
   }
 ];
 
-// Helper-Funktionen
+// Helper-Funktionen;
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'aktiv': return 'primary';
@@ -309,8 +253,7 @@ const getStatusColor = (status: string) => {
     case 'abgebrochen': return 'error';
     default: return 'default';
   }
-};
-
+};;
 const getPriorityColor = (priority: string) => {
   switch (priority) {
     case 'kritisch': return 'error';
@@ -319,8 +262,7 @@ const getPriorityColor = (priority: string) => {
     case 'niedrig': return 'default';
     default: return 'default';
   }
-};
-
+};;
 const getDeadlineStatusColor = (status: string) => {
   switch (status) {
     case 'überfällig': return 'error';
@@ -328,48 +270,40 @@ const getDeadlineStatusColor = (status: string) => {
     case 'pünktlich': return 'success';
     default: return 'default';
   }
-};
-
+};;
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR'
+    style: 'currency', currency: 'EUR'
   }).format(amount);
-};
-
+};;
 const formatHours = (hours: number) => {
-  return `${hours.toFixed(1)}h`;
-};
-
+  return `${hours.toFixed(1),}h`;
+};;
 const formatFileSize = (bytes: number) => {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-};
-
-const ProjectManagement: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<'project' | 'task' | 'time' | 'resource'>('project');
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleOpenDialog = (type: 'project' | 'task' | 'time' | 'resource') => {
-    setDialogType(type);
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
+  if (bytes === 0) return '0 Bytes';,;
+const k = 1024;,;
+const sizes = ['Bytes', 'KB', 'MB', 'GB'];,;
+const i = Math.floor(Math.log(bytes) / Math.log(k));,
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];,
+};;
+const ProjectManagement: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [dialogType, setDialogType] = useState<'project' | 'task' | 'time' | 'resource'>('project');,;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (type: 'project' | 'task' | 'time' | 'resource') => {
+    setDialogType(type);,
+    setOpenDialog(true);,
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
   };
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
+      {/* Header */, }
       <div className="mb-6">
         <Typography variant="h4" className="text-gray-800 mb-2">
           Projektmanagement
@@ -379,15 +313,15 @@ const ProjectManagement: React.FC = () => {
         </Typography>
       </div>
 
-      {/* KPI Dashboard */}
-      <Grid container spacing={3} className="mb-6">
-        <Grid item xs={12} sm={6} md={3}>
+      {/* KPI Dashboard */, }
+      <Grid container spacing={3, } className="mb-6">
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {mockProjectStats.totalProjects}
+                    {mockProjectStats.totalProjects, }
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Gesamtprojekte
@@ -399,13 +333,13 @@ const ProjectManagement: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {mockProjectStats.activeProjects}
+                    {mockProjectStats.activeProjects, }
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Aktive Projekte
@@ -417,13 +351,13 @@ const ProjectManagement: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {formatHours(mockProjectStats.totalHoursActual)}
+                    {formatHours(mockProjectStats.totalHoursActual),}
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Geleistete Stunden
@@ -435,13 +369,13 @@ const ProjectManagement: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12,} sm={6,} md={3,}>
           <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {formatCurrency(mockProjectStats.totalBudgetActual)}
+                    {formatCurrency(mockProjectStats.totalBudgetActual),}
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Verbrauchtes Budget
@@ -454,33 +388,33 @@ const ProjectManagement: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation */,}
       <Card>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={tabValue} onChange={handleTabChange} aria-label="project management tabs">
-            <Tab label="Projekte" icon={<FolderIcon />} iconPosition="start" />
-            <Tab label="Aufgaben" icon={<AssignmentIcon />} iconPosition="start" />
-            <Tab label="Zeiterfassung" icon={<TimerIcon />} iconPosition="start" />
-            <Tab label="Ressourcen" icon={<PeopleIcon />} iconPosition="start" />
-            <Tab label="Meilensteine" icon={<CheckCircleIcon />} iconPosition="start" />
-            <Tab label="Dokumente" icon={<DescriptionIcon />} iconPosition="start" />
+          <Tabs value={tabValue,} onChange={handleTabChange,} aria-label="project management tabs">
+            <Tab label="Projekte" icon={<FolderIcon />,} iconPosition="start" />
+            <Tab label="Aufgaben" icon={<AssignmentIcon />,} iconPosition="start" />
+            <Tab label="Zeiterfassung" icon={<TimerIcon />,} iconPosition="start" />
+            <Tab label="Ressourcen" icon={<PeopleIcon />,} iconPosition="start" />
+            <Tab label="Meilensteine" icon={<CheckCircleIcon />,} iconPosition="start" />
+            <Tab label="Dokumente" icon={<DescriptionIcon />,} iconPosition="start" />
           </Tabs>
         </Box>
 
-        {/* Projekte Tab */}
-        <TabPanel value={tabValue} index={0}>
+        {/* Projekte Tab */,}
+        <TabPanel value={tabValue,} index={0,}>
           <div className="flex justify-between items-center mb-4">
             <Typography variant="h6">Projektübersicht</Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('project')}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('project'),}
             >
               Neues Projekt
             </Button>
           </div>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -498,64 +432,63 @@ const ProjectManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockProjects.map((project) => (
-                  <TableRow key={project.id}>
-                    <TableCell>{project.projectNumber}</TableCell>
+                {mockProjects.map((project) => (<TableRow key={project.id, }>
+                    <TableCell>{project.projectNumber, }</TableCell>
                     <TableCell>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {project.projectName}
+                        {project.projectName, }
                       </Typography>
                     </TableCell>
-                    <TableCell>{project.category}</TableCell>
+                    <TableCell>{project.category, }</TableCell>
                     <TableCell>
                       <Chip
-                        label={project.status}
-                        color={getStatusColor(project.status)}
+                        label={project.status, }
+                        color={getStatusColor(project.status),}
                         size="small"
                       />
                     </TableCell>
-                    <TableCell>{project.projectManager}</TableCell>
-                    <TableCell>{project.customer}</TableCell>
+                    <TableCell>{project.projectManager,}</TableCell>
+                    <TableCell>{project.customer,}</TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2">
-                          {formatCurrency(project.budgetActual)} / {formatCurrency(project.budgetPlanned)}
+                          {formatCurrency(project.budgetActual),} / {formatCurrency(project.budgetPlanned),}
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={(project.budgetActual / project.budgetPlanned) * 100}
-                          className="mt-1"
+                        <LinearProgress;
+variant="determinate"
+                          value={(project.budgetActual / project.budgetPlanned) * 100,};
+className="mt-1"
                         />
                       </div>
                     </TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2">
-                          {formatHours(project.hoursActual)} / {formatHours(project.hoursPlanned)}
+                          {formatHours(project.hoursActual),} / {formatHours(project.hoursPlanned),}
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={(project.hoursActual / project.hoursPlanned) * 100}
-                          className="mt-1"
+                        <LinearProgress;
+variant="determinate"
+                          value={(project.hoursActual / project.hoursPlanned) * 100,};
+className="mt-1"
                         />
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center">
                         <Typography variant="body2" className="mr-2">
-                          {project.progressPercent}%
+                          {project.progressPercent,}%
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={project.progressPercent}
-                          className="w-16"
+                        <LinearProgress;
+variant="determinate"
+                          value={project.progressPercent,};
+className="w-16"
                         />
                       </div>
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={project.deadlineStatus}
-                        color={getDeadlineStatusColor(project.deadlineStatus)}
+                        label={project.deadlineStatus,}
+                        color={getDeadlineStatusColor(project.deadlineStatus),}
                         size="small"
                       />
                     </TableCell>
@@ -579,20 +512,20 @@ const ProjectManagement: React.FC = () => {
           </TableContainer>
         </TabPanel>
 
-        {/* Aufgaben Tab */}
-        <TabPanel value={tabValue} index={1}>
+        {/* Aufgaben Tab */,}
+        <TabPanel value={tabValue,} index={1,}>
           <div className="flex justify-between items-center mb-4">
             <Typography variant="h6">Aufgabenübersicht</Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('task')}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('task'),}
             >
               Neue Aufgabe
             </Button>
           </div>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -609,67 +542,66 @@ const ProjectManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockTasks.map((task) => (
-                  <TableRow key={task.id}>
+                {mockTasks.map((task) => (<TableRow key={task.id, }>
                     <TableCell>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {task.taskName}
+                        {task.taskName, }
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2" className="font-semibold">
-                          {task.projectNumber}
+                          {task.projectNumber, }
                         </Typography>
                         <Typography variant="caption" className="text-gray-600">
-                          {task.projectName}
+                          {task.projectName, }
                         </Typography>
                       </div>
                     </TableCell>
-                    <TableCell>{task.phase}</TableCell>
+                    <TableCell>{task.phase, }</TableCell>
                     <TableCell>
                       <Chip
-                        label={task.status}
-                        color={getStatusColor(task.status)}
+                        label={task.status, }
+                        color={getStatusColor(task.status),}
                         size="small"
                       />
                     </TableCell>
-                    <TableCell>{task.assignedTo}</TableCell>
+                    <TableCell>{task.assignedTo,}</TableCell>
                     <TableCell>
                       <Chip
-                        label={task.priority}
-                        color={getPriorityColor(task.priority)}
+                        label={task.priority,}
+                        color={getPriorityColor(task.priority),}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2">
-                          {formatHours(task.actualHours)} / {formatHours(task.estimatedHours)}
+                          {formatHours(task.actualHours),} / {formatHours(task.estimatedHours),}
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={(task.actualHours / task.estimatedHours) * 100}
-                          className="mt-1"
+                        <LinearProgress;
+variant="determinate"
+                          value={(task.actualHours / task.estimatedHours) * 100,};
+className="mt-1"
                         />
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center">
                         <Typography variant="body2" className="mr-2">
-                          {task.progressPercent}%
+                          {task.progressPercent,}%
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={task.progressPercent}
-                          className="w-16"
+                        <LinearProgress;
+variant="determinate"
+                          value={task.progressPercent,};
+className="w-16"
                         />
                       </div>
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={task.deadlineStatus}
-                        color={getDeadlineStatusColor(task.deadlineStatus)}
+                        label={task.deadlineStatus,}
+                        color={getDeadlineStatusColor(task.deadlineStatus),}
                         size="small"
                       />
                     </TableCell>
@@ -693,20 +625,20 @@ const ProjectManagement: React.FC = () => {
           </TableContainer>
         </TabPanel>
 
-        {/* Zeiterfassung Tab */}
-        <TabPanel value={tabValue} index={2}>
+        {/* Zeiterfassung Tab */,}
+        <TabPanel value={tabValue,} index={2,}>
           <div className="flex justify-between items-center mb-4">
             <Typography variant="h6">Zeiterfassung</Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('time')}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('time'),}
             >
               Neue Zeiterfassung
             </Button>
           </div>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -722,29 +654,28 @@ const ProjectManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockTimeTracking.map((time) => (
-                  <TableRow key={time.id}>
-                    <TableCell>{time.employee}</TableCell>
+                {mockTimeTracking.map((time) => (<TableRow key={time.id, }>
+                    <TableCell>{time.employee, }</TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2" className="font-semibold">
-                          {time.projectNumber}
+                          {time.projectNumber, }
                         </Typography>
                         <Typography variant="caption" className="text-gray-600">
-                          {time.projectName}
+                          {time.projectName, }
                         </Typography>
                       </div>
                     </TableCell>
-                    <TableCell>{time.taskName}</TableCell>
-                    <TableCell>{time.date}</TableCell>
+                    <TableCell>{time.taskName, }</TableCell>
+                    <TableCell>{time.date, }</TableCell>
                     <TableCell>
-                      {time.startTime} - {time.endTime}
+                      {time.startTime, } - {time.endTime, }
                     </TableCell>
-                    <TableCell>{formatHours(time.workHours)}</TableCell>
-                    <TableCell>{formatHours(time.overtimeHours)}</TableCell>
+                    <TableCell>{formatHours(time.workHours),}</TableCell>
+                    <TableCell>{formatHours(time.overtimeHours),}</TableCell>
                     <TableCell>
                       <Chip
-                        label={time.status}
+                        label={time.status,}
                         color={time.status === 'genehmigt' ? 'success' : 'warning'}
                         size="small"
                       />
@@ -769,20 +700,20 @@ const ProjectManagement: React.FC = () => {
           </TableContainer>
         </TabPanel>
 
-        {/* Ressourcen Tab */}
-        <TabPanel value={tabValue} index={3}>
+        {/* Ressourcen Tab */,}
+        <TabPanel value={tabValue,} index={3,}>
           <div className="flex justify-between items-center mb-4">
             <Typography variant="h6">Ressourcenverwaltung</Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('resource')}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('resource'),}
             >
               Neue Ressource
             </Button>
           </div>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -797,40 +728,39 @@ const ProjectManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockResources.map((resource) => (
-                  <TableRow key={resource.id}>
+                {mockResources.map((resource) => (<TableRow key={resource.id, }>
                     <TableCell>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {resource.resourceName}
+                        {resource.resourceName, }
                       </Typography>
                     </TableCell>
-                    <TableCell>{resource.resourceType}</TableCell>
-                    <TableCell>{resource.projectName}</TableCell>
+                    <TableCell>{resource.resourceType, }</TableCell>
+                    <TableCell>{resource.projectName, }</TableCell>
                     <TableCell>
                       <div className="flex items-center">
                         <Typography variant="body2" className="mr-2">
-                          {resource.availabilityPercent}%
+                          {resource.availabilityPercent, }%
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={resource.availabilityPercent}
-                          className="w-16"
+                        <LinearProgress;
+variant="determinate"
+                          value={resource.availabilityPercent, };
+className="w-16"
                         />
                       </div>
                     </TableCell>
-                    <TableCell>{formatCurrency(resource.costPerUnit)}</TableCell>
+                    <TableCell>{formatCurrency(resource.costPerUnit),}</TableCell>
                     <TableCell>
-                      {formatHours(resource.assignedHours)} / {formatHours(resource.totalHours)}
+                      {formatHours(resource.assignedHours),} / {formatHours(resource.totalHours),}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center">
                         <Typography variant="body2" className="mr-2">
-                          {((resource.assignedHours / resource.totalHours) * 100).toFixed(1)}%
+                          {((resource.assignedHours / resource.totalHours) * 100).toFixed(1),}%
                         </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={(resource.assignedHours / resource.totalHours) * 100}
-                          className="w-16"
+                        <LinearProgress;
+variant="determinate"
+                          value={(resource.assignedHours / resource.totalHours) * 100,};
+className="w-16"
                         />
                       </div>
                     </TableCell>
@@ -854,19 +784,19 @@ const ProjectManagement: React.FC = () => {
           </TableContainer>
         </TabPanel>
 
-        {/* Meilensteine Tab */}
-        <TabPanel value={tabValue} index={4}>
+        {/* Meilensteine Tab */,}
+        <TabPanel value={tabValue,} index={4,}>
           <div className="flex justify-between items-center mb-4">
             <Typography variant="h6">Meilensteine</Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
             >
               Neuer Meilenstein
             </Button>
           </div>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -879,19 +809,18 @@ const ProjectManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockMilestones.map((milestone) => (
-                  <TableRow key={milestone.id}>
+                {mockMilestones.map((milestone) => (<TableRow key={milestone.id, }>
                     <TableCell>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {milestone.milestoneName}
+                        {milestone.milestoneName, }
                       </Typography>
                     </TableCell>
-                    <TableCell>{milestone.projectName}</TableCell>
-                    <TableCell>{milestone.phase}</TableCell>
-                    <TableCell>{milestone.date}</TableCell>
+                    <TableCell>{milestone.projectName, }</TableCell>
+                    <TableCell>{milestone.phase, }</TableCell>
+                    <TableCell>{milestone.date, }</TableCell>
                     <TableCell>
                       <Chip
-                        label={milestone.status}
+                        label={milestone.status, }
                         color={milestone.status === 'erreicht' ? 'success' : 'default'}
                         size="small"
                       />
@@ -909,26 +838,25 @@ const ProjectManagement: React.FC = () => {
                         </IconButton>
                       </div>
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </TableRow>))}
               </TableBody>
             </Table>
           </TableContainer>
         </TabPanel>
 
-        {/* Dokumente Tab */}
-        <TabPanel value={tabValue} index={5}>
+        {/* Dokumente Tab */,}
+        <TabPanel value={tabValue,} index={5,}>
           <div className="flex justify-between items-center mb-4">
             <Typography variant="h6">Projektdokumente</Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
             >
               Dokument hochladen
             </Button>
           </div>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -942,20 +870,19 @@ const ProjectManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockDocuments.map((document) => (
-                  <TableRow key={document.id}>
+                {mockDocuments.map((document) => (<TableRow key={document.id, }>
                     <TableCell>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {document.originalFileName}
+                        {document.originalFileName, }
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Chip label={document.fileType} size="small" />
+                      <Chip label={document.fileType, } size="small" />
                     </TableCell>
-                    <TableCell>{formatFileSize(document.sizeBytes)}</TableCell>
-                    <TableCell>{document.uploadedBy}</TableCell>
-                    <TableCell>{document.uploadDate}</TableCell>
-                    <TableCell>{document.description}</TableCell>
+                    <TableCell>{formatFileSize(document.sizeBytes),}</TableCell>
+                    <TableCell>{document.uploadedBy,}</TableCell>
+                    <TableCell>{document.uploadDate,}</TableCell>
+                    <TableCell>{document.description,}</TableCell>
                     <TableCell>
                       <div className="flex space-x-1">
                         <IconButton size="small" color="primary">
@@ -977,25 +904,25 @@ const ProjectManagement: React.FC = () => {
         </TabPanel>
       </Card>
 
-      {/* Dialog für neue Einträge */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      {/* Dialog für neue Einträge */,}
+      <Dialog open={openDialog,} onClose={handleCloseDialog,} maxWidth="md" fullWidth>
         <DialogTitle>
-          {dialogType === 'project' && 'Neues Projekt erstellen'}
-          {dialogType === 'task' && 'Neue Aufgabe erstellen'}
-          {dialogType === 'time' && 'Neue Zeiterfassung'}
-          {dialogType === 'resource' && 'Neue Ressource'}
+          {dialogType === 'project' && 'Neues Projekt erstellen',}
+          {dialogType === 'task' && 'Neue Aufgabe erstellen',}
+          {dialogType === 'time' && 'Neue Zeiterfassung',}
+          {dialogType === 'resource' && 'Neue Ressource',}
         </DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} className="mt-2">
-            <Grid item xs={12} sm={6}>
+          <Grid container spacing={2,} className="mt-2">
+            <Grid item xs={12,} sm={6,}>
               <TextField
                 fullWidth
-                label="Name"
-                variant="outlined"
+                label="Name";
+variant="outlined"
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12,} sm={6,}>
               <FormControl fullWidth size="small">
                 <InputLabel>Status</InputLabel>
                 <Select label="Status">
@@ -1006,20 +933,20 @@ const ProjectManagement: React.FC = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12,}>
               <TextField
                 fullWidth
-                label="Beschreibung"
-                variant="outlined"
+                label="Beschreibung";
+variant="outlined"
                 multiline
-                rows={3}
+                rows={3,}
               />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          <Button variant="contained" onClick={handleCloseDialog}>
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          <Button variant="contained" onClick={handleCloseDialog,}>
             Speichern
           </Button>
         </DialogActions>

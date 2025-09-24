@@ -4,11 +4,11 @@
  * Inspiriert von SAP Fiori 4/HANA und OpenUI5, aber moderner und KI-optimiert
  */
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme ,} from '@mui/material/styles';
 
 // NeuroFlow Color Palette
 export const neuroFlowColors = {
-  // Primary Colors - KI-Blau
+  // Primary Colors - KI-Blau,
   primary: {
     50: '#E3F2FD',
     100: '#BBDEFB',
@@ -128,77 +128,77 @@ export const neuroFlowColors = {
 export const neuroFlowTypography = {
   fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
   
-  // Display Typography
+  // Display Typography,
   h1: {
     fontSize: '3rem',
     fontWeight: 700,
-    lineHeight: 1.2,
-    letterSpacing: '-0.02em',
+    lineHeight: 1.2,;
+letterSpacing: '-0.02em',
   },
   h2: {
     fontSize: '2.5rem',
     fontWeight: 600,
-    lineHeight: 1.3,
-    letterSpacing: '-0.01em',
+    lineHeight: 1.3,;
+letterSpacing: '-0.01em',
   },
   h3: {
     fontSize: '2rem',
     fontWeight: 600,
-    lineHeight: 1.4,
-    letterSpacing: '-0.01em',
+    lineHeight: 1.4,;
+letterSpacing: '-0.01em',
   },
   h4: {
     fontSize: '1.75rem',
     fontWeight: 600,
-    lineHeight: 1.4,
-    letterSpacing: '-0.01em',
+    lineHeight: 1.4,;
+letterSpacing: '-0.01em',
   },
   h5: {
     fontSize: '1.5rem',
     fontWeight: 600,
-    lineHeight: 1.4,
-    letterSpacing: '-0.01em',
+    lineHeight: 1.4,;
+letterSpacing: '-0.01em',
   },
   h6: {
     fontSize: '1.25rem',
     fontWeight: 600,
-    lineHeight: 1.4,
-    letterSpacing: '-0.01em',
+    lineHeight: 1.4,;
+letterSpacing: '-0.01em',
   },
   
   // Body Typography
   body1: {
     fontSize: '1rem',
     fontWeight: 400,
-    lineHeight: 1.6,
-    letterSpacing: '0.01em',
+    lineHeight: 1.6,;
+letterSpacing: '0.01em',
   },
   body2: {
     fontSize: '0.875rem',
     fontWeight: 400,
-    lineHeight: 1.6,
-    letterSpacing: '0.01em',
+    lineHeight: 1.6,;
+letterSpacing: '0.01em',
   },
   
   // UI Typography
   button: {
     fontSize: '0.875rem',
     fontWeight: 600,
-    lineHeight: 1.4,
-    letterSpacing: '0.01em',
+    lineHeight: 1.4,;
+letterSpacing: '0.01em',
     textTransform: 'none' as const,
   },
   caption: {
     fontSize: '0.75rem',
     fontWeight: 400,
-    lineHeight: 1.4,
-    letterSpacing: '0.02em',
+    lineHeight: 1.4,;
+letterSpacing: '0.02em',
   },
   overline: {
     fontSize: '0.75rem',
     fontWeight: 600,
-    lineHeight: 1.4,
-    letterSpacing: '0.1em',
+    lineHeight: 1.4,;
+letterSpacing: '0.1em',
     textTransform: 'uppercase' as const,
   },
 };
@@ -257,63 +257,21 @@ export const neuroFlowBreakpoints = {
 export const neuroFlowTheme = createTheme({
   palette: {
     primary: {
-      main: neuroFlowColors.primary[500],
-      light: neuroFlowColors.primary[300],
-      dark: neuroFlowColors.primary[700],
-      contrastText: '#FFFFFF',
-    },
-    secondary: {
-      main: neuroFlowColors.secondary[500],
-      light: neuroFlowColors.secondary[300],
-      dark: neuroFlowColors.secondary[700],
-      contrastText: '#FFFFFF',
-    },
-    success: {
-      main: neuroFlowColors.success[500],
-      light: neuroFlowColors.success[300],
-      dark: neuroFlowColors.success[700],
-      contrastText: '#FFFFFF',
-    },
-    warning: {
-      main: neuroFlowColors.warning[500],
-      light: neuroFlowColors.warning[300],
-      dark: neuroFlowColors.warning[700],
-      contrastText: '#000000',
-    },
-    error: {
-      main: neuroFlowColors.error[500],
-      light: neuroFlowColors.error[300],
-      dark: neuroFlowColors.error[700],
-      contrastText: '#FFFFFF',
-    },
-    info: {
-      main: neuroFlowColors.info[500],
-      light: neuroFlowColors.info[300],
-      dark: neuroFlowColors.info[700],
-      contrastText: '#FFFFFF',
-    },
-    background: {
-      default: neuroFlowColors.background.default,
-      paper: neuroFlowColors.background.paper,
-    },
-    text: {
-      primary: neuroFlowColors.neutral[900],
-      secondary: neuroFlowColors.neutral[700],
-      disabled: neuroFlowColors.neutral[400],
-    },
-    divider: neuroFlowColors.neutral[200],
-  },
-  
-  typography: neuroFlowTypography,
-  
-  shape: {
+      main: neuroFlowColors.primary[500], light: neuroFlowColors.primary[300], dark: neuroFlowColors.primary[700], contrastText: '#FFFFFF', }, secondary: {
+      main: neuroFlowColors.secondary[500], light: neuroFlowColors.secondary[300], dark: neuroFlowColors.secondary[700], contrastText: '#FFFFFF', }, success: {
+      main: neuroFlowColors.success[500], light: neuroFlowColors.success[300], dark: neuroFlowColors.success[700], contrastText: '#FFFFFF', }, warning: {
+      main: neuroFlowColors.warning[500], light: neuroFlowColors.warning[300], dark: neuroFlowColors.warning[700], contrastText: '#000000', }, error: {
+      main: neuroFlowColors.error[500], light: neuroFlowColors.error[300], dark: neuroFlowColors.error[700], contrastText: '#FFFFFF', }, info: {
+      main: neuroFlowColors.info[500], light: neuroFlowColors.info[300], dark: neuroFlowColors.info[700], contrastText: '#FFFFFF', }, background: {
+      default: neuroFlowColors.background.default, paper: neuroFlowColors.background.paper, }, text: {
+      primary: neuroFlowColors.neutral[900], secondary: neuroFlowColors.neutral[700], disabled: neuroFlowColors.neutral[400], }, divider: neuroFlowColors.neutral[200], }, typography: neuroFlowTypography, shape: {
     borderRadius: parseInt(neuroFlowBorderRadius.md),
   },
   
-  spacing: (factor: number) => `${factor * 0.25}rem`,
+  spacing: (factor: _number) => `${factor * 0.25,}rem`,
   
   components: {
-    // Button Component
+    // Button Component,
     MuiButton: {
       styleOverrides: {
         root: {

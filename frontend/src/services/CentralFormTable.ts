@@ -5,8 +5,8 @@
  * und Eingabemasken mit Versionsnummern und Berechtigungen.
  */
 
-import { ExtendedFormRegistryService } from './ExtendedFormRegistry';
-import { StandardizedFormConfig } from '../types/forms';
+import { ExtendedFormRegistryService ,} from './ExtendedFormRegistry';
+import { StandardizedFormConfig ,} from '../types/forms';
 
 /**
  * Berechtigungs-Level für Formulare
@@ -15,7 +15,7 @@ export enum PermissionLevel {
   NONE = 'none',
   READ = 'read',
   WRITE = 'write',
-  ADMIN = 'admin'
+  ADMIN = 'admin',
 }
 
 /**
@@ -25,14 +25,14 @@ export enum FormStatus {
   DRAFT = 'draft',
   ACTIVE = 'active',
   DEPRECATED = 'deprecated',
-  ARCHIVED = 'archived'
+  ARCHIVED = 'archived',
 }
 
 /**
  * Formular-Eintrag in der zentralen Tabelle
  */
 export interface FormTableEntry {
-  // Basis-Informationen
+  // Basis-Informationen,
   id: string;
   index: number;
   title: string;
@@ -40,14 +40,14 @@ export interface FormTableEntry {
   module: string;
   category: string;
   
-  // Versionierung
+  // Versionierung,
   version: string;
   versionHistory: string[];
   lastModified: Date;
   createdBy: string;
   modifiedBy: string;
   
-  // Status und Berechtigungen
+  // Status und Berechtigungen,
   status: FormStatus;
   permissions: {
     read: PermissionLevel[];
@@ -106,7 +106,7 @@ export const FORM_CATEGORIES = {
     'inventur',
     'qualitaetskontrolle',
     'logistik',
-    'versand'
+    'versand',
   ],
   [MODULE_CATEGORIES.FINANZBUCHHALTUNG]: [
     'buchung',
@@ -124,7 +124,7 @@ export const FORM_CATEGORIES = {
     'jahresabschluss',
     'steuern',
     'debitoren',
-    'kreditoren'
+    'kreditoren',
   ],
   [MODULE_CATEGORIES.CRM]: [
     'kunde',
@@ -140,7 +140,7 @@ export const FORM_CATEGORIES = {
     'kundenservice',
     'berichte',
     'automatisierung',
-    'integration'
+    'integration',
   ],
   [MODULE_CATEGORIES.CROSS_CUTTING]: [
     'benutzerverwaltung',
@@ -157,8 +157,8 @@ export const FORM_CATEGORIES = {
     'backupwiederherstellung',
     'monitoring',
     'apimanagement',
-    'dokumentenverwaltung'
-  ]
+    'dokumentenverwaltung',
+  ],
 } as const;
 
 /**
@@ -203,12 +203,12 @@ export class CentralFormTableService {
   private indexCounter: number = 1;
 
   private constructor() {
-    this.initializeFormTable();
+    this.initializeFormTable();,
   }
 
   public static getInstance(): CentralFormTableService {
     if (!CentralFormTableService.instance) {
-      CentralFormTableService.instance = new CentralFormTableService();
+      CentralFormTableService.instance = new CentralFormTableService();,
     }
     return CentralFormTableService.instance;
   }
@@ -216,29 +216,29 @@ export class CentralFormTableService {
   /**
    * Initialisiert die Formular-Tabelle mit allen Formularen
    */
-  private initializeFormTable(): void {
-    const formRegistry = ExtendedFormRegistryService.getInstance();
-    const allForms = formRegistry.getAllForms();
+  private initializeFormTable(): void {;
+const formRegistry = ExtendedFormRegistryService.getInstance();,;
+const allForms = formRegistry.getAllForms();,
 
-    allForms.forEach(formConfig => {
-      const tableEntry = this.createFormTableEntry(formConfig);
-      this.formTable.set(formConfig.id, tableEntry);
+    allForms.forEach(formConfig => {;
+const tableEntry = this.createFormTableEntry(formConfig);,
+      this.formTable.set(formConfig.id, tableEntry);,
     });
   }
 
   /**
    * Erstellt einen Formular-Tabellen-Eintrag aus einer Formular-Konfiguration
    */
-  private createFormTableEntry(formConfig: StandardizedFormConfig): FormTableEntry {
-    const category = this.determineCategory(formConfig);
-    const complexity = this.calculateComplexity(formConfig);
-    const priority = this.calculatePriority(formConfig);
-    const dependencies = this.extractDependencies(formConfig);
-    const tags = this.generateTags(formConfig);
-    const uiComponents = this.extractUIComponents(formConfig);
+  private createFormTableEntry(formConfig: StandardizedFormConfig): FormTableEntry {;
+const category = this.determineCategory(formConfig);,;
+const complexity = this.calculateComplexity(formConfig);,;
+const priority = this.calculatePriority(formConfig);,;
+const dependencies = this.extractDependencies(formConfig);,;
+const tags = this.generateTags(formConfig);,;
+const uiComponents = this.extractUIComponents(formConfig);,
 
     return {
-      // Basis-Informationen
+      // Basis-Informationen,
       id: formConfig.id,
       index: this.indexCounter++,
       title: formConfig.metadata.name,
@@ -246,14 +246,14 @@ export class CentralFormTableService {
       module: formConfig.module,
       category: category,
       
-      // Versionierung
+      // Versionierung,
       version: formConfig.metadata.version,
       versionHistory: [formConfig.metadata.version],
       lastModified: new Date(),
       createdBy: 'system',
       modifiedBy: 'system',
       
-      // Status und Berechtigungen
+      // Status und Berechtigungen,
       status: FormStatus.ACTIVE,
       permissions: {
         read: [PermissionLevel.READ, PermissionLevel.WRITE, PermissionLevel.ADMIN],
@@ -286,15 +286,15 @@ export class CentralFormTableService {
   /**
    * Ermittelt die Kategorie für ein Formular
    */
-  private determineCategory(formConfig: StandardizedFormConfig): string {
-    const moduleCategories = FORM_CATEGORIES[formConfig.module as keyof typeof FORM_CATEGORIES];
+  private determineCategory(formConfig: StandardizedFormConfig): string {;
+const moduleCategories = FORM_CATEGORIES[formConfig.module as keyof typeof FORM_CATEGORIES];,
     
-    // Versuche Kategorie aus ID zu extrahieren
-    const idParts = formConfig.id.split('-');
-    if (idParts.length >= 2) {
-      const potentialCategory = idParts[1];
+    // Versuche Kategorie aus ID zu extrahieren,;
+const idParts = formConfig.id.split('-');,
+    if (idParts.length >= 2) {;
+const potentialCategory = idParts[1];,
       if (Array.isArray(moduleCategories) && moduleCategories.includes(potentialCategory)) {
-        return potentialCategory;
+        return potentialCategory;,
       }
     }
     
@@ -305,25 +305,23 @@ export class CentralFormTableService {
   /**
    * Berechnet die Komplexität eines Formulars
    */
-  private calculateComplexity(formConfig: StandardizedFormConfig): 'low' | 'medium' | 'high' {
-    const fieldCount = this.countFields(formConfig);
-    const validationCount = this.countValidationRules(formConfig);
+  private calculateComplexity(formConfig: StandardizedFormConfig): 'low' | 'medium' | 'high' {;
+const fieldCount = this.countFields(formConfig);,;
+const validationCount = this.countValidationRules(formConfig);,;
+const complexityScore = fieldCount + (validationCount * 0.5);,
     
-    const complexityScore = fieldCount + (validationCount * 0.5);
-    
-    if (complexityScore <= 5) return 'low';
-    if (complexityScore <= 15) return 'medium';
-    return 'high';
+    if (complexityScore <= 5) return 'low';,
+    if (complexityScore <= 15) return 'medium';,
+    return 'high';,
   }
 
   /**
    * Zählt die Felder in einem Formular
    */
-  private countFields(formConfig: StandardizedFormConfig): number {
-    let count = 0;
+  private countFields(formConfig: StandardizedFormConfig): number {;
+let count = 0;,
     formConfig.layout.tabs?.forEach(tab => {
-      count += tab.fields?.length || 0;
-    });
+      count += tab.fields?.length || 0;, });
     return count;
   }
 
@@ -331,41 +329,41 @@ export class CentralFormTableService {
    * Zählt die Validierungsregeln in einem Formular
    */
   private countValidationRules(formConfig: StandardizedFormConfig): number {
-    if (!formConfig.validationSchema) return 0;
+    if (!formConfig.validationSchema) return 0;,
     
-    // Einfache Schätzung basierend auf Schema-Komplexität
-    const schemaString = formConfig.validationSchema.toString();
-    const requiredFields = (schemaString.match(/required/g) || []).length;
-    const minValidations = (schemaString.match(/min/g) || []).length;
-    const maxValidations = (schemaString.match(/max/g) || []).length;
+    // Einfache Schätzung basierend auf Schema-Komplexität,;
+const schemaString = formConfig.validationSchema.toString();,;
+const requiredFields = (schemaString.match(/required/g) || []).length;,;
+const minValidations = (schemaString.match(/min/g) || []).length;,;
+const maxValidations = (schemaString.match(/max/g) || []).length;,
     
-    return requiredFields + minValidations + maxValidations;
+    return requiredFields + minValidations + maxValidations;,
   }
 
   /**
    * Berechnet die Priorität eines Formulars
    */
-  private calculatePriority(formConfig: StandardizedFormConfig): number {
-    let priority = 50; // Basis-Priorität
+  private calculatePriority(formConfig: StandardizedFormConfig): number {;
+let priority = 50; // Basis-Priorität,
     
-    // Modul-spezifische Prioritäten
+    // Modul-spezifische Prioritäten,
     switch (formConfig.module) {
       case 'warenwirtschaft':
-        priority += 10;
-        break;
+        priority += 10;,
+        break;,
       case 'finanzbuchhaltung':
-        priority += 15;
-        break;
+        priority += 15;,
+        break;,
       case 'crm':
-        priority += 5;
-        break;
+        priority += 5;,
+        break;,
       case 'crosscutting':
-        priority += 20;
-        break;
+        priority += 20;,
+        break;,
     }
     
-    // Kategorie-spezifische Prioritäten
-    const category = this.determineCategory(formConfig);
+    // Kategorie-spezifische Prioritäten;
+const category = this.determineCategory(formConfig);
     if (category.includes('management')) priority += 5;
     if (category.includes('verwaltung')) priority += 5;
     if (category.includes('berichte')) priority += 3;
@@ -377,23 +375,23 @@ export class CentralFormTableService {
   /**
    * Extrahiert Abhängigkeiten aus einem Formular
    */
-  private extractDependencies(formConfig: StandardizedFormConfig): string[] {
-    const dependencies: string[] = [];
+  private extractDependencies(formConfig: StandardizedFormConfig): string[] {;
+const dependencies: string[] = [];
     
-    // Abhängigkeiten basierend auf Modul
+    // Abhängigkeiten basierend auf Modul,
     switch (formConfig.module) {
       case 'warenwirtschaft':
-        dependencies.push('artikelstammdaten', 'lagerverwaltung');
-        break;
+        dependencies.push('artikelstammdaten', 'lagerverwaltung');,
+        break;,
       case 'finanzbuchhaltung':
-        dependencies.push('kontenrahmen', 'buchungsvorlagen');
-        break;
+        dependencies.push('kontenrahmen', 'buchungsvorlagen');,
+        break;,
       case 'crm':
-        dependencies.push('kundenverwaltung', 'kontaktverwaltung');
-        break;
+        dependencies.push('kundenverwaltung', 'kontaktverwaltung');,
+        break;,
       case 'crosscutting':
-        dependencies.push('benutzerverwaltung', 'rollenverwaltung');
-        break;
+        dependencies.push('benutzerverwaltung', 'rollenverwaltung');,
+        break;,
     }
     
     return dependencies;
@@ -402,54 +400,54 @@ export class CentralFormTableService {
   /**
    * Generiert Tags für ein Formular
    */
-  private generateTags(formConfig: StandardizedFormConfig): string[] {
-    const tags: string[] = [];
+  private generateTags(formConfig: StandardizedFormConfig): string[] {;
+const tags: string[] = [];
     
-    // Modul-Tags
-    tags.push(formConfig.module);
+    // Modul-Tags,
+    tags.push(formConfig.module);,
     
-    // Kategorie-Tags
-    const category = this.determineCategory(formConfig);
-    tags.push(category);
+    // Kategorie-Tags,;
+const category = this.determineCategory(formConfig);,
+    tags.push(category);,
     
-    // Funktions-Tags
-    if (formConfig.id.includes('verwaltung')) tags.push('verwaltung');
-    if (formConfig.id.includes('berichte')) tags.push('berichte');
-    if (formConfig.id.includes('archiv')) tags.push('archiv');
-    if (formConfig.id.includes('import')) tags.push('import');
-    if (formConfig.id.includes('export')) tags.push('export');
-    if (formConfig.id.includes('optimierung')) tags.push('optimierung');
-    if (formConfig.id.includes('historie')) tags.push('historie');
+    // Funktions-Tags,
+    if (formConfig.id.includes('verwaltung')) tags.push('verwaltung');,
+    if (formConfig.id.includes('berichte')) tags.push('berichte');,
+    if (formConfig.id.includes('archiv')) tags.push('archiv');,
+    if (formConfig.id.includes('import')) tags.push('import');,
+    if (formConfig.id.includes('export')) tags.push('export');,
+    if (formConfig.id.includes('optimierung')) tags.push('optimierung');,
+    if (formConfig.id.includes('historie')) tags.push('historie');,
     
-    // Komplexitäts-Tags
-    const complexity = this.calculateComplexity(formConfig);
-    tags.push(complexity);
+    // Komplexitäts-Tags,;
+const complexity = this.calculateComplexity(formConfig);,
+    tags.push(complexity);,
     
-    return tags;
+    return tags;,
   }
 
   /**
    * Extrahiert UI-Komponenten aus einem Formular
    */
-  private extractUIComponents(formConfig: StandardizedFormConfig): string[] {
-    const components: string[] = [];
+  private extractUIComponents(formConfig: StandardizedFormConfig): string[] {;
+const components: string[] = [];
     
-    // Basis-Komponenten
-    components.push('FormContainer');
-    components.push('FormHeader');
-    components.push('FormFooter');
+    // Basis-Komponenten,
+    components.push('FormContainer');,
+    components.push('FormHeader');,
+    components.push('FormFooter');,
     
-    // Layout-spezifische Komponenten
+    // Layout-spezifische Komponenten,
     if (formConfig.layout.type === 'tabs') {
-      components.push('TabNavigation');
-      components.push('TabContent');
+      components.push('TabNavigation');,
+      components.push('TabContent');,
     }
     
     // Feld-spezifische Komponenten (vereinfacht, da field jetzt String ist)
     formConfig.layout.tabs?.forEach(tab => {
       if (tab.fields && tab.fields.length > 0) {
-        components.push('TextField'); // Standard für alle Felder
-        components.push('FormField');
+        components.push('TextField'); // Standard für alle Felder,
+        components.push('FormField');,
       }
     });
     
@@ -462,15 +460,15 @@ export class CentralFormTableService {
   private getComponentPath(module: string): string {
     switch (module) {
       case 'warenwirtschaft':
-        return 'components/forms/WaWiForms';
+        return 'components/forms/WaWiForms';,
       case 'finanzbuchhaltung':
-        return 'components/forms/FiBuForms';
+        return 'components/forms/FiBuForms';,
       case 'crm':
-        return 'components/forms/CRMForms';
+        return 'components/forms/CRMForms';,
       case 'crosscutting':
-        return 'components/forms/CrossCuttingForms';
+        return 'components/forms/CrossCuttingForms';,
       default:
-        return 'components/forms/ModernERPForm';
+        return 'components/forms/ModernERPForm';,
     }
   }
 
@@ -478,7 +476,7 @@ export class CentralFormTableService {
    * Ermittelt Berechtigungen für ein Modul
    */
   private getModulePermissions(module: string) {
-    return MODULE_PERMISSIONS[module as keyof typeof MODULE_PERMISSIONS] || MODULE_PERMISSIONS[MODULE_CATEGORIES.CROSS_CUTTING];
+    return MODULE_PERMISSIONS[module as keyof typeof MODULE_PERMISSIONS] || MODULE_PERMISSIONS[MODULE_CATEGORIES.CROSS_CUTTING];,
   }
 
   // ============================================================================
@@ -489,55 +487,54 @@ export class CentralFormTableService {
    * Gibt alle Formular-Einträge zurück
    */
   public getAllFormEntries(): FormTableEntry[] {
-    return Array.from(this.formTable.values());
+    return Array.from(this.formTable.values());,
   }
 
   /**
    * Gibt einen spezifischen Formular-Eintrag zurück
    */
   public getFormEntry(formId: string): FormTableEntry | undefined {
-    return this.formTable.get(formId);
+    return this.formTable.get(formId);,
   }
 
   /**
    * Gibt alle Formulare eines Moduls zurück
    */
   public getFormsByModule(module: string): FormTableEntry[] {
-    return Array.from(this.formTable.values()).filter(entry => entry.module === module);
+    return Array.from(this.formTable.values()).filter(entry => entry.module === module);,
   }
 
   /**
    * Gibt alle Formulare einer Kategorie zurück
    */
   public getFormsByCategory(category: string): FormTableEntry[] {
-    return Array.from(this.formTable.values()).filter(entry => entry.category === category);
+    return Array.from(this.formTable.values()).filter(entry => entry.category === category);,
   }
 
   /**
    * Gibt alle Formulare mit einem bestimmten Status zurück
    */
   public getFormsByStatus(status: FormStatus): FormTableEntry[] {
-    return Array.from(this.formTable.values()).filter(entry => entry.status === status);
+    return Array.from(this.formTable.values()).filter(entry => entry.status === status);,
   }
 
   /**
    * Gibt alle Formulare mit einer bestimmten Komplexität zurück
    */
   public getFormsByComplexity(complexity: 'low' | 'medium' | 'high'): FormTableEntry[] {
-    return Array.from(this.formTable.values()).filter(entry => entry.complexity === complexity);
+    return Array.from(this.formTable.values()).filter(entry => entry.complexity === complexity);,
   }
 
   /**
    * Sucht Formulare nach einem Suchbegriff
    */
-  public searchForms(searchTerm: string): FormTableEntry[] {
-    const term = searchTerm.toLowerCase();
-    return Array.from(this.formTable.values()).filter(entry => 
-      entry.title.toLowerCase().includes(term) ||
-      entry.description.toLowerCase().includes(term) ||
-      entry.id.toLowerCase().includes(term) ||
-      entry.tags.some(tag => tag.toLowerCase().includes(term))
-    );
+  public searchForms(searchTerm: string): FormTableEntry[] {;
+const term = searchTerm.toLowerCase();,
+    return Array.from(this.formTable.values()).filter(entry =>, entry.title.toLowerCase().includes(term) ||,
+      entry.description.toLowerCase().includes(term) ||,
+      entry.id.toLowerCase().includes(term) ||,
+      entry.tags.some(tag => tag.toLowerCase().includes(term)),
+    );,
   }
 
   /**
@@ -551,8 +548,8 @@ export class CentralFormTableService {
     byCategory: Record<string, number>;
     averagePriority: number;
     versionDistribution: Record<string, number>;
-  } {
-    const entries = Array.from(this.formTable.values());
+  } {;
+const entries = Array.from(this.formTable.values());,
     
     return {
       total: entries.length,
@@ -568,11 +565,11 @@ export class CentralFormTableService {
   /**
    * Gruppiert Einträge nach einem Feld
    */
-  private groupBy(entries: FormTableEntry[], field: keyof FormTableEntry): Record<string, number> {
-    const groups: Record<string, number> = {};
-    entries.forEach(entry => {
-      const value = String(entry[field]);
-      groups[value] = (groups[value] || 0) + 1;
+  private groupBy(entries: FormTableEntry[], field: keyof FormTableEntry): Record<string, number> {;
+const groups: Record<string, number> = {};
+    entries.forEach(entry => {;
+const value = String(entry[field]);,
+      groups[value] = (groups[value] || 0) + 1;,
     });
     return groups;
   }
@@ -581,18 +578,18 @@ export class CentralFormTableService {
    * Berechnet die durchschnittliche Priorität
    */
   private calculateAveragePriority(entries: FormTableEntry[]): number {
-    if (entries.length === 0) return 0;
-    const sum = entries.reduce((acc, entry) => acc + entry.priority, 0);
-    return Math.round(sum / entries.length);
+    if (entries.length === 0) return 0;,;
+const sum = entries.reduce((acc, entry) => acc + entry.priority, 0);,
+    return Math.round(sum / entries.length);,
   }
 
   /**
    * Gibt die Versionsverteilung zurück
    */
-  private getVersionDistribution(entries: FormTableEntry[]): Record<string, number> {
-    const distribution: Record<string, number> = {};
+  private getVersionDistribution(entries: FormTableEntry[]): Record<string, number> {;
+const distribution: Record<string, number> = {};
     entries.forEach(entry => {
-      distribution[entry.version] = (distribution[entry.version] || 0) + 1;
+      distribution[entry.version] = (distribution[entry.version] || 0) + 1;,
     });
     return distribution;
   }
@@ -604,11 +601,11 @@ export class CentralFormTableService {
   /**
    * Aktualisiert Berechtigungen für ein Formular
    */
-  public updateFormPermissions(formId: string, permissions: Partial<FormTableEntry['permissions']>): boolean {
-    const entry = this.formTable.get(formId);
-    if (!entry) return false;
+  public updateFormPermissions(formId: string, permissions: Partial<FormTableEntry['permissions']>): boolean {;
+const entry = this.formTable.get(formId);,
+    if (!entry) return false;,
     
-    entry.permissions = { ...entry.permissions, ...permissions };
+    entry.permissions = { ...entry.permissions, ...permissions ,};
     entry.lastModified = new Date();
     entry.modifiedBy = 'admin';
     
@@ -618,37 +615,37 @@ export class CentralFormTableService {
   /**
    * Aktualisiert den Status eines Formulars
    */
-  public updateFormStatus(formId: string, status: FormStatus): boolean {
-    const entry = this.formTable.get(formId);
-    if (!entry) return false;
+  public updateFormStatus(formId: string, status: FormStatus): boolean {;
+const entry = this.formTable.get(formId);,
+    if (!entry) return false;,
     
-    entry.status = status;
-    entry.lastModified = new Date();
-    entry.modifiedBy = 'admin';
+    entry.status = status;,
+    entry.lastModified = new Date();,
+    entry.modifiedBy = 'admin';,
     
-    return true;
+    return true;,
   }
 
   /**
    * Fügt eine neue Version zu einem Formular hinzu
    */
-  public addFormVersion(formId: string, newVersion: string): boolean {
-    const entry = this.formTable.get(formId);
-    if (!entry) return false;
+  public addFormVersion(formId: string, newVersion: string): boolean {;
+const entry = this.formTable.get(formId);,
+    if (!entry) return false;,
     
-    entry.versionHistory.push(newVersion);
-    entry.version = newVersion;
-    entry.lastModified = new Date();
-    entry.modifiedBy = 'admin';
+    entry.versionHistory.push(newVersion);,
+    entry.version = newVersion;,
+    entry.lastModified = new Date();,
+    entry.modifiedBy = 'admin';,
     
-    return true;
+    return true;,
   }
 
   /**
    * Exportiert die Formular-Tabelle als JSON
    */
-  public exportTable(): string {
-    const data = {
+  public exportTable(): string {;
+const data = {
       exportDate: new Date().toISOString(),
       totalForms: this.formTable.size,
       forms: Array.from(this.formTable.values())
@@ -661,19 +658,19 @@ export class CentralFormTableService {
    * Importiert eine Formular-Tabelle aus JSON
    */
   public importTable(jsonData: string): boolean {
-    try {
-      const data = JSON.parse(jsonData);
+    try {;
+const data = JSON.parse(jsonData);,
       if (data.forms && Array.isArray(data.forms)) {
-        this.formTable.clear();
+        this.formTable.clear();,
         data.forms.forEach((form: FormTableEntry) => {
-          this.formTable.set(form.id, form);
+          this.formTable.set(form.id, form);,
         });
         return true;
       }
       return false;
     } catch (error) {
       console.error('Fehler beim Importieren der Formular-Tabelle:', error);
-      return false;
+      return false;,
     }
   }
 }

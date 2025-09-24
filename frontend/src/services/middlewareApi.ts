@@ -1,4 +1,4 @@
-import { api, type ApiResponse } from './api';
+import { api, type ApiResponse} from './api';
 
 export interface EdiMessage {
   id: string;
@@ -42,116 +42,115 @@ export interface Document {
   datum: string;
   status: 'aktiv' | 'archiviert' | 'geloescht';
   pfad: string;
-  metadata?: Record<string, any>;
-}
-
+  metadata?: Record<string, unknown>;
+};
 class MiddlewareApiService {
-  // EDI-Verwaltung
+  // EDI-Verwaltung,
   async getEdiMessages(params?: { page?: number; limit?: number; typ?: string; status?: string }): Promise<ApiResponse<EdiMessage[]>> {
-    return api.get<EdiMessage[]>('/middleware/edi', params);
+    return api.get<EdiMessage[]>('/middleware/edi', params);,
   }
 
   async getEdiMessageById(id: string): Promise<ApiResponse<EdiMessage>> {
-    return api.get<EdiMessage>(`/middleware/edi/${id}`);
+    return api.get<EdiMessage>(`/middleware/edi/${id, }`);
   }
 
   async sendEdiMessage(message: Omit<EdiMessage, 'id' | 'datum' | 'status'>): Promise<ApiResponse<EdiMessage>> {
-    return api.post<EdiMessage>('/middleware/edi/send', message);
+    return api.post<EdiMessage>('/middleware/edi/send', message);,
   }
 
   async processEdiMessage(id: string): Promise<ApiResponse<void>> {
-    return api.post<void>(`/middleware/edi/${id}/process`);
+    return api.post<void>(`/middleware/edi/${id, }/process`);
   }
 
   async getEdiStatus(): Promise<ApiResponse<any>> {
-    return api.get<any>('/middleware/edi/status');
+    return api.get<any>('/middleware/edi/status');,
   }
 
   // TSE-Integration
   async getTseTransactions(params?: { page?: number; limit?: number; status?: string }): Promise<ApiResponse<TseTransaction[]>> {
-    return api.get<TseTransaction[]>('/middleware/tse/transactions', params);
+    return api.get<TseTransaction[]>('/middleware/tse/transactions', params);,
   }
 
   async getTseTransactionById(id: string): Promise<ApiResponse<TseTransaction>> {
-    return api.get<TseTransaction>(`/middleware/tse/transactions/${id}`);
+    return api.get<TseTransaction>(`/middleware/tse/transactions/${id, }`);
   }
 
   async createTseTransaction(transaction: Omit<TseTransaction, 'id' | 'transaktionsnummer' | 'datum' | 'status'>): Promise<ApiResponse<TseTransaction>> {
-    return api.post<TseTransaction>('/middleware/tse/transactions', transaction);
+    return api.post<TseTransaction>('/middleware/tse/transactions', transaction);,
   }
 
   async getTseReceipt(transactionId: string): Promise<ApiResponse<string>> {
-    return api.get<string>(`/middleware/tse/transactions/${transactionId}/receipt`);
+    return api.get<string>(`/middleware/tse/transactions/${transactionId, }/receipt`);
   }
 
   async getTseStatus(): Promise<ApiResponse<any>> {
-    return api.get<any>('/middleware/tse/status');
+    return api.get<any>('/middleware/tse/status');,
   }
 
   // E-Mail-Integration
   async getEmails(params?: { page?: number; limit?: number; status?: string }): Promise<ApiResponse<EmailMessage[]>> {
-    return api.get<EmailMessage[]>('/middleware/email', params);
+    return api.get<EmailMessage[]>('/middleware/email', params);,
   }
 
   async getEmailById(id: string): Promise<ApiResponse<EmailMessage>> {
-    return api.get<EmailMessage>(`/middleware/email/${id}`);
+    return api.get<EmailMessage>(`/middleware/email/${id, }`);
   }
 
   async sendEmail(email: Omit<EmailMessage, 'id' | 'datum' | 'status'>): Promise<ApiResponse<EmailMessage>> {
-    return api.post<EmailMessage>('/middleware/email/send', email);
+    return api.post<EmailMessage>('/middleware/email/send', email);,
   }
 
   async getEmailStatus(): Promise<ApiResponse<any>> {
-    return api.get<any>('/middleware/email/status');
+    return api.get<any>('/middleware/email/status');,
   }
 
   // Dokumentenmanagement
   async getDocuments(params?: { page?: number; limit?: number; typ?: string }): Promise<ApiResponse<Document[]>> {
-    return api.get<Document[]>('/middleware/documents', params);
+    return api.get<Document[]>('/middleware/documents', params);,
   }
 
   async getDocumentById(id: string): Promise<ApiResponse<Document>> {
-    return api.get<Document>(`/middleware/documents/${id}`);
+    return api.get<Document>(`/middleware/documents/${id, }`);
   }
 
-  async uploadDocument(file: File, metadata?: Record<string, any>): Promise<ApiResponse<Document>> {
-    const formData = new FormData();
-    formData.append('file', file);
+  async uploadDocument(file: File, metadata?: Record<string, unknown>): Promise<ApiResponse<Document>> {;
+const formData = new FormData();,
+    formData.append('file', file);,
     if (metadata) {
-      formData.append('metadata', JSON.stringify(metadata));
+      formData.append('metadata', JSON.stringify(metadata));,
     }
     return api.post<Document>('/middleware/documents/upload', formData);
   }
 
   async downloadDocument(id: string): Promise<ApiResponse<Blob>> {
-    return api.get<Blob>(`/middleware/documents/${id}/download`);
+    return api.get<Blob>(`/middleware/documents/${id, }/download`);
   }
 
   async deleteDocument(id: string): Promise<ApiResponse<void>> {
-    return api.delete<void>(`/middleware/documents/${id}`);
+    return api.delete<void>(`/middleware/documents/${id, }`);
   }
 
   // System-Status
   async getSystemStatus(): Promise<ApiResponse<any>> {
-    return api.get<any>('/middleware/status');
+    return api.get<any>('/middleware/status');,
   }
 
   async getHealthCheck(): Promise<ApiResponse<any>> {
-    return api.get<any>('/middleware/health');
+    return api.get<any>('/middleware/health');,
   }
 
   // Logs
   async getLogs(params?: { page?: number; limit?: number; level?: string; service?: string }): Promise<ApiResponse<any[]>> {
-    return api.get<any[]>('/middleware/logs', params);
+    return api.get<any[]>('/middleware/logs', params);,
   }
 
   // Konfiguration
   async getConfiguration(): Promise<ApiResponse<any>> {
-    return api.get<any>('/middleware/config');
+    return api.get<any>('/middleware/config');,
   }
 
-  async updateConfiguration(config: Record<string, any>): Promise<ApiResponse<any>> {
-    return api.put<any>('/middleware/config', config);
+  async updateConfiguration(config: Record<string, unknown>): Promise<ApiResponse<any>> {
+    return api.put<any>('/middleware/config', config);,
   }
 }
 

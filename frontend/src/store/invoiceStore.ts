@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create ,} from 'zustand';
+import { devtools ,} from 'zustand/middleware';
 
-// Invoice Types für VALEO NeuroERP
+// Invoice Types für VALEO NeuroERP;
 interface InvoiceItem {
   id: string;
   description: string;
@@ -9,8 +9,7 @@ interface InvoiceItem {
   unitPrice: number;
   taxRate: number;
   total: number;
-}
-
+};
 interface Invoice {
   id: string;
   invoiceNumber: string;
@@ -28,10 +27,9 @@ interface Invoice {
   paymentTerms?: string;
   createdAt: Date;
   updatedAt: Date;
-}
-
+};
 interface InvoiceStore {
-  // State
+  // State,
   invoices: Invoice[];
   selectedInvoice: Invoice | null;
   filters: {
@@ -48,88 +46,68 @@ interface InvoiceStore {
   
   // Actions
   setInvoices: (invoices: Invoice[]) => void;
-  addInvoice: (invoice: Omit<Invoice, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
-  updateInvoice: (id: string, updates: Partial<Invoice>) => Promise<void>;
-  deleteInvoice: (id: string) => Promise<void>;
-  setSelectedInvoice: (invoice: Invoice | null) => void;
+  addInvoice: (invoice: Omit<_Invoice, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
+  updateInvoice: (id: _string, updates: Partial<Invoice>) => Promise<void>;
+  deleteInvoice: (id: _string) => Promise<void>;
+  setSelectedInvoice: (invoice: Invoice | _null) => void;
   
   setFilters: (filters: Partial<InvoiceStore['filters']>) => void;
   clearFilters: () => void;
   
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
+  setLoading: (loading: _boolean) => void;
+  setError: (error: string | _null) => void;
   clearError: () => void;
   
   // Computed Actions
   getInvoicesByStatus: (status: Invoice['status']) => Invoice[];
-  getInvoicesByCustomer: (customerId: string) => Invoice[];
+  getInvoicesByCustomer: (customerId: _string) => Invoice[];
   getTotalAmount: () => number;
   getOverdueInvoices: () => Invoice[];
 }
 
-export const useInvoiceStore = create<InvoiceStore>()(
-  devtools(
+export const useInvoiceStore = create<InvoiceStore>()(devtools(
     (set, get) => ({
-      // Initial State
-      invoices: [],
-      selectedInvoice: null,
-      filters: {
-        status: [],
-        dateRange: {
-          start: null,
-          end: null
-        },
-        customerId: null,
-        searchTerm: ''
-      },
-      loading: false,
-      error: null,
-      
-      // Actions
-      setInvoices: (invoices) => {
-        set({ invoices });
+      // Initial State, invoices: [], selectedInvoice: null, filters: {
+        status: [], dateRange: {
+          start: null, end: null
+        }, customerId: null, searchTerm: ''
+      }, loading: false, error: null, // Actions
+      setInvoices: (_invoices) => {
+        set({ invoices, });
       },
       
       addInvoice: async (invoiceData) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch('/api/invoices', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(invoiceData)
+        try {;
+const response = await fetch('/api/invoices', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(invoiceData)
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Erstellen der Rechnung');
-          }
-          
-          const newInvoice = await response.json();
+            throw new Error('Fehler beim Erstellen der Rechnung');,
+          };
+const newInvoice = await response.json();
           set((state) => ({
-            invoices: [...state.invoices, newInvoice],
-            loading: false
+            invoices: [...state.invoices, newInvoice], loading: false
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
       updateInvoice: async (id, updates) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/invoices/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updates)
+        try {;
+const response = await fetch(`/api/invoices/${id, }`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates)
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Aktualisieren der Rechnung');
-          }
-          
-          const updatedInvoice = await response.json();
+            throw new Error('Fehler beim Aktualisieren der Rechnung');,
+          };
+const updatedInvoice = await response.json();
           set((state) => ({
             invoices: state.invoices.map(invoice =>
               invoice.id === id ? updatedInvoice : invoice
@@ -139,21 +117,20 @@ export const useInvoiceStore = create<InvoiceStore>()(
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
       deleteInvoice: async (id) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/invoices/${id}`, {
+        try {;
+const response = await fetch(`/api/invoices/${id, }`, {
             method: 'DELETE'
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Löschen der Rechnung');
+            throw new Error('Fehler beim Löschen der Rechnung');,
           }
           
           set((state) => ({
@@ -163,17 +140,16 @@ export const useInvoiceStore = create<InvoiceStore>()(
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
-      setSelectedInvoice: (invoice) => {
+      setSelectedInvoice: (_invoice) => {
         set({ selectedInvoice: invoice });
       },
       
-      setFilters: (filters) => {
+      setFilters: (_filters) => {
         set((state) => ({
           filters: { ...state.filters, ...filters }
         }));
@@ -182,23 +158,19 @@ export const useInvoiceStore = create<InvoiceStore>()(
       clearFilters: () => {
         set({
           filters: {
-            status: [],
-            dateRange: {
-              start: null,
-              end: null
-            },
-            customerId: null,
-            searchTerm: ''
+            status: [], dateRange: {
+              start: null, end: null
+            }, customerId: null, searchTerm: ''
           }
         });
       },
       
-      setLoading: (loading) => {
-        set({ loading });
+      setLoading: (_loading) => {
+        set({ loading, });
       },
       
-      setError: (error) => {
-        set({ error });
+      setError: (_error) => {
+        set({ error, });
       },
       
       clearError: () => {
@@ -206,24 +178,22 @@ export const useInvoiceStore = create<InvoiceStore>()(
       },
       
       // Computed Actions
-      getInvoicesByStatus: (status) => {
-        return get().invoices.filter(invoice => invoice.status === status);
+      getInvoicesByStatus: (_status) => {
+        return get().invoices.filter(invoice => invoice.status === status);,
       },
       
-      getInvoicesByCustomer: (customerId) => {
-        return get().invoices.filter(invoice => invoice.customerId === customerId);
+      getInvoicesByCustomer: (_customerId) => {
+        return get().invoices.filter(invoice => invoice.customerId === customerId);,
       },
       
       getTotalAmount: () => {
-        return get().invoices.reduce((total, invoice) => total + invoice.total, 0);
+        return get().invoices.reduce((total, invoice) => total + invoice.total, 0);,
       },
       
-      getOverdueInvoices: () => {
-        const today = new Date();
-        return get().invoices.filter(invoice => 
-          invoice.status === 'sent' && 
-          new Date(invoice.dueDate) < today
-        );
+      getOverdueInvoices: () => {;
+const today = new Date();,
+        return get().invoices.filter(invoice =>, invoice.status === 'sent' &&, new Date(invoice.dueDate) < today,
+        );,
       }
     }),
     { name: 'invoice-store' }

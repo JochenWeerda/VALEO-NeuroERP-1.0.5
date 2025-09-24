@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Container, Typography, Alert, Snackbar } from '@mui/material';
-import { DeliveryNoteForm, DeliveryNoteFormProps } from '../../components/erp/DeliveryNoteForm';
-import { DeliveryNoteMasterData, DeliveryNotePosition } from '../../types/erp';
-import { Supplier } from '../../types/crm';
+import React, { useState ,} from 'react';
+import { Container, Typography, Alert, Snackbar} from '@mui/material';
+import { DeliveryNoteForm, DeliveryNoteFormProps} from '../../components/erp/DeliveryNoteForm';
+import { DeliveryNoteMasterData, DeliveryNotePosition} from '../../types/erp';
+import { Supplier ,} from '../../types/crm';
 
 /**
  * Beispiel-Seite für Lieferanten-Lieferschein
  * Demonstriert die Verwendung der DeliveryNoteForm-Komponente
  */
 export const DeliveryNotePage: React.FC = () => {
-  // Mock-Daten für Lieferanten
-  const mockSuppliers: Supplier[] = [
+  // Mock-Daten für Lieferanten,;
+const mockSuppliers: Supplier[] = [
     {
       id: '1',
       supplierNumber: 'SUP001',
@@ -59,8 +59,8 @@ export const DeliveryNotePage: React.FC = () => {
     }
   ];
 
-  // Initiale Stammdaten
-  const initialMasterData: DeliveryNoteMasterData = {
+  // Initiale Stammdaten;
+const initialMasterData: DeliveryNoteMasterData = {
     lieferant: null,
     zwHaendler: '',
     lsReferenzNr: '',
@@ -70,8 +70,8 @@ export const DeliveryNotePage: React.FC = () => {
     lsNr: `LS-${Date.now()}`
   };
 
-  // Initiale Positionen
-  const initialPositions: DeliveryNotePosition[] = [
+  // Initiale Positionen;
+const initialPositions: DeliveryNotePosition[] = [
     {
       posNr: 1,
       artikelNr: 'ART001',
@@ -110,57 +110,57 @@ export const DeliveryNotePage: React.FC = () => {
     }
   ];
 
-  // State
-  const [masterData, setMasterData] = useState<DeliveryNoteMasterData>(initialMasterData);
-  const [positions, setPositions] = useState<DeliveryNotePosition[]>(initialPositions);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>();
-  const [successMessage, setSuccessMessage] = useState<string | undefined>();
+  // State;
+const [masterData, setMasterData] = useState<DeliveryNoteMasterData>(initialMasterData);;
+const [positions, setPositions] = useState<DeliveryNotePosition[]>(initialPositions);;
+const [loading, setLoading] = useState(false);;
+const [error, setError] = useState<string | undefined>();;
+const [successMessage, setSuccessMessage] = useState<string | undefined>();
 
-  // Handler für Stammdaten-Änderungen
-  const handleMasterDataChange: DeliveryNoteFormProps['onChangeMasterData'] = (data) => {
-    setMasterData(prev => ({ ...prev, ...data }));
+  // Handler für Stammdaten-Änderungen;
+const handleMasterDataChange: DeliveryNoteFormProps['onChangeMasterData'] = (data) => {
+    setMasterData(prev => ({ ...prev, ...data, }));
   };
 
-  // Handler für Positions-Änderungen
-  const handlePositionsChange: DeliveryNoteFormProps['onChangePositions'] = (newPositions) => {
-    setPositions(newPositions);
+  // Handler für Positions-Änderungen;
+const handlePositionsChange: DeliveryNoteFormProps['onChangePositions'] = (newPositions) => {
+    setPositions(newPositions);,
   };
 
-  // Handler für Formular-Submit
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError(undefined);
+  // Handler für Formular-Submit;
+const handleSubmit = async () => {
+    setLoading(true);,
+    setError(undefined);,
     
     try {
-      // Simuliere API-Call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Simuliere API-Call,
+      await new Promise(resolve => setTimeout(resolve, 2000));,
       
-      // Validierung
+      // Validierung,
       if (!masterData.lieferant) {
-        throw new Error('Bitte wählen Sie einen Lieferanten aus.');
+        throw new Error('Bitte wählen Sie einen Lieferanten aus.');,
       }
       
       if (positions.length === 0) {
-        throw new Error('Bitte fügen Sie mindestens eine Position hinzu.');
+        throw new Error('Bitte fügen Sie mindestens eine Position hinzu.');,
       }
       
       // Erfolg
       setSuccessMessage('Lieferschein erfolgreich gespeichert!');
-      console.log('Lieferschein-Daten:', { masterData, positions });
+      console.log('Lieferschein-Daten:', { masterData, positions, });
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ein unbekannter Fehler ist aufgetreten.');
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
   };
 
-  // Handler für Abbrechen
-  const handleCancel = () => {
-    setMasterData(initialMasterData);
-    setPositions(initialPositions);
-    setError(undefined);
+  // Handler für Abbrechen;
+const handleCancel = () => {
+    setMasterData(initialMasterData);,
+    setPositions(initialPositions);,
+    setError(undefined);,
   };
 
   return (
@@ -171,26 +171,26 @@ export const DeliveryNotePage: React.FC = () => {
       
       <div data-testid="delivery-note-form-root">
         <DeliveryNoteForm
-          masterData={masterData}
-          positions={positions}
-          suppliers={mockSuppliers}
-          loading={loading}
-          error={error}
-          onChangeMasterData={handleMasterDataChange}
-          onChangePositions={handlePositionsChange}
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
+          masterData={masterData, }
+          positions={positions, }
+          suppliers={mockSuppliers, }
+          loading={loading, }
+          error={error, }
+          onChangeMasterData={handleMasterDataChange, }
+          onChangePositions={handlePositionsChange, }
+          onSubmit={handleSubmit, }
+          onCancel={handleCancel, }
         />
       </div>
 
-      {/* Success Message */}
+      {/* Success Message */, }
       <Snackbar
-        open={!!successMessage}
-        autoHideDuration={6000}
-        onClose={() => setSuccessMessage(undefined)}
+        open={!!successMessage, }
+        autoHideDuration={6000, }
+        onClose={() => setSuccessMessage(undefined),}
       >
-        <Alert onClose={() => setSuccessMessage(undefined)} severity="success">
-          {successMessage}
+        <Alert onClose={() => setSuccessMessage(undefined),} severity="success">
+          {successMessage,}
         </Alert>
       </Snackbar>
     </Container>

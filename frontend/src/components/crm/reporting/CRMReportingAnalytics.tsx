@@ -1,56 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-  IconButton,
-  Tooltip,
-  CircularProgress,
-  Alert,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { de } from 'date-fns/locale';
+  Box, Grid, Card, CardContent, Typography, Button, FormControl, InputLabel, Select, MenuItem, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, IconButton, Tooltip, CircularProgress, Alert, Dialog, DialogTitle, DialogContent, DialogActions} from '@mui/material';
+import { DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import { AdapterDateFns ,} from '@mui/x-date-pickers/AdapterDateFns';
+import { de ,} from 'date-fns/locale';
 import {
-  Download as DownloadIcon,
-  FilterList as FilterIcon,
-  Refresh as RefreshIcon,
-  Assessment as AnalyticsIcon,
-  TrendingUp as TrendingUpIcon,
-  People as PeopleIcon,
-  AttachMoney as MoneyIcon,
-  Chat as ChatIcon,
-  LocalOffer as OfferIcon,
-  ShoppingCart as OrderIcon,
-  Receipt as InvoiceIcon,
-  Visibility as ViewIcon
-} from '@mui/icons-material';
-import { useQuery } from '@tanstack/react-query';
-
+  Download as DownloadIcon, FilterList as FilterIcon, Refresh as RefreshIcon, Assessment as AnalyticsIcon, TrendingUp as TrendingUpIcon, People as PeopleIcon, AttachMoney as MoneyIcon, Chat as ChatIcon, LocalOffer as OfferIcon, ShoppingCart as OrderIcon, Receipt as InvoiceIcon, Visibility as ViewIcon} from '@mui/icons-material';
+import { useQuery ,} from '@tanstack/react-query';;
 interface CRMReportingAnalyticsProps {
-  onReportClick?: (reportType: string, data?: any) => void;
-}
-
+  onReportClick?: (reportType: string, data?: unknown) => void;
+};
 interface CustomerData {
   id: string;
   name: string;
@@ -59,18 +18,16 @@ interface CustomerData {
   revenue: number;
   lastOrder: string;
   riskScore: number;
-}
-
+};
 interface CommunicationData {
   id: string;
-  customer: string;
-  type: string;
+  customer: string;;
+type: string;
   subject: string;
   date: string;
   status: string;
   outcome: string;
-}
-
+};
 interface OfferData {
   id: string;
   customer: string;
@@ -79,8 +36,7 @@ interface OfferData {
   status: string;
   createdDate: string;
   validUntil: string;
-}
-
+};
 interface OrderData {
   id: string;
   customer: string;
@@ -89,8 +45,7 @@ interface OrderData {
   status: string;
   orderDate: string;
   deliveryDate: string;
-}
-
+};
 interface InvoiceData {
   id: string;
   customer: string;
@@ -99,67 +54,52 @@ interface InvoiceData {
   status: string;
   issueDate: string;
   dueDate: string;
-}
-
-type ReportData = CustomerData | CommunicationData | OfferData | OrderData | InvoiceData;
-
+};
+type ReportData = CustomerData | CommunicationData | OfferData | OrderData | InvoiceData;;
 const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
-  onReportClick
-}) => {
-  const [selectedReport, setSelectedReport] = useState<string>('customers');
-  const [dateFrom, setDateFrom] = useState<Date | null>(null);
-  const [dateTo, setDateTo] = useState<Date | null>(null);
-  const [filters, setFilters] = useState<any>({});
-  const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
-  const [exportFormat, setExportFormat] = useState<string>('excel');
+  onReportClick, }) => {;
+const [selectedReport, setSelectedReport] = useState<string>('customers');,;
+const [dateFrom, setDateFrom] = useState<Date | null>(null);,;
+const [dateTo, setDateTo] = useState<Date | null>(null);,;
+const [filters, setFilters] = useState<any>({});;
+const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);;
+const [exportFormat, setExportFormat] = useState<string>('excel');
 
-  // Fetch CRM analytics data
-  const { data: analytics, isLoading, error, refetch } = useQuery({
-    queryKey: ['crm-analytics', selectedReport, dateFrom, dateTo, filters],
-    queryFn: () => Promise.resolve({ customers: [], revenue: 0, orders: 0 }), // Mock data
+  // Fetch CRM analytics data;
+const { data: analytics, _isLoading, _error, _refetch} = useQuery({
+    queryKey: ['crm-analytics', selectedReport, dateFrom, dateTo, filters], queryFn: () => Promise.resolve({ customers: [], revenue: 0, orders: 0 }), // Mock data
     staleTime: 5 * 60 * 1000, // 5 minutes
-  });
-
-  const handleReportChange = (reportType: string) => {
-    setSelectedReport(reportType);
-  };
-
-  const handleFilterChange = (filterName: string, value: any) => {
+  });;
+const handleReportChange = (reportType: string) => {
+    setSelectedReport(reportType);,
+  };;
+const handleFilterChange = (filterName: string, value: unknown) => {
     setFilters(prev => ({
-      ...prev,
-      [filterName]: value
+      ...prev, [filterName]: value
     }));
-  };
-
-  const handleExport = () => {
-    setIsExportDialogOpen(true);
-  };
-
-  const handleExportConfirm = async () => {
-    try {
-      const response = await fetch('/api/crm/reports/export', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+  };;
+const handleExport = () => {
+    setIsExportDialogOpen(true);,
+  };;
+const handleExportConfirm = async () => {
+    try {;
+const response = await fetch('/api/crm/reports/export', {
+        method: 'POST', headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
-          reportType: selectedReport,
-          format: exportFormat,
-          filters: filters,
-          dateRange: {
-            start: filters.startDate,
-            end: filters.endDate
+          reportType: selectedReport, format: exportFormat, filters: filters, dateRange: {
+            start: filters.startDate, end: filters.endDate
           }
         })
       });
 
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `crm-report-${selectedReport}-${new Date().toISOString().split('T')[0]}.${exportFormat}`;
+      if (response.ok) {;
+const blob = await response.blob();,;
+const url = window.URL.createObjectURL(blob);,;
+const a = document.createElement('a');,
+        a.href = url;,
+        a.download = `crm-report-${selectedReport,}-${new Date().toISOString().split('T')[0],}.${exportFormat,}`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -167,34 +107,29 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
         
         console.log('Report exported successfully in format:', exportFormat);
       } else {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        throw new Error(`HTTP ${response.status, }: ${response.statusText, }`);
       }
     } catch (err) {
       console.error('Error exporting report:', err);
-      alert('Fehler beim Exportieren des Reports');
+      alert('Fehler beim Exportieren des Reports');,
     } finally {
-      setIsExportDialogOpen(false);
+      setIsExportDialogOpen(false);,
     }
-  };
-
-  const formatCurrency = (amount: number) => {
+  };;
+const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR'
+      style: 'currency', currency: 'EUR'
     }).format(amount);
-  };
-
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('de-DE').format(num);
-  };
-
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('de-DE');
-  };
-
-  const getReportData = () => {
-    // Mock data for different report types
-    const mockData = {
+  };;
+const formatNumber = (num: number) => {
+    return new Intl.NumberFormat('de-DE').format(num);,
+  };;
+const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('de-DE');,
+  };;
+const getReportData = () => {
+    // Mock data for different report types,;
+const mockData = {
       customers: [
         {
           id: '1',
@@ -218,8 +153,8 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
       communications: [
         {
           id: '1',
-          customer: 'Musterfirma GmbH',
-          type: 'WhatsApp',
+          customer: 'Musterfirma GmbH',;
+type: 'WhatsApp',
           subject: 'Bestellbestätigung',
           date: '2024-01-20',
           status: 'Delivered',
@@ -227,8 +162,8 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
         },
         {
           id: '2',
-          customer: 'Beispiel AG',
-          type: 'Email',
+          customer: 'Beispiel AG',;
+type: 'Email',
           subject: 'Angebot',
           date: '2024-01-19',
           status: 'Sent',
@@ -273,10 +208,9 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
     };
 
     return mockData[selectedReport as keyof typeof mockData] || [];
-  };
-
-  const getReportColumns = () => {
-    const columns = {
+  };;
+const getReportColumns = () => {;
+const columns = {
       customers: [
         { field: 'name', header: 'Kundenname' },
         { field: 'segment', header: 'Segment' },
@@ -322,15 +256,14 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
     };
 
     return columns[selectedReport as keyof typeof columns] || [];
-  };
-
-  const renderTableCell = (row: any, column: any) => {
-    const value = row[column.field];
+  };;
+const renderTableCell = (row: unknown, column: unknown) => {;
+const value = row[column.field];,
 
     switch (column.field) {
       case 'revenue':
       case 'amount':
-        return formatCurrency(value);
+        return formatCurrency(value);,
       case 'lastOrder':
       case 'date':
       case 'validUntil':
@@ -338,140 +271,125 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
       case 'deliveryDate':
       case 'invoiceDate':
       case 'dueDate':
-        return formatDate(value);
+        return formatDate(value);,
       case 'segment':
-        return (
-          <Chip
-            label={value}
+        return (<Chip, label={value, }
             color={value === 'Premium' ? 'primary' : value === 'Standard' ? 'success' : 'default'}
             size="small"
-          />
-        );
+          />);
       case 'status':
         return (
           <Chip
-            label={value}
+            label={value, }
             color={value === 'Aktiv' || value === 'Confirmed' || value === 'Paid' ? 'success' : 
                    value === 'Draft' ? 'default' : 'warning'}
             size="small"
-          />
-        );
+          />);
       case 'type':
         return (
           <Chip
-            label={value}
+            label={value, }
             color={value === 'WhatsApp' ? 'success' : value === 'Email' ? 'primary' : 'default'}
             size="small"
-          />
-        );
+          />);
       case 'outcome':
         return (
           <Chip
-            label={value}
+            label={value, }
             color={value === 'Positive' ? 'success' : value === 'Negative' ? 'error' : 'default'}
             size="small"
-          />
-        );
+          />);
       default:
         return value;
     }
   };
 
   if (isLoading) {
-    return (
-      <Box className="flex justify-center items-center h-64">
-        <CircularProgress />
-      </Box>
-    );
+    return (<Box className="flex justify-center items-center h-64">, <CircularProgress />, </Box>);,
   }
 
   if (error) {
-    return (
-      <Box className="p-4">
-        <Alert severity="error">
-          Fehler beim Laden der Reporting-Daten: {error.message}
+    return (<Box className="p-4">, <Alert severity="error">, Fehler beim Laden der Reporting-Daten: {error.message}
         </Alert>
-      </Box>
-    );
-  }
-
-  const reportData = getReportData();
-  const reportColumns = getReportColumns();
+      </Box>);
+  };
+const reportData = getReportData();;
+const reportColumns = getReportColumns();
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={de}>
+    <LocalizationProvider dateAdapter={AdapterDateFns, } adapterLocale={de, }>
       <Box className="p-6 space-y-6">
-        {/* Header */}
+        {/* Header */, }
         <Box className="flex justify-between items-center">
           <Typography variant="h4" className="text-gray-800">
             Reporting & Analytics
           </Typography>
           <Box className="flex gap-2">
-            <Button
-              variant="outlined"
-              startIcon={<RefreshIcon />}
-              onClick={() => refetch()}
+            <Button;
+variant="outlined"
+              startIcon={<RefreshIcon />, }
+              onClick={() => refetch(),}
             >
               Aktualisieren
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<DownloadIcon />}
-              onClick={handleExport}
+            <Button;
+variant="contained"
+              startIcon={<DownloadIcon />,}
+              onClick={handleExport,}
             >
               Exportieren
             </Button>
           </Box>
         </Box>
 
-        {/* Report Type Selection */}
+        {/* Report Type Selection */,}
         <Card>
           <CardContent>
             <Typography variant="h6" className="mb-4">
               Berichtstyp auswählen
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2,}>
               <Grid item>
-                <Button
-                  variant={selectedReport === 'customers' ? 'contained' : 'outlined'}
-                  startIcon={<PeopleIcon />}
-                  onClick={() => handleReportChange('customers')}
+                <Button;
+variant={selectedReport === 'customers' ? 'contained' : 'outlined'}
+                  startIcon={<PeopleIcon />,}
+                  onClick={() => handleReportChange('customers'),}
                 >
                   Kunden
                 </Button>
               </Grid>
               <Grid item>
-                <Button
-                  variant={selectedReport === 'communications' ? 'contained' : 'outlined'}
-                  startIcon={<ChatIcon />}
-                  onClick={() => handleReportChange('communications')}
+                <Button;
+variant={selectedReport === 'communications' ? 'contained' : 'outlined'}
+                  startIcon={<ChatIcon />,}
+                  onClick={() => handleReportChange('communications'),}
                 >
                   Kommunikation
                 </Button>
               </Grid>
               <Grid item>
-                <Button
-                  variant={selectedReport === 'offers' ? 'contained' : 'outlined'}
-                  startIcon={<OfferIcon />}
-                  onClick={() => handleReportChange('offers')}
+                <Button;
+variant={selectedReport === 'offers' ? 'contained' : 'outlined'}
+                  startIcon={<OfferIcon />,}
+                  onClick={() => handleReportChange('offers'),}
                 >
                   Angebote
                 </Button>
               </Grid>
               <Grid item>
-                <Button
-                  variant={selectedReport === 'orders' ? 'contained' : 'outlined'}
-                  startIcon={<OrderIcon />}
-                  onClick={() => handleReportChange('orders')}
+                <Button;
+variant={selectedReport === 'orders' ? 'contained' : 'outlined'}
+                  startIcon={<OrderIcon />,}
+                  onClick={() => handleReportChange('orders'),}
                 >
                   Aufträge
                 </Button>
               </Grid>
               <Grid item>
-                <Button
-                  variant={selectedReport === 'invoices' ? 'contained' : 'outlined'}
-                  startIcon={<InvoiceIcon />}
-                  onClick={() => handleReportChange('invoices')}
+                <Button;
+variant={selectedReport === 'invoices' ? 'contained' : 'outlined'}
+                  startIcon={<InvoiceIcon />,}
+                  onClick={() => handleReportChange('invoices'),}
                 >
                   Rechnungen
                 </Button>
@@ -480,35 +398,35 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
           </CardContent>
         </Card>
 
-        {/* Filters */}
+        {/* Filters */,}
         <Card>
           <CardContent>
             <Typography variant="h6" className="mb-4">
               Filter
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6} md={3}>
+            <Grid container spacing={3,}>
+              <Grid item xs={12,} sm={6,} md={3,}>
                 <DatePicker
                   label="Von Datum"
-                  value={dateFrom}
-                  onChange={(newValue) => setDateFrom(newValue)}
+                  value={dateFrom,}
+                  onChange={(newValue) => setDateFrom(newValue),}
                   slotProps={{ textField: { fullWidth: true } }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12,} sm={6,} md={3,}>
                 <DatePicker
                   label="Bis Datum"
-                  value={dateTo}
-                  onChange={(newValue) => setDateTo(newValue)}
+                  value={dateTo,}
+                  onChange={(newValue) => setDateTo(newValue),}
                   slotProps={{ textField: { fullWidth: true } }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12,} sm={6,} md={3,}>
                 <FormControl fullWidth>
                   <InputLabel>Status</InputLabel>
                   <Select
-                    value={filters.status || ''}
-                    onChange={(e) => handleFilterChange('status', e.target.value)}
+                    value={filters.status || '',}
+                    onChange={(e) => handleFilterChange('status', e.target.value),}
                     label="Status"
                   >
                     <MenuItem value="">Alle</MenuItem>
@@ -520,12 +438,12 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12,} sm={6,} md={3,}>
                 <FormControl fullWidth>
                   <InputLabel>Segment</InputLabel>
                   <Select
-                    value={filters.segment || ''}
-                    onChange={(e) => handleFilterChange('segment', e.target.value)}
+                    value={filters.segment || '',}
+                    onChange={(e) => handleFilterChange('segment', e.target.value),}
                     label="Segment"
                   >
                     <MenuItem value="">Alle</MenuItem>
@@ -539,47 +457,43 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
           </CardContent>
         </Card>
 
-        {/* Report Table */}
+        {/* Report Table */,}
         <Card>
           <CardContent>
             <Box className="flex justify-between items-center mb-4">
               <Typography variant="h6">
-                {selectedReport === 'customers' && 'Kundenbericht'}
-                {selectedReport === 'communications' && 'Kommunikationsbericht'}
-                {selectedReport === 'offers' && 'Angebotsbericht'}
-                {selectedReport === 'orders' && 'Auftragsbericht'}
-                {selectedReport === 'invoices' && 'Rechnungsbericht'}
+                {selectedReport === 'customers' && 'Kundenbericht',}
+                {selectedReport === 'communications' && 'Kommunikationsbericht',}
+                {selectedReport === 'offers' && 'Angebotsbericht',}
+                {selectedReport === 'orders' && 'Auftragsbericht',}
+                {selectedReport === 'invoices' && 'Rechnungsbericht',}
               </Typography>
               <Typography variant="body2" className="text-gray-600">
-                {reportData.length} Einträge
+                {reportData.length,} Einträge
               </Typography>
             </Box>
 
-            <TableContainer component={Paper} variant="outlined">
+            <TableContainer component={Paper,} variant="outlined">
               <Table>
                 <TableHead>
                   <TableRow>
-                    {reportColumns.map((column) => (
-                      <TableCell key={column.field}>
-                        {column.header}
-                      </TableCell>
-                    ))}
+                    {reportColumns.map((column) => (<TableCell key={column.field, }>
+                        {column.header, }
+                      </TableCell>))}
                     <TableCell align="right">Aktionen</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {reportData.map((row) => (
-                    <TableRow key={row.id} hover>
-                      {reportColumns.map((column) => (
-                        <TableCell key={column.field}>
-                          {renderTableCell(row, column)}
+                  {reportData.map((row) => (<TableRow key={row.id, } hover>
+                      {reportColumns.map((column) => (<TableCell key={column.field, }>
+                          {renderTableCell(row, column),}
                         </TableCell>
                       ))}
                       <TableCell align="right">
                         <Tooltip title="Details anzeigen">
                           <IconButton
                             size="small"
-                            onClick={() => onReportClick?.(selectedReport, row)}
+                            onClick={() => onReportClick?.(selectedReport, row),}
                           >
                             <ViewIcon />
                           </IconButton>
@@ -593,9 +507,9 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
           </CardContent>
         </Card>
 
-        {/* Analytics Summary */}
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        {/* Analytics Summary */,}
+        <Grid container spacing={3,}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">
@@ -605,37 +519,29 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
                   <Box className="flex justify-between">
                     <Typography variant="body2">Gesamtanzahl:</Typography>
                     <Typography variant="body2" className="font-semibold">
-                      {formatNumber(reportData.length)}
+                      {formatNumber(reportData.length),}
                     </Typography>
                   </Box>
-                  {selectedReport === 'customers' && (
-                    <>
-                      <Box className="flex justify-between">
-                        <Typography variant="body2">Durchschnittlicher Umsatz:</Typography>
-                        <Typography variant="body2" className="font-semibold">
-                          {formatCurrency(reportData.reduce((sum, row) => sum + ('revenue' in row ? row.revenue : 0), 0) / reportData.length)}
+                  {selectedReport === 'customers' && (<>, <Box className="flex justify-between">, <Typography variant="body2">Durchschnittlicher Umsatz:</Typography>
+                        <Typography variant="body2" className="font-semibold">, {formatCurrency(reportData.reduce((sum, row) => sum + ('revenue' in row ? row.revenue : 0), 0) / reportData.length)}
                         </Typography>
                       </Box>
                       <Box className="flex justify-between">
                         <Typography variant="body2">Premium Kunden:</Typography>
                         <Typography variant="body2" className="font-semibold">
-                          {formatNumber(reportData.filter(row => 'segment' in row && row.segment === 'Premium').length)}
+                          {formatNumber(reportData.filter(row => 'segment' in row && row.segment === 'Premium').length),}
                         </Typography>
                       </Box>
                     </>
                   )}
-                  {selectedReport === 'communications' && (
-                    <>
-                      <Box className="flex justify-between">
-                        <Typography variant="body2">WhatsApp Nachrichten:</Typography>
-                        <Typography variant="body2" className="font-semibold">
-                          {formatNumber(reportData.filter(row => 'type' in row && row.type === 'WhatsApp').length)}
+                  {selectedReport === 'communications' && (<>, <Box className="flex justify-between">, <Typography variant="body2">WhatsApp Nachrichten:</Typography>
+                        <Typography variant="body2" className="font-semibold">, {formatNumber(reportData.filter(row => 'type' in row && row.type === 'WhatsApp').length),}
                         </Typography>
                       </Box>
                       <Box className="flex justify-between">
                         <Typography variant="body2">Positive Ergebnisse:</Typography>
                         <Typography variant="body2" className="font-semibold">
-                          {formatNumber(reportData.filter(row => 'outcome' in row && row.outcome === 'Positive').length)}
+                          {formatNumber(reportData.filter(row => 'outcome' in row && row.outcome === 'Positive').length),}
                         </Typography>
                       </Box>
                     </>
@@ -645,7 +551,7 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">
@@ -687,15 +593,15 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
           </Grid>
         </Grid>
 
-        {/* Export Dialog */}
-        <Dialog open={isExportDialogOpen} onClose={() => setIsExportDialogOpen(false)}>
+        {/* Export Dialog */,}
+        <Dialog open={isExportDialogOpen,} onClose={() => setIsExportDialogOpen(false),}>
           <DialogTitle>Daten exportieren</DialogTitle>
           <DialogContent>
             <FormControl fullWidth className="mt-2">
               <InputLabel>Export-Format</InputLabel>
               <Select
-                value={exportFormat}
-                onChange={(e) => setExportFormat(e.target.value)}
+                value={exportFormat,}
+                onChange={(e) => setExportFormat(e.target.value),}
                 label="Export-Format"
               >
                 <MenuItem value="excel">Excel (.xlsx)</MenuItem>
@@ -706,10 +612,10 @@ const CRMReportingAnalytics: React.FC<CRMReportingAnalyticsProps> = ({
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setIsExportDialogOpen(false)}>
+            <Button onClick={() => setIsExportDialogOpen(false),}>
               Abbrechen
             </Button>
-            <Button variant="contained" onClick={handleExportConfirm}>
+            <Button variant="contained" onClick={handleExportConfirm,}>
               Exportieren
             </Button>
           </DialogActions>

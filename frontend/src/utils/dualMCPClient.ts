@@ -3,10 +3,10 @@
  * Kombiniert Schema- und UI-Metadata-Server für optimale Komponenten-Generierung
  */
 
-import { z } from 'zod';
+import { z ,} from 'zod';
 
-// MCP Server URLs
-const SCHEMA_MCP_URL = 'http://localhost:8000';
+// MCP Server URLs;
+const SCHEMA_MCP_URL = 'http://localhost:8000';;
 const UI_METADATA_MCP_URL = 'http://localhost:8001';
 
 // TypeScript Interfaces für UI-Metadata
@@ -21,8 +21,8 @@ export interface UIFieldMetadata {
   readonly: boolean;
   hidden: boolean;
   group?: string;
-  validation_rules?: Record<string, any>;
-  options?: Array<{ value: string; label: string; color?: string; [key: string]: any }>;
+  validation_rules?: Record<string, unknown>;
+  options?: Array<{ value: string; label: string; color?: string; [key: string]: unknown }>;
   min_value?: number;
   max_value?: number;
   step?: number;
@@ -50,7 +50,7 @@ export interface UITableMetadata {
   enable_pagination: boolean;
   enable_export: boolean;
   enable_bulk_actions: boolean;
-  custom_columns?: Array<Record<string, any>>;
+  custom_columns?: Array<Record<string, unknown>>;
 }
 
 export interface UIFormMetadata {
@@ -84,16 +84,16 @@ export interface CompleteMetadata {
 export interface MCPSchema {
   table_name: string;
   columns: Array<{
-    name: string;
-    type: string;
+    name: string;;
+type: string;
     not_null: boolean;
     default_value?: string;
     is_primary_key: boolean;
     is_foreign_key: boolean;
     foreign_table?: string;
     foreign_column?: string;
-    check_constraints?: string[];
-    enum_values?: string[];
+    check_constraints?: string[];;
+enum_values?: string[];
   }>;
   foreign_keys: Array<{
     column: string;
@@ -112,24 +112,19 @@ export interface MCPSchema {
  */
 export class DualMCPClient {
   private schemaUrl: string;
-  private uiMetadataUrl: string;
-
-  constructor(
-    schemaUrl: string = SCHEMA_MCP_URL,
-    uiMetadataUrl: string = UI_METADATA_MCP_URL
-  ) {
-    this.schemaUrl = schemaUrl;
-    this.uiMetadataUrl = uiMetadataUrl;
+  private uiMetadataUrl: string;;
+constructor(schemaUrl: string = SCHEMA_MCP_URL, uiMetadataUrl: string = UI_METADATA_MCP_URL) {
+    this.schemaUrl = schemaUrl;,
+    this.uiMetadataUrl = uiMetadataUrl;,
   }
 
   /**
    * Gesundheitscheck für beide Server
    */
   async checkHealth(): Promise<{ schema: boolean; uiMetadata: boolean }> {
-    try {
-      const [schemaHealth, uiHealth] = await Promise.allSettled([
-        fetch(`${this.schemaUrl}/health`),
-        fetch(`${this.uiMetadataUrl}/health`)
+    try {;
+const [schemaHealth, uiHealth] = await Promise.allSettled([, fetch(`${this.schemaUrl, }/health`),
+        fetch(`${this.uiMetadataUrl, }/health`)
       ]);
 
       return {
@@ -146,16 +141,15 @@ export class DualMCPClient {
    * Schema von Schema-MCP-Server abrufen
    */
   async getSchema(tableName: string): Promise<MCPSchema | null> {
-    try {
-      const response = await fetch(`${this.schemaUrl}/api/schema/${tableName}`);
+    try {;
+const response = await fetch(`${this.schemaUrl, }/api/schema/${tableName, }`);
       if (!response.ok) {
         throw new Error(`Schema request failed: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
+      };
+const data = await response.json();
       return data.success ? data.data : null;
     } catch (error) {
-      console.error(`Error fetching schema for ${tableName}:`, error);
+      console.error(`Error fetching schema for ${tableName, }:`, error);
       return null;
     }
   }
@@ -164,16 +158,15 @@ export class DualMCPClient {
    * UI-Metadata von UI-Metadata-MCP-Server abrufen
    */
   async getUIMetadata(tableName: string): Promise<CompleteMetadata | null> {
-    try {
-      const response = await fetch(`${this.uiMetadataUrl}/api/ui/complete/${tableName}`);
+    try {;
+const response = await fetch(`${this.uiMetadataUrl, }/api/ui/complete/${tableName, }`);
       if (!response.ok) {
         throw new Error(`UI metadata request failed: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
+      };
+const data = await response.json();
       return data.success ? data.data : null;
     } catch (error) {
-      console.error(`Error fetching UI metadata for ${tableName}:`, error);
+      console.error(`Error fetching UI metadata for ${tableName, }:`, error);
       return null;
     }
   }
@@ -184,24 +177,23 @@ export class DualMCPClient {
   async getCombinedMetadata(tableName: string): Promise<{
     schema: MCPSchema | null;
     uiMetadata: CompleteMetadata | null;
-    combined: any;
+    combined: unknown;
   }> {
-    try {
-      const [schema, uiMetadata] = await Promise.all([
-        this.getSchema(tableName),
-        this.getUIMetadata(tableName)
-      ]);
+    try {;
+const [schema, uiMetadata] = await Promise.all([, this.getSchema(tableName),
+        this.getUIMetadata(tableName),
+      ]);,
 
-      // Kombiniere Schema und UI-Metadata
-      const combined = this.combineMetadata(schema, uiMetadata);
+      // Kombiniere Schema und UI-Metadata,;
+const combined = this.combineMetadata(schema, uiMetadata);,
 
       return {
         schema,
         uiMetadata,
-        combined
+        combined,
       };
     } catch (error) {
-      console.error(`Error fetching combined metadata for ${tableName}:`, error);
+      console.error(`Error fetching combined metadata for ${tableName, }:`, error);
       return {
         schema: null,
         uiMetadata: null,
@@ -213,12 +205,11 @@ export class DualMCPClient {
   /**
    * Kombiniere Schema und UI-Metadata zu einer optimierten Struktur
    */
-  private combineMetadata(schema: MCPSchema | null, uiMetadata: CompleteMetadata | null): any {
+  private combineMetadata(schema: MCPSchema | null, uiMetadata: CompleteMetadata | null): unknown {
     if (!schema && !uiMetadata) {
-      return null;
-    }
-
-    const combined: any = {
+      return null;,
+    };
+const combined: unknown = {
       table_name: schema?.table_name || uiMetadata?.table_name,
       schema: schema,
       ui: uiMetadata,
@@ -226,23 +217,23 @@ export class DualMCPClient {
     };
 
     if (schema && uiMetadata?.form) {
-      // Erstelle erweiterte Felder mit Schema + UI-Informationen
-      combined.enhanced_fields = schema.columns.map(column => {
-        const uiField = uiMetadata.form?.fields.find(f => f.field_name === column.name);
+      // Erstelle erweiterte Felder mit Schema + UI-Informationen,
+      combined.enhanced_fields = schema.columns.map(column => {;
+const uiField = uiMetadata.form?.fields.find(f => f.field_name === column.name);,
         
         return {
-          // Schema-Informationen
-          name: column.name,
-          type: column.type,
+          // Schema-Informationen,
+          name: column.name,;
+type: column.type,
           not_null: column.not_null,
           default_value: column.default_value,
           is_primary_key: column.is_primary_key,
           is_foreign_key: column.is_foreign_key,
           foreign_table: column.foreign_table,
-          foreign_column: column.foreign_column,
-          enum_values: column.enum_values,
+          foreign_column: column.foreign_column,;
+enum_values: column.enum_values,
           
-          // UI-Informationen
+          // UI-Informationen,
           ui_component: uiField?.ui_component || this.inferUIComponent(column),
           label: uiField?.label || this.generateLabel(column.name),
           placeholder: uiField?.placeholder,
@@ -267,18 +258,18 @@ export class DualMCPClient {
   /**
    * UI-Komponente basierend auf Schema-Typ ableiten
    */
-  private inferUIComponent(column: any): string {
-    const type = column.type.toLowerCase();
+  private inferUIComponent(column: unknown): string {;
+const type = column.type.toLowerCase();,
     
-    if (type.includes('enum')) return 'select';
-    if (type.includes('date') || type.includes('timestamp')) return 'date';
-    if (type.includes('int') || type.includes('numeric') || type.includes('decimal')) return 'number';
+    if (type.includes('enum')) return 'select';,
+    if (type.includes('date') || type.includes('timestamp')) return 'date';,
+    if (type.includes('int') || type.includes('numeric') || type.includes('decimal')) return 'number';,
     if (type.includes('text') || type.includes('varchar')) {
-      if (column.name.toLowerCase().includes('email')) return 'email';
-      if (column.name.toLowerCase().includes('password')) return 'password';
-      if (column.name.toLowerCase().includes('url')) return 'url';
-      if (column.name.toLowerCase().includes('phone')) return 'tel';
-      return 'text';
+      if (column.name.toLowerCase().includes('email')) return 'email';,
+      if (column.name.toLowerCase().includes('password')) return 'password';,
+      if (column.name.toLowerCase().includes('url')) return 'url';,
+      if (column.name.toLowerCase().includes('phone')) return 'tel';,
+      return 'text';,
     }
     if (type.includes('boolean')) return 'checkbox';
     
@@ -289,34 +280,34 @@ export class DualMCPClient {
    * Label aus Feldname generieren
    */
   private generateLabel(fieldName: string): string {
-    return fieldName
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    return fieldName,
+      .split('_'),
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)),
+      .join(' ');,
   }
 
   /**
    * Validierungsregeln basierend auf Schema generieren
    */
-  private generateValidationRules(column: any): Record<string, any> {
-    const rules: Record<string, any> = {};
+  private generateValidationRules(column: unknown): Record<string, unknown> {;
+const rules: Record<string, unknown> = {};
     
     if (column.not_null) {
-      rules.required = true;
+      rules.required = true;,
     }
     
     if (column.type.includes('email')) {
-      rules.email = true;
+      rules.email = true;,
     }
     
     if (column.type.includes('uuid')) {
-      rules.uuid = true;
+      rules.uuid = true;,
     }
     
     if (column.type.includes('int') || column.type.includes('numeric')) {
-      rules.number = true;
+      rules.number = true;,
       if (column.type.includes('positive')) {
-        rules.positive = true;
+        rules.positive = true;,
       }
     }
     
@@ -326,11 +317,10 @@ export class DualMCPClient {
   /**
    * Optionen für Select-Felder generieren
    */
-  private generateOptions(column: any): Array<{ value: string; label: string }> {
+  private generateOptions(column: unknown): Array<{ value: string; label: string }> {
     if (column.enum_values) {
       return column.enum_values.map((value: string) => ({
-        value,
-        label: this.generateLabel(value)
+        value, label: this.generateLabel(value)
       }));
     }
     
@@ -340,77 +330,76 @@ export class DualMCPClient {
   /**
    * Zod-Schema basierend auf kombinierten Metadaten generieren
    */
-  generateZodSchema(combinedMetadata: any): z.ZodSchema {
+  generateZodSchema(combinedMetadata: unknown): z.ZodSchema {
     if (!combinedMetadata?.enhanced_fields) {
       return z.object({});
-    }
+    };
+const schemaObject: Record<string, z.ZodTypeAny> = {};
 
-    const schemaObject: Record<string, z.ZodTypeAny> = {};
+    combinedMetadata.enhanced_fields.forEach((field: unknown) => {;
+let zodType: z.ZodTypeAny;
 
-    combinedMetadata.enhanced_fields.forEach((field: any) => {
-      let zodType: z.ZodTypeAny;
-
-      // Basis-Typ basierend auf Schema
+      // Basis-Typ basierend auf Schema,
       switch (field.type.toLowerCase()) {
         case 'uuid':
-          zodType = z.string().uuid();
-          break;
+          zodType = z.string().uuid();,
+          break;,
         case 'email':
-          zodType = z.string().email();
-          break;
+          zodType = z.string().email();,
+          break;,
         case 'int':
         case 'integer':
         case 'bigint':
-          zodType = z.number().int();
-          break;
+          zodType = z.number().int();,
+          break;,
         case 'numeric':
         case 'decimal':
         case 'real':
         case 'double precision':
-          zodType = z.number();
-          break;
+          zodType = z.number();,
+          break;,
         case 'boolean':
-          zodType = z.boolean();
-          break;
+          zodType = z.boolean();,
+          break;,
         case 'date':
         case 'timestamp':
         case 'timestamptz':
-          zodType = z.string(); // Für Formulare als String
-          break;
+          zodType = z.string(); // Für Formulare als String,
+          break;,
         default:
-          zodType = z.string();
+          zodType = z.string();,
       }
 
       // Validierungsregeln anwenden
       if (field.validation_rules) {
         if (field.validation_rules.required && zodType instanceof z.ZodString) {
-          zodType = zodType.min(1, `${field.label} ist erforderlich`);
+          zodType = zodType.min(1, `${field.label, } ist erforderlich`);
         }
         if (field.validation_rules.email && zodType instanceof z.ZodString) {
-          zodType = zodType.email('Ungültige E-Mail-Adresse');
+          zodType = zodType.email('Ungültige E-Mail-Adresse');,
         }
         if (field.validation_rules.positive && zodType instanceof z.ZodNumber) {
-          zodType = zodType.positive('Wert muss positiv sein');
+          zodType = zodType.positive('Wert muss positiv sein');,
         }
         if (field.validation_rules.number && zodType instanceof z.ZodNumber) {
           if (field.validation_rules.min !== undefined) {
-            zodType = zodType.min(field.validation_rules.min);
+            zodType = zodType.min(field.validation_rules.min);,
           }
           if (field.validation_rules.max !== undefined) {
-            zodType = (zodType as any).max(field.validation_rules.max);
+            zodType = (zodType as any).max(field.validation_rules.max);,
           }
         }
         if (field.validation_rules.max_length && zodType instanceof z.ZodString) {
-          zodType = zodType.max(field.validation_rules.max_length);
+          zodType = zodType.max(field.validation_rules.max_length);,
         }
         if (field.validation_rules.pattern && zodType instanceof z.ZodString) {
-          zodType = zodType.regex(new RegExp(field.validation_rules.pattern));
+          zodType = zodType.regex(new RegExp(field.validation_rules.pattern));,
         }
       }
 
       // Enum-Werte anwenden
       if (field.enum_values && field.enum_values.length > 0) {
-        zodType = z.enum(field.enum_values as [string, ...string[]]);
+        zodType = z.enum(field.enum_values as [string, ...string[]]);,
       }
 
       schemaObject[field.name] = zodType;
@@ -422,18 +411,17 @@ export class DualMCPClient {
   /**
    * React-Komponenten-Code basierend auf kombinierten Metadaten generieren
    */
-  generateReactComponent(combinedMetadata: any, componentType: 'form' | 'table'): string {
+  generateReactComponent(combinedMetadata: unknown, componentType: 'form' | 'table'): string {
     if (!combinedMetadata) {
-      return '// Keine Metadaten verfügbar';
-    }
-
-    const tableName = combinedMetadata.table_name;
-    const uiMetadata = combinedMetadata.ui;
+      return '// Keine Metadaten verfügbar';,
+    };
+const tableName = combinedMetadata.table_name;;
+const uiMetadata = combinedMetadata.ui;
     
     if (componentType === 'form' && uiMetadata?.form) {
-      return this.generateFormComponent(combinedMetadata);
+      return this.generateFormComponent(combinedMetadata);,
     } else if (componentType === 'table' && uiMetadata?.table) {
-      return this.generateTableComponent(combinedMetadata);
+      return this.generateTableComponent(combinedMetadata);,
     }
 
     return '// Komponente nicht verfügbar';
@@ -442,67 +430,42 @@ export class DualMCPClient {
   /**
    * Formular-Komponente generieren
    */
-  private generateFormComponent(combinedMetadata: any): string {
-    const form = combinedMetadata.ui.form;
-    const fields = combinedMetadata.enhanced_fields;
-    
-    let code = `import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+  private generateFormComponent(combinedMetadata: unknown): string {;
+const form = combinedMetadata.ui.form;,;
+const fields = combinedMetadata.enhanced_fields;,;
+let code = `import React from 'react';,
+import { useForm, Controller} from 'react-hook-form';
+import { zodResolver ,} from '@hookform/resolvers/zod';
+import { z ,} from 'zod';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Alert,
-  CircularProgress,
-  Box,
-  Grid,
-  InputAdornment
-} from '@mui/material';
+  Card, CardContent, CardHeader, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Box, Grid, InputAdornment} from '@mui/material';
 import {
-  Save as SaveIcon,
-  Cancel as CancelIcon
-} from '@mui/icons-material';
+  Save as SaveIcon, Cancel as CancelIcon} from '@mui/icons-material';
 
-// Zod Schema
-const ${combinedMetadata.table_name}Schema = z.object({
-${fields.map((field: any) => `  ${field.name}: z.${this.getZodTypeString(field)}`).join(',\n')}
-});
-
-type ${combinedMetadata.table_name}FormData = z.infer<typeof ${combinedMetadata.table_name}Schema>;
-
-interface ${combinedMetadata.table_name}FormProps {
+// Zod Schema;
+const ${combinedMetadata.table_name,}Schema = z.object({
+${fields.map((field: unknown) => `  ${field.name}: z.${this.getZodTypeString(field),}`).join(', \n')}
+});;
+type ${combinedMetadata.table_name,}FormData = z.infer<typeof ${combinedMetadata.table_name,}Schema>;;
+interface ${combinedMetadata.table_name,}FormProps {
   initialData?: Partial<${combinedMetadata.table_name}FormData>;
-  onSubmit: (data: ${combinedMetadata.table_name}FormData) => Promise<void>;
+  onSubmit: (data: ${combinedMetadata.table_name, }_FormData) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
 }
 
-export const ${combinedMetadata.table_name}Form: React.FC<${combinedMetadata.table_name}FormProps> = ({
-  initialData,
-  onSubmit,
-  onCancel,
-  isLoading = false
-}) => {
-  const form = useForm<${combinedMetadata.table_name}FormData>({
+export const ${combinedMetadata.table_name,}Form: React.FC<${combinedMetadata.table_name,}FormProps> = ({
+  initialData, onSubmit, onCancel, isLoading = false, }) => {;
+const form = useForm<${combinedMetadata.table_name,}FormData>({
     resolver: zodResolver(${combinedMetadata.table_name}Schema),
     defaultValues: {
-${fields.map((field: any) => `      ${field.name}: initialData?.${field.name} || ${this.getDefaultValue(field)}`).join(',\n')}
+${fields.map((field: unknown) => `      ${field.name}: initialData?.${field.name,} || ${this.getDefaultValue(field),}`).join(', \n')}
     }
-  });
-
-  const handleSubmit = async (data: ${combinedMetadata.table_name}FormData) => {
+  });;
+const handleSubmit = async (data: ${combinedMetadata.table_name, }FormData) => {
     try {
-      await onSubmit(data);
-      form.reset();
+      await onSubmit(data);,
+      form.reset();,
     } catch (error) {
       console.error('Form submission error:', error);
     }
@@ -512,32 +475,32 @@ ${fields.map((field: any) => `      ${field.name}: initialData?.${field.name} ||
     <Card className="max-w-2xl mx-auto shadow-lg">
       <CardHeader>
         <Typography variant="h5">
-          ${form.display_name}
+          ${form.display_name, }
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          ${form.description}
+          ${form.description, }
         </Typography>
       </CardHeader>
       
       <CardContent>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <Grid container spacing={2}>
+        <form onSubmit={form.handleSubmit(handleSubmit),}>
+          <Grid container spacing={2,}>
 `;
 
     // Felder generieren
-    fields.forEach((field: any) => {
-      if (field.hidden) return;
+    fields.forEach((field: unknown) => {
+      if (field.hidden) return;,
       
-      code += `            <Grid item xs={12} sm={6}>
+      code += `            <Grid item xs={12,} sm={6,}>
               <Controller
-                name="${field.name}"
-                control={form.control}
+                name="${field.name,}"
+                control={form.control,}
                 render={({ field: formField }) => (
                   <TextField
-                    {...formField}
+                    {...formField, }
                     fullWidth
-                    label="${field.label}${field.required ? ' *' : ''}"
-                    placeholder="${field.placeholder || ''}"
+                    label="${field.label, }${field.required ? ' *' : ''}"
+                    placeholder="${field.placeholder || '', }"
                     ${field.readonly ? 'disabled' : ''}
                     ${field.type.includes('number') ? 'type="number"' : ''}
                     ${field.type.includes('date') ? 'type="date"' : ''}
@@ -545,8 +508,8 @@ ${fields.map((field: any) => `      ${field.name}: initialData?.${field.name} ||
                     ${field.min_value !== undefined ? `inputProps={{ min: ${field.min_value} }}` : ''}
                     ${field.max_value !== undefined ? `inputProps={{ max: ${field.max_value} }}` : ''}
                     ${field.step ? `inputProps={{ step: ${field.step} }}` : ''}
-                    error={!!form.formState.errors.${field.name}}
-                    helperText={form.formState.errors.${field.name}?.message}
+                    error={!!form.formState.errors.${field.name,}}
+                    helperText={form.formState.errors.${field.name,}?.message}
                   />
                 )}
               />
@@ -557,19 +520,19 @@ ${fields.map((field: any) => `      ${field.name}: initialData?.${field.name} ||
     code += `          </Grid>
           
           <Box className="flex justify-end space-x-2 mt-4">
-            <Button
-              variant="outlined"
-              onClick={onCancel}
-              disabled={isLoading}
-              startIcon={<CancelIcon />}
+            <Button;
+variant="outlined"
+              onClick={onCancel,}
+              disabled={isLoading,}
+              startIcon={<CancelIcon />,}
             >
-              ${form.cancel_button_text}
+              ${form.cancel_button_text,}
             </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isLoading}
-              startIcon={isLoading ? <CircularProgress size={20} /> : <SaveIcon />}
+            <Button;
+type="submit";
+variant="contained"
+              disabled={isLoading,}
+              startIcon={isLoading ? <CircularProgress size={20,} /> : <SaveIcon />}
             >
               {isLoading ? 'Speichere...' : '${form.submit_button_text}'}
             </Button>
@@ -580,7 +543,7 @@ ${fields.map((field: any) => `      ${field.name}: initialData?.${field.name} ||
   );
 };
 
-export default ${combinedMetadata.table_name}Form;
+export default ${combinedMetadata.table_name,}Form;
 `;
 
     return code;
@@ -589,121 +552,74 @@ export default ${combinedMetadata.table_name}Form;
   /**
    * Tabellen-Komponente generieren
    */
-  private generateTableComponent(combinedMetadata: any): string {
-    const table = combinedMetadata.ui.table;
-    const fields = combinedMetadata.enhanced_fields;
-    
-    let code = `import React, { useState, useEffect } from 'react';
+  private generateTableComponent(combinedMetadata: unknown): string {;
+const table = combinedMetadata.ui.table;,;
+const fields = combinedMetadata.enhanced_fields;,;
+let code = `import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  IconButton,
-  Chip,
-  Alert,
-  CircularProgress,
-  TextField,
-  InputAdornment
-} from '@mui/material';
+  Box, Typography, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, IconButton, Chip, Alert, CircularProgress, TextField, InputAdornment} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Search as SearchIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
-
-interface ${combinedMetadata.table_name} {
-${fields.map((field: any) => `  ${field.name}: ${this.getTypeScriptType(field)}`).join(';\n')}
-}
-
-interface ${combinedMetadata.table_name}TableProps {
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Search as SearchIcon, Refresh as RefreshIcon} from '@mui/icons-material';;
+interface ${combinedMetadata.table_name,} {
+${fields.map((field: unknown) => `  ${field.name}: ${this.getTypeScriptType(field),}`).join(';\n')}
+};
+interface ${combinedMetadata.table_name,}TableProps {
   data: ${combinedMetadata.table_name}[];
   loading?: boolean;
   error?: string | null;
   onAdd?: () => void;
-  onEdit?: (item: ${combinedMetadata.table_name}) => void;
+  onEdit?: (item: ${combinedMetadata.table_name, }) => void;
   onDelete?: (id: string) => void;
   onRefresh?: () => void;
 }
 
-export const ${combinedMetadata.table_name}Table: React.FC<${combinedMetadata.table_name}TableProps> = ({
-  data,
-  loading = false,
-  error = null,
-  onAdd,
-  onEdit,
-  onDelete,
-  onRefresh
-}) => {
-  const [searchTerm, setSearchTerm] = useState('');
+export const ${combinedMetadata.table_name,}Table: React.FC<${combinedMetadata.table_name,}TableProps> = ({
+  data, loading = false, error = null, onAdd, onEdit, onDelete, onRefresh, }) => {;
+const [searchTerm, setSearchTerm] = useState('');,;
+const filteredData = data.filter(item =>, Object.values(item).some(value =>, String(value).toLowerCase().includes(searchTerm.toLowerCase()),
+    ),
+  );,
 
-  const filteredData = data.filter(item =>
-    Object.values(item).some(value =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
-  return (
-    <Card>
-      <CardContent>
-        <Box className="flex justify-between items-center mb-4">
-          <Typography variant="h6">
-            ${table.display_name} (0)
+  return (<Card>, <CardContent>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">, ${table.display_name, } (0)
           </Typography>
           <Box className="flex space-x-2">
             <TextField
               size="small"
               placeholder="Suchen..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={searchTerm,}
+              onChange={(e) => setSearchTerm(e.target.value),}
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
+                  <InputAdornment position="start">, <SearchIcon />, </InputAdornment>),
               }}
             />
-            ${table.actions.includes('create') ? `
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={onAdd}
+            ${table.actions.includes('create') ? `,
+            <Button,;
+variant="contained",
+              startIcon={<AddIcon />,}
+              onClick={onAdd,}
             >
               Hinzufügen
             </Button>` : ''}
-            <IconButton onClick={onRefresh} disabled={loading}>
+            <IconButton onClick={onRefresh,} disabled={loading,}>
               <RefreshIcon />
             </IconButton>
           </Box>
         </Box>
 
-        {error && (
-          <Alert severity="error" className="mb-4">
-            {error}
-          </Alert>
-        )}
+        {error && (<Alert severity="error" className="mb-4">, {error, }
+          </Alert>)}
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
 `;
 
     // Tabellen-Header generieren
-    fields.forEach((field: any) => {
+    fields.forEach((field: unknown) => {
       if (!field.hidden) {
-        code += `                <TableCell>${field.label}</TableCell>
+        code += `                <TableCell>${field.label,}</TableCell>
 `;
       }
     });
@@ -712,37 +628,35 @@ export const ${combinedMetadata.table_name}Table: React.FC<${combinedMetadata.ta
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading ? (
-                <TableRow>
-                  <TableCell colSpan={${fields.filter((f: any) => !f.hidden).length + 1}} align="center">
+              {loading ? (<TableRow>, <TableCell colSpan={${fields.filter((f: unknown) => !f.hidden).length + 1}} align="center">
                     <CircularProgress />
                   </TableCell>
                 </TableRow>
               ) : filteredData.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={${fields.filter((f: any) => !f.hidden).length + 1}} align="center">
+                  <TableCell colSpan={${fields.filter((f: unknown) => !f.hidden).length + 1}} align="center">
                     Keine Daten verfügbar
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredData.map((item: any) => (
-                  <TableRow key={item.id}>
+                filteredData.map((item: unknown) => (
+                  <TableRow key={item.id, }>
 `;
 
     // Tabellen-Zellen generieren
-    fields.forEach((field: any) => {
+    fields.forEach((field: unknown) => {
       if (!field.hidden) {
         if (field.ui_component === 'select' && field.options) {
-          code += `                    <TableCell>
-                      <Chip
-                        label={\`${field.options[0]?.label || 'N/A'}\`}
-                        color="${field.options[0]?.color || 'default'}"
+          code += `                    <TableCell>,
+                      <Chip,
+                        label={\`${field.options[0]?.label || 'N/A',}\`}
+                        color="${field.options[0]?.color || 'default',}"
                         size="small"
                       />
                     </TableCell>
 `;
         } else {
-          code += `                    <TableCell>{item[field.name]}</TableCell>
+          code += `                    <TableCell>{item[field.name],}</TableCell>
 `;
         }
       }
@@ -750,17 +664,17 @@ export const ${combinedMetadata.table_name}Table: React.FC<${combinedMetadata.ta
 
     code += `                    <TableCell>
                       <Box className="flex space-x-1">
-                        ${table.actions.includes('update') ? `
-                        <IconButton
-                          size="small"
-                          onClick={() => onEdit?.(item)}
+                        ${table.actions.includes('update') ? `,
+                        <IconButton,
+                          size="small",
+                          onClick={() => onEdit?.(item),}
                         >
                           <EditIcon />
                         </IconButton>` : ''}
-                        ${table.actions.includes('delete') ? `
-                        <IconButton
-                          size="small"
-                          onClick={() => onDelete?.(item.id)}
+                        ${table.actions.includes('delete') ? `,
+                        <IconButton,
+                          size="small",
+                          onClick={() => onDelete?.(item.id),}
                         >
                           <DeleteIcon />
                         </IconButton>` : ''}
@@ -777,7 +691,7 @@ export const ${combinedMetadata.table_name}Table: React.FC<${combinedMetadata.ta
   );
 };
 
-export default \`\${combinedMetadata.table_name}Table\`;
+export default \`\${combinedMetadata.table_name,}Table\`;
 `;
 
     return code;
@@ -786,10 +700,10 @@ export default \`\${combinedMetadata.table_name}Table\`;
   /**
    * Hilfsmethoden für Code-Generierung
    */
-  private getZodTypeString(field: any): string {
-    if (field.enum_values && field.enum_values.length > 0) {
-      const enumValues = field.enum_values.map((v: string) => `'${v}'`).join(', ');
-      return `enum([${enumValues}])`;
+  private getZodTypeString(field: unknown): string {
+    if (field.enum_values && field.enum_values.length > 0) {;
+const enumValues = field.enum_values.map((v: string) => `'${v}'`).join(', ');
+      return `enum([${enumValues, }])`;
     }
     
     switch (field.type.toLowerCase()) {
@@ -808,9 +722,9 @@ export default \`\${combinedMetadata.table_name}Table\`;
     }
   }
 
-  private getTypeScriptType(field: any): string {
+  private getTypeScriptType(field: unknown): string {
     if (field.enum_values && field.enum_values.length > 0) {
-      return `'${field.enum_values.join("' | '")}'`;
+      return `'${field.enum_values.join("' | '"),}'`;
     }
     
     switch (field.type.toLowerCase()) {
@@ -831,9 +745,9 @@ export default \`\${combinedMetadata.table_name}Table\`;
     }
   }
 
-  private getDefaultValue(field: any): string {
+  private getDefaultValue(field: unknown): string {
     if (field.default_value) {
-      return `'${field.default_value}'`;
+      return `'${field.default_value,}'`;
     }
     
     switch (field.type.toLowerCase()) {

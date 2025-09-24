@@ -5,69 +5,7 @@
  */
 
 import {
-  FormID,
-  FormVersion,
-  FormStatus,
-  FormPermission,
-  FormMetadata,
-  RolePermissions,
-  FormField,
-  FormConfig,
-  FormRegistry,
-  FormVersionHistory,
-  FormChangeRequest,
-  FormChange,
-  FORM_MODULES,
-  FORM_STATUSES,
-  FORM_PERMISSIONS,
-  FORM_FEATURES,
-  PersonalFormSchema,
-  WarehouseFormSchema,
-  CustomerFormSchema,
-  InvoiceFormSchema,
-  SupplierFormSchema,
-  OrderFormSchema,
-  BedarfsermittlungSchema,
-  AnfrageSchema,
-  BestellungSchema,
-  AuftragsbestaetigungSchema,
-  AuftragsbearbeitungSchema,
-  PacklisteSchema,
-  VersandetikettierungSchema,
-  LogistikUebergabeSchema,
-  MaterialbedarfsermittlungSchema,
-  RueckverfolgungSchema,
-  ProduktionsauftragSchema,
-  RueckmeldungSchema,
-  LieferantenbewertungSchema,
-  KundenruecklaeuferSchema,
-  GutschriftSchema,
-  UrsachenanalyseSchema,
-  VerpackungsvorschriftenSchema,
-  EtikettenSchema,
-  UNNummernSchema,
-  ADRKonformitaetSchema,
-  InventurerfassungSchema,
-  DifferenzkontrolleSchema,
-  UmlagerungSchema,
-  PreislistenSchema,
-  AktionenSchema,
-  StaffelpreiseSchema,
-  RabattsystemeSchema,
-  ArtikelstammdatenSchema,
-  ArtikelklassifizierungSchema,
-  ArtikelvarianteSchema,
-  StuecklisteSchema,
-  EinlagerungSchema,
-  AuslagerungSchema,
-  LagerplatzOptimierungSchema,
-  InventurSchema,
-  ChargeSchema,
-  LieferantenavisierungSchema,
-  WareneingangspruefungSchema,
-  WareneingangsbuchungSchema,
-  ReklamationSchema,
-} from '../types/forms';
+  FormID, FormVersion, FormStatus, FormPermission, FormMetadata, RolePermissions, FormField, FormConfig, FormRegistry, FormVersionHistory, FormChangeRequest, FormChange, FORM_MODULES, FORM_STATUSES, FORM_PERMISSIONS, FORM_FEATURES, PersonalFormSchema, WarehouseFormSchema, CustomerFormSchema, InvoiceFormSchema, SupplierFormSchema, OrderFormSchema, BedarfsermittlungSchema, AnfrageSchema, BestellungSchema, AuftragsbestaetigungSchema, AuftragsbearbeitungSchema, PacklisteSchema, VersandetikettierungSchema, LogistikUebergabeSchema, MaterialbedarfsermittlungSchema, RueckverfolgungSchema, ProduktionsauftragSchema, RueckmeldungSchema, LieferantenbewertungSchema, KundenruecklaeuferSchema, GutschriftSchema, UrsachenanalyseSchema, VerpackungsvorschriftenSchema, EtikettenSchema, UNNummernSchema, ADRKonformitaetSchema, InventurerfassungSchema, DifferenzkontrolleSchema, UmlagerungSchema, PreislistenSchema, AktionenSchema, StaffelpreiseSchema, RabattsystemeSchema, ArtikelstammdatenSchema, ArtikelklassifizierungSchema, ArtikelvarianteSchema, StuecklisteSchema, EinlagerungSchema, AuslagerungSchema, LagerplatzOptimierungSchema, InventurSchema, ChargeSchema, LieferantenavisierungSchema, WareneingangspruefungSchema, WareneingangsbuchungSchema, ReklamationSchema} from '../types/forms';
 
 // ============================================================================
 // FORMULAR-REGISTRIERUNG MIT VERSIONIERUNG
@@ -93,7 +31,7 @@ export class FormRegistryService {
 
   public static getInstance(): FormRegistryService {
     if (!FormRegistryService.instance) {
-      FormRegistryService.instance = new FormRegistryService();
+      FormRegistryService.instance = new FormRegistryService();,
     }
     return FormRegistryService.instance;
   }
@@ -103,16 +41,10 @@ export class FormRegistryService {
   // ============================================================================
 
   private initializeDefaultForms(): void {
-    // Personal Formular
+    // Personal Formular,
     this.registerForm({
-      id: 'personal-employee-form',
-      metadata: {
-        id: 'personal-employee-form',
-        name: 'Mitarbeiter-Formular',
-        module: FORM_MODULES.PERSONAL,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'personal-employee-form', metadata: {
+        id: 'personal-employee-form', name: 'Mitarbeiter-Formular', module: FORM_MODULES.PERSONAL, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -131,14 +63,8 @@ export class FormRegistryService {
 
     // Warehouse Formular
     this.registerForm({
-      id: 'warehouse-article-form',
-      metadata: {
-        id: 'warehouse-article-form',
-        name: 'Artikel-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'warehouse-article-form', metadata: {
+        id: 'warehouse-article-form', name: 'Artikel-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -157,14 +83,8 @@ export class FormRegistryService {
 
     // Customer Formular
     this.registerForm({
-      id: 'customer-form',
-      metadata: {
-        id: 'customer-form',
-        name: 'Kunden-Formular',
-        module: FORM_MODULES.CRM,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'customer-form', metadata: {
+        id: 'customer-form', name: 'Kunden-Formular', module: FORM_MODULES.CRM, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -183,14 +103,8 @@ export class FormRegistryService {
 
     // Invoice Formular
     this.registerForm({
-      id: 'invoice-form',
-      metadata: {
-        id: 'invoice-form',
-        name: 'Rechnungs-Formular',
-        module: FORM_MODULES.FINANCE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'invoice-form', metadata: {
+        id: 'invoice-form', name: 'Rechnungs-Formular', module: FORM_MODULES.FINANCE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -209,14 +123,8 @@ export class FormRegistryService {
 
     // Supplier Formular
     this.registerForm({
-      id: 'supplier-form',
-      metadata: {
-        id: 'supplier-form',
-        name: 'Lieferanten-Formular',
-        module: FORM_MODULES.PURCHASING,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'supplier-form', metadata: {
+        id: 'supplier-form', name: 'Lieferanten-Formular', module: FORM_MODULES.PURCHASING, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -235,14 +143,8 @@ export class FormRegistryService {
 
     // Order Formular
     this.registerForm({
-      id: 'order-form',
-      metadata: {
-        id: 'order-form',
-        name: 'Auftrags-Formular',
-        module: FORM_MODULES.SALES,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'order-form', metadata: {
+        id: 'order-form', name: 'Auftrags-Formular', module: FORM_MODULES.SALES, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -265,14 +167,8 @@ export class FormRegistryService {
 
     // Artikelstammdaten verwalten
     this.registerForm({
-      id: 'wawi-artikelstammdaten-form',
-      metadata: {
-        id: 'wawi-artikelstammdaten-form',
-        name: 'Artikelstammdaten-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-artikelstammdaten-form', metadata: {
+        id: 'wawi-artikelstammdaten-form', name: 'Artikelstammdaten-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -290,14 +186,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-artikelklassifizierung-form',
-      metadata: {
-        id: 'wawi-artikelklassifizierung-form',
-        name: 'Artikelklassifizierung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-artikelklassifizierung-form', metadata: {
+        id: 'wawi-artikelklassifizierung-form', name: 'Artikelklassifizierung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -315,14 +205,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-artikelvariante-form',
-      metadata: {
-        id: 'wawi-artikelvariante-form',
-        name: 'Artikelvariante-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-artikelvariante-form', metadata: {
+        id: 'wawi-artikelvariante-form', name: 'Artikelvariante-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -340,14 +224,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-stueckliste-form',
-      metadata: {
-        id: 'wawi-stueckliste-form',
-        name: 'Stückliste-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-stueckliste-form', metadata: {
+        id: 'wawi-stueckliste-form', name: 'Stückliste-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -366,14 +244,8 @@ export class FormRegistryService {
 
     // Lagerverwaltung
     this.registerForm({
-      id: 'wawi-einlagerung-form',
-      metadata: {
-        id: 'wawi-einlagerung-form',
-        name: 'Einlagerung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-einlagerung-form', metadata: {
+        id: 'wawi-einlagerung-form', name: 'Einlagerung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -391,14 +263,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-auslagerung-form',
-      metadata: {
-        id: 'wawi-auslagerung-form',
-        name: 'Auslagerung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-auslagerung-form', metadata: {
+        id: 'wawi-auslagerung-form', name: 'Auslagerung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -416,14 +282,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-lagerplatz-optimierung-form',
-      metadata: {
-        id: 'wawi-lagerplatz-optimierung-form',
-        name: 'Lagerplatz-Optimierung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-lagerplatz-optimierung-form', metadata: {
+        id: 'wawi-lagerplatz-optimierung-form', name: 'Lagerplatz-Optimierung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -441,14 +301,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-inventur-form',
-      metadata: {
-        id: 'wawi-inventur-form',
-        name: 'Inventur-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-inventur-form', metadata: {
+        id: 'wawi-inventur-form', name: 'Inventur-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -466,14 +320,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-charge-form',
-      metadata: {
-        id: 'wawi-charge-form',
-        name: 'Charge-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-charge-form', metadata: {
+        id: 'wawi-charge-form', name: 'Charge-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -492,14 +340,8 @@ export class FormRegistryService {
 
     // Wareneingang
     this.registerForm({
-      id: 'wawi-lieferantenavisierung-form',
-      metadata: {
-        id: 'wawi-lieferantenavisierung-form',
-        name: 'Lieferantenavisierung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-lieferantenavisierung-form', metadata: {
+        id: 'wawi-lieferantenavisierung-form', name: 'Lieferantenavisierung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -517,14 +359,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-wareneingangspruefung-form',
-      metadata: {
-        id: 'wawi-wareneingangspruefung-form',
-        name: 'Wareneingangsprüfung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-wareneingangspruefung-form', metadata: {
+        id: 'wawi-wareneingangspruefung-form', name: 'Wareneingangsprüfung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -542,14 +378,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-wareneingangsbuchung-form',
-      metadata: {
-        id: 'wawi-wareneingangsbuchung-form',
-        name: 'Wareneingangsbuchung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-wareneingangsbuchung-form', metadata: {
+        id: 'wawi-wareneingangsbuchung-form', name: 'Wareneingangsbuchung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -567,14 +397,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-reklamation-form',
-      metadata: {
-        id: 'wawi-reklamation-form',
-        name: 'Reklamation-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-reklamation-form', metadata: {
+        id: 'wawi-reklamation-form', name: 'Reklamation-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -593,14 +417,8 @@ export class FormRegistryService {
 
     // Bestellwesen
     this.registerForm({
-      id: 'wawi-bedarfsermittlung-form',
-      metadata: {
-        id: 'wawi-bedarfsermittlung-form',
-        name: 'Bedarfsermittlung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-bedarfsermittlung-form', metadata: {
+        id: 'wawi-bedarfsermittlung-form', name: 'Bedarfsermittlung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -618,14 +436,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-anfrage-form',
-      metadata: {
-        id: 'wawi-anfrage-form',
-        name: 'Anfrage-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-anfrage-form', metadata: {
+        id: 'wawi-anfrage-form', name: 'Anfrage-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -643,14 +455,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-bestellung-form',
-      metadata: {
-        id: 'wawi-bestellung-form',
-        name: 'Bestellung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-bestellung-form', metadata: {
+        id: 'wawi-bestellung-form', name: 'Bestellung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -668,14 +474,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-auftragsbestaetigung-form',
-      metadata: {
-        id: 'wawi-auftragsbestaetigung-form',
-        name: 'Auftragsbestätigung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-auftragsbestaetigung-form', metadata: {
+        id: 'wawi-auftragsbestaetigung-form', name: 'Auftragsbestätigung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -694,14 +494,8 @@ export class FormRegistryService {
 
     // Warenausgang/Kommissionierung
     this.registerForm({
-      id: 'wawi-auftragsbearbeitung-form',
-      metadata: {
-        id: 'wawi-auftragsbearbeitung-form',
-        name: 'Auftragsbearbeitung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-auftragsbearbeitung-form', metadata: {
+        id: 'wawi-auftragsbearbeitung-form', name: 'Auftragsbearbeitung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -719,14 +513,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-packliste-form',
-      metadata: {
-        id: 'wawi-packliste-form',
-        name: 'Packliste-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-packliste-form', metadata: {
+        id: 'wawi-packliste-form', name: 'Packliste-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -744,14 +532,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-versandetikettierung-form',
-      metadata: {
-        id: 'wawi-versandetikettierung-form',
-        name: 'Versandetikettierung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-versandetikettierung-form', metadata: {
+        id: 'wawi-versandetikettierung-form', name: 'Versandetikettierung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -769,14 +551,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-logistik-uebergabe-form',
-      metadata: {
-        id: 'wawi-logistik-uebergabe-form',
-        name: 'Logistik-Übergabe-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-logistik-uebergabe-form', metadata: {
+        id: 'wawi-logistik-uebergabe-form', name: 'Logistik-Übergabe-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -795,14 +571,8 @@ export class FormRegistryService {
 
     // Produktion/Rezepturverwaltung
     this.registerForm({
-      id: 'wawi-materialbedarfsermittlung-form',
-      metadata: {
-        id: 'wawi-materialbedarfsermittlung-form',
-        name: 'Materialbedarfsermittlung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-materialbedarfsermittlung-form', metadata: {
+        id: 'wawi-materialbedarfsermittlung-form', name: 'Materialbedarfsermittlung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -820,14 +590,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-rueckverfolgung-form',
-      metadata: {
-        id: 'wawi-rueckverfolgung-form',
-        name: 'Rückverfolgung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-rueckverfolgung-form', metadata: {
+        id: 'wawi-rueckverfolgung-form', name: 'Rückverfolgung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -845,14 +609,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-produktionsauftrag-form',
-      metadata: {
-        id: 'wawi-produktionsauftrag-form',
-        name: 'Produktionsauftrag-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-produktionsauftrag-form', metadata: {
+        id: 'wawi-produktionsauftrag-form', name: 'Produktionsauftrag-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -870,14 +628,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-rueckmeldung-form',
-      metadata: {
-        id: 'wawi-rueckmeldung-form',
-        name: 'Rückmeldung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-rueckmeldung-form', metadata: {
+        id: 'wawi-rueckmeldung-form', name: 'Rückmeldung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -896,14 +648,8 @@ export class FormRegistryService {
 
     // Lieferantenbewertung
     this.registerForm({
-      id: 'wawi-lieferantenbewertung-form',
-      metadata: {
-        id: 'wawi-lieferantenbewertung-form',
-        name: 'Lieferantenbewertung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-lieferantenbewertung-form', metadata: {
+        id: 'wawi-lieferantenbewertung-form', name: 'Lieferantenbewertung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -922,14 +668,8 @@ export class FormRegistryService {
 
     // Retouren/Reklamationen
     this.registerForm({
-      id: 'wawi-kundenruecklaeufer-form',
-      metadata: {
-        id: 'wawi-kundenruecklaeufer-form',
-        name: 'Kundenrückläufer-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-kundenruecklaeufer-form', metadata: {
+        id: 'wawi-kundenruecklaeufer-form', name: 'Kundenrückläufer-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -947,14 +687,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-gutschrift-form',
-      metadata: {
-        id: 'wawi-gutschrift-form',
-        name: 'Gutschrift-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-gutschrift-form', metadata: {
+        id: 'wawi-gutschrift-form', name: 'Gutschrift-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -972,14 +706,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-ursachenanalyse-form',
-      metadata: {
-        id: 'wawi-ursachenanalyse-form',
-        name: 'Ursachenanalyse-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-ursachenanalyse-form', metadata: {
+        id: 'wawi-ursachenanalyse-form', name: 'Ursachenanalyse-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -998,14 +726,8 @@ export class FormRegistryService {
 
     // Verpackung/Gefahrgut
     this.registerForm({
-      id: 'wawi-verpackungsvorschriften-form',
-      metadata: {
-        id: 'wawi-verpackungsvorschriften-form',
-        name: 'Verpackungsvorschriften-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-verpackungsvorschriften-form', metadata: {
+        id: 'wawi-verpackungsvorschriften-form', name: 'Verpackungsvorschriften-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1023,14 +745,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-etiketten-form',
-      metadata: {
-        id: 'wawi-etiketten-form',
-        name: 'Etiketten-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-etiketten-form', metadata: {
+        id: 'wawi-etiketten-form', name: 'Etiketten-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1048,14 +764,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-un-nummern-form',
-      metadata: {
-        id: 'wawi-un-nummern-form',
-        name: 'UN-Nummern-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-un-nummern-form', metadata: {
+        id: 'wawi-un-nummern-form', name: 'UN-Nummern-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1073,14 +783,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-adr-konformitaet-form',
-      metadata: {
-        id: 'wawi-adr-konformitaet-form',
-        name: 'ADR-Konformität-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-adr-konformitaet-form', metadata: {
+        id: 'wawi-adr-konformitaet-form', name: 'ADR-Konformität-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1099,14 +803,8 @@ export class FormRegistryService {
 
     // Inventur & Umlagerung
     this.registerForm({
-      id: 'wawi-inventurerfassung-form',
-      metadata: {
-        id: 'wawi-inventurerfassung-form',
-        name: 'Inventurerfassung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-inventurerfassung-form', metadata: {
+        id: 'wawi-inventurerfassung-form', name: 'Inventurerfassung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1124,14 +822,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-differenzkontrolle-form',
-      metadata: {
-        id: 'wawi-differenzkontrolle-form',
-        name: 'Differenzkontrolle-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-differenzkontrolle-form', metadata: {
+        id: 'wawi-differenzkontrolle-form', name: 'Differenzkontrolle-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1149,14 +841,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-umlagerung-form',
-      metadata: {
-        id: 'wawi-umlagerung-form',
-        name: 'Umlagerung-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-umlagerung-form', metadata: {
+        id: 'wawi-umlagerung-form', name: 'Umlagerung-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1175,14 +861,8 @@ export class FormRegistryService {
 
     // Preis- & Rabattverwaltung
     this.registerForm({
-      id: 'wawi-preislisten-form',
-      metadata: {
-        id: 'wawi-preislisten-form',
-        name: 'Preislisten-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-preislisten-form', metadata: {
+        id: 'wawi-preislisten-form', name: 'Preislisten-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1200,14 +880,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-aktionen-form',
-      metadata: {
-        id: 'wawi-aktionen-form',
-        name: 'Aktionen-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-aktionen-form', metadata: {
+        id: 'wawi-aktionen-form', name: 'Aktionen-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1225,14 +899,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-staffelpreise-form',
-      metadata: {
-        id: 'wawi-staffelpreise-form',
-        name: 'Staffelpreise-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-staffelpreise-form', metadata: {
+        id: 'wawi-staffelpreise-form', name: 'Staffelpreise-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1250,14 +918,8 @@ export class FormRegistryService {
     });
 
     this.registerForm({
-      id: 'wawi-rabattsysteme-form',
-      metadata: {
-        id: 'wawi-rabattsysteme-form',
-        name: 'Rabattsysteme-Formular',
-        module: FORM_MODULES.WAREHOUSE,
-        version: '1.0.0',
-        status: FORM_STATUSES.ACTIVE,
-        createdAt: new Date(),
+      id: 'wawi-rabattsysteme-form', metadata: {
+        id: 'wawi-rabattsysteme-form', name: 'Rabattsysteme-Formular', module: FORM_MODULES.WAREHOUSE, version: '1.0.0', status: FORM_STATUSES.ACTIVE, createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'system',
         updatedBy: 'system',
@@ -1280,51 +942,51 @@ export class FormRegistryService {
   // ============================================================================
 
   private getPersonalFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'employeeNumber',
-        label: 'Mitarbeiternummer',
-        type: 'text' as const,
+        label: 'Mitarbeiternummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         helpText: 'Eindeutige Mitarbeiternummer',
-        validation: { required: true, pattern: /^[A-Z]{2}\d{4}$/ },
+        validation: { required: true, pattern: /^[A-Z]{2}\d{4,}$/ },
       },
       {
         name: 'firstName',
-        label: 'Vorname',
-        type: 'text' as const,
+        label: 'Vorname',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, min: 2 },
       },
       {
         name: 'lastName',
-        label: 'Nachname',
-        type: 'text' as const,
+        label: 'Nachname',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, min: 2 },
       },
       {
         name: 'email',
-        label: 'E-Mail',
-        type: 'email' as const,
+        label: 'E-Mail',;
+type: 'email' as const,
         required: true,
         group: 'kontakt',
         validation: { required: true },
       },
       {
         name: 'phone',
-        label: 'Telefon',
-        type: 'text' as const,
+        label: 'Telefon',;
+type: 'text' as const,
         group: 'kontakt',
-        validation: { pattern: /^[\+]?[0-9\s\-\(\)]+$/ },
+        validation: { pattern: /^[+]?[0-9\s\-()]+$/ },
       },
       {
         name: 'department',
-        label: 'Abteilung',
-        type: 'select' as const,
+        label: 'Abteilung',;
+type: 'select' as const,
         required: true,
         group: 'position',
         options: [
@@ -1338,31 +1000,31 @@ export class FormRegistryService {
       },
       {
         name: 'position',
-        label: 'Position',
-        type: 'text' as const,
+        label: 'Position',;
+type: 'text' as const,
         required: true,
         group: 'position',
         validation: { required: true, min: 2 },
       },
       {
         name: 'hireDate',
-        label: 'Einstellungsdatum',
-        type: 'date' as const,
+        label: 'Einstellungsdatum',;
+type: 'date' as const,
         required: true,
         group: 'position',
         validation: { required: true },
       },
       {
         name: 'salary',
-        label: 'Gehalt',
-        type: 'number' as const,
+        label: 'Gehalt',;
+type: 'number' as const,
         group: 'finanzen',
         validation: { min: 0 },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -1374,19 +1036,19 @@ export class FormRegistryService {
       },
       {
         name: 'notes',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getWarehouseFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'articleNumber',
-        label: 'Artikelnummer',
-        type: 'text' as const,
+        label: 'Artikelnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         barcodeScanner: true,
@@ -1394,22 +1056,22 @@ export class FormRegistryService {
       },
       {
         name: 'name',
-        label: 'Artikelname',
-        type: 'text' as const,
+        label: 'Artikelname',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, min: 2 },
       },
       {
         name: 'description',
-        label: 'Beschreibung',
-        type: 'textarea' as const,
+        label: 'Beschreibung',;
+type: 'textarea' as const,
         group: 'grunddaten',
       },
       {
         name: 'category',
-        label: 'Kategorie',
-        type: 'select' as const,
+        label: 'Kategorie',;
+type: 'select' as const,
         required: true,
         group: 'klassifizierung',
         options: [
@@ -1422,8 +1084,8 @@ export class FormRegistryService {
       },
       {
         name: 'unit',
-        label: 'Einheit',
-        type: 'select' as const,
+        label: 'Einheit',;
+type: 'select' as const,
         required: true,
         group: 'grunddaten',
         options: [
@@ -1436,56 +1098,56 @@ export class FormRegistryService {
       },
       {
         name: 'purchasePrice',
-        label: 'Einkaufspreis',
-        type: 'currency' as const,
+        label: 'Einkaufspreis',;
+type: 'currency' as const,
         required: true,
         group: 'preise',
         validation: { required: true, min: 0 },
       },
       {
         name: 'sellingPrice',
-        label: 'Verkaufspreis',
-        type: 'currency' as const,
+        label: 'Verkaufspreis',;
+type: 'currency' as const,
         required: true,
         group: 'preise',
         validation: { required: true, min: 0 },
       },
       {
         name: 'stockQuantity',
-        label: 'Lagerbestand',
-        type: 'number' as const,
+        label: 'Lagerbestand',;
+type: 'number' as const,
         required: true,
         group: 'lager',
         validation: { required: true, min: 0 },
       },
       {
         name: 'minStockLevel',
-        label: 'Mindestbestand',
-        type: 'number' as const,
+        label: 'Mindestbestand',;
+type: 'number' as const,
         required: true,
         group: 'lager',
         validation: { required: true, min: 0 },
       },
       {
         name: 'maxStockLevel',
-        label: 'Maximalbestand',
-        type: 'number' as const,
+        label: 'Maximalbestand',;
+type: 'number' as const,
         required: true,
         group: 'lager',
         validation: { required: true, min: 0 },
       },
       {
         name: 'location',
-        label: 'Lagerplatz',
-        type: 'text' as const,
+        label: 'Lagerplatz',;
+type: 'text' as const,
         required: true,
         group: 'lager',
         validation: { required: true },
       },
       {
         name: 'supplierId',
-        label: 'Lieferant',
-        type: 'select' as const,
+        label: 'Lieferant',;
+type: 'select' as const,
         group: 'lieferant',
         options: [
           { value: 'supplier1', label: 'Lieferant 1' },
@@ -1494,20 +1156,20 @@ export class FormRegistryService {
       },
       {
         name: 'barcode',
-        label: 'Barcode',
-        type: 'barcode' as const,
+        label: 'Barcode',;
+type: 'barcode' as const,
         group: 'identifikation',
       },
       {
         name: 'expiryDate',
-        label: 'Verfallsdatum',
-        type: 'date' as const,
+        label: 'Verfallsdatum',;
+type: 'date' as const,
         group: 'qualität',
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -1521,66 +1183,66 @@ export class FormRegistryService {
   }
 
   private getCustomerFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'customerNumber',
-        label: 'Kundennummer',
-        type: 'text' as const,
+        label: 'Kundennummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
-        validation: { required: true, pattern: /^[A-Z]{2}\d{4}$/ },
+        validation: { required: true, pattern: /^[A-Z]{2}\d{4,}$/ },
       },
       {
         name: 'name',
-        label: 'Name',
-        type: 'text' as const,
+        label: 'Name',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, min: 2 },
       },
       {
         name: 'email',
-        label: 'E-Mail',
-        type: 'email' as const,
+        label: 'E-Mail',;
+type: 'email' as const,
         required: true,
         group: 'kontakt',
         validation: { required: true },
       },
       {
         name: 'phone',
-        label: 'Telefon',
-        type: 'text' as const,
+        label: 'Telefon',;
+type: 'text' as const,
         group: 'kontakt',
-        validation: { pattern: /^[\+]?[0-9\s\-\(\)]+$/ },
+        validation: { pattern: /^[+]?[0-9\s\-()]+$/ },
       },
       {
         name: 'address',
-        label: 'Adresse',
-        type: 'textarea' as const,
+        label: 'Adresse',;
+type: 'textarea' as const,
         required: true,
         group: 'adresse',
         validation: { required: true },
       },
       {
         name: 'postalCode',
-        label: 'PLZ',
-        type: 'text' as const,
+        label: 'PLZ',;
+type: 'text' as const,
         required: true,
         group: 'adresse',
         validation: { required: true, pattern: /^\d{5}$/ },
       },
       {
         name: 'city',
-        label: 'Stadt',
-        type: 'text' as const,
+        label: 'Stadt',;
+type: 'text' as const,
         required: true,
         group: 'adresse',
         validation: { required: true },
       },
       {
         name: 'country',
-        label: 'Land',
-        type: 'select' as const,
+        label: 'Land',;
+type: 'select' as const,
         required: true,
         group: 'adresse',
         options: [
@@ -1592,8 +1254,8 @@ export class FormRegistryService {
       },
       {
         name: 'customerType',
-        label: 'Kundentyp',
-        type: 'select' as const,
+        label: 'Kundentyp',;
+type: 'select' as const,
         required: true,
         group: 'klassifizierung',
         options: [
@@ -1605,21 +1267,21 @@ export class FormRegistryService {
       },
       {
         name: 'creditLimit',
-        label: 'Kreditlimit',
-        type: 'currency' as const,
+        label: 'Kreditlimit',;
+type: 'currency' as const,
         group: 'finanzen',
         validation: { min: 0 },
       },
       {
         name: 'paymentTerms',
-        label: 'Zahlungsbedingungen',
-        type: 'text' as const,
+        label: 'Zahlungsbedingungen',;
+type: 'text' as const,
         group: 'finanzen',
       },
       {
         name: 'salesRepId',
-        label: 'Vertriebsmitarbeiter',
-        type: 'select' as const,
+        label: 'Vertriebsmitarbeiter',;
+type: 'select' as const,
         group: 'vertrieb',
         options: [
           { value: 'rep1', label: 'Vertriebler 1' },
@@ -1628,8 +1290,8 @@ export class FormRegistryService {
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -1641,27 +1303,27 @@ export class FormRegistryService {
       },
       {
         name: 'notes',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getInvoiceFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'invoiceNumber',
-        label: 'Rechnungsnummer',
-        type: 'text' as const,
+        label: 'Rechnungsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^INV-\d{6}$/ },
       },
       {
         name: 'customerId',
-        label: 'Kunde',
-        type: 'select' as const,
+        label: 'Kunde',;
+type: 'select' as const,
         required: true,
         group: 'kunde',
         options: [
@@ -1672,24 +1334,24 @@ export class FormRegistryService {
       },
       {
         name: 'invoiceDate',
-        label: 'Rechnungsdatum',
-        type: 'date' as const,
+        label: 'Rechnungsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'dueDate',
-        label: 'Fälligkeitsdatum',
-        type: 'date' as const,
+        label: 'Fälligkeitsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'paymentStatus',
-        label: 'Zahlungsstatus',
-        type: 'select' as const,
+        label: 'Zahlungsstatus',;
+type: 'select' as const,
         required: true,
         group: 'zahlung',
         options: [
@@ -1702,8 +1364,8 @@ export class FormRegistryService {
       },
       {
         name: 'paymentMethod',
-        label: 'Zahlungsmethode',
-        type: 'select' as const,
+        label: 'Zahlungsmethode',;
+type: 'select' as const,
         group: 'zahlung',
         options: [
           { value: 'bank_transfer', label: 'Banküberweisung' },
@@ -1713,82 +1375,82 @@ export class FormRegistryService {
       },
       {
         name: 'notes',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getSupplierFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'supplierNumber',
-        label: 'Lieferantennummer',
-        type: 'text' as const,
+        label: 'Lieferantennummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
-        validation: { required: true, pattern: /^[A-Z]{2}\d{4}$/ },
+        validation: { required: true, pattern: /^[A-Z]{2}\d{4,}$/ },
       },
       {
         name: 'name',
-        label: 'Name',
-        type: 'text' as const,
+        label: 'Name',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, min: 2 },
       },
       {
         name: 'contactPerson',
-        label: 'Ansprechpartner',
-        type: 'text' as const,
+        label: 'Ansprechpartner',;
+type: 'text' as const,
         required: true,
         group: 'kontakt',
         validation: { required: true },
       },
       {
         name: 'email',
-        label: 'E-Mail',
-        type: 'email' as const,
+        label: 'E-Mail',;
+type: 'email' as const,
         required: true,
         group: 'kontakt',
         validation: { required: true },
       },
       {
         name: 'phone',
-        label: 'Telefon',
-        type: 'text' as const,
+        label: 'Telefon',;
+type: 'text' as const,
         group: 'kontakt',
-        validation: { pattern: /^[\+]?[0-9\s\-\(\)]+$/ },
+        validation: { pattern: /^[+]?[0-9\s\-()]+$/ },
       },
       {
         name: 'address',
-        label: 'Adresse',
-        type: 'textarea' as const,
+        label: 'Adresse',;
+type: 'textarea' as const,
         required: true,
         group: 'adresse',
         validation: { required: true },
       },
       {
         name: 'postalCode',
-        label: 'PLZ',
-        type: 'text' as const,
+        label: 'PLZ',;
+type: 'text' as const,
         required: true,
         group: 'adresse',
         validation: { required: true, pattern: /^\d{5}$/ },
       },
       {
         name: 'city',
-        label: 'Stadt',
-        type: 'text' as const,
+        label: 'Stadt',;
+type: 'text' as const,
         required: true,
         group: 'adresse',
         validation: { required: true },
       },
       {
         name: 'country',
-        label: 'Land',
-        type: 'select' as const,
+        label: 'Land',;
+type: 'select' as const,
         required: true,
         group: 'adresse',
         options: [
@@ -1800,28 +1462,28 @@ export class FormRegistryService {
       },
       {
         name: 'paymentTerms',
-        label: 'Zahlungsbedingungen',
-        type: 'text' as const,
+        label: 'Zahlungsbedingungen',;
+type: 'text' as const,
         group: 'finanzen',
       },
       {
         name: 'creditLimit',
-        label: 'Kreditlimit',
-        type: 'currency' as const,
+        label: 'Kreditlimit',;
+type: 'currency' as const,
         group: 'finanzen',
         validation: { min: 0 },
       },
       {
         name: 'rating',
-        label: 'Bewertung',
-        type: 'number' as const,
+        label: 'Bewertung',;
+type: 'number' as const,
         group: 'bewertung',
         validation: { min: 1, max: 5 },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -1833,27 +1495,27 @@ export class FormRegistryService {
       },
       {
         name: 'notes',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getOrderFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'orderNumber',
-        label: 'Auftragsnummer',
-        type: 'text' as const,
+        label: 'Auftragsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^ORD-\d{6}$/ },
       },
       {
         name: 'customerId',
-        label: 'Kunde',
-        type: 'select' as const,
+        label: 'Kunde',;
+type: 'select' as const,
         required: true,
         group: 'kunde',
         options: [
@@ -1864,22 +1526,22 @@ export class FormRegistryService {
       },
       {
         name: 'orderDate',
-        label: 'Auftragsdatum',
-        type: 'date' as const,
+        label: 'Auftragsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'deliveryDate',
-        label: 'Lieferdatum',
-        type: 'date' as const,
+        label: 'Lieferdatum',;
+type: 'date' as const,
         group: 'datum',
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -1893,8 +1555,8 @@ export class FormRegistryService {
       },
       {
         name: 'paymentStatus',
-        label: 'Zahlungsstatus',
-        type: 'select' as const,
+        label: 'Zahlungsstatus',;
+type: 'select' as const,
         required: true,
         group: 'zahlung',
         options: [
@@ -1906,8 +1568,8 @@ export class FormRegistryService {
       },
       {
         name: 'notes',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
@@ -1953,54 +1615,44 @@ export class FormRegistryService {
   // ============================================================================
 
   public registerForm(config: FormConfig): void {
-    this.registry.forms[config.id] = config;
-    this.registry.metadata[config.id] = config.metadata;
-    this.registry.permissions[config.id] = config.metadata.permissions;
-    this.registry.versions[config.id] = [config.metadata.version];
+    this.registry.forms[config.id] = config;,
+    this.registry.metadata[config.id] = config.metadata;,
+    this.registry.permissions[config.id] = config.metadata.permissions;,
+    this.registry.versions[config.id] = [config.metadata.version];,
     
-    // Version-Historie initialisieren
+    // Version-Historie initialisieren,
     this.versionHistory.set(config.id, [{
-      formId: config.id,
-      version: config.metadata.version,
-      changes: ['Initiale Version'],
-      author: config.metadata.createdBy,
-      timestamp: config.metadata.createdAt,
-      status: 'approved',
-    }]);
+      formId: config.id, version: config.metadata.version, changes: ['Initiale Version'], author: config.metadata.createdBy, timestamp: config.metadata.createdAt, status: 'approved', }]);
   }
 
   public getForm(formId: FormID): FormConfig | null {
-    return this.registry.forms[formId] || null;
+    return this.registry.forms[formId] || null;,
   }
 
   public getAllForms(): FormConfig[] {
-    return Object.values(this.registry.forms);
+    return Object.values(this.registry.forms);,
   }
 
   public getFormsByModule(module: string): FormConfig[] {
-    return Object.values(this.registry.forms).filter(
-      form => form.metadata.module === module
-    );
+    return Object.values(this.registry.forms).filter(,
+      form => form.metadata.module === module,
+    );,
   }
 
   // ============================================================================
   // VERSIONIERUNG
   // ============================================================================
 
-  public createNewVersion(formId: FormID, version: FormVersion, changes: string[], author: string): void {
-    const form = this.getForm(formId);
+  public createNewVersion(formId: FormID, version: FormVersion, changes: string[], author: string): void {;
+const form = this.getForm(formId);,
     if (!form) {
-      throw new Error(`Formular ${formId} nicht gefunden`);
+      throw new Error(`Formular ${formId, } nicht gefunden`);
     }
 
-    // Neue Version zur Historie hinzufügen
-    const history = this.versionHistory.get(formId) || [];
+    // Neue Version zur Historie hinzufügen;
+const history = this.versionHistory.get(formId) || [];
     history.push({
-      formId,
-      version,
-      changes,
-      author,
-      timestamp: new Date(),
+      formId, version, changes, author, timestamp: new Date(),
       status: 'draft',
     });
     this.versionHistory.set(formId, history);
@@ -2010,16 +1662,16 @@ export class FormRegistryService {
   }
 
   public getVersionHistory(formId: FormID): FormVersionHistory[] {
-    return this.versionHistory.get(formId) || [];
+    return this.versionHistory.get(formId) || [];,
   }
 
-  public approveVersion(formId: FormID, version: FormVersion, approvedBy: string): void {
-    const history = this.versionHistory.get(formId);
-    if (history) {
-      const versionEntry = history.find(h => h.version === version);
+  public approveVersion(formId: FormID, version: FormVersion, approvedBy: string): void {;
+const history = this.versionHistory.get(formId);,
+    if (history) {;
+const versionEntry = history.find(h => h.version === version);,
       if (versionEntry) {
-        versionEntry.status = 'approved';
-        versionEntry.approvedBy = approvedBy;
+        versionEntry.status = 'approved';,
+        versionEntry.approvedBy = approvedBy;,
       }
     }
   }
@@ -2029,14 +1681,9 @@ export class FormRegistryService {
   // ============================================================================
 
   public createChangeRequest(
-    formId: FormID,
-    requestedBy: string,
-    changes: FormChange[],
-    comments?: string
-  ): string {
-    const requestId = `cr_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    const changeRequest: FormChangeRequest = {
+    formId: FormID, requestedBy: string, changes: FormChange[], comments?: string): string {;
+const requestId = `cr_${Date.now(),}_${Math.random().toString(36).substr(2, 9),}`;;
+const changeRequest: FormChangeRequest = {
       id: requestId,
       formId,
       requestedBy,
@@ -2051,30 +1698,30 @@ export class FormRegistryService {
   }
 
   public getChangeRequest(requestId: string): FormChangeRequest | null {
-    return this.changeRequests.get(requestId) || null;
+    return this.changeRequests.get(requestId) || null;,
   }
 
   public getAllChangeRequests(): FormChangeRequest[] {
-    return Array.from(this.changeRequests.values());
+    return Array.from(this.changeRequests.values());,
   }
 
-  public approveChangeRequest(requestId: string, reviewedBy: string, comments?: string): void {
-    const request = this.changeRequests.get(requestId);
+  public approveChangeRequest(requestId: string, reviewedBy: string, comments?: string): void {;
+const request = this.changeRequests.get(requestId);,
     if (request) {
-      request.status = 'approved';
-      request.reviewedBy = reviewedBy;
-      request.reviewedAt = new Date();
-      request.comments = comments;
+      request.status = 'approved';,
+      request.reviewedBy = reviewedBy;,
+      request.reviewedAt = new Date();,
+      request.comments = comments;,
     }
   }
 
-  public rejectChangeRequest(requestId: string, reviewedBy: string, comments?: string): void {
-    const request = this.changeRequests.get(requestId);
+  public rejectChangeRequest(requestId: string, reviewedBy: string, comments?: string): void {;
+const request = this.changeRequests.get(requestId);,
     if (request) {
-      request.status = 'rejected';
-      request.reviewedBy = reviewedBy;
-      request.reviewedAt = new Date();
-      request.comments = comments;
+      request.status = 'rejected';,
+      request.reviewedBy = reviewedBy;,
+      request.reviewedAt = new Date();,
+      request.comments = comments;,
     }
   }
 
@@ -2082,30 +1729,29 @@ export class FormRegistryService {
   // BERECHTIGUNGEN
   // ============================================================================
 
-  public hasPermission(formId: FormID, role: string, permission: FormPermission): boolean {
-    const formPermissions = this.registry.permissions[formId];
-    if (!formPermissions) return false;
+  public hasPermission(formId: FormID, role: string, permission: FormPermission): boolean {;
+const formPermissions = this.registry.permissions[formId];,
+    if (!formPermissions) return false;,;
+const rolePermissions = formPermissions[role as keyof RolePermissions];,
+    if (!rolePermissions) return false;,
 
-    const rolePermissions = formPermissions[role as keyof RolePermissions];
-    if (!rolePermissions) return false;
-
-    return rolePermissions.includes(permission);
+    return rolePermissions.includes(permission);,
   }
 
   public updatePermissions(formId: FormID, permissions: RolePermissions, updatedBy: string): void {
-    this.registry.permissions[formId] = permissions;
+    this.registry.permissions[formId] = permissions;,
     
-    // Metadata aktualisieren
-    const metadata = this.registry.metadata[formId];
+    // Metadata aktualisieren,;
+const metadata = this.registry.metadata[formId];,
     if (metadata) {
-      metadata.permissions = permissions;
-      metadata.updatedAt = new Date();
-      metadata.updatedBy = updatedBy;
+      metadata.permissions = permissions;,
+      metadata.updatedAt = new Date();,
+      metadata.updatedBy = updatedBy;,
     }
   }
 
   public getFormPermissions(formId: FormID): RolePermissions | null {
-    return this.registry.permissions[formId] || null;
+    return this.registry.permissions[formId] || null;,
   }
 
   // ============================================================================
@@ -2113,43 +1759,42 @@ export class FormRegistryService {
   // ============================================================================
 
   public exportRegistry(): FormRegistry {
-    return JSON.parse(JSON.stringify(this.registry));
+    return JSON.parse(JSON.stringify(this.registry));,
   }
 
   public importRegistry(registry: FormRegistry): void {
-    this.registry = registry;
+    this.registry = registry;,
   }
 
   public exportVersionHistory(): Map<FormID, FormVersionHistory[]> {
-    return new Map(this.versionHistory);
+    return new Map(this.versionHistory);,
   }
 
   public importVersionHistory(history: Map<FormID, FormVersionHistory[]>): void {
-    this.versionHistory = history;
+    this.versionHistory = history;,
   }
 
   // ============================================================================
   // STATISTIKEN UND METRIKEN
   // ============================================================================
 
-  public getFormStatistics() {
-    const forms = this.getAllForms();
-    const modules = new Map<string, number>();
-    const statuses = new Map<string, number>();
-    const versions = new Map<string, number>();
+  public getFormStatistics() {;
+const forms = this.getAllForms();,;
+const modules = new Map<string, number>();,;
+const statuses = new Map<string, number>();,;
+const versions = new Map<string, number>();,
 
     forms.forEach(form => {
-      // Module zählen
-      const moduleCount = modules.get(form.metadata.module) || 0;
-      modules.set(form.metadata.module, moduleCount + 1);
+      // Module zählen, const moduleCount = modules.get(form.metadata.module) || 0;,
+      modules.set(form.metadata.module, moduleCount + 1);,
 
-      // Status zählen
-      const statusCount = statuses.get(form.metadata.status) || 0;
-      statuses.set(form.metadata.status, statusCount + 1);
+      // Status zählen,;
+const statusCount = statuses.get(form.metadata.status) || 0;,
+      statuses.set(form.metadata.status, statusCount + 1);,
 
-      // Versionen zählen
-      const versionCount = versions.get(form.metadata.version) || 0;
-      versions.set(form.metadata.version, versionCount + 1);
+      // Versionen zählen,;
+const versionCount = versions.get(form.metadata.version) || 0;,
+      versions.set(form.metadata.version, versionCount + 1);,
     });
 
     return {
@@ -2172,30 +1817,23 @@ export class FormRegistryService {
     lastUpdated: Date;
   }> {
     return Object.values(this.registry.forms).map(form => ({
-      id: form.id,
-      name: form.metadata.name,
-      module: form.metadata.module,
-      version: form.metadata.version,
-      status: form.metadata.status,
-      permissions: form.metadata.permissions,
-      lastUpdated: form.metadata.updatedAt,
-    }));
+      id: form.id, name: form.metadata.name, module: form.metadata.module, version: form.metadata.version, status: form.metadata.status, permissions: form.metadata.permissions, lastUpdated: form.metadata.updatedAt, }));
   }
 
   private getBedarfsermittlungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'ermittlungsnummer',
-        label: 'Ermittlungsnummer',
-        type: 'text' as const,
+        label: 'Ermittlungsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^BED-\d{6}$/ },
       },
       {
         name: 'artikelId',
-        label: 'Artikel',
-        type: 'select' as const,
+        label: 'Artikel',;
+type: 'select' as const,
         required: true,
         group: 'artikel',
         options: [
@@ -2206,8 +1844,8 @@ export class FormRegistryService {
       },
       {
         name: 'varianteId',
-        label: 'Variante',
-        type: 'select' as const,
+        label: 'Variante',;
+type: 'select' as const,
         group: 'artikel',
         options: [
           { value: 'variante1', label: 'Variante 1' },
@@ -2216,24 +1854,24 @@ export class FormRegistryService {
       },
       {
         name: 'periode',
-        label: 'Periode',
-        type: 'text' as const,
+        label: 'Periode',;
+type: 'text' as const,
         required: true,
         group: 'zeitraum',
         validation: { required: true },
       },
       {
         name: 'verbrauchsmenge',
-        label: 'Verbrauchsmenge',
-        type: 'number' as const,
+        label: 'Verbrauchsmenge',;
+type: 'number' as const,
         required: true,
         group: 'verbrauch',
         validation: { required: true, min: 0 },
       },
       {
         name: 'einheit',
-        label: 'Einheit',
-        type: 'select' as const,
+        label: 'Einheit',;
+type: 'select' as const,
         required: true,
         group: 'verbrauch',
         options: [
@@ -2245,8 +1883,8 @@ export class FormRegistryService {
       },
       {
         name: 'verbrauchsart',
-        label: 'Verbrauchsart',
-        type: 'select' as const,
+        label: 'Verbrauchsart',;
+type: 'select' as const,
         required: true,
         group: 'verbrauch',
         options: [
@@ -2258,40 +1896,40 @@ export class FormRegistryService {
       },
       {
         name: 'bedarfsmenge',
-        label: 'Bedarfsmenge',
-        type: 'number' as const,
+        label: 'Bedarfsmenge',;
+type: 'number' as const,
         required: true,
         group: 'bedarf',
         validation: { required: true, min: 0 },
       },
       {
         name: 'sicherheitsbestand',
-        label: 'Sicherheitsbestand',
-        type: 'number' as const,
+        label: 'Sicherheitsbestand',;
+type: 'number' as const,
         required: true,
         group: 'bedarf',
         validation: { required: true, min: 0 },
       },
       {
         name: 'bestellpunkt',
-        label: 'Bestellpunkt',
-        type: 'number' as const,
+        label: 'Bestellpunkt',;
+type: 'number' as const,
         required: true,
         group: 'bedarf',
         validation: { required: true, min: 0 },
       },
       {
         name: 'empfohleneBestellmenge',
-        label: 'Empfohlene Bestellmenge',
-        type: 'number' as const,
+        label: 'Empfohlene Bestellmenge',;
+type: 'number' as const,
         required: true,
         group: 'bedarf',
         validation: { required: true, min: 0 },
       },
       {
         name: 'lieferantId',
-        label: 'Lieferant',
-        type: 'select' as const,
+        label: 'Lieferant',;
+type: 'select' as const,
         group: 'lieferant',
         options: [
           { value: 'lieferant1', label: 'Lieferant 1' },
@@ -2300,34 +1938,34 @@ export class FormRegistryService {
       },
       {
         name: 'lieferzeit',
-        label: 'Lieferzeit (Tage)',
-        type: 'number' as const,
+        label: 'Lieferzeit (Tage)',;
+type: 'number' as const,
         group: 'lieferant',
         validation: { min: 0 },
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getAnfrageFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'anfragenummer',
-        label: 'Anfragenummer',
-        type: 'text' as const,
+        label: 'Anfragenummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^ANF-\d{6}$/ },
       },
       {
         name: 'lieferantId',
-        label: 'Lieferant',
-        type: 'select' as const,
+        label: 'Lieferant',;
+type: 'select' as const,
         required: true,
         group: 'lieferant',
         options: [
@@ -2338,24 +1976,24 @@ export class FormRegistryService {
       },
       {
         name: 'anfragedatum',
-        label: 'Anfragedatum',
-        type: 'date' as const,
+        label: 'Anfragedatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'gueltigBis',
-        label: 'Gültig bis',
-        type: 'date' as const,
+        label: 'Gültig bis',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2368,27 +2006,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getBestellungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'bestellnummer',
-        label: 'Bestellnummer',
-        type: 'text' as const,
+        label: 'Bestellnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^BES-\d{6}$/ },
       },
       {
         name: 'lieferantId',
-        label: 'Lieferant',
-        type: 'select' as const,
+        label: 'Lieferant',;
+type: 'select' as const,
         required: true,
         group: 'lieferant',
         options: [
@@ -2399,32 +2037,32 @@ export class FormRegistryService {
       },
       {
         name: 'bestelldatum',
-        label: 'Bestelldatum',
-        type: 'date' as const,
+        label: 'Bestelldatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'erwartetesLieferdatum',
-        label: 'Erwartetes Lieferdatum',
-        type: 'date' as const,
+        label: 'Erwartetes Lieferdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'gesamtbetrag',
-        label: 'Gesamtbetrag',
-        type: 'currency' as const,
+        label: 'Gesamtbetrag',;
+type: 'currency' as const,
         required: true,
         group: 'finanzen',
         validation: { required: true, min: 0 },
       },
       {
         name: 'waehrung',
-        label: 'Währung',
-        type: 'select' as const,
+        label: 'Währung',;
+type: 'select' as const,
         required: true,
         group: 'finanzen',
         options: [
@@ -2435,24 +2073,24 @@ export class FormRegistryService {
       },
       {
         name: 'zahlungsbedingungen',
-        label: 'Zahlungsbedingungen',
-        type: 'text' as const,
+        label: 'Zahlungsbedingungen',;
+type: 'text' as const,
         required: true,
         group: 'finanzen',
         validation: { required: true },
       },
       {
         name: 'lieferbedingungen',
-        label: 'Lieferbedingungen',
-        type: 'text' as const,
+        label: 'Lieferbedingungen',;
+type: 'text' as const,
         required: true,
         group: 'lieferung',
         validation: { required: true },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2466,27 +2104,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getAuftragsbestaetigungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'bestaetigungsnummer',
-        label: 'Bestätigungsnummer',
-        type: 'text' as const,
+        label: 'Bestätigungsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^ABC-\d{6}$/ },
       },
       {
         name: 'bestellungId',
-        label: 'Bestellung',
-        type: 'select' as const,
+        label: 'Bestellung',;
+type: 'select' as const,
         required: true,
         group: 'bestellung',
         options: [
@@ -2497,8 +2135,8 @@ export class FormRegistryService {
       },
       {
         name: 'lieferantId',
-        label: 'Lieferant',
-        type: 'select' as const,
+        label: 'Lieferant',;
+type: 'select' as const,
         required: true,
         group: 'lieferant',
         options: [
@@ -2509,24 +2147,24 @@ export class FormRegistryService {
       },
       {
         name: 'bestaetigungsdatum',
-        label: 'Bestätigungsdatum',
-        type: 'date' as const,
+        label: 'Bestätigungsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'bestaetigterLiefertermin',
-        label: 'Bestätigter Liefertermin',
-        type: 'date' as const,
+        label: 'Bestätigter Liefertermin',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2538,27 +2176,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getAuftragsbearbeitungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'auftragsnummer',
-        label: 'Auftragsnummer',
-        type: 'text' as const,
+        label: 'Auftragsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^AUB-\d{6}$/ },
       },
       {
         name: 'kundeId',
-        label: 'Kunde',
-        type: 'select' as const,
+        label: 'Kunde',;
+type: 'select' as const,
         required: true,
         group: 'kunde',
         options: [
@@ -2569,38 +2207,38 @@ export class FormRegistryService {
       },
       {
         name: 'auftragsdatum',
-        label: 'Auftragsdatum',
-        type: 'date' as const,
+        label: 'Auftragsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'gewuenschterLiefertermin',
-        label: 'Gewünschter Liefertermin',
-        type: 'date' as const,
+        label: 'Gewünschter Liefertermin',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'bestaetigterLiefertermin',
-        label: 'Bestätigter Liefertermin',
-        type: 'date' as const,
+        label: 'Bestätigter Liefertermin',;
+type: 'date' as const,
         group: 'datum',
       },
       {
         name: 'gesamtbetrag',
-        label: 'Gesamtbetrag',
-        type: 'currency' as const,
+        label: 'Gesamtbetrag',;
+type: 'currency' as const,
         required: true,
         group: 'finanzen',
         validation: { required: true, min: 0 },
       },
       {
         name: 'waehrung',
-        label: 'Währung',
-        type: 'select' as const,
+        label: 'Währung',;
+type: 'select' as const,
         required: true,
         group: 'finanzen',
         options: [
@@ -2611,8 +2249,8 @@ export class FormRegistryService {
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2627,8 +2265,8 @@ export class FormRegistryService {
       },
       {
         name: 'prioritaet',
-        label: 'Priorität',
-        type: 'select' as const,
+        label: 'Priorität',;
+type: 'select' as const,
         required: true,
         group: 'priorität',
         options: [
@@ -2641,27 +2279,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getPacklisteFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'packlistennummer',
-        label: 'Packlistennummer',
-        type: 'text' as const,
+        label: 'Packlistennummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^PAC-\d{6}$/ },
       },
       {
         name: 'auftragId',
-        label: 'Auftrag',
-        type: 'select' as const,
+        label: 'Auftrag',;
+type: 'select' as const,
         required: true,
         group: 'auftrag',
         options: [
@@ -2672,8 +2310,8 @@ export class FormRegistryService {
       },
       {
         name: 'kundeId',
-        label: 'Kunde',
-        type: 'select' as const,
+        label: 'Kunde',;
+type: 'select' as const,
         required: true,
         group: 'kunde',
         options: [
@@ -2684,16 +2322,16 @@ export class FormRegistryService {
       },
       {
         name: 'packdatum',
-        label: 'Packdatum',
-        type: 'date' as const,
+        label: 'Packdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'packerId',
-        label: 'Packer',
-        type: 'select' as const,
+        label: 'Packer',;
+type: 'select' as const,
         required: true,
         group: 'personal',
         options: [
@@ -2704,30 +2342,30 @@ export class FormRegistryService {
       },
       {
         name: 'gesamtgewicht',
-        label: 'Gesamtgewicht (kg)',
-        type: 'number' as const,
+        label: 'Gesamtgewicht (kg)',;
+type: 'number' as const,
         group: 'versand',
         validation: { min: 0 },
       },
       {
         name: 'gesamtvolumen',
-        label: 'Gesamtvolumen (m³)',
-        type: 'number' as const,
+        label: 'Gesamtvolumen (m³)',;
+type: 'number' as const,
         group: 'versand',
         validation: { min: 0 },
       },
       {
         name: 'anzahlPackstuecke',
-        label: 'Anzahl Packstücke',
-        type: 'number' as const,
+        label: 'Anzahl Packstücke',;
+type: 'number' as const,
         required: true,
         group: 'versand',
         validation: { required: true, min: 1 },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2738,27 +2376,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getVersandetikettierungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'etikettennummer',
-        label: 'Etikettennummer',
-        type: 'text' as const,
+        label: 'Etikettennummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^ETI-\d{6}$/ },
       },
       {
         name: 'packlisteId',
-        label: 'Packliste',
-        type: 'select' as const,
+        label: 'Packliste',;
+type: 'select' as const,
         required: true,
         group: 'packliste',
         options: [
@@ -2769,8 +2407,8 @@ export class FormRegistryService {
       },
       {
         name: 'auftragId',
-        label: 'Auftrag',
-        type: 'select' as const,
+        label: 'Auftrag',;
+type: 'select' as const,
         required: true,
         group: 'auftrag',
         options: [
@@ -2781,8 +2419,8 @@ export class FormRegistryService {
       },
       {
         name: 'kundeId',
-        label: 'Kunde',
-        type: 'select' as const,
+        label: 'Kunde',;
+type: 'select' as const,
         required: true,
         group: 'kunde',
         options: [
@@ -2793,8 +2431,8 @@ export class FormRegistryService {
       },
       {
         name: 'versandart',
-        label: 'Versandart',
-        type: 'select' as const,
+        label: 'Versandart',;
+type: 'select' as const,
         required: true,
         group: 'versand',
         options: [
@@ -2806,8 +2444,8 @@ export class FormRegistryService {
       },
       {
         name: 'versanddienstleister',
-        label: 'Versanddienstleister',
-        type: 'select' as const,
+        label: 'Versanddienstleister',;
+type: 'select' as const,
         required: true,
         group: 'versand',
         options: [
@@ -2819,14 +2457,14 @@ export class FormRegistryService {
       },
       {
         name: 'trackingnummer',
-        label: 'Trackingnummer',
-        type: 'text' as const,
+        label: 'Trackingnummer',;
+type: 'text' as const,
         group: 'versand',
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2838,27 +2476,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getLogistikUebergabeFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'uebergabenummer',
-        label: 'Übergabenummer',
-        type: 'text' as const,
+        label: 'Übergabenummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^UEG-\d{6}$/ },
       },
       {
         name: 'packlisteId',
-        label: 'Packliste',
-        type: 'select' as const,
+        label: 'Packliste',;
+type: 'select' as const,
         required: true,
         group: 'packliste',
         options: [
@@ -2869,8 +2507,8 @@ export class FormRegistryService {
       },
       {
         name: 'auftragId',
-        label: 'Auftrag',
-        type: 'select' as const,
+        label: 'Auftrag',;
+type: 'select' as const,
         required: true,
         group: 'auftrag',
         options: [
@@ -2881,16 +2519,16 @@ export class FormRegistryService {
       },
       {
         name: 'uebergabedatum',
-        label: 'Übergabedatum',
-        type: 'date' as const,
+        label: 'Übergabedatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'uebergeberId',
-        label: 'Übergeber',
-        type: 'select' as const,
+        label: 'Übergeber',;
+type: 'select' as const,
         required: true,
         group: 'personal',
         options: [
@@ -2901,8 +2539,8 @@ export class FormRegistryService {
       },
       {
         name: 'empfaengerId',
-        label: 'Empfänger',
-        type: 'select' as const,
+        label: 'Empfänger',;
+type: 'select' as const,
         required: true,
         group: 'personal',
         options: [
@@ -2913,8 +2551,8 @@ export class FormRegistryService {
       },
       {
         name: 'versanddienstleister',
-        label: 'Versanddienstleister',
-        type: 'select' as const,
+        label: 'Versanddienstleister',;
+type: 'select' as const,
         required: true,
         group: 'versand',
         options: [
@@ -2926,14 +2564,14 @@ export class FormRegistryService {
       },
       {
         name: 'trackingnummer',
-        label: 'Trackingnummer',
-        type: 'text' as const,
+        label: 'Trackingnummer',;
+type: 'text' as const,
         group: 'versand',
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -2945,27 +2583,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getMaterialbedarfsermittlungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'ermittlungsnummer',
-        label: 'Ermittlungsnummer',
-        type: 'text' as const,
+        label: 'Ermittlungsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^MAT-\d{6}$/ },
       },
       {
         name: 'produktionsauftragId',
-        label: 'Produktionsauftrag',
-        type: 'select' as const,
+        label: 'Produktionsauftrag',;
+type: 'select' as const,
         required: true,
         group: 'produktion',
         options: [
@@ -2976,8 +2614,8 @@ export class FormRegistryService {
       },
       {
         name: 'stuecklisteId',
-        label: 'Stückliste',
-        type: 'select' as const,
+        label: 'Stückliste',;
+type: 'select' as const,
         required: true,
         group: 'produktion',
         options: [
@@ -2988,16 +2626,16 @@ export class FormRegistryService {
       },
       {
         name: 'ermittlungsdatum',
-        label: 'Ermittlungsdatum',
-        type: 'date' as const,
+        label: 'Ermittlungsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -3009,27 +2647,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getRueckverfolgungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'rueckverfolgungsnummer',
-        label: 'Rückverfolgungsnummer',
-        type: 'text' as const,
+        label: 'Rückverfolgungsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^RUE-\d{6}$/ },
       },
       {
         name: 'artikelId',
-        label: 'Artikel',
-        type: 'select' as const,
+        label: 'Artikel',;
+type: 'select' as const,
         required: true,
         group: 'artikel',
         options: [
@@ -3040,8 +2678,8 @@ export class FormRegistryService {
       },
       {
         name: 'varianteId',
-        label: 'Variante',
-        type: 'select' as const,
+        label: 'Variante',;
+type: 'select' as const,
         group: 'artikel',
         options: [
           { value: 'variante1', label: 'Variante 1' },
@@ -3050,8 +2688,8 @@ export class FormRegistryService {
       },
       {
         name: 'chargeId',
-        label: 'Charge',
-        type: 'select' as const,
+        label: 'Charge',;
+type: 'select' as const,
         group: 'artikel',
         options: [
           { value: 'charge1', label: 'Charge 1' },
@@ -3060,28 +2698,28 @@ export class FormRegistryService {
       },
       {
         name: 'seriennummer',
-        label: 'Seriennummer',
-        type: 'text' as const,
+        label: 'Seriennummer',;
+type: 'text' as const,
         group: 'artikel',
       },
       {
         name: 'herstellungsdatum',
-        label: 'Herstellungsdatum',
-        type: 'date' as const,
+        label: 'Herstellungsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'hersteller',
-        label: 'Hersteller',
-        type: 'text' as const,
+        label: 'Hersteller',;
+type: 'text' as const,
         group: 'hersteller',
       },
       {
         name: 'lieferantId',
-        label: 'Lieferant',
-        type: 'select' as const,
+        label: 'Lieferant',;
+type: 'select' as const,
         group: 'lieferant',
         options: [
           { value: 'lieferant1', label: 'Lieferant 1' },
@@ -3090,8 +2728,8 @@ export class FormRegistryService {
       },
       {
         name: 'kundeId',
-        label: 'Kunde',
-        type: 'select' as const,
+        label: 'Kunde',;
+type: 'select' as const,
         group: 'kunde',
         options: [
           { value: 'kunde1', label: 'Kunde 1' },
@@ -3100,8 +2738,8 @@ export class FormRegistryService {
       },
       {
         name: 'auftragId',
-        label: 'Auftrag',
-        type: 'select' as const,
+        label: 'Auftrag',;
+type: 'select' as const,
         group: 'auftrag',
         options: [
           { value: 'auftrag1', label: 'Auftrag 1' },
@@ -3110,8 +2748,8 @@ export class FormRegistryService {
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -3123,27 +2761,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getProduktionsauftragFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'auftragsnummer',
-        label: 'Auftragsnummer',
-        type: 'text' as const,
+        label: 'Auftragsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^PRO-\d{6}$/ },
       },
       {
         name: 'produktId',
-        label: 'Produkt',
-        type: 'select' as const,
+        label: 'Produkt',;
+type: 'select' as const,
         required: true,
         group: 'produkt',
         options: [
@@ -3154,8 +2792,8 @@ export class FormRegistryService {
       },
       {
         name: 'stuecklisteId',
-        label: 'Stückliste',
-        type: 'select' as const,
+        label: 'Stückliste',;
+type: 'select' as const,
         required: true,
         group: 'produktion',
         options: [
@@ -3166,16 +2804,16 @@ export class FormRegistryService {
       },
       {
         name: 'menge',
-        label: 'Menge',
-        type: 'number' as const,
+        label: 'Menge',;
+type: 'number' as const,
         required: true,
         group: 'menge',
         validation: { required: true, min: 0.001 },
       },
       {
         name: 'einheit',
-        label: 'Einheit',
-        type: 'select' as const,
+        label: 'Einheit',;
+type: 'select' as const,
         required: true,
         group: 'menge',
         options: [
@@ -3187,24 +2825,24 @@ export class FormRegistryService {
       },
       {
         name: 'startdatum',
-        label: 'Startdatum',
-        type: 'date' as const,
+        label: 'Startdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'enddatum',
-        label: 'Enddatum',
-        type: 'date' as const,
+        label: 'Enddatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -3217,8 +2855,8 @@ export class FormRegistryService {
       },
       {
         name: 'prioritaet',
-        label: 'Priorität',
-        type: 'select' as const,
+        label: 'Priorität',;
+type: 'select' as const,
         required: true,
         group: 'priorität',
         options: [
@@ -3231,8 +2869,8 @@ export class FormRegistryService {
       },
       {
         name: 'werkstattId',
-        label: 'Werkstatt',
-        type: 'select' as const,
+        label: 'Werkstatt',;
+type: 'select' as const,
         group: 'werkstatt',
         options: [
           { value: 'werkstatt1', label: 'Werkstatt 1' },
@@ -3241,8 +2879,8 @@ export class FormRegistryService {
       },
       {
         name: 'maschinenId',
-        label: 'Maschinen',
-        type: 'select' as const,
+        label: 'Maschinen',;
+type: 'select' as const,
         group: 'maschinen',
         options: [
           { value: 'maschine1', label: 'Maschine 1' },
@@ -3251,8 +2889,8 @@ export class FormRegistryService {
       },
       {
         name: 'mitarbeiterId',
-        label: 'Mitarbeiter',
-        type: 'select' as const,
+        label: 'Mitarbeiter',;
+type: 'select' as const,
         group: 'personal',
         options: [
           { value: 'mitarbeiter1', label: 'Mitarbeiter 1' },
@@ -3261,27 +2899,27 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getRueckmeldungFormFields(): FormField[] {
-    return [
+    return [,
       {
         name: 'rueckmeldungsnummer',
-        label: 'Rückmeldungsnummer',
-        type: 'text' as const,
+        label: 'Rückmeldungsnummer',;
+type: 'text' as const,
         required: true,
         group: 'grunddaten',
         validation: { required: true, pattern: /^RUE-\d{6}$/ },
       },
       {
         name: 'produktionsauftragId',
-        label: 'Produktionsauftrag',
-        type: 'select' as const,
+        label: 'Produktionsauftrag',;
+type: 'select' as const,
         required: true,
         group: 'produktion',
         options: [
@@ -3292,16 +2930,16 @@ export class FormRegistryService {
       },
       {
         name: 'rueckmeldungsdatum',
-        label: 'Rückmeldungsdatum',
-        type: 'date' as const,
+        label: 'Rückmeldungsdatum',;
+type: 'date' as const,
         required: true,
         group: 'datum',
         validation: { required: true },
       },
       {
         name: 'mitarbeiterId',
-        label: 'Mitarbeiter',
-        type: 'select' as const,
+        label: 'Mitarbeiter',;
+type: 'select' as const,
         required: true,
         group: 'personal',
         options: [
@@ -3312,8 +2950,8 @@ export class FormRegistryService {
       },
       {
         name: 'status',
-        label: 'Status',
-        type: 'select' as const,
+        label: 'Status',;
+type: 'select' as const,
         required: true,
         group: 'status',
         options: [
@@ -3324,15 +2962,15 @@ export class FormRegistryService {
       },
       {
         name: 'notizen',
-        label: 'Notizen',
-        type: 'textarea' as const,
+        label: 'Notizen',;
+type: 'textarea' as const,
         group: 'zusätzlich',
       },
     ];
   }
 
   private getLieferantenbewertungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'bewertungsnummer', label: 'Bewertungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^BEW-\d{6}$/ } },
       { name: 'lieferantId', label: 'Lieferant', type: 'select' as const, required: true, group: 'lieferant', options: [{ value: 'lieferant1', label: 'Lieferant 1' }, { value: 'lieferant2', label: 'Lieferant 2' }], validation: { required: true } },
       { name: 'bewertungszeitraum', label: 'Bewertungszeitraum', type: 'text' as const, required: true, group: 'zeitraum', validation: { required: true } },
@@ -3344,7 +2982,7 @@ export class FormRegistryService {
   }
 
   private getKundenruecklaeuferFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'ruecklaeufernummer', label: 'Rückläufernummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^RUE-\d{6}$/ } },
       { name: 'kundeId', label: 'Kunde', type: 'select' as const, required: true, group: 'kunde', options: [{ value: 'kunde1', label: 'Kunde 1' }, { value: 'kunde2', label: 'Kunde 2' }], validation: { required: true } },
       { name: 'auftragId', label: 'Auftrag', type: 'select' as const, group: 'auftrag', options: [{ value: 'auftrag1', label: 'Auftrag 1' }, { value: 'auftrag2', label: 'Auftrag 2' }] },
@@ -3359,7 +2997,7 @@ export class FormRegistryService {
   }
 
   private getGutschriftFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'gutschriftsnummer', label: 'Gutschriftsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^GUT-\d{6}$/ } },
       { name: 'ruecklaeuferId', label: 'Rückläufer', type: 'select' as const, group: 'rueckläufer', options: [{ value: 'ruecklaeufer1', label: 'Rückläufer 1' }, { value: 'ruecklaeufer2', label: 'Rückläufer 2' }] },
       { name: 'rechnungId', label: 'Rechnung', type: 'select' as const, group: 'rechnung', options: [{ value: 'rechnung1', label: 'Rechnung 1' }, { value: 'rechnung2', label: 'Rechnung 2' }] },
@@ -3373,7 +3011,7 @@ export class FormRegistryService {
   }
 
   private getUrsachenanalyseFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'analysenummer', label: 'Analysenummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^ANA-\d{6}$/ } },
       { name: 'ruecklaeuferId', label: 'Rückläufer', type: 'select' as const, required: true, group: 'rueckläufer', options: [{ value: 'ruecklaeufer1', label: 'Rückläufer 1' }, { value: 'ruecklaeufer2', label: 'Rückläufer 2' }], validation: { required: true } },
       { name: 'analysendatum', label: 'Analysendatum', type: 'date' as const, required: true, group: 'datum', validation: { required: true } },
@@ -3387,7 +3025,7 @@ export class FormRegistryService {
   }
 
   private getVerpackungsvorschriftenFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'vorschriftennummer', label: 'Vorschriftennummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^VER-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3404,7 +3042,7 @@ export class FormRegistryService {
   }
 
   private getEtikettenFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'etikettennummer', label: 'Etikettennummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^ETI-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3417,7 +3055,7 @@ export class FormRegistryService {
   }
 
   private getUNNummernFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'unNummer', label: 'UN-Nummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^\d{4}$/ } },
       { name: 'bezeichnung', label: 'Bezeichnung', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'gefahrgutklasse', label: 'Gefahrgutklasse', type: 'text' as const, required: true, group: 'gefahrgut', validation: { required: true } },
@@ -3428,7 +3066,7 @@ export class FormRegistryService {
   }
 
   private getADRKonformitaetFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'konformitaetsnummer', label: 'Konformitätsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^ADR-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3444,7 +3082,7 @@ export class FormRegistryService {
   }
 
   private getInventurerfassungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'erfassungsnummer', label: 'Erfassungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^ERF-\d{6}$/ } },
       { name: 'inventurId', label: 'Inventur', type: 'select' as const, required: true, group: 'inventur', options: [{ value: 'inventur1', label: 'Inventur 1' }, { value: 'inventur2', label: 'Inventur 2' }], validation: { required: true } },
       { name: 'lagerortId', label: 'Lagerort', type: 'select' as const, required: true, group: 'lager', options: [{ value: 'lagerort1', label: 'Lagerort 1' }, { value: 'lagerort2', label: 'Lagerort 2' }], validation: { required: true } },
@@ -3457,7 +3095,7 @@ export class FormRegistryService {
   }
 
   private getDifferenzkontrolleFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'kontrollnummer', label: 'Kontrollnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^KON-\d{6}$/ } },
       { name: 'inventurId', label: 'Inventur', type: 'select' as const, required: true, group: 'inventur', options: [{ value: 'inventur1', label: 'Inventur 1' }, { value: 'inventur2', label: 'Inventur 2' }], validation: { required: true } },
       { name: 'kontrolleurId', label: 'Kontrolleur', type: 'select' as const, required: true, group: 'personal', options: [{ value: 'mitarbeiter1', label: 'Mitarbeiter 1' }, { value: 'mitarbeiter2', label: 'Mitarbeiter 2' }], validation: { required: true } },
@@ -3469,7 +3107,7 @@ export class FormRegistryService {
   }
 
   private getUmlagerungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'umlagerungsnummer', label: 'Umlagerungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^UML-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3490,7 +3128,7 @@ export class FormRegistryService {
   }
 
   private getPreislistenFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'preislistennummer', label: 'Preislistennummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^PRE-\d{6}$/ } },
       { name: 'bezeichnung', label: 'Bezeichnung', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'gueltigAb', label: 'Gültig ab', type: 'date' as const, required: true, group: 'datum', validation: { required: true } },
@@ -3503,7 +3141,7 @@ export class FormRegistryService {
   }
 
   private getAktionenFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'aktionsnummer', label: 'Aktionsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^AKT-\d{6}$/ } },
       { name: 'bezeichnung', label: 'Bezeichnung', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'aktionstyp', label: 'Aktionstyp', type: 'select' as const, required: true, group: 'aktion', options: [{ value: 'rabatt', label: 'Rabatt' }, { value: 'mengenrabatt', label: 'Mengenrabatt' }, { value: 'gratisartikel', label: 'Gratisartikel' }, { value: 'preisreduktion', label: 'Preisreduktion' }], validation: { required: true } },
@@ -3517,7 +3155,7 @@ export class FormRegistryService {
   }
 
   private getStaffelpreiseFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'staffelpreisnummer', label: 'Staffelpreisnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^STA-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3529,7 +3167,7 @@ export class FormRegistryService {
   }
 
   private getRabattsystemeFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'rabattsystemnummer', label: 'Rabattsystemnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^RAB-\d{6}$/ } },
       { name: 'bezeichnung', label: 'Bezeichnung', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'rabattsystemtyp', label: 'Rabattsystemtyp', type: 'select' as const, required: true, group: 'rabatt', options: [{ value: 'kundengruppe', label: 'Kundengruppe' }, { value: 'mengenrabatt', label: 'Mengenrabatt' }, { value: 'treuerabatt', label: 'Treuerabatt' }, { value: 'saisonrabatt', label: 'Saisonrabatt' }], validation: { required: true } },
@@ -3541,7 +3179,7 @@ export class FormRegistryService {
   }
 
   private getArtikelstammdatenFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'artikelnummer', label: 'Artikelnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^ART-\d{6}$/ } },
       { name: 'bezeichnung', label: 'Bezeichnung', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'kurzbeschreibung', label: 'Kurzbeschreibung', type: 'text' as const, group: 'beschreibung' },
@@ -3568,7 +3206,7 @@ export class FormRegistryService {
   }
 
   private getArtikelklassifizierungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'hauptkategorie', label: 'Hauptkategorie', type: 'select' as const, required: true, group: 'klassifizierung', options: [{ value: 'haupt1', label: 'Hauptkategorie 1' }, { value: 'haupt2', label: 'Hauptkategorie 2' }], validation: { required: true } },
       { name: 'unterkategorie', label: 'Unterkategorie', type: 'select' as const, required: true, group: 'klassifizierung', options: [{ value: 'unter1', label: 'Unterkategorie 1' }, { value: 'unter2', label: 'Unterkategorie 2' }], validation: { required: true } },
@@ -3581,7 +3219,7 @@ export class FormRegistryService {
   }
 
   private getArtikelvarianteFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'variantenname', label: 'Variantenname', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'variantencode', label: 'Variantencode', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
@@ -3594,7 +3232,7 @@ export class FormRegistryService {
   }
 
   private getStuecklisteFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'stuecklistennummer', label: 'Stücklistennummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^STU-\d{6}$/ } },
       { name: 'bezeichnung', label: 'Bezeichnung', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true } },
       { name: 'version', label: 'Version', type: 'text' as const, required: true, group: 'version', validation: { required: true } },
@@ -3606,7 +3244,7 @@ export class FormRegistryService {
   }
 
   private getEinlagerungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'bewegungsnummer', label: 'Bewegungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^EIN-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3625,7 +3263,7 @@ export class FormRegistryService {
   }
 
   private getAuslagerungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'bewegungsnummer', label: 'Bewegungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^AUS-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3644,7 +3282,7 @@ export class FormRegistryService {
   }
 
   private getLagerplatzOptimierungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'lagerortId', label: 'Lagerort', type: 'select' as const, required: true, group: 'lager', options: [{ value: 'lagerort1', label: 'Lagerort 1' }, { value: 'lagerort2', label: 'Lagerort 2' }], validation: { required: true } },
       { name: 'lagerplatzId', label: 'Lagerplatz', type: 'select' as const, required: true, group: 'lager', options: [{ value: 'lagerplatz1', label: 'Lagerplatz 1' }, { value: 'lagerplatz2', label: 'Lagerplatz 2' }], validation: { required: true } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
@@ -3656,7 +3294,7 @@ export class FormRegistryService {
   }
 
   private getInventurFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'inventurnummer', label: 'Inventurnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^INV-\d{6}$/ } },
       { name: 'lagerortId', label: 'Lagerort', type: 'select' as const, required: true, group: 'lager', options: [{ value: 'lagerort1', label: 'Lagerort 1' }, { value: 'lagerort2', label: 'Lagerort 2' }], validation: { required: true } },
       { name: 'inventurdatum', label: 'Inventurdatum', type: 'date' as const, required: true, group: 'datum', validation: { required: true } },
@@ -3667,7 +3305,7 @@ export class FormRegistryService {
   }
 
   private getChargeFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'chargennummer', label: 'Chargennummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^CHA-\d{6}$/ } },
       { name: 'artikelId', label: 'Artikel', type: 'select' as const, required: true, group: 'artikel', options: [{ value: 'artikel1', label: 'Artikel 1' }, { value: 'artikel2', label: 'Artikel 2' }], validation: { required: true } },
       { name: 'varianteId', label: 'Variante', type: 'select' as const, group: 'artikel', options: [{ value: 'variante1', label: 'Variante 1' }, { value: 'variante2', label: 'Variante 2' }] },
@@ -3686,7 +3324,7 @@ export class FormRegistryService {
   }
 
   private getLieferantenavisierungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'avisierungsnummer', label: 'Avisierungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^AVI-\d{6}$/ } },
       { name: 'lieferantId', label: 'Lieferant', type: 'select' as const, required: true, group: 'lieferant', options: [{ value: 'lieferant1', label: 'Lieferant 1' }, { value: 'lieferant2', label: 'Lieferant 2' }], validation: { required: true } },
       { name: 'bestellungId', label: 'Bestellung', type: 'select' as const, group: 'bestellung', options: [{ value: 'bestellung1', label: 'Bestellung 1' }, { value: 'bestellung2', label: 'Bestellung 2' }] },
@@ -3697,7 +3335,7 @@ export class FormRegistryService {
   }
 
   private getWareneingangspruefungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'pruefungsnummer', label: 'Prüfungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^PRU-\d{6}$/ } },
       { name: 'lieferungId', label: 'Lieferung', type: 'select' as const, required: true, group: 'lieferung', options: [{ value: 'lieferung1', label: 'Lieferung 1' }, { value: 'lieferung2', label: 'Lieferung 2' }], validation: { required: true } },
       { name: 'prueferId', label: 'Prüfer', type: 'select' as const, required: true, group: 'personal', options: [{ value: 'mitarbeiter1', label: 'Mitarbeiter 1' }, { value: 'mitarbeiter2', label: 'Mitarbeiter 2' }], validation: { required: true } },
@@ -3709,7 +3347,7 @@ export class FormRegistryService {
   }
 
   private getWareneingangsbuchungFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'buchungsnummer', label: 'Buchungsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^BUC-\d{6}$/ } },
       { name: 'lieferungId', label: 'Lieferung', type: 'select' as const, required: true, group: 'lieferung', options: [{ value: 'lieferung1', label: 'Lieferung 1' }, { value: 'lieferung2', label: 'Lieferung 2' }], validation: { required: true } },
       { name: 'buchungsdatum', label: 'Buchungsdatum', type: 'date' as const, required: true, group: 'datum', validation: { required: true } },
@@ -3719,7 +3357,7 @@ export class FormRegistryService {
   }
 
   private getReklamationFormFields(): FormField[] {
-    return [
+    return [,
       { name: 'reklamationsnummer', label: 'Reklamationsnummer', type: 'text' as const, required: true, group: 'grunddaten', validation: { required: true, pattern: /^REK-\d{6}$/ } },
       { name: 'lieferungId', label: 'Lieferung', type: 'select' as const, required: true, group: 'lieferung', options: [{ value: 'lieferung1', label: 'Lieferung 1' }, { value: 'lieferung2', label: 'Lieferung 2' }], validation: { required: true } },
       { name: 'lieferantId', label: 'Lieferant', type: 'select' as const, required: true, group: 'lieferant', options: [{ value: 'lieferant1', label: 'Lieferant 1' }, { value: 'lieferant2', label: 'Lieferant 2' }], validation: { required: true } },

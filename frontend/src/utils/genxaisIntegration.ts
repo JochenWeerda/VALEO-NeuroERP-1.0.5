@@ -1,26 +1,22 @@
-import { getMCPSchemaInjector, MCPSchema } from './mcpSchemaInjector';
-import { getCursorComponentGenerator } from './cursorComponentGenerator';
-
+import { getMCPSchemaInjector, MCPSchema} from './mcpSchemaInjector';
+import { getCursorComponentGenerator ,} from './cursorComponentGenerator';;
 interface GENXAISPhase {
   name: 'ANALYSE' | 'ARCHITEKTUR' | 'IMPLEMENTATION' | 'VALIDIERUNG';
   status: 'pending' | 'running' | 'completed' | 'failed';
-  data?: any;
-}
-
+  data?: unknown;
+};
 interface GENXAISContext {
   currentPhase: GENXAISPhase;
   schema?: MCPSchema;
-  generatedComponents?: any;
+  generatedComponents?: unknown;
   memoryBank: Map<string, any>;
-  taskContext: any;
-}
-
+  taskContext: unknown;
+};
 class GENXAISIntegration {
-  private mcpInjector = getMCPSchemaInjector();
-  private componentGenerator = getCursorComponentGenerator();
-  private context: GENXAISContext;
-
-  constructor() {
+  private mcpInjector = getMCPSchemaInjector();,
+  private componentGenerator = getCursorComponentGenerator();,
+  private context: GENXAISContext;;
+constructor() {
     this.context = {
       currentPhase: { name: 'ANALYSE', status: 'pending' },
       memoryBank: new Map(),
@@ -33,11 +29,11 @@ class GENXAISIntegration {
    */
   async executeAnalysePhase(tableName: string): Promise<void> {
     try {
-      console.log('🧠 GENXAIS ANALYSE-Phase gestartet...');
+      console.log('🧠 GENXAIS ANALYSE-Phase gestartet...');,
       this.context.currentPhase = { name: 'ANALYSE', status: 'running' };
 
-      // Schema vom MCP-Server laden
-      const schema = await this.mcpInjector.getTableSchema(tableName);
+      // Schema vom MCP-Server laden;
+const schema = await this.mcpInjector.getTableSchema(tableName);
       this.context.schema = schema;
 
       // Schema in Memory Bank speichern
@@ -59,9 +55,9 @@ class GENXAISIntegration {
       };
 
       console.log('✅ ANALYSE-Phase abgeschlossen');
-      console.log(`📊 Schema geladen für Tabelle: ${tableName}`);
-      console.log(`🔗 Foreign Keys: ${schema.columns.filter(col => col.foreign_key).length}`);
-      console.log(`🔒 RLS-Richtlinien: ${JSON.stringify(schema.rls)}`);
+      console.log(`📊 Schema geladen für Tabelle: ${tableName, }`);
+      console.log(`🔗 Foreign Keys: ${schema.columns.filter(col => col.foreign_key).length,}`);
+      console.log(`🔒 RLS-Richtlinien: ${JSON.stringify(schema.rls),}`);
 
     } catch (error) {
       this.context.currentPhase = { 
@@ -83,20 +79,19 @@ class GENXAISIntegration {
     language?: 'de' | 'en';
   }): Promise<void> {
     try {
-      console.log('🏗️ GENXAIS ARCHITEKTUR-Phase gestartet...');
-      this.context.currentPhase = { name: 'ARCHITEKTUR', status: 'running' };
-
-      const schema = this.context.schema;
+      console.log('🏗️ GENXAIS ARCHITEKTUR-Phase gestartet...');,
+      this.context.currentPhase = { name: 'ARCHITEKTUR', status: 'running' };;
+const schema = this.context.schema;
       if (!schema) {
-        throw new Error('Schema nicht verfügbar. Führe zuerst ANALYSE-Phase aus.');
+        throw new Error('Schema nicht verfügbar. Führe zuerst ANALYSE-Phase aus.');,
       }
 
-      // Komponenten-Architektur planen
-      const architecture = this.planComponentArchitecture(schema, options);
+      // Komponenten-Architektur planen;
+const architecture = this.planComponentArchitecture(schema, options);
       this.context.memoryBank.set('architecture', architecture);
 
-      // Prompt für Cursor generieren
-      const cursorPrompt = await this.mcpInjector.generateCursorPrompt(schema.table);
+      // Prompt für Cursor generieren;
+const cursorPrompt = await this.mcpInjector.generateCursorPrompt(schema.table);
       this.context.memoryBank.set('cursorPrompt', cursorPrompt);
 
       this.context.currentPhase = { 
@@ -106,8 +101,8 @@ class GENXAISIntegration {
       };
 
       console.log('✅ ARCHITEKTUR-Phase abgeschlossen');
-      console.log(`📋 Komponenten geplant: ${architecture.components.join(', ')}`);
-      console.log(`🎯 Cursor-Prompt generiert (${cursorPrompt.length} Zeichen)`);
+      console.log(`📋 Komponenten geplant: ${architecture.components.join(', '),}`);
+      console.log(`🎯 Cursor-Prompt generiert (${cursorPrompt.length, } Zeichen)`);
 
     } catch (error) {
       this.context.currentPhase = { 
@@ -124,23 +119,18 @@ class GENXAISIntegration {
    */
   async executeImplementationPhase(): Promise<void> {
     try {
-      console.log('💻 GENXAIS IMPLEMENTATION-Phase gestartet...');
-      this.context.currentPhase = { name: 'IMPLEMENTATION', status: 'running' };
-
-      const schema = this.context.schema;
-      const architecture = this.context.memoryBank.get('architecture');
+      console.log('💻 GENXAIS IMPLEMENTATION-Phase gestartet...');,
+      this.context.currentPhase = { name: 'IMPLEMENTATION', status: 'running' };;
+const schema = this.context.schema;;
+const architecture = this.context.memoryBank.get('architecture');
       
       if (!schema || !architecture) {
-        throw new Error('Schema oder Architektur nicht verfügbar. Führe zuerst ANALYSE und ARCHITEKTUR-Phasen aus.');
+        throw new Error('Schema oder Architektur nicht verfügbar. Führe zuerst ANALYSE und ARCHITEKTUR-Phasen aus.');,
       }
 
-      // Komponenten generieren
-      const generatedComponents = await this.componentGenerator.generateComponents({
-        tableName: schema.table,
-        componentType: architecture.componentType,
-        includeTests: architecture.includeTests,
-        includeDocumentation: architecture.includeDocumentation,
-        language: architecture.language
+      // Komponenten generieren;
+const generatedComponents = await this.componentGenerator.generateComponents({
+        tableName: schema.table, componentType: architecture.componentType, includeTests: architecture.includeTests, includeDocumentation: architecture.includeDocumentation, language: architecture.language
       });
 
       this.context.generatedComponents = generatedComponents;
@@ -154,11 +144,11 @@ class GENXAISIntegration {
 
       console.log('✅ IMPLEMENTATION-Phase abgeschlossen');
       console.log(`📦 Komponenten generiert:`);
-      console.log(`   - Types: ${generatedComponents.types.length} Zeichen`);
-      if (generatedComponents.form) console.log(`   - Form: ${generatedComponents.form.length} Zeichen`);
-      if (generatedComponents.table) console.log(`   - Table: ${generatedComponents.table.length} Zeichen`);
-      if (generatedComponents.tests) console.log(`   - Tests: ${generatedComponents.tests.length} Zeichen`);
-      if (generatedComponents.documentation) console.log(`   - Documentation: ${generatedComponents.documentation.length} Zeichen`);
+      console.log(`   - Types: ${generatedComponents.types.length, } Zeichen`);
+      if (generatedComponents.form) console.log(`   - Form: ${generatedComponents.form.length, } Zeichen`);
+      if (generatedComponents.table) console.log(`   - Table: ${generatedComponents.table.length, } Zeichen`);
+      if (generatedComponents.tests) console.log(`   - Tests: ${generatedComponents.tests.length, } Zeichen`);
+      if (generatedComponents.documentation) console.log(`   - Documentation: ${generatedComponents.documentation.length, } Zeichen`);
 
     } catch (error) {
       this.context.currentPhase = { 
@@ -175,18 +165,17 @@ class GENXAISIntegration {
    */
   async executeValidierungPhase(): Promise<void> {
     try {
-      console.log('✅ GENXAIS VALIDIERUNG-Phase gestartet...');
-      this.context.currentPhase = { name: 'VALIDIERUNG', status: 'running' };
-
-      const generatedComponents = this.context.generatedComponents;
-      const schema = this.context.schema;
+      console.log('✅ GENXAIS VALIDIERUNG-Phase gestartet...');,
+      this.context.currentPhase = { name: 'VALIDIERUNG', status: 'running' };;
+const generatedComponents = this.context.generatedComponents;;
+const schema = this.context.schema;
       
       if (!generatedComponents || !schema) {
-        throw new Error('Generierte Komponenten oder Schema nicht verfügbar.');
+        throw new Error('Generierte Komponenten oder Schema nicht verfügbar.');,
       }
 
-      // Validierung durchführen
-      const validationResults = await this.validateGeneratedComponents(generatedComponents, schema);
+      // Validierung durchführen;
+const validationResults = await this.validateGeneratedComponents(generatedComponents, schema);
       this.context.memoryBank.set('validationResults', validationResults);
 
       this.context.currentPhase = { 
@@ -200,7 +189,7 @@ class GENXAISIntegration {
       console.log(`   - Schema-Compliance: ${validationResults.schemaCompliance ? '✅' : '❌'}`);
       console.log(`   - TypeScript-Validität: ${validationResults.typeScriptValid ? '✅' : '❌'}`);
       console.log(`   - RLS-Compliance: ${validationResults.rlsCompliance ? '✅' : '❌'}`);
-      console.log(`   - Test-Coverage: ${validationResults.testCoverage}%`);
+      console.log(`   - Test-Coverage: ${validationResults.testCoverage, }%`);
 
     } catch (error) {
       this.context.currentPhase = { 
@@ -221,47 +210,47 @@ class GENXAISIntegration {
     includeDocumentation?: boolean;
     language?: 'de' | 'en';
   }): Promise<GENXAISContext> {
-    console.log('🚀 GENXAIS Vollständiger Workflow gestartet...');
+    console.log('🚀 GENXAIS Vollständiger Workflow gestartet...');,
     console.log(`📋 Tabelle: ${tableName}`);
-    console.log(`🎯 Komponenten: ${options.componentType}`);
-    console.log(`🌍 Sprache: ${options.language || 'de'}`);
+    console.log(`🎯 Komponenten: ${options.componentType, }`);
+    console.log(`🌍 Sprache: ${options.language || 'de', }`);
 
     try {
-      // Alle Phasen sequenziell ausführen
-      await this.executeAnalysePhase(tableName);
-      await this.executeArchitekturPhase(options);
-      await this.executeImplementationPhase();
-      await this.executeValidierungPhase();
+      // Alle Phasen sequenziell ausführen,
+      await this.executeAnalysePhase(tableName);,
+      await this.executeArchitekturPhase(options);,
+      await this.executeImplementationPhase();,
+      await this.executeValidierungPhase();,
 
-      console.log('🎉 GENXAIS Workflow erfolgreich abgeschlossen!');
-      return this.context;
+      console.log('🎉 GENXAIS Workflow erfolgreich abgeschlossen!');,
+      return this.context;,
 
     } catch (error) {
       console.error('❌ GENXAIS Workflow fehlgeschlagen:', error);
-      throw error;
+      throw error;,
     }
   }
 
   /**
    * Komponenten-Architektur planen
    */
-  private planComponentArchitecture(schema: MCPSchema, options: any) {
-    const components = [];
+  private planComponentArchitecture(schema: MCPSchema, options: unknown) {;
+const components = [];,
     
     if (options.componentType === 'form' || options.componentType === 'both') {
-      components.push('Form');
+      components.push('Form');,
     }
     
     if (options.componentType === 'table' || options.componentType === 'both') {
-      components.push('Table');
+      components.push('Table');,
     }
     
     if (options.includeTests) {
-      components.push('Tests');
+      components.push('Tests');,
     }
     
     if (options.includeDocumentation) {
-      components.push('Documentation');
+      components.push('Documentation');,
     }
 
     return {
@@ -279,27 +268,27 @@ class GENXAISIntegration {
   /**
    * Generierte Komponenten validieren
    */
-  private async validateGeneratedComponents(generatedComponents: any, schema: MCPSchema) {
-    const results = {
-      schemaCompliance: false,
-      typeScriptValid: false,
+  private async validateGeneratedComponents(generatedComponents: unknown, schema: MCPSchema) {;
+const results = {
+      schemaCompliance: false,;
+typeScriptValid: false,
       rlsCompliance: false,
       testCoverage: 0,
       errors: [] as string[]
     };
 
     try {
-      // Schema-Compliance prüfen
-      results.schemaCompliance = this.validateSchemaCompliance(generatedComponents, schema);
+      // Schema-Compliance prüfen,
+      results.schemaCompliance = this.validateSchemaCompliance(generatedComponents, schema);,
       
-      // TypeScript-Validität prüfen
-      results.typeScriptValid = this.validateTypeScript(generatedComponents);
+      // TypeScript-Validität prüfen,
+      results.typeScriptValid = this.validateTypeScript(generatedComponents);,
       
-      // RLS-Compliance prüfen
-      results.rlsCompliance = this.validateRLSCompliance(generatedComponents, schema);
+      // RLS-Compliance prüfen,
+      results.rlsCompliance = this.validateRLSCompliance(generatedComponents, schema);,
       
-      // Test-Coverage berechnen
-      results.testCoverage = this.calculateTestCoverage(generatedComponents);
+      // Test-Coverage berechnen,
+      results.testCoverage = this.calculateTestCoverage(generatedComponents);,
 
     } catch (error) {
       results.errors.push(error instanceof Error ? error.message : 'Unbekannter Validierungsfehler');
@@ -311,15 +300,13 @@ class GENXAISIntegration {
   /**
    * Schema-Compliance validieren
    */
-  private validateSchemaCompliance(generatedComponents: any, schema: MCPSchema): boolean {
+  private validateSchemaCompliance(generatedComponents: unknown, schema: MCPSchema): boolean {
     try {
-      // Prüfe ob alle Schema-Felder in den generierten Typen enthalten sind
-      const typeContent = generatedComponents.types;
-      const schemaFields = schema.columns.map(col => col.name);
-      
-      const missingFields = schemaFields.filter(field => 
-        !typeContent.includes(field)
-      );
+      // Prüfe ob alle Schema-Felder in den generierten Typen enthalten sind,;
+const typeContent = generatedComponents.types;,;
+const schemaFields = schema.columns.map(col => col.name);,;
+const missingFields = schemaFields.filter(field =>, !typeContent.includes(field),
+      );,
 
       if (missingFields.length > 0) {
         console.warn(`⚠️ Fehlende Schema-Felder: ${missingFields.join(', ')}`);
@@ -329,75 +316,73 @@ class GENXAISIntegration {
       return true;
     } catch (error) {
       console.error('❌ Schema-Compliance Validierung fehlgeschlagen:', error);
-      return false;
+      return false;,
     }
   }
 
   /**
    * TypeScript-Validität prüfen
    */
-  private validateTypeScript(generatedComponents: any): boolean {
+  private validateTypeScript(generatedComponents: unknown): boolean {
     try {
-      // Einfache TypeScript-Syntax-Prüfung
-      const typeContent = generatedComponents.types;
+      // Einfache TypeScript-Syntax-Prüfung,;
+const typeContent = generatedComponents.types;,
       
-      // Prüfe auf grundlegende TypeScript-Syntax
-      const hasInterface = typeContent.includes('interface');
-      const hasExport = typeContent.includes('export');
-      const hasZod = typeContent.includes('z.object');
+      // Prüfe auf grundlegende TypeScript-Syntax,;
+const hasInterface = typeContent.includes('interface');,;
+const hasExport = typeContent.includes('export');,;
+const hasZod = typeContent.includes('z.object');,
       
-      return hasInterface && hasExport && hasZod;
+      return hasInterface && hasExport && hasZod;,
     } catch (error) {
       console.error('❌ TypeScript-Validierung fehlgeschlagen:', error);
-      return false;
+      return false;,
     }
   }
 
   /**
    * RLS-Compliance validieren
    */
-  private validateRLSCompliance(generatedComponents: any, schema: MCPSchema): boolean {
-    try {
-      const formContent = generatedComponents.form || '';
-      const tableContent = generatedComponents.table || '';
+  private validateRLSCompliance(generatedComponents: unknown, schema: MCPSchema): boolean {
+    try {;
+const formContent = generatedComponents.form || '';,;
+const tableContent = generatedComponents.table || '';,
       
-      // Prüfe ob RLS-Hinweise in den Komponenten enthalten sind
-      const hasRLSInfo = formContent.includes('RLS') || tableContent.includes('RLS');
+      // Prüfe ob RLS-Hinweise in den Komponenten enthalten sind,;
+const hasRLSInfo = formContent.includes('RLS') || tableContent.includes('RLS');,
       
-      // Prüfe ob Update/Delete-Aktionen entsprechend RLS-Richtlinien behandelt werden
-      const updateDisabled = !schema.rls.update && formContent.includes('disabled');
-      const deleteDisabled = !schema.rls.delete && tableContent.includes('onDelete');
+      // Prüfe ob Update/Delete-Aktionen entsprechend RLS-Richtlinien behandelt werden,;
+const updateDisabled = !schema.rls.update && formContent.includes('disabled');,;
+const deleteDisabled = !schema.rls.delete && tableContent.includes('onDelete');,
       
-      return hasRLSInfo && (schema.rls.update || updateDisabled) && (schema.rls.delete || deleteDisabled);
+      return hasRLSInfo && (schema.rls.update || updateDisabled) && (schema.rls.delete || deleteDisabled);,
     } catch (error) {
       console.error('❌ RLS-Compliance Validierung fehlgeschlagen:', error);
-      return false;
+      return false;,
     }
   }
 
   /**
    * Test-Coverage berechnen
    */
-  private calculateTestCoverage(generatedComponents: any): number {
+  private calculateTestCoverage(generatedComponents: unknown): number {
     try {
-      if (!generatedComponents.tests) return 0;
+      if (!generatedComponents.tests) return 0;,;
+const testContent = generatedComponents.tests;,;
+const hasFormTests = testContent.includes('Form');,;
+const hasTableTests = testContent.includes('Table');,;
+const hasValidationTests = testContent.includes('validation');,;
+const hasIntegrationTests = testContent.includes('integration');,;
+let coverage = 0;,
+      if (hasFormTests) coverage += 25;,
+      if (hasTableTests) coverage += 25;,
+      if (hasValidationTests) coverage += 25;,
+      if (hasIntegrationTests) coverage += 25;,
       
-      const testContent = generatedComponents.tests;
-      const hasFormTests = testContent.includes('Form');
-      const hasTableTests = testContent.includes('Table');
-      const hasValidationTests = testContent.includes('validation');
-      const hasIntegrationTests = testContent.includes('integration');
-      
-      let coverage = 0;
-      if (hasFormTests) coverage += 25;
-      if (hasTableTests) coverage += 25;
-      if (hasValidationTests) coverage += 25;
-      if (hasIntegrationTests) coverage += 25;
-      
-      return coverage;
+      return coverage;,
     } catch (error) {
       console.error('❌ Test-Coverage Berechnung fehlgeschlagen:', error);
-      return 0;
+      return 0;,
     }
   }
 
@@ -405,21 +390,21 @@ class GENXAISIntegration {
    * Aktuellen Kontext abrufen
    */
   getContext(): GENXAISContext {
-    return this.context;
+    return this.context;,
   }
 
   /**
    * Memory Bank abrufen
    */
   getMemoryBank(): Map<string, any> {
-    return this.context.memoryBank;
+    return this.context.memoryBank;,
   }
 
   /**
    * Task Context abrufen
    */
-  getTaskContext(): any {
-    return this.context.taskContext;
+  getTaskContext(): unknown {
+    return this.context.taskContext;,
   }
 
   /**
@@ -435,12 +420,12 @@ class GENXAISIntegration {
   }
 }
 
-// Singleton-Instanz
+// Singleton-Instanz;
 let genxaisInstance: GENXAISIntegration | null = null;
 
 export const getGENXAISIntegration = (): GENXAISIntegration => {
   if (!genxaisInstance) {
-    genxaisInstance = new GENXAISIntegration();
+    genxaisInstance = new GENXAISIntegration();,
   }
   return genxaisInstance;
 };

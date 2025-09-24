@@ -1,17 +1,7 @@
-import { z } from 'zod';
+import { z ,} from 'zod';
 import {
-  FormConfig,
-  StandardizedFormConfig,
-  FormTab,
-  FormLayout,
-  STANDARD_WAWI_TABS,
-  STANDARD_FIBU_TABS,
-  STANDARD_CRM_TABS,
-  STANDARD_WORKFLOW_TIMELINE,
-  STANDARD_BELEGFOLGE,
-  FORM_TEMPLATES
-} from '../types/forms';
-import { MissingFormsGenerator } from './MissingFormsGenerator';
+  FormConfig, StandardizedFormConfig, FormTab, FormLayout, STANDARD_WAWI_TABS, STANDARD_FIBU_TABS, STANDARD_CRM_TABS, STANDARD_WORKFLOW_TIMELINE, STANDARD_BELEGFOLGE, FORM_TEMPLATES} from '../types/forms';
+import { MissingFormsGenerator ,} from './MissingFormsGenerator';
 
 /**
  * Erweiterte Formular-Registry für VALEO NeuroERP
@@ -92,8 +82,8 @@ export const ARTIKELSTAMMDATEN_CONFIG: StandardizedFormConfig = {
     exportSupport: true
   },
   module: 'warenwirtschaft',
-  layout: {
-    type: 'tabs',
+  layout: {;
+type: 'tabs',
     tabs: [
       {
         id: 'grunddaten',
@@ -216,8 +206,8 @@ export const EINLAGERUNG_CONFIG: StandardizedFormConfig = {
     exportSupport: true
   },
   module: 'warenwirtschaft',
-  layout: {
-    type: 'tabs',
+  layout: {;
+type: 'tabs',
     tabs: [
       {
         id: 'wareneingang',
@@ -340,8 +330,8 @@ export const AUSLAGERUNG_CONFIG: StandardizedFormConfig = {
     exportSupport: true
   },
   module: 'warenwirtschaft',
-  layout: {
-    type: 'tabs',
+  layout: {;
+type: 'tabs',
     tabs: [
       {
         id: 'warenausgang',
@@ -467,8 +457,8 @@ export const BUCHUNG_CONFIG: StandardizedFormConfig = {
     exportSupport: true
   },
   module: 'finanzbuchhaltung',
-  layout: {
-    type: 'tabs',
+  layout: {;
+type: 'tabs',
     tabs: [
       {
         id: 'grunddaten',
@@ -593,8 +583,8 @@ export const RECHNUNG_CONFIG: StandardizedFormConfig = {
     exportSupport: true
   },
   module: 'finanzbuchhaltung',
-  layout: {
-    type: 'tabs',
+  layout: {;
+type: 'tabs',
     tabs: [
       {
         id: 'rechnungskopf',
@@ -723,8 +713,8 @@ export const KUNDE_CONFIG: StandardizedFormConfig = {
     exportSupport: true
   },
   module: 'crm',
-  layout: {
-    type: 'tabs',
+  layout: {;
+type: 'tabs',
     tabs: [
       {
         id: 'grunddaten',
@@ -808,44 +798,44 @@ export class ExtendedFormRegistryService {
   private registry: Map<string, StandardizedFormConfig>;
 
   private constructor() {
-    this.registry = new Map();
-    this.initializeForms();
+    this.registry = new Map();,
+    this.initializeForms();,
   }
 
   public static getInstance(): ExtendedFormRegistryService {
     if (!ExtendedFormRegistryService.instance) {
-      ExtendedFormRegistryService.instance = new ExtendedFormRegistryService();
+      ExtendedFormRegistryService.instance = new ExtendedFormRegistryService();,
     }
     return ExtendedFormRegistryService.instance;
   }
 
   private initializeForms(): void {
-    // Alle erweiterten Formulare registrieren
+    // Alle erweiterten Formulare registrieren,
     EXTENDED_FORM_CONFIGS.forEach(config => {
-      this.registry.set(config.id, config);
+      this.registry.set(config.id, config);,
     });
   }
 
   public getForm(id: string): StandardizedFormConfig | undefined {
-    return this.registry.get(id);
+    return this.registry.get(id);,
   }
 
   public getAllForms(): StandardizedFormConfig[] {
-    return Array.from(this.registry.values());
+    return Array.from(this.registry.values());,
   }
 
   public getFormsByModule(module: string): StandardizedFormConfig[] {
-    return Array.from(this.registry.values()).filter(form => form.module === module);
+    return Array.from(this.registry.values()).filter(form => form.module === module);,
   }
 
   public getFormCount(): number {
-    return this.registry.size;
+    return this.registry.size;,
   }
 
-  public getModuleCounts(): Record<string, number> {
-    const counts: Record<string, number> = {};
+  public getModuleCounts(): Record<string, number> {;
+const counts: Record<string, number> = {};
     this.registry.forEach(form => {
-      counts[form.module] = (counts[form.module] || 0) + 1;
+      counts[form.module] = (counts[form.module] || 0) + 1;,
     });
     return counts;
   }

@@ -1,53 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import { 
-  Table, 
-  Input, 
-  Button, 
-  Space, 
-  Modal, 
-  message, 
-  Card, 
-  Typography, 
-  Tag, 
-  Tooltip,
-  Row,
-  Col,
-  Statistic,
-  Divider
-} from 'antd';
+  Table, Input, Button, Space, Modal, message, Card, Typography, Tag, Tooltip, Row, Col, Statistic, Divider} from 'antd';
 import { 
-  PlusOutlined, 
-  SearchOutlined, 
-  EditOutlined, 
-  DeleteOutlined, 
-  EyeOutlined,
-  DownloadOutlined,
-  ReloadOutlined
-} from '@ant-design/icons';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+  PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined, DownloadOutlined, ReloadOutlined} from '@ant-design/icons';
+import { useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
 import { 
-  Streckengeschaeft, 
-  StreckengeschaeftFilter, 
-  VorgangsTyp, 
-  StreckenStatus,
-  getVorgangsTypLabel, 
-  getStatusLabel, 
-  getStatusColor,
-  formatCurrency,
-  formatNumber,
-  formatDate,
-  calculateGewinn,
-  calculateGewinnmarge,
-  calculateDeckungsbeitrag,
-  StreckengeschaeftSummen
-} from '../../types/streckengeschaeft';
-import { StreckengeschaeftForm } from './StreckengeschaeftForm';
-import { StreckengeschaeftFilterPanel } from './StreckengeschaeftFilterPanel';
+  Streckengeschaeft, StreckengeschaeftFilter, VorgangsTyp, StreckenStatus, getVorgangsTypLabel, getStatusLabel, getStatusColor, formatCurrency, formatNumber, formatDate, calculateGewinn, calculateGewinnmarge, calculateDeckungsbeitrag, StreckengeschaeftSummen} from '../../types/streckengeschaeft';
+import { StreckengeschaeftForm ,} from './StreckengeschaeftForm';
+import { StreckengeschaeftFilterPanel ,} from './StreckengeschaeftFilterPanel';;
+const { _Search,} = Input;;
+const { _Title, _Text,} = Typography;
 
-const { Search } = Input;
-const { Title, Text } = Typography;
-
-// Mock-Daten für erweiterte Felder
+// Mock-Daten für erweiterte Felder;
 const mockStreckengeschaeftData: Streckengeschaeft[] = [
   {
     streckeNr: 'STR-2024-001',
@@ -201,7 +165,7 @@ const mockStreckengeschaeftData: Streckengeschaeft[] = [
   }
 ];
 
-// Mock-Summen-Daten
+// Mock-Summen-Daten;
 const mockSummen: StreckengeschaeftSummen = {
   ekBetragInklMwSt: 654.50,
   vkBetragInklMwSt: 1012.00,
@@ -217,96 +181,83 @@ const mockSummen: StreckengeschaeftSummen = {
   geplanteMengenVk: 3000
 };
 
-export const StreckengeschaeftList: React.FC = () => {
-  const [searchText, setSearchText] = useState('');
-  const [filter, setFilter] = useState<StreckengeschaeftFilter>({});
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [editingRecord, setEditingRecord] = useState<Streckengeschaeft | null>(null);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  
-  const queryClient = useQueryClient();
+export const StreckengeschaeftList: React.FC = () => {;
+const [searchText, setSearchText] = useState('');,;
+const [filter, setFilter] = useState<StreckengeschaeftFilter>({});;
+const [isFormVisible, setIsFormVisible] = useState(false);;
+const [editingRecord, setEditingRecord] = useState<Streckengeschaeft | null>(null);;
+const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);;
+const queryClient = useQueryClient();
 
-  // Mock Query für Streckengeschäfte
-  const { data: streckengeschaeftData = [], isLoading } = useQuery({
-    queryKey: ['streckengeschaeft', filter, searchText],
-    queryFn: () => {
-      // Mock-Filterung
-      let filteredData = [...mockStreckengeschaeftData];
+  // Mock Query für Streckengeschäfte;
+const { data: streckengeschaeftData = [], _isLoading} = useQuery({
+    queryKey: ['streckengeschaeft', filter, searchText], queryFn: () => {
+      // Mock-Filterung,;
+let filteredData = [...mockStreckengeschaeftData];,
       
       if (searchText) {
-        filteredData = filteredData.filter(item =>
-          item.streckeNr.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.artikelBezeichnung.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.lieferantName.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.kundeName.toLowerCase().includes(searchText.toLowerCase())
-        );
+        filteredData = filteredData.filter(item =>, item.streckeNr.toLowerCase().includes(searchText.toLowerCase()) ||,
+          item.artikelBezeichnung.toLowerCase().includes(searchText.toLowerCase()) ||,
+          item.lieferantName.toLowerCase().includes(searchText.toLowerCase()) ||,
+          item.kundeName.toLowerCase().includes(searchText.toLowerCase()),
+        );,
       }
       
       return filteredData;
     }
   });
 
-  // Mock Query für Summen
-  const { data: summen = mockSummen } = useQuery({
-    queryKey: ['streckengeschaeft-summen', filter],
-    queryFn: () => mockSummen
+  // Mock Query für Summen;
+const { data: summen = mockSummen} = useQuery({
+    queryKey: ['streckengeschaeft-summen', filter], queryFn: () => mockSummen
   });
 
-  // Mock Mutation für Erstellen/Bearbeiten
-  const createMutation = useMutation({
-    mutationFn: (data: Streckengeschaeft) => {
+  // Mock Mutation für Erstellen/Bearbeiten;
+const createMutation = useMutation({
+    mutationFn: (data: _Streckengeschaeft) => {
       return new Promise<Streckengeschaeft>((resolve) => {
-        setTimeout(() => resolve(data), 1000);
+        setTimeout(() => resolve(data), 1000);,
       });
     },
     onSuccess: () => {
-      message.success('Streckengeschäft erfolgreich erstellt');
-      setIsFormVisible(false);
+      message.success('Streckengeschäft erfolgreich erstellt');,
+      setIsFormVisible(false);,
       queryClient.invalidateQueries({ queryKey: ['streckengeschaeft'] });
     }
   });
 
-  // Mock Mutation für Löschen
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => {
+  // Mock Mutation für Löschen;
+const deleteMutation = useMutation({
+    mutationFn: (id: _string) => {
       return new Promise<void>((resolve) => {
-        setTimeout(() => resolve(), 1000);
+        setTimeout(() => resolve(), 1000);,
       });
     },
     onSuccess: () => {
-      message.success('Streckengeschäft erfolgreich gelöscht');
+      message.success('Streckengeschäft erfolgreich gelöscht');,
       queryClient.invalidateQueries({ queryKey: ['streckengeschaeft'] });
     }
-  });
-
-  const handleCreate = () => {
-    setEditingRecord(null);
-    setIsFormVisible(true);
-  };
-
-  const handleEdit = (record: Streckengeschaeft) => {
-    setEditingRecord(record);
-    setIsFormVisible(true);
-  };
-
-  const handleDelete = (record: Streckengeschaeft) => {
+  });;
+const handleCreate = () => {
+    setEditingRecord(null);,
+    setIsFormVisible(true);,
+  };;
+const handleEdit = (record: Streckengeschaeft) => {
+    setEditingRecord(record);,
+    setIsFormVisible(true);,
+  };;
+const handleDelete = (record: Streckengeschaeft) => {
     Modal.confirm({
-      title: 'Streckengeschäft löschen',
-      content: `Möchten Sie das Streckengeschäft "${record.streckeNr}" wirklich löschen?`,
-      okText: 'Löschen',
-      okType: 'danger',
-      cancelText: 'Abbrechen',
-      onOk: () => deleteMutation.mutate(record.streckeNr)
+      title: 'Streckengeschäft löschen', content: `Möchten Sie das Streckengeschäft "${record.streckeNr}" wirklich löschen?`, okText: 'Löschen', okType: 'danger', cancelText: 'Abbrechen', onOk: () => deleteMutation.mutate(record.streckeNr)
     });
-  };
-
-  const handleFormSubmit = (values: any) => {
+  };;
+const handleFormSubmit = (values: unknown) => {
     if (editingRecord) {
-      // Bearbeiten
-      createMutation.mutate({ ...editingRecord, ...values });
+      // Bearbeiten,
+      createMutation.mutate({ ...editingRecord, ...values, });
     } else {
-      // Erstellen
-      const newRecord: Streckengeschaeft = {
+      // Erstellen,;
+const newRecord: Streckengeschaeft = {
         ...values,
         streckeNr: `STR-${Date.now()}`,
         status: StreckenStatus.ENTWURF,
@@ -316,32 +267,31 @@ export const StreckengeschaeftList: React.FC = () => {
       };
       createMutation.mutate(newRecord);
     }
-  };
-
-  const columns = [
+  };;
+const columns = [
     {
       title: 'Strecke-Nr.',
       dataIndex: 'streckeNr',
       key: 'streckeNr',
       fixed: 'left' as const,
       width: 120,
-      render: (text: string) => <Text strong>{text}</Text>
+      render: (text: _string) => <Text strong>{text}</Text>
     },
     {
       title: 'Datum',
       dataIndex: 'datum',
       key: 'datum',
       width: 100,
-      render: (text: string) => formatDate(text)
+      render: (text: _string) => formatDate(text)
     },
     {
       title: 'Vorgang',
       dataIndex: 'vorgangsTyp',
       key: 'vorgangsTyp',
       width: 100,
-      render: (text: VorgangsTyp) => (
+      render: (text: _VorgangsTyp) => (
         <Tag color={text === VorgangsTyp.KAUF ? 'blue' : 'green'}>
-          {getVorgangsTypLabel(text)}
+          {getVorgangsTypLabel(text),}
         </Tag>
       )
     },
@@ -410,21 +360,21 @@ export const StreckengeschaeftList: React.FC = () => {
       dataIndex: 'ekMenge',
       key: 'ekMenge',
       width: 100,
-      render: (value: number) => formatNumber(value)
+      render: (value: _number) => formatNumber(value)
     },
     {
       title: 'EK-Netto',
       dataIndex: 'ekNetto',
       key: 'ekNetto',
       width: 100,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'EK-Lieferkosten',
       dataIndex: 'ekLieferkosten',
       key: 'ekLieferkosten',
       width: 120,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'EK-Rechnung',
@@ -449,21 +399,21 @@ export const StreckengeschaeftList: React.FC = () => {
       dataIndex: 'vkMenge',
       key: 'vkMenge',
       width: 100,
-      render: (value: number) => formatNumber(value)
+      render: (value: _number) => formatNumber(value)
     },
     {
       title: 'VK-Netto',
       dataIndex: 'vkNetto',
       key: 'vkNetto',
       width: 100,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'VK-Lieferkosten',
       dataIndex: 'vkLieferkosten',
       key: 'vkLieferkosten',
       width: 120,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'VK-Rechnung',
@@ -494,42 +444,42 @@ export const StreckengeschaeftList: React.FC = () => {
       dataIndex: 'frachtkosten',
       key: 'frachtkosten',
       width: 100,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'Preis pro Einheit',
       dataIndex: 'preisProEinheit',
       key: 'preisProEinheit',
       width: 120,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'Summe VK',
       dataIndex: 'summeVk',
       key: 'summeVk',
       width: 100,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'Summe EK',
       dataIndex: 'summeEk',
       key: 'summeEk',
       width: 100,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'Restwert',
       dataIndex: 'restwert',
       key: 'restwert',
       width: 100,
-      render: (value: number) => formatCurrency(value)
+      render: (value: _number) => formatCurrency(value)
     },
     {
       title: 'Geplante Menge VK',
       dataIndex: 'geplanteMengeVk',
       key: 'geplanteMengeVk',
       width: 140,
-      render: (value: number) => formatNumber(value)
+      render: (value: _number) => formatNumber(value)
     },
     {
       title: 'Status',
@@ -537,9 +487,9 @@ export const StreckengeschaeftList: React.FC = () => {
       key: 'status',
       width: 120,
       fixed: 'right' as const,
-      render: (text: StreckenStatus) => (
-        <Tag color={getStatusColor(text)}>
-          {getStatusLabel(text)}
+      render: (text: _StreckenStatus) => (
+        <Tag color={getStatusColor(text),}>
+          {getStatusLabel(text),}
         </Tag>
       )
     },
@@ -548,223 +498,217 @@ export const StreckengeschaeftList: React.FC = () => {
       key: 'actions',
       fixed: 'right' as const,
       width: 120,
-      render: (_: any, record: Streckengeschaeft) => (
-        <Space size="small">
-          <Tooltip title="Anzeigen">
-            <Button 
-              type="text" 
-              size="small" 
-              icon={<EyeOutlined />} 
+      render: (_: _any, record: _Streckengeschaeft) => (
+        <Space size="small">, <Tooltip title="Anzeigen">, <Button, type="text", size="small", icon={<EyeOutlined />, } 
             />
           </Tooltip>
           <Tooltip title="Bearbeiten">
-            <Button 
-              type="text" 
+            <Button ;
+type="text" 
               size="small" 
-              icon={<EditOutlined />} 
-              onClick={() => handleEdit(record)}
+              icon={<EditOutlined />, } 
+              onClick={() => handleEdit(record),}
             />
           </Tooltip>
           <Tooltip title="Löschen">
-            <Button 
-              type="text" 
+            <Button ;
+type="text" 
               size="small" 
               danger 
-              icon={<DeleteOutlined />} 
-              onClick={() => handleDelete(record)}
+              icon={<DeleteOutlined />,} 
+              onClick={() => handleDelete(record),}
             />
           </Tooltip>
         </Space>
       )
     }
-  ];
-
-  const rowSelection = {
+  ];;
+const rowSelection = {
     selectedRowKeys,
     onChange: (newSelectedRowKeys: React.Key[]) => {
-      setSelectedRowKeys(newSelectedRowKeys);
+      setSelectedRowKeys(newSelectedRowKeys);,
     }
   };
 
   return (
     <div className="space-y-4">
-      {/* Header */}
+      {/* Header */, }
       <div className="flex justify-between items-center">
-        <Title level={3}>Streckengeschäfte</Title>
+        <Title level={3, }>Streckengeschäfte</Title>
         <Space>
           <Button 
-            icon={<DownloadOutlined />}
-            onClick={() => message.info('Export-Funktion wird implementiert')}
+            icon={<DownloadOutlined />, }
+            onClick={() => message.info('Export-Funktion wird implementiert'),}
           >
             Export
           </Button>
           <Button 
-            icon={<ReloadOutlined />}
+            icon={<ReloadOutlined />,}
             onClick={() => queryClient.invalidateQueries({ queryKey: ['streckengeschaeft'] })}
-            loading={isLoading}
+            loading={isLoading,}
           >
             Aktualisieren
           </Button>
-          <Button 
-            type="primary" 
-            icon={<PlusOutlined />}
-            onClick={handleCreate}
+          <Button ;
+type="primary" 
+            icon={<PlusOutlined />,}
+            onClick={handleCreate,}
           >
             Neues Streckengeschäft
           </Button>
         </Space>
       </div>
 
-      {/* Filter Panel */}
+      {/* Filter Panel */,}
       <StreckengeschaeftFilterPanel
-        onFilterChange={setFilter}
+        onFilterChange={setFilter,}
         onReset={() => setFilter({})}
-        loading={isLoading}
+        loading={isLoading,}
       />
 
-      {/* Summen-Anzeige */}
+      {/* Summen-Anzeige */,}
       <Card size="small" className="mb-4">
-        <Row gutter={16}>
-          <Col span={3}>
+        <Row gutter={16,}>
+          <Col span={3,}>
             <Statistic 
               title="EK-Betrag inkl. MwSt." 
-              value={summen.ekBetragInklMwSt} 
-              precision={2}
+              value={summen.ekBetragInklMwSt,} 
+              precision={2,}
               suffix="€"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="VK-Betrag inkl. MwSt." 
-              value={summen.vkBetragInklMwSt} 
-              precision={2}
+              value={summen.vkBetragInklMwSt,} 
+              precision={2,}
               suffix="€"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Frachtkosten" 
-              value={summen.frachtkosten} 
-              precision={2}
+              value={summen.frachtkosten,} 
+              precision={2,}
               suffix="€"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Soll/Ist Differenz" 
-              value={summen.sollDifferenz} 
-              precision={2}
+              value={summen.sollDifferenz,} 
+              precision={2,}
               suffix="€"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="MwSt." 
-              value={summen.mwst} 
-              precision={2}
+              value={summen.mwst,} 
+              precision={2,}
               suffix="€"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Deckungsbeitrag" 
-              value={summen.deckungsbeitrag} 
-              precision={2}
+              value={summen.deckungsbeitrag,} 
+              precision={2,}
               suffix="€"
               valueStyle={{ color: summen.deckungsbeitrag > 0 ? '#3f8600' : '#cf1322' }}
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Differenz Soll/Ist" 
-              value={summen.differenzSollIst} 
-              precision={2}
+              value={summen.differenzSollIst,} 
+              precision={2,}
               suffix="€"
               valueStyle={{ color: summen.differenzSollIst > 0 ? '#3f8600' : '#cf1322' }}
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Rest-Menge" 
-              value={summen.restMenge} 
+              value={summen.restMenge,} 
               suffix="kg"
             />
           </Col>
         </Row>
         <Divider />
-        <Row gutter={16}>
-          <Col span={3}>
+        <Row gutter={16,}>
+          <Col span={3,}>
             <Statistic 
               title="Rest-Wert" 
-              value={summen.restWert} 
-              precision={2}
+              value={summen.restWert,} 
+              precision={2,}
               suffix="€"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Geplante Mengen EK" 
-              value={summen.geplanteMengenEk} 
+              value={summen.geplanteMengenEk,} 
               suffix="kg"
             />
           </Col>
-          <Col span={3}>
+          <Col span={3,}>
             <Statistic 
               title="Geplante Mengen VK" 
-              value={summen.geplanteMengenVk} 
+              value={summen.geplanteMengenVk,} 
               suffix="kg"
             />
           </Col>
         </Row>
       </Card>
 
-      {/* Tabelle */}
+      {/* Tabelle */,}
       <Card>
         <div className="mb-4">
           <Search
             placeholder="Streckengeschäfte durchsuchen..."
             allowClear
-            enterButton={<SearchOutlined />}
+            enterButton={<SearchOutlined />,}
             size="large"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText,}
+            onChange={(e) => setSearchText(e.target.value),}
             style={{ maxWidth: 400 }}
           />
         </div>
 
         <Table
-          columns={columns}
-          dataSource={streckengeschaeftData}
+          columns={columns,}
+          dataSource={streckengeschaeftData,}
           rowKey="streckeNr"
-          loading={isLoading}
+          loading={isLoading,}
           scroll={{ x: 3000 }}
           pagination={{
             total: streckengeschaeftData.length,
             pageSize: 20,
             showSizeChanger: true,
             showQuickJumper: true,
-            showTotal: (total, range) => 
-              `${range[0]}-${range[1]} von ${total} Streckengeschäften`
+            showTotal: (_total, _range) => 
+              `${range[0],}-${range[1],} von ${total,} Streckengeschäften`
           }}
-          rowSelection={rowSelection}
+          rowSelection={rowSelection,}
           size="small"
         />
       </Card>
 
-      {/* Form Modal */}
+      {/* Form Modal */,}
       <Modal
         title={editingRecord ? 'Streckengeschäft bearbeiten' : 'Neues Streckengeschäft'}
-        open={isFormVisible}
-        onCancel={() => setIsFormVisible(false)}
-        footer={null}
-        width={1200}
+        open={isFormVisible,}
+        onCancel={() => setIsFormVisible(false),}
+        footer={null,}
+        width={1200,}
         destroyOnClose
       >
         <StreckengeschaeftForm
-          initialData={editingRecord}
-          onSubmit={handleFormSubmit}
-          onCancel={() => setIsFormVisible(false)}
-          loading={createMutation.isPending}
+          initialData={editingRecord,}
+          onSubmit={handleFormSubmit,}
+          onCancel={() => setIsFormVisible(false),}
+          loading={createMutation.isPending,}
         />
       </Modal>
     </div>

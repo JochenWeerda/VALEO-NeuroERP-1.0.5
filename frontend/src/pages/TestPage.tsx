@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, Typography, Button, Container, Card, CardContent } from '@mui/material';
+import { Box, Typography, Button, Container, Card, CardContent} from '@mui/material';
 
 export const TestPage: React.FC = () => {
-  return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
+  return (<Container maxWidth="md" sx={{ mt: 4 }}>
       <Card>
         <CardContent>
           <Typography variant="h4" gutterBottom>
@@ -46,8 +45,7 @@ export const TestPage: React.FC = () => {
           </Box>
         </CardContent>
       </Card>
-    </Container>
-  );
+    </Container>);
 };
 
 export default TestPage; 

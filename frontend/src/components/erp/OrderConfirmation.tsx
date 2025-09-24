@@ -20,20 +20,12 @@ export interface OrderConfirmationItem {
 }
 
 export interface OrderConfirmationProps {
-  onConfirmationCreate: (confirmation: OrderConfirmationData) => void;
-  onConfirmationUpdate: (id: string, confirmation: Partial<OrderConfirmationData>) => void;
-  onConfirmationDelete: (id: string) => void;
+  onConfirmationCreate: (confirmation: _OrderConfirmationData) => void;
+  onConfirmationUpdate: (id: _string, confirmation: Partial<OrderConfirmationData>) => void;
+  onConfirmationDelete: (id: _string) => void;
 }
 
 export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
-  onConfirmationCreate,
-  onConfirmationUpdate,
-  onConfirmationDelete
-}) => {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Order Confirmation</h1>
-      <p className="text-gray-600">Diese Komponente wird später implementiert.</p>
-    </div>
-  );
+  onConfirmationCreate, onConfirmationUpdate, onConfirmationDelete, }) => {
+  return (<div className="p-6">, <h1 className="text-2xl font-bold mb-4">Order Confirmation</h1>, <p className="text-gray-600">Diese Komponente wird später implementiert.</p>, </div>);,
 }; 

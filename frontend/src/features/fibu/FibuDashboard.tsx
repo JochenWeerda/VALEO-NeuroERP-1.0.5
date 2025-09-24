@@ -1,70 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import { 
-  Box, 
-  Typography, 
-  Card, 
-  Alert, 
-  Chip,
-  CircularProgress,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@mui/material';
+  Box, Typography, Card, Alert, Chip, CircularProgress, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import { 
-  AccountBalance as AccountBalanceIcon,
-  Receipt as ReceiptIcon,
-  Payment as PaymentIcon,
-  TrendingUp as TrendingUpIcon,
-  Add as AddIcon,
-  Download as DownloadIcon
-} from '@mui/icons-material';
-
+  AccountBalance as AccountBalanceIcon, Receipt as ReceiptIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Add as AddIcon, Download as DownloadIcon} from '@mui/icons-material';;
 interface FinancialAccount {
   id: string;
   name: string;
-  number: string;
-  type: 'asset' | 'liability' | 'equity' | 'revenue' | 'expense';
+  number: string;;
+type: 'asset' | 'liability' | 'equity' | 'revenue' | 'expense';
   balance: number;
   currency: string;
   status: 'active' | 'inactive';
-}
-
+};
 interface Transaction {
   id: string;
   date: Date;
   description: string;
-  amount: number;
-  type: 'debit' | 'credit';
+  amount: number;;
+type: 'debit' | 'credit';
   accountId: string;
   reference: string;
   status: 'posted' | 'pending' | 'cancelled';
-}
-
-const FibuDashboard: React.FC = () => {
-  const [accounts, setAccounts] = useState<FinancialAccount[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+};
+const FibuDashboard: React.FC = () => {;
+const [accounts, setAccounts] = useState<FinancialAccount[]>([]);,;
+const [transactions, setTransactions] = useState<Transaction[]>([]);,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,
 
   useEffect(() => {
-    loadFibuData();
-  }, []);
-
-  const loadFibuData = async () => {
-    setLoading(true);
+    loadFibuData();,
+  }, []);;
+const loadFibuData = async () => {
+    setLoading(true);,
     try {
-      // Simuliere API-Aufruf für FiBu-Daten
-      const mockAccounts: FinancialAccount[] = [
+      // Simuliere API-Aufruf für FiBu-Daten,;
+const mockAccounts: FinancialAccount[] = [
         {
           id: '1',
           name: 'Bankkonto',
-          number: '1000',
-          type: 'asset',
+          number: '1000',;
+type: 'asset',
           balance: 125000,
           currency: 'EUR',
           status: 'active'
@@ -72,8 +48,8 @@ const FibuDashboard: React.FC = () => {
         {
           id: '2',
           name: 'Verbindlichkeiten',
-          number: '2000',
-          type: 'liability',
+          number: '2000',;
+type: 'liability',
           balance: -45000,
           currency: 'EUR',
           status: 'active'
@@ -81,8 +57,8 @@ const FibuDashboard: React.FC = () => {
         {
           id: '3',
           name: 'Umsatzerlöse',
-          number: '4000',
-          type: 'revenue',
+          number: '4000',;
+type: 'revenue',
           balance: 250000,
           currency: 'EUR',
           status: 'active'
@@ -90,21 +66,20 @@ const FibuDashboard: React.FC = () => {
         {
           id: '4',
           name: 'Betriebsausgaben',
-          number: '5000',
-          type: 'expense',
+          number: '5000',;
+type: 'expense',
           balance: -180000,
           currency: 'EUR',
           status: 'active'
         }
-      ];
-
-      const mockTransactions: Transaction[] = [
+      ];;
+const mockTransactions: Transaction[] = [
         {
           id: '1',
           date: new Date(),
           description: 'Kundenzahlung',
-          amount: 5000,
-          type: 'credit',
+          amount: 5000,;
+type: 'credit',
           accountId: '1',
           reference: 'RE-2024-001',
           status: 'posted'
@@ -113,8 +88,8 @@ const FibuDashboard: React.FC = () => {
           id: '2',
           date: new Date(Date.now() - 86400000),
           description: 'Lieferantenrechnung',
-          amount: 2500,
-          type: 'debit',
+          amount: 2500,;
+type: 'debit',
           accountId: '2',
           reference: 'LI-2024-001',
           status: 'posted'
@@ -124,13 +99,12 @@ const FibuDashboard: React.FC = () => {
       setAccounts(mockAccounts);
       setTransactions(mockTransactions);
     } catch (err) {
-      setError('Fehler beim Laden der FiBu-Daten');
+      setError('Fehler beim Laden der FiBu-Daten');,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const getAccountTypeColor = (type: string) => {
+  };;
+const getAccountTypeColor = (type: string) => {
     switch (type) {
       case 'asset': return 'success';
       case 'liability': return 'error';
@@ -139,35 +113,30 @@ const FibuDashboard: React.FC = () => {
       case 'expense': return 'warning';
       default: return 'default';
     }
-  };
-
-  const getTransactionTypeColor = (type: string) => {
+  };;
+const getTransactionTypeColor = (type: string) => {
     switch (type) {
       case 'credit': return 'success';
       case 'debit': return 'error';
       default: return 'default';
     }
-  };
-
-  const getStatusColor = (status: string) => {
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'posted': return 'success';
       case 'pending': return 'warning';
       case 'cancelled': return 'error';
       default: return 'default';
     }
-  };
-
-  const calculateTotalBalance = () => {
-    return accounts.reduce((sum, account) => sum + account.balance, 0);
+  };;
+const calculateTotalBalance = () => {
+    return accounts.reduce((sum, account) => sum + account.balance, 0);,
   };
 
   if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+    return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
   }
 
   return (
@@ -180,13 +149,11 @@ const FibuDashboard: React.FC = () => {
         Finanzverwaltung und Buchhaltung
       </Typography>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+      {error && (, <Alert severity="error" sx={{ mb: 3 }}>
+          {error, }
+        </Alert>)}
 
-      {/* Financial Overview */}
+      {/* Financial Overview */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Finanzübersicht
@@ -196,48 +163,48 @@ const FibuDashboard: React.FC = () => {
             <AccountBalanceIcon className="text-green-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-green-800">Gesamtbilanz</Typography>
             <Typography variant="h4" className="text-green-600">
-              {calculateTotalBalance().toLocaleString('de-DE')}€
+              {calculateTotalBalance().toLocaleString('de-DE'),}€
             </Typography>
           </Box>
           <Box className="text-center p-4 bg-blue-50 rounded-lg">
             <ReceiptIcon className="text-blue-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-blue-800">Aktiva</Typography>
             <Typography variant="h4" className="text-blue-600">
-              {accounts.filter(a => a.type === 'asset').reduce((sum, a) => sum + a.balance, 0).toLocaleString('de-DE')}€
+              {accounts.filter(a => a.type === 'asset').reduce((sum, a) => sum + a.balance, 0).toLocaleString('de-DE'),}€
             </Typography>
           </Box>
           <Box className="text-center p-4 bg-red-50 rounded-lg">
             <PaymentIcon className="text-red-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-red-800">Passiva</Typography>
             <Typography variant="h4" className="text-red-600">
-              {Math.abs(accounts.filter(a => a.type === 'liability').reduce((sum, a) => sum + a.balance, 0)).toLocaleString('de-DE')}€
+              {Math.abs(accounts.filter(a => a.type === 'liability').reduce((sum, a) => sum + a.balance, 0)).toLocaleString('de-DE'),}€
             </Typography>
           </Box>
           <Box className="text-center p-4 bg-purple-50 rounded-lg">
             <TrendingUpIcon className="text-purple-600 text-3xl mb-2" />
             <Typography variant="h6" className="text-purple-800">Gewinn</Typography>
             <Typography variant="h4" className="text-purple-600">
-              {(accounts.filter(a => a.type === 'revenue').reduce((sum, a) => sum + a.balance, 0) + 
-                accounts.filter(a => a.type === 'expense').reduce((sum, a) => sum + a.balance, 0)).toLocaleString('de-DE')}€
+              {(accounts.filter(a => a.type === 'revenue').reduce((sum, a) => sum + a.balance, 0) + ,
+                accounts.filter(a => a.type === 'expense').reduce((sum, a) => sum + a.balance, 0)).toLocaleString('de-DE'),}€
             </Typography>
           </Box>
         </Box>
       </Card>
 
-      {/* Accounts Table */}
+      {/* Accounts Table */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Box className="flex justify-between items-center mb-4">
           <Typography variant="h6">
             Konten
           </Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
           >
             Neues Konto
           </Button>
         </Box>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow className="bg-gray-50">
@@ -250,31 +217,30 @@ const FibuDashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {accounts.map((account) => (
-                <TableRow key={account.id} className="hover:bg-gray-50">
+              {accounts.map((account) => (<TableRow key={account.id, } className="hover:bg-gray-50">
                   <TableCell>
                     <Typography variant="body1" className="font-medium">
-                      {account.number}
+                      {account.number, }
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{account.name}</Typography>
+                    <Typography variant="body2">{account.name, }</Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={account.type}
+                      label={account.type, }
                       size="small"
-                      color={getAccountTypeColor(account.type) as any}
+                      color={getAccountTypeColor(account.type) as any,}
                     />
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2" className={`font-medium ${account.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {account.balance.toLocaleString('de-DE')} {account.currency}
+                      {account.balance.toLocaleString('de-DE'),} {account.currency,}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={account.status}
+                      label={account.status,}
                       size="small"
                       color={account.status === 'active' ? 'success' : 'default'}
                     />
@@ -282,14 +248,14 @@ const FibuDashboard: React.FC = () => {
                   <TableCell>
                     <Box className="flex gap-1">
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Details
                       </Button>
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Buchungen
                       </Button>
@@ -302,12 +268,12 @@ const FibuDashboard: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Recent Transactions */}
+      {/* Recent Transactions */,}
       <Card sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
           Letzte Buchungen
         </Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow className="bg-gray-50">
@@ -320,38 +286,37 @@ const FibuDashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {transactions.map((transaction) => (
-                <TableRow key={transaction.id} className="hover:bg-gray-50">
+              {transactions.map((transaction) => (<TableRow key={transaction.id, } className="hover:bg-gray-50">
                   <TableCell>
                     <Typography variant="body2">
-                      {transaction.date.toLocaleDateString('de-DE')}
+                      {transaction.date.toLocaleDateString('de-DE'),}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{transaction.description}</Typography>
+                    <Typography variant="body2">{transaction.description,}</Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2" className={`font-medium ${transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}`}>
-                      {transaction.type === 'credit' ? '+' : '-'}{transaction.amount.toLocaleString('de-DE')}€
+                      {transaction.type === 'credit' ? '+' : '-'}{transaction.amount.toLocaleString('de-DE'),}€
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={transaction.type}
+                      label={transaction.type,}
                       size="small"
-                      color={getTransactionTypeColor(transaction.type) as any}
+                      color={getTransactionTypeColor(transaction.type) as any,}
                     />
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2" className="text-gray-600">
-                      {transaction.reference}
+                      {transaction.reference,}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={transaction.status}
+                      label={transaction.status,}
                       size="small"
-                      color={getStatusColor(transaction.status) as any}
+                      color={getStatusColor(transaction.status) as any,}
                     />
                   </TableCell>
                 </TableRow>
@@ -361,19 +326,19 @@ const FibuDashboard: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Actions */}
+      {/* Actions */,}
       <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-        <Button
-          variant="contained"
-          onClick={loadFibuData}
-          disabled={loading}
+        <Button;
+variant="contained"
+          onClick={loadFibuData,}
+          disabled={loading,}
         >
           Daten aktualisieren
         </Button>
-        <Button variant="outlined" startIcon={<AddIcon />}>
+        <Button variant="outlined" startIcon={<AddIcon />,}>
           Neue Buchung
         </Button>
-        <Button variant="outlined" startIcon={<DownloadIcon />}>
+        <Button variant="outlined" startIcon={<DownloadIcon />,}>
           Bilanz exportieren
         </Button>
       </Box>

@@ -1,89 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import { 
-  Box, 
-  Card, 
-  Typography, 
-  Button,
-  Chip,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  IconButton,
-  Tooltip,
-  CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
-} from '@mui/material';
+  Box, Card, Typography, Button, Chip, List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction, IconButton, Tooltip, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Refresh as RefreshIcon,
-  Description as DescriptionIcon,
-  Download as DownloadIcon,
-  Visibility as VisibilityIcon,
-  FileCopy as FileCopyIcon,
-  Image as ImageIcon,
-  PictureAsPdf as PdfIcon,
-  InsertDriveFile as FileIcon,
-  FilterList as FilterListIcon
-} from '@mui/icons-material';
-import { useApi } from '../contexts/ApiContext';
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Refresh as RefreshIcon, Description as DescriptionIcon, Download as DownloadIcon, Visibility as VisibilityIcon, FileCopy as FileCopyIcon, Image as ImageIcon, PictureAsPdf as PdfIcon, InsertDriveFile as FileIcon, FilterList as FilterListIcon} from '@mui/icons-material';
+import { useApi ,} from '../contexts/ApiContext';
 import {
-  ObjectPageHeader
-} from '../components/ui/NeuroFlowComponents';
-
+  ObjectPageHeader,
+} from '../components/ui/NeuroFlowComponents';;
 interface DocumentFormData {
-  name: string;
-  type: string;
+  name: string;;
+type: string;
   content: string;
-}
-
-const DocumentsPage: React.FC = () => {
-  const {
-    documents,
-    getDocuments,
-    uploadDocument,
-    isLoading,
-    error
-  } = useApi();
-
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editingDocument, setEditingDocument] = useState<any>(null);
-  const [formData, setFormData] = useState<DocumentFormData>({
-    name: '',
-    type: 'document',
-    content: ''
-  });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
+};
+const DocumentsPage: React.FC = () => {;
+const {
+    _documents, _getDocuments, _uploadDocument, _isLoading, _error,} = useApi();;
+const [openDialog, setOpenDialog] = useState(false);;
+const [editingDocument, setEditingDocument] = useState<any>(null);;
+const [formData, setFormData] = useState<DocumentFormData>({
+    name: '', type: 'document', content: ''
+  });;
+const [searchTerm, setSearchTerm] = useState('');;
+const [filterType, setFilterType] = useState('all');
 
   useEffect(() => {
-    loadDocuments();
-  }, []);
-
-  const loadDocuments = async () => {
-    await getDocuments();
-  };
-
-  const handleSubmit = async (formData: DocumentFormData) => {
+    loadDocuments();,
+  }, []);;
+const loadDocuments = async () => {
+    await getDocuments();,
+  };;
+const handleSubmit = async (formData: DocumentFormData) => {
     try {
       if (editingDocument) {
         console.log('Update document:', editingDocument.id, formData);
-      } else {
-        const file = new File([''], formData.name, { type: 'text/plain' });
+      } else {;
+const file = new File([''], formData.name, { type: 'text/plain' });
         await uploadDocument(file, {
-          ...formData,
-          user_id: localStorage.getItem('userId') || 'current-user-id'
+          ...formData, user_id: localStorage.getItem('userId') || 'current-user-id'
         });
       }
       setOpenDialog(false);
@@ -92,100 +45,85 @@ const DocumentsPage: React.FC = () => {
     } catch (err) {
       console.error('Error saving document:', err);
     }
-  };
-
-  const handleDeleteDocument = (id: string) => {
-    // Mock-Implementation für das Löschen
+  };;
+const handleDeleteDocument = (id: string) => {
+    // Mock-Implementation für das Löschen,
     console.log('Deleting document:', id);
-    // In einer echten Implementierung würde hier die API aufgerufen werden
-    // und dann der lokale State aktualisiert werden
-  };
-
-  const handleEdit = (document: any) => {
-    setEditingDocument(document);
+    // In einer echten Implementierung würde hier die API aufgerufen werden,
+    // und dann der lokale State aktualisiert werden,
+  };;
+const handleEdit = (document: unknown) => {
+    setEditingDocument(document);,
     setFormData({
-      name: document.name,
-      type: document.type,
-      content: document.content
+      name: document.name, type: document.type, content: document.content
     });
     setOpenDialog(true);
-  };
-
-  const handleCreate = () => {
-    setEditingDocument(null);
+  };;
+const handleCreate = () => {
+    setEditingDocument(null);,
     setFormData({
-      name: '',
-      type: 'document',
-      content: ''
+      name: '', type: 'document', content: ''
     });
     setOpenDialog(true);
-  };
-
-  const resetForm = () => {
+  };;
+const resetForm = () => {
     setFormData({
-      name: '',
-      type: 'document',
-      content: ''
+      name: '', type: 'document', content: ''
     });
     setEditingDocument(null);
-  };
-
-  const filteredDocuments = documents.filter(doc => {
-    const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         doc.type.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = filterType === 'all' || doc.type === filterType;
-    return matchesSearch && matchesType;
-  });
-
-  const getTypeIcon = (type: string) => {
+  };;
+const filteredDocuments = documents.filter(doc => {;
+const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+                         doc.type.toLowerCase().includes(searchTerm.toLowerCase());,;
+const matchesType = filterType === 'all' || doc.type === filterType;,
+    return matchesSearch && matchesType;,
+  });;
+const getTypeIcon = (type: string) => {
     switch (type) {
       case 'pdf': return <PdfIcon color="error" />;
       case 'image': return <ImageIcon color="primary" />;
       case 'text': return <DescriptionIcon color="info" />;
       default: return <FileIcon />;
     }
-  };
-
-  const getTypeColor = (type: string) => {
+  };;
+const getTypeColor = (type: string) => {
     switch (type) {
       case 'pdf': return 'error';
       case 'image': return 'primary';
       case 'text': return 'info';
       default: return 'default';
     }
-  };
-
-  const totalDocuments = filteredDocuments.length;
-  const pdfDocuments = filteredDocuments.filter(doc => doc.type === 'pdf').length;
-  const imageDocuments = filteredDocuments.filter(doc => doc.type === 'image').length;
-  const textDocuments = filteredDocuments.filter(doc => doc.type === 'text').length;
-
-  const handleResetFilters = () => {
-    setSearchTerm('');
-    setFilterType('all');
+  };;
+const totalDocuments = filteredDocuments.length;;
+const pdfDocuments = filteredDocuments.filter(doc => doc.type === 'pdf').length;;
+const imageDocuments = filteredDocuments.filter(doc => doc.type === 'image').length;;
+const textDocuments = filteredDocuments.filter(doc => doc.type === 'text').length;;
+const handleResetFilters = () => {
+    setSearchTerm('');,
+    setFilterType('all');,
   };
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
-      {/* Header */}
+      {/* Header */, }
       <ObjectPageHeader
         title="Dokumentenverwaltung"
         subtitle="Zentrale Verwaltung aller Dokumente und Dateien"
         status="Live-Daten"
         actions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              startIcon={<RefreshIcon />}
-              onClick={loadDocuments}
-              disabled={isLoading}
+            <Button;
+variant="outlined"
+              startIcon={<RefreshIcon />, }
+              onClick={loadDocuments, }
+              disabled={isLoading, }
             >
               Aktualisieren
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handleCreate}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />, }
+              onClick={handleCreate, }
             >
               Neues Dokument
             </Button>
@@ -193,23 +131,21 @@ const DocumentsPage: React.FC = () => {
         }
       />
 
-      {/* Error Display */}
-      {error && (
-        <Box sx={{ px: 3 }}>
-          <Typography variant="body1" color="error">{error}</Typography>
-        </Box>
-      )}
+      {/* Error Display */, }
+      {error && (, <Box sx={{ px: 3 }}>
+          <Typography variant="body1" color="error">{error, }</Typography>
+        </Box>)}
 
-      {/* Action Bar */}
+      {/* Action Bar */,}
       <Box sx={{ p: 3 }}>
-        {/* Summary Cards */}
+        {/* Summary Cards */,}
         <Box className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           <Card sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <DescriptionIcon sx={{ fontSize: 40, color: '#0A6ED1' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#0A6ED1', fontWeight: 600 }}>
-                  {totalDocuments}
+                  {totalDocuments,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Gesamte Dokumente
@@ -223,7 +159,7 @@ const DocumentsPage: React.FC = () => {
               <PdfIcon sx={{ fontSize: 40, color: '#BB0000' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#BB0000', fontWeight: 600 }}>
-                  {pdfDocuments}
+                  {pdfDocuments,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   PDF-Dokumente
@@ -237,7 +173,7 @@ const DocumentsPage: React.FC = () => {
               <ImageIcon sx={{ fontSize: 40, color: '#107C41' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#107C41', fontWeight: 600 }}>
-                  {imageDocuments}
+                  {imageDocuments,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Bilder
@@ -251,7 +187,7 @@ const DocumentsPage: React.FC = () => {
               <FileIcon sx={{ fontSize: 40, color: '#E9730C' }} />
               <Box>
                 <Typography variant="h4" sx={{ color: '#E9730C', fontWeight: 600 }}>
-                  {textDocuments}
+                  {textDocuments,}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#515559' }}>
                   Text-Dokumente
@@ -261,7 +197,7 @@ const DocumentsPage: React.FC = () => {
           </Card>
         </Box>
 
-        {/* Filters */}
+        {/* Filters */,}
         <Box sx={{ p: 3, pb: 0 }}>
           <Card sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}>
@@ -272,8 +208,8 @@ const DocumentsPage: React.FC = () => {
               
               <TextField
                 label="Suche"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm,}
+                onChange={(e) => setSearchTerm(e.target.value),}
                 size="small"
                 sx={{ minWidth: 200 }}
               />
@@ -281,8 +217,8 @@ const DocumentsPage: React.FC = () => {
               <FormControl size="small" sx={{ minWidth: 150 }}>
                 <InputLabel>Typ</InputLabel>
                 <Select
-                  value={filterType}
-                  onChange={(e) => setFilterType(e.target.value)}
+                  value={filterType,}
+                  onChange={(e) => setFilterType(e.target.value),}
                   label="Typ"
                 >
                   <MenuItem value="all">Alle Typen</MenuItem>
@@ -293,9 +229,9 @@ const DocumentsPage: React.FC = () => {
                 </Select>
               </FormControl>
               
-              <Button
-                variant="outlined"
-                onClick={handleResetFilters}
+              <Button;
+variant="outlined"
+                onClick={handleResetFilters,}
                 size="small"
               >
                 Filter zurücksetzen
@@ -304,36 +240,35 @@ const DocumentsPage: React.FC = () => {
           </Card>
         </Box>
 
-        {/* Documents List */}
+        {/* Documents List */,}
         <Card>
           <List>
-            {filteredDocuments.map((document) => (
-              <ListItem key={document.id} divider>
+            {filteredDocuments.map((document) => (<ListItem key={document.id, } divider>
                 <ListItemIcon>
-                  {getTypeIcon(document.type)}
+                  {getTypeIcon(document.type),}
                 </ListItemIcon>
                 <ListItemText
                   primary={
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                       <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                        {document.name}
+                        {document.name,}
                       </Typography>
                       <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
                         <Chip
-                          label={document.type}
+                          label={document.type,}
                           size="small"
-                          color={getTypeColor(document.type) as any}
+                          color={getTypeColor(document.type) as any,}
                         />
                       </Box>
                     </Box>
                   }
                   secondary={
-                    <Box>
+                    <Box>,
                       <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                        {document.content.substring(0, 100)}...
+                        {document.content.substring(0, 100),}...
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        Erstellt: {new Date(document.created_at).toLocaleDateString('de-DE')}
+                        Erstellt: {new Date(document.created_at).toLocaleDateString('de-DE'),}
                       </Typography>
                     </Box>
                   }
@@ -358,7 +293,7 @@ const DocumentsPage: React.FC = () => {
                     <Tooltip title="Bearbeiten">
                       <IconButton
                         size="small"
-                        onClick={() => handleEdit(document)}
+                        onClick={() => handleEdit(document),}
                       >
                         <EditIcon />
                       </IconButton>
@@ -367,7 +302,7 @@ const DocumentsPage: React.FC = () => {
                       <IconButton
                         size="small"
                         color="error"
-                        onClick={() => handleDeleteDocument(document.id)}
+                        onClick={() => handleDeleteDocument(document.id),}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -376,23 +311,19 @@ const DocumentsPage: React.FC = () => {
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
-            {filteredDocuments.length === 0 && (
-              <ListItem>
-                <ListItemText
-                  primary={
+            {filteredDocuments.length === 0 && (<ListItem>, <ListItemText, primary={
                     <Typography variant="body2" color="text.secondary" align="center" sx={{ py: 4 }}>
                       Keine Dokumente gefunden
                     </Typography>
                   }
                 />
-              </ListItem>
-            )}
+              </ListItem>)}
           </List>
         </Card>
       </Box>
 
-      {/* Create/Edit Dialog */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
+      {/* Create/Edit Dialog */,}
+      <Dialog open={openDialog,} onClose={() => setOpenDialog(false),} maxWidth="md" fullWidth>
         <DialogTitle>
           {editingDocument ? 'Dokument bearbeiten' : 'Neues Dokument'}
         </DialogTitle>
@@ -401,7 +332,7 @@ const DocumentsPage: React.FC = () => {
             <TextField
               fullWidth
               label="Dokumentname"
-              value={formData.name}
+              value={formData.name,}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               margin="normal"
               required
@@ -411,7 +342,7 @@ const DocumentsPage: React.FC = () => {
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>Typ</InputLabel>
                 <Select
-                  value={formData.type}
+                  value={formData.type,}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   label="Typ"
                 >
@@ -426,32 +357,26 @@ const DocumentsPage: React.FC = () => {
             <TextField
               fullWidth
               label="Inhalt"
-              value={formData.content}
+              value={formData.content,}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               margin="normal"
               multiline
-              rows={8}
+              rows={8,}
               required
             />
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Abbrechen</Button>
-          <Button onClick={() => handleSubmit(formData)} variant="contained">
+          <Button onClick={() => setOpenDialog(false),}>Abbrechen</Button>
+          <Button onClick={() => handleSubmit(formData),} variant="contained">
             {editingDocument ? 'Aktualisieren' : 'Erstellen'}
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Loading Overlay */}
-      {isLoading && (
-        <Box sx={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          bottom: 0, 
-          bgcolor: 'rgba(0,0,0,0.3)', 
+      {/* Loading Overlay */,}
+      {isLoading && (<Box sx={{ 
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0, 0, 0, 0.3)', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',

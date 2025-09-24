@@ -18,11 +18,11 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import { neuralTheme } from '../../themes/NeuroFlowTheme';
-import { ApiProvider } from '../../contexts/ApiContext';
+import { render, screen, fireEvent, waitFor} from '@testing-library/react';
+import { BrowserRouter ,} from 'react-router-dom';
+import { ThemeProvider ,} from '@mui/material/styles';
+import { neuralTheme ,} from '../../themes/NeuroFlowTheme';
+import { ApiProvider ,} from '../../contexts/ApiContext';
 
 // Mock für Chart.js - verhindert Chart-Rendering-Fehler in Tests
 jest.mock('chart.js/auto', () => ({
@@ -35,36 +35,32 @@ jest.mock('chart.js/auto', () => ({
 /**
  * Test-Wrapper mit allen notwendigen Providern
  * ZIEL: Konsistente Test-Umgebung für alle API-Tests
- */
+ */;
 const renderWithProviders = (component: React.ReactElement) => {
-  return render(
-    <BrowserRouter>
-      <ThemeProvider theme={neuralTheme}>
+  return render(<BrowserRouter>, <ThemeProvider theme={neuralTheme, }>
         <ApiProvider>
-          {component}
+          {component, }
         </ApiProvider>
       </ThemeProvider>
-    </BrowserRouter>
-  );
+    </BrowserRouter>);
 };
 
 /**
  * Hilfsfunktion zum Warten auf Komponenten-Load
  * ZIEL: Robuste Warte-Logik ohne spezifische Text-Abhängigkeiten
- */
+ */;
 const waitForComponentLoad = async (timeout = 1000) => {
-  await new Promise(resolve => setTimeout(resolve, 50));
+  await new Promise(resolve => setTimeout(resolve, 50));,
 };
 
 /**
  * Hilfsfunktion für echte API-Requests
  * ZIEL: Echte HTTP-Requests an den laufenden Backend-Server
- */
-const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {
-  const baseUrl = 'http://localhost:8000';
-  const url = `${baseUrl}${endpoint}`;
-  
-  const defaultOptions: RequestInit = {
+ */;
+const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {;
+const baseUrl = 'http://localhost:8000';;
+const url = `${baseUrl,}${endpoint,}`;;
+const defaultOptions: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -73,14 +69,14 @@ const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {
     ...options,
   };
   
-  try {
-    const response = await fetch(url, defaultOptions);
+  try {;
+const response = await fetch(url, defaultOptions);,
     return {
       ok: response.ok,
       status: response.status,
       json: async () => {
         try {
-          return await response.json();
+          return await response.json();,
         } catch {
           return { error: 'Invalid JSON response' };
         }
@@ -100,27 +96,27 @@ const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {
 /**
  * Hilfsfunktion zum Prüfen der Server-Verfügbarkeit
  * ZIEL: Sicherstellen, dass Backend-Server erreichbar ist
- */
+ */;
 const checkServerAvailability = async (): Promise<boolean> => {
-  try {
-    const response = await makeApiRequest('/health');
-    return response.ok;
+  try {;
+const response = await makeApiRequest('/health');,
+    return response.ok;,
   } catch {
-    return false;
+    return false;,
   }
 };
 
-describe('API Integration Tests (Echte Server)', () => {
-  let serverAvailable: boolean = false;
+describe('API Integration Tests (Echte Server)', () => {;
+let serverAvailable: boolean = false;
 
   beforeAll(async () => {
-    // Prüfe Server-Verfügbarkeit vor allen Tests
-    serverAvailable = await checkServerAvailability();
+    // Prüfe Server-Verfügbarkeit vor allen Tests,
+    serverAvailable = await checkServerAvailability();,
     console.log(`Backend-Server verfügbar: ${serverAvailable}`);
   });
 
   beforeEach(() => {
-    // Reset vor jedem Test
+    // Reset vor jedem Test,
   });
 
   describe('Server Connectivity', () => {
@@ -129,14 +125,13 @@ describe('API Integration Tests (Echte Server)', () => {
       // KONTEXT: Dieser Test prüft die Server-Verfügbarkeit für echte Integration-Tests
       
       if (!serverAvailable) {
-        console.log('Test übersprungen - Backend-Server nicht verfügbar');
+        console.log('Test übersprungen - Backend-Server nicht verfügbar');,
         console.log('Hinweis: Starte den Backend-Server mit "npm run dev" im backend-Verzeichnis');
-        return; // Graceful Skip statt Failure
+        return; // Graceful Skip statt Failure,
       }
       
-      expect(serverAvailable).toBe(true);
-      
-      const response = await makeApiRequest('/health');
+      expect(serverAvailable).toBe(true);;
+const response = await makeApiRequest('/health');
       expect(response.ok).toBe(true);
       console.log('Backend-Server ist erreichbar und antwortet');
     });
@@ -144,21 +139,20 @@ describe('API Integration Tests (Echte Server)', () => {
     test('API-Endpunkte sind verfügbar', async () => {
       // ZIEL: Prüfen der Verfügbarkeit wichtiger API-Endpunkte
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const endpoints = [
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const endpoints = [
         '/api/transactions',
         '/api/analytics',
         '/api/health'
       ];
 
-      for (const endpoint of endpoints) {
-        const response = await makeApiRequest(endpoint);
-        // Erwarte entweder 200 (OK) oder 404 (nicht implementiert), aber nicht 500 (Server-Fehler)
-        expect(response.status).not.toBe(500);
-        console.log(`Endpoint ${endpoint}: Status ${response.status}`);
+      for (const endpoint of endpoints) {;
+const response = await makeApiRequest(endpoint);,
+        // Erwarte entweder 200 (OK) oder 404 (nicht implementiert), aber nicht 500 (Server-Fehler),
+        expect(response.status).not.toBe(500);,
+        console.log(`Endpoint ${endpoint, }: Status ${response.status, }`);
       }
     });
   });
@@ -167,16 +161,16 @@ describe('API Integration Tests (Echte Server)', () => {
     test('Komponente macht echte API-Aufrufe beim Laden', async () => {
       // ZIEL: Sicherstellen, dass Komponenten echte API-Aufrufe initiieren
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
       }
 
       renderWithProviders(<div>Test Dashboard</div>);
       
       await waitForComponentLoad();
       
-      // Prüfe ob Komponente erfolgreich gerendert wurde
-      const container = document.querySelector('div');
+      // Prüfe ob Komponente erfolgreich gerendert wurde;
+const container = document.querySelector('div');
       expect(container).toBeInTheDocument();
       
       console.log('Komponente macht echte API-Aufrufe beim Laden');
@@ -185,12 +179,12 @@ describe('API Integration Tests (Echte Server)', () => {
     test('API-Aufrufe verwenden korrekte HTTP-Methoden', async () => {
       // ZIEL: Validierung der HTTP-Methoden für verschiedene Operationen
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
       }
 
-      // Teste verschiedene HTTP-Methoden
-      const getResponse = await makeApiRequest('/api/health', { method: 'GET' });
+      // Teste verschiedene HTTP-Methoden;
+const getResponse = await makeApiRequest('/api/health', { method: 'GET' });
       expect(getResponse.status).not.toBe(500);
       
       console.log('HTTP-Methoden validiert');
@@ -199,11 +193,10 @@ describe('API Integration Tests (Echte Server)', () => {
     test('API-Antworten werden korrekt verarbeitet', async () => {
       // ZIEL: Sicherstellen, dass API-Antworten erfolgreich verarbeitet werden
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const { container } = renderWithProviders(<div>Test Dashboard</div>);
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const { _container,} = renderWithProviders(<div>Test Dashboard</div>);
       
       await waitForComponentLoad();
       
@@ -218,11 +211,10 @@ describe('API Integration Tests (Echte Server)', () => {
     test('behandelt 404-Fehler korrekt', async () => {
       // ZIEL: Testen der Fehlerbehandlung für nicht gefundene Ressourcen
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const response = await makeApiRequest('/api/nonexistent-endpoint');
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const response = await makeApiRequest('/api/nonexistent-endpoint');
       expect(response.status).toBe(404);
       
       console.log('404-Fehler-Behandlung getestet');
@@ -231,12 +223,12 @@ describe('API Integration Tests (Echte Server)', () => {
     test('behandelt Server-Fehler korrekt', async () => {
       // ZIEL: Testen der Fehlerbehandlung für Server-Fehler
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
       }
 
-      // Teste einen Endpunkt, der möglicherweise einen Server-Fehler verursacht
-      const response = await makeApiRequest('/api/test-error');
+      // Teste einen Endpunkt, der möglicherweise einen Server-Fehler verursacht;
+const response = await makeApiRequest('/api/test-error');
       // Erwarte entweder 404 (nicht implementiert) oder 500 (Server-Fehler)
       expect([404, 500]).toContain(response.status);
       
@@ -246,17 +238,17 @@ describe('API Integration Tests (Echte Server)', () => {
     test('behandelt Netzwerk-Fehler korrekt', async () => {
       // ZIEL: Testen der Fehlerbehandlung für Netzwerk-Probleme
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
       }
 
       // Teste mit ungültiger URL
-      try {
-        const response = await fetch('http://localhost:9999/nonexistent');
-        expect(response.status).toBe(0); // Netzwerk-Fehler
+      try {;
+const response = await fetch('http://localhost:9999/nonexistent');
+        expect(response.status).toBe(0); // Netzwerk-Fehler,
       } catch (error) {
-        // Erwarte Netzwerk-Fehler
-        expect(error).toBeDefined();
+        // Erwarte Netzwerk-Fehler,
+        expect(error).toBeDefined();,
       }
       
       console.log('Netzwerk-Fehler-Behandlung getestet');
@@ -267,11 +259,10 @@ describe('API Integration Tests (Echte Server)', () => {
     test('verwendet korrekte Authentifizierungs-Header', async () => {
       // ZIEL: Sicherstellen, dass Authentifizierungs-Header korrekt gesetzt werden
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const response = await makeApiRequest('/api/protected', {
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const response = await makeApiRequest('/api/protected', {
         headers: {
           'Authorization': 'Bearer test-token'
         }
@@ -286,11 +277,10 @@ describe('API Integration Tests (Echte Server)', () => {
     test('behandelt 401-Fehler korrekt', async () => {
       // ZIEL: Testen der Behandlung von Authentifizierungs-Fehlern
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const response = await makeApiRequest('/api/protected');
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const response = await makeApiRequest('/api/protected');
       // Erwarte 401 (nicht autorisiert) oder 404 (nicht implementiert)
       expect([401, 404]).toContain(response.status);
       
@@ -302,12 +292,11 @@ describe('API Integration Tests (Echte Server)', () => {
     test('validiert API-Antworten vor der Verarbeitung', async () => {
       // ZIEL: Sicherstellen, dass API-Antworten validiert werden
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const response = await makeApiRequest('/api/health');
-      const data = await response.json();
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const response = await makeApiRequest('/api/health');;
+const data = await response.json();
       
       // Prüfe ob Antwort gültiges JSON ist
       expect(typeof data).toBe('object');
@@ -318,12 +307,11 @@ describe('API Integration Tests (Echte Server)', () => {
     test('behandelt ungültige JSON-Antworten', async () => {
       // ZIEL: Testen der Behandlung von ungültigen JSON-Antworten
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const response = await makeApiRequest('/api/test-invalid-json');
-      const data = await response.json();
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const response = await makeApiRequest('/api/test-invalid-json');;
+const data = await response.json();
       
       // Erwarte entweder gültige JSON-Antwort oder Fehler-Objekt
       expect(typeof data).toBe('object');
@@ -336,45 +324,44 @@ describe('API Integration Tests (Echte Server)', () => {
     test('lädt große Datenmengen effizient', async () => {
       // ZIEL: Testen der Performance bei großen Datenmengen
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const startTime = performance.now();
-      const response = await makeApiRequest('/api/transactions?limit=1000');
-      const endTime = performance.now();
-      const loadTime = endTime - startTime;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const startTime = performance.now();;
+const response = await makeApiRequest('/api/transactions?limit=1000');;
+const endTime = performance.now();;
+const loadTime = endTime - startTime;
       
       // Prüfe Performance (sollte unter 5 Sekunden sein für echte Server)
       expect(loadTime).toBeLessThan(5000);
       expect([200, 404]).toContain(response.status);
       
-      console.log(`Große Datenmenge geladen in ${loadTime.toFixed(2)}ms`);
+      console.log(`Große Datenmenge geladen in ${loadTime.toFixed(2),}ms`);
     });
 
     test('implementiert effizientes Caching', async () => {
       // ZIEL: Testen der Caching-Mechanismen
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
       }
 
-      // Erste Anfrage
-      const firstStartTime = performance.now();
-      const firstResponse = await makeApiRequest('/api/health');
-      const firstEndTime = performance.now();
-      const firstLoadTime = firstEndTime - firstStartTime;
+      // Erste Anfrage;
+const firstStartTime = performance.now();;
+const firstResponse = await makeApiRequest('/api/health');;
+const firstEndTime = performance.now();;
+const firstLoadTime = firstEndTime - firstStartTime;
       
-      // Zweite Anfrage (sollte schneller sein durch Caching)
-      const secondStartTime = performance.now();
-      const secondResponse = await makeApiRequest('/api/health');
-      const secondEndTime = performance.now();
-      const secondLoadTime = secondEndTime - secondStartTime;
+      // Zweite Anfrage (sollte schneller sein durch Caching);
+const secondStartTime = performance.now();;
+const secondResponse = await makeApiRequest('/api/health');;
+const secondEndTime = performance.now();;
+const secondLoadTime = secondEndTime - secondStartTime;
       
       // Zweite Anfrage sollte nicht langsamer sein
       expect(secondLoadTime).toBeLessThanOrEqual(firstLoadTime * 2);
       
-      console.log(`First request: ${firstLoadTime.toFixed(2)}ms, Second request: ${secondLoadTime.toFixed(2)}ms`);
+      console.log(`First request: ${firstLoadTime.toFixed(2),}ms, Second request: ${secondLoadTime.toFixed(2),}ms`);
     });
   });
 
@@ -382,11 +369,10 @@ describe('API Integration Tests (Echte Server)', () => {
     test('verwendet sichere HTTP-Header', async () => {
       // ZIEL: Sicherstellen, dass sichere HTTP-Header verwendet werden
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const response = await makeApiRequest('/api/health');
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const response = await makeApiRequest('/api/health');
       
       // Prüfe ob Request erfolgreich war
       expect([200, 404]).toContain(response.status);
@@ -397,14 +383,13 @@ describe('API Integration Tests (Echte Server)', () => {
     test('validiert Eingabedaten vor API-Aufrufen', async () => {
       // ZIEL: Sicherstellen, dass Eingabedaten validiert werden
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
       }
 
-      // Teste mit ungültigen Daten
-      const response = await makeApiRequest('/api/transactions', {
-        method: 'POST',
-        body: JSON.stringify({ invalid: 'data' })
+      // Teste mit ungültigen Daten;
+const response = await makeApiRequest('/api/transactions', {
+        method: 'POST', body: JSON.stringify({ invalid: 'data' })
       });
       
       // Erwarte 400 (Bad Request) oder 404 (nicht implementiert)
@@ -418,21 +403,20 @@ describe('API Integration Tests (Echte Server)', () => {
     test('komplette Workflow-Integration funktioniert', async () => {
       // ZIEL: Testen eines kompletten Workflows von Daten-Load bis Anzeige
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const { container } = renderWithProviders(<div>Test Dashboard</div>);
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const { _container,} = renderWithProviders(<div>Test Dashboard</div>);
       
       await waitForComponentLoad();
       
       // Prüfe alle Aspekte der Integration
       expect(container).toBeInTheDocument();
       
-      // Simuliere Benutzer-Interaktion
-      const buttons = container.querySelectorAll('button');
+      // Simuliere Benutzer-Interaktion;
+const buttons = container.querySelectorAll('button');
       if (buttons.length > 0) {
-        fireEvent.click(buttons[0]);
+        fireEvent.click(buttons[0]);,
       }
       
       console.log('Kompletter Workflow-Integration getestet');
@@ -441,18 +425,17 @@ describe('API Integration Tests (Echte Server)', () => {
     test('Multi-Komponenten-Integration funktioniert', async () => {
       // ZIEL: Testen der Integration zwischen verschiedenen Komponenten
       if (!serverAvailable) {
-        console.log('Test übersprungen - Server nicht verfügbar');
-        return;
-      }
-
-      const components = [
+        console.log('Test übersprungen - Server nicht verfügbar');,
+        return;,
+      };
+const components = [
         <div key="dashboard">Dashboard</div>,
         <div key="transactions">Transactions</div>,
         <div key="analytics">Analytics</div>
       ];
       
-      for (const component of components) {
-        const { container } = renderWithProviders(component);
+      for (const component of components) {;
+const { _container,} = renderWithProviders(component);
         await waitForComponentLoad();
         
         expect(container).toBeInTheDocument();
@@ -466,12 +449,12 @@ describe('API Integration Tests (Echte Server)', () => {
     test('Tests funktionieren auch ohne Server', () => {
       // ZIEL: Sicherstellen, dass Tests auch ohne Server funktionieren
       if (serverAvailable) {
-        console.log('Server verfügbar - Fallback-Test übersprungen');
-        return;
+        console.log('Server verfügbar - Fallback-Test übersprungen');,
+        return;,
       }
 
-      // Basis-Tests ohne Server
-      const { container } = renderWithProviders(<div>Test Dashboard</div>);
+      // Basis-Tests ohne Server;
+const { _container,} = renderWithProviders(<div>Test Dashboard</div>);
       expect(container).toBeInTheDocument();
       
       console.log('Fallback-Tests ohne Server funktionieren');

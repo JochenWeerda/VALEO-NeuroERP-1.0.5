@@ -1,8 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError ,} from 'axios';
 
 // API Configuration
-// Hinweis: Das Backend läuft auf Port 8000, aber die API-Routen sind noch nicht vollständig implementiert
-const API_BASE_URL = 'http://localhost:8000';
+// Hinweis: Das Backend läuft auf Port 8000, aber die API-Routen sind noch nicht vollständig implementiert;
+const API_BASE_URL = 'http://localhost:8000';;
 const API_TIMEOUT = 30000; // 30 seconds
 
 // Response interface
@@ -28,40 +28,36 @@ export interface ApiError {
   method: string;
 }
 
-// Axios instance with interceptors
+// Axios instance with interceptors;
 const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: API_TIMEOUT,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+  baseURL: API_BASE_URL, timeout: API_TIMEOUT, headers: {
+    'Content-Type': 'application/json', }, });
 
 // Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    // Add auth token if available
-    const token = localStorage.getItem('authToken');
+    // Add auth token if available,;
+const token = localStorage.getItem('authToken');,
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token,}`;
     }
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error);,
   }
 );
 
 // Response interceptor
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response;
+    return response;,
   },
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized access
-      localStorage.removeItem('authToken');
-      window.location.href = '/login';
+      // Handle unauthorized access,
+      localStorage.removeItem('authToken');,
+      window.location.href = '/login';,
     }
     return Promise.reject(error);
   }
@@ -69,15 +65,15 @@ apiClient.interceptors.response.use(
 
 // Generic API methods
 export const api = {
-  get: async <T>(url: string, params?: any): Promise<ApiResponse<T>> => {
-    try {
-      const response = await apiClient.get<T>(url, { params });
+  get: async <T>(url: string, params?: unknown): Promise<ApiResponse<T>> => {
+    try {;
+const response = await apiClient.get<T>(url, { params, });
       return {
         success: true,
         data: response.data,
         count: Array.isArray(response.data) ? response.data.length : undefined
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
         error: {
@@ -91,14 +87,14 @@ export const api = {
     }
   },
 
-  post: async <T>(url: string, data?: any): Promise<ApiResponse<T>> => {
-    try {
-      const response = await apiClient.post<T>(url, data);
+  post: async <T>(url: string, data?: unknown): Promise<ApiResponse<T>> => {
+    try {;
+const response = await apiClient.post<T>(url, data);,
       return {
         success: true,
         data: response.data
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
         error: {
@@ -112,14 +108,14 @@ export const api = {
     }
   },
 
-  put: async <T>(url: string, data?: any): Promise<ApiResponse<T>> => {
-    try {
-      const response = await apiClient.put<T>(url, data);
+  put: async <T>(url: string, data?: unknown): Promise<ApiResponse<T>> => {
+    try {;
+const response = await apiClient.put<T>(url, data);,
       return {
         success: true,
         data: response.data
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
         error: {
@@ -134,13 +130,13 @@ export const api = {
   },
 
   delete: async <T>(url: string): Promise<ApiResponse<T>> => {
-    try {
-      const response = await apiClient.delete<T>(url);
+    try {;
+const response = await apiClient.delete<T>(url);,
       return {
         success: true,
         data: response.data
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
         error: {
@@ -157,43 +153,43 @@ export const api = {
 
 // Health check - funktioniert definitiv
 export const healthCheck = async (): Promise<boolean> => {
-  try {
-    const res = await axios.get(`${API_BASE_URL}/health`, { timeout: 5000 });
-    const status = (res.data?.status || '').toString().toLowerCase();
+  try {;
+const res = await axios.get(`${API_BASE_URL, }/health`, { timeout: 5000 });;
+const status = (res.data?.status || '').toString().toLowerCase();
     return status === 'healthy' || status === 'ok';
   } catch (error) {
     console.warn('Health check fehlgeschlagen:', error);
-    return false;
+    return false;,
   }
 };
 
 // Database status check
 export const databaseStatus = async (): Promise<boolean> => {
   try {
-    // Versuche detaillierten Status (liefert DB-Status, wenn verfügbar)
-    const response = await apiClient.get('/status');
-    const dbStatus = response.data?.database?.status || response.data?.status;
-    return (dbStatus || '').toString().toLowerCase() === 'connected' || (dbStatus || '').toString().toLowerCase() === 'healthy';
+    // Versuche detaillierten Status (liefert DB-Status, wenn verfügbar),;
+const response = await apiClient.get('/status');,;
+const dbStatus = response.data?.database?.status || response.data?.status;,
+    return (dbStatus || '').toString().toLowerCase() === 'connected' || (dbStatus || '').toString().toLowerCase() === 'healthy';,
   } catch (error) {
     try {
-      // Fallback: /metrics am Root
-      const res = await axios.get('http://localhost:8004/metrics', { timeout: 5000 });
-      const status = (res.data?.status || '').toString().toLowerCase();
+      // Fallback: /metrics am Root;
+const res = await axios.get('http://localhost:8004/metrics', { timeout: 5000 });;
+const status = (res.data?.status || '').toString().toLowerCase();
       return status === 'healthy';
     } catch (err) {
       console.error('Database status check failed:', err);
-      return false;
+      return false;,
     }
   }
 };
 
 // Mock data service für Entwicklung
-export const getMockData = async (endpoint: string): Promise<any> => {
-  // Simuliere API-Verzögerung
-  await new Promise(resolve => setTimeout(resolve, 100));
+export const getMockData = async (endpoint: string): Promise<unknown> => {
+  // Simuliere API-Verzögerung,
+  await new Promise(resolve => setTimeout(resolve, 100));,
   
-  // Fallback-Daten für verschiedene Endpunkte
-  const mockData: Record<string, any> = {
+  // Fallback-Daten für verschiedene Endpunkte,;
+const mockData: Record<string, unknown> = {
     'warenwirtschaft/artikel': [
       { id: 1, name: 'Weizen Premium', kategorie: 'Getreide', lagerbestand: 1500, einheit: 'kg' },
       { id: 2, name: 'Mais Qualität A', kategorie: 'Getreide', lagerbestand: 1000, einheit: 'kg' },

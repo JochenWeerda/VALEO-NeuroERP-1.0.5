@@ -32,7 +32,7 @@ export interface InquiryPosition {
 }
 
 export interface InquiryProps {
-  onInquiryCreate: (inquiry: InquiryData) => void;
-  onInquiryUpdate: (id: string, inquiry: Partial<InquiryData>) => void;
-  onInquiryDelete: (id: string) => void;
+  onInquiryCreate: (inquiry: _InquiryData) => void;
+  onInquiryUpdate: (id: _string, inquiry: Partial<InquiryData>) => void;
+  onInquiryDelete: (id: _string) => void;
 } 

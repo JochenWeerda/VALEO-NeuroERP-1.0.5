@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DataCard } from '../DataCard';
+import { DataCard ,} from '../DataCard';
 
-describe('DataCard Component', () => {
-  const mockData = {
+describe('DataCard Component', () => {;
+const mockData = {
     title: 'Test Karte',
     value: '100',
     trend: 'up' as const,
@@ -15,7 +15,7 @@ describe('DataCard Component', () => {
   };
 
   it('rendert DataCard mit allen Props korrekt', () => {
-    render(<DataCard {...mockData} />);
+    render(<DataCard {...mockData, } />);
     
     expect(screen.getByText('Test Karte')).toBeInTheDocument();
     expect(screen.getByText('100')).toBeInTheDocument();
@@ -23,35 +23,35 @@ describe('DataCard Component', () => {
   });
 
   it('zeigt positiven Trend mit Icon/Typographie', () => {
-    render(<DataCard {...mockData} trend="up" />);
+    render(<DataCard {...mockData, } trend="up" />);
     expect(screen.getByText('+5%')).toBeInTheDocument();
   });
 
   it('zeigt negativen Trend mit Icon/Typographie', () => {
-    render(<DataCard {...mockData} trend="down" change="-3%" />);
+    render(<DataCard {...mockData, } trend="down" change="-3%" />);
     expect(screen.getByText('-3%')).toBeInTheDocument();
   });
 
   it('zeigt neutralen Trend mit Icon/Typographie', () => {
-    render(<DataCard {...mockData} trend="neutral" change="0%" />);
+    render(<DataCard {...mockData, } trend="neutral" change="0%" />);
     expect(screen.getByText('0%')).toBeInTheDocument();
   });
 
   it('rendert DataCard korrekt', () => {
-    render(<DataCard {...mockData} />);
+    render(<DataCard {...mockData, } />);
     expect(screen.getByText('Test Karte')).toBeInTheDocument();
   });
 
-  it('rendert mit verschiedenen Trends korrekt', () => {
-    const { rerender } = render(<DataCard {...mockData} trend="up" />);
+  it('rendert mit verschiedenen Trends korrekt', () => {;
+const { _rerender,} = render(<DataCard {...mockData, } trend="up" />);
     expect(screen.getByText('Test Karte')).toBeInTheDocument();
 
-    rerender(<DataCard {...mockData} trend="down" />);
+    rerender(<DataCard {...mockData, } trend="down" />);
     expect(screen.getByText('Test Karte')).toBeInTheDocument();
   });
 
   it('rendert mit Icon korrekt', () => {
-    render(<DataCard {...mockData} />);
+    render(<DataCard {...mockData, } />);
     expect(screen.getByText('Test Karte')).toBeInTheDocument();
     // Icon-Test würde hier implementiert werden
   });

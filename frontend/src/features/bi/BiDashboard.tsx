@@ -1,29 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import { 
-  Box, 
-  Typography, 
-  Card, 
-  Alert, 
-  Chip,
-  CircularProgress,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@mui/material';
+  Box, Typography, Card, Alert, Chip, CircularProgress, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import { 
-  Analytics as AnalyticsIcon,
-  TrendingUp as TrendingUpIcon,
-  Assessment as AssessmentIcon,
-  BarChart as BarChartIcon,
-  PieChart as PieChartIcon,
-  Timeline as TimelineIcon
-} from '@mui/icons-material';
-
+  Analytics as AnalyticsIcon, TrendingUp as TrendingUpIcon, Assessment as AssessmentIcon, BarChart as BarChartIcon, PieChart as PieChartIcon, Timeline as TimelineIcon} from '@mui/icons-material';;
 interface BiMetric {
   id: string;
   name: string;
@@ -32,32 +11,29 @@ interface BiMetric {
   trend: 'up' | 'down' | 'stable';
   unit: string;
   category: string;
-}
-
+};
 interface BiReport {
   id: string;
-  name: string;
-  type: 'sales' | 'inventory' | 'financial' | 'operational';
+  name: string;;
+type: 'sales' | 'inventory' | 'financial' | 'operational';
   lastUpdated: Date;
   status: 'ready' | 'processing' | 'error';
   description: string;
-}
-
-const BiDashboard: React.FC = () => {
-  const [metrics, setMetrics] = useState<BiMetric[]>([]);
-  const [reports, setReports] = useState<BiReport[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+};
+const BiDashboard: React.FC = () => {;
+const [metrics, setMetrics] = useState<BiMetric[]>([]);,;
+const [reports, setReports] = useState<BiReport[]>([]);,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,
 
   useEffect(() => {
-    loadBiData();
-  }, []);
-
-  const loadBiData = async () => {
-    setLoading(true);
+    loadBiData();,
+  }, []);;
+const loadBiData = async () => {
+    setLoading(true);,
     try {
-      // Simuliere API-Aufruf für BI-Daten
-      const mockMetrics: BiMetric[] = [
+      // Simuliere API-Aufruf für BI-Daten,;
+const mockMetrics: BiMetric[] = [
         {
           id: '1',
           name: 'Umsatz (Monat)',
@@ -94,29 +70,28 @@ const BiDashboard: React.FC = () => {
           unit: '/5',
           category: 'operational'
         }
-      ];
-
-      const mockReports: BiReport[] = [
+      ];;
+const mockReports: BiReport[] = [
         {
           id: '1',
-          name: 'Umsatzanalyse Q4',
-          type: 'sales',
+          name: 'Umsatzanalyse Q4',;
+type: 'sales',
           lastUpdated: new Date(),
           status: 'ready',
           description: 'Detaillierte Umsatzanalyse für Q4 2024'
         },
         {
           id: '2',
-          name: 'Bestandsoptimierung',
-          type: 'inventory',
+          name: 'Bestandsoptimierung',;
+type: 'inventory',
           lastUpdated: new Date(Date.now() - 86400000),
           status: 'ready',
           description: 'Bestandsanalyse und Optimierungsvorschläge'
         },
         {
           id: '3',
-          name: 'Finanzbericht',
-          type: 'financial',
+          name: 'Finanzbericht',;
+type: 'financial',
           lastUpdated: new Date(),
           status: 'processing',
           description: 'Monatlicher Finanzbericht'
@@ -126,29 +101,26 @@ const BiDashboard: React.FC = () => {
       setMetrics(mockMetrics);
       setReports(mockReports);
     } catch (err) {
-      setError('Fehler beim Laden der BI-Daten');
+      setError('Fehler beim Laden der BI-Daten');,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const getTrendIcon = (trend: string) => {
+  };;
+const getTrendIcon = (trend: string) => {
     switch (trend) {
       case 'up': return <TrendingUpIcon className="text-green-600" />;
       case 'down': return <TrendingUpIcon className="text-red-600 transform rotate-180" />;
       default: return <TimelineIcon className="text-gray-600" />;
     }
-  };
-
-  const getTrendColor = (trend: string) => {
+  };;
+const getTrendColor = (trend: string) => {
     switch (trend) {
       case 'up': return 'success';
       case 'down': return 'error';
       default: return 'default';
     }
-  };
-
-  const getReportStatusColor = (status: string) => {
+  };;
+const getReportStatusColor = (status: string) => {
     switch (status) {
       case 'ready': return 'success';
       case 'processing': return 'warning';
@@ -158,11 +130,9 @@ const BiDashboard: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+    return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
   }
 
   return (
@@ -175,35 +145,32 @@ const BiDashboard: React.FC = () => {
         Intelligente Analysen und Berichte für datengetriebene Entscheidungen
       </Typography>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+      {error && (, <Alert severity="error" sx={{ mb: 3 }}>
+          {error, }
+        </Alert>)}
 
-      {/* Key Metrics */}
+      {/* Key Metrics */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom className="flex items-center gap-2">
           <AssessmentIcon className="text-green-600" />
           Key Performance Indicators
         </Typography>
         <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {metrics.map((metric) => (
-            <Card key={metric.id} variant="outlined" sx={{ p: 2 }}>
+          {metrics.map((metric) => (<Card key={metric.id, } variant="outlined" sx={{ p: 2 }}>
               <Box className="flex items-center justify-between mb-2">
                 <Typography variant="subtitle2" className="text-gray-600">
-                  {metric.name}
+                  {metric.name, }
                 </Typography>
-                {getTrendIcon(metric.trend)}
+                {getTrendIcon(metric.trend),}
               </Box>
               <Typography variant="h4" className="font-bold">
-                {metric.value.toLocaleString('de-DE')} {metric.unit}
+                {metric.value.toLocaleString('de-DE'),} {metric.unit,}
               </Typography>
               <Box className="flex items-center gap-1 mt-1">
                 <Chip
-                  label={`${metric.change > 0 ? '+' : ''}${metric.change}%`}
+                  label={`${metric.change > 0 ? '+' : ''}${metric.change,}%`}
                   size="small"
-                  color={getTrendColor(metric.trend) as any}
+                  color={getTrendColor(metric.trend) as any,}
                 />
                 <Typography variant="caption" className="text-gray-500">
                   vs. Vormonat
@@ -214,13 +181,13 @@ const BiDashboard: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Reports Section */}
+      {/* Reports Section */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom className="flex items-center gap-2">
           <BarChartIcon className="text-purple-600" />
           Verfügbare Berichte
         </Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow className="bg-gray-50">
@@ -232,49 +199,48 @@ const BiDashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {reports.map((report) => (
-                <TableRow key={report.id} className="hover:bg-gray-50">
+              {reports.map((report) => (<TableRow key={report.id, } className="hover:bg-gray-50">
                   <TableCell>
                     <div>
                       <Typography variant="body1" className="font-medium">
-                        {report.name}
+                        {report.name, }
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        {report.description}
+                        {report.description, }
                       </Typography>
                     </div>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={report.type}
-                      size="small"
-                      variant="outlined"
+                      label={report.type, }
+                      size="small";
+variant="outlined"
                     />
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={report.status}
+                      label={report.status, }
                       size="small"
-                      color={getReportStatusColor(report.status) as any}
+                      color={getReportStatusColor(report.status) as any,}
                     />
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {report.lastUpdated.toLocaleString('de-DE')}
+                      {report.lastUpdated.toLocaleString('de-DE'),}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Box className="flex gap-1">
                       <Button
-                        size="small"
-                        variant="outlined"
-                        disabled={report.status !== 'ready'}
+                        size="small";
+variant="outlined"
+                        disabled={report.status !== 'ready',}
                       >
                         Anzeigen
                       </Button>
                       <Button
-                        size="small"
-                        variant="outlined"
+                        size="small";
+variant="outlined"
                       >
                         Exportieren
                       </Button>
@@ -287,7 +253,7 @@ const BiDashboard: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Chart Placeholders */}
+      {/* Chart Placeholders */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom className="flex items-center gap-2">
           <PieChartIcon className="text-orange-600" />
@@ -307,12 +273,12 @@ const BiDashboard: React.FC = () => {
         </Box>
       </Card>
 
-      {/* Actions */}
+      {/* Actions */,}
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <Button
-          variant="contained"
-          onClick={loadBiData}
-          disabled={loading}
+        <Button;
+variant="contained"
+          onClick={loadBiData,}
+          disabled={loading,}
         >
           Daten aktualisieren
         </Button>

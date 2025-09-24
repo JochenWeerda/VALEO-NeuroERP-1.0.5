@@ -1,108 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Tabs,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-  LinearProgress,
-  Avatar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Switch,
-  FormControlLabel,
-  IconButton,
-  Box,
-  Badge,
-  Tooltip,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Divider,
-  Alert,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails
-} from '@mui/material';
+  Grid, Card, CardContent, Typography, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, LinearProgress, Avatar, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, InputLabel, Select, MenuItem, Switch, FormControlLabel, IconButton, Box, Badge, Tooltip, List, ListItem, ListItemText, ListItemIcon, Divider, Alert, Accordion, AccordionSummary, AccordionDetails} from '@mui/material';
 import {
-  Description as DescriptionIcon,
-  Folder as FolderIcon,
-  AccountTree as WorkflowIcon,
-  Archive as ArchiveIcon,
-  Search as SearchIcon,
-  Upload as UploadIcon,
-  Download as DownloadIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  Add as AddIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
-  Schedule as ScheduleIcon,
-  Security as SecurityIcon,
-  History as HistoryIcon,
-  Tag as TagIcon,
-  Category as CategoryIcon,
-  Settings as SettingsIcon,
-  CloudUpload as CloudUploadIcon,
-  CloudDownload as CloudDownloadIcon,
-  Verified as VerifiedIcon,
-  Pending as PendingIcon,
-  Block as BlockIcon,
-  ExpandMore as ExpandMoreIcon,
-  CleaningServices as CleaningServicesIcon,
-  Gavel as GavelIcon,
-  Storage as StorageIcon,
-  Timeline as TimelineIcon,
-  Notifications as NotificationsIcon,
-  AutoDelete as AutoDeleteIcon,
-  Backup as BackupIcon,
-  RestoreFromTrash as RestoreFromTrashIcon,
-  Assessment as AssessmentIcon
-} from '@mui/icons-material';
-
+  Description as DescriptionIcon, Folder as FolderIcon, AccountTree as WorkflowIcon, Archive as ArchiveIcon, Search as SearchIcon, Upload as UploadIcon, Download as DownloadIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, Add as AddIcon, CheckCircle as CheckCircleIcon, Warning as WarningIcon, Error as ErrorIcon, Schedule as ScheduleIcon, Security as SecurityIcon, History as HistoryIcon, Tag as TagIcon, Category as CategoryIcon, Settings as SettingsIcon, CloudUpload as CloudUploadIcon, CloudDownload as CloudDownloadIcon, Verified as VerifiedIcon, Pending as PendingIcon, Block as BlockIcon, ExpandMore as ExpandMoreIcon, CleaningServices as CleaningServicesIcon, Gavel as GavelIcon, Storage as StorageIcon, Timeline as TimelineIcon, Notifications as NotificationsIcon, AutoDelete as AutoDeleteIcon, Backup as BackupIcon, RestoreFromTrash as RestoreFromTrashIcon, Assessment as AssessmentIcon} from '@mui/icons-material';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`document-tabpanel-${index}`}
-      aria-labelledby={`document-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`document-tabpanel-${index, }`}
+      aria-labelledby={`document-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
+      {value === index && <Box sx={{ p: 3 }}>{children, }</Box>}
+    </div>);
 }
 
-// Mock-Daten für Dokumentenstatistiken
+// Mock-Daten für Dokumentenstatistiken;
 const mockDocumentStats = {
   gesamtDokumente: 1247,
   neueDokumente: 45,
@@ -116,7 +37,7 @@ const mockDocumentStats = {
   abgeschlosseneWorkflows: 156
 };
 
-// Mock-Daten für Dokumente
+// Mock-Daten für Dokumente;
 const mockDocuments = [
   {
     id: '1',
@@ -192,7 +113,7 @@ const mockDocuments = [
   }
 ];
 
-// Mock-Daten für Workflows
+// Mock-Daten für Workflows;
 const mockWorkflows = [
   {
     id: '1',
@@ -220,7 +141,7 @@ const mockWorkflows = [
   }
 ];
 
-// Mock-Daten für Kategorien
+// Mock-Daten für Kategorien;
 const mockCategories = [
   { id: '1', name: 'Verträge', beschreibung: 'Verträge und Vereinbarungen', farbe: '#1976d2', anzahlDokumente: 156 },
   { id: '2', name: 'Rechnungen', beschreibung: 'Rechnungen und Zahlungsbelege', farbe: '#388e3c', anzahlDokumente: 234 },
@@ -230,7 +151,7 @@ const mockCategories = [
   { id: '6', name: 'Finanzen', beschreibung: 'Finanzberichte und Buchhaltung', farbe: '#ff9800', anzahlDokumente: 123 }
 ];
 
-// Mock-Daten für Tags
+// Mock-Daten für Tags;
 const mockTags = [
   { id: '1', name: 'Wichtig', beschreibung: 'Wichtige Dokumente', farbe: '#d32f2f', anzahlDokumente: 45 },
   { id: '2', name: 'Vertraulich', beschreibung: 'Vertrauliche Dokumente', farbe: '#7b1fa2', anzahlDokumente: 23 },
@@ -239,7 +160,7 @@ const mockTags = [
   { id: '5', name: 'Draft', beschreibung: 'Entwürfe', farbe: '#ff9800', anzahlDokumente: 89 }
 ];
 
-// Mock-Daten für Bereinigungsaufträge
+// Mock-Daten für Bereinigungsaufträge;
 const mockBereinigungsauftraege = [
   {
     id: '1',
@@ -271,7 +192,7 @@ const mockBereinigungsauftraege = [
   }
 ];
 
-// Mock-Daten für Bereinigungsprotokoll
+// Mock-Daten für Bereinigungsprotokoll;
 const mockBereinigungsprotokoll = [
   {
     id: '1',
@@ -301,7 +222,7 @@ const mockBereinigungsprotokoll = [
   }
 ];
 
-// Mock-Daten für gesetzliche Fristen
+// Mock-Daten für gesetzliche Fristen;
 const mockGesetzlicheFristen = [
   {
     id: '1',
@@ -350,7 +271,7 @@ const mockGesetzlicheFristen = [
   }
 ];
 
-// Mock-Daten für Speicherplatz-Statistiken
+// Mock-Daten für Speicherplatz-Statistiken;
 const mockSpeicherplatzStats = {
   gesamtSpeicherMB: 2456.8,
   aktiveDokumenteMB: 1890.3,
@@ -362,31 +283,28 @@ const mockSpeicherplatzStats = {
   kritischeFristen: 12
 };
 
-// Mock-Daten für Sicherheit und Compliance
+// Mock-Daten für Sicherheit und Compliance;
 const mockSicherheitsDaten = {
   verschluesselteDokumente: 45,
   digitaleSignaturen: 23,
   aktiveBerechtigungen: 156,
-  sicherheitswarnungen: 3,
-  letzteSicherheitspruefung: '2024-05-28 14:30:00'
-};
-
+  sicherheitswarnungen: 3,;
+letzteSicherheitspruefung: '2024-05-28 14:30:00'
+};;
 const mockComplianceDaten = {
   dsgvoKonformeDokumente: 892,
   personenbezogeneDaten: 234,
   ablaufendeFristen: 12,
-  auditEintraege: 1247,
-  letzterComplianceCheck: '2024-05-28 10:15:00'
-};
-
+  auditEintraege: 1247,;
+letzterComplianceCheck: '2024-05-28 10:15:00'
+};;
 const mockPerformanceDaten = {
   durchschnittlicheSuchzeit: 0.8,
   durchschnittlicheUploadZeit: 2.3,
   durchschnittlicheDownloadZeit: 1.1,
   systemAuslastung: 67,
   aktiveBenutzer: 23
-};
-
+};;
 const mockVolltextSuchergebnisse = [
   {
     id: '1',
@@ -408,7 +326,7 @@ const mockVolltextSuchergebnisse = [
   }
 ];
 
-// Helper-Funktionen
+// Helper-Funktionen;
 const getStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
     case 'freigegeben': return 'success';
@@ -417,8 +335,7 @@ const getStatusColor = (status: string) => {
     case 'geloescht': return 'error';
     default: return 'default';
   }
-};
-
+};;
 const getDocumentTypeIcon = (type: string) => {
   switch (type.toUpperCase()) {
     case 'PDF': return <DescriptionIcon />;
@@ -432,8 +349,7 @@ const getDocumentTypeIcon = (type: string) => {
     case 'PNG': return <DescriptionIcon />;
     default: return <DescriptionIcon />;
   }
-};
-
+};;
 const getWorkflowStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
     case 'aktiv': return 'warning';
@@ -441,36 +357,30 @@ const getWorkflowStatusColor = (status: string) => {
     case 'abgebrochen': return 'error';
     default: return 'default';
   }
-};
-
+};;
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('de-DE');
-};
-
+  return new Date(dateString).toLocaleDateString('de-DE');,
+};;
 const formatFileSize = (bytes: number) => {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-};
-
-const DocumentManagement: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogType, setDialogType] = useState<'document' | 'workflow' | 'category' | 'tag' | 'bereinigung' | 'frist' | 'sicherheit'>('document');
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleOpenDialog = (type: 'document' | 'workflow' | 'category' | 'tag' | 'bereinigung' | 'frist' | 'sicherheit') => {
-    setDialogType(type);
-    setDialogOpen(true);
-  };
-
-  const handleCloseDialog = () => {
-    setDialogOpen(false);
+  if (bytes === 0) return '0 Bytes';,;
+const k = 1024;,;
+const sizes = ['Bytes', 'KB', 'MB', 'GB'];,;
+const i = Math.floor(Math.log(bytes) / Math.log(k));,
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];,
+};;
+const DocumentManagement: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [dialogOpen, setDialogOpen] = useState(false);,;
+const [dialogType, setDialogType] = useState<'document' | 'workflow' | 'category' | 'tag' | 'bereinigung' | 'frist' | 'sicherheit'>('document');,;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (type: 'document' | 'workflow' | 'category' | 'tag' | 'bereinigung' | 'frist' | 'sicherheit') => {
+    setDialogType(type);,
+    setDialogOpen(true);,
+  };;
+const handleCloseDialog = () => {
+    setDialogOpen(false);,
   };
 
   return (
@@ -479,15 +389,15 @@ const DocumentManagement: React.FC = () => {
         Dokumentenverwaltung
       </Typography>
 
-      {/* KPI Dashboard */}
-      <Grid container spacing={3} className="mb-6">
-        <Grid item xs={12} sm={6} md={3}>
+      {/* KPI Dashboard */, }
+      <Grid container spacing={3, } className="mb-6">
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {mockDocumentStats.gesamtDokumente}
+                    {mockDocumentStats.gesamtDokumente, }
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Gesamt Dokumente
@@ -498,13 +408,13 @@ const DocumentManagement: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {mockDocumentStats.freigegebeneDokumente}
+                    {mockDocumentStats.freigegebeneDokumente, }
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Freigegeben
@@ -515,13 +425,13 @@ const DocumentManagement: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {mockDocumentStats.archivierteDokumente}
+                    {mockDocumentStats.archivierteDokumente, }
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Archiviert
@@ -532,13 +442,13 @@ const DocumentManagement: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12, } sm={6, } md={3, }>
           <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
                   <Typography variant="h4" className="font-bold">
-                    {Math.round(mockDocumentStats.gesamtDateigroesseMB)} MB
+                    {Math.round(mockDocumentStats.gesamtDateigroesseMB),} MB
                   </Typography>
                   <Typography variant="body2" className="opacity-90">
                     Speicherplatz
@@ -551,41 +461,38 @@ const DocumentManagement: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Speicherplatz-Warnung */}
-      {mockSpeicherplatzStats.einsparungspotentialMB > 200 && (
-        <Alert severity="warning" className="mb-4">
-          <Typography variant="body2">
-            <strong>Speicherplatz-Optimierung möglich:</strong> {Math.round(mockSpeicherplatzStats.einsparungspotentialMB)} MB können durch Bereinigung abgelaufener Dokumente freigegeben werden.
+      {/* Speicherplatz-Warnung */,}
+      {mockSpeicherplatzStats.einsparungspotentialMB > 200 && (<Alert severity="warning" className="mb-4">, <Typography variant="body2">, <strong>Speicherplatz-Optimierung möglich:</strong> {Math.round(mockSpeicherplatzStats.einsparungspotentialMB)} MB können durch Bereinigung abgelaufener Dokumente freigegeben werden.
           </Typography>
         </Alert>
       )}
 
-      {/* Tabs */}
+      {/* Tabs */,}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabValue} onChange={handleTabChange} aria-label="Dokumenten Tabs">
-          <Tab label="Dokumente" icon={<DescriptionIcon />} iconPosition="start" />
-          <Tab label="Workflows" icon={<WorkflowIcon />} iconPosition="start" />
-          <Tab label="Kategorien" icon={<CategoryIcon />} iconPosition="start" />
-          <Tab label="Tags" icon={<TagIcon />} iconPosition="start" />
-          <Tab label="Archiv" icon={<ArchiveIcon />} iconPosition="start" />
-          <Tab label="Bereinigung" icon={<CleaningServicesIcon />} iconPosition="start" />
-          <Tab label="Gesetzliche Fristen" icon={<GavelIcon />} iconPosition="start" />
-          <Tab label="Sicherheit" icon={<SecurityIcon />} iconPosition="start" />
-          <Tab label="Compliance" icon={<VerifiedIcon />} iconPosition="start" />
-          <Tab label="Suche" icon={<SearchIcon />} iconPosition="start" />
-          <Tab label="Performance" icon={<TimelineIcon />} iconPosition="start" />
-          <Tab label="Statistiken" icon={<AssessmentIcon />} iconPosition="start" />
+        <Tabs value={tabValue,} onChange={handleTabChange,} aria-label="Dokumenten Tabs">
+          <Tab label="Dokumente" icon={<DescriptionIcon />,} iconPosition="start" />
+          <Tab label="Workflows" icon={<WorkflowIcon />,} iconPosition="start" />
+          <Tab label="Kategorien" icon={<CategoryIcon />,} iconPosition="start" />
+          <Tab label="Tags" icon={<TagIcon />,} iconPosition="start" />
+          <Tab label="Archiv" icon={<ArchiveIcon />,} iconPosition="start" />
+          <Tab label="Bereinigung" icon={<CleaningServicesIcon />,} iconPosition="start" />
+          <Tab label="Gesetzliche Fristen" icon={<GavelIcon />,} iconPosition="start" />
+          <Tab label="Sicherheit" icon={<SecurityIcon />,} iconPosition="start" />
+          <Tab label="Compliance" icon={<VerifiedIcon />,} iconPosition="start" />
+          <Tab label="Suche" icon={<SearchIcon />,} iconPosition="start" />
+          <Tab label="Performance" icon={<TimelineIcon />,} iconPosition="start" />
+          <Tab label="Statistiken" icon={<AssessmentIcon />,} iconPosition="start" />
         </Tabs>
       </Box>
 
-      {/* Dokumente Tab */}
-      <TabPanel value={tabValue} index={0}>
+      {/* Dokumente Tab */,}
+      <TabPanel value={tabValue,} index={0,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Dokumente</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('document')}
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('document'),}
           >
             Neues Dokument
           </Button>
@@ -595,14 +502,14 @@ const DocumentManagement: React.FC = () => {
         </Typography>
       </TabPanel>
 
-      {/* Workflows Tab */}
-      <TabPanel value={tabValue} index={1}>
+      {/* Workflows Tab */,}
+      <TabPanel value={tabValue,} index={1,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Workflows</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('workflow')}
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('workflow'),}
           >
             Neuer Workflow
           </Button>
@@ -612,14 +519,14 @@ const DocumentManagement: React.FC = () => {
         </Typography>
       </TabPanel>
 
-      {/* Kategorien Tab */}
-      <TabPanel value={tabValue} index={2}>
+      {/* Kategorien Tab */,}
+      <TabPanel value={tabValue,} index={2,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Kategorien</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('category')}
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('category'),}
           >
             Neue Kategorie
           </Button>
@@ -629,14 +536,14 @@ const DocumentManagement: React.FC = () => {
         </Typography>
       </TabPanel>
 
-      {/* Tags Tab */}
-      <TabPanel value={tabValue} index={3}>
+      {/* Tags Tab */,}
+      <TabPanel value={tabValue,} index={3,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Tags</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('tag')}
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('tag'),}
           >
             Neuer Tag
           </Button>
@@ -646,13 +553,13 @@ const DocumentManagement: React.FC = () => {
         </Typography>
       </TabPanel>
 
-      {/* Archiv Tab */}
-      <TabPanel value={tabValue} index={4}>
+      {/* Archiv Tab */,}
+      <TabPanel value={tabValue,} index={4,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Archiv</Typography>
-          <Button
-            variant="outlined"
-            startIcon={<SearchIcon />}
+          <Button;
+variant="outlined"
+            startIcon={<SearchIcon />,}
           >
             Archiv durchsuchen
           </Button>
@@ -662,21 +569,21 @@ const DocumentManagement: React.FC = () => {
         </Typography>
       </TabPanel>
 
-      {/* Bereinigung Tab */}
-      <TabPanel value={tabValue} index={5}>
+      {/* Bereinigung Tab */,}
+      <TabPanel value={tabValue,} index={5,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Dokumenten-Bereinigung</Typography>
           <div className="flex space-x-2">
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('bereinigung')}
+            <Button;
+variant="outlined"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('bereinigung'),}
             >
               Bereinigungsauftrag
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<AutoDeleteIcon />}
+            <Button;
+variant="contained"
+              startIcon={<AutoDeleteIcon />,}
               color="warning"
             >
               Automatische Bereinigung
@@ -684,46 +591,46 @@ const DocumentManagement: React.FC = () => {
           </div>
         </div>
 
-        {/* Speicherplatz-Übersicht */}
-        <Grid container spacing={3} className="mb-6">
-          <Grid item xs={12} md={6}>
+        {/* Speicherplatz-Übersicht */,}
+        <Grid container spacing={3,} className="mb-6">
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Speicherplatz-Übersicht</Typography>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Aktive Dokumente:</span>
-                    <span className="font-semibold">{Math.round(mockSpeicherplatzStats.aktiveDokumenteMB)} MB</span>
+                    <span className="font-semibold">{Math.round(mockSpeicherplatzStats.aktiveDokumenteMB),} MB</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Archivierte Dokumente:</span>
-                    <span className="font-semibold">{Math.round(mockSpeicherplatzStats.archivierteDokumenteMB)} MB</span>
+                    <span className="font-semibold">{Math.round(mockSpeicherplatzStats.archivierteDokumenteMB),} MB</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Einsparungspotential:</span>
-                    <span className="font-semibold text-orange-600">{Math.round(mockSpeicherplatzStats.einsparungspotentialMB)} MB</span>
+                    <span className="font-semibold text-orange-600">{Math.round(mockSpeicherplatzStats.einsparungspotentialMB),} MB</span>
                   </div>
-                  <LinearProgress 
-                    variant="determinate" 
-                    value={(mockSpeicherplatzStats.aktiveDokumenteMB / mockSpeicherplatzStats.gesamtSpeicherMB) * 100}
-                    className="mt-2"
+                  <LinearProgress ;
+variant="determinate" 
+                    value={(mockSpeicherplatzStats.aktiveDokumenteMB / mockSpeicherplatzStats.gesamtSpeicherMB) * 100,};
+className="mt-2"
                   />
                 </div>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Fristen-Übersicht</Typography>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Ablaufende Fristen:</span>
-                    <Chip label={mockSpeicherplatzStats.ablaufendeFristen} color="warning" size="small" />
+                    <Chip label={mockSpeicherplatzStats.ablaufendeFristen,} color="warning" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Kritische Fristen:</span>
-                    <Chip label={mockSpeicherplatzStats.kritischeFristen} color="error" size="small" />
+                    <Chip label={mockSpeicherplatzStats.kritischeFristen,} color="error" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Nächste Bereinigung:</span>
@@ -735,9 +642,9 @@ const DocumentManagement: React.FC = () => {
           </Grid>
         </Grid>
 
-        {/* Bereinigungsaufträge */}
+        {/* Bereinigungsaufträge */,}
         <Typography variant="h6" className="mb-4">Bereinigungsaufträge</Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -754,40 +661,37 @@ const DocumentManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {mockBereinigungsauftraege.map((auftrag) => (
-                <TableRow key={auftrag.id}>
+              {mockBereinigungsauftraege.map((auftrag) => (<TableRow key={auftrag.id, }>
                   <TableCell>
                     <Typography variant="subtitle2" className="font-semibold">
-                      {auftrag.auftragNr}
+                      {auftrag.auftragNr, }
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={auftrag.auftragTyp}
+                      label={auftrag.auftragTyp, }
                       color={auftrag.auftragTyp === 'ARCHIVIERUNG' ? 'primary' : 'error'}
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{auftrag.regelName}</TableCell>
+                  <TableCell>{auftrag.regelName, }</TableCell>
                   <TableCell>
                     <Chip
-                      label={auftrag.status}
+                      label={auftrag.status, }
                       color={auftrag.status === 'ABGESCHLOSSEN' ? 'success' : 'warning'}
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{formatDate(auftrag.geplantesDatum)}</TableCell>
+                  <TableCell>{formatDate(auftrag.geplantesDatum),}</TableCell>
                   <TableCell>
                     {auftrag.ausgefuehrtAm ? formatDate(auftrag.ausgefuehrtAm.split(' ')[0]) : '-'}
                   </TableCell>
-                  <TableCell>{auftrag.anzahlDokumente}</TableCell>
+                  <TableCell>{auftrag.anzahlDokumente,}</TableCell>
                   <TableCell>
-                    <Chip label={auftrag.erfolgreichVerarbeitet} color="success" size="small" />
+                    <Chip label={auftrag.erfolgreichVerarbeitet,} color="success" size="small" />
                   </TableCell>
                   <TableCell>
-                    {auftrag.fehlgeschlageneVerarbeitung > 0 && (
-                      <Chip label={auftrag.fehlgeschlageneVerarbeitung} color="error" size="small" />
-                    )}
+                    {auftrag.fehlgeschlageneVerarbeitung > 0 && (<Chip label={auftrag.fehlgeschlageneVerarbeitung, } color="error" size="small" />)}
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-1">
@@ -805,10 +709,10 @@ const DocumentManagement: React.FC = () => {
           </Table>
         </TableContainer>
 
-        {/* Bereinigungsprotokoll */}
+        {/* Bereinigungsprotokoll */,}
         <div className="mt-6">
           <Typography variant="h6" className="mb-4">Bereinigungsprotokoll</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper,}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -823,49 +727,42 @@ const DocumentManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockBereinigungsprotokoll.map((eintrag) => (
-                  <TableRow key={eintrag.id}>
-                    <TableCell>{eintrag.auftragNr}</TableCell>
+                {mockBereinigungsprotokoll.map((eintrag) => (<TableRow key={eintrag.id, }>
+                    <TableCell>{eintrag.auftragNr, }</TableCell>
                     <TableCell>
                       <div>
                         <Typography variant="body2" className="font-semibold">
-                          {eintrag.dokumentNr}
+                          {eintrag.dokumentNr, }
                         </Typography>
                         <Typography variant="caption" className="text-gray-600">
-                          {eintrag.dokumentTitel}
+                          {eintrag.dokumentTitel, }
                         </Typography>
                       </div>
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={eintrag.aktion}
+                        label={eintrag.aktion, }
                         color={eintrag.aktion === 'ARCHIVIERT' ? 'primary' : 'error'}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={eintrag.status}
+                        label={eintrag.status, }
                         color={eintrag.status === 'ERFOLGREICH' ? 'success' : 'error'}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
-                      {eintrag.fehlermeldung && (
-                        <Typography variant="caption" className="text-red-600">
-                          {eintrag.fehlermeldung}
-                        </Typography>
-                      )}
+                      {eintrag.fehlermeldung && (, <Typography variant="caption" className="text-red-600">, {eintrag.fehlermeldung, }
+                        </Typography>)}
                     </TableCell>
                     <TableCell>
-                      {eintrag.exportPfad && (
-                        <Typography variant="caption" className="text-blue-600">
-                          {eintrag.exportPfad}
-                        </Typography>
-                      )}
+                      {eintrag.exportPfad && (<Typography variant="caption" className="text-blue-600">, {eintrag.exportPfad, }
+                        </Typography>)}
                     </TableCell>
-                    <TableCell>{formatFileSize(eintrag.dateigroesseVorher)}</TableCell>
-                    <TableCell>{formatDate(eintrag.ausgefuehrtAm.split(' ')[0])}</TableCell>
+                    <TableCell>{formatFileSize(eintrag.dateigroesseVorher),}</TableCell>
+                    <TableCell>{formatDate(eintrag.ausgefuehrtAm.split(' ')[0]),}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -874,21 +771,21 @@ const DocumentManagement: React.FC = () => {
         </div>
       </TabPanel>
 
-      {/* Gesetzliche Fristen Tab */}
-      <TabPanel value={tabValue} index={6}>
+      {/* Gesetzliche Fristen Tab */,}
+      <TabPanel value={tabValue,} index={6,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Gesetzliche Aufbewahrungsfristen</Typography>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('frist')}
+          <Button;
+variant="outlined"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('frist'),}
           >
             Neue Frist
           </Button>
         </div>
 
-        <Grid container spacing={3} className="mb-6">
-          <Grid item xs={12} md={8}>
+        <Grid container spacing={3,} className="mb-6">
+          <Grid item xs={12,} md={8,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Gesetzliche Fristen</Typography>
@@ -905,37 +802,33 @@ const DocumentManagement: React.FC = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {mockGesetzlicheFristen.map((frist) => (
-                        <TableRow key={frist.id}>
+                      {mockGesetzlicheFristen.map((frist) => (<TableRow key={frist.id, }>
                           <TableCell>
                             <Typography variant="subtitle2" className="font-semibold">
-                              {frist.dokumentTyp}
+                              {frist.dokumentTyp, }
                             </Typography>
                           </TableCell>
                           <TableCell>
-                            <Chip label={frist.kategorie} color="primary" size="small" />
+                            <Chip label={frist.kategorie, } color="primary" size="small" />
                           </TableCell>
                           <TableCell>
                             <Chip 
-                              label={`${frist.gesetzlicheFristJahre} Jahre`} 
+                              label={`${frist.gesetzlicheFristJahre, } Jahre`} 
                               color={frist.gesetzlicheFristJahre >= 10 ? 'error' : 'warning'}
                               size="small" 
                             />
                           </TableCell>
                           <TableCell>
                             <Typography variant="caption" className="text-gray-600">
-                              {frist.gesetzlicheGrundlage}
+                              {frist.gesetzlicheGrundlage, }
                             </Typography>
                           </TableCell>
                           <TableCell>
                             <Typography variant="body2">
-                              {frist.beschreibung}
+                              {frist.beschreibung, }
                             </Typography>
-                            {frist.bemerkungen && (
-                              <Typography variant="caption" className="text-gray-600 block">
-                                {frist.bemerkungen}
-                              </Typography>
-                            )}
+                            {frist.bemerkungen && (, <Typography variant="caption" className="text-gray-600 block">, {frist.bemerkungen, }
+                              </Typography>)}
                           </TableCell>
                           <TableCell>
                             <div className="flex space-x-1">
@@ -958,14 +851,14 @@ const DocumentManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12,} md={4,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Fristen-Übersicht</Typography>
                 <div className="space-y-4">
                   <div className="text-center">
                     <Typography variant="h4" className="text-red-600 font-bold">
-                      {mockGesetzlicheFristen.filter(f => f.gesetzlicheFristJahre >= 10).length}
+                      {mockGesetzlicheFristen.filter(f => f.gesetzlicheFristJahre >= 10).length,}
                     </Typography>
                     <Typography variant="body2" className="text-gray-600">
                       Langfristige Aufbewahrung (≥10 Jahre)
@@ -973,7 +866,7 @@ const DocumentManagement: React.FC = () => {
                   </div>
                   <div className="text-center">
                     <Typography variant="h4" className="text-orange-600 font-bold">
-                      {mockGesetzlicheFristen.filter(f => f.gesetzlicheFristJahre >= 6 && f.gesetzlicheFristJahre < 10).length}
+                      {mockGesetzlicheFristen.filter(f => f.gesetzlicheFristJahre >= 6 && f.gesetzlicheFristJahre < 10).length,}
                     </Typography>
                     <Typography variant="body2" className="text-gray-600">
                       Mittelfristige Aufbewahrung (6-9 Jahre)
@@ -981,7 +874,7 @@ const DocumentManagement: React.FC = () => {
                   </div>
                   <div className="text-center">
                     <Typography variant="h4" className="text-blue-600 font-bold">
-                      {mockGesetzlicheFristen.filter(f => f.gesetzlicheFristJahre < 6).length}
+                      {mockGesetzlicheFristen.filter(f => f.gesetzlicheFristJahre < 6).length,}
                     </Typography>
                     <Typography variant="body2" className="text-gray-600">
                       Kurzfristige Aufbewahrung (&lt;6 Jahre)
@@ -996,21 +889,21 @@ const DocumentManagement: React.FC = () => {
                 <Typography variant="h6" className="mb-4">Automatische Bereinigung</Typography>
                 <div className="space-y-3">
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Automatische Archivierung aktiv"
                   />
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Automatische Löschung aktiv"
                   />
                   <FormControlLabel
-                    control={<Switch />}
+                    control={<Switch />,}
                     label="Export vor Löschung"
                   />
                   <div className="pt-2">
-                    <Button
-                      variant="contained"
-                      startIcon={<AutoDeleteIcon />}
+                    <Button;
+variant="contained"
+                      startIcon={<AutoDeleteIcon />,}
                       fullWidth
                       color="warning"
                     >
@@ -1024,72 +917,72 @@ const DocumentManagement: React.FC = () => {
         </Grid>
       </TabPanel>
 
-      {/* Sicherheit Tab */}
-      <TabPanel value={tabValue} index={7}>
+      {/* Sicherheit Tab */,}
+      <TabPanel value={tabValue,} index={7,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Sicherheit & Zugriffskontrolle</Typography>
           <div className="flex space-x-2">
-            <Button
-              variant="outlined"
-              startIcon={<SecurityIcon />}
+            <Button;
+variant="outlined"
+              startIcon={<SecurityIcon />,}
             >
               Sicherheitsprüfung
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog('sicherheit')}
+            <Button;
+variant="contained"
+              startIcon={<AddIcon />,}
+              onClick={() => handleOpenDialog('sicherheit'),}
             >
               Berechtigung erteilen
             </Button>
           </div>
         </div>
 
-        <Grid container spacing={3} className="mb-6">
-          <Grid item xs={12} md={6}>
+        <Grid container spacing={3,} className="mb-6">
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Sicherheits-Übersicht</Typography>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Verschlüsselte Dokumente:</span>
-                    <Chip label={mockSicherheitsDaten.verschluesselteDokumente} color="primary" size="small" />
+                    <Chip label={mockSicherheitsDaten.verschluesselteDokumente,} color="primary" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Digitale Signaturen:</span>
-                    <Chip label={mockSicherheitsDaten.digitaleSignaturen} color="success" size="small" />
+                    <Chip label={mockSicherheitsDaten.digitaleSignaturen,} color="success" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Aktive Berechtigungen:</span>
-                    <Chip label={mockSicherheitsDaten.aktiveBerechtigungen} color="info" size="small" />
+                    <Chip label={mockSicherheitsDaten.aktiveBerechtigungen,} color="info" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Sicherheitswarnungen:</span>
-                    <Chip label={mockSicherheitsDaten.sicherheitswarnungen} color="warning" size="small" />
+                    <Chip label={mockSicherheitsDaten.sicherheitswarnungen,} color="warning" size="small" />
                   </div>
                 </div>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Zugriffskontrolle</Typography>
                 <div className="space-y-3">
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="IP-Beschränkungen aktiv"
                   />
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Zeitliche Beschränkungen"
                   />
                   <FormControlLabel
-                    control={<Switch />}
+                    control={<Switch />,}
                     label="Zwei-Faktor-Authentifizierung"
                   />
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Session-Timeout"
                   />
                 </div>
@@ -1099,7 +992,7 @@ const DocumentManagement: React.FC = () => {
         </Grid>
 
         <Typography variant="h6" className="mb-4">Aktive Berechtigungen</Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -1140,20 +1033,20 @@ const DocumentManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      {/* Compliance Tab */}
-      <TabPanel value={tabValue} index={8}>
+      {/* Compliance Tab */,}
+      <TabPanel value={tabValue,} index={8,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">DSGVO-Compliance & Audit</Typography>
           <div className="flex space-x-2">
-            <Button
-              variant="outlined"
-              startIcon={<VerifiedIcon />}
+            <Button;
+variant="outlined"
+              startIcon={<VerifiedIcon />,}
             >
               Compliance-Report
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<AutoDeleteIcon />}
+            <Button;
+variant="contained"
+              startIcon={<AutoDeleteIcon />,}
               color="warning"
             >
               DSGVO-Löschung
@@ -1161,51 +1054,51 @@ const DocumentManagement: React.FC = () => {
           </div>
         </div>
 
-        <Grid container spacing={3} className="mb-6">
-          <Grid item xs={12} md={6}>
+        <Grid container spacing={3,} className="mb-6">
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Compliance-Status</Typography>
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>DSGVO-konforme Dokumente:</span>
-                    <Chip label={mockComplianceDaten.dsgvoKonformeDokumente} color="success" size="small" />
+                    <Chip label={mockComplianceDaten.dsgvoKonformeDokumente,} color="success" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Personenbezogene Daten:</span>
-                    <Chip label={mockComplianceDaten.personenbezogeneDaten} color="warning" size="small" />
+                    <Chip label={mockComplianceDaten.personenbezogeneDaten,} color="warning" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Ablaufende Fristen:</span>
-                    <Chip label={mockComplianceDaten.ablaufendeFristen} color="error" size="small" />
+                    <Chip label={mockComplianceDaten.ablaufendeFristen,} color="error" size="small" />
                   </div>
                   <div className="flex justify-between">
                     <span>Audit-Einträge:</span>
-                    <Chip label={mockComplianceDaten.auditEintraege} color="info" size="small" />
+                    <Chip label={mockComplianceDaten.auditEintraege,} color="info" size="small" />
                   </div>
                 </div>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <Card>
               <CardContent>
                 <Typography variant="h6" className="mb-4">Datenschutz-Einstellungen</Typography>
                 <div className="space-y-3">
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Automatische DSGVO-Löschung"
                   />
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Audit-Trail aktiv"
                   />
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch defaultChecked />,}
                     label="Verschlüsselung sensibler Daten"
                   />
                   <FormControlLabel
-                    control={<Switch />}
+                    control={<Switch />,}
                     label="Anonymisierung aktiv"
                   />
                 </div>
@@ -1215,7 +1108,7 @@ const DocumentManagement: React.FC = () => {
         </Grid>
 
         <Typography variant="h6" className="mb-4">Audit-Trail</Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -1247,13 +1140,13 @@ const DocumentManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      {/* Suche Tab */}
-      <TabPanel value={tabValue} index={9}>
+      {/* Suche Tab */,}
+      <TabPanel value={tabValue,} index={9,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Erweiterte Suche</Typography>
-          <Button
-            variant="outlined"
-            startIcon={<HistoryIcon />}
+          <Button;
+variant="outlined"
+            startIcon={<HistoryIcon />,}
           >
             Suchhistorie
           </Button>
@@ -1265,11 +1158,11 @@ const DocumentManagement: React.FC = () => {
             <div className="flex space-x-2 mb-4">
               <TextField
                 fullWidth
-                placeholder="Suchbegriff eingeben..."
-                variant="outlined"
+                placeholder="Suchbegriff eingeben...";
+variant="outlined"
                 size="small"
               />
-              <Button variant="contained" startIcon={<SearchIcon />}>
+              <Button variant="contained" startIcon={<SearchIcon />,}>
                 Suchen
               </Button>
             </div>
@@ -1309,7 +1202,7 @@ const DocumentManagement: React.FC = () => {
         </Card>
 
         <Typography variant="h6" className="mb-4">Suchergebnisse</Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -1322,35 +1215,34 @@ const DocumentManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {mockVolltextSuchergebnisse.map((ergebnis) => (
-                <TableRow key={ergebnis.id}>
+              {mockVolltextSuchergebnisse.map((ergebnis) => (<TableRow key={ergebnis.id, }>
                   <TableCell>
                     <div>
                       <Typography variant="subtitle2" className="font-semibold">
-                        {ergebnis.dokumentNr}
+                        {ergebnis.dokumentNr, }
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        {ergebnis.titel}
+                        {ergebnis.titel, }
                       </Typography>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Chip label={ergebnis.kategorieName} color="primary" size="small" />
+                    <Chip label={ergebnis.kategorieName, } color="primary" size="small" />
                   </TableCell>
                   <TableCell>
-                    <LinearProgress 
-                      variant="determinate" 
-                      value={ergebnis.relevanzScore * 100}
-                      className="w-20"
+                    <LinearProgress ;
+variant="determinate" 
+                      value={ergebnis.relevanzScore * 100, };
+className="w-20"
                     />
                     <Typography variant="caption">
-                      {Math.round(ergebnis.relevanzScore * 100)}%
+                      {Math.round(ergebnis.relevanzScore * 100),}%
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Chip label={ergebnis.trefferAnzahl} color="success" size="small" />
+                    <Chip label={ergebnis.trefferAnzahl,} color="success" size="small" />
                   </TableCell>
-                  <TableCell>{formatDate(ergebnis.erstelltAm)}</TableCell>
+                  <TableCell>{formatDate(ergebnis.erstelltAm),}</TableCell>
                   <TableCell>
                     <div className="flex space-x-1">
                       <IconButton size="small" color="primary">
@@ -1368,24 +1260,24 @@ const DocumentManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      {/* Performance Tab */}
-      <TabPanel value={tabValue} index={10}>
+      {/* Performance Tab */,}
+      <TabPanel value={tabValue,} index={10,}>
         <div className="flex justify-between items-center mb-4">
           <Typography variant="h6">Performance-Monitoring</Typography>
-          <Button
-            variant="outlined"
-            startIcon={<TimelineIcon />}
+          <Button;
+variant="outlined"
+            startIcon={<TimelineIcon />,}
           >
             Performance-Report
           </Button>
         </div>
 
-        <Grid container spacing={3} className="mb-6">
-          <Grid item xs={12} sm={6} md={3}>
+        <Grid container spacing={3,} className="mb-6">
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card>
               <CardContent>
                 <Typography variant="h4" className="text-blue-600 font-bold">
-                  {mockPerformanceDaten.durchschnittlicheSuchzeit}s
+                  {mockPerformanceDaten.durchschnittlicheSuchzeit,}s
                 </Typography>
                 <Typography variant="body2" className="text-gray-600">
                   Durchschnittliche Suchzeit
@@ -1393,11 +1285,11 @@ const DocumentManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card>
               <CardContent>
                 <Typography variant="h4" className="text-green-600 font-bold">
-                  {mockPerformanceDaten.durchschnittlicheUploadZeit}s
+                  {mockPerformanceDaten.durchschnittlicheUploadZeit,}s
                 </Typography>
                 <Typography variant="body2" className="text-gray-600">
                   Durchschnittliche Upload-Zeit
@@ -1405,11 +1297,11 @@ const DocumentManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card>
               <CardContent>
                 <Typography variant="h4" className="text-orange-600 font-bold">
-                  {mockPerformanceDaten.durchschnittlicheDownloadZeit}s
+                  {mockPerformanceDaten.durchschnittlicheDownloadZeit,}s
                 </Typography>
                 <Typography variant="body2" className="text-gray-600">
                   Durchschnittliche Download-Zeit
@@ -1417,11 +1309,11 @@ const DocumentManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card>
               <CardContent>
                 <Typography variant="h4" className="text-purple-600 font-bold">
-                  {mockPerformanceDaten.systemAuslastung}%
+                  {mockPerformanceDaten.systemAuslastung,}%
                 </Typography>
                 <Typography variant="body2" className="text-gray-600">
                   System-Auslastung
@@ -1437,26 +1329,26 @@ const DocumentManagement: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <Typography variant="body2" className="mb-2">Suchzeit (letzte 7 Tage)</Typography>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={80}
-                  className="h-2"
+                <LinearProgress ;
+variant="determinate" 
+                  value={80,};
+className="h-2"
                 />
               </div>
               <div>
                 <Typography variant="body2" className="mb-2">Upload-Zeit (letzte 7 Tage)</Typography>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={65}
-                  className="h-2"
+                <LinearProgress ;
+variant="determinate" 
+                  value={65,};
+className="h-2"
                 />
               </div>
               <div>
                 <Typography variant="body2" className="mb-2">Download-Zeit (letzte 7 Tage)</Typography>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={90}
-                  className="h-2"
+                <LinearProgress ;
+variant="determinate" 
+                  value={90,};
+className="h-2"
                 />
               </div>
             </div>
@@ -1464,24 +1356,24 @@ const DocumentManagement: React.FC = () => {
         </Card>
       </TabPanel>
 
-      {/* Statistiken Tab */}
-      <TabPanel value={tabValue} index={7}>
+      {/* Statistiken Tab */,}
+      <TabPanel value={tabValue,} index={7,}>
         <Typography variant="h6" className="mb-4">Dokumentenstatistiken</Typography>
         <Typography variant="body2" className="text-gray-600">
           Statistik-Dashboard wird hier implementiert...
         </Typography>
       </TabPanel>
 
-      {/* Dialog */}
-      <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      {/* Dialog */,}
+      <Dialog open={dialogOpen,} onClose={handleCloseDialog,} maxWidth="md" fullWidth>
         <DialogTitle>
-          {dialogType === 'document' && 'Neues Dokument'}
-          {dialogType === 'workflow' && 'Neuer Workflow'}
-          {dialogType === 'category' && 'Neue Kategorie'}
-          {dialogType === 'tag' && 'Neuer Tag'}
-          {dialogType === 'bereinigung' && 'Bereinigungsauftrag'}
-          {dialogType === 'frist' && 'Neue gesetzliche Frist'}
-          {dialogType === 'sicherheit' && 'Berechtigung erteilen'}
+          {dialogType === 'document' && 'Neues Dokument',}
+          {dialogType === 'workflow' && 'Neuer Workflow',}
+          {dialogType === 'category' && 'Neue Kategorie',}
+          {dialogType === 'tag' && 'Neuer Tag',}
+          {dialogType === 'bereinigung' && 'Bereinigungsauftrag',}
+          {dialogType === 'frist' && 'Neue gesetzliche Frist',}
+          {dialogType === 'sicherheit' && 'Berechtigung erteilen',}
         </DialogTitle>
         <DialogContent>
           <Typography variant="body2" className="text-gray-600 mt-2">
@@ -1489,8 +1381,8 @@ const DocumentManagement: React.FC = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          <Button variant="contained" onClick={handleCloseDialog}>
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          <Button variant="contained" onClick={handleCloseDialog,}>
             Speichern
           </Button>
         </DialogActions>

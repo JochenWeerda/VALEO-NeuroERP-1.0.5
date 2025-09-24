@@ -1,21 +1,17 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { render, screen, waitFor, fireEvent} from '@testing-library/react';
+import { ThemeProvider, createTheme} from '@mui/material/styles';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter ,} from 'react-router-dom';
 import AIBarcodeDashboard from '../AIBarcodeDashboard';
 
-// Einfaches Theme für Tests
+// Einfaches Theme für Tests;
 const testTheme = createTheme();
 
 // Mock für Offline-Hooks
-jest.mock('../../../hooks/useOffline', () => {
-  const useOffline = jest.fn().mockReturnValue({
-    isOnline: true,
-    isOffline: false,
-    pendingRequests: [],
-    syncInProgress: false,
-    lastSyncTime: Date.now(),
+jest.mock('../../../hooks/useOffline', () => {;
+const useOffline = jest.fn().mockReturnValue({
+    isOnline: true, isOffline: false, pendingRequests: [], syncInProgress: false, lastSyncTime: Date.now(),
     addPendingRequest: jest.fn(),
     removePendingRequest: jest.fn(),
     retryPendingRequest: jest.fn(),
@@ -24,47 +20,40 @@ jest.mock('../../../hooks/useOffline', () => {
     syncPendingRequests: jest.fn(),
   });
   const useOfflineStatus = jest.fn().mockReturnValue({
-    isOnline: true,
-    pendingRequests: 0,
-    syncInProgress: false,
-    lastSync: Date.now(),
+    isOnline: true, pendingRequests: 0, syncInProgress: false, lastSync: Date.now(),
     error: null
   });
   const useOfflineData = jest.fn().mockReturnValue({
-    data: [],
-    loading: false,
-    error: null
+    data: [], loading: false, error: null
   });
-  return { useOffline, useOfflineStatus, useOfflineData };
+  return { useOffline, useOfflineStatus, useOfflineData ,};
 });
-
+;
 const renderWithProviders = (component: React.ReactElement) => {
-  return render(
-    <ThemeProvider theme={testTheme}>
+  return render(<ThemeProvider theme={testTheme, }>
       <BrowserRouter>
-        {component}
+        {component, }
       </BrowserRouter>
-    </ThemeProvider>
-  );
+    </ThemeProvider>);
 };
 
 // Integration-Tests mit echten API-Aufrufen
-describe('AIBarcodeDashboard Integration Tests', () => {
-  const API_BASE_URL = 'http://localhost:8000';
+describe('AIBarcodeDashboard Integration Tests', () => {;
+const API_BASE_URL = 'http://localhost:8000';
 
   beforeAll(() => {
-    // Prüfe ob Backend verfügbar ist
-    global.fetch = jest.fn();
+    // Prüfe ob Backend verfügbar ist,
+    global.fetch = jest.fn();,
   });
 
   beforeEach(() => {
-    (global.fetch as jest.Mock).mockClear();
+    (global.fetch as jest.Mock).mockClear();,
   });
 
   describe('Echte API-Integration', () => {
     it('lädt echte Barcode-Vorschläge vom Backend', async () => {
-      // Mock für echte API-Antwort
-      const mockSuggestions = [
+      // Mock für echte API-Antwort,;
+const mockSuggestions = [,
         {
           id: '1',
           product_name: 'iPhone 15 Pro',
@@ -99,27 +88,17 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
       (global.fetch as jest.Mock)
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: mockSuggestions })
+          ok: true, json: async () => ({ data: mockSuggestions })
         })
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({
+          ok: true, json: async () => ({
             data: {
-              total_suggestions: 2,
-              high_confidence: 1,
-              medium_confidence: 1,
-              low_confidence: 0,
-              categories: [
-                { name: 'Elektronik', count: 1 },
-                { name: 'Bücher', count: 1 }
-              ],
-              confidence_trend: [
+              total_suggestions: 2, high_confidence: 1, medium_confidence: 1, low_confidence: 0, categories: [
+                { name: 'Elektronik', count: 1 }, { name: 'Bücher', count: 1 }
+              ], confidence_trend: [
                 { date: '2024-01-15', avg_confidence: 0.885 }
-              ],
-              top_categories: [
-                { category: 'Elektronik', count: 1 },
-                { category: 'Bücher', count: 1 }
+              ], top_categories: [
+                { category: 'Elektronik', count: 1 }, { category: 'Bücher', count: 1 }
               ]
             }
           })
@@ -129,11 +108,11 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
       // Warte auf das Laden der Daten
       await waitFor(() => {
-        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();
+        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();,
       });
 
       await waitFor(() => {
-        expect(screen.getByText('Harry Potter Box Set')).toBeInTheDocument();
+        expect(screen.getByText('Harry Potter Box Set')).toBeInTheDocument();,
       });
 
       // Prüfe API-Aufrufe
@@ -142,19 +121,19 @@ describe('AIBarcodeDashboard Integration Tests', () => {
     });
 
     it('behandelt API-Fehler korrekt', async () => {
-      (global.fetch as jest.Mock).mockRejectedValueOnce(
-        new Error('Network error')
-      );
+      (global.fetch as jest.Mock).mockRejectedValueOnce(,
+        new Error('Network error'),
+      );,
 
-      renderWithProviders(<AIBarcodeDashboard />);
+      renderWithProviders(<AIBarcodeDashboard />);,
 
-      // Warte auf Error-Anzeige (flexibler Matcher)
-      const err = await screen.findByText(/Fehler beim Laden der Vorschläge|Network error|HTTP/i);
-      expect(err).toBeInTheDocument();
+      // Warte auf Error-Anzeige (flexibler Matcher),;
+const err = await screen.findByText(/Fehler beim Laden der Vorschläge|Network error|HTTP/i);,
+      expect(err).toBeInTheDocument();,
     });
 
-    it('filtert Vorschläge nach Kategorie', async () => {
-      const mockSuggestions = [
+    it('filtert Vorschläge nach Kategorie', async () => {;
+const mockSuggestions = [,
         {
           id: '1',
           product_name: 'iPhone 15 Pro',
@@ -181,41 +160,39 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
       (global.fetch as jest.Mock)
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: mockSuggestions })
+          ok: true, json: async () => ({ data: mockSuggestions })
         })
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: {} })
+          ok: true, json: async () => ({ data: {} })
         });
 
       renderWithProviders(<AIBarcodeDashboard />);
 
       // Warte auf das Laden der Daten
       await waitFor(() => {
-        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();
+        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();,
       });
 
-      // Öffne Kategorie-Filter
-      const categoryFilter = screen.getByLabelText('Nach Kategorie filtern');
+      // Öffne Kategorie-Filter;
+const categoryFilter = screen.getByLabelText('Nach Kategorie filtern');
       fireEvent.mouseDown(categoryFilter);
 
-      // Wähle "Elektronik"
-      const elektronikOption = screen.getByText('Elektronik');
+      // Wähle "Elektronik";
+const elektronikOption = screen.getByText('Elektronik');
       fireEvent.click(elektronikOption);
 
       // Prüfe dass nur Elektronik-Produkte angezeigt werden
       await waitFor(() => {
-        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();
+        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();,
       });
-      // Tabelle kann gefilterte Items weiter unten rendern; prüfe stattdessen Zeilenanzahl (1 Produkt sichtbar)
-      const rows = screen.getAllByRole('row');
+      // Tabelle kann gefilterte Items weiter unten rendern; prüfe stattdessen Zeilenanzahl (1 Produkt sichtbar);
+const rows = screen.getAllByRole('row');
       // Header + 1 Datenzeile erwartet
       expect(rows.length).toBeGreaterThanOrEqual(2);
     });
 
-    it('öffnet Detail-Dialog für Vorschlag', async () => {
-      const mockSuggestions = [
+    it('öffnet Detail-Dialog für Vorschlag', async () => {;
+const mockSuggestions = [,
         {
           id: '1',
           product_name: 'iPhone 15 Pro',
@@ -235,34 +212,32 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
       (global.fetch as jest.Mock)
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: mockSuggestions })
+          ok: true, json: async () => ({ data: mockSuggestions })
         })
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: {} })
+          ok: true, json: async () => ({ data: {} })
         });
 
       renderWithProviders(<AIBarcodeDashboard />);
 
       // Warte auf das Laden der Daten
       await waitFor(() => {
-        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();
+        expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();,
       });
 
-      // Klicke auf Details-Button
-      const detailsButton = screen.getByLabelText('Details anzeigen');
+      // Klicke auf Details-Button;
+const detailsButton = screen.getByLabelText('Details anzeigen');
       fireEvent.click(detailsButton);
 
       // Prüfe dass Dialog geöffnet wird
       await waitFor(() => {
-        expect(screen.getByText('Barcode-Vorschlag Details')).toBeInTheDocument();
-        expect(screen.getByText('Detaillierte Begründung für Barcode-Vorschlag')).toBeInTheDocument();
+        expect(screen.getByText('Barcode-Vorschlag Details')).toBeInTheDocument();,
+        expect(screen.getByText('Detaillierte Begründung für Barcode-Vorschlag')).toBeInTheDocument();,
       });
     });
 
-    it('führt Modell-Retraining durch', async () => {
-      const mockSuggestions = [
+    it('führt Modell-Retraining durch', async () => {;
+const mockSuggestions = [,
         {
           id: '1',
           product_name: 'Test Product',
@@ -278,43 +253,39 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
       (global.fetch as jest.Mock)
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: mockSuggestions })
+          ok: true, json: async () => ({ data: mockSuggestions })
         })
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: {} })
+          ok: true, json: async () => ({ data: {} })
         })
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ message: 'Modell erfolgreich neu trainiert' })
+          ok: true, json: async () => ({ message: 'Modell erfolgreich neu trainiert' })
         });
 
       renderWithProviders(<AIBarcodeDashboard />);
 
       // Warte auf das Laden der Daten
       await waitFor(() => {
-        expect(screen.getByText('Test Product')).toBeInTheDocument();
+        expect(screen.getByText('Test Product')).toBeInTheDocument();,
       });
 
-      // Klicke auf "Modell neu laden"
-      const retrainButton = screen.getByText('Modell neu laden');
+      // Klicke auf "Modell neu laden";
+const retrainButton = screen.getByText('Modell neu laden');
       fireEvent.click(retrainButton);
 
       // Prüfe dass Retraining-Dialog geöffnet wird
       await waitFor(() => {
-        expect(screen.getByText('KI-Modell neu laden')).toBeInTheDocument();
+        expect(screen.getByText('KI-Modell neu laden')).toBeInTheDocument();,
       });
 
-      // Klicke auf "Neuladen starten"
-      const startRetrainButton = screen.getByText('Neuladen starten');
+      // Klicke auf "Neuladen starten";
+const startRetrainButton = screen.getByText('Neuladen starten');
       fireEvent.click(startRetrainButton);
 
       // Prüfe dass Retraining-API aufgerufen wird
       await waitFor(() => {
         expect(global.fetch).toHaveBeenCalledWith('/api/ai/barcode/retrain', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
+          method: 'POST', headers: { 'Content-Type': 'application/json' }
         });
       });
     });
@@ -322,15 +293,10 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
   describe('Offline-Funktionalität', () => {
     it('zeigt Offline-Status bei fehlender Verbindung', async () => {
-      (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
-
-      const offlineHooks = await import('../../../hooks/useOffline');
+      (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));,;
+const offlineHooks = await import('../../../hooks/useOffline');,
       (offlineHooks.useOffline as jest.Mock).mockReturnValue({
-        isOnline: false,
-        isOffline: true,
-        pendingRequests: [{ id: 'p1' }, { id: 'p2' }],
-        syncInProgress: false,
-        lastSyncTime: Date.now(),
+        isOnline: false, isOffline: true, pendingRequests: [{ id: 'p1' }, { id: 'p2' }], syncInProgress: false, lastSyncTime: Date.now(),
         addPendingRequest: jest.fn(),
         removePendingRequest: jest.fn(),
         retryPendingRequest: jest.fn(),
@@ -339,47 +305,32 @@ describe('AIBarcodeDashboard Integration Tests', () => {
         syncPendingRequests: jest.fn(),
       });
       (offlineHooks.useOfflineStatus as jest.Mock).mockReturnValue({
-        isOnline: false,
-        pendingRequests: 2,
-        syncInProgress: false,
-        lastSync: Date.now(),
+        isOnline: false, pendingRequests: 2, syncInProgress: false, lastSync: Date.now(),
         error: null
       });
       (offlineHooks.useOffline as jest.Mock).mockReturnValue({
         data: [
           {
-            id: '1',
-            product_name: 'Offline Product',
-            suggested_barcode: '1234567890',
-            confidence_score: 0.8,
-            reasoning: 'Offline data',
-            category: 'Test',
-            similar_products: [],
-            market_trends: {},
-            created_at: '2024-01-15T10:30:00Z'
+            id: '1', product_name: 'Offline Product', suggested_barcode: '1234567890', confidence_score: 0.8, reasoning: 'Offline data', category: 'Test', similar_products: [], market_trends: {}, created_at: '2024-01-15T10:30:00Z'
           }
-        ],
-        loading: false,
-        error: null
+        ], loading: false, error: null
       });
 
       renderWithProviders(<AIBarcodeDashboard />);
 
-      // Prüfe Offline-Banner (flexibler Matcher)
-      const offlineText = await screen.findByText(/Offline-Modus/i);
+      // Prüfe Offline-Banner (flexibler Matcher);
+const offlineText = await screen.findByText(/Offline-Modus/i);
       expect(offlineText).toBeInTheDocument();
     });
   });
 
   describe('Performance-Tests', () => {
     it('lädt große Datenmengen effizient', async () => {
-      // Generiere 100 Test-Vorschläge
-      const mockSuggestions = Array.from({ length: 100 }, (_, i) => ({
-        id: `${i + 1}`,
-        product_name: `Product ${i + 1}`,
-        suggested_barcode: `123456789${i.toString().padStart(3, '0')}`,
+      // Generiere 100 Test-Vorschläge,;
+const mockSuggestions = Array.from({ length: 100 }, (_, i) => ({
+        id: `${i + 1}`, product_name: `Product ${i + 1, }`, suggested_barcode: `123456789${i.toString().padStart(3, '0'),}`,
         confidence_score: 0.5 + (i % 50) / 100,
-        reasoning: `Begründung für Produkt ${i + 1}`,
+        reasoning: `Begründung für Produkt ${i + 1,}`,
         category: ['Elektronik', 'Bücher', 'Kleidung'][i % 3],
         similar_products: [],
         market_trends: {},
@@ -388,30 +339,28 @@ describe('AIBarcodeDashboard Integration Tests', () => {
 
       (global.fetch as jest.Mock)
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: mockSuggestions })
+          ok: true, json: async () => ({ data: mockSuggestions })
         })
         .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ data: {} })
+          ok: true, json: async () => ({ data: {} })
         });
-
-      const startTime = performance.now();
+;
+const startTime = performance.now();
 
       renderWithProviders(<AIBarcodeDashboard />);
 
       // Warte auf das Laden aller Daten
       await waitFor(() => {
-        expect(screen.getByText(/100 Vorschlägen|100 Vorschläge/)).toBeInTheDocument();
+        expect(screen.getByText(/100 Vorschlägen|100 Vorschläge/)).toBeInTheDocument();,
       });
-
-      const endTime = performance.now();
+;
+const endTime = performance.now();
       const loadTime = endTime - startTime;
 
       // Prüfe dass Ladezeit akzeptabel ist (< 8 Sekunden) – CI-toleranter Schwellenwert
       expect(loadTime).toBeLessThan(8000);
 
-      console.log(`Ladezeit für 100 Vorschläge: ${loadTime.toFixed(2)}ms`);
+      console.log(`Ladezeit für 100 Vorschläge: ${loadTime.toFixed(2),}ms`);
     });
   });
 }); 

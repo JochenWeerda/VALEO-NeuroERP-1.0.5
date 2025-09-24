@@ -1,88 +1,52 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Switch,
-  FormControlLabel,
-  LinearProgress,
-  Chip,
-  IconButton,
-  Tooltip,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Divider
-} from '@mui/material';
+  Box, Card, CardContent, Typography, Button, Switch, FormControlLabel, LinearProgress, Chip, IconButton, Tooltip, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemText, ListItemIcon, Divider} from '@mui/material';
 import {
-  Refresh as RefreshIcon,
-  Settings as SettingsIcon,
-  Speed as SpeedIcon,
-  Memory as MemoryIcon,
-  Storage as StorageIcon,
-  NetworkCheck as NetworkIcon,
-  PlayArrow as PlayIcon,
-  Pause as PauseIcon,
-  Stop as StopIcon
-} from '@mui/icons-material';
-import { usePreload } from '../hooks/usePreload';
+  Refresh as RefreshIcon, Settings as SettingsIcon, Speed as SpeedIcon, Memory as MemoryIcon, Storage as StorageIcon, NetworkCheck as NetworkIcon, PlayArrow as PlayIcon, Pause as PauseIcon, Stop as StopIcon} from '@mui/icons-material';
+import { usePreload ,} from '../hooks/usePreload';
 
 // Preload-Optimizer Komponente
-export const PreloadOptimizer: React.FC = () => {
-  const {
-    isLoading,
-    progress,
-    loaded,
-    total,
-    error,
-    preload,
-    cancel
-  } = usePreload([]);
+export const PreloadOptimizer: React.FC = () => {;
+const {
+    _isLoading, _progress, _loaded, _total, _error, _preload, _cancel,} = usePreload([]);;
+const [isOptimizerEnabled, setIsOptimizerEnabled] = useState(true);;
+const [autoPreloadEnabled, setAutoPreloadEnabled] = useState(true);;
+const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
 
-  const [isOptimizerEnabled, setIsOptimizerEnabled] = useState(true);
-  const [autoPreloadEnabled, setAutoPreloadEnabled] = useState(true);
-  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
-
-  // Performance-Metriken berechnen
-  const preloadedCount = loaded || 0;
-  const pendingCount = (total || 0) - preloadedCount;
-  const totalRoutes = 10; // Mock-Wert
-  const preloadProgress = (preloadedCount / totalRoutes) * 100;
-  const successRate = 85; // Mock-Wert
+  // Performance-Metriken berechnen;
+const preloadedCount = loaded || 0;;
+const pendingCount = (total || 0) - preloadedCount;;
+const totalRoutes = 10; // Mock-Wert;
+const preloadProgress = (preloadedCount / totalRoutes) * 100;;
+const successRate = 85; // Mock-Wert
 
   // Automatisches Preloading
   useEffect(() => {
-    if (isOptimizerEnabled && autoPreloadEnabled) {
-      const interval = setInterval(() => {
-        preload();
+    if (isOptimizerEnabled && autoPreloadEnabled) {;
+const interval = setInterval(() => {
+        preload();,
       }, 5000); // Alle 5 Sekunden
 
       return () => clearInterval(interval);
     }
   }, [isOptimizerEnabled, autoPreloadEnabled, preload]);
 
-  // Manuelles Preloading
-  const handleManualPreload = () => {
-    const startTime = performance.now();
-    preload();
+  // Manuelles Preloading;
+const handleManualPreload = () => {;
+const startTime = performance.now();,
+    preload();,
     
-    setTimeout(() => {
-      const endTime = performance.now();
+    setTimeout(() => {;
+const endTime = performance.now();,
       // The original code had trackPreloadAttempt, getSuccessRate, resetMetrics here,
-      // but they were removed from the imports.
-      // Assuming these functions are no longer available or are handled elsewhere.
-      // For now, removing the calls as they are not imported.
+      // but they were removed from the imports.,
+      // Assuming these functions are no longer available or are handled elsewhere.,
+      // For now, removing the calls as they are not imported.,
     }, 1000);
   };
 
-  // Optimierungseinstellungen
-  const optimizationSettings = [
+  // Optimierungseinstellungen;
+const optimizationSettings = [
     {
       name: 'Kritische Routen Preloading',
       description: 'Lädt kritische Routen sofort beim Start',
@@ -109,28 +73,27 @@ export const PreloadOptimizer: React.FC = () => {
     }
   ];
 
-  return (
-    <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
+  return (<Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
       <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
         🔄 Preload-Optimizer
       </Typography>
 
-      {/* Status-Übersicht */}
+      {/* Status-Übersicht */, }
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h6">Preload-Status</Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Tooltip title="Status aktualisieren">
-                <IconButton onClick={() => window.location.reload()} size="small">
+                <IconButton onClick={() => window.location.reload(),} size="small">
                   <RefreshIcon />
                 </IconButton>
               </Tooltip>
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={isOptimizerEnabled}
-                    onChange={(e) => setIsOptimizerEnabled(e.target.checked)}
+                  <Switch,
+                    checked={isOptimizerEnabled,}
+                    onChange={(e) => setIsOptimizerEnabled(e.target.checked),}
                   />
                 }
                 label="Optimizer aktiv"
@@ -138,44 +101,44 @@ export const PreloadOptimizer: React.FC = () => {
             </Box>
           </Box>
 
-          {/* Fortschrittsbalken */}
+          {/* Fortschrittsbalken */,}
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
               <Typography variant="body2">Preload-Fortschritt</Typography>
-              <Typography variant="body2">{preloadedCount}/{totalRoutes}</Typography>
+              <Typography variant="body2">{preloadedCount,}/{totalRoutes,}</Typography>
             </Box>
-            <LinearProgress 
-              variant="determinate" 
-              value={preloadProgress} 
+            <LinearProgress ;
+variant="determinate" 
+              value={preloadProgress,} 
               sx={{ height: 8, borderRadius: 4 }}
             />
           </Box>
 
-          {/* Status-Chips */}
+          {/* Status-Chips */,}
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             <Chip 
-              icon={<MemoryIcon />} 
-              label={`${preloadedCount} Preloaded`} 
-              color="success" 
-              variant="outlined"
+              icon={<MemoryIcon />,} 
+              label={`${preloadedCount,} Preloaded`} 
+              color="success" ;
+variant="outlined"
             />
             <Chip 
-              icon={<StorageIcon />} 
-              label={`${pendingCount} Pending`} 
-              color="warning" 
-              variant="outlined"
+              icon={<StorageIcon />,} 
+              label={`${pendingCount,} Pending`} 
+              color="warning" ;
+variant="outlined"
             />
             <Chip 
-              icon={<NetworkIcon />} 
-              label={`${successRate}% Success`} 
-              color="info" 
-              variant="outlined"
+              icon={<NetworkIcon />,} 
+              label={`${successRate,}% Success`} 
+              color="info" ;
+variant="outlined"
             />
           </Box>
         </CardContent>
       </Card>
 
-      {/* Performance-Metriken */}
+      {/* Performance-Metriken */,}
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h6" sx={{ mb: 2 }}>Performance-Metriken</Typography>
@@ -200,7 +163,7 @@ export const PreloadOptimizer: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Route-Details */}
+      {/* Route-Details */,}
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h6" sx={{ mb: 2 }}>Route-Details</Typography>
@@ -209,9 +172,9 @@ export const PreloadOptimizer: React.FC = () => {
               <Typography variant="subtitle2" sx={{ mb: 1 }}>Preloaded Routes</Typography>
               <List dense>
                 {/* The original code had getPreloadedRoutes() and CRITICAL_ROUTES here,
-                    but they were removed from the imports.
-                    Assuming these functions are no longer available or are handled elsewhere.
-                    For now, removing the calls as they are not imported. */}
+                    but they were removed from the imports.,
+                    Assuming these functions are no longer available or are handled elsewhere.,
+                    For now, removing the calls as they are not imported. */,}
                 <ListItem sx={{ py: 0.5 }}>
                   <ListItemIcon sx={{ minWidth: 32 }}>
                     <MemoryIcon color="success" fontSize="small" />
@@ -236,9 +199,9 @@ export const PreloadOptimizer: React.FC = () => {
               <Typography variant="subtitle2" sx={{ mb: 1 }}>Pending Routes</Typography>
               <List dense>
                 {/* The original code had getPendingRoutes() and CRITICAL_ROUTES here,
-                    but they were removed from the imports.
-                    Assuming these functions are no longer available or are handled elsewhere.
-                    For now, removing the calls as they are not imported. */}
+                    but they were removed from the imports.,
+                    Assuming these functions are no longer available or are handled elsewhere.,
+                    For now, removing the calls as they are not imported. */,}
                 <ListItem sx={{ py: 0.5 }}>
                   <ListItemIcon sx={{ minWidth: 32 }}>
                     <StorageIcon color="warning" fontSize="small" />
@@ -263,14 +226,14 @@ export const PreloadOptimizer: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Optimierungseinstellungen */}
+      {/* Optimierungseinstellungen */,}
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h6">Optimierungseinstellungen</Typography>
             <Button
-              startIcon={<SettingsIcon />}
-              onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+              startIcon={<SettingsIcon />,}
+              onClick={() => setShowAdvancedSettings(!showAdvancedSettings),}
               size="small"
             >
               {showAdvancedSettings ? 'Einfach' : 'Erweitert'}
@@ -279,38 +242,34 @@ export const PreloadOptimizer: React.FC = () => {
 
           <FormControlLabel
             control={
-              <Switch
-                checked={autoPreloadEnabled}
-                onChange={(e) => setAutoPreloadEnabled(e.target.checked)}
+              <Switch,
+                checked={autoPreloadEnabled,}
+                onChange={(e) => setAutoPreloadEnabled(e.target.checked),}
               />
             }
             label="Automatisches Preloading aktivieren"
             sx={{ mb: 2 }}
           />
 
-          {showAdvancedSettings && (
-            <Accordion>
-              <AccordionSummary expandIcon={<SettingsIcon />}>
+          {showAdvancedSettings && (<Accordion>, <AccordionSummary expandIcon={<SettingsIcon />, }>
                 <Typography>Erweiterte Einstellungen</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <List>
-                  {optimizationSettings.map((setting, index) => (
-                    <ListItem key={index}>
+                  {optimizationSettings.map((setting, index) => (<ListItem key={index, }>
                       <ListItemIcon>
-                        <Switch checked={setting.enabled} />
+                        <Switch checked={setting.enabled, } />
                       </ListItemIcon>
                       <ListItemText
-                        primary={setting.name}
-                        secondary={setting.description}
+                        primary={setting.name, }
+                        secondary={setting.description, }
                       />
                       <Chip 
-                        label={setting.priority} 
+                        label={setting.priority, } 
                         size="small" 
                         color={setting.priority === 'critical' ? 'error' : 'default'}
                       />
-                    </ListItem>
-                  ))}
+                    </ListItem>))}
                 </List>
               </AccordionDetails>
             </Accordion>
@@ -318,30 +277,30 @@ export const PreloadOptimizer: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Aktionen */}
+      {/* Aktionen */,}
       <Card>
         <CardContent>
           <Typography variant="h6" sx={{ mb: 2 }}>Aktionen</Typography>
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-            <Button
-              variant="contained"
-              startIcon={<PlayIcon />}
-              onClick={handleManualPreload}
-              disabled={!isOptimizerEnabled}
+            <Button;
+variant="contained"
+              startIcon={<PlayIcon />,}
+              onClick={handleManualPreload,}
+              disabled={!isOptimizerEnabled,}
             >
               Manuelles Preloading starten
             </Button>
-            <Button
-              variant="outlined"
-              startIcon={<PauseIcon />}
-              onClick={() => setAutoPreloadEnabled(false)}
-              disabled={!autoPreloadEnabled}
+            <Button;
+variant="outlined"
+              startIcon={<PauseIcon />,}
+              onClick={() => setAutoPreloadEnabled(false),}
+              disabled={!autoPreloadEnabled,}
             >
               Auto-Preloading pausieren
             </Button>
-            <Button
-              variant="outlined"
-              startIcon={<StopIcon />}
+            <Button;
+variant="outlined"
+              startIcon={<StopIcon />,}
               // The original code had resetMetrics here,
               // but it was removed from the imports.
               // Assuming this function is no longer available or is handled elsewhere.
@@ -354,22 +313,20 @@ export const PreloadOptimizer: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Warnungen */}
+      {/* Warnungen */,}
       {/* The original code had metrics.failedPreloads > 0 and successRate < 80 here,
-          but they were removed from the imports.
-          Assuming these properties and function calls are no longer available or are handled elsewhere.
-          For now, removing the conditions as they are not imported. */}
-      {/*
-      {metrics.failedPreloads > 0 && (
-        <Alert severity="warning" sx={{ mt: 2 }}>
-          Es wurden {metrics.failedPreloads} fehlgeschlagene Preload-Versuche erkannt. 
+          but they were removed from the imports.,
+          Assuming these properties and function calls are no longer available or are handled elsewhere.,
+          For now, removing the conditions as they are not imported. */,}
+      {/*,
+      {metrics.failedPreloads > 0 && (<Alert severity="warning" sx={{ mt: 2 }}>
+          Es wurden {metrics.failedPreloads, } fehlgeschlagene Preload-Versuche erkannt. 
           Überprüfen Sie die Netzwerkverbindung und die Route-Konfiguration.
-        </Alert>
-      )}
+        </Alert>)}
 
-      {successRate < 80 && metrics.totalPreloads > 5 && (
+      {successRate < 80 && metrics.totalPreloads > 5 && (,
         <Alert severity="info" sx={{ mt: 2 }}>
-          Die Erfolgsrate liegt bei {successRate.toFixed(1)}%. 
+          Die Erfolgsrate liegt bei {successRate.toFixed(1),}%. 
           Erwägen Sie eine Optimierung der Preload-Strategie.
         </Alert>
       )}
@@ -379,35 +336,34 @@ export const PreloadOptimizer: React.FC = () => {
 };
 
 // Kompakte Version für Dashboard-Integration
-export const PreloadOptimizerCompact: React.FC = () => {
-  const { isLoading, progress, loaded, total, error, preload, cancel } = usePreload([]);
+export const PreloadOptimizerCompact: React.FC = () => {;
+const { _isLoading, _progress, _loaded, _total, _error, _preload, _cancel,} = usePreload([]);
   // The original code had getSuccessRate here,
   // but it was removed from the imports.
   // Assuming this function is no longer available or is handled elsewhere.
-  // For now, removing the call as it is not imported.
-  const preloadedCount = loaded;
-  const totalRoutes = 10; // Mock-Wert
-  const preloadProgress = (preloadedCount / totalRoutes) * 100;
-  const successRate = 85; // Mock-Wert
+  // For now, removing the call as it is not imported.;
+const preloadedCount = loaded;;
+const totalRoutes = 10; // Mock-Wert;
+const preloadProgress = (preloadedCount / totalRoutes) * 100;;
+const successRate = 85; // Mock-Wert
 
   return (
     <Card sx={{ p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
         <Typography variant="subtitle2">Preload-Status</Typography>
         <Chip 
-          label={`${preloadedCount}/${totalRoutes}`} 
+          label={`${preloadedCount, }/${totalRoutes, }`} 
           size="small" 
           color={preloadProgress === 100 ? 'success' : 'default'}
         />
       </Box>
-      <LinearProgress 
-        variant="determinate" 
-        value={preloadProgress} 
+      <LinearProgress ;
+variant="determinate" 
+        value={preloadProgress, } 
         sx={{ height: 4, borderRadius: 2 }}
       />
       <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-        Erfolgsrate: {successRate}%
+        Erfolgsrate: {successRate, }%
       </Typography>
-    </Card>
-  );
+    </Card>);
 }; 

@@ -1,76 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Box,
-  Card,
-  Typography,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Alert,
-  Snackbar,
-  Tabs,
-  Tab
-} from '@mui/material';
+  Box, Card, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem, Grid, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Alert, Snackbar, Tabs, Tab} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Business as BusinessIcon,
-  Email as EmailIcon,
-  Phone as PhoneIcon,
-  LocationOn as LocationIcon,
-  AccountBalance as AccountBalanceIcon,
-  Assignment as AssignmentIcon,
-  Receipt as ReceiptIcon,
-  History as HistoryIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon
-} from '@mui/icons-material';
-
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Business as BusinessIcon, Email as EmailIcon, Phone as PhoneIcon, LocationOn as LocationIcon, AccountBalance as AccountBalanceIcon, Assignment as AssignmentIcon, Receipt as ReceiptIcon, History as HistoryIcon, CheckCircle as CheckCircleIcon, Warning as WarningIcon, Error as ErrorIcon} from '@mui/icons-material';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`lieferant-tabpanel-${index}`}
-      aria-labelledby={`lieferant-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`lieferant-tabpanel-${index, }`}
+      aria-labelledby={`lieferant-tab-${index, }`}
+      {...other, }
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && (, <Box sx={{ p: 3 }}>
+          {children, }
+        </Box>)}
     </div>
   );
-}
-
+};
 interface Lieferant {
   id: string;
   lieferantennummer: string;
@@ -91,148 +45,56 @@ interface Lieferant {
   status: 'aktiv' | 'inaktiv' | 'gesperrt';
   kategorie: string;
   notizen: string;
-  erstellt_am: string;
-  letzte_aktivitaet: string;
+  erstellt_am: string;;
+letzte_aktivitaet: string;
   bewertung: number;
-}
+};
+const LieferantenFormular: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [selectedLieferant, setSelectedLieferant] = useState<Lieferant | null>(null);,;
+const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as any });
 
-const LieferantenFormular: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [selectedLieferant, setSelectedLieferant] = useState<Lieferant | null>(null);
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as any });
-
-  // Formular-Daten für neuen Lieferanten
-  const [lieferantForm, setLieferantForm] = useState({
-    lieferantennummer: '',
-    firmenname: '',
-    ansprechpartner: '',
-    email: '',
-    telefon: '',
-    strasse: '',
-    plz: '',
-    ort: '',
-    land: 'Deutschland',
-    steuernummer: '',
-    ust_id: '',
-    zahlungsbedingungen: '30 Tage netto',
-    kreditlimit: 0,
-    status: 'aktiv' as Lieferant['status'],
-    kategorie: 'Standard',
-    notizen: '',
-    bewertung: 5
+  // Formular-Daten für neuen Lieferanten;
+const [lieferantForm, setLieferantForm] = useState({
+    lieferantennummer: '', firmenname: '', ansprechpartner: '', email: '', telefon: '', strasse: '', plz: '', ort: '', land: 'Deutschland', steuernummer: '', ust_id: '', zahlungsbedingungen: '30 Tage netto', kreditlimit: 0, status: 'aktiv' as Lieferant['status'], kategorie: 'Standard', notizen: '', bewertung: 5
   });
 
-  // Mock-Daten für Lieferanten
-  const [lieferanten, setLieferanten] = useState<Lieferant[]>([
+  // Mock-Daten für Lieferanten;
+const [lieferanten, setLieferanten] = useState<Lieferant[]>([
     {
-      id: '1',
-      lieferantennummer: 'L-2024-001',
-      firmenname: 'TechSupply GmbH',
-      ansprechpartner: 'Hans Weber',
-      email: 'h.weber@techsupply.de',
-      telefon: '+49 30 1234 5678',
-      adresse: {
-        strasse: 'Industriestraße 45',
-        plz: '10115',
-        ort: 'Berlin',
-        land: 'Deutschland'
-      },
-      steuernummer: '29/123/12345',
-      ust_id: 'DE123456789',
-      zahlungsbedingungen: '30 Tage netto',
-      kreditlimit: 100000,
-      status: 'aktiv',
-      kategorie: 'Premium',
-      notizen: 'Hauptlieferant für Elektronik',
-      erstellt_am: '2024-01-15',
-      letzte_aktivitaet: '2024-01-20',
-      bewertung: 4.5
-    },
-    {
-      id: '2',
-      lieferantennummer: 'L-2024-002',
-      firmenname: 'MaterialHandel KG',
-      ansprechpartner: 'Maria Schmidt',
-      email: 'm.schmidt@materialhandel.de',
-      telefon: '+49 40 9876 5432',
-      adresse: {
-        strasse: 'Handelsweg 78',
-        plz: '20095',
-        ort: 'Hamburg',
-        land: 'Deutschland'
-      },
-      steuernummer: '22/456/78901',
-      ust_id: 'DE987654321',
-      zahlungsbedingungen: '14 Tage netto',
-      kreditlimit: 50000,
-      status: 'aktiv',
-      kategorie: 'Standard',
-      notizen: 'Lieferant für Rohmaterialien',
-      erstellt_am: '2024-01-16',
-      letzte_aktivitaet: '2024-01-18',
-      bewertung: 4.0
+      id: '1', lieferantennummer: 'L-2024-001', firmenname: 'TechSupply GmbH', ansprechpartner: 'Hans Weber', email: 'h.weber@techsupply.de', telefon: '+49 30 1234 5678', adresse: {
+        strasse: 'Industriestraße 45', plz: '10115', ort: 'Berlin', land: 'Deutschland'
+      }, steuernummer: '29/123/12345', ust_id: 'DE123456789', zahlungsbedingungen: '30 Tage netto', kreditlimit: 100000, status: 'aktiv', kategorie: 'Premium', notizen: 'Hauptlieferant für Elektronik', erstellt_am: '2024-01-15', letzte_aktivitaet: '2024-01-20', bewertung: 4.5
+    }, {
+      id: '2', lieferantennummer: 'L-2024-002', firmenname: 'MaterialHandel KG', ansprechpartner: 'Maria Schmidt', email: 'm.schmidt@materialhandel.de', telefon: '+49 40 9876 5432', adresse: {
+        strasse: 'Handelsweg 78', plz: '20095', ort: 'Hamburg', land: 'Deutschland'
+      }, steuernummer: '22/456/78901', ust_id: 'DE987654321', zahlungsbedingungen: '14 Tage netto', kreditlimit: 50000, status: 'aktiv', kategorie: 'Standard', notizen: 'Lieferant für Rohmaterialien', erstellt_am: '2024-01-16', letzte_aktivitaet: '2024-01-18', bewertung: 4.0
     }
-  ]);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleOpenDialog = (lieferant?: Lieferant) => {
+  ]);;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (lieferant?: Lieferant) => {
     if (lieferant) {
-      setSelectedLieferant(lieferant);
+      setSelectedLieferant(lieferant);,
       setLieferantForm({
-        lieferantennummer: lieferant.lieferantennummer,
-        firmenname: lieferant.firmenname,
-        ansprechpartner: lieferant.ansprechpartner,
-        email: lieferant.email,
-        telefon: lieferant.telefon,
-        strasse: lieferant.adresse.strasse,
-        plz: lieferant.adresse.plz,
-        ort: lieferant.adresse.ort,
-        land: lieferant.adresse.land,
-        steuernummer: lieferant.steuernummer,
-        ust_id: lieferant.ust_id,
-        zahlungsbedingungen: lieferant.zahlungsbedingungen,
-        kreditlimit: lieferant.kreditlimit,
-        status: lieferant.status,
-        kategorie: lieferant.kategorie,
-        notizen: lieferant.notizen,
-        bewertung: lieferant.bewertung
+        lieferantennummer: lieferant.lieferantennummer, firmenname: lieferant.firmenname, ansprechpartner: lieferant.ansprechpartner, email: lieferant.email, telefon: lieferant.telefon, strasse: lieferant.adresse.strasse, plz: lieferant.adresse.plz, ort: lieferant.adresse.ort, land: lieferant.adresse.land, steuernummer: lieferant.steuernummer, ust_id: lieferant.ust_id, zahlungsbedingungen: lieferant.zahlungsbedingungen, kreditlimit: lieferant.kreditlimit, status: lieferant.status, kategorie: lieferant.kategorie, notizen: lieferant.notizen, bewertung: lieferant.bewertung
       });
     } else {
-      setSelectedLieferant(null);
+      setSelectedLieferant(null);,
       setLieferantForm({
-        lieferantennummer: '',
-        firmenname: '',
-        ansprechpartner: '',
-        email: '',
-        telefon: '',
-        strasse: '',
-        plz: '',
-        ort: '',
-        land: 'Deutschland',
-        steuernummer: '',
-        ust_id: '',
-        zahlungsbedingungen: '30 Tage netto',
-        kreditlimit: 0,
-        status: 'aktiv',
-        kategorie: 'Standard',
-        notizen: '',
-        bewertung: 5
+        lieferantennummer: '', firmenname: '', ansprechpartner: '', email: '', telefon: '', strasse: '', plz: '', ort: '', land: 'Deutschland', steuernummer: '', ust_id: '', zahlungsbedingungen: '30 Tage netto', kreditlimit: 0, status: 'aktiv', kategorie: 'Standard', notizen: '', bewertung: 5
       });
     }
     setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setSelectedLieferant(null);
-  };
-
-  const handleSaveLieferant = () => {
-    const newLieferant: Lieferant = {
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
+    setSelectedLieferant(null);,
+  };;
+const handleSaveLieferant = () => {;
+const newLieferant: Lieferant = {
       id: selectedLieferant?.id || Date.now().toString(),
       lieferantennummer: lieferantForm.lieferantennummer || `L-2024-${String(lieferanten.length + 1).padStart(3, '0')}`,
       firmenname: lieferantForm.firmenname,
@@ -252,8 +114,8 @@ const LieferantenFormular: React.FC = () => {
       status: lieferantForm.status,
       kategorie: lieferantForm.kategorie,
       notizen: lieferantForm.notizen,
-      erstellt_am: selectedLieferant?.erstellt_am || new Date().toISOString().split('T')[0],
-      letzte_aktivitaet: new Date().toISOString().split('T')[0],
+      erstellt_am: selectedLieferant?.erstellt_am || new Date().toISOString().split('T')[0],;
+letzte_aktivitaet: new Date().toISOString().split('T')[0],
       bewertung: lieferantForm.bewertung
     };
 
@@ -261,22 +123,20 @@ const LieferantenFormular: React.FC = () => {
       setLieferanten(lieferanten.map(l => l.id === selectedLieferant.id ? newLieferant : l));
       setSnackbar({ open: true, message: 'Lieferant erfolgreich aktualisiert!', severity: 'success' });
     } else {
-      setLieferanten([...lieferanten, newLieferant]);
+      setLieferanten([...lieferanten, newLieferant]);,
       setSnackbar({ open: true, message: 'Lieferant erfolgreich erstellt!', severity: 'success' });
     }
     handleCloseDialog();
-  };
-
-  const getStatusColor = (status: string) => {
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'aktiv': return 'success';
       case 'inaktiv': return 'default';
       case 'gesperrt': return 'error';
       default: return 'default';
     }
-  };
-
-  const getStatusText = (status: string) => {
+  };;
+const getStatusText = (status: string) => {
     switch (status) {
       case 'aktiv': return 'Aktiv';
       case 'inaktiv': return 'Inaktiv';
@@ -285,8 +145,7 @@ const LieferantenFormular: React.FC = () => {
     }
   };
 
-  return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
+  return (<Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
       <Box sx={{ p: 3 }}>
         <Typography variant="h4" sx={{ mb: 3, fontWeight: 700, color: '#0A6ED1' }}>
           Lieferantenverwaltung
@@ -294,44 +153,44 @@ const LieferantenFormular: React.FC = () => {
 
         <Card sx={{ mb: 4 }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={tabValue} onChange={handleTabChange} aria-label="Lieferanten sections">
+            <Tabs value={tabValue, } onChange={handleTabChange, } aria-label="Lieferanten sections">
               <Tab 
-                icon={<BusinessIcon />} 
+                icon={<BusinessIcon />, } 
                 label="Lieferantenliste" 
                 iconPosition="start"
               />
               <Tab 
-                icon={<AssignmentIcon />} 
+                icon={<AssignmentIcon />, } 
                 label="Bestellungen" 
                 iconPosition="start"
               />
               <Tab 
-                icon={<ReceiptIcon />} 
+                icon={<ReceiptIcon />, } 
                 label="Rechnungen" 
                 iconPosition="start"
               />
               <Tab 
-                icon={<HistoryIcon />} 
+                icon={<HistoryIcon />, } 
                 label="Bewertungen" 
                 iconPosition="start"
               />
             </Tabs>
           </Box>
 
-          <TabPanel value={tabValue} index={0}>
-            {/* Lieferantenliste */}
+          <TabPanel value={tabValue, } index={0, }>
+            {/* Lieferantenliste */, }
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
               <Typography variant="h5">Alle Lieferanten</Typography>
-              <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={() => handleOpenDialog()}
+              <Button;
+variant="contained"
+                startIcon={<AddIcon />, }
+                onClick={() => handleOpenDialog(),}
               >
                 Neuer Lieferant
               </Button>
             </Box>
             
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -346,38 +205,37 @@ const LieferantenFormular: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {lieferanten.map((lieferant) => (
-                    <TableRow key={lieferant.id} hover>
+                  {lieferanten.map((lieferant) => (<TableRow key={lieferant.id, } hover>
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          {lieferant.lieferantennummer}
+                          {lieferant.lieferantennummer, }
                         </Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          {lieferant.firmenname}
+                          {lieferant.firmenname, }
                         </Typography>
                       </TableCell>
-                      <TableCell>{lieferant.ansprechpartner}</TableCell>
-                      <TableCell>{lieferant.email}</TableCell>
-                      <TableCell>{lieferant.telefon}</TableCell>
+                      <TableCell>{lieferant.ansprechpartner, }</TableCell>
+                      <TableCell>{lieferant.email, }</TableCell>
+                      <TableCell>{lieferant.telefon, }</TableCell>
                       <TableCell>
                         <Chip
-                          label={getStatusText(lieferant.status)}
-                          color={getStatusColor(lieferant.status) as any}
+                          label={getStatusText(lieferant.status),}
+                          color={getStatusColor(lieferant.status) as any,}
                           size="small"
                         />
                       </TableCell>
                       <TableCell>
                         <Chip
-                          label={`${lieferant.bewertung}/5`}
+                          label={`${lieferant.bewertung,}/5`}
                           color={lieferant.bewertung >= 4 ? 'success' : lieferant.bewertung >= 3 ? 'warning' : 'error'}
                           size="small"
                         />
                       </TableCell>
                       <TableCell>
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                          <IconButton size="small" onClick={() => handleOpenDialog(lieferant)}>
+                          <IconButton size="small" onClick={() => handleOpenDialog(lieferant),}>
                             <EditIcon />
                           </IconButton>
                           <IconButton size="small" color="error">
@@ -392,10 +250,10 @@ const LieferantenFormular: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={1}>
-            {/* Bestellungen */}
+          <TabPanel value={tabValue,} index={1,}>
+            {/* Bestellungen */,}
             <Typography variant="h5" sx={{ mb: 3 }}>Lieferantenbestellungen</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -409,7 +267,7 @@ const LieferantenFormular: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell colSpan={6} align="center">
+                    <TableCell colSpan={6,} align="center">
                       <Typography variant="body2" color="text.secondary">
                         Keine Bestellungen vorhanden
                       </Typography>
@@ -420,10 +278,10 @@ const LieferantenFormular: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={2}>
-            {/* Rechnungen */}
+          <TabPanel value={tabValue,} index={2,}>
+            {/* Rechnungen */,}
             <Typography variant="h5" sx={{ mb: 3 }}>Lieferantenrechnungen</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -437,7 +295,7 @@ const LieferantenFormular: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell colSpan={6} align="center">
+                    <TableCell colSpan={6,} align="center">
                       <Typography variant="body2" color="text.secondary">
                         Keine Rechnungen vorhanden
                       </Typography>
@@ -448,10 +306,10 @@ const LieferantenFormular: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={3}>
-            {/* Bewertungen */}
+          <TabPanel value={tabValue,} index={3,}>
+            {/* Bewertungen */,}
             <Typography variant="h5" sx={{ mb: 3 }}>Lieferantenbewertungen</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -463,22 +321,21 @@ const LieferantenFormular: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {lieferanten.map((lieferant) => (
-                    <TableRow key={lieferant.id} hover>
-                      <TableCell>{lieferant.firmenname}</TableCell>
+                  {lieferanten.map((lieferant) => (<TableRow key={lieferant.id, } hover>
+                      <TableCell>{lieferant.firmenname, }</TableCell>
                       <TableCell>
                         <Chip
-                          label={`${lieferant.bewertung}/5`}
+                          label={`${lieferant.bewertung, }/5`}
                           color={lieferant.bewertung >= 4 ? 'success' : lieferant.bewertung >= 3 ? 'warning' : 'error'}
                           size="small"
                         />
                       </TableCell>
-                      <TableCell>{lieferant.kategorie}</TableCell>
-                      <TableCell>{lieferant.letzte_aktivitaet}</TableCell>
+                      <TableCell>{lieferant.kategorie, }</TableCell>
+                      <TableCell>{lieferant.letzte_aktivitaet, }</TableCell>
                       <TableCell>
                         <Chip
-                          label={getStatusText(lieferant.status)}
-                          color={getStatusColor(lieferant.status) as any}
+                          label={getStatusText(lieferant.status),}
+                          color={getStatusColor(lieferant.status) as any,}
                           size="small"
                         />
                       </TableCell>
@@ -491,10 +348,10 @@ const LieferantenFormular: React.FC = () => {
         </Card>
       </Box>
 
-      {/* Lieferanten-Erstellungs-Dialog */}
+      {/* Lieferanten-Erstellungs-Dialog */,}
       <Dialog 
-        open={openDialog} 
-        onClose={handleCloseDialog}
+        open={openDialog,} 
+        onClose={handleCloseDialog,}
         maxWidth="md"
         fullWidth
       >
@@ -503,128 +360,128 @@ const LieferantenFormular: React.FC = () => {
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={2,}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Lieferantennummer"
-                  value={lieferantForm.lieferantennummer}
+                  value={lieferantForm.lieferantennummer,}
                   onChange={(e) => setLieferantForm({...lieferantForm, lieferantennummer: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Firmenname"
-                  value={lieferantForm.firmenname}
+                  value={lieferantForm.firmenname,}
                   onChange={(e) => setLieferantForm({...lieferantForm, firmenname: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12,}>
                 <TextField
                   fullWidth
                   label="Ansprechpartner"
-                  value={lieferantForm.ansprechpartner}
+                  value={lieferantForm.ansprechpartner,}
                   onChange={(e) => setLieferantForm({...lieferantForm, ansprechpartner: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
-                  label="E-Mail"
-                  type="email"
-                  value={lieferantForm.email}
+                  label="E-Mail";
+type="email"
+                  value={lieferantForm.email,}
                   onChange={(e) => setLieferantForm({...lieferantForm, email: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Telefon"
-                  value={lieferantForm.telefon}
+                  value={lieferantForm.telefon,}
                   onChange={(e) => setLieferantForm({...lieferantForm, telefon: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12,}>
                 <TextField
                   fullWidth
                   label="Straße & Hausnummer"
-                  value={lieferantForm.strasse}
+                  value={lieferantForm.strasse,}
                   onChange={(e) => setLieferantForm({...lieferantForm, strasse: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <TextField
                   fullWidth
                   label="PLZ"
-                  value={lieferantForm.plz}
+                  value={lieferantForm.plz,}
                   onChange={(e) => setLieferantForm({...lieferantForm, plz: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <TextField
                   fullWidth
                   label="Ort"
-                  value={lieferantForm.ort}
+                  value={lieferantForm.ort,}
                   onChange={(e) => setLieferantForm({...lieferantForm, ort: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <TextField
                   fullWidth
                   label="Land"
-                  value={lieferantForm.land}
+                  value={lieferantForm.land,}
                   onChange={(e) => setLieferantForm({...lieferantForm, land: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Steuernummer"
-                  value={lieferantForm.steuernummer}
+                  value={lieferantForm.steuernummer,}
                   onChange={(e) => setLieferantForm({...lieferantForm, steuernummer: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="USt-ID"
-                  value={lieferantForm.ust_id}
+                  value={lieferantForm.ust_id,}
                   onChange={(e) => setLieferantForm({...lieferantForm, ust_id: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Zahlungsbedingungen"
-                  value={lieferantForm.zahlungsbedingungen}
+                  value={lieferantForm.zahlungsbedingungen,}
                   onChange={(e) => setLieferantForm({...lieferantForm, zahlungsbedingungen: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
-                  label="Kreditlimit"
-                  type="number"
-                  value={lieferantForm.kreditlimit}
+                  label="Kreditlimit";
+type="number"
+                  value={lieferantForm.kreditlimit,}
                   onChange={(e) => setLieferantForm({...lieferantForm, kreditlimit: parseFloat(e.target.value) || 0})}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <FormControl fullWidth>
                   <InputLabel>Status</InputLabel>
                   <Select
-                    value={lieferantForm.status}
+                    value={lieferantForm.status,}
                     onChange={(e) => setLieferantForm({...lieferantForm, status: e.target.value as Lieferant['status']})}
                     label="Status"
                   >
@@ -634,21 +491,21 @@ const LieferantenFormular: React.FC = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Kategorie"
-                  value={lieferantForm.kategorie}
+                  value={lieferantForm.kategorie,}
                   onChange={(e) => setLieferantForm({...lieferantForm, kategorie: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12,}>
                 <TextField
                   fullWidth
                   label="Notizen"
                   multiline
-                  rows={3}
-                  value={lieferantForm.notizen}
+                  rows={3,}
+                  value={lieferantForm.notizen,}
                   onChange={(e) => setLieferantForm({...lieferantForm, notizen: e.target.value})}
                 />
               </Grid>
@@ -656,20 +513,20 @@ const LieferantenFormular: React.FC = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          <Button onClick={handleSaveLieferant} variant="contained">
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          <Button onClick={handleSaveLieferant,} variant="contained">
             {selectedLieferant ? 'Aktualisieren' : 'Erstellen'}
           </Button>
         </DialogActions>
       </Dialog>
 
       <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
+        open={snackbar.open,}
+        autoHideDuration={6000,}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       >
-        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity}>
-          {snackbar.message}
+        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity,}>
+          {snackbar.message,}
         </Alert>
       </Snackbar>
     </Box>

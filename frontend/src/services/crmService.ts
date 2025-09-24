@@ -1,7 +1,7 @@
 // CRM Service für VALEO NeuroERP
-import { Customer, ContactPerson, CustomerFilter, ContactPersonFilter, ContactPersonFormData, mapFormDataToApiContact, ContactRole, ContactPermission, CustomerSegment } from '../types/crm';
+import { Customer, ContactPerson, CustomerFilter, ContactPersonFilter, ContactPersonFormData, mapFormDataToApiContact, ContactRole, ContactPermission, CustomerSegment} from '../types/crm';
 
-// Mock-Daten für Kontaktpersonen
+// Mock-Daten für Kontaktpersonen;
 const mockContactPersons: ContactPerson[] = [
   {
     id: '1',
@@ -72,7 +72,7 @@ const mockContactPersons: ContactPerson[] = [
   }
 ];
 
-// Mock-Daten für Kunden
+// Mock-Daten für Kunden;
 const mockCustomers: Customer[] = [
   {
     id: 'customer-1',
@@ -102,38 +102,35 @@ const mockCustomers: Customer[] = [
     riskScore: 2,
     priority: 'high'
   }
-];
-
+];;
 class CRMService {
-  // Kontaktpersonen-Methoden
+  // Kontaktpersonen-Methoden,
   async getContactPersons(customerId: string, filter?: ContactPersonFilter): Promise<ContactPerson[]> {
-    // Simuliere API-Verzögerung
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Simuliere API-Verzögerung,
+    await new Promise(resolve => setTimeout(resolve, 500));,;
+let contacts = mockContactPersons.filter(contact => contact.customerId === customerId);,
     
-    let contacts = mockContactPersons.filter(contact => contact.customerId === customerId);
-    
-    // Filter anwenden
+    // Filter anwenden,
     if (filter) {
-      if (filter.search) {
-        const searchTerm = filter.search.toLowerCase();
-        contacts = contacts.filter(contact => 
-          contact.firstName.toLowerCase().includes(searchTerm) ||
-          contact.lastName.toLowerCase().includes(searchTerm) ||
-          contact.position.toLowerCase().includes(searchTerm) ||
-          contact.department?.toLowerCase().includes(searchTerm)
-        );
+      if (filter.search) {;
+const searchTerm = filter.search.toLowerCase();,
+        contacts = contacts.filter(contact =>, contact.firstName.toLowerCase().includes(searchTerm) ||,
+          contact.lastName.toLowerCase().includes(searchTerm) ||,
+          contact.position.toLowerCase().includes(searchTerm) ||,
+          contact.department?.toLowerCase().includes(searchTerm),
+        );,
       }
       
       if (filter.isMainContact !== undefined) {
-        contacts = contacts.filter(contact => contact.isMainContact === filter.isMainContact);
+        contacts = contacts.filter(contact => contact.isMainContact === filter.isMainContact);,
       }
       
       if (filter.isActive !== undefined) {
-        contacts = contacts.filter(contact => contact.isActive === filter.isActive);
+        contacts = contacts.filter(contact => contact.isActive === filter.isActive);,
       }
       
       if (filter.role) {
-        contacts = contacts.filter(contact => contact.role === filter.role);
+        contacts = contacts.filter(contact => contact.role === filter.role);,
       }
     }
     
@@ -141,14 +138,13 @@ class CRMService {
   }
 
   async getContactPersonById(id: string): Promise<ContactPerson | null> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return mockContactPersons.find(contact => contact.id === id) || null;
+    await new Promise(resolve => setTimeout(resolve, 300));,
+    return mockContactPersons.find(contact => contact.id === id) || null;,
   }
 
   async createContactPerson(formData: ContactPersonFormData): Promise<ContactPerson> {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    const newContact: ContactPerson = {
+    await new Promise(resolve => setTimeout(resolve, 800));,;
+const newContact: ContactPerson = {
       id: `contact-${Date.now()}`,
       customerId: 'customer-1', // In der echten Implementierung würde dies aus dem Kontext kommen
       salutation: formData.salutation,
@@ -184,14 +180,12 @@ class CRMService {
   }
 
   async updateContactPerson(id: string, formData: ContactPersonFormData): Promise<ContactPerson> {
-    await new Promise(resolve => setTimeout(resolve, 600));
-    
-    const index = mockContactPersons.findIndex(contact => contact.id === id);
+    await new Promise(resolve => setTimeout(resolve, 600));,;
+const index = mockContactPersons.findIndex(contact => contact.id === id);,
     if (index === -1) {
-      throw new Error('Kontakt nicht gefunden');
-    }
-    
-    const updatedContact: ContactPerson = {
+      throw new Error('Kontakt nicht gefunden');,
+    };
+const updatedContact: ContactPerson = {
       ...mockContactPersons[index],
       salutation: formData.salutation,
       firstName: formData.firstName,
@@ -223,11 +217,10 @@ class CRMService {
   }
 
   async deleteContactPerson(id: string): Promise<void> {
-    await new Promise(resolve => setTimeout(resolve, 400));
-    
-    const index = mockContactPersons.findIndex(contact => contact.id === id);
+    await new Promise(resolve => setTimeout(resolve, 400));,;
+const index = mockContactPersons.findIndex(contact => contact.id === id);,
     if (index === -1) {
-      throw new Error('Kontakt nicht gefunden');
+      throw new Error('Kontakt nicht gefunden');,
     }
     
     mockContactPersons.splice(index, 1);
@@ -235,25 +228,23 @@ class CRMService {
 
   // Kunden-Methoden
   async getCustomers(filter?: CustomerFilter): Promise<Customer[]> {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    let customers = [...mockCustomers];
+    await new Promise(resolve => setTimeout(resolve, 500));,;
+let customers = [...mockCustomers];,
     
     if (filter) {
-      if (filter.search) {
-        const searchTerm = filter.search.toLowerCase();
-        customers = customers.filter(customer => 
-          customer.name.toLowerCase().includes(searchTerm) ||
-          customer.customerNumber.toLowerCase().includes(searchTerm)
-        );
+      if (filter.search) {;
+const searchTerm = filter.search.toLowerCase();,
+        customers = customers.filter(customer =>, customer.name.toLowerCase().includes(searchTerm) ||,
+          customer.customerNumber.toLowerCase().includes(searchTerm),
+        );,
       }
       
       if (filter.customerGroup) {
-        customers = customers.filter(customer => customer.customerGroup === filter.customerGroup);
+        customers = customers.filter(customer => customer.customerGroup === filter.customerGroup);,
       }
       
       if (filter.status) {
-        customers = customers.filter(customer => customer.status === filter.status);
+        customers = customers.filter(customer => customer.status === filter.status);,
       }
     }
     
@@ -261,19 +252,18 @@ class CRMService {
   }
 
   async getCustomerById(id: string): Promise<Customer | null> {
-    // Simuliere API-Verzögerung
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Simuliere API-Verzögerung,
+    await new Promise(resolve => setTimeout(resolve, 500));,
     
-    return mockCustomers.find(customer => customer.id === id) || null;
+    return mockCustomers.find(customer => customer.id === id) || null;,
   }
 
   async updateCustomer(id: string, data: Partial<Customer>): Promise<Customer> {
-    // Simuliere API-Verzögerung
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const customerIndex = mockCustomers.findIndex(customer => customer.id === id);
+    // Simuliere API-Verzögerung,
+    await new Promise(resolve => setTimeout(resolve, 1000));,;
+const customerIndex = mockCustomers.findIndex(customer => customer.id === id);,
     if (customerIndex === -1) {
-      throw new Error(`Kunde mit ID ${id} nicht gefunden`);
+      throw new Error(`Kunde mit ID ${id, } nicht gefunden`);
     }
     
     // Aktualisiere den Kunden

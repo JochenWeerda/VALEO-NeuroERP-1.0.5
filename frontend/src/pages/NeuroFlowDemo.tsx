@@ -1,41 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import { 
-  Box, 
-  Typography, 
-  Button,
-  IconButton
-} from '@mui/material';
+  Box, Typography, Button, IconButton} from '@mui/material';
 import { 
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  Download as DownloadIcon,
-  Refresh as RefreshIcon,
-  People as PeopleIcon,
-  AccountBalance as AccountBalanceIcon,
-  Inventory as InventoryIcon
-} from '@mui/icons-material';
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, Download as DownloadIcon, Refresh as RefreshIcon, People as PeopleIcon, AccountBalance as AccountBalanceIcon, Inventory as InventoryIcon} from '@mui/icons-material';
 import {
-  ObjectPageHeader,
-  ObjectListItem,
-  ActionBar,
-  QuickViewCard,
-  StatusIndicator,
-  DataTableToolbar,
-  SectionHeader,
-  MessageStrip
-} from '../components/ui/NeuroFlowComponents';
-
-const NeuroFlowDemo: React.FC = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [showMessage, setShowMessage] = useState(true);
-
-  const handleAction = (action: string) => {
+  ObjectPageHeader, ObjectListItem, ActionBar, QuickViewCard, StatusIndicator, DataTableToolbar, SectionHeader, MessageStrip} from '../components/ui/NeuroFlowComponents';;
+const NeuroFlowDemo: React.FC = () => {;
+const [searchValue, setSearchValue] = useState('');,;
+const [showMessage, setShowMessage] = useState(true);,;
+const handleAction = (action: string) => {
     console.log(`Action: ${action}`);
-  };
-
-  const mockCustomers = [
+  };;
+const mockCustomers = [
     {
       id: '1',
       name: 'Max Mustermann',
@@ -62,9 +38,8 @@ const NeuroFlowDemo: React.FC = () => {
     }
   ];
 
-  return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
-      {/* Object Page Header */}
+  return (<Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
+      {/* Object Page Header */, }
       <ObjectPageHeader
         title="VALEO NeuroERP Demo"
         subtitle="NeuroFlow Design System"
@@ -72,60 +47,59 @@ const NeuroFlowDemo: React.FC = () => {
         status="Aktiv"
         actions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button variant="outlined" startIcon={<EditIcon />}>
+            <Button variant="outlined" startIcon={<EditIcon />, }>
               Bearbeiten
             </Button>
-            <Button variant="contained" startIcon={<AddIcon />}>
+            <Button variant="contained" startIcon={<AddIcon />, }>
               Neu erstellen
             </Button>
           </Box>
         }
       />
 
-      {/* Message Strip */}
-      {showMessage && (
-        <Box sx={{ px: 3 }}>
-          <MessageStrip
-            type="info"
+      {/* Message Strip */, }
+      {showMessage && (, <Box sx={{ px: 3 }}>
+          <MessageStrip;
+type="info"
             title="Willkommen"
-            onClose={() => setShowMessage(false)}
+            onClose={() => setShowMessage(false),}
           >
             Dies ist eine Demo des neuen NeuroFlow Design-Systems für VALEO NeuroERP.
           </MessageStrip>
         </Box>
       )}
 
-      {/* Action Bar */}
+      {/* Action Bar */,}
       <ActionBar
         title="Kundenverwaltung"
-        actions={[
+        actions={[,
           {
             label: 'Neuer Kunde',
             icon: <AddIcon />,
-            onClick: () => handleAction('Neuer Kunde'),
-            variant: 'contained'
+            onClick: () => handleAction('Neuer Kunde'),;
+variant: 'contained'
           },
           {
             label: 'Exportieren',
             icon: <DownloadIcon />,
-            onClick: () => handleAction('Exportieren'),
-            variant: 'outlined'
+            onClick: () => handleAction('Exportieren'),;
+variant: 'outlined'
           },
           {
             label: 'Aktualisieren',
             icon: <RefreshIcon />,
-            onClick: () => handleAction('Aktualisieren'),
-            variant: 'text'
+            onClick: () => handleAction('Aktualisieren'),;
+variant: 'text'
           }
         ]}
       />
 
       <Box sx={{ p: 3 }}>
-        {/* Data Table Toolbar */}
+        {/* Data Table Toolbar */,}
         <DataTableToolbar
           title="Kundenliste"
-          searchValue={searchValue}
-          onSearchChange={setSearchValue}
+          searchValue={searchValue,}
+          onSearchChange={setSearchValue,}
           actions={
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Button size="small" variant="outlined">
@@ -138,15 +112,13 @@ const NeuroFlowDemo: React.FC = () => {
           }
         />
 
-        {/* Object List Items */}
+        {/* Object List Items */,}
         <Box sx={{ mb: 4 }}>
-          {mockCustomers.map((customer) => (
-            <ObjectListItem
-              key={customer.id}
-              title={customer.name}
-              subtitle={customer.company}
-              description={customer.email}
-              status={customer.status}
+          {mockCustomers.map((customer) => (<ObjectListItem, key={customer.id, }
+              title={customer.name, }
+              subtitle={customer.company, }
+              description={customer.email, }
+              status={customer.status, }
               avatar={`https://ui-avatars.com/api/?name=${customer.name}&background=0A6ED1&color=fff`}
               actions={
                 <Box sx={{ display: 'flex', gap: 0.5 }}>
@@ -166,7 +138,7 @@ const NeuroFlowDemo: React.FC = () => {
           ))}
         </Box>
 
-        {/* Quick View Cards */}
+        {/* Quick View Cards */,}
         <SectionHeader
           title="Übersicht"
           subtitle="Wichtige Kennzahlen und Status"
@@ -180,11 +152,11 @@ const NeuroFlowDemo: React.FC = () => {
         }}>
           <QuickViewCard
             title="Kunden"
-            icon={<PeopleIcon />}
+            icon={<PeopleIcon />,}
             actions={
-              <IconButton size="small">
-                <ViewIcon />
-              </IconButton>
+              <IconButton size="small">,
+                <ViewIcon />,
+              </IconButton>,
             }
           >
             <Box sx={{ textAlign: 'center', py: 2 }}>
@@ -204,11 +176,11 @@ const NeuroFlowDemo: React.FC = () => {
 
           <QuickViewCard
             title="Umsatz"
-            icon={<AccountBalanceIcon />}
+            icon={<AccountBalanceIcon />,}
             actions={
-              <IconButton size="small">
-                <DownloadIcon />
-              </IconButton>
+              <IconButton size="small">,
+                <DownloadIcon />,
+              </IconButton>,
             }
           >
             <Box sx={{ textAlign: 'center', py: 2 }}>
@@ -228,11 +200,11 @@ const NeuroFlowDemo: React.FC = () => {
 
           <QuickViewCard
             title="Bestand"
-            icon={<InventoryIcon />}
+            icon={<InventoryIcon />,}
             actions={
-              <IconButton size="small">
-                <ViewIcon />
-              </IconButton>
+              <IconButton size="small">,
+                <ViewIcon />,
+              </IconButton>,
             }
           >
             <Box sx={{ textAlign: 'center', py: 2 }}>
@@ -251,7 +223,7 @@ const NeuroFlowDemo: React.FC = () => {
           </QuickViewCard>
         </Box>
 
-        {/* Status Indicators Demo */}
+        {/* Status Indicators Demo */,}
         <SectionHeader
           title="Status-Übersicht"
           subtitle="Verschiedene Status-Indikatoren"
@@ -270,7 +242,7 @@ const NeuroFlowDemo: React.FC = () => {
           <StatusIndicator status="neutral" label="Neutraler Status" />
         </Box>
 
-        {/* Message Strips Demo */}
+        {/* Message Strips Demo */,}
         <SectionHeader
           title="Nachrichten"
           subtitle="Verschiedene Nachrichtentypen"
