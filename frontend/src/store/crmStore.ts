@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create ,} from 'zustand';
+import { devtools ,} from 'zustand/middleware';
 
-// CRM Types für VALEO NeuroERP
+// CRM Types für VALEO NeuroERP;
 interface Customer {
   id: string;
   name: string;
@@ -21,22 +21,20 @@ interface Customer {
   tags: string[];
   createdAt: Date;
   updatedAt: Date;
-}
-
+};
 interface Contact {
   id: string;
-  customerId: string;
-  type: 'email' | 'phone' | 'meeting' | 'note';
+  customerId: string;;
+type: 'email' | 'phone' | 'meeting' | 'note';
   subject: string;
   description: string;
   date: Date;
   outcome?: string;
   nextAction?: string;
   assignedTo?: string;
-}
-
+};
 interface CRMStore {
-  // State
+  // State,
   customers: Customer[];
   contacts: Contact[];
   selectedCustomer: Customer | null;
@@ -51,85 +49,65 @@ interface CRMStore {
   
   // Actions
   setCustomers: (customers: Customer[]) => void;
-  addCustomer: (customer: Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
-  updateCustomer: (id: string, updates: Partial<Customer>) => Promise<void>;
-  deleteCustomer: (id: string) => Promise<void>;
-  setSelectedCustomer: (customer: Customer | null) => void;
+  addCustomer: (customer: Omit<_Customer, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
+  updateCustomer: (id: _string, updates: Partial<Customer>) => Promise<void>;
+  deleteCustomer: (id: _string) => Promise<void>;
+  setSelectedCustomer: (customer: Customer | _null) => void;
   
   setContacts: (contacts: Contact[]) => void;
-  addContact: (contact: Omit<Contact, 'id'>) => Promise<void>;
-  updateContact: (id: string, updates: Partial<Contact>) => Promise<void>;
-  deleteContact: (id: string) => Promise<void>;
+  addContact: (contact: Omit<_Contact, 'id'>) => Promise<void>;
+  updateContact: (id: _string, updates: Partial<Contact>) => Promise<void>;
+  deleteContact: (id: _string) => Promise<void>;
   
   setFilters: (filters: Partial<CRMStore['filters']>) => void;
   clearFilters: () => void;
   
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
+  setLoading: (loading: _boolean) => void;
+  setError: (error: string | _null) => void;
   clearError: () => void;
 }
 
-export const useCRMStore = create<CRMStore>()(
-  devtools(
+export const useCRMStore = create<CRMStore>()(devtools(
     (set, get) => ({
-      // Initial State
-      customers: [],
-      contacts: [],
-      selectedCustomer: null,
-      filters: {
-        status: [],
-        category: [],
-        tags: [],
-        searchTerm: ''
-      },
-      loading: false,
-      error: null,
-      
-      // Actions
-      setCustomers: (customers) => {
-        set({ customers });
+      // Initial State, customers: [], contacts: [], selectedCustomer: null, filters: {
+        status: [], category: [], tags: [], searchTerm: ''
+      }, loading: false, error: null, // Actions
+      setCustomers: (_customers) => {
+        set({ customers, });
       },
       
       addCustomer: async (customerData) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch('/api/crm/customers', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(customerData)
+        try {;
+const response = await fetch('/api/crm/customers', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(customerData)
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Erstellen des Kunden');
-          }
-          
-          const newCustomer = await response.json();
+            throw new Error('Fehler beim Erstellen des Kunden');,
+          };
+const newCustomer = await response.json();
           set((state) => ({
-            customers: [...state.customers, newCustomer],
-            loading: false
+            customers: [...state.customers, newCustomer], loading: false
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
       updateCustomer: async (id, updates) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/crm/customers/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updates)
+        try {;
+const response = await fetch(`/api/crm/customers/${id, }`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates)
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Aktualisieren des Kunden');
-          }
-          
-          const updatedCustomer = await response.json();
+            throw new Error('Fehler beim Aktualisieren des Kunden');,
+          };
+const updatedCustomer = await response.json();
           set((state) => ({
             customers: state.customers.map(customer =>
               customer.id === id ? updatedCustomer : customer
@@ -139,21 +117,20 @@ export const useCRMStore = create<CRMStore>()(
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
       deleteCustomer: async (id) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/crm/customers/${id}`, {
+        try {;
+const response = await fetch(`/api/crm/customers/${id, }`, {
             method: 'DELETE'
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Löschen des Kunden');
+            throw new Error('Fehler beim Löschen des Kunden');,
           }
           
           set((state) => ({
@@ -163,60 +140,51 @@ export const useCRMStore = create<CRMStore>()(
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
-      setSelectedCustomer: (customer) => {
+      setSelectedCustomer: (_customer) => {
         set({ selectedCustomer: customer });
       },
       
-      setContacts: (contacts) => {
-        set({ contacts });
+      setContacts: (_contacts) => {
+        set({ contacts, });
       },
       
       addContact: async (contactData) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch('/api/crm/contacts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(contactData)
+        try {;
+const response = await fetch('/api/crm/contacts', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(contactData)
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Erstellen des Kontakts');
-          }
-          
-          const newContact = await response.json();
+            throw new Error('Fehler beim Erstellen des Kontakts');,
+          };
+const newContact = await response.json();
           set((state) => ({
-            contacts: [...state.contacts, newContact],
-            loading: false
+            contacts: [...state.contacts, newContact], loading: false
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
       updateContact: async (id, updates) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/crm/contacts/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updates)
+        try {;
+const response = await fetch(`/api/crm/contacts/${id, }`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates)
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Aktualisieren des Kontakts');
-          }
-          
-          const updatedContact = await response.json();
+            throw new Error('Fehler beim Aktualisieren des Kontakts');,
+          };
+const updatedContact = await response.json();
           set((state) => ({
             contacts: state.contacts.map(contact =>
               contact.id === id ? updatedContact : contact
@@ -225,21 +193,20 @@ export const useCRMStore = create<CRMStore>()(
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
       deleteContact: async (id) => {
         set({ loading: true, error: null });
-        try {
-          const response = await fetch(`/api/crm/contacts/${id}`, {
+        try {;
+const response = await fetch(`/api/crm/contacts/${id, }`, {
             method: 'DELETE'
           });
           
           if (!response.ok) {
-            throw new Error('Fehler beim Löschen des Kontakts');
+            throw new Error('Fehler beim Löschen des Kontakts');,
           }
           
           set((state) => ({
@@ -248,13 +215,12 @@ export const useCRMStore = create<CRMStore>()(
           }));
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-            loading: false
+            error: error instanceof Error ? error.message : 'Unbekannter Fehler', loading: false
           });
         }
       },
       
-      setFilters: (filters) => {
+      setFilters: (_filters) => {
         set((state) => ({
           filters: { ...state.filters, ...filters }
         }));
@@ -263,20 +229,17 @@ export const useCRMStore = create<CRMStore>()(
       clearFilters: () => {
         set({
           filters: {
-            status: [],
-            category: [],
-            tags: [],
-            searchTerm: ''
+            status: [], category: [], tags: [], searchTerm: ''
           }
         });
       },
       
-      setLoading: (loading) => {
-        set({ loading });
+      setLoading: (_loading) => {
+        set({ loading, });
       },
       
-      setError: (error) => {
-        set({ error });
+      setError: (_error) => {
+        set({ error, });
       },
       
       clearError: () => {

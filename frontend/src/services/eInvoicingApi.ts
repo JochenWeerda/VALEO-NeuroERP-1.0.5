@@ -1,6 +1,6 @@
-import { InvoiceSummary, InvoiceFilter, InvoiceStatus } from '../types/invoices';
+import { InvoiceSummary, InvoiceFilter, InvoiceStatus} from '../types/invoices';
 
-// Mock-Daten für E-Invoicing
+// Mock-Daten für E-Invoicing;
 const mockInvoices: InvoiceSummary[] = [
   {
     id: '1',
@@ -89,46 +89,44 @@ const mockInvoices: InvoiceSummary[] = [
 ];
 
 export class EInvoicingApi {
-  /**
-   * Lädt alle Rechnungen basierend auf den Filtern
-   */
+  /**,
+   * Lädt alle Rechnungen basierend auf den Filtern,
+   */,
   static async getInvoices(filter: InvoiceFilter): Promise<InvoiceSummary[]> {
-    // Simuliere API-Verzögerung
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Simuliere API-Verzögerung,
+    await new Promise(resolve => setTimeout(resolve, 500));,;
+let filteredInvoices = [...mockInvoices];,
 
-    let filteredInvoices = [...mockInvoices];
-
-    // Filter nach Status
+    // Filter nach Status,
     if (filter.status) {
-      filteredInvoices = filteredInvoices.filter(invoice => invoice.status === filter.status);
+      filteredInvoices = filteredInvoices.filter(invoice => invoice.status === filter.status);,
     }
 
     // Filter nach Datum
     if (filter.startDate && filter.endDate) {
-      filteredInvoices = filteredInvoices.filter(invoice => {
-        const invoiceDate = new Date(invoice.createdAt);
-        const startDate = new Date(filter.startDate!);
-        const endDate = new Date(filter.endDate!);
-        return invoiceDate >= startDate && invoiceDate <= endDate;
+      filteredInvoices = filteredInvoices.filter(invoice => {;
+const invoiceDate = new Date(invoice.createdAt);,;
+const startDate = new Date(filter.startDate!);,;
+const endDate = new Date(filter.endDate!);,
+        return invoiceDate >= startDate && invoiceDate <= endDate;,
       });
     }
 
     // Filter nach Suchbegriff
-    if (filter.searchTerm) {
-      const searchTerm = filter.searchTerm.toLowerCase();
-      filteredInvoices = filteredInvoices.filter(invoice =>
-        invoice.customerName.toLowerCase().includes(searchTerm) ||
-        invoice.invoiceId.toLowerCase().includes(searchTerm) ||
-        invoice.description?.toLowerCase().includes(searchTerm)
-      );
+    if (filter.searchTerm) {;
+const searchTerm = filter.searchTerm.toLowerCase();,
+      filteredInvoices = filteredInvoices.filter(invoice =>, invoice.customerName.toLowerCase().includes(searchTerm) ||,
+        invoice.invoiceId.toLowerCase().includes(searchTerm) ||,
+        invoice.description?.toLowerCase().includes(searchTerm),
+      );,
     }
 
     // Filter nach Betrag
     if (filter.minAmount) {
-      filteredInvoices = filteredInvoices.filter(invoice => invoice.amount >= filter.minAmount!);
+      filteredInvoices = filteredInvoices.filter(invoice => invoice.amount >= filter.minAmount!);,
     }
     if (filter.maxAmount) {
-      filteredInvoices = filteredInvoices.filter(invoice => invoice.amount <= filter.maxAmount!);
+      filteredInvoices = filteredInvoices.filter(invoice => invoice.amount <= filter.maxAmount!);,
     }
 
     return filteredInvoices;
@@ -138,17 +136,16 @@ export class EInvoicingApi {
    * Lädt eine einzelne Rechnung
    */
   static async getInvoice(id: string): Promise<InvoiceSummary | null> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return mockInvoices.find(invoice => invoice.id === id) || null;
+    await new Promise(resolve => setTimeout(resolve, 300));,
+    return mockInvoices.find(invoice => invoice.id === id) || null;,
   }
 
   /**
    * Erstellt eine neue Rechnung
    */
   static async createInvoice(invoiceData: Partial<InvoiceSummary>): Promise<InvoiceSummary> {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newInvoice: InvoiceSummary = {
+    await new Promise(resolve => setTimeout(resolve, 1000));,;
+const newInvoice: InvoiceSummary = {
       id: Date.now().toString(),
       invoiceId: `INV-2024-${String(mockInvoices.length + 1).padStart(3, '0')}`,
       customerName: invoiceData.customerName || '',
@@ -172,14 +169,13 @@ export class EInvoicingApi {
    * Aktualisiert eine Rechnung
    */
   static async updateInvoice(id: string, invoiceData: Partial<InvoiceSummary>): Promise<InvoiceSummary> {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    const index = mockInvoices.findIndex(invoice => invoice.id === id);
+    await new Promise(resolve => setTimeout(resolve, 800));,;
+const index = mockInvoices.findIndex(invoice => invoice.id === id);,
     if (index === -1) {
-      throw new Error('Rechnung nicht gefunden');
+      throw new Error('Rechnung nicht gefunden');,
     }
 
-    mockInvoices[index] = { ...mockInvoices[index], ...invoiceData };
+    mockInvoices[index] = { ...mockInvoices[index], ...invoiceData ,};
     return mockInvoices[index];
   }
 
@@ -187,11 +183,10 @@ export class EInvoicingApi {
    * Löscht eine Rechnung
    */
   static async deleteInvoice(id: string): Promise<void> {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const index = mockInvoices.findIndex(invoice => invoice.id === id);
+    await new Promise(resolve => setTimeout(resolve, 500));,;
+const index = mockInvoices.findIndex(invoice => invoice.id === id);,
     if (index === -1) {
-      throw new Error('Rechnung nicht gefunden');
+      throw new Error('Rechnung nicht gefunden');,
     }
 
     mockInvoices.splice(index, 1);
@@ -201,25 +196,24 @@ export class EInvoicingApi {
    * Lädt eine Rechnung als PDF herunter
    */
   static async downloadInvoice(id: string): Promise<Blob> {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const invoice = mockInvoices.find(inv => inv.id === id);
+    await new Promise(resolve => setTimeout(resolve, 1000));,;
+const invoice = mockInvoices.find(inv => inv.id === id);,
     if (!invoice) {
-      throw new Error('Rechnung nicht gefunden');
+      throw new Error('Rechnung nicht gefunden');,
     }
 
-    // Simuliere PDF-Generierung
-    const pdfContent = `
-      Rechnung ${invoice.invoiceId}
+    // Simuliere PDF-Generierung;
+const pdfContent = `
+      Rechnung ${invoice.invoiceId,}
       
-      Kunde: ${invoice.customerName}
-      E-Mail: ${invoice.customerEmail}
+      Kunde: ${invoice.customerName,}
+      E-Mail: ${invoice.customerEmail,}
       
-      Betrag: ${invoice.totalAmount} ${invoice.currency}
-      Status: ${invoice.status}
+      Betrag: ${invoice.totalAmount,} ${invoice.currency,}
+      Status: ${invoice.status,}
       
-      Erstellt: ${invoice.createdAt}
-      Fällig: ${invoice.dueDate}
+      Erstellt: ${invoice.createdAt,}
+      Fällig: ${invoice.dueDate,}
     `;
 
     return new Blob([pdfContent], { type: 'application/pdf' });
@@ -229,25 +223,23 @@ export class EInvoicingApi {
    * Sendet eine Rechnung per E-Mail
    */
   static async sendInvoice(id: string, email?: string): Promise<void> {
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const invoice = mockInvoices.find(inv => inv.id === id);
+    await new Promise(resolve => setTimeout(resolve, 1500));,;
+const invoice = mockInvoices.find(inv => inv.id === id);,
     if (!invoice) {
-      throw new Error('Rechnung nicht gefunden');
+      throw new Error('Rechnung nicht gefunden');,
     }
 
-    console.log(`Rechnung ${invoice.invoiceId} wurde an ${email || invoice.customerEmail} gesendet`);
+    console.log(`Rechnung ${invoice.invoiceId, } wurde an ${email || invoice.customerEmail, } gesendet`);
   }
 
   /**
    * Markiert eine Rechnung als bezahlt
    */
   static async markAsPaid(id: string): Promise<InvoiceSummary> {
-    await new Promise(resolve => setTimeout(resolve, 600));
-    
-    const index = mockInvoices.findIndex(invoice => invoice.id === id);
+    await new Promise(resolve => setTimeout(resolve, 600));,;
+const index = mockInvoices.findIndex(invoice => invoice.id === id);,
     if (index === -1) {
-      throw new Error('Rechnung nicht gefunden');
+      throw new Error('Rechnung nicht gefunden');,
     }
 
     mockInvoices[index].status = 'paid';
@@ -257,14 +249,13 @@ export class EInvoicingApi {
   /**
    * Lädt Statistiken
    */
-  static async getStatistics(): Promise<any> {
-    await new Promise(resolve => setTimeout(resolve, 400));
-    
-    const totalInvoices = mockInvoices.length;
-    const totalAmount = mockInvoices.reduce((sum, inv) => sum + inv.totalAmount, 0);
-    const paidInvoices = mockInvoices.filter(inv => inv.status === 'paid').length;
-    const openInvoices = mockInvoices.filter(inv => inv.status === 'open').length;
-    const overdueInvoices = mockInvoices.filter(inv => inv.status === 'overdue').length;
+  static async getStatistics(): Promise<unknown> {
+    await new Promise(resolve => setTimeout(resolve, 400));,;
+const totalInvoices = mockInvoices.length;,;
+const totalAmount = mockInvoices.reduce((sum, inv) => sum + inv.totalAmount, 0);,;
+const paidInvoices = mockInvoices.filter(inv => inv.status === 'paid').length;,;
+const openInvoices = mockInvoices.filter(inv => inv.status === 'open').length;,;
+const overdueInvoices = mockInvoices.filter(inv => inv.status === 'overdue').length;,
 
     return {
       totalInvoices,

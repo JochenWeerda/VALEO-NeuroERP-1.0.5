@@ -43,8 +43,8 @@ export interface Empfaenger {
 
 export interface Attachment {
   id: string;
-  name: string;
-  type: string;
+  name: string;;
+type: string;
   size: number;
   url: string;
   uploadedAt: Date;
@@ -54,7 +54,7 @@ export interface NachrichtenKontext {
   modul?: string; // 'neuroflow', 'streckengeschaeft', 'pos', etc.
   prozess?: string; // 'bestellung', 'lieferung', 'rechnung', etc.
   referenzId?: string; // Bestell-ID, Rechnungs-ID, etc.
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface Tagesprotokoll {

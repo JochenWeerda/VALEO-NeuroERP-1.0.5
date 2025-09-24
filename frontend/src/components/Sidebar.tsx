@@ -1,11 +1,9 @@
 import React from 'react';
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton} from '@mui/material';
 import { 
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon
-} from '@mui/icons-material';
+  ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon} from '@mui/icons-material';
 // ✅ NEU: Import der standardisierten UI-Komponenten
-import { UI_LABELS } from './ui/UIStandardization';
+import { UI_LABELS ,} from './ui/UIStandardization';
 
 export type Module = 'crm' | 'warenwirtschaft' | 'fibu' | 'lager' | 'bi' | 'dms' | 'settings' | 'help';
 
@@ -22,11 +20,10 @@ export interface ModuleItem {
 
 export interface SidebarProps {
   activeModule: Module;
-  onModuleChange: (module: Module) => void;
+  onModuleChange: (module: _Module) => void;
   collapsed?: boolean;
   onToggleCollapse?: () => void;
-}
-
+};
 const defaultModules: ModuleItem[] = [
   {
     id: 'crm',
@@ -111,38 +108,24 @@ const defaultModules: ModuleItem[] = [
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({
-  activeModule,
-  onModuleChange,
-  collapsed = false,
-  onToggleCollapse
-}) => {
-  return (
-    <Box
-      sx={{
-        width: collapsed ? 64 : 240,
-        minHeight: '100vh',
-        bgcolor: 'background.paper',
-        borderRight: 1,
-        borderColor: 'divider',
-        transition: 'width 0.2s ease-in-out'
+  activeModule, onModuleChange, collapsed = false, onToggleCollapse, }) => {
+  return (<Box, sx={{
+        width: collapsed ? 64 : 240, minHeight: '100vh', bgcolor: 'background.paper', borderRight: 1, borderColor: 'divider', transition: 'width 0.2s ease-in-out'
       }}
     >
-      {/* Toggle Button */}
-      {onToggleCollapse && (
-        <Box sx={{ p: 1, display: 'flex', justifyContent: 'flex-end' }}>
-          <IconButton onClick={onToggleCollapse} size="small">
+      {/* Toggle Button */, }
+      {onToggleCollapse && (, <Box sx={{ p: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton onClick={onToggleCollapse, } size="small">
             {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
-        </Box>
-      )}
+        </Box>)}
 
-      {/* Module List */}
+      {/* Module List */,}
       <List>
-        {defaultModules.map((module) => (
-          <ListItem key={module.id} disablePadding>
+        {defaultModules.map((module) => (<ListItem key={module.id, } disablePadding>
             <ListItemButton
-              selected={activeModule === module.id}
-              onClick={() => onModuleChange(module.id as Module)}
+              selected={activeModule === module.id, }
+              onClick={() => onModuleChange(module.id as Module),}
               sx={{
                 minHeight: 48,
                 px: 2.5,
@@ -174,25 +157,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     fontSize: '12px'
                   }}
                 >
-                  {module.icon.includes('fas fa-') ? 
+                  {module.icon.includes('fas fa-') ? ,
                     module.icon.replace('fas fa-', '').charAt(0).toUpperCase() : 
-                    'M'
+                    'M',
                   }
                 </Box>
               </ListItemIcon>
-              {!collapsed && (
-                <ListItemText
-                  primary={module.title}
-                  secondary={module.description}
+              {!collapsed && (<ListItemText, primary={module.title, }
+                  secondary={module.description, }
                   primaryTypographyProps={{
-                    fontSize: '0.875rem',
-                    fontWeight: activeModule === module.id ? 600 : 400,
-                  }}
+                    fontSize: '0.875rem', fontWeight: activeModule === module.id ? 600 : 400, }}
                   secondaryTypographyProps={{
-                    fontSize: '0.75rem',
-                  }}
-                />
-              )}
+                    fontSize: '0.75rem', }}
+                />)}
             </ListItemButton>
           </ListItem>
         ))}

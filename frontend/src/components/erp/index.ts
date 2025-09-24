@@ -2,16 +2,16 @@
 // Export aller ERP-bezogenen Komponenten
 
 // Bestehende ERP-Komponenten
-export { OrderConfirmation } from './OrderConfirmation';
-export { DeliveryNote } from './DeliveryNote';
-export { SupplierOffer } from './SupplierOffer';
-export { PurchaseOrder } from './PurchaseOrder';
-export { OrderSuggestion } from './OrderSuggestion';
+export { OrderConfirmation ,} from './OrderConfirmation';
+export { DeliveryNote ,} from './DeliveryNote';
+export { SupplierOffer ,} from './SupplierOffer';
+export { PurchaseOrder ,} from './PurchaseOrder';
+export { OrderSuggestion ,} from './OrderSuggestion';
 
 // Neue ERP-Komponenten für Einkauf, Lieferschein, Bestellung, Frachtauftrag
-export { DeliveryNoteForm } from './DeliveryNoteForm';
-export { OrderSuggestionForm } from './OrderSuggestionForm';
-export { FreightOrderForm } from './FreightOrderForm';
+export { DeliveryNoteForm ,} from './DeliveryNoteForm';
+export { OrderSuggestionForm ,} from './OrderSuggestionForm';
+export { FreightOrderForm ,} from './FreightOrderForm';
 
 // TypeScript Interfaces für externe Verwendung
 export type {
@@ -19,25 +19,25 @@ export type {
   PurchaseOrderPosition,
   DocumentReference,
   PaymentTerms,
-  PurchaseOrderProps
+  PurchaseOrderProps,
 } from './PurchaseOrder';
 
 export type {
   OrderSuggestionData,
-  OrderSuggestionProps
+  OrderSuggestionProps,
 } from './OrderSuggestion';
 
 export type {
   SupplierOfferData,
-  SupplierOfferProps
+  SupplierOfferProps,
 } from './SupplierOffer';
 
 export type {
   DeliveryNoteData,
-  DeliveryNoteProps
+  DeliveryNoteProps,
 } from './DeliveryNote';
 
 export type {
   OrderConfirmationData,
-  OrderConfirmationProps
+  OrderConfirmationProps,
 } from './OrderConfirmation'; 

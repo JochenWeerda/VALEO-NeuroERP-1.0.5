@@ -3,68 +3,28 @@
  * KI-first, responsive-first Rechnungsformular mit MCP-Integration
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  Alert,
-  Chip,
-  Divider,
-  Stack,
-  IconButton,
-  Tooltip,
-  Skeleton,
-  CircularProgress,
-} from '@mui/material';
+  Box, Card, CardContent, Typography, TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, FormHelperText, Alert, Chip, Divider, Stack, IconButton, Tooltip, Skeleton, CircularProgress} from '@mui/material';
 import {
-  Save as SaveIcon,
-  Cancel as CancelIcon,
-  Refresh as RefreshIcon,
-  Receipt as ReceiptIcon,
-  Person as PersonIcon,
-  Euro as EuroIcon,
-  CalendarToday as CalendarIcon,
-  Description as DescriptionIcon,
-} from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { styled } from '@mui/material/styles';
+  Save as SaveIcon, Cancel as CancelIcon, Refresh as RefreshIcon, Receipt as ReceiptIcon, Person as PersonIcon, Euro as EuroIcon, CalendarToday as CalendarIcon, Description as DescriptionIcon} from '@mui/icons-material';
+import { useForm, Controller} from 'react-hook-form';
+import { zodResolver ,} from '@hookform/resolvers/zod';
+import { z ,} from 'zod';
+import { styled ,} from '@mui/material/styles';
 
-// Styled Components
-const NeuroFlowCard = styled(Card)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[1],
-  border: `1px solid ${theme.palette.divider}`,
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
-    boxShadow: theme.shadows[4],
-  },
-}));
-
-const NeuroFlowButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 1.5,
-  textTransform: 'none',
-  fontWeight: 600,
-  padding: '0.75rem 1.5rem',
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
+// Styled Components;
+const NeuroFlowCard = styled(Card)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 2, boxShadow: theme.shadows[1], border: `1px solid ${theme.palette.divider}`, transition: 'all 0.3s ease-in-out', '&:hover': {
+    boxShadow: theme.shadows[4], }, }));;
+const NeuroFlowButton = styled(Button)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 1.5, textTransform: 'none', fontWeight: 600, padding: '0.75rem 1.5rem', transition: 'all 0.3s ease-in-out', '&:hover': {
     transform: 'translateY(-1px)',
     boxShadow: theme.shadows[3],
   },
 }));
 
-// Zod Schema basierend auf MCP Schema
+// Zod Schema basierend auf MCP Schema;
 const InvoiceSchema = z.object({
   customer_id: z.string().min(1, 'Kunde ist erforderlich'),
   invoice_number: z.string().min(1, 'Rechnungsnummer ist erforderlich'),
@@ -76,17 +36,15 @@ const InvoiceSchema = z.object({
   status: z.enum(['draft', 'sent', 'paid', 'overdue', 'cancelled']),
   payment_terms: z.string().optional(),
   notes: z.string().optional(),
-});
-
+});;
 type InvoiceFormData = z.infer<typeof InvoiceSchema>;
 
-// Mock Data für MCP Integration
+// Mock Data für MCP Integration;
 const mockCustomers = [
   { id: '1', name: 'Max Mustermann GmbH', email: 'max@mustermann.de' },
   { id: '2', name: 'Firma Schmidt AG', email: 'info@schmidt.de' },
   { id: '3', name: 'Test Unternehmen', email: 'test@unternehmen.de' },
-];
-
+];;
 const mockStatusOptions = [
   { value: 'draft', label: 'Entwurf', color: 'default' },
   { value: 'sent', label: 'Versendet', color: 'info' },
@@ -95,7 +53,7 @@ const mockStatusOptions = [
   { value: 'cancelled', label: 'Storniert', color: 'warning' },
 ];
 
-// NeuroFlow Invoice Form Component
+// NeuroFlow Invoice Form Component;
 interface NeuroFlowInvoiceFormProps {
   initialData?: Partial<InvoiceFormData>;
   onSubmit?: (data: InvoiceFormData) => Promise<void>;
@@ -105,17 +63,11 @@ interface NeuroFlowInvoiceFormProps {
 }
 
 export const NeuroFlowInvoiceForm: React.FC<NeuroFlowInvoiceFormProps> = ({
-  initialData,
-  onSubmit,
-  onCancel,
-  loading = false,
-  mode = 'create',
-}) => {
-  const [customers, setCustomers] = useState(mockCustomers);
-  const [isLoadingCustomers, setIsLoadingCustomers] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
-
-  const {
+  initialData, onSubmit, onCancel, loading = false, mode = 'create', }) => {;
+const [customers, setCustomers] = useState(mockCustomers);,;
+const [isLoadingCustomers, setIsLoadingCustomers] = useState(false);,;
+const [submitLoading, setSubmitLoading] = useState(false);,;
+const {
     control,
     handleSubmit,
     formState: { errors, isDirty },
@@ -137,93 +89,87 @@ export const NeuroFlowInvoiceForm: React.FC<NeuroFlowInvoiceFormProps> = ({
       notes: '',
       ...initialData,
     },
-  });
+  });;
+const watchedAmount = watch('amount');;
+const watchedTaxRate = watch('tax_rate');
 
-  const watchedAmount = watch('amount');
-  const watchedTaxRate = watch('tax_rate');
-
-  // Calculate totals
-  const taxAmount = (watchedAmount * watchedTaxRate) / 100;
-  const totalAmount = watchedAmount + taxAmount;
+  // Calculate totals;
+const taxAmount = (watchedAmount * watchedTaxRate) / 100;;
+const totalAmount = watchedAmount + taxAmount;
 
   // Load customers from MCP
-  useEffect(() => {
-    const loadCustomers = async () => {
-      setIsLoadingCustomers(true);
+  useEffect(() => {;
+const loadCustomers = async () => {
+      setIsLoadingCustomers(true);,
       try {
-        // Try to load from MCP API first
-        const response = await fetch('/api/mcp/customers', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        // Try to load from MCP API first,;
+const response = await fetch('/api/mcp/customers', {
+          method: 'GET', headers: {
+            'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
           }
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          setCustomers(data.customers || []);
+        if (response.ok) {;
+const data = await response.json();,
+          setCustomers(data.customers || []);,
         } else {
-          // Fallback to mock data if MCP API is not available
-          console.warn('MCP API not available, using mock data');
-          setCustomers(mockCustomers);
+          // Fallback to mock data if MCP API is not available,
+          console.warn('MCP API not available, using mock data');,
+          setCustomers(mockCustomers);,
         }
       } catch (error) {
         console.error('Error loading customers:', error);
-        // Fallback to mock data
-        setCustomers(mockCustomers);
+        // Fallback to mock data,
+        setCustomers(mockCustomers);,
       } finally {
-        setIsLoadingCustomers(false);
+        setIsLoadingCustomers(false);,
       }
     };
 
     loadCustomers();
-  }, []);
-
-  const handleFormSubmit = async (data: InvoiceFormData) => {
-    setSubmitLoading(true);
+  }, []);;
+const handleFormSubmit = async (data: InvoiceFormData) => {
+    setSubmitLoading(true);,
     try {
       if (onSubmit) {
-        await onSubmit(data);
+        await onSubmit(data);,
       }
       // Show success message or redirect
       console.log('Invoice saved:', data);
     } catch (error) {
       console.error('Error saving invoice:', error);
     } finally {
-      setSubmitLoading(false);
+      setSubmitLoading(false);,
     }
-  };
-
-  const handleCancel = () => {
+  };;
+const handleCancel = () => {
     if (isDirty) {
       if (window.confirm('Änderungen verwerfen?')) {
-        reset();
-        onCancel?.();
+        reset();,
+        onCancel?.();,
       }
     } else {
-      onCancel?.();
+      onCancel?.();,
     }
-  };
-
-  const generateInvoiceNumber = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    const invoiceNumber = `INV-${year}${month}-${random}`;
+  };;
+const generateInvoiceNumber = () => {;
+const date = new Date();,;
+const year = date.getFullYear();,;
+const month = String(date.getMonth() + 1).padStart(2, '0');,;
+const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');,;
+const invoiceNumber = `INV-${year,}${month,}-${random,}`;
     setValue('invoice_number', invoiceNumber);
   };
 
   return (
     <NeuroFlowCard>
       <CardContent>
-        {/* Header */}
-        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-          <Box display="flex" alignItems="center" gap={2}>
+        {/* Header */, }
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3, }>
+          <Box display="flex" alignItems="center" gap={2, }>
             <ReceiptIcon color="primary" sx={{ fontSize: 32 }} />
             <Box>
-              <Typography variant="h5" fontWeight={600} color="text.primary">
+              <Typography variant="h5" fontWeight={600, } color="text.primary">
                 {mode === 'create' ? 'Neue Rechnung' : 'Rechnung bearbeiten'}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -232,206 +178,189 @@ export const NeuroFlowInvoiceForm: React.FC<NeuroFlowInvoiceFormProps> = ({
             </Box>
           </Box>
           
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1, }>
             <Tooltip title="Rechnungsnummer generieren">
-              <IconButton onClick={generateInvoiceNumber} color="primary">
+              <IconButton onClick={generateInvoiceNumber, } color="primary">
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
           </Stack>
         </Box>
 
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <Grid container spacing={3}>
-            {/* Basic Information */}
-            <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={600} color="text.primary" mb={2}>
+        <form onSubmit={handleSubmit(handleFormSubmit),}>
+          <Grid container spacing={3,}>
+            {/* Basic Information */,}
+            <Grid item xs={12,}>
+              <Typography variant="h6" fontWeight={600,} color="text.primary" mb={2,}>
                 Grundinformationen
               </Typography>
             </Grid>
 
-            {/* Customer Selection */}
-            <Grid item xs={12} md={6}>
+            {/* Customer Selection */,}
+            <Grid item xs={12,} md={6,}>
               <Controller
                 name="customer_id"
-                control={control}
-                render={({ field }) => (
-                  <FormControl fullWidth error={!!errors.customer_id}>
+                control={control,}
+                render={({ field, }) => (
+                  <FormControl fullWidth error={!!errors.customer_id, }>
                     <InputLabel>Kunde *</InputLabel>
                     <Select
-                      {...field}
+                      {...field, }
                       label="Kunde *"
-                      disabled={isLoadingCustomers}
+                      disabled={isLoadingCustomers, }
                       startAdornment={
-                        isLoadingCustomers ? (
-                          <CircularProgress size={20} sx={{ mr: 1 }} />
-                        ) : (
-                          <PersonIcon sx={{ mr: 1, color: 'text.secondary' }} />
-                        )
+                        isLoadingCustomers ? (, <CircularProgress size={20, } sx={{ mr: 1 }} />) : (
+                          <PersonIcon sx={{ mr: 1, color: 'text.secondary' }} />)
                       }
                     >
-                      {customers.map((customer) => (
-                        <MenuItem key={customer.id} value={customer.id}>
+                      {customers.map((customer) => (<MenuItem key={customer.id, } value={customer.id, }>
                           <Box>
-                            <Typography variant="body2" fontWeight={500}>
-                              {customer.name}
+                            <Typography variant="body2" fontWeight={500, }>
+                              {customer.name, }
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
-                              {customer.email}
+                              {customer.email, }
                             </Typography>
                           </Box>
-                        </MenuItem>
-                      ))}
+                        </MenuItem>))}
                     </Select>
-                    {errors.customer_id && (
-                      <FormHelperText>{errors.customer_id.message}</FormHelperText>
-                    )}
+                    {errors.customer_id && (<FormHelperText>{errors.customer_id.message, }</FormHelperText>)}
                   </FormControl>
                 )}
               />
             </Grid>
 
-            {/* Invoice Number */}
-            <Grid item xs={12} md={6}>
+            {/* Invoice Number */,}
+            <Grid item xs={12,} md={6,}>
               <Controller
                 name="invoice_number"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
+                    {...field, }
                     label="Rechnungsnummer *"
                     fullWidth
-                    error={!!errors.invoice_number}
-                    helperText={errors.invoice_number?.message}
+                    error={!!errors.invoice_number, }
+                    helperText={errors.invoice_number?.message, }
                     InputProps={{
-                      startAdornment: <ReceiptIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                    }}
-                  />
-                )}
+                      startAdornment: <ReceiptIcon sx={{ mr: 1, color: 'text.secondary' }} />, }}
+                  />)}
               />
             </Grid>
 
-            {/* Invoice Date */}
-            <Grid item xs={12} md={6}>
+            {/* Invoice Date */,}
+            <Grid item xs={12,} md={6,}>
               <Controller
                 name="invoice_date"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
-                    label="Rechnungsdatum *"
-                    type="date"
+                    {...field, }
+                    label="Rechnungsdatum *";
+type="date"
                     fullWidth
-                    error={!!errors.invoice_date}
-                    helperText={errors.invoice_date?.message}
+                    error={!!errors.invoice_date, }
+                    helperText={errors.invoice_date?.message, }
                     InputProps={{
-                      startAdornment: <CalendarIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                    }}
-                  />
-                )}
+                      startAdornment: <CalendarIcon sx={{ mr: 1, color: 'text.secondary' }} />, }}
+                  />)}
               />
             </Grid>
 
-            {/* Due Date */}
-            <Grid item xs={12} md={6}>
+            {/* Due Date */,}
+            <Grid item xs={12,} md={6,}>
               <Controller
                 name="due_date"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
-                    label="Fälligkeitsdatum *"
-                    type="date"
+                    {...field, }
+                    label="Fälligkeitsdatum *";
+type="date"
                     fullWidth
-                    error={!!errors.due_date}
-                    helperText={errors.due_date?.message}
+                    error={!!errors.due_date, }
+                    helperText={errors.due_date?.message, }
                     InputProps={{
-                      startAdornment: <CalendarIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                    }}
-                  />
-                )}
+                      startAdornment: <CalendarIcon sx={{ mr: 1, color: 'text.secondary' }} />, }}
+                  />)}
               />
             </Grid>
 
-            {/* Amount and Tax */}
-            <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={600} color="text.primary" mb={2}>
+            {/* Amount and Tax */,}
+            <Grid item xs={12,}>
+              <Typography variant="h6" fontWeight={600,} color="text.primary" mb={2,}>
                 Rechnungsdetails
               </Typography>
             </Grid>
 
-            {/* Amount */}
-            <Grid item xs={12} md={4}>
+            {/* Amount */,}
+            <Grid item xs={12,} md={4,}>
               <Controller
                 name="amount"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
-                    label="Betrag (€) *"
-                    type="number"
+                    {...field, }
+                    label="Betrag (€) *";
+type="number"
                     fullWidth
-                    error={!!errors.amount}
-                    helperText={errors.amount?.message}
+                    error={!!errors.amount,}
+                    helperText={errors.amount?.message,}
                     InputProps={{
                       startAdornment: <EuroIcon sx={{ mr: 1, color: 'text.secondary' }} />,
                     }}
-                    onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                    onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                   />
                 )}
               />
             </Grid>
 
-            {/* Tax Rate */}
-            <Grid item xs={12} md={4}>
+            {/* Tax Rate */,}
+            <Grid item xs={12,} md={4,}>
               <Controller
                 name="tax_rate"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
-                    label="Steuersatz (%) *"
-                    type="number"
+                    {...field, }
+                    label="Steuersatz (%) *";
+type="number"
                     fullWidth
-                    error={!!errors.tax_rate}
-                    helperText={errors.tax_rate?.message}
-                    onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                    error={!!errors.tax_rate,}
+                    helperText={errors.tax_rate?.message,}
+                    onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                   />
                 )}
               />
             </Grid>
 
-            {/* Status */}
-            <Grid item xs={12} md={4}>
+            {/* Status */,}
+            <Grid item xs={12,} md={4,}>
               <Controller
                 name="status"
-                control={control}
-                render={({ field }) => (
-                  <FormControl fullWidth error={!!errors.status}>
+                control={control,}
+                render={({ field, }) => (
+                  <FormControl fullWidth error={!!errors.status, }>
                     <InputLabel>Status *</InputLabel>
-                    <Select {...field} label="Status *">
-                      {mockStatusOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                    <Select {...field, } label="Status *">
+                      {mockStatusOptions.map((option) => (<MenuItem key={option.value, } value={option.value, }>
                           <Chip
-                            label={option.label}
+                            label={option.label, }
                             size="small"
-                            color={option.color as any}
+                            color={option.color as any, }
                             sx={{ mr: 1 }}
                           />
-                          {option.label}
-                        </MenuItem>
-                      ))}
+                          {option.label, }
+                        </MenuItem>))}
                     </Select>
-                    {errors.status && (
-                      <FormHelperText>{errors.status.message}</FormHelperText>
-                    )}
+                    {errors.status && (<FormHelperText>{errors.status.message, }</FormHelperText>)}
                   </FormControl>
                 )}
               />
             </Grid>
 
-            {/* Totals Display */}
-            <Grid item xs={12}>
+            {/* Totals Display */,}
+            <Grid item xs={12,}>
               <Box
                 sx={{
                   p: 2,
@@ -441,106 +370,102 @@ export const NeuroFlowInvoiceForm: React.FC<NeuroFlowInvoiceFormProps> = ({
                   borderColor: 'divider',
                 }}
               >
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={3}>
+                <Grid container spacing={2,}>
+                  <Grid item xs={12,} md={3,}>
                     <Typography variant="body2" color="text.secondary">
                       Nettobetrag
                     </Typography>
-                    <Typography variant="h6" fontWeight={600}>
-                      {watchedAmount.toFixed(2)} €
+                    <Typography variant="h6" fontWeight={600,}>
+                      {watchedAmount.toFixed(2),} €
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={3}>
+                  <Grid item xs={12,} md={3,}>
                     <Typography variant="body2" color="text.secondary">
-                      Steuer ({watchedTaxRate}%)
+                      Steuer ({watchedTaxRate, }%)
                     </Typography>
-                    <Typography variant="h6" fontWeight={600}>
-                      {taxAmount.toFixed(2)} €
+                    <Typography variant="h6" fontWeight={600,}>
+                      {taxAmount.toFixed(2),} €
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} md={3}>
+                  <Grid item xs={12,} md={3,}>
                     <Typography variant="body2" color="text.secondary">
                       Gesamtbetrag
                     </Typography>
-                    <Typography variant="h6" fontWeight={600} color="primary.main">
-                      {totalAmount.toFixed(2)} €
+                    <Typography variant="h6" fontWeight={600,} color="primary.main">
+                      {totalAmount.toFixed(2),} €
                     </Typography>
                   </Grid>
                 </Grid>
               </Box>
             </Grid>
 
-            {/* Description */}
-            <Grid item xs={12}>
+            {/* Description */,}
+            <Grid item xs={12,}>
               <Controller
                 name="description"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
+                    {...field, }
                     label="Beschreibung *"
                     multiline
-                    rows={3}
+                    rows={3, }
                     fullWidth
-                    error={!!errors.description}
-                    helperText={errors.description?.message}
+                    error={!!errors.description, }
+                    helperText={errors.description?.message, }
                     InputProps={{
-                      startAdornment: <DescriptionIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                    }}
-                  />
-                )}
+                      startAdornment: <DescriptionIcon sx={{ mr: 1, color: 'text.secondary' }} />, }}
+                  />)}
               />
             </Grid>
 
-            {/* Payment Terms */}
-            <Grid item xs={12} md={6}>
+            {/* Payment Terms */,}
+            <Grid item xs={12,} md={6,}>
               <Controller
                 name="payment_terms"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
+                    {...field, }
                     label="Zahlungsbedingungen"
                     fullWidth
                     placeholder="z.B. Zahlbar innerhalb von 30 Tagen"
-                  />
-                )}
+                  />)}
               />
             </Grid>
 
-            {/* Notes */}
-            <Grid item xs={12} md={6}>
+            {/* Notes */,}
+            <Grid item xs={12,} md={6,}>
               <Controller
                 name="notes"
-                control={control}
-                render={({ field }) => (
+                control={control,}
+                render={({ field, }) => (
                   <TextField
-                    {...field}
+                    {...field, }
                     label="Notizen"
                     fullWidth
                     placeholder="Zusätzliche Informationen"
-                  />
-                )}
+                  />)}
               />
             </Grid>
 
-            {/* Form Actions */}
-            <Grid item xs={12}>
+            {/* Form Actions */,}
+            <Grid item xs={12,}>
               <Divider sx={{ my: 3 }} />
-              <Box display="flex" justifyContent="flex-end" gap={2}>
-                <NeuroFlowButton
-                  variant="outlined"
-                  onClick={handleCancel}
-                  disabled={submitLoading}
-                  startIcon={<CancelIcon />}
+              <Box display="flex" justifyContent="flex-end" gap={2,}>
+                <NeuroFlowButton;
+variant="outlined"
+                  onClick={handleCancel,}
+                  disabled={submitLoading,}
+                  startIcon={<CancelIcon />,}
                 >
                   Abbrechen
                 </NeuroFlowButton>
-                <NeuroFlowButton
-                  type="submit"
-                  variant="contained"
-                  disabled={submitLoading || loading}
-                  startIcon={submitLoading ? <CircularProgress size={20} /> : <SaveIcon />}
+                <NeuroFlowButton;
+type="submit";
+variant="contained"
+                  disabled={submitLoading || loading,}
+                  startIcon={submitLoading ? <CircularProgress size={20,} /> : <SaveIcon />}
                 >
                   {submitLoading ? 'Speichern...' : 'Rechnung speichern'}
                 </NeuroFlowButton>

@@ -1,63 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Box,
-  Grid,
-  Button,
-  Chip,
-  Divider,
-  Alert,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Switch,
-  FormControlLabel
-} from '@mui/material';
+  Box, Grid, Button, Chip, Divider, Alert, CircularProgress, FormControl, InputLabel, Select, MenuItem, Switch, FormControlLabel} from '@mui/material';
 import {
-  Save as SaveIcon,
-  Edit as EditIcon,
-  Cancel as CancelIcon
-} from '@mui/icons-material';
-import { Customer, CustomerSegment, CustomerFormData, mapApiCustomerToFormData, mapFormDataToApiCustomer, getInitialCustomerFormData } from '../../../types/crm';
-import { useUpdateCustomer } from '../../../hooks/useCRM';
-import { CustomerBasicInfoCard } from '../customers/CustomerBasicInfoCard';
-import { CustomerAddressCard } from '../customers/CustomerAddressCard';
-import { CustomerContactCard } from '../customers/CustomerContactCard';
-
+  Save as SaveIcon, Edit as EditIcon, Cancel as CancelIcon} from '@mui/icons-material';
+import { Customer, CustomerSegment, CustomerFormData, mapApiCustomerToFormData, mapFormDataToApiCustomer, getInitialCustomerFormData} from '../../../types/crm';
+import { useUpdateCustomer ,} from '../../../hooks/useCRM';
+import { CustomerBasicInfoCard ,} from '../customers/CustomerBasicInfoCard';
+import { CustomerAddressCard ,} from '../customers/CustomerAddressCard';
+import { CustomerContactCard ,} from '../customers/CustomerContactCard';;
 interface CustomerGeneralTabProps {
   customer: Customer;
   currentSubTab?: string;
   onSubTabChange?: (subTab: string) => void;
   onCustomerChange?: (customer: Customer) => void;
-}
-
+};
 const CustomerGeneralTab: React.FC<CustomerGeneralTabProps> = ({
-  customer,
-  onCustomerChange
-}) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState<CustomerFormData>(() => 
-    mapApiCustomerToFormData(customer)
-  );
-
-  const updateCustomerMutation = useUpdateCustomer();
-
-  const handleEdit = () => {
-    setIsEditing(true);
-    setFormData(mapApiCustomerToFormData(customer));
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setFormData(mapApiCustomerToFormData(customer));
-  };
-
-  const handleSave = async () => {
-    try {
-      const updatedCustomer = await updateCustomerMutation.mutateAsync({
-        id: customer.id,
-        data: mapFormDataToApiCustomer(formData, customer.id)
+  customer, onCustomerChange, }) => {;
+const [isEditing, setIsEditing] = useState(false);,;
+const [formData, setFormData] = useState<CustomerFormData>(() => ,
+    mapApiCustomerToFormData(customer),
+  );,;
+const updateCustomerMutation = useUpdateCustomer();,;
+const handleEdit = () => {
+    setIsEditing(true);,
+    setFormData(mapApiCustomerToFormData(customer));,
+  };;
+const handleCancel = () => {
+    setIsEditing(false);,
+    setFormData(mapApiCustomerToFormData(customer));,
+  };;
+const handleSave = async () => {
+    try {;
+const updatedCustomer = await updateCustomerMutation.mutateAsync({
+        id: customer.id, data: mapFormDataToApiCustomer(formData, customer.id)
       });
       
       onCustomerChange?.(updatedCustomer);
@@ -65,72 +40,62 @@ const CustomerGeneralTab: React.FC<CustomerGeneralTabProps> = ({
     } catch (error) {
       console.error('Fehler beim Speichern:', error);
     }
-  };
-
-  const handleFieldChange = (field: keyof CustomerFormData, value: any) => {
+  };;
+const handleFieldChange = (field: keyof CustomerFormData, value: unknown) => {
     setFormData(prev => ({
-      ...prev,
-      [field]: value
+      ...prev, [field]: value
     }));
-  };
-
-  const formatCurrency = (amount: number) => {
+  };;
+const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR'
+      style: 'currency', currency: 'EUR'
     }).format(amount);
-  };
-
-  const getSegmentColor = (segment: CustomerSegment) => {
+  };;
+const getSegmentColor = (segment: CustomerSegment) => {
     switch (segment) {
       case CustomerSegment.PREMIUM:
-        return 'success';
+        return 'success';,
       case CustomerSegment.REGULAR:
-        return 'primary';
+        return 'primary';,
       case CustomerSegment.BASIC:
-        return 'default';
+        return 'default';,
       case CustomerSegment.PROSPECT:
-        return 'warning';
+        return 'warning';,
       case CustomerSegment.INACTIVE:
-        return 'error';
+        return 'error';,
       default:
-        return 'default';
+        return 'default';,
     }
-  };
-
-  const getStatusColor = (status: string) => {
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
-        return 'success';
+        return 'success';,
       case 'inactive':
-        return 'error';
+        return 'error';,
       case 'prospect':
-        return 'warning';
+        return 'warning';,
       default:
-        return 'default';
+        return 'default';,
     }
   };
 
   if (updateCustomerMutation.isPending) {
-    return (
-      <Box className="flex justify-center items-center h-64">
-        <CircularProgress />
-      </Box>
-    );
+    return (<Box className="flex justify-center items-center h-64">, <CircularProgress />, </Box>);,
   }
 
   return (
     <Box className="space-y-6">
-      {/* Header mit Aktionen */}
+      {/* Header mit Aktionen */, }
       <Box className="flex justify-between items-center">
         <Box>
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            {customer.name}
+            {customer.name, }
           </h2>
           <Box className="flex space-x-2">
             <Chip
               label={customer.status === 'active' ? 'Aktiv' : customer.status === 'inactive' ? 'Inaktiv' : 'Interessent'}
-              color={getStatusColor(customer.status)}
+              color={getStatusColor(customer.status),}
               size="small"
             />
             <Chip
@@ -138,109 +103,98 @@ const CustomerGeneralTab: React.FC<CustomerGeneralTabProps> = ({
                      customer.customerSegment === CustomerSegment.REGULAR ? 'Standard' :
                      customer.customerSegment === CustomerSegment.BASIC ? 'Basic' :
                      customer.customerSegment === CustomerSegment.PROSPECT ? 'Interessent' : 'Inaktiv'}
-              color={getSegmentColor(customer.customerSegment)}
+              color={getSegmentColor(customer.customerSegment),}
               size="small"
             />
           </Box>
         </Box>
         
         <Box className="flex space-x-2">
-          {!isEditing ? (
-            <Button
-              variant="contained"
-              startIcon={<EditIcon />}
-              onClick={handleEdit}
+          {!isEditing ? (<Button, variant="contained", startIcon={<EditIcon />, }
+              onClick={handleEdit, }
             >
               Bearbeiten
-            </Button>
-          ) : (
+            </Button>) : (
             <>
-              <Button
-                variant="contained"
+              <Button;
+variant="contained"
                 color="primary"
-                startIcon={<SaveIcon />}
-                onClick={handleSave}
-                disabled={updateCustomerMutation.isPending}
+                startIcon={<SaveIcon />, }
+                onClick={handleSave, }
+                disabled={updateCustomerMutation.isPending, }
               >
                 Speichern
               </Button>
-              <Button
-                variant="outlined"
-                startIcon={<CancelIcon />}
-                onClick={handleCancel}
-                disabled={updateCustomerMutation.isPending}
+              <Button;
+variant="outlined"
+                startIcon={<CancelIcon />, }
+                onClick={handleCancel, }
+                disabled={updateCustomerMutation.isPending, }
               >
                 Abbrechen
               </Button>
-            </>
-          )}
+            </>)}
         </Box>
       </Box>
 
-      {/* Fehleranzeige */}
-      {updateCustomerMutation.error && (
-        <Alert severity="error" className="mb-4">
-          Fehler beim Speichern: {updateCustomerMutation.error.message}
-        </Alert>
-      )}
+      {/* Fehleranzeige */,}
+      {updateCustomerMutation.error && (<Alert severity="error" className="mb-4">, Fehler beim Speichern: {updateCustomerMutation.error.message}
+        </Alert>)}
 
-      {/* Kundeninformationen */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+      {/* Kundeninformationen */,}
+      <Grid container spacing={3,}>
+        <Grid item xs={12,} md={6,}>
           <CustomerBasicInfoCard
-            formData={formData}
-            isEditing={isEditing}
-            onFieldChange={handleFieldChange}
+            formData={formData,}
+            isEditing={isEditing,}
+            onFieldChange={handleFieldChange,}
           />
         </Grid>
         
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12,} md={6,}>
           <CustomerAddressCard
-            formData={formData}
-            isEditing={isEditing}
-            onFieldChange={handleFieldChange}
+            formData={formData,}
+            isEditing={isEditing,}
+            onFieldChange={handleFieldChange,}
           />
         </Grid>
         
-        <Grid item xs={12}>
+        <Grid item xs={12,}>
           <CustomerContactCard
-            formData={formData}
-            isEditing={isEditing}
-            onFieldChange={handleFieldChange}
+            formData={formData,}
+            isEditing={isEditing,}
+            onFieldChange={handleFieldChange,}
           />
         </Grid>
       </Grid>
 
-      {/* Zusätzliche Informationen (nur Anzeige) */}
-      {!isEditing && (
-        <Box className="mt-6">
-          <Divider className="mb-4" />
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+      {/* Zusätzliche Informationen (nur Anzeige) */,}
+      {!isEditing && (<Box className="mt-6">, <Divider className="mb-4" />, <Grid container spacing={3, }>
+            <Grid item xs={12, } md={6, }>
               <Box className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold mb-3">Finanzielle Übersicht</h3>
                 <Box className="space-y-2">
                   <Box className="flex justify-between">
                     <span className="text-gray-600">Gesamtumsatz:</span>
-                    <span className="font-semibold">{formatCurrency(customer.totalRevenue)}</span>
+                    <span className="font-semibold">{formatCurrency(customer.totalRevenue),}</span>
                   </Box>
                   <Box className="flex justify-between">
                     <span className="text-gray-600">Kreditlimit:</span>
-                    <span className="font-semibold">{formatCurrency(customer.creditLimit)}</span>
+                    <span className="font-semibold">{formatCurrency(customer.creditLimit),}</span>
                   </Box>
                   <Box className="flex justify-between">
                     <span className="text-gray-600">Kredit ausgenutzt:</span>
-                    <span className="font-semibold">{formatCurrency(customer.creditUsed)}</span>
+                    <span className="font-semibold">{formatCurrency(customer.creditUsed),}</span>
                   </Box>
                   <Box className="flex justify-between">
                     <span className="text-gray-600">Offene Rechnungen:</span>
-                    <span className="font-semibold">{customer.openInvoices}</span>
+                    <span className="font-semibold">{customer.openInvoices,}</span>
                   </Box>
                 </Box>
               </Box>
             </Grid>
             
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12,} md={6,}>
               <Box className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold mb-3">Letzte Aktivitäten</h3>
                 <Box className="space-y-2">
@@ -253,13 +207,13 @@ const CustomerGeneralTab: React.FC<CustomerGeneralTabProps> = ({
                   <Box className="flex justify-between">
                     <span className="text-gray-600">Erstellt am:</span>
                     <span className="font-semibold">
-                      {new Date(customer.createdAt).toLocaleDateString('de-DE')}
+                      {new Date(customer.createdAt).toLocaleDateString('de-DE'),}
                     </span>
                   </Box>
                   <Box className="flex justify-between">
                     <span className="text-gray-600">Zuletzt aktualisiert:</span>
                     <span className="font-semibold">
-                      {new Date(customer.updatedAt).toLocaleDateString('de-DE')}
+                      {new Date(customer.updatedAt).toLocaleDateString('de-DE'),}
                     </span>
                   </Box>
                 </Box>

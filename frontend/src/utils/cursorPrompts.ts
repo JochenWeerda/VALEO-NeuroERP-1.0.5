@@ -1,4 +1,4 @@
-import { MCPSchema } from './mcpSchemaInjector';
+import { MCPSchema ,} from './mcpSchemaInjector';
 
 /**
  * Cursor-Prompt-Templates für automatische Komponenten-Generierung
@@ -7,8 +7,8 @@ import { MCPSchema } from './mcpSchemaInjector';
 export interface CursorPromptTemplate {
   name: string;
   description: string;
-  template: string;
-  variables: string[];
+  template: string;;
+variables: string[];
 }
 
 /**
@@ -61,20 +61,20 @@ Du bist ein erfahrener Frontend-Entwickler für VALEO NeuroERP. Erstelle React-K
 
 ## 📊 Schema-Kontext
 
-{{SCHEMA_CONTEXT}}
+{{SCHEMA_CONTEXT,}}
 
 ## 🎯 Aufgabe
 
-{{TASK_DESCRIPTION}}
+{{TASK_DESCRIPTION,}}
 
 ## 📝 Ausgabe-Format
 
 Erstelle die folgenden Dateien:
 
-1. **TypeScript-Typen** (\`types/{{TABLE_NAME}}.ts\`)
-2. **React-Komponente** (\`components/{{COMPONENT_TYPE}}/{{COMPONENT_NAME}}.tsx\`)
-3. **Tests** (\`components/__tests__/{{COMPONENT_NAME}}.test.tsx\`) - optional
-4. **Dokumentation** (\`components/{{COMPONENT_TYPE}}/README.md\`) - optional
+1. **TypeScript-Typen** (\`types/{{TABLE_NAME, }}.ts\`)
+2. **React-Komponente** (\`components/{{COMPONENT_TYPE, }}/{{COMPONENT_NAME, }}.tsx\`)
+3. **Tests** (\`components/__tests__/{{COMPONENT_NAME, }}.test.tsx\`) - optional
+4. **Dokumentation** (\`components/{{COMPONENT_TYPE, }}/README.md\`) - optional
 
 ## 🔒 Sicherheits-Hinweise
 
@@ -93,11 +93,11 @@ Erstelle die folgenden Dateien:
  * Formular-Komponenten-Prompt
  */
 export const FORM_PROMPT_TEMPLATE = `
-${BASE_PROMPT_TEMPLATE}
+${BASE_PROMPT_TEMPLATE,}
 
 ## 🎯 Aufgabe: Formular-Komponente erstellen
 
-Erstelle eine vollständige React-Formular-Komponente für die Tabelle \`{{TABLE_NAME}}\` mit folgenden Features:
+Erstelle eine vollständige React-Formular-Komponente für die Tabelle \`{{TABLE_NAME,}}\` mit folgenden Features:
 
 ### ✅ Anforderungen:
 - **React Hook Form** Integration mit Zod-Validierung
@@ -148,11 +148,11 @@ Erstelle eine vollständige, produktionsbereite React-Komponente mit allen notwe
  * Tabellen-Komponenten-Prompt
  */
 export const TABLE_PROMPT_TEMPLATE = `
-${BASE_PROMPT_TEMPLATE}
+${BASE_PROMPT_TEMPLATE,}
 
 ## 🎯 Aufgabe: Tabellen-Komponente erstellen
 
-Erstelle eine vollständige React-Tabellen-Komponente für die Tabelle \`{{TABLE_NAME}}\` mit folgenden Features:
+Erstelle eine vollständige React-Tabellen-Komponente für die Tabelle \`{{TABLE_NAME,}}\` mit folgenden Features:
 
 ### ✅ Anforderungen:
 - **Material-UI Table** mit Sortierung und Paginierung
@@ -203,11 +203,11 @@ Erstelle eine vollständige, produktionsbereite React-Tabellen-Komponente mit al
  * Vollständige CRUD-Komponenten-Prompt
  */
 export const CRUD_PROMPT_TEMPLATE = `
-${BASE_PROMPT_TEMPLATE}
+${BASE_PROMPT_TEMPLATE,}
 
 ## 🎯 Aufgabe: Vollständige CRUD-Komponenten erstellen
 
-Erstelle eine vollständige CRUD-Anwendung für die Tabelle \`{{TABLE_NAME}}\` mit folgenden Komponenten:
+Erstelle eine vollständige CRUD-Anwendung für die Tabelle \`{{TABLE_NAME,}}\` mit folgenden Komponenten:
 
 ### ✅ Anforderungen:
 - **Formular-Komponente** für Create/Update
@@ -220,10 +220,10 @@ Erstelle eine vollständige CRUD-Anwendung für die Tabelle \`{{TABLE_NAME}}\` m
 - **RLS-Compliance** für alle Operationen
 
 ### 📋 Komponenten-Struktur:
-1. **Types** (\`types/{{TABLE_NAME}}.ts\`)
-2. **Form Component** (\`components/forms/{{TABLE_NAME}}Form.tsx\`)
-3. **Table Component** (\`components/tables/{{TABLE_NAME}}Table.tsx\`)
-4. **Page Component** (\`pages/{{TABLE_NAME}}Page.tsx\`)
+1. **Types** (\`types/{{TABLE_NAME, }}.ts\`)
+2. **Form Component** (\`components/forms/{{TABLE_NAME, }}Form.tsx\`)
+3. **Table Component** (\`components/tables/{{TABLE_NAME, }}Table.tsx\`)
+4. **Page Component** (\`pages/{{TABLE_NAME, }}Page.tsx\`)
 5. **Tests** für alle Komponenten
 6. **Documentation** mit Verwendungsbeispielen
 
@@ -257,53 +257,48 @@ Erstelle eine vollständige, produktionsbereite CRUD-Anwendung mit allen notwend
  * Prompt-Templates generieren
  */
 export class CursorPromptGenerator {
-  /**
-   * Generiert einen vollständigen Cursor-Prompt basierend auf Schema und Template
-   */
-  static generatePrompt(
-    schema: MCPSchema,
-    template: 'form' | 'table' | 'crud',
-    options: {
+  /**,
+   * Generiert einen vollständigen Cursor-Prompt basierend auf Schema und Template,
+   */,
+  static generatePrompt(schema: MCPSchema, template: 'form' | 'table' | 'crud', options: {
       language?: 'de' | 'en';
       includeTests?: boolean;
       includeDocumentation?: boolean;
-    } = {}
-  ): string {
-    const schemaContext = this.generateSchemaContext(schema);
-    
-    let promptTemplate: string;
+    } = {}): string {;
+const schemaContext = this.generateSchemaContext(schema);,;
+let promptTemplate: string;
     switch (template) {
       case 'form':
-        promptTemplate = FORM_PROMPT_TEMPLATE;
-        break;
+        promptTemplate = FORM_PROMPT_TEMPLATE;,
+        break;,
       case 'table':
-        promptTemplate = TABLE_PROMPT_TEMPLATE;
-        break;
+        promptTemplate = TABLE_PROMPT_TEMPLATE;,
+        break;,
       case 'crud':
-        promptTemplate = CRUD_PROMPT_TEMPLATE;
-        break;
+        promptTemplate = CRUD_PROMPT_TEMPLATE;,
+        break;,
       default:
         throw new Error(`Unbekanntes Template: ${template}`);
     }
 
-    // Template-Variablen ersetzen
-    let prompt = promptTemplate
-      .replace('{{SCHEMA_CONTEXT}}', schemaContext)
-      .replace(/{{TABLE_NAME}}/g, schema.table)
-      .replace(/{{COMPONENT_TYPE}}/g, template === 'form' ? 'forms' : template === 'table' ? 'tables' : 'pages')
-      .replace(/{{COMPONENT_NAME}}/g, this.getComponentName(schema.table, template));
+    // Template-Variablen ersetzen;
+let prompt = promptTemplate
+      .replace('{{SCHEMA_CONTEXT, }}', schemaContext)
+      .replace(/{{TABLE_NAME, }}/g, schema.table)
+      .replace(/{{COMPONENT_TYPE, }}/g, template === 'form' ? 'forms' : template === 'table' ? 'tables' : 'pages')
+      .replace(/{{COMPONENT_NAME, }}/g, this.getComponentName(schema.table, template));
 
     // Optionale Features hinzufügen
     if (options.includeTests) {
-      prompt += '\n\n## 🧪 Tests\nErstelle umfassende Tests für alle Komponenten mit React Testing Library.';
+      prompt += '\n\n## 🧪 Tests\nErstelle umfassende Tests für alle Komponenten mit React Testing Library.';,
     }
 
     if (options.includeDocumentation) {
-      prompt += '\n\n## 📚 Dokumentation\nErstelle eine umfassende README-Dokumentation mit Verwendungsbeispielen.';
+      prompt += '\n\n## 📚 Dokumentation\nErstelle eine umfassende README-Dokumentation mit Verwendungsbeispielen.';,
     }
 
     if (options.language === 'en') {
-      prompt = this.translateToEnglish(prompt);
+      prompt = this.translateToEnglish(prompt);,
     }
 
     return prompt;
@@ -313,12 +308,12 @@ export class CursorPromptGenerator {
    * Generiert Schema-Kontext für Cursor-Prompt
    */
   private static generateSchemaContext(schema: MCPSchema): string {
-    return `
+    return `,
 ### Aktuelle Tabelle: \`${schema.table}\`
 
 ### Schema-Details:
 \`\`\`json
-${JSON.stringify(schema, null, 2)}
+${JSON.stringify(schema, null, 2),}
 \`\`\`
 
 ### RLS-Richtlinien:
@@ -328,40 +323,39 @@ ${JSON.stringify(schema, null, 2)}
 - **DELETE**: ${schema.rls.delete ? '✅ Erlaubt' : '❌ Verboten'}
 
 ### Foreign Key Beziehungen:
-${schema.columns
-  .filter(col => col.foreign_key)
-  .map(col => `- \`${col.name}\` → \`${col.foreign_key}\``)
+${schema.columns,
+  .filter(col => col.foreign_key),
+  .map(col => `- \`${col.name, }\` → \`${col.foreign_key, }\``)
   .join('\n') || '- Keine Foreign Keys definiert'}
 
 ### Validierungsregeln:
-${schema.columns
-  .filter(col => col.not_null || col.check || col.enum_values)
-  .map(col => {
-    const rules = [];
-    if (col.not_null) rules.push('NOT NULL');
+${schema.columns,
+  .filter(col => col.not_null || col.check || col.enum_values),
+  .map(col => {;
+const rules = [];, if (col.not_null) rules.push('NOT NULL');,
     if (col.check) rules.push(`CHECK: ${col.check}`);
-    if (col.enum_values) rules.push(`ENUM: [${col.enum_values.join(', ')}]`);
-    return `- \`${col.name}\`: ${rules.join(', ')}`;
+    if (col.enum_values) rules.push(`ENUM: [${col.enum_values.join(', '),}]`);
+    return `- \`${col.name,}\`: ${rules.join(', '),}`;
   })
   .join('\n') || '- Keine speziellen Validierungsregeln'}
 
-### Schema-Timestamp: ${new Date().toISOString()}
+### Schema-Timestamp: ${new Date().toISOString(),}
 `;
   }
 
   /**
    * Generiert Komponenten-Namen
    */
-  private static getComponentName(tableName: string, template: string): string {
-    const className = tableName.charAt(0).toUpperCase() + tableName.slice(1);
+  private static getComponentName(tableName: string, template: string): string {;
+const className = tableName.charAt(0).toUpperCase() + tableName.slice(1);,
     
     switch (template) {
       case 'form':
-        return `${className}Form`;
+        return `${className,}Form`;
       case 'table':
-        return `${className}Table`;
+        return `${className,}Table`;
       case 'crud':
-        return `${className}Page`;
+        return `${className,}Page`;
       default:
         return className;
     }
@@ -370,8 +364,8 @@ ${schema.columns
   /**
    * Übersetzt Prompt ins Englische
    */
-  private static translateToEnglish(prompt: string): string {
-    const translations: Record<string, string> = {
+  private static translateToEnglish(prompt: string): string {;
+const translations: Record<string, string> = {
       'Erstelle eine vollständige React-Formular-Komponente': 'Create a complete React form component',
       'Erstelle eine vollständige React-Tabellen-Komponente': 'Create a complete React table component',
       'Erstelle eine vollständige CRUD-Anwendung': 'Create a complete CRUD application',
@@ -388,11 +382,10 @@ ${schema.columns
       'HINWEIS': 'NOTE',
       'Verwende ausschließlich die oben definierten Felder': 'Use only the fields defined above',
       'Erfinde KEINE zusätzlichen Felder oder Typen': 'Do NOT invent additional fields or types'
-    };
-
-    let translatedPrompt = prompt;
+    };;
+let translatedPrompt = prompt;
     Object.entries(translations).forEach(([german, english]) => {
-      translatedPrompt = translatedPrompt.replace(new RegExp(german, 'g'), english);
+      translatedPrompt = translatedPrompt.replace(new RegExp(german, 'g'), english);,
     });
 
     return translatedPrompt;
@@ -402,19 +395,19 @@ ${schema.columns
    * Generiert einen kurzen Prompt für schnelle Komponenten-Generierung
    */
   static generateQuickPrompt(schema: MCPSchema, componentType: string): string {
-    return `
-# Quick Component Generator
+    return `,
+# Quick Component Generator,
 
-Generate a React component for table \`${schema.table}\` with type \`${componentType}\`.
+Generate a React component for table \`${schema.table,}\` with type \`${componentType,}\`.
 
 ## Schema:
 \`\`\`json
-${JSON.stringify(schema, null, 2)}
+${JSON.stringify(schema, null, 2),}
 \`\`\`
 
 ## Requirements:
 - Use only fields from schema
-- Respect RLS policies: ${JSON.stringify(schema.rls)}
+- Respect RLS policies: ${JSON.stringify(schema.rls),}
 - Include TypeScript types
 - Use Material-UI + TailwindCSS
 - German labels and messages
@@ -428,14 +421,14 @@ Generate the component now.
    * Generiert einen Debug-Prompt für Schema-Analyse
    */
   static generateDebugPrompt(schema: MCPSchema): string {
-    return `
-# Schema Debug Analysis
+    return `,
+# Schema Debug Analysis,
 
 Analyze this Supabase schema and provide insights:
 
 ## Schema:
-\`\`\`json
-${JSON.stringify(schema, null, 2)}
+\`\`\`json,
+${JSON.stringify(schema, null, 2),}
 \`\`\`
 
 ## Analysis Questions:
@@ -458,20 +451,20 @@ export const PROMPT_TEMPLATES: Record<string, CursorPromptTemplate> = {
   form: {
     name: 'Formular-Komponente',
     description: 'Erstellt eine React-Formular-Komponente basierend auf Supabase-Schema',
-    template: FORM_PROMPT_TEMPLATE,
-    variables: ['{{TABLE_NAME}}', '{{SCHEMA_CONTEXT}}', '{{COMPONENT_NAME}}']
+    template: FORM_PROMPT_TEMPLATE,;
+variables: ['{{TABLE_NAME}}', '{{SCHEMA_CONTEXT,}}', '{{COMPONENT_NAME,}}']
   },
   table: {
     name: 'Tabellen-Komponente',
     description: 'Erstellt eine React-Tabellen-Komponente basierend auf Supabase-Schema',
-    template: TABLE_PROMPT_TEMPLATE,
-    variables: ['{{TABLE_NAME}}', '{{SCHEMA_CONTEXT}}', '{{COMPONENT_NAME}}']
+    template: TABLE_PROMPT_TEMPLATE,;
+variables: ['{{TABLE_NAME}}', '{{SCHEMA_CONTEXT,}}', '{{COMPONENT_NAME,}}']
   },
   crud: {
     name: 'CRUD-Anwendung',
     description: 'Erstellt eine vollständige CRUD-Anwendung basierend auf Supabase-Schema',
-    template: CRUD_PROMPT_TEMPLATE,
-    variables: ['{{TABLE_NAME}}', '{{SCHEMA_CONTEXT}}', '{{COMPONENT_NAME}}']
+    template: CRUD_PROMPT_TEMPLATE,;
+variables: ['{{TABLE_NAME}}', '{{SCHEMA_CONTEXT,}}', '{{COMPONENT_NAME,}}']
   }
 };
 

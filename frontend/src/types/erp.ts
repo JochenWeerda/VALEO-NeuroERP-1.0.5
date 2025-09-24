@@ -9,7 +9,7 @@
 //
 // Bestehende Typen aus crm.ts werden referenziert, wo sinnvoll.
 
-import { Supplier, Customer } from './crm';
+import { Supplier, Customer} from './crm';
 
 /**
  * Stammdaten für Lieferanten-Lieferschein

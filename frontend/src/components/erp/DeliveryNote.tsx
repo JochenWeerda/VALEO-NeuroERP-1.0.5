@@ -18,20 +18,12 @@ export interface DeliveryNoteItem {
 }
 
 export interface DeliveryNoteProps {
-  onDeliveryCreate: (delivery: DeliveryNoteData) => void;
-  onDeliveryUpdate: (id: string, delivery: Partial<DeliveryNoteData>) => void;
-  onDeliveryDelete: (id: string) => void;
+  onDeliveryCreate: (delivery: _DeliveryNoteData) => void;
+  onDeliveryUpdate: (id: _string, delivery: Partial<DeliveryNoteData>) => void;
+  onDeliveryDelete: (id: _string) => void;
 }
 
 export const DeliveryNote: React.FC<DeliveryNoteProps> = ({
-  onDeliveryCreate,
-  onDeliveryUpdate,
-  onDeliveryDelete
-}) => {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Delivery Note</h1>
-      <p className="text-gray-600">Diese Komponente wird durch DeliveryNoteForm ersetzt.</p>
-    </div>
-  );
+  onDeliveryCreate, onDeliveryUpdate, onDeliveryDelete, }) => {
+  return (<div className="p-6">, <h1 className="text-2xl font-bold mb-4">Delivery Note</h1>, <p className="text-gray-600">Diese Komponente wird durch DeliveryNoteForm ersetzt.</p>, </div>);,
 }; 

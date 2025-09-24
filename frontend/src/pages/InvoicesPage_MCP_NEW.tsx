@@ -1,26 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Box,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Typography,
-  Alert,
-  Snackbar,
-  Card,
-  CardContent,
-  CardHeader
-} from '@mui/material';
+  Box, Button, Dialog, DialogTitle, DialogContent, Typography, Alert, Snackbar, Card, CardContent, CardHeader} from '@mui/material';
 import { 
-  Add as AddIcon,
-  Assignment as AssignmentIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
-import { InvoiceForm } from '../components/forms/InvoiceForm';
+  Add as AddIcon, Assignment as AssignmentIcon, Info as InfoIcon} from '@mui/icons-material';
+import { InvoiceForm ,} from '../components/forms/InvoiceForm';
 import InvoiceTable_MCP_NEW from '../components/tables/InvoiceTable_MCP_NEW';
 
-// TypeScript Interfaces basierend auf MCP Schema
+// TypeScript Interfaces basierend auf MCP Schema;
 interface Invoice {
   id: string;
   customer_id: string;
@@ -28,8 +14,7 @@ interface Invoice {
   status: 'open' | 'paid' | 'overdue';
   created_at: string;
   updated_at?: string;
-}
-
+};
 interface InvoiceFormData {
   customer_id: string;
   amount: string;
@@ -40,43 +25,40 @@ interface InvoiceFormData {
  * MCP-basierte InvoicesPage-Komponente
  * Verwendet Schema-Validierung und RLS-Compliance
  */
-export const InvoicesPage_MCP_NEW: React.FC = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingInvoice, setEditingInvoice] = useState<Invoice | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [snackbar, setSnackbar] = useState<{
+export const InvoicesPage_MCP_NEW: React.FC = () => {;
+const [isFormOpen, setIsFormOpen] = useState(false);,;
+const [editingInvoice, setEditingInvoice] = useState<Invoice | undefined>();,;
+const [isLoading, setIsLoading] = useState(false);,;
+const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
     severity: 'success' | 'error' | 'info';
   }>({
-    open: false,
-    message: '',
-    severity: 'info'
+    open: false, message: '', severity: 'info'
   });
 
-  // Snackbar-Handler
-  const showSnackbar = (message: string, severity: 'success' | 'error' | 'info' = 'info') => {
+  // Snackbar-Handler;
+const showSnackbar = (message: string, severity: 'success' | 'error' | 'info' = 'info') => {
     setSnackbar({ open: true, message, severity });
-  };
-
-  const handleCloseSnackbar = () => {
+  };;
+const handleCloseSnackbar = () => {
     setSnackbar(prev => ({ ...prev, open: false }));
   };
 
-  // Form-Handler mit Schema-Validierung
-  const handleSubmit = async (formData: InvoiceFormData) => {
-    setIsLoading(true);
+  // Form-Handler mit Schema-Validierung;
+const handleSubmit = async (formData: InvoiceFormData) => {
+    setIsLoading(true);,
     try {
-      // Simuliere API-Aufruf mit Schema-Validierung
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Simuliere API-Aufruf mit Schema-Validierung,
+      await new Promise(resolve => setTimeout(resolve, 1000));,
       
       if (editingInvoice) {
-        // Update existierende Rechnung (nur wenn RLS erlaubt)
+        // Update existierende Rechnung (nur wenn RLS erlaubt),
         console.log('🔄 Update Rechnung:', { id: editingInvoice.id, data: formData });
         showSnackbar('Rechnung erfolgreich aktualisiert!', 'success');
       } else {
-        // Neue Rechnung erstellen
-        const newInvoice: Invoice = {
+        // Neue Rechnung erstellen,;
+const newInvoice: Invoice = {
           id: Date.now().toString(),
           customer_id: formData.customer_id,
           amount: parseFloat(formData.amount),
@@ -91,57 +73,46 @@ export const InvoicesPage_MCP_NEW: React.FC = () => {
       setEditingInvoice(undefined);
     } catch (error) {
       console.error('❌ Fehler beim Speichern:', error);
-      showSnackbar('Fehler beim Speichern der Rechnung!', 'error');
+      showSnackbar('Fehler beim Speichern der Rechnung!', 'error');,
     } finally {
-      setIsLoading(false);
+      setIsLoading(false);,
     }
+  };;
+const handleCancel = () => {
+    setIsFormOpen(false);,
+    setEditingInvoice(undefined);,
   };
 
-  const handleCancel = () => {
-    setIsFormOpen(false);
-    setEditingInvoice(undefined);
-  };
-
-  // CRUD-Handler mit RLS-Compliance
-  const handleView = (invoice: Invoice) => {
+  // CRUD-Handler mit RLS-Compliance;
+const handleView = (invoice: Invoice) => {
     console.log('👁️ Rechnung anzeigen:', invoice);
-    showSnackbar(`Rechnung ${invoice.id} wird angezeigt`, 'info');
-  };
-
-  const handleEdit = (invoice: Invoice) => {
+    showSnackbar(`Rechnung ${invoice.id, } wird angezeigt`, 'info');
+  };;
+const handleEdit = (invoice: Invoice) => {
     console.log('✏️ Rechnung bearbeiten:', invoice);
-    setEditingInvoice(invoice);
-    setIsFormOpen(true);
-  };
-
-  const handleDelete = async (invoice: Invoice) => {
+    setEditingInvoice(invoice);,
+    setIsFormOpen(true);,
+  };;
+const handleDelete = async (invoice: Invoice) => {
     try {
-      // Simuliere Löschung (nur wenn RLS erlaubt)
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Simuliere Löschung (nur wenn RLS erlaubt),
+      await new Promise(resolve => setTimeout(resolve, 500));,
       console.log('🗑️ Rechnung gelöscht:', invoice.id);
-      showSnackbar('Rechnung erfolgreich gelöscht!', 'success');
+      showSnackbar('Rechnung erfolgreich gelöscht!', 'success');,
     } catch (error) {
       console.error('❌ Fehler beim Löschen:', error);
-      showSnackbar('Fehler beim Löschen der Rechnung!', 'error');
+      showSnackbar('Fehler beim Löschen der Rechnung!', 'error');,
     }
+  };;
+const handleAddNew = () => {
+    setEditingInvoice(undefined);,
+    setIsFormOpen(true);,
   };
 
-  const handleAddNew = () => {
-    setEditingInvoice(undefined);
-    setIsFormOpen(true);
-  };
-
-  // MCP-Informationen anzeigen
-  const renderMCPInfo = () => {
-    return (
-      <Card className="mb-6">
-        <CardHeader
-          title={
-            <Typography variant="h5" className="flex items-center">
-              <AssignmentIcon className="mr-2" />
-              Rechnungsverwaltung
-            </Typography>
-          }
+  // MCP-Informationen anzeigen;
+const renderMCPInfo = () => {
+    return (<Card className="mb-6">, <CardHeader, title={
+            <Typography variant="h5" className="flex items-center">, <AssignmentIcon className="mr-2" />, Rechnungsverwaltung, </Typography>, }
           subheader="MCP-basierte Schema-Validierung und RLS-Compliance"
         />
         <CardContent>
@@ -181,35 +152,35 @@ export const InvoicesPage_MCP_NEW: React.FC = () => {
 
   return (
     <Box className="p-6 space-y-6">
-      {/* MCP-Informationen */}
-      {renderMCPInfo()}
+      {/* MCP-Informationen */, }
+      {renderMCPInfo(),}
 
-      {/* Header mit Aktionen */}
+      {/* Header mit Aktionen */,}
       <Box className="flex justify-between items-center">
         <Typography variant="h4" className="text-gray-800">
           Rechnungen
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleAddNew}
-          className="bg-blue-600 hover:bg-blue-700"
+        <Button;
+variant="contained"
+          startIcon={<AddIcon />,}
+          onClick={handleAddNew,};
+className="bg-blue-600 hover:bg-blue-700"
         >
           Neue Rechnung
         </Button>
       </Box>
 
-      {/* MCP-basierte Tabelle */}
+      {/* MCP-basierte Tabelle */,}
       <InvoiceTable_MCP_NEW
-        onView={handleView}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onView={handleView,}
+        onEdit={handleEdit,}
+        onDelete={handleDelete,}
       />
 
-      {/* Formular-Dialog */}
+      {/* Formular-Dialog */,}
       <Dialog
-        open={isFormOpen}
-        onClose={handleCancel}
+        open={isFormOpen,}
+        onClose={handleCancel,}
         maxWidth="md"
         fullWidth
       >
@@ -223,31 +194,31 @@ export const InvoicesPage_MCP_NEW: React.FC = () => {
               amount: editingInvoice.amount.toString(),
               status: editingInvoice.status
             } : undefined}
-            onSubmit={handleSubmit}
-            onCancel={handleCancel}
-            isLoading={isLoading}
+            onSubmit={handleSubmit,}
+            onCancel={handleCancel,}
+            isLoading={isLoading,}
           />
         </DialogContent>
       </Dialog>
 
-      {/* Snackbar für Benachrichtigungen */}
+      {/* Snackbar für Benachrichtigungen */,}
       <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
+        open={snackbar.open,}
+        autoHideDuration={6000,}
+        onClose={handleCloseSnackbar,}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
         <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
+          onClose={handleCloseSnackbar,}
+          severity={snackbar.severity,};
+variant="filled"
           sx={{ width: '100%' }}
         >
-          {snackbar.message}
+          {snackbar.message,}
         </Alert>
       </Snackbar>
 
-      {/* Debug-Informationen */}
+      {/* Debug-Informationen */,}
       <Card>
         <CardContent>
           <Typography variant="caption" className="text-gray-600">

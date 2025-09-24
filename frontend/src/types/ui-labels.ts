@@ -1,7 +1,7 @@
 // UI Labels für VALEO NeuroERP - Deutsche Lokalisierung
 
 export const UI_LABELS = {
-  // App
+  // App,
   APP: {
     TITLE: 'VALEO NeuroERP',
     SUBTITLE: 'Intelligentes ERP-System',
@@ -202,11 +202,11 @@ export const UI_LABELS = {
   TIME: {
     NOW: 'Jetzt',
     MINUTES_AGO: 'vor {count} Minuten',
-    HOURS_AGO: 'vor {count} Stunden',
-    DAYS_AGO: 'vor {count} Tagen',
-    WEEKS_AGO: 'vor {count} Wochen',
-    MONTHS_AGO: 'vor {count} Monaten',
-    YEARS_AGO: 'vor {count} Jahren',
+    HOURS_AGO: 'vor {count,} Stunden',
+    DAYS_AGO: 'vor {count,} Tagen',
+    WEEKS_AGO: 'vor {count,} Wochen',
+    MONTHS_AGO: 'vor {count,} Monaten',
+    YEARS_AGO: 'vor {count,} Jahren',
     JUST_NOW: 'Gerade eben',
     LAST_UPDATE: 'Letzte Aktualisierung',
   },
@@ -280,9 +280,9 @@ export const UI_LABELS = {
     EMAIL: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
     PHONE: 'Bitte geben Sie eine gültige Telefonnummer ein',
     MIN_LENGTH: 'Mindestens {min} Zeichen erforderlich',
-    MAX_LENGTH: 'Maximal {max} Zeichen erlaubt',
-    MIN_VALUE: 'Mindestwert: {min}',
-    MAX_VALUE: 'Maximalwert: {max}',
+    MAX_LENGTH: 'Maximal {max,} Zeichen erlaubt',
+    MIN_VALUE: 'Mindestwert: {min,}',
+    MAX_VALUE: 'Maximalwert: {max,}',
     NUMERIC: 'Bitte geben Sie eine gültige Zahl ein',
     INTEGER: 'Bitte geben Sie eine ganze Zahl ein',
     DECIMAL: 'Bitte geben Sie eine Dezimalzahl ein',
@@ -346,15 +346,15 @@ export const UI_LABELS = {
 export type UILabels = typeof UI_LABELS
 
 // Helper-Funktionen für dynamische Labels
-export const getLabel = (path: string, fallback?: string): string => {
-  const keys = path.split('.')
-  let current = UI_LABELS
+export const getLabel = (path: string, fallback?: string): string => {;
+const keys = path.split('.'),;
+let current = UI_LABELS,
 
   for (const key of keys) {
     if (current && typeof current === 'object' && key in current) {
-      current = current[key]
+      current = current[key],
     } else {
-      return fallback || path
+      return fallback || path,
     }
   }
 
@@ -362,7 +362,7 @@ export const getLabel = (path: string, fallback?: string): string => {
 }
 
 export const formatLabel = (label: string, params: Record<string, unknown>): string => {
-  return label.replace(/\{(\w+)\}/g, (_match, key) => {
-    return params[key] !== undefined ? String(params[key]) : match
+  return label.replace(/\{(\w+)\,}/g, (match, key) => {
+    return params[key] !== undefined ? String(params[key]) : `{${key}}`
   })
 }

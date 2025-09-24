@@ -1,9 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { render, screen, fireEvent, waitFor} from '@testing-library/react';
+import { ThemeProvider, createTheme} from '@mui/material/styles';
 import '@testing-library/jest-dom';
 import SapFioriDashboard from '../SapFioriDashboard';
-import { ApiProvider } from '../../contexts/ApiContext';
+import { ApiProvider ,} from '../../contexts/ApiContext';
 
 // Mock für react-router-dom
 jest.mock('react-router-dom', () => ({
@@ -14,101 +14,87 @@ jest.mock('react-router-dom', () => ({
 // Mock für fetch
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({
+    ok: true, json: () => Promise.resolve({
       transactions: [
-        { id: 1, amount: 1000, status: 'completed', date: '2024-01-01' },
-        { id: 2, amount: 2000, status: 'pending', date: '2024-01-02' },
-      ],
-      inventory: [
-        { id: 1, name: 'Product A', quantity: 100, status: 'in_stock' },
-        { id: 2, name: 'Product B', quantity: 50, status: 'low_stock' },
-      ],
-    }),
+        { id: 1, amount: 1000, status: 'completed', date: '2024-01-01' }, { id: 2, amount: 2000, status: 'pending', date: '2024-01-02' }, ], inventory: [
+        { id: 1, name: 'Product A', quantity: 100, status: 'in_stock' }, { id: 2, name: 'Product B', quantity: 50, status: 'low_stock' }, ], }),
   })
-) as jest.Mock;
-
-const theme = createTheme();
-
+) as jest.Mock;;
+const theme = createTheme();;
 const renderWithProviders = (component: React.ReactElement) => {
-  return render(
-    <ThemeProvider theme={theme}>
+  return render(<ThemeProvider theme={theme, }>
       <ApiProvider>
-        {component}
+        {component, }
       </ApiProvider>
-    </ThemeProvider>
-  );
+    </ThemeProvider>);
 };
 
 describe('SapFioriDashboard', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks();,
   });
 
   test('rendert Dashboard korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    expect(screen.getByText('VALEO NeuroERP Dashboard')).toBeInTheDocument();
-    expect(screen.getByText('SAP Fiori Style - Intelligente Beschaffungsübersicht')).toBeInTheDocument();
-    expect(screen.getByText('Live-Daten')).toBeInTheDocument();
+    expect(screen.getByText('VALEO NeuroERP Dashboard')).toBeInTheDocument();,
+    expect(screen.getByText('SAP Fiori Style - Intelligente Beschaffungsübersicht')).toBeInTheDocument();,
+    expect(screen.getByText('Live-Daten')).toBeInTheDocument();,
   });
 
   test('zeigt alle Tabs korrekt an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    expect(screen.getByText('Startseite')).toBeInTheDocument();
-    expect(screen.getByText('Mitarbeiterservice')).toBeInTheDocument();
-    expect(screen.getByText('Einkaufsanalyse')).toBeInTheDocument();
-    expect(screen.getByText('Bedarfsanforderung')).toBeInTheDocument();
-    expect(screen.getByText('Bestellabwicklung')).toBeInTheDocument();
-    expect(screen.getByText('Lieferantenbewertung')).toBeInTheDocument();
-    expect(screen.getByText('Bestellungen überwachen')).toBeInTheDocument();
-    expect(screen.getByText('Beschaffungsübersicht')).toBeInTheDocument();
+    expect(screen.getByText('Startseite')).toBeInTheDocument();,
+    expect(screen.getByText('Mitarbeiterservice')).toBeInTheDocument();,
+    expect(screen.getByText('Einkaufsanalyse')).toBeInTheDocument();,
+    expect(screen.getByText('Bedarfsanforderung')).toBeInTheDocument();,
+    expect(screen.getByText('Bestellabwicklung')).toBeInTheDocument();,
+    expect(screen.getByText('Lieferantenbewertung')).toBeInTheDocument();,
+    expect(screen.getByText('Bestellungen überwachen')).toBeInTheDocument();,
+    expect(screen.getByText('Beschaffungsübersicht')).toBeInTheDocument();,
   });
 
   test('zeigt Aktions-Buttons korrekt an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    expect(screen.getByText('Aktualisieren')).toBeInTheDocument();
-    expect(screen.getByText('Export')).toBeInTheDocument();
+    expect(screen.getByText('Aktualisieren')).toBeInTheDocument();,
+    expect(screen.getByText('Export')).toBeInTheDocument();,
   });
 
   test('wechselt zwischen Tabs korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,;
+const mitarbeiterserviceTab = screen.getByText('Mitarbeiterservice');,
+    fireEvent.click(mitarbeiterserviceTab);,
     
-    const mitarbeiterserviceTab = screen.getByText('Mitarbeiterservice');
-    fireEvent.click(mitarbeiterserviceTab);
-    
-    expect(screen.getByText('Diese Funktion wird in Kürze verfügbar sein.')).toBeInTheDocument();
+    expect(screen.getByText('Diese Funktion wird in Kürze verfügbar sein.')).toBeInTheDocument();,
   });
 
   test('zeigt Dashboard-Karten korrekt an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob die Summary-Karten angezeigt werden
-    expect(screen.getByText('Gesamtbestellwert')).toBeInTheDocument();
-    expect(screen.getByText('Aktive Gruppen')).toBeInTheDocument();
-    expect(screen.getByText('Überfällige Positionen')).toBeInTheDocument();
-    expect(screen.getAllByText('Budgetabweichung')[0]).toBeInTheDocument();
+    // Prüfe ob die Summary-Karten angezeigt werden,
+    expect(screen.getByText('Gesamtbestellwert')).toBeInTheDocument();,
+    expect(screen.getByText('Aktive Gruppen')).toBeInTheDocument();,
+    expect(screen.getByText('Überfällige Positionen')).toBeInTheDocument();,
+    expect(screen.getAllByText('Budgetabweichung')[0]).toBeInTheDocument();,
   });
 
   test('zeigt korrekte Werte in den Karten an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    expect(screen.getByText('533 Mio.€')).toBeInTheDocument();
-    expect(screen.getByText('18')).toBeInTheDocument();
-    expect(screen.getByText('625')).toBeInTheDocument();
-    expect(screen.getByText('33,4%')).toBeInTheDocument();
+    expect(screen.getByText('533 Mio.€')).toBeInTheDocument();,
+    expect(screen.getByText('18')).toBeInTheDocument();,
+    expect(screen.getByText('625')).toBeInTheDocument();,
+    expect(screen.getByText('33, 4%')).toBeInTheDocument();,
   });
 
   test('behandelt Loading-Zustand korrekt', async () => {
-    // Mock für langsame Antwort
-    global.fetch = jest.fn(() =>
-      new Promise(resolve =>
-        setTimeout(() =>
+    // Mock für langsame Antwort,
+    global.fetch = jest.fn(() =>,
+      new Promise(resolve =>, setTimeout(() =>,
           resolve({
-            ok: true,
-            json: () => Promise.resolve({ transactions: [], inventory: [] }),
+            ok: true, json: () => Promise.resolve({ transactions: [], inventory: [] }),
           }),
           100
         )
@@ -123,72 +109,70 @@ describe('SapFioriDashboard', () => {
   });
 
   test('behandelt Fehler korrekt', async () => {
-    // Mock für Fehler
-    global.fetch = jest.fn(() =>
-      Promise.reject(new Error('Network error'))
-    ) as jest.Mock;
+    // Mock für Fehler,
+    global.fetch = jest.fn(() =>,
+      Promise.reject(new Error('Network error')),
+    ) as jest.Mock;,
 
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Da der Fehler möglicherweise nicht direkt angezeigt wird, prüfen wir nur ob das Dashboard gerendert wird
-    expect(screen.getByText('VALEO NeuroERP Dashboard')).toBeInTheDocument();
+    // Da der Fehler möglicherweise nicht direkt angezeigt wird, prüfen wir nur ob das Dashboard gerendert wird,
+    expect(screen.getByText('VALEO NeuroERP Dashboard')).toBeInTheDocument();,
   });
 
   test('aktualisiert Daten korrekt', async () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,;
+const refreshButton = screen.getByText('Aktualisieren');,
+    fireEvent.click(refreshButton);,
     
-    const refreshButton = screen.getByText('Aktualisieren');
-    fireEvent.click(refreshButton);
-    
-    // Prüfe ob der Button klickbar ist
-    expect(refreshButton).toBeInTheDocument();
+    // Prüfe ob der Button klickbar ist,
+    expect(refreshButton).toBeInTheDocument();,
   });
 
   test('zeigt andere Tab-Inhalte korrekt an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Klicke auf verschiedene Tabs
-    const einkaufsanalyseTab = screen.getByText('Einkaufsanalyse');
-    fireEvent.click(einkaufsanalyseTab);
+    // Klicke auf verschiedene Tabs,;
+const einkaufsanalyseTab = screen.getByText('Einkaufsanalyse');,
+    fireEvent.click(einkaufsanalyseTab);,
     
-    // Prüfe ob der Tab-Inhalt angezeigt wird
-    expect(screen.getByText('Diese Funktion wird in Kürze verfügbar sein.')).toBeInTheDocument();
+    // Prüfe ob der Tab-Inhalt angezeigt wird,
+    expect(screen.getByText('Diese Funktion wird in Kürze verfügbar sein.')).toBeInTheDocument();,
   });
 
   test('behandelt Tab-Wechsel korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Startseite sollte initial aktiv sein
-    expect(screen.getByText('Gesamtbestellwert')).toBeInTheDocument();
+    // Startseite sollte initial aktiv sein,
+    expect(screen.getByText('Gesamtbestellwert')).toBeInTheDocument();,
     
-    // Wechsle zu anderem Tab
-    const bedarfsanforderungTab = screen.getAllByText('Bedarfsanforderung')[0];
-    fireEvent.click(bedarfsanforderungTab);
+    // Wechsle zu anderem Tab,;
+const bedarfsanforderungTab = screen.getAllByText('Bedarfsanforderung')[0];,
+    fireEvent.click(bedarfsanforderungTab);,
     
-    // Prüfe ob der neue Tab-Inhalt angezeigt wird
-    expect(screen.getByText('Diese Funktion wird in Kürze verfügbar sein.')).toBeInTheDocument();
+    // Prüfe ob der neue Tab-Inhalt angezeigt wird,
+    expect(screen.getByText('Diese Funktion wird in Kürze verfügbar sein.')).toBeInTheDocument();,
   });
 
   test('zeigt alle Tab-Icons korrekt an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob die Icons in den Tabs vorhanden sind
-    const tabs = screen.getAllByRole('tab');
-    expect(tabs.length).toBeGreaterThan(0);
+    // Prüfe ob die Icons in den Tabs vorhanden sind,;
+const tabs = screen.getAllByRole('tab');,
+    expect(tabs.length).toBeGreaterThan(0);,
     
-    // Prüfe ob die Icons in den Summary-Karten vorhanden sind
-    expect(screen.getAllByTestId('TrendingUpIcon')[0]).toBeInTheDocument();
-    expect(screen.getAllByTestId('CheckCircleIcon')[0]).toBeInTheDocument();
-    expect(screen.getAllByTestId('WarningIcon')[0]).toBeInTheDocument();
-    expect(screen.getAllByTestId('ErrorIcon')[0]).toBeInTheDocument();
+    // Prüfe ob die Icons in den Summary-Karten vorhanden sind,
+    expect(screen.getAllByTestId('TrendingUpIcon')[0]).toBeInTheDocument();,
+    expect(screen.getAllByTestId('CheckCircleIcon')[0]).toBeInTheDocument();,
+    expect(screen.getAllByTestId('WarningIcon')[0]).toBeInTheDocument();,
+    expect(screen.getAllByTestId('ErrorIcon')[0]).toBeInTheDocument();,
   });
 
   test('behandelt leere API-Antwort korrekt', async () => {
-    // Mock für leere Antwort
-    global.fetch = jest.fn(() =>
+    // Mock für leere Antwort,
+    global.fetch = jest.fn(() =>,
       Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({}),
+        ok: true, json: () => Promise.resolve({}),
       })
     ) as jest.Mock;
 
@@ -199,92 +183,91 @@ describe('SapFioriDashboard', () => {
   });
 
   test('zeigt korrekte Farben für Status-Indikatoren', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob die Karten mit korrekten Farben angezeigt werden
-    const cards = screen.getAllByText('Gesamtbestellwert');
-    expect(cards.length).toBeGreaterThan(0);
+    // Prüfe ob die Karten mit korrekten Farben angezeigt werden,;
+const cards = screen.getAllByText('Gesamtbestellwert');,
+    expect(cards.length).toBeGreaterThan(0);,
   });
 
   test('behandelt Export-Button korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,;
+const exportButton = screen.getByText('Export');,
+    expect(exportButton).toBeInTheDocument();,
     
-    const exportButton = screen.getByText('Export');
-    expect(exportButton).toBeInTheDocument();
-    
-    // Button sollte klickbar sein
-    fireEvent.click(exportButton);
-    // Hier könnte man prüfen ob eine Export-Funktion aufgerufen wird
+    // Button sollte klickbar sein,
+    fireEvent.click(exportButton);,
+    // Hier könnte man prüfen ob eine Export-Funktion aufgerufen wird,
   });
 
   test('zeigt korrekte Typografie-Hierarchie', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob die Hauptüberschrift korrekt angezeigt wird
-    const mainTitle = screen.getByText('VALEO NeuroERP Dashboard');
-    expect(mainTitle).toBeInTheDocument();
+    // Prüfe ob die Hauptüberschrift korrekt angezeigt wird,;
+const mainTitle = screen.getByText('VALEO NeuroERP Dashboard');,
+    expect(mainTitle).toBeInTheDocument();,
     
-    // Prüfe ob die Untertitel korrekt angezeigt werden
-    const subtitle = screen.getByText('SAP Fiori Style - Intelligente Beschaffungsübersicht');
-    expect(subtitle).toBeInTheDocument();
+    // Prüfe ob die Untertitel korrekt angezeigt werden,;
+const subtitle = screen.getByText('SAP Fiori Style - Intelligente Beschaffungsübersicht');,
+    expect(subtitle).toBeInTheDocument();,
   });
 
   test('behandelt Responsive-Design korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Teste ob das Grid-Layout korrekt angezeigt wird
-    const gridContainer = screen.getByText('Gesamtbestellwert').closest('div');
-    expect(gridContainer).toBeInTheDocument();
+    // Teste ob das Grid-Layout korrekt angezeigt wird,;
+const gridContainer = screen.getByText('Gesamtbestellwert').closest('div');,
+    expect(gridContainer).toBeInTheDocument();,
   });
 
   test('zeigt korrekte Status-Chips an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob der Live-Daten Chip angezeigt wird
-    const liveDataChip = screen.getByText('Live-Daten');
-    expect(liveDataChip).toBeInTheDocument();
+    // Prüfe ob der Live-Daten Chip angezeigt wird,;
+const liveDataChip = screen.getByText('Live-Daten');,
+    expect(liveDataChip).toBeInTheDocument();,
   });
 
   test('behandelt Navigation korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob alle Navigationselemente vorhanden sind
-    expect(screen.getByText('Startseite')).toBeInTheDocument();
-    expect(screen.getByText('Mitarbeiterservice')).toBeInTheDocument();
-    expect(screen.getByText('Einkaufsanalyse')).toBeInTheDocument();
+    // Prüfe ob alle Navigationselemente vorhanden sind,
+    expect(screen.getByText('Startseite')).toBeInTheDocument();,
+    expect(screen.getByText('Mitarbeiterservice')).toBeInTheDocument();,
+    expect(screen.getByText('Einkaufsanalyse')).toBeInTheDocument();,
   });
 
   test('zeigt korrekte Metriken an', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob alle wichtigen Metriken angezeigt werden
-    expect(screen.getByText('533 Mio.€')).toBeInTheDocument();
-    expect(screen.getByText('18')).toBeInTheDocument();
-    expect(screen.getByText('625')).toBeInTheDocument();
-    expect(screen.getByText('33,4%')).toBeInTheDocument();
+    // Prüfe ob alle wichtigen Metriken angezeigt werden,
+    expect(screen.getByText('533 Mio.€')).toBeInTheDocument();,
+    expect(screen.getByText('18')).toBeInTheDocument();,
+    expect(screen.getByText('625')).toBeInTheDocument();,
+    expect(screen.getByText('33, 4%')).toBeInTheDocument();,
   });
 
   test('zeigt Dashboard-Karten mit korrekten Icons', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob die Icons in den Dashboard-Karten vorhanden sind
-    expect(screen.getByTestId('HomeIcon')).toBeInTheDocument();
-    expect(screen.getByTestId('RefreshIcon')).toBeInTheDocument();
+    // Prüfe ob die Icons in den Dashboard-Karten vorhanden sind,
+    expect(screen.getByTestId('HomeIcon')).toBeInTheDocument();,
+    expect(screen.getByTestId('RefreshIcon')).toBeInTheDocument();,
   });
 
   test('behandelt Tab-Panel-Wechsel korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob das erste Tab-Panel korrekt angezeigt wird
-    const tabPanel = screen.getByRole('tabpanel');
-    expect(tabPanel).toBeInTheDocument();
+    // Prüfe ob das erste Tab-Panel korrekt angezeigt wird,;
+const tabPanel = screen.getByRole('tabpanel');,
+    expect(tabPanel).toBeInTheDocument();,
   });
 
   test('zeigt korrekte Tab-Labels', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob alle Tab-Labels korrekt angezeigt werden
-    const tabLabels = [
+    // Prüfe ob alle Tab-Labels korrekt angezeigt werden,;
+const tabLabels = [,
       'Startseite',
       'Mitarbeiterservice', 
       'Einkaufsanalyse',
@@ -292,26 +275,26 @@ describe('SapFioriDashboard', () => {
       'Bestellabwicklung',
       'Lieferantenbewertung',
       'Bestellungen überwachen',
-      'Beschaffungsübersicht'
-    ];
+      'Beschaffungsübersicht',
+    ];,
     
     tabLabels.forEach(label => {
-      expect(screen.getByText(label)).toBeInTheDocument();
+      expect(screen.getByText(label)).toBeInTheDocument();,
     });
   });
 
   test('behandelt Button-Interaktionen korrekt', () => {
-    renderWithProviders(<SapFioriDashboard />);
+    renderWithProviders(<SapFioriDashboard />);,
     
-    // Prüfe ob Buttons klickbar sind
-    const refreshButton = screen.getByText('Aktualisieren');
-    const exportButton = screen.getByText('Export');
+    // Prüfe ob Buttons klickbar sind,;
+const refreshButton = screen.getByText('Aktualisieren');,;
+const exportButton = screen.getByText('Export');,
     
-    expect(refreshButton).toBeInTheDocument();
-    expect(exportButton).toBeInTheDocument();
+    expect(refreshButton).toBeInTheDocument();,
+    expect(exportButton).toBeInTheDocument();,
     
-    // Simuliere Klicks
-    fireEvent.click(refreshButton);
-    fireEvent.click(exportButton);
+    // Simuliere Klicks,
+    fireEvent.click(refreshButton);,
+    fireEvent.click(exportButton);,
   });
 }); 

@@ -6,7 +6,7 @@
 import React from 'react';
 
 export interface PerformanceMetrics {
-  // Navigation Timing
+  // Navigation Timing,
   navigationStart: number;
   fetchStart: number;
   domainLookupStart: number;
@@ -23,17 +23,17 @@ export interface PerformanceMetrics {
   loadEventStart: number;
   loadEventEnd: number;
   
-  // Custom Metrics
+  // Custom Metrics,
   firstContentfulPaint?: number;
   largestContentfulPaint?: number;
   firstInputDelay?: number;
   cumulativeLayoutShift?: number;
   
-  // Bundle Metrics
+  // Bundle Metrics,
   bundleSize?: number;
   chunkCount?: number;
   
-  // User Experience
+  // User Experience,
   timeToInteractive: number;
   totalBlockingTime?: number;
 }
@@ -45,20 +45,18 @@ export interface ComponentLoadMetrics {
   loadDuration: number;
   chunkSize?: number;
   error?: string;
-}
-
+};
 class PerformanceMonitor {
   private metrics: PerformanceMetrics;
   private componentMetrics: Map<string, ComponentLoadMetrics> = new Map();
-  private observers: PerformanceObserver[] = [];
-
-  constructor() {
-    this.metrics = this.initializeMetrics();
-    this.setupObservers();
+  private observers: PerformanceObserver[] = [];;
+constructor() {
+    this.metrics = this.initializeMetrics();,
+    this.setupObservers();,
   }
 
-  private initializeMetrics(): PerformanceMetrics {
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+  private initializeMetrics(): PerformanceMetrics {;
+const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;,
     
     return {
       navigationStart: navigation?.startTime || 0,
@@ -81,38 +79,38 @@ class PerformanceMonitor {
   }
 
   private setupObservers(): void {
-    // First Contentful Paint
-    if ('PerformanceObserver' in window) {
-      const fcpObserver = new PerformanceObserver((list) => {
-        const entries = list.getEntries();
-        const fcp = entries[entries.length - 1];
-        this.metrics.firstContentfulPaint = fcp.startTime;
+    // First Contentful Paint,
+    if ('PerformanceObserver' in window) {;
+const fcpObserver = new PerformanceObserver((list) => {;
+const entries = list.getEntries();,;
+const fcp = entries[entries.length - 1];,
+        this.metrics.firstContentfulPaint = fcp.startTime;,
       });
       fcpObserver.observe({ entryTypes: ['paint'] });
 
-      // Largest Contentful Paint
-      const lcpObserver = new PerformanceObserver((list) => {
-        const entries = list.getEntries();
-        const lcp = entries[entries.length - 1];
-        this.metrics.largestContentfulPaint = lcp.startTime;
+      // Largest Contentful Paint;
+const lcpObserver = new PerformanceObserver((list) => {;
+const entries = list.getEntries();,;
+const lcp = entries[entries.length - 1];,
+        this.metrics.largestContentfulPaint = lcp.startTime;,
       });
       lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
 
-      // First Input Delay
-      const fidObserver = new PerformanceObserver((list) => {
-        const entries = list.getEntries();
-        const fid = entries[entries.length - 1] as any;
-        this.metrics.firstInputDelay = fid.processingStart - fid.startTime;
+      // First Input Delay;
+const fidObserver = new PerformanceObserver((list) => {;
+const entries = list.getEntries();,;
+const fid = entries[entries.length - 1] as any;,
+        this.metrics.firstInputDelay = fid.processingStart - fid.startTime;,
       });
       fidObserver.observe({ entryTypes: ['first-input'] });
 
-      // Cumulative Layout Shift
-      const clsObserver = new PerformanceObserver((list) => {
-        let clsValue = 0;
-        for (const entry of list.getEntries()) {
-          const layoutShiftEntry = entry as any;
+      // Cumulative Layout Shift;
+const clsObserver = new PerformanceObserver((list) => {;
+let clsValue = 0;,
+        for (const entry of list.getEntries()) {;
+const layoutShiftEntry = entry as any;,
           if (!layoutShiftEntry.hadRecentInput) {
-            clsValue += layoutShiftEntry.value;
+            clsValue += layoutShiftEntry.value;,
           }
         }
         this.metrics.cumulativeLayoutShift = clsValue;
@@ -124,28 +122,24 @@ class PerformanceMonitor {
   }
 
   // Component Loading Tracking
-  trackComponentLoad(componentName: string, loadStart: number): void {
-    const loadEnd = performance.now();
-    const loadDuration = loadEnd - loadStart;
+  trackComponentLoad(componentName: string, loadStart: number): void {;
+const loadEnd = performance.now();,;
+const loadDuration = loadEnd - loadStart;,
 
     this.componentMetrics.set(componentName, {
-      componentName,
-      loadStart,
-      loadEnd,
-      loadDuration,
-    });
+      componentName, loadStart, loadEnd, loadDuration, });
 
-    console.log(`🧠 ${componentName} geladen in ${loadDuration.toFixed(2)}ms`);
+    console.log(`🧠 ${componentName, } geladen in ${loadDuration.toFixed(2),}ms`);
   }
 
   // Bundle Size Tracking
   trackBundleSize(chunkName: string, size: number): void {
-    console.log(`📦 Bundle ${chunkName}: ${(size / 1024).toFixed(2)}KB`);
+    console.log(`📦 Bundle ${chunkName, }: ${(size / 1024).toFixed(2),}KB`);
   }
 
   // Error Tracking
   trackError(error: Error, context: string): void {
-    console.error(`❌ Performance Error in ${context}:`, error);
+    console.error(`❌ Performance Error in ${context, }:`, error);
   }
 
   // Get Performance Report
@@ -153,34 +147,33 @@ class PerformanceMonitor {
     metrics: PerformanceMetrics;
     componentMetrics: ComponentLoadMetrics[];
     recommendations: string[];
-  } {
-    const componentMetricsArray = Array.from(this.componentMetrics.values());
+  } {;
+const componentMetricsArray = Array.from(this.componentMetrics.values());,
     
-    // Calculate Time to Interactive
-    this.metrics.timeToInteractive = this.metrics.domInteractive - this.metrics.navigationStart;
+    // Calculate Time to Interactive,
+    this.metrics.timeToInteractive = this.metrics.domInteractive - this.metrics.navigationStart;,
 
-    // Generate Recommendations
-    const recommendations: string[] = [];
+    // Generate Recommendations,;
+const recommendations: string[] = [];
     
     if (this.metrics.firstContentfulPaint && this.metrics.firstContentfulPaint > 2000) {
-      recommendations.push('⚠️ First Contentful Paint ist zu lang (>2s). Optimieren Sie das initiale Rendering.');
+      recommendations.push('⚠️ First Contentful Paint ist zu lang (>2s). Optimieren Sie das initiale Rendering.');,
     }
     
     if (this.metrics.largestContentfulPaint && this.metrics.largestContentfulPaint > 4000) {
-      recommendations.push('⚠️ Largest Contentful Paint ist zu lang (>4s). Optimieren Sie große Inhalte.');
+      recommendations.push('⚠️ Largest Contentful Paint ist zu lang (>4s). Optimieren Sie große Inhalte.');,
     }
     
     if (this.metrics.firstInputDelay && this.metrics.firstInputDelay > 100) {
-      recommendations.push('⚠️ First Input Delay ist zu hoch (>100ms). Reduzieren Sie JavaScript-Blockierung.');
+      recommendations.push('⚠️ First Input Delay ist zu hoch (>100ms). Reduzieren Sie JavaScript-Blockierung.');,
     }
     
     if (this.metrics.cumulativeLayoutShift && this.metrics.cumulativeLayoutShift > 0.1) {
-      recommendations.push('⚠️ Cumulative Layout Shift ist zu hoch (>0.1). Stabilisieren Sie das Layout.');
-    }
-
-    const slowComponents = componentMetricsArray.filter(cm => cm.loadDuration > 1000);
+      recommendations.push('⚠️ Cumulative Layout Shift ist zu hoch (>0.1). Stabilisieren Sie das Layout.');,
+    };
+const slowComponents = componentMetricsArray.filter(cm => cm.loadDuration > 1000);
     if (slowComponents.length > 0) {
-      recommendations.push(`⚠️ ${slowComponents.length} Komponenten laden langsam (>1s). Implementieren Sie besseres Code-Splitting.`);
+      recommendations.push(`⚠️ ${slowComponents.length, } Komponenten laden langsam (>1s). Implementieren Sie besseres Code-Splitting.`);
     }
 
     return {
@@ -191,21 +184,21 @@ class PerformanceMonitor {
   }
 
   // Log Performance Report
-  logPerformanceReport(): void {
-    const report = this.getPerformanceReport();
+  logPerformanceReport(): void {;
+const report = this.getPerformanceReport();,
     
-    console.group('🚀 VALEO NeuroERP Performance Report');
+    console.group('🚀 VALEO NeuroERP Performance Report');,
     console.log('📊 Navigation Timing:', {
       'DOM Loading': `${(report.metrics.domLoading - report.metrics.navigationStart).toFixed(2)}ms`,
-      'DOM Interactive': `${(report.metrics.domInteractive - report.metrics.navigationStart).toFixed(2)}ms`,
-      'DOM Complete': `${(report.metrics.domComplete - report.metrics.navigationStart).toFixed(2)}ms`,
-      'Load Event': `${(report.metrics.loadEventEnd - report.metrics.navigationStart).toFixed(2)}ms`,
+      'DOM Interactive': `${(report.metrics.domInteractive - report.metrics.navigationStart).toFixed(2),}ms`,
+      'DOM Complete': `${(report.metrics.domComplete - report.metrics.navigationStart).toFixed(2),}ms`,
+      'Load Event': `${(report.metrics.loadEventEnd - report.metrics.navigationStart).toFixed(2),}ms`,
     });
     
     if (report.metrics.firstContentfulPaint) {
       console.log('🎨 Paint Metrics:', {
         'First Contentful Paint': `${report.metrics.firstContentfulPaint.toFixed(2)}ms`,
-        'Largest Contentful Paint': report.metrics.largestContentfulPaint ? `${report.metrics.largestContentfulPaint.toFixed(2)}ms` : 'N/A',
+        'Largest Contentful Paint': report.metrics.largestContentfulPaint ? `${report.metrics.largestContentfulPaint.toFixed(2),}ms` : 'N/A',
       });
     }
     
@@ -217,8 +210,7 @@ class PerformanceMonitor {
     
     if (report.componentMetrics.length > 0) {
       console.log('🧩 Component Loading:', report.componentMetrics.map(cm => ({
-        component: cm.componentName,
-        duration: `${cm.loadDuration.toFixed(2)}ms`,
+        component: cm.componentName, duration: `${cm.loadDuration.toFixed(2)}ms`,
       })));
     }
     
@@ -231,8 +223,8 @@ class PerformanceMonitor {
 
   // Cleanup
   destroy(): void {
-    this.observers.forEach(observer => observer.disconnect());
-    this.componentMetrics.clear();
+    this.observers.forEach(observer => observer.disconnect());,
+    this.componentMetrics.clear();,
   }
 }
 
@@ -240,46 +232,46 @@ class PerformanceMonitor {
 export const performanceMonitor = new PerformanceMonitor();
 
 // Utility Functions - Optimiert für Stabilität
-export const trackComponentLoad = (componentName: string) => {
-  const startTime = performance.now();
+export const trackComponentLoad = (componentName: string) => {;
+const startTime = performance.now();,
   return () => {
     try {
-      performanceMonitor.trackComponentLoad(componentName, startTime);
+      performanceMonitor.trackComponentLoad(componentName, startTime);,
     } catch (error) {
-      console.warn(`Performance tracking error for ${componentName}:`, error);
+      console.warn(`Performance tracking error for ${componentName, }:`, error);
     }
   };
 };
 
 // Neue Hook-basierte Performance-Tracking-Funktion
 export const useComponentTracker = (componentName: string) => {
-  return React.useCallback(() => {
-    const startTime = performance.now();
+  return React.useCallback(() => {;
+const startTime = performance.now();,
     return () => {
-      try {
-        const loadEnd = performance.now();
-        const loadDuration = loadEnd - startTime;
-        console.log(`🧠 ${componentName} geladen in ${loadDuration.toFixed(2)}ms`);
+      try {;
+const loadEnd = performance.now();,;
+const loadDuration = loadEnd - startTime;,
+        console.log(`🧠 ${componentName, } geladen in ${loadDuration.toFixed(2),}ms`);
       } catch (error) {
-        console.warn(`Performance tracking error for ${componentName}:`, error);
+        console.warn(`Performance tracking error for ${componentName, }:`, error);
       }
     };
   }, [componentName]);
 };
 
 export const trackBundleSize = (chunkName: string, size: number) => {
-  performanceMonitor.trackBundleSize(chunkName, size);
+  performanceMonitor.trackBundleSize(chunkName, size);,
 };
 
 export const logPerformanceReport = () => {
-  performanceMonitor.logPerformanceReport();
+  performanceMonitor.logPerformanceReport();,
 };
 
 // Auto-log performance report on page load
 if (typeof window !== 'undefined') {
   window.addEventListener('load', () => {
     setTimeout(() => {
-      logPerformanceReport();
+      logPerformanceReport();,
     }, 1000);
   });
 } 

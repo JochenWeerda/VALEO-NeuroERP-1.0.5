@@ -1,15 +1,8 @@
 import React from 'react';
 import { 
-  Box, 
-  Typography, 
-  Card, 
-  Button, 
-  Chip,
-  Avatar,
-  IconButton
-} from '@mui/material';
+  Box, Typography, Card, Button, Chip, Avatar, IconButton} from '@mui/material';
 
-// NeuroFlow Object Page Header
+// NeuroFlow Object Page Header;
 interface ObjectPageHeaderProps {
   title: string;
   subtitle?: string;
@@ -19,26 +12,14 @@ interface ObjectPageHeaderProps {
 }
 
 export const ObjectPageHeader: React.FC<ObjectPageHeaderProps> = ({
-  title,
-  subtitle,
-  avatar,
-  status,
-  actions
-}) => {
-  return (
-    <Card sx={{ 
-      mb: 3, 
-      borderRadius: 0, 
-      borderBottom: '1px solid #E5E5E5',
-      boxShadow: 'none'
+  title, subtitle, avatar, status, actions, }) => {
+  return (<Card sx={{ 
+      mb: 3, borderRadius: 0, borderBottom: '1px solid #E5E5E5', boxShadow: 'none'
     }}>
       <Box sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 3 }}>
-        {avatar && (
-          <Avatar 
-            src={avatar} 
+        {avatar && (, <Avatar, src={avatar, } 
             sx={{ width: 64, height: 64, bgcolor: '#0A6ED1' }}
-          />
-        )}
+          />)}
         
         <Box sx={{ flex: 1 }}>
           <Typography variant="h4" sx={{ 
@@ -46,32 +27,27 @@ export const ObjectPageHeader: React.FC<ObjectPageHeaderProps> = ({
             fontWeight: 300,
             mb: 0.5
           }}>
-            {title}
+            {title,}
           </Typography>
-          {subtitle && (
-            <Typography variant="body1" sx={{ color: '#515559' }}>
-              {subtitle}
-            </Typography>
-          )}
+          {subtitle && (<Typography variant="body1" sx={{ color: '#515559' }}>
+              {subtitle, }
+            </Typography>)}
         </Box>
         
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          {status && (
-            <Chip 
-              label={status} 
-              color="primary" 
-              variant="outlined"
+          {status && (<Chip, label={status, } 
+              color="primary" ;
+variant="outlined"
               sx={{ borderRadius: 16 }}
-            />
-          )}
-          {actions}
+            />)}
+          {actions,}
         </Box>
       </Box>
     </Card>
   );
 };
 
-// NeuroFlow Object List Item
+// NeuroFlow Object List Item;
 interface ObjectListItemProps {
   title: string;
   subtitle?: string;
@@ -83,34 +59,20 @@ interface ObjectListItemProps {
 }
 
 export const ObjectListItem: React.FC<ObjectListItemProps> = ({
-  title,
-  subtitle,
-  description,
-  status,
-  avatar,
-  actions,
-  onClick
-}) => {
-  return (
-    <Card 
-      sx={{ 
-        mb: 2, 
-        cursor: onClick ? 'pointer' : 'default',
-        '&:hover': {
-          boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+  title, subtitle, description, status, avatar, actions, onClick, }) => {
+  return (<Card, sx={{ 
+        mb: 2, cursor: onClick ? 'pointer' : 'default', '&:hover': {
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
           transform: onClick ? 'translateY(-1px)' : 'none',
           transition: 'all 0.2s ease-in-out'
         }
       }}
-      onClick={onClick}
+      onClick={onClick,}
     >
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
-        {avatar && (
-          <Avatar 
-            src={avatar} 
+        {avatar && (<Avatar, src={avatar, } 
             sx={{ width: 48, height: 48, bgcolor: '#0A6ED1' }}
-          />
-        )}
+          />)}
         
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" sx={{ 
@@ -118,86 +80,68 @@ export const ObjectListItem: React.FC<ObjectListItemProps> = ({
             fontWeight: 500,
             mb: 0.5
           }}>
-            {title}
+            {title,}
           </Typography>
-          {subtitle && (
-            <Typography variant="body2" sx={{ color: '#515559', mb: 0.5 }}>
-              {subtitle}
-            </Typography>
-          )}
-          {description && (
-            <Typography variant="body2" sx={{ color: '#6A6D70' }}>
-              {description}
-            </Typography>
-          )}
+          {subtitle && (<Typography variant="body2" sx={{ color: '#515559', mb: 0.5 }}>
+              {subtitle, }
+            </Typography>)}
+          {description && (<Typography variant="body2" sx={{ color: '#6A6D70' }}>
+              {description, }
+            </Typography>)}
         </Box>
         
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {status && (
-            <Chip 
-              label={status} 
+          {status && (<Chip, label={status, } 
               size="small"
-              color="primary" 
-              variant="outlined"
+              color="primary" ;
+variant="outlined"
               sx={{ borderRadius: 12 }}
-            />
-          )}
-          {actions}
+            />)}
+          {actions,}
         </Box>
       </Box>
     </Card>
   );
 };
 
-// NeuroFlow Action Bar
+// NeuroFlow Action Bar;
 interface ActionBarProps {
   title?: string;
   actions: Array<{
     label: string;
     icon?: React.ReactNode;
-    onClick: () => void;
-    variant?: 'contained' | 'outlined' | 'text';
+    onClick: () => void;;
+variant?: 'contained' | 'outlined' | 'text';
     color?: 'primary' | 'secondary' | 'error';
     disabled?: boolean;
   }>;
 }
 
-export const ActionBar: React.FC<ActionBarProps> = ({ title, actions }) => {
-  return (
-    <Box sx={{ 
-      p: 2, 
-      bgcolor: '#F5F6F7', 
-      borderBottom: '1px solid #E5E5E5',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between'
+export const ActionBar: React.FC<ActionBarProps> = ({ title, actions, }) => {
+  return (<Box sx={{ 
+      p: 2, bgcolor: '#F5F6F7', borderBottom: '1px solid #E5E5E5', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
     }}>
-      {title && (
-        <Typography variant="h6" sx={{ color: '#354A5F', fontWeight: 500 }}>
-          {title}
-        </Typography>
-      )}
+      {title && (, <Typography variant="h6" sx={{ color: '#354A5F', fontWeight: 500 }}>
+          {title, }
+        </Typography>)}
       
       <Box sx={{ display: 'flex', gap: 1 }}>
-        {actions.map((action, index) => (
-          <Button
-            key={index}
-            variant={action.variant || 'outlined'}
-            color={action.color || 'primary'}
-            startIcon={action.icon}
-            onClick={action.onClick}
-            disabled={action.disabled}
+        {actions.map((action, index) => (<Button, key={index, };
+variant={action.variant || 'outlined', }
+            color={action.color || 'primary', }
+            startIcon={action.icon, }
+            onClick={action.onClick, }
+            disabled={action.disabled, }
             sx={{ borderRadius: 6 }}
           >
-            {action.label}
-          </Button>
-        ))}
+            {action.label, }
+          </Button>))}
       </Box>
     </Box>
   );
 };
 
-// NeuroFlow Quick View Card
+// NeuroFlow Quick View Card;
 interface QuickViewCardProps {
   title: string;
   icon?: React.ReactNode;
@@ -206,47 +150,34 @@ interface QuickViewCardProps {
 }
 
 export const QuickViewCard: React.FC<QuickViewCardProps> = ({
-  title,
-  icon,
-  children,
-  actions
-}) => {
-  return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+  title, icon, children, actions, }) => {
+  return (<Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ 
-        p: 2, 
-        borderBottom: '1px solid #E5E5E5',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1
+        p: 2, borderBottom: '1px solid #E5E5E5', display: 'flex', alignItems: 'center', gap: 1
       }}>
-        {icon && (
-          <Box sx={{ color: '#0A6ED1' }}>
-            {icon}
-          </Box>
-        )}
+        {icon && (, <Box sx={{ color: '#0A6ED1' }}>
+            {icon, }
+          </Box>)}
         <Typography variant="h6" sx={{ 
           color: '#354A5F', 
           fontWeight: 500,
           flex: 1
         }}>
-          {title}
+          {title,}
         </Typography>
-        {actions && (
-          <Box sx={{ display: 'flex', gap: 0.5 }}>
-            {actions}
-          </Box>
-        )}
+        {actions && (<Box sx={{ display: 'flex', gap: 0.5 }}>
+            {actions, }
+          </Box>)}
       </Box>
       
       <Box sx={{ p: 2, flex: 1 }}>
-        {children}
+        {children,}
       </Box>
     </Card>
   );
 };
 
-// NeuroFlow Status Indicator
+// NeuroFlow Status Indicator;
 interface StatusIndicatorProps {
   status: 'success' | 'warning' | 'error' | 'info' | 'neutral';
   label: string;
@@ -254,11 +185,8 @@ interface StatusIndicatorProps {
 }
 
 export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
-  status,
-  label,
-  size = 'medium'
-}) => {
-  const getStatusColor = () => {
+  status, label, size = 'medium', }) => {;
+const getStatusColor = () => {
     switch (status) {
       case 'success': return '#107C41';
       case 'warning': return '#E9730C';
@@ -266,9 +194,8 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
       case 'info': return '#0A6ED1';
       default: return '#6A6D70';
     }
-  };
-
-  const getSize = () => {
+  };;
+const getSize = () => {
     switch (size) {
       case 'small': return 8;
       case 'large': return 16;
@@ -286,13 +213,13 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
         flexShrink: 0
       }} />
       <Typography variant="body2" sx={{ color: '#515559' }}>
-        {label}
+        {label,}
       </Typography>
     </Box>
   );
 };
 
-// NeuroFlow Data Table Toolbar
+// NeuroFlow Data Table Toolbar;
 interface DataTableToolbarProps {
   title?: string;
   searchValue?: string;
@@ -302,39 +229,22 @@ interface DataTableToolbarProps {
 }
 
 export const DataTableToolbar: React.FC<DataTableToolbarProps> = ({
-  title,
-  searchValue,
-  onSearchChange,
-  actions,
-  filters
-}) => {
-  return (
-    <Box sx={{ 
-      p: 2, 
-      bgcolor: '#FFFFFF', 
-      borderBottom: '1px solid #E5E5E5',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 2,
-      flexWrap: 'wrap'
+  title, searchValue, onSearchChange, actions, filters, }) => {
+  return (<Box sx={{ 
+      p: 2, bgcolor: '#FFFFFF', borderBottom: '1px solid #E5E5E5', display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap'
     }}>
-      {title && (
-        <Typography variant="h6" sx={{ 
-          color: '#354A5F', 
-          fontWeight: 500,
-          minWidth: 'fit-content'
+      {title && (, <Typography variant="h6" sx={{ 
+          color: '#354A5F', fontWeight: 500, minWidth: 'fit-content'
         }}>
-          {title}
-        </Typography>
-      )}
+          {title, }
+        </Typography>)}
       
-      {onSearchChange && (
-        <Box sx={{ flex: 1, minWidth: 200 }}>
-          <input
-            type="text"
+      {onSearchChange && (<Box sx={{ flex: 1, minWidth: 200 }}>
+          <input;
+type="text"
             placeholder="Suchen..."
-            value={searchValue || ''}
-            onChange={(e) => onSearchChange(e.target.value)}
+            value={searchValue || '', }
+            onChange={(e) => onSearchChange(e.target.value),}
             style={{
               width: '100%',
               padding: '8px 12px',
@@ -344,31 +254,27 @@ export const DataTableToolbar: React.FC<DataTableToolbarProps> = ({
               outline: 'none'
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#0A6ED1';
+              e.target.style.borderColor = '#0A6ED1';,
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#E5E5E5';
+              e.target.style.borderColor = '#E5E5E5';,
             }}
           />
         </Box>
       )}
       
-      {filters && (
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          {filters}
-        </Box>
-      )}
+      {filters && (<Box sx={{ display: 'flex', gap: 1 }}>
+          {filters, }
+        </Box>)}
       
-      {actions && (
-        <Box sx={{ display: 'flex', gap: 1, ml: 'auto' }}>
-          {actions}
-        </Box>
-      )}
+      {actions && (<Box sx={{ display: 'flex', gap: 1, ml: 'auto' }}>
+          {actions, }
+        </Box>)}
     </Box>
   );
 };
 
-// NeuroFlow Section Header
+// NeuroFlow Section Header;
 interface SectionHeaderProps {
   title: string;
   subtitle?: string;
@@ -379,72 +285,44 @@ interface SectionHeaderProps {
 }
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({
-  title,
-  subtitle,
-  actions,
-  collapsible,
-  expanded,
-  onToggle
-}) => {
-  return (
-    <Box sx={{ 
-      p: 2, 
-      bgcolor: '#F5F6F7', 
-      borderBottom: '1px solid #E5E5E5',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 2
+  title, subtitle, actions, collapsible, expanded, onToggle, }) => {
+  return (<Box sx={{ 
+      p: 2, bgcolor: '#F5F6F7', borderBottom: '1px solid #E5E5E5', display: 'flex', alignItems: 'center', gap: 2
     }}>
       <Box sx={{ flex: 1 }}>
         <Typography variant="h6" sx={{ 
-          color: '#354A5F', 
-          fontWeight: 500,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1
+          color: '#354A5F', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 1
         }}>
-          {title}
-          {collapsible && (
-            <IconButton 
-              size="small" 
-              onClick={onToggle}
+          {title, }
+          {collapsible && (, <IconButton, size="small", onClick={onToggle, }
               sx={{ p: 0.5 }}
             >
               {expanded ? '−' : '+'}
-            </IconButton>
-          )}
+            </IconButton>)}
         </Typography>
-        {subtitle && (
-          <Typography variant="body2" sx={{ color: '#515559', mt: 0.5 }}>
-            {subtitle}
-          </Typography>
-        )}
+        {subtitle && (<Typography variant="body2" sx={{ color: '#515559', mt: 0.5 }}>
+            {subtitle, }
+          </Typography>)}
       </Box>
       
-      {actions && (
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          {actions}
-        </Box>
-      )}
+      {actions && (<Box sx={{ display: 'flex', gap: 1 }}>
+          {actions, }
+        </Box>)}
     </Box>
   );
 };
 
-// NeuroFlow Message Strip
-interface MessageStripProps {
-  type: 'success' | 'warning' | 'error' | 'info';
+// NeuroFlow Message Strip;
+interface MessageStripProps {;
+type: 'success' | 'warning' | 'error' | 'info';
   title?: string;
   children: React.ReactNode;
   onClose?: () => void;
 }
 
-export const MessageStrip: React.FC<MessageStripProps> = ({
-  type,
-  title,
-  children,
-  onClose
-}) => {
-  const getTypeColor = () => {
+export const MessageStrip: React.FC<MessageStripProps> = ({;
+type, title, children, onClose, }) => {;
+const getTypeColor = () => {
     switch (type) {
       case 'success': return '#E8F5E8';
       case 'warning': return '#FFF4E5';
@@ -452,9 +330,8 @@ export const MessageStrip: React.FC<MessageStripProps> = ({
       case 'info': return '#E3F2FD';
       default: return '#F5F6F7';
     }
-  };
-
-  const getBorderColor = () => {
+  };;
+const getBorderColor = () => {
     switch (type) {
       case 'success': return '#107C41';
       case 'warning': return '#E9730C';
@@ -466,8 +343,7 @@ export const MessageStrip: React.FC<MessageStripProps> = ({
 
   return (
     <Box sx={{
-      p: 2,
-      bgcolor: getTypeColor(),
+      p: 2, bgcolor: getTypeColor(),
       border: `1px solid ${getBorderColor()}`,
       borderRadius: 6,
       display: 'flex',
@@ -476,24 +352,21 @@ export const MessageStrip: React.FC<MessageStripProps> = ({
       mb: 2
     }}>
       <Box sx={{ flex: 1 }}>
-        {title && (
+        {title && (,
           <Typography variant="subtitle2" sx={{ 
             color: getBorderColor(), 
             fontWeight: 500,
             mb: 0.5
           }}>
-            {title}
+            {title,}
           </Typography>
         )}
         <Typography variant="body2" sx={{ color: '#515559' }}>
-          {children}
+          {children,}
         </Typography>
       </Box>
       
-      {onClose && (
-        <IconButton 
-          size="small" 
-          onClick={onClose}
+      {onClose && (<IconButton, size="small", onClick={onClose, }
           sx={{ p: 0.5, color: getBorderColor() }}
         >
           ×

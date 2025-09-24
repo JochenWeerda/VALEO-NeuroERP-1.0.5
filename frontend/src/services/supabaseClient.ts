@@ -1,15 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co';
+import { createClient ,} from '@supabase/supabase-js';;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co';;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  },
-  realtime: {
+    autoRefreshToken: true, persistSession: true, detectSessionInUrl: true
+  }, realtime: {
     params: {
       eventsPerSecond: 10
     }
@@ -26,7 +22,7 @@ export interface Database {
           empfaenger_gruppe: string;
           betreff: string;
           inhalt: string;
-          empfaenger: any[];
+          empfaenger: unknown[];
           gelesen_von: string[];
           bestaetigt_von: string[];
           erstellt_am: string;
@@ -41,14 +37,14 @@ export interface Database {
           lese_bestaetigung_erforderlich: boolean;
           archivierung_erzwingen: boolean;
           auto_protokoll_anhaengen: boolean;
-          kontext?: any;
+          kontext?: unknown;
         };
         Insert: {
           id?: string;
           empfaenger_gruppe: string;
           betreff: string;
           inhalt: string;
-          empfaenger: any[];
+          empfaenger: unknown[];
           gelesen_von?: string[];
           bestaetigt_von?: string[];
           erstellt_am?: string;
@@ -63,14 +59,14 @@ export interface Database {
           lese_bestaetigung_erforderlich?: boolean;
           archivierung_erzwingen?: boolean;
           auto_protokoll_anhaengen?: boolean;
-          kontext?: any;
+          kontext?: unknown;
         };
         Update: {
           id?: string;
           empfaenger_gruppe?: string;
           betreff?: string;
           inhalt?: string;
-          empfaenger?: any[];
+          empfaenger?: unknown[];
           gelesen_von?: string[];
           bestaetigt_von?: string[];
           erstellt_am?: string;
@@ -85,7 +81,7 @@ export interface Database {
           lese_bestaetigung_erforderlich?: boolean;
           archivierung_erzwingen?: boolean;
           auto_protokoll_anhaengen?: boolean;
-          kontext?: any;
+          kontext?: unknown;
         };
       };
       benutzer: {

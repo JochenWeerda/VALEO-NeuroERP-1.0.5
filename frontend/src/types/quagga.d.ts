@@ -1,10 +1,10 @@
-declare module 'quagga' {
-  interface QuaggaConfig {
+declare module 'quagga' {;
+interface QuaggaConfig {
     inputStream: {
-      name: string;
-      type: string;
-      target: HTMLElement;
-      constraints?: {
+      name: string;;
+type: string;
+      target: HTMLElement;;
+constraints?: {
         width?: { min?: number; ideal?: number; max?: number };
         height?: { min?: number; ideal?: number; max?: number };
         facingMode?: string;
@@ -20,23 +20,20 @@ declare module 'quagga' {
       readers: string[];
     };
     locate?: boolean;
-  }
-
-  interface QuaggaResult {
+  };
+interface QuaggaResult {
     codeResult: {
       code: string;
       format: string;
     };
-  }
-
-  interface QuaggaStatic {
+  };
+interface QuaggaStatic {
     init(config: QuaggaConfig): Promise<void>;
     start(): Promise<void>;
     stop(): void;
-    onDetected(callback: (result: QuaggaResult) => void): void;
-    offDetected(callback: (result: QuaggaResult) => void): void;
-  }
-
-  const Quagga: QuaggaStatic;
+    onDetected(callback: (result: _QuaggaResult) => void): void;
+    offDetected(callback: (result: _QuaggaResult) => void): void;
+  };
+const Quagga: QuaggaStatic;
   export default Quagga;
 } 

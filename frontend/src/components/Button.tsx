@@ -1,11 +1,10 @@
 import React from 'react';
-import { cn } from '../lib/utils';
+import { cn ,} from '../lib/utils';
 // ✅ NEU: Import der standardisierten UI-Komponenten
-import { StandardButton } from './forms/FormStandardization';
-import { UI_LABELS } from './ui/UIStandardization';
-
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'agent' | 'ai';
+import { StandardButton ,} from './forms/FormStandardization';
+import { UI_LABELS ,} from './ui/UIStandardization';;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {;
+variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'agent' | 'ai';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
   icon?: string;
@@ -20,18 +19,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
  * 
  * @deprecated Verwenden Sie direkt StandardButton aus FormStandardization
  */
-export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
-  size = 'md',
-  loading = false,
-  icon,
-  children,
-  className,
-  disabled,
-  ...props
-}) => {
-  // ✅ REFAKTORIERT: Mapping der alten Varianten zu neuen StandardButton-Varianten
-  const getStandardVariant = (oldVariant: string) => {
+export const Button: React.FC<ButtonProps> = ({;
+variant = 'primary', size = 'md', loading = false, icon, children, className, disabled, ...props, }) => {
+  // ✅ REFAKTORIERT: Mapping der alten Varianten zu neuen StandardButton-Varianten;
+const getStandardVariant = (oldVariant: string) => {
     switch (oldVariant) {
       case 'primary': return 'contained';
       case 'secondary': return 'outlined';
@@ -42,9 +33,8 @@ export const Button: React.FC<ButtonProps> = ({
       case 'ai': return 'contained';
       default: return 'contained';
     }
-  };
-
-  const getStandardColor = (oldVariant: string) => {
+  };;
+const getStandardColor = (oldVariant: string) => {
     switch (oldVariant) {
       case 'primary': return 'primary';
       case 'secondary': return 'secondary';
@@ -55,9 +45,8 @@ export const Button: React.FC<ButtonProps> = ({
       case 'ai': return 'primary';
       default: return 'primary';
     }
-  };
-
-  const getStandardSize = (oldSize: string) => {
+  };;
+const getStandardSize = (oldSize: string) => {
     switch (oldSize) {
       case 'sm': return 'small';
       case 'md': return 'medium';
@@ -67,16 +56,16 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <StandardButton
-      variant={getStandardVariant(variant)}
-      color={getStandardColor(variant)}
-      size={getStandardSize(size)}
-      loading={loading}
-      disabled={disabled}
-      onClick={props.onClick ? (event: React.MouseEvent<HTMLButtonElement>) => props.onClick?.(event) : undefined}
-      type={props.type as 'submit' | 'button' | 'reset'}
+    <StandardButton;
+variant={getStandardVariant(variant),}
+      color={getStandardColor(variant),}
+      size={getStandardSize(size),}
+      loading={loading,}
+      disabled={disabled,}
+      onClick={props.onClick ? (event: React.MouseEvent<HTMLButtonElement>) => props.onClick?.(event) : undefined};
+type={props.type as 'submit' | 'button' | 'reset',}
     >
-      {children}
+      {children,}
     </StandardButton>
   );
 }; 

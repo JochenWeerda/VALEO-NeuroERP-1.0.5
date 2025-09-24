@@ -1,4 +1,4 @@
-import { api, getMockData, type ApiResponse } from './api';
+import { api, getMockData, type ApiResponse} from './api';
 
 // Types für CRM
 export interface Kunde {
@@ -36,29 +36,28 @@ export interface Projekt {
   budget: number;
   verantwortlicher: string;
   prioritaet: 'niedrig' | 'mittel' | 'hoch';
-}
-
+};
 class CrmApiService {
-  // Versuche echte API, fallback zu Mock-Daten
+  // Versuche echte API, fallback zu Mock-Daten,
   async getKunden(params?: { page?: number; limit?: number; search?: string; kategorie?: string }): Promise<ApiResponse<Kunde[]>> {
-    try {
-      const response = await api.get<Kunde[]>('/api/v1/crm/kunde/', params);
+    try {;
+const response = await api.get<Kunde[]>('/api/v1/crm/kunde/', params);,
       return { data: response.data, success: true };
     } catch (error) {
-      console.warn('API nicht verfügbar, verwende Mock-Daten:', error);
-      const mockData = await getMockData('crm/kunden');
+      console.warn('API nicht verfügbar, verwende Mock-Daten:', error);;
+const mockData = await getMockData('crm/kunden');,
       return { data: mockData, success: true };
     }
   }
 
   async getKundeById(id: string): Promise<ApiResponse<Kunde>> {
-    try {
-      const response = await api.get<Kunde>(`/api/v1/crm/kunde/${id}`);
+    try {;
+const response = await api.get<Kunde>(`/api/v1/crm/kunde/${id, }`);
       return { data: response.data, success: true };
     } catch (error) {
-      console.warn('API nicht verfügbar, verwende Mock-Daten:', error);
-      const mockData = await getMockData('crm/kunden');
-      const kunde = mockData.find((k: Kunde) => k.id.toString() === id);
+      console.warn('API nicht verfügbar, verwende Mock-Daten:', error);;
+const mockData = await getMockData('crm/kunden');,;
+const kunde = mockData.find((k: Kunde) => k.id.toString() === id);
       if (kunde) {
         return { data: kunde, success: true };
       }
@@ -67,13 +66,13 @@ class CrmApiService {
   }
 
   async createKunde(kunde: Omit<Kunde, 'id'>): Promise<ApiResponse<Kunde>> {
-    try {
-      const response = await api.post<Kunde>('/api/v1/crm/kunde/', kunde);
+    try {;
+const response = await api.post<Kunde>('/api/v1/crm/kunde/', kunde);,
       return { data: response.data, success: true };
     } catch (error) {
       console.warn('API nicht verfügbar, simuliere Erstellung:', error);
-      // Simuliere erfolgreiche Erstellung
-      const newKunde: Kunde = {
+      // Simuliere erfolgreiche Erstellung,;
+const newKunde: Kunde = {
         ...kunde,
         id: Date.now() // Einfache ID-Generierung für Mock
       };
@@ -82,16 +81,16 @@ class CrmApiService {
   }
 
   async updateKunde(id: string, kunde: Partial<Kunde>): Promise<ApiResponse<Kunde>> {
-    try {
-      const response = await api.put<Kunde>(`/api/v1/crm/kunde/${id}`, kunde);
+    try {;
+const response = await api.put<Kunde>(`/api/v1/crm/kunde/${id, }`, kunde);
       return { data: response.data, success: true };
     } catch (error) {
       console.warn('API nicht verfügbar, simuliere Update:', error);
-      // Simuliere erfolgreiches Update
-      const mockData = await getMockData('crm/kunden');
-      const existingKunde = mockData.find((k: Kunde) => k.id.toString() === id);
-      if (existingKunde) {
-        const updatedKunde = { ...existingKunde, ...kunde };
+      // Simuliere erfolgreiches Update,;
+const mockData = await getMockData('crm/kunden');,;
+const existingKunde = mockData.find((k: Kunde) => k.id.toString() === id);
+      if (existingKunde) {;
+const updatedKunde = { ...existingKunde, ...kunde ,};
         return { data: updatedKunde, success: true };
       }
       throw new Error('Kunde nicht gefunden');
@@ -100,68 +99,68 @@ class CrmApiService {
 
   async deleteKunde(id: string): Promise<ApiResponse<boolean>> {
     try {
-      await api.delete(`/api/v1/crm/kunde/${id}`);
+      await api.delete(`/api/v1/crm/kunde/${id, }`);
       return { data: true, success: true };
     } catch (error) {
       console.warn('API nicht verfügbar, simuliere Löschung:', error);
-      // Simuliere erfolgreiche Löschung
+      // Simuliere erfolgreiche Löschung,
       return { data: true, success: true };
     }
   }
 
   // Kontakte
   async getKontakte(params?: { page?: number; limit?: number; kundeId?: string }): Promise<ApiResponse<Kontakt[]>> {
-    return api.get<Kontakt[]>('/crm/kontakt/', params);
+    return api.get<Kontakt[]>('/crm/kontakt/', params);,
   }
 
   async getKontaktById(id: string): Promise<ApiResponse<Kontakt>> {
-    return api.get<Kontakt>(`/crm/kontakt/${id}`);
+    return api.get<Kontakt>(`/crm/kontakt/${id, }`);
   }
 
   async createKontakt(kontakt: Omit<Kontakt, 'id'>): Promise<ApiResponse<Kontakt>> {
-    return api.post<Kontakt>('/crm/kontakt/', kontakt);
+    return api.post<Kontakt>('/crm/kontakt/', kontakt);,
   }
 
   async updateKontakt(id: string, kontakt: Partial<Kontakt>): Promise<ApiResponse<Kontakt>> {
-    return api.put<Kontakt>(`/crm/kontakt/${id}`, kontakt);
+    return api.put<Kontakt>(`/crm/kontakt/${id, }`, kontakt);
   }
 
   async deleteKontakt(id: string): Promise<ApiResponse<void>> {
-    return api.delete<void>(`/crm/kontakt/${id}`);
+    return api.delete<void>(`/crm/kontakt/${id, }`);
   }
 
   // Projekte
   async getProjekte(params?: { page?: number; limit?: number; kundeId?: string; status?: string }): Promise<ApiResponse<Projekt[]>> {
-    return api.get<Projekt[]>('/crm/projekte', params);
+    return api.get<Projekt[]>('/crm/projekte', params);,
   }
 
   async getProjektById(id: string): Promise<ApiResponse<Projekt>> {
-    return api.get<Projekt>(`/crm/projekte/${id}`);
+    return api.get<Projekt>(`/crm/projekte/${id, }`);
   }
 
   async createProjekt(projekt: Omit<Projekt, 'id'>): Promise<ApiResponse<Projekt>> {
-    return api.post<Projekt>('/crm/projekte', projekt);
+    return api.post<Projekt>('/crm/projekte', projekt);,
   }
 
   async updateProjekt(id: string, projekt: Partial<Projekt>): Promise<ApiResponse<Projekt>> {
-    return api.put<Projekt>(`/crm/projekte/${id}`, projekt);
+    return api.put<Projekt>(`/crm/projekte/${id, }`, projekt);
   }
 
   async deleteProjekt(id: string): Promise<ApiResponse<void>> {
-    return api.delete<void>(`/crm/projekte/${id}`);
+    return api.delete<void>(`/crm/projekte/${id, }`);
   }
 
   // Berichte
   async getKundenbericht(): Promise<ApiResponse<any>> {
-    return api.get<any>('/crm/berichte/kunden');
+    return api.get<any>('/crm/berichte/kunden');,
   }
 
   async getUmsatzbericht(): Promise<ApiResponse<any>> {
-    return api.get<any>('/crm/berichte/umsatz');
+    return api.get<any>('/crm/berichte/umsatz');,
   }
 
   async getAktivitaetsbericht(): Promise<ApiResponse<any>> {
-    return api.get<any>('/crm/berichte/aktivitaet');
+    return api.get<any>('/crm/berichte/aktivitaet');,
   }
 }
 

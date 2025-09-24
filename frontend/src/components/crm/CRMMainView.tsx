@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Tabs,
-  Tab,
-  Typography,
-  Paper,
-  Alert,
-  CircularProgress,
-  Button,
-  IconButton,
-  Chip
-} from '@mui/material';
-import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-import { CRMMainTab, CRMSubTab, CRMTabConfig, Customer, CustomerSegment } from '../../types/crm';
-import { useCustomer } from '../../hooks/useCRM';
+  Box, Tabs, Tab, Typography, Paper, Alert, CircularProgress, Button, IconButton, Chip} from '@mui/material';
+import { ArrowBack as ArrowBackIcon ,} from '@mui/icons-material';
+import { CRMMainTab, CRMSubTab, CRMTabConfig, Customer, CustomerSegment} from '../../types/crm';
+import { useCustomer ,} from '../../hooks/useCRM';
 
 // Tab Components
 import CustomerGeneralTab from './tabs/CustomerGeneralTab';
@@ -27,7 +17,7 @@ import CustomerDirectBusinessTab from './tabs/CustomerDirectBusinessTab';
 import CustomerExternalStocksTab from './tabs/CustomerExternalStocksTab';
 import CustomerCommunicationsTab from './tabs/CustomerCommunicationsTab';
 import CustomerWhatsAppHistoryTab from './tabs/CustomerWhatsAppHistoryTab';
-import { CustomerWhatsAppWebTab } from './tabs/CustomerWhatsAppWebTab';
+import { CustomerWhatsAppWebTab ,} from './tabs/CustomerWhatsAppWebTab';
 import SupplierManagementTab from './tabs/SupplierManagementTab';
 
 // Icons
@@ -45,8 +35,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 import CRMRibbon from './CRMRibbon';
-import CRMContextMenu from './CRMContextMenu';
-
+import CRMContextMenu from './CRMContextMenu';;
 interface CRMMainViewProps {
   customerId?: string;
   initialTab?: CRMMainTab;
@@ -54,29 +43,18 @@ interface CRMMainViewProps {
   onCustomerChange?: (customer: Customer) => void;
   onTabChange?: (mainTab: CRMMainTab, subTab: CRMSubTab) => void;
   onBack?: () => void;
-}
-
+};
 const CRMMainView: React.FC<CRMMainViewProps> = ({
-  customerId,
-  initialTab = CRMMainTab.GENERAL,
-  initialSubTab = CRMSubTab.BASIC_INFO,
-  onCustomerChange,
-  onTabChange,
-  onBack
-}) => {
-  const [currentMainTab, setCurrentMainTab] = useState<CRMMainTab>(initialTab);
-  const [currentSubTab, setCurrentSubTab] = useState<CRMSubTab>(initialSubTab);
+  customerId, initialTab = CRMMainTab.GENERAL, initialSubTab = CRMSubTab.BASIC_INFO, onCustomerChange, onTabChange, onBack, }) => {;
+const [currentMainTab, setCurrentMainTab] = useState<CRMMainTab>(initialTab);,;
+const [currentSubTab, setCurrentSubTab] = useState<CRMSubTab>(initialSubTab);,
 
-  // API Hook für Kundendaten
-  const { 
-    data: customer, 
-    isLoading, 
-    error, 
-    refetch 
-  } = useCustomer(customerId || '');
+  // API Hook für Kundendaten,;
+const { 
+    data: customer, _isLoading, _error, _refetch} = useCustomer(customerId || '');
 
-  // Tab-Konfiguration
-  const tabConfig: CRMTabConfig[] = [
+  // Tab-Konfiguration;
+const tabConfig: CRMTabConfig[] = [
     {
       id: CRMMainTab.GENERAL,
       label: 'Allgemein',
@@ -204,85 +182,61 @@ const CRMMainView: React.FC<CRMMainViewProps> = ({
     }
   ];
 
-  // Sortiere Tabs nach Reihenfolge
-  const sortedTabs = tabConfig.sort((a, b) => (a.order || 0) - (b.order || 0));
-
-  const handleMainTabChange = (event: React.SyntheticEvent, newValue: CRMMainTab) => {
-    setCurrentMainTab(newValue);
-    // Setze den ersten verfügbaren Sub-Tab
-    const tab = sortedTabs.find(t => t.id === newValue);
+  // Sortiere Tabs nach Reihenfolge;
+const sortedTabs = tabConfig.sort((a, b) => (a.order || 0) - (b.order || 0));;
+const handleMainTabChange = (event: React.SyntheticEvent, newValue: CRMMainTab) => {
+    setCurrentMainTab(newValue);,
+    // Setze den ersten verfügbaren Sub-Tab,;
+const tab = sortedTabs.find(t => t.id === newValue);,
     if (tab && tab.subTabs.length > 0) {
-      setCurrentSubTab(tab.subTabs[0].id);
+      setCurrentSubTab(tab.subTabs[0].id);,
     }
     onTabChange?.(newValue, currentSubTab);
-  };
-
-  const handleSubTabChange = (subTab: CRMSubTab) => {
-    setCurrentSubTab(subTab);
-    onTabChange?.(currentMainTab, subTab);
-  };
-
-  const renderTabContent = () => {
+  };;
+const handleSubTabChange = (subTab: CRMSubTab) => {
+    setCurrentSubTab(subTab);,
+    onTabChange?.(currentMainTab, subTab);,
+  };;
+const renderTabContent = () => {
     if (isLoading) {
-      return (
-        <Box className="flex justify-center items-center h-64">
-          <CircularProgress />
-        </Box>
-      );
+      return (<Box className="flex justify-center items-center h-64">, <CircularProgress />, </Box>);,
     }
 
     if (error) {
-      return (
-        <Alert severity="error" className="m-4">
-          Fehler beim Laden der Kundendaten: {error.message}
-        </Alert>
-      );
+      return (<Alert severity="error" className="m-4">, Fehler beim Laden der Kundendaten: {error.message}
+        </Alert>);
     }
 
     if (!customer) {
-      return (
-        <Alert severity="warning" className="m-4">
-          Keine Kundendaten gefunden.
-        </Alert>
-      );
-    }
-
-    const currentTab = sortedTabs.find(tab => tab.id === currentMainTab);
+      return (<Alert severity="warning" className="m-4">, Keine Kundendaten gefunden., </Alert>);,
+    };
+const currentTab = sortedTabs.find(tab => tab.id === currentMainTab);
     if (!currentTab) {
-      return (
-        <Alert severity="error" className="m-4">
-          Tab nicht gefunden.
-        </Alert>
-      );
-    }
-
-    const TabComponent = currentTab.component;
+      return (<Alert severity="error" className="m-4">, Tab nicht gefunden., </Alert>);,
+    };
+const TabComponent = currentTab.component;
     return (
       <TabComponent 
-        customer={customer}
-        currentSubTab={currentSubTab}
-        onSubTabChange={handleSubTabChange}
-        onCustomerChange={onCustomerChange}
-      />
-    );
-  };
-
-  const getCurrentTab = () => sortedTabs.find(tab => tab.id === currentMainTab);
+        customer={customer, }
+        currentSubTab={currentSubTab, }
+        onSubTabChange={handleSubTabChange, }
+        onCustomerChange={onCustomerChange, }
+      />);
+  };;
+const getCurrentTab = () => sortedTabs.find(tab => tab.id === currentMainTab);
 
   return (
     <Box className="h-full flex flex-col bg-gray-50">
-      {/* Header */}
+      {/* Header */, }
       <Paper className="p-4 shadow-sm">
         <Box className="flex items-center justify-between mb-4">
           <Box className="flex items-center">
-            {onBack && (
-              <IconButton onClick={onBack} className="mr-2">
+            {onBack && (, <IconButton onClick={onBack, } className="mr-2">
                 <ArrowBackIcon />
-              </IconButton>
-            )}
+              </IconButton>)}
             <Box>
               <Typography variant="h5" className="text-gray-800">
-                {customer?.name || 'Kunde wird geladen...'}
+                {customer?.name || 'Kunde wird geladen...',}
               </Typography>
               <Typography variant="body2" className="text-gray-600">
                 {customer?.customerNumber && `Kundennummer: ${customer.customerNumber}`}
@@ -290,10 +244,7 @@ const CRMMainView: React.FC<CRMMainViewProps> = ({
             </Box>
           </Box>
           <Box className="flex items-center gap-2">
-            {customer && (
-              <>
-                <Chip
-                  label={customer.status === 'active' ? 'Aktiv' : customer.status === 'inactive' ? 'Inaktiv' : 'Interessent'}
+            {customer && (<>, <Chip, label={customer.status === 'active' ? 'Aktiv' : customer.status === 'inactive' ? 'Inaktiv' : 'Interessent'}
                   color={customer.status === 'active' ? 'success' : customer.status === 'inactive' ? 'error' : 'warning'}
                   size="small"
                 />
@@ -306,62 +257,55 @@ const CRMMainView: React.FC<CRMMainViewProps> = ({
                          customer.customerSegment === CustomerSegment.REGULAR ? 'success' : 'default'}
                   size="small"
                 />
-              </>
-            )}
-            <Button
-              variant="outlined"
+              </>)}
+            <Button;
+variant="outlined"
               size="small"
-              onClick={() => refetch()}
-              disabled={isLoading}
+              onClick={() => refetch(),}
+              disabled={isLoading,}
             >
               Aktualisieren
             </Button>
           </Box>
         </Box>
 
-        {/* Ribbon */}
-        {customer && (
-          <CRMRibbon 
-            currentTab={currentMainTab}
-            currentSubTab={currentSubTab}
-            customer={customer}
-          />
-        )}
+        {/* Ribbon */,}
+        {customer && (<CRMRibbon, currentTab={currentMainTab, }
+            currentSubTab={currentSubTab, }
+            customer={customer, }
+          />)}
       </Paper>
 
-      {/* Tabs */}
+      {/* Tabs */,}
       <Paper className="flex-1 flex flex-col">
         <Tabs
-          value={currentMainTab}
-          onChange={handleMainTabChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          className="border-b border-gray-200"
+          value={currentMainTab,}
+          onChange={handleMainTabChange,};
+variant="scrollable"
+          scrollButtons="auto";
+className="border-b border-gray-200"
         >
-          {sortedTabs.map((tab) => (
-            <Tab
-              key={tab.id}
-              value={tab.id}
-              label={tab.label}
-              icon={tab.icon}
+          {sortedTabs.map((tab) => (<Tab, key={tab.id, }
+              value={tab.id, }
+              label={tab.label, }
+              icon={tab.icon, }
               iconPosition="start"
-              disabled={!tab.isEnabled}
-              className="min-w-0"
-            />
-          ))}
+              disabled={!tab.isEnabled, };
+className="min-w-0"
+            />))}
         </Tabs>
 
-        {/* Tab Content */}
+        {/* Tab Content */,}
         <Box className="flex-1 overflow-auto">
-          {renderTabContent()}
+          {renderTabContent(),}
         </Box>
       </Paper>
 
-      {/* Context Menu */}
+      {/* Context Menu */,}
       <CRMContextMenu 
-        currentTab={currentMainTab}
-        currentSubTab={currentSubTab}
-        customer={customer}
+        currentTab={currentMainTab,}
+        currentSubTab={currentSubTab,}
+        customer={customer,}
       />
     </Box>
   );

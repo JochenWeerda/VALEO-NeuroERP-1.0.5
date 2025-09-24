@@ -1,83 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Box,
-  Card,
-  Typography,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Alert,
-  Snackbar,
-  Tabs,
-  Tab,
-  Avatar,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@mui/material';
+  Box, Card, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem, Grid, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Alert, Snackbar, Tabs, Tab, Avatar, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Person as PersonIcon,
-  Business as BusinessIcon,
-  Email as EmailIcon,
-  Phone as PhoneIcon,
-  LocationOn as LocationIcon,
-  Work as WorkIcon,
-  Assignment as AssignmentIcon,
-  History as HistoryIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
-  CalendarToday as CalendarIcon,
-  AccountCircle as AccountCircleIcon
-} from '@mui/icons-material';
-
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Person as PersonIcon, Business as BusinessIcon, Email as EmailIcon, Phone as PhoneIcon, LocationOn as LocationIcon, Work as WorkIcon, Assignment as AssignmentIcon, History as HistoryIcon, CheckCircle as CheckCircleIcon, Warning as WarningIcon, Error as ErrorIcon, CalendarToday as CalendarIcon, AccountCircle as AccountCircleIcon} from '@mui/icons-material';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`mitarbeiter-tabpanel-${index}`}
-      aria-labelledby={`mitarbeiter-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`mitarbeiter-tabpanel-${index, }`}
+      aria-labelledby={`mitarbeiter-tab-${index, }`}
+      {...other, }
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && (, <Box sx={{ p: 3 }}>
+          {children, }
+        </Box>)}
     </div>
   );
-}
-
+};
 interface Mitarbeiter {
   id: string;
   mitarbeiternummer: string;
@@ -101,23 +48,16 @@ interface Mitarbeiter {
   };
   notizen: string;
   foto?: string;
-}
+};
+const MitarbeiterFormular: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [selectedMitarbeiter, setSelectedMitarbeiter] = useState<Mitarbeiter | null>(null);,;
+const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as any });
 
-const MitarbeiterFormular: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [selectedMitarbeiter, setSelectedMitarbeiter] = useState<Mitarbeiter | null>(null);
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as any });
-
-  // Formular-Daten für neuen Mitarbeiter
-  const [mitarbeiterForm, setMitarbeiterForm] = useState({
-    mitarbeiternummer: '',
-    vorname: '',
-    nachname: '',
-    email: '',
-    telefon: '',
-    geburtsdatum: '',
-    eintrittsdatum: new Date().toISOString().split('T')[0],
+  // Formular-Daten für neuen Mitarbeiter;
+const [mitarbeiterForm, setMitarbeiterForm] = useState({
+    mitarbeiternummer: '', vorname: '', nachname: '', email: '', telefon: '', geburtsdatum: '', eintrittsdatum: new Date().toISOString().split('T')[0],
     abteilungsnummer: '',
     abteilung: '',
     position: '',
@@ -131,93 +71,31 @@ const MitarbeiterFormular: React.FC = () => {
     notizen: ''
   });
 
-  // Mock-Daten für Mitarbeiter
-  const [mitarbeiter, setMitarbeiter] = useState<Mitarbeiter[]>([
+  // Mock-Daten für Mitarbeiter;
+const [mitarbeiter, setMitarbeiter] = useState<Mitarbeiter[]>([
     {
-      id: '1',
-      mitarbeiternummer: 'MA-2024-001',
-      vorname: 'Max',
-      nachname: 'Mustermann',
-      email: 'max.mustermann@valeo.de',
-      telefon: '+49 89 1234 5678',
-      geburtsdatum: '1985-03-15',
-      eintrittsdatum: '2020-01-15',
-      abteilungsnummer: 'IT-001',
-      abteilung: 'IT & Entwicklung',
-      position: 'Senior Entwickler',
-      gehalt: 65000,
-      status: 'aktiv',
-      vertragsart: 'unbefristet',
-      adresse: {
-        strasse: 'Musterstraße 123',
-        plz: '80331',
-        ort: 'München',
-        land: 'Deutschland'
-      },
-      notizen: 'Erfahrener Full-Stack Entwickler'
-    },
-    {
-      id: '2',
-      mitarbeiternummer: 'MA-2024-002',
-      vorname: 'Anna',
-      nachname: 'Schmidt',
-      email: 'anna.schmidt@valeo.de',
-      telefon: '+49 40 9876 5432',
-      geburtsdatum: '1990-07-22',
-      eintrittsdatum: '2022-03-01',
-      abteilungsnummer: 'HR-001',
-      abteilung: 'Personalwesen',
-      position: 'HR Manager',
-      gehalt: 58000,
-      status: 'aktiv',
-      vertragsart: 'unbefristet',
-      adresse: {
-        strasse: 'Beispielweg 456',
-        plz: '20095',
-        ort: 'Hamburg',
-        land: 'Deutschland'
-      },
-      notizen: 'Verantwortlich für Recruiting'
+      id: '1', mitarbeiternummer: 'MA-2024-001', vorname: 'Max', nachname: 'Mustermann', email: 'max.mustermann@valeo.de', telefon: '+49 89 1234 5678', geburtsdatum: '1985-03-15', eintrittsdatum: '2020-01-15', abteilungsnummer: 'IT-001', abteilung: 'IT & Entwicklung', position: 'Senior Entwickler', gehalt: 65000, status: 'aktiv', vertragsart: 'unbefristet', adresse: {
+        strasse: 'Musterstraße 123', plz: '80331', ort: 'München', land: 'Deutschland'
+      }, notizen: 'Erfahrener Full-Stack Entwickler'
+    }, {
+      id: '2', mitarbeiternummer: 'MA-2024-002', vorname: 'Anna', nachname: 'Schmidt', email: 'anna.schmidt@valeo.de', telefon: '+49 40 9876 5432', geburtsdatum: '1990-07-22', eintrittsdatum: '2022-03-01', abteilungsnummer: 'HR-001', abteilung: 'Personalwesen', position: 'HR Manager', gehalt: 58000, status: 'aktiv', vertragsart: 'unbefristet', adresse: {
+        strasse: 'Beispielweg 456', plz: '20095', ort: 'Hamburg', land: 'Deutschland'
+      }, notizen: 'Verantwortlich für Recruiting'
     }
-  ]);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleOpenDialog = (mitarbeiter?: Mitarbeiter) => {
+  ]);;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (mitarbeiter?: Mitarbeiter) => {
     if (mitarbeiter) {
-      setSelectedMitarbeiter(mitarbeiter);
+      setSelectedMitarbeiter(mitarbeiter);,
       setMitarbeiterForm({
-        mitarbeiternummer: mitarbeiter.mitarbeiternummer,
-        vorname: mitarbeiter.vorname,
-        nachname: mitarbeiter.nachname,
-        email: mitarbeiter.email,
-        telefon: mitarbeiter.telefon,
-        geburtsdatum: mitarbeiter.geburtsdatum,
-        eintrittsdatum: mitarbeiter.eintrittsdatum,
-        abteilungsnummer: mitarbeiter.abteilungsnummer,
-        abteilung: mitarbeiter.abteilung,
-        position: mitarbeiter.position,
-        gehalt: mitarbeiter.gehalt,
-        status: mitarbeiter.status,
-        vertragsart: mitarbeiter.vertragsart,
-        strasse: mitarbeiter.adresse.strasse,
-        plz: mitarbeiter.adresse.plz,
-        ort: mitarbeiter.adresse.ort,
-        land: mitarbeiter.adresse.land,
-        notizen: mitarbeiter.notizen
+        mitarbeiternummer: mitarbeiter.mitarbeiternummer, vorname: mitarbeiter.vorname, nachname: mitarbeiter.nachname, email: mitarbeiter.email, telefon: mitarbeiter.telefon, geburtsdatum: mitarbeiter.geburtsdatum, eintrittsdatum: mitarbeiter.eintrittsdatum, abteilungsnummer: mitarbeiter.abteilungsnummer, abteilung: mitarbeiter.abteilung, position: mitarbeiter.position, gehalt: mitarbeiter.gehalt, status: mitarbeiter.status, vertragsart: mitarbeiter.vertragsart, strasse: mitarbeiter.adresse.strasse, plz: mitarbeiter.adresse.plz, ort: mitarbeiter.adresse.ort, land: mitarbeiter.adresse.land, notizen: mitarbeiter.notizen
       });
     } else {
-      setSelectedMitarbeiter(null);
+      setSelectedMitarbeiter(null);,
       setMitarbeiterForm({
-        mitarbeiternummer: '',
-        vorname: '',
-        nachname: '',
-        email: '',
-        telefon: '',
-        geburtsdatum: '',
-        eintrittsdatum: new Date().toISOString().split('T')[0],
+        mitarbeiternummer: '', vorname: '', nachname: '', email: '', telefon: '', geburtsdatum: '', eintrittsdatum: new Date().toISOString().split('T')[0],
         abteilungsnummer: '',
         abteilung: '',
         position: '',
@@ -232,15 +110,13 @@ const MitarbeiterFormular: React.FC = () => {
       });
     }
     setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setSelectedMitarbeiter(null);
-  };
-
-  const handleSaveMitarbeiter = () => {
-    const newMitarbeiter: Mitarbeiter = {
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
+    setSelectedMitarbeiter(null);,
+  };;
+const handleSaveMitarbeiter = () => {;
+const newMitarbeiter: Mitarbeiter = {
       id: selectedMitarbeiter?.id || Date.now().toString(),
       mitarbeiternummer: mitarbeiterForm.mitarbeiternummer || `MA-2024-${String(mitarbeiter.length + 1).padStart(3, '0')}`,
       vorname: mitarbeiterForm.vorname,
@@ -268,13 +144,12 @@ const MitarbeiterFormular: React.FC = () => {
       setMitarbeiter(mitarbeiter.map(m => m.id === selectedMitarbeiter.id ? newMitarbeiter : m));
       setSnackbar({ open: true, message: 'Mitarbeiter erfolgreich aktualisiert!', severity: 'success' });
     } else {
-      setMitarbeiter([...mitarbeiter, newMitarbeiter]);
+      setMitarbeiter([...mitarbeiter, newMitarbeiter]);,
       setSnackbar({ open: true, message: 'Mitarbeiter erfolgreich erstellt!', severity: 'success' });
     }
     handleCloseDialog();
-  };
-
-  const getStatusColor = (status: string) => {
+  };;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'aktiv': return 'success';
       case 'inaktiv': return 'default';
@@ -282,9 +157,8 @@ const MitarbeiterFormular: React.FC = () => {
       case 'krank': return 'error';
       default: return 'default';
     }
-  };
-
-  const getStatusText = (status: string) => {
+  };;
+const getStatusText = (status: string) => {
     switch (status) {
       case 'aktiv': return 'Aktiv';
       case 'inaktiv': return 'Inaktiv';
@@ -292,9 +166,8 @@ const MitarbeiterFormular: React.FC = () => {
       case 'krank': return 'Krank';
       default: return status;
     }
-  };
-
-  const getVertragsartText = (vertragsart: string) => {
+  };;
+const getVertragsartText = (vertragsart: string) => {
     switch (vertragsart) {
       case 'unbefristet': return 'Unbefristet';
       case 'befristet': return 'Befristet';
@@ -304,8 +177,7 @@ const MitarbeiterFormular: React.FC = () => {
     }
   };
 
-  return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
+  return (<Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
       <Box sx={{ p: 3 }}>
         <Typography variant="h4" sx={{ mb: 3, fontWeight: 700, color: '#0A6ED1' }}>
           Personalverwaltung
@@ -313,44 +185,44 @@ const MitarbeiterFormular: React.FC = () => {
 
         <Card sx={{ mb: 4 }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={tabValue} onChange={handleTabChange} aria-label="Mitarbeiter sections">
+            <Tabs value={tabValue, } onChange={handleTabChange, } aria-label="Mitarbeiter sections">
               <Tab 
-                icon={<PersonIcon />} 
+                icon={<PersonIcon />, } 
                 label="Mitarbeiterliste" 
                 iconPosition="start"
               />
               <Tab 
-                icon={<BusinessIcon />} 
+                icon={<BusinessIcon />, } 
                 label="Abteilungen" 
                 iconPosition="start"
               />
               <Tab 
-                icon={<AssignmentIcon />} 
+                icon={<AssignmentIcon />, } 
                 label="Zeiterfassung" 
                 iconPosition="start"
               />
               <Tab 
-                icon={<HistoryIcon />} 
+                icon={<HistoryIcon />, } 
                 label="Aktivitäten" 
                 iconPosition="start"
               />
             </Tabs>
           </Box>
 
-          <TabPanel value={tabValue} index={0}>
-            {/* Mitarbeiterliste */}
+          <TabPanel value={tabValue, } index={0, }>
+            {/* Mitarbeiterliste */, }
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
               <Typography variant="h5">Alle Mitarbeiter</Typography>
-              <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={() => handleOpenDialog()}
+              <Button;
+variant="contained"
+                startIcon={<AddIcon />, }
+                onClick={() => handleOpenDialog(),}
               >
                 Neuer Mitarbeiter
               </Button>
             </Box>
             
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -366,61 +238,58 @@ const MitarbeiterFormular: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {mitarbeiter.map((ma) => (
-                    <TableRow key={ma.id} hover>
+                  {mitarbeiter.map((ma) => (<TableRow key={ma.id, } hover>
                       <TableCell>
                         <Avatar sx={{ width: 40, height: 40 }}>
-                          {ma.foto ? (
-                            <img src={ma.foto} alt={`${ma.vorname} ${ma.nachname}`} />
-                          ) : (
+                          {ma.foto ? (, <img src={ma.foto, } alt={`${ma.vorname, } ${ma.nachname, }`} />) : (
                             <PersonIcon />
                           )}
                         </Avatar>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          {ma.mitarbeiternummer}
+                          {ma.mitarbeiternummer,}
                         </Typography>
                       </TableCell>
                       <TableCell>
                         <Box>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {ma.vorname} {ma.nachname}
+                            {ma.vorname,} {ma.nachname,}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
-                            {ma.telefon}
+                            {ma.telefon,}
                           </Typography>
                         </Box>
                       </TableCell>
                       <TableCell>
                         <Box>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {ma.abteilung}
+                            {ma.abteilung,}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
-                            {ma.abteilungsnummer}
+                            {ma.abteilungsnummer,}
                           </Typography>
                         </Box>
                       </TableCell>
-                      <TableCell>{ma.position}</TableCell>
-                      <TableCell>{ma.email}</TableCell>
+                      <TableCell>{ma.position,}</TableCell>
+                      <TableCell>{ma.email,}</TableCell>
                       <TableCell>
                         <Chip
-                          label={getStatusText(ma.status)}
-                          color={getStatusColor(ma.status) as any}
+                          label={getStatusText(ma.status),}
+                          color={getStatusColor(ma.status) as any,}
                           size="small"
                         />
                       </TableCell>
                       <TableCell>
                         <Chip
-                          label={getVertragsartText(ma.vertragsart)}
-                          size="small"
-                          variant="outlined"
+                          label={getVertragsartText(ma.vertragsart),}
+                          size="small";
+variant="outlined"
                         />
                       </TableCell>
                       <TableCell>
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                          <IconButton size="small" onClick={() => handleOpenDialog(ma)}>
+                          <IconButton size="small" onClick={() => handleOpenDialog(ma),}>
                             <EditIcon />
                           </IconButton>
                           <IconButton size="small" color="error">
@@ -435,10 +304,10 @@ const MitarbeiterFormular: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={1}>
-            {/* Abteilungen */}
+          <TabPanel value={tabValue,} index={1,}>
+            {/* Abteilungen */,}
             <Typography variant="h5" sx={{ mb: 3 }}>Abteilungsübersicht</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -469,10 +338,10 @@ const MitarbeiterFormular: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={2}>
-            {/* Zeiterfassung */}
+          <TabPanel value={tabValue,} index={2,}>
+            {/* Zeiterfassung */,}
             <Typography variant="h5" sx={{ mb: 3 }}>Zeiterfassung</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -486,7 +355,7 @@ const MitarbeiterFormular: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell colSpan={6} align="center">
+                    <TableCell colSpan={6,} align="center">
                       <Typography variant="body2" color="text.secondary">
                         Keine Zeiterfassungsdaten vorhanden
                       </Typography>
@@ -497,22 +366,21 @@ const MitarbeiterFormular: React.FC = () => {
             </TableContainer>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={3}>
-            {/* Aktivitäten */}
+          <TabPanel value={tabValue,} index={3,}>
+            {/* Aktivitäten */,}
             <Typography variant="h5" sx={{ mb: 3 }}>Mitarbeiteraktivitäten</Typography>
             <List>
-              {mitarbeiter.map((ma) => (
-                <ListItem key={ma.id}>
+              {mitarbeiter.map((ma) => (<ListItem key={ma.id, }>
                   <ListItemIcon>
                     <PersonIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={`${ma.vorname} ${ma.nachname} - ${ma.position}`}
-                    secondary={`Abteilung: ${ma.abteilung} | Eintritt: ${ma.eintrittsdatum}`}
+                    primary={`${ma.vorname, } ${ma.nachname, } - ${ma.position, }`}
+                    secondary={`Abteilung: ${ma.abteilung} | Eintritt: ${ma.eintrittsdatum, }`}
                   />
                   <Chip
-                    label={getStatusText(ma.status)}
-                    color={getStatusColor(ma.status) as any}
+                    label={getStatusText(ma.status),}
+                    color={getStatusColor(ma.status) as any,}
                     size="small"
                   />
                 </ListItem>
@@ -522,10 +390,10 @@ const MitarbeiterFormular: React.FC = () => {
         </Card>
       </Box>
 
-      {/* Mitarbeiter-Erstellungs-Dialog */}
+      {/* Mitarbeiter-Erstellungs-Dialog */,}
       <Dialog 
-        open={openDialog} 
-        onClose={handleCloseDialog}
+        open={openDialog,} 
+        onClose={handleCloseDialog,}
         maxWidth="md"
         fullWidth
       >
@@ -534,112 +402,112 @@ const MitarbeiterFormular: React.FC = () => {
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={2,}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Mitarbeiternummer"
-                  value={mitarbeiterForm.mitarbeiternummer}
+                  value={mitarbeiterForm.mitarbeiternummer,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, mitarbeiternummer: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
-                  label="Eintrittsdatum"
-                  type="date"
-                  value={mitarbeiterForm.eintrittsdatum}
+                  label="Eintrittsdatum";
+type="date"
+                  value={mitarbeiterForm.eintrittsdatum,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, eintrittsdatum: e.target.value})}
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Vorname"
-                  value={mitarbeiterForm.vorname}
+                  value={mitarbeiterForm.vorname,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, vorname: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Nachname"
-                  value={mitarbeiterForm.nachname}
+                  value={mitarbeiterForm.nachname,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, nachname: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
-                  label="E-Mail"
-                  type="email"
-                  value={mitarbeiterForm.email}
+                  label="E-Mail";
+type="email"
+                  value={mitarbeiterForm.email,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, email: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Telefon"
-                  value={mitarbeiterForm.telefon}
+                  value={mitarbeiterForm.telefon,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, telefon: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
-                  label="Geburtsdatum"
-                  type="date"
-                  value={mitarbeiterForm.geburtsdatum}
+                  label="Geburtsdatum";
+type="date"
+                  value={mitarbeiterForm.geburtsdatum,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, geburtsdatum: e.target.value})}
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Position"
-                  value={mitarbeiterForm.position}
+                  value={mitarbeiterForm.position,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, position: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Abteilungsnummer"
-                  value={mitarbeiterForm.abteilungsnummer}
+                  value={mitarbeiterForm.abteilungsnummer,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, abteilungsnummer: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
                   label="Abteilung"
-                  value={mitarbeiterForm.abteilung}
+                  value={mitarbeiterForm.abteilung,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, abteilung: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <TextField
                   fullWidth
-                  label="Gehalt"
-                  type="number"
-                  value={mitarbeiterForm.gehalt}
+                  label="Gehalt";
+type="number"
+                  value={mitarbeiterForm.gehalt,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, gehalt: parseFloat(e.target.value) || 0})}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <FormControl fullWidth>
                   <InputLabel>Status</InputLabel>
                   <Select
-                    value={mitarbeiterForm.status}
+                    value={mitarbeiterForm.status,}
                     onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, status: e.target.value as Mitarbeiter['status']})}
                     label="Status"
                   >
@@ -650,11 +518,11 @@ const MitarbeiterFormular: React.FC = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12,} md={6,}>
                 <FormControl fullWidth>
                   <InputLabel>Vertragsart</InputLabel>
                   <Select
-                    value={mitarbeiterForm.vertragsart}
+                    value={mitarbeiterForm.vertragsart,}
                     onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, vertragsart: e.target.value as Mitarbeiter['vertragsart']})}
                     label="Vertragsart"
                   >
@@ -665,49 +533,49 @@ const MitarbeiterFormular: React.FC = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12,}>
                 <TextField
                   fullWidth
                   label="Straße & Hausnummer"
-                  value={mitarbeiterForm.strasse}
+                  value={mitarbeiterForm.strasse,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, strasse: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <TextField
                   fullWidth
                   label="PLZ"
-                  value={mitarbeiterForm.plz}
+                  value={mitarbeiterForm.plz,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, plz: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <TextField
                   fullWidth
                   label="Ort"
-                  value={mitarbeiterForm.ort}
+                  value={mitarbeiterForm.ort,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, ort: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12,} md={4,}>
                 <TextField
                   fullWidth
                   label="Land"
-                  value={mitarbeiterForm.land}
+                  value={mitarbeiterForm.land,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, land: e.target.value})}
                   required
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12,}>
                 <TextField
                   fullWidth
                   label="Notizen"
                   multiline
-                  rows={3}
-                  value={mitarbeiterForm.notizen}
+                  rows={3,}
+                  value={mitarbeiterForm.notizen,}
                   onChange={(e) => setMitarbeiterForm({...mitarbeiterForm, notizen: e.target.value})}
                 />
               </Grid>
@@ -715,20 +583,20 @@ const MitarbeiterFormular: React.FC = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          <Button onClick={handleSaveMitarbeiter} variant="contained">
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          <Button onClick={handleSaveMitarbeiter,} variant="contained">
             {selectedMitarbeiter ? 'Aktualisieren' : 'Erstellen'}
           </Button>
         </DialogActions>
       </Dialog>
 
       <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
+        open={snackbar.open,}
+        autoHideDuration={6000,}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       >
-        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity}>
-          {snackbar.message}
+        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity,}>
+          {snackbar.message,}
         </Alert>
       </Snackbar>
     </Box>

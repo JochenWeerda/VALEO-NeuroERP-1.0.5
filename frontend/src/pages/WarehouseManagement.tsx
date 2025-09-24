@@ -1,58 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Typography,
-  Tabs,
-  Tab,
-  Card,
-  CardContent,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Chip,
-  CircularProgress,
-  Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Tooltip,
-  Alert,
-  LinearProgress
-} from '@mui/material';
+  Box, Typography, Tabs, Tab, Card, CardContent, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, Chip, CircularProgress, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Tooltip, Alert, LinearProgress} from '@mui/material';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  LocationOn as LocationIcon,
-  Storage as StorageIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckIcon,
-  Inventory as InventoryIcon,
-  TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
-  LocalShipping as ShippingIcon,
-  Assignment as AssignmentIcon,
-  Schedule as ScheduleIcon,
-  PriorityHigh as PriorityIcon
-} from '@mui/icons-material';
+  Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, LocationOn as LocationIcon, Storage as StorageIcon, Warning as WarningIcon, CheckCircle as CheckIcon, Inventory as InventoryIcon, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon, LocalShipping as ShippingIcon, Assignment as AssignmentIcon, Schedule as ScheduleIcon, PriorityHigh as PriorityIcon} from '@mui/icons-material';
 
 // =====================================================
 // MOCK DATA
-// =====================================================
-
+// =====================================================;
 const mockLagerorte: Lagerort[] = [
   {
     lagerort_id: '1',
@@ -98,8 +52,7 @@ const mockLagerorte: Lagerort[] = [
     belegte_kapazitaet_m3: 150,
     auslastung_prozent: 50
   }
-];
-
+];;
 const mockBestaende: Bestand[] = [
   {
     artikel_id: '1',
@@ -140,8 +93,7 @@ const mockBestaende: Bestand[] = [
     mindestbestand: 50,
     optimalbestand: 200
   }
-];
-
+];;
 const mockLagerbewegungen: Lagerbewegung[] = [
   {
     bewegung_id: '1',
@@ -165,8 +117,7 @@ const mockLagerbewegungen: Lagerbewegung[] = [
     status: 'IN_BEARBEITUNG',
     referenz_nr: 'AUF-2024-001'
   }
-];
-
+];;
 const mockWareneingaenge: Wareneingang[] = [
   {
     wareneingang_id: '1',
@@ -186,8 +137,7 @@ const mockWareneingaenge: Wareneingang[] = [
     anzahl_positionen: 3,
     qualitaetspruefung_erforderlich: false
   }
-];
-
+];;
 const mockWarenausgaenge: Warenausgang[] = [
   {
     warenausgang_id: '1',
@@ -207,8 +157,7 @@ const mockWarenausgaenge: Warenausgang[] = [
     status: 'ABGESCHLOSSEN',
     kommissionierung_status: 'ABGESCHLOSSEN'
   }
-];
-
+];;
 const mockKommissionierauftraege: Kommissionierauftrag[] = [
   {
     kommissionierauftrag_id: '1',
@@ -232,8 +181,7 @@ const mockKommissionierauftraege: Kommissionierauftrag[] = [
 
 // =====================================================
 // INTERFACES
-// =====================================================
-
+// =====================================================;
 interface Lagerort {
   lagerort_id: string;
   lagerort_nr: string;
@@ -244,8 +192,7 @@ interface Lagerort {
   kapazitaet_m3: number;
   belegte_kapazitaet_m3: number;
   auslastung_prozent: number;
-}
-
+};
 interface Bestand {
   artikel_id: string;
   artikel_bezeichnung: string;
@@ -258,8 +205,7 @@ interface Bestand {
   bestandsstatus: 'KRITISCH' | 'NIEDRIG' | 'OK';
   mindestbestand: number;
   optimalbestand: number;
-}
-
+};
 interface Lagerbewegung {
   bewegung_id: string;
   bewegungsnummer: string;
@@ -270,8 +216,7 @@ interface Lagerbewegung {
   bewegungsdatum: string;
   status: string;
   referenz_nr: string;
-}
-
+};
 interface Wareneingang {
   wareneingang_id: string;
   wareneingang_nr: string;
@@ -280,8 +225,7 @@ interface Wareneingang {
   status: string;
   anzahl_positionen: number;
   qualitaetspruefung_erforderlich: boolean;
-}
-
+};
 interface Warenausgang {
   warenausgang_id: string;
   warenausgang_nr: string;
@@ -290,8 +234,7 @@ interface Warenausgang {
   ausgangsdatum: string;
   status: string;
   kommissionierung_status: string;
-}
-
+};
 interface Kommissionierauftrag {
   kommissionierauftrag_id: string;
   kommissionierauftrag_nr: string;
@@ -304,8 +247,7 @@ interface Kommissionierauftrag {
 
 // =====================================================
 // COMPONENTS
-// =====================================================
-
+// =====================================================;
 interface KPICardProps {
   title: string;
   value: string | number;
@@ -316,135 +258,111 @@ interface KPICardProps {
     value: number;
     isPositive: boolean;
   };
-}
-
-const KPICard: React.FC<KPICardProps> = ({ title, value, subtitle, icon, color, trend }) => {
-  return (
-    <Card className="h-full">
-      <CardContent>
-        <Box className="flex items-center justify-between mb-2">
-          <Box className="text-gray-600">
-            {icon}
+};
+const KPICard: React.FC<KPICardProps> = ({ title, value, subtitle, icon, color, trend, }) => {
+  return (<Card className="h-full">, <CardContent>, <Box className="flex items-center justify-between mb-2">, <Box className="text-gray-600">, {icon, }
           </Box>
-          {trend && (
-            <Box className="flex items-center">
-              {trend.isPositive ? (
-                <TrendingUpIcon className="text-green-500 text-sm" />
-              ) : (
-                <TrendingDownIcon className="text-red-500 text-sm" />
-              )}
+          {trend && (, <Box className="flex items-center">, {trend.isPositive ? (, <TrendingUpIcon className="text-green-500 text-sm" />) : (
+                <TrendingDownIcon className="text-red-500 text-sm" />,
+              ),}
               <Typography variant="caption" className="ml-1">
-                {trend.value}%
+                {trend.value,}%
               </Typography>
             </Box>
           )}
         </Box>
         <Typography variant="h4" className="font-bold mb-1">
-          {value}
+          {value,}
         </Typography>
         <Typography variant="body2" color="textSecondary" className="mb-1">
-          {title}
+          {title,}
         </Typography>
-        {subtitle && (
-          <Typography variant="caption" color="textSecondary">
-            {subtitle}
-          </Typography>
-        )}
+        {subtitle && (<Typography variant="caption" color="textSecondary">, {subtitle, }
+          </Typography>)}
       </CardContent>
     </Card>
   );
-};
-
+};;
 interface StatusChipProps {
   status: string;
   label: string;
-}
-
-const StatusChip: React.FC<StatusChipProps> = ({ status, label }) => {
-  const getStatusColor = (status: string) => {
+};
+const StatusChip: React.FC<StatusChipProps> = ({ status, label, }) => {;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'AKTIV':
       case 'ABGESCHLOSSEN':
       case 'OK':
-        return 'success';
+        return 'success';,
       case 'IN_BEARBEITUNG':
       case 'KOMMISSIONIERUNG':
       case 'QUALITAETSPRUEFUNG':
-        return 'primary';
+        return 'primary';,
       case 'NIEDRIG':
-        return 'warning';
+        return 'warning';,
       case 'KRITISCH':
       case 'GEPLANT':
-        return 'error';
+        return 'error';,
       default:
-        return 'default';
+        return 'default';,
     }
   };
 
   return (
     <Chip 
-      label={label} 
-      color={getStatusColor(status) as any}
-      size="small"
-      variant="outlined"
+      label={label, } 
+      color={getStatusColor(status) as any,}
+      size="small";
+variant="outlined"
     />
   );
 };
 
 // =====================================================
 // WAREHOUSE MANAGEMENT COMPONENT
-// =====================================================
+// =====================================================;
+const WarehouseManagement: React.FC = () => {;
+const [activeTab, setActiveTab] = useState(0);,;
+const [loading, setLoading] = useState(false);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [dialogType, setDialogType] = useState<'lagerort' | 'bewegung' | 'wareneingang' | 'warenausgang' | null>(null);,
 
-const WarehouseManagement: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<'lagerort' | 'bewegung' | 'wareneingang' | 'warenausgang' | null>(null);
-
-  // Mock loading state
+  // Mock loading state,
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
-
-  const handleOpenDialog = (type: 'lagerort' | 'bewegung' | 'wareneingang' | 'warenausgang') => {
-    setDialogType(type);
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setDialogType(null);
-  };
-
-  const getBestandsstatusIcon = (status: string) => {
+    setLoading(true);,
+    setTimeout(() => setLoading(false), 1000);,
+  }, []);;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);,
+  };;
+const handleOpenDialog = (type: 'lagerort' | 'bewegung' | 'wareneingang' | 'warenausgang') => {
+    setDialogType(type);,
+    setOpenDialog(true);,
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
+    setDialogType(null);,
+  };;
+const getBestandsstatusIcon = (status: string) => {
     switch (status) {
       case 'KRITISCH':
-        return <WarningIcon className="text-red-500" />;
+        return <WarningIcon className="text-red-500" />;,
       case 'NIEDRIG':
-        return <WarningIcon className="text-orange-500" />;
+        return <WarningIcon className="text-orange-500" />;,
       case 'OK':
-        return <CheckIcon className="text-green-500" />;
+        return <CheckIcon className="text-green-500" />;,
       default:
-        return <InventoryIcon className="text-gray-500" />;
+        return <InventoryIcon className="text-gray-500" />;,
     }
   };
 
   if (loading) {
-    return (
-      <Box className="flex justify-center items-center h-64">
-        <CircularProgress />
-      </Box>
-    );
+    return (<Box className="flex justify-center items-center h-64">, <CircularProgress />, </Box>);,
   }
 
   return (
     <Box className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
+      {/* Header */, }
       <Box className="mb-6">
         <Typography variant="h4" className="font-bold text-gray-800 mb-2">
           Lagerverwaltung
@@ -454,13 +372,13 @@ const WarehouseManagement: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* KPI Cards */}
+      {/* KPI Cards */, }
       <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <KPICard
           title="Lagerorte"
-          value={mockLagerorte.length}
+          value={mockLagerorte.length, }
           subtitle="Aktive Standorte"
-          icon={<LocationIcon className="text-2xl" />}
+          icon={<LocationIcon className="text-2xl" />, }
           color="primary"
           trend={{ value: 0, isPositive: true }}
         />
@@ -468,32 +386,32 @@ const WarehouseManagement: React.FC = () => {
           title="Durchschnittliche Auslastung"
           value="59.7%"
           subtitle="Alle Lagerorte"
-          icon={<StorageIcon className="text-2xl" />}
+          icon={<StorageIcon className="text-2xl" />, }
           color="success"
           trend={{ value: 3, isPositive: true }}
         />
         <KPICard
           title="Kritische Bestände"
-          value={mockBestaende.filter(b => b.bestandsstatus === 'KRITISCH').length}
+          value={mockBestaende.filter(b => b.bestandsstatus === 'KRITISCH').length,}
           subtitle="Benötigen Nachbestellung"
-          icon={<WarningIcon className="text-2xl" />}
+          icon={<WarningIcon className="text-2xl" />,}
           color="error"
           trend={{ value: -2, isPositive: false }}
         />
         <KPICard
           title="Offene Kommissionierungen"
-          value={mockKommissionierauftraege.filter(k => k.status === 'IN_BEARBEITUNG').length}
+          value={mockKommissionierauftraege.filter(k => k.status === 'IN_BEARBEITUNG').length,}
           subtitle="Warten auf Bearbeitung"
-          icon={<AssignmentIcon className="text-2xl" />}
+          icon={<AssignmentIcon className="text-2xl" />,}
           color="warning"
           trend={{ value: 1, isPositive: false }}
         />
       </Box>
 
-      {/* Tabs */}
+      {/* Tabs */,}
       <Card>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={activeTab} onChange={handleTabChange} aria-label="warehouse tabs">
+          <Tabs value={activeTab,} onChange={handleTabChange,} aria-label="warehouse tabs">
             <Tab label="Lagerorte" />
             <Tab label="Bestände" />
             <Tab label="Lagerbewegungen" />
@@ -504,21 +422,15 @@ const WarehouseManagement: React.FC = () => {
         </Box>
 
         <CardContent>
-          {/* Lagerorte Tab */}
-          {activeTab === 0 && (
-            <Box>
-              <Box className="flex justify-between items-center mb-4">
-                <Typography variant="h6">Lagerorte Übersicht</Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => handleOpenDialog('lagerort')}
+          {/* Lagerorte Tab */,}
+          {activeTab === 0 && (<Box>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">Lagerorte Übersicht</Typography>, <Button, variant="contained", startIcon={<AddIcon />, }
+                  onClick={() => handleOpenDialog('lagerort'),}
                 >
                   Neuer Lagerort
                 </Button>
               </Box>
               
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper,}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -532,27 +444,26 @@ const WarehouseManagement: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockLagerorte.map((lagerort) => (
-                      <TableRow key={lagerort.lagerort_id}>
-                        <TableCell>{lagerort.lagerort_nr}</TableCell>
-                        <TableCell>{lagerort.bezeichnung}</TableCell>
-                        <TableCell>{lagerort.lagerort_typ}</TableCell>
-                        <TableCell>{lagerort.standort}</TableCell>
+                    {mockLagerorte.map((lagerort) => (<TableRow key={lagerort.lagerort_id, }>
+                        <TableCell>{lagerort.lagerort_nr, }</TableCell>
+                        <TableCell>{lagerort.bezeichnung, }</TableCell>
+                        <TableCell>{lagerort.lagerort_typ, }</TableCell>
+                        <TableCell>{lagerort.standort, }</TableCell>
                         <TableCell>
                           <Box className="flex items-center">
                             <Box className="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                              <Box
-                                className="bg-blue-600 h-2 rounded-full"
+                              <Box;
+className="bg-blue-600 h-2 rounded-full"
                                 style={{ width: `${lagerort.auslastung_prozent}%` }}
                               />
                             </Box>
                             <Typography variant="body2">
-                              {lagerort.auslastung_prozent}%
+                              {lagerort.auslastung_prozent, }%
                             </Typography>
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <StatusChip status={lagerort.status} label={lagerort.status} />
+                          <StatusChip status={lagerort.status, } label={lagerort.status, } />
                         </TableCell>
                         <TableCell>
                           <Box className="flex space-x-1">
@@ -573,28 +484,21 @@ const WarehouseManagement: React.FC = () => {
                             </Tooltip>
                           </Box>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow>))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Box>
           )}
 
-          {/* Bestände Tab */}
-          {activeTab === 1 && (
-            <Box>
-              <Box className="flex justify-between items-center mb-4">
-                <Typography variant="h6">Bestandsübersicht</Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
+          {/* Bestände Tab */,}
+          {activeTab === 1 && (<Box>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">Bestandsübersicht</Typography>, <Button, variant="contained", startIcon={<AddIcon />, }
                 >
                   Bestand erfassen
                 </Button>
               </Box>
               
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper, }>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -608,17 +512,16 @@ const WarehouseManagement: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockBestaende.map((bestand) => (
-                      <TableRow key={bestand.artikel_id}>
-                        <TableCell>{bestand.artikel_bezeichnung}</TableCell>
-                        <TableCell>{bestand.lagerort_nr}</TableCell>
-                        <TableCell>{bestand.menge_verfuegbar} {bestand.einheit}</TableCell>
-                        <TableCell>{bestand.menge_reserviert} {bestand.einheit}</TableCell>
-                        <TableCell>{bestand.menge_gesamt} {bestand.einheit}</TableCell>
+                    {mockBestaende.map((bestand) => (<TableRow key={bestand.artikel_id, }>
+                        <TableCell>{bestand.artikel_bezeichnung, }</TableCell>
+                        <TableCell>{bestand.lagerort_nr, }</TableCell>
+                        <TableCell>{bestand.menge_verfuegbar, } {bestand.einheit, }</TableCell>
+                        <TableCell>{bestand.menge_reserviert, } {bestand.einheit, }</TableCell>
+                        <TableCell>{bestand.menge_gesamt, } {bestand.einheit, }</TableCell>
                         <TableCell>
                           <Box className="flex items-center">
-                            {getBestandsstatusIcon(bestand.bestandsstatus)}
-                            <StatusChip status={bestand.bestandsstatus} label={bestand.bestandsstatus} />
+                            {getBestandsstatusIcon(bestand.bestandsstatus),}
+                            <StatusChip status={bestand.bestandsstatus,} label={bestand.bestandsstatus,} />
                           </Box>
                         </TableCell>
                         <TableCell>
@@ -643,21 +546,15 @@ const WarehouseManagement: React.FC = () => {
             </Box>
           )}
 
-          {/* Lagerbewegungen Tab */}
-          {activeTab === 2 && (
-            <Box>
-              <Box className="flex justify-between items-center mb-4">
-                <Typography variant="h6">Lagerbewegungen</Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => handleOpenDialog('bewegung')}
+          {/* Lagerbewegungen Tab */,}
+          {activeTab === 2 && (<Box>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">Lagerbewegungen</Typography>, <Button, variant="contained", startIcon={<AddIcon />, }
+                  onClick={() => handleOpenDialog('bewegung'),}
                 >
                   Neue Bewegung
                 </Button>
               </Box>
               
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper,}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -671,15 +568,14 @@ const WarehouseManagement: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockLagerbewegungen.map((bewegung) => (
-                      <TableRow key={bewegung.bewegung_id}>
-                        <TableCell>{bewegung.bewegungsnummer}</TableCell>
-                        <TableCell>{bewegung.bewegungstyp}</TableCell>
-                        <TableCell>{bewegung.artikel_bezeichnung}</TableCell>
-                        <TableCell>{bewegung.menge} {bewegung.einheit}</TableCell>
-                        <TableCell>{bewegung.bewegungsdatum}</TableCell>
+                    {mockLagerbewegungen.map((bewegung) => (<TableRow key={bewegung.bewegung_id, }>
+                        <TableCell>{bewegung.bewegungsnummer, }</TableCell>
+                        <TableCell>{bewegung.bewegungstyp, }</TableCell>
+                        <TableCell>{bewegung.artikel_bezeichnung, }</TableCell>
+                        <TableCell>{bewegung.menge, } {bewegung.einheit, }</TableCell>
+                        <TableCell>{bewegung.bewegungsdatum, }</TableCell>
                         <TableCell>
-                          <StatusChip status={bewegung.status} label={bewegung.status} />
+                          <StatusChip status={bewegung.status, } label={bewegung.status, } />
                         </TableCell>
                         <TableCell>
                           <Box className="flex space-x-1">
@@ -695,29 +591,22 @@ const WarehouseManagement: React.FC = () => {
                             </Tooltip>
                           </Box>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow>))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Box>
           )}
 
-          {/* Wareneingang Tab */}
-          {activeTab === 3 && (
-            <Box>
-              <Box className="flex justify-between items-center mb-4">
-                <Typography variant="h6">Wareneingang</Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => handleOpenDialog('wareneingang')}
+          {/* Wareneingang Tab */,}
+          {activeTab === 3 && (<Box>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">Wareneingang</Typography>, <Button, variant="contained", startIcon={<AddIcon />, }
+                  onClick={() => handleOpenDialog('wareneingang'),}
                 >
                   Neuer Wareneingang
                 </Button>
               </Box>
               
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper,}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -730,14 +619,13 @@ const WarehouseManagement: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockWareneingaenge.map((wareneingang) => (
-                      <TableRow key={wareneingang.wareneingang_id}>
-                        <TableCell>{wareneingang.wareneingang_nr}</TableCell>
-                        <TableCell>{wareneingang.lieferant_name}</TableCell>
-                        <TableCell>{wareneingang.lieferdatum}</TableCell>
-                        <TableCell>{wareneingang.anzahl_positionen}</TableCell>
+                    {mockWareneingaenge.map((wareneingang) => (<TableRow key={wareneingang.wareneingang_id, }>
+                        <TableCell>{wareneingang.wareneingang_nr, }</TableCell>
+                        <TableCell>{wareneingang.lieferant_name, }</TableCell>
+                        <TableCell>{wareneingang.lieferdatum, }</TableCell>
+                        <TableCell>{wareneingang.anzahl_positionen, }</TableCell>
                         <TableCell>
-                          <StatusChip status={wareneingang.status} label={wareneingang.status} />
+                          <StatusChip status={wareneingang.status, } label={wareneingang.status, } />
                         </TableCell>
                         <TableCell>
                           <Box className="flex space-x-1">
@@ -753,29 +641,22 @@ const WarehouseManagement: React.FC = () => {
                             </Tooltip>
                           </Box>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow>))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Box>
           )}
 
-          {/* Warenausgang Tab */}
-          {activeTab === 4 && (
-            <Box>
-              <Box className="flex justify-between items-center mb-4">
-                <Typography variant="h6">Warenausgang</Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => handleOpenDialog('warenausgang')}
+          {/* Warenausgang Tab */,}
+          {activeTab === 4 && (<Box>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">Warenausgang</Typography>, <Button, variant="contained", startIcon={<AddIcon />, }
+                  onClick={() => handleOpenDialog('warenausgang'),}
                 >
                   Neuer Warenausgang
                 </Button>
               </Box>
               
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper,}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -789,17 +670,16 @@ const WarehouseManagement: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockWarenausgaenge.map((warenausgang) => (
-                      <TableRow key={warenausgang.warenausgang_id}>
-                        <TableCell>{warenausgang.warenausgang_nr}</TableCell>
-                        <TableCell>{warenausgang.kunde_name}</TableCell>
-                        <TableCell>{warenausgang.ausgangstyp}</TableCell>
-                        <TableCell>{warenausgang.ausgangsdatum}</TableCell>
+                    {mockWarenausgaenge.map((warenausgang) => (<TableRow key={warenausgang.warenausgang_id, }>
+                        <TableCell>{warenausgang.warenausgang_nr, }</TableCell>
+                        <TableCell>{warenausgang.kunde_name, }</TableCell>
+                        <TableCell>{warenausgang.ausgangstyp, }</TableCell>
+                        <TableCell>{warenausgang.ausgangsdatum, }</TableCell>
                         <TableCell>
-                          <StatusChip status={warenausgang.status} label={warenausgang.status} />
+                          <StatusChip status={warenausgang.status, } label={warenausgang.status, } />
                         </TableCell>
                         <TableCell>
-                          <StatusChip status={warenausgang.kommissionierung_status} label={warenausgang.kommissionierung_status} />
+                          <StatusChip status={warenausgang.kommissionierung_status, } label={warenausgang.kommissionierung_status, } />
                         </TableCell>
                         <TableCell>
                           <Box className="flex space-x-1">
@@ -815,28 +695,21 @@ const WarehouseManagement: React.FC = () => {
                             </Tooltip>
                           </Box>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow>))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Box>
           )}
 
-          {/* Kommissionierung Tab */}
-          {activeTab === 5 && (
-            <Box>
-              <Box className="flex justify-between items-center mb-4">
-                <Typography variant="h6">Kommissionieraufträge</Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
+          {/* Kommissionierung Tab */,}
+          {activeTab === 5 && (<Box>, <Box className="flex justify-between items-center mb-4">, <Typography variant="h6">Kommissionieraufträge</Typography>, <Button, variant="contained", startIcon={<AddIcon />, }
                 >
                   Neuer Auftrag
                 </Button>
               </Box>
               
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper, }>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -850,20 +723,19 @@ const WarehouseManagement: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockKommissionierauftraege.map((auftrag) => (
-                      <TableRow key={auftrag.kommissionierauftrag_id}>
-                        <TableCell>{auftrag.kommissionierauftrag_nr}</TableCell>
-                        <TableCell>{auftrag.kommissionierauftrag_typ}</TableCell>
+                    {mockKommissionierauftraege.map((auftrag) => (<TableRow key={auftrag.kommissionierauftrag_id, }>
+                        <TableCell>{auftrag.kommissionierauftrag_nr, }</TableCell>
+                        <TableCell>{auftrag.kommissionierauftrag_typ, }</TableCell>
                         <TableCell>
                           <Box className="flex items-center">
                             <PriorityIcon className="text-red-500 mr-1" />
-                            {auftrag.prioritaet}
+                            {auftrag.prioritaet, }
                           </Box>
                         </TableCell>
-                        <TableCell>{auftrag.anzahl_positionen}</TableCell>
-                        <TableCell>{auftrag.geplante_startzeit}</TableCell>
+                        <TableCell>{auftrag.anzahl_positionen, }</TableCell>
+                        <TableCell>{auftrag.geplante_startzeit, }</TableCell>
                         <TableCell>
-                          <StatusChip status={auftrag.status} label={auftrag.status} />
+                          <StatusChip status={auftrag.status, } label={auftrag.status, } />
                         </TableCell>
                         <TableCell>
                           <Box className="flex space-x-1">
@@ -879,8 +751,7 @@ const WarehouseManagement: React.FC = () => {
                             </Tooltip>
                           </Box>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow>))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -889,13 +760,13 @@ const WarehouseManagement: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Dialog */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+      {/* Dialog */,}
+      <Dialog open={openDialog,} onClose={handleCloseDialog,} maxWidth="sm" fullWidth>
         <DialogTitle>
-          {dialogType === 'lagerort' && 'Neuer Lagerort'}
-          {dialogType === 'bewegung' && 'Neue Lagerbewegung'}
-          {dialogType === 'wareneingang' && 'Neuer Wareneingang'}
-          {dialogType === 'warenausgang' && 'Neuer Warenausgang'}
+          {dialogType === 'lagerort' && 'Neuer Lagerort',}
+          {dialogType === 'bewegung' && 'Neue Lagerbewegung',}
+          {dialogType === 'wareneingang' && 'Neuer Wareneingang',}
+          {dialogType === 'warenausgang' && 'Neuer Warenausgang',}
         </DialogTitle>
         <DialogContent>
           <Typography variant="body2" color="textSecondary">
@@ -903,8 +774,8 @@ const WarehouseManagement: React.FC = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Abbrechen</Button>
-          <Button variant="contained" onClick={handleCloseDialog}>
+          <Button onClick={handleCloseDialog,}>Abbrechen</Button>
+          <Button variant="contained" onClick={handleCloseDialog,}>
             Speichern
           </Button>
         </DialogActions>

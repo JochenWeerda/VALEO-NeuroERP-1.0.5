@@ -4,7 +4,7 @@
  * Serena Quality: Complete type safety with role-based permissions
  */
 
-import { z } from 'zod';
+import { z ,} from 'zod';
 
 // ============================================================================
 // BASIS-TYPEN FÜR ALLE FORMULARE
@@ -46,7 +46,7 @@ export interface FormFieldOption {
   label: string;
   disabled?: boolean;
   icon?: React.ReactNode;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface FormFieldValidation {
@@ -54,14 +54,14 @@ export interface FormFieldValidation {
   min?: number;
   max?: number;
   pattern?: RegExp;
-  custom?: (value: any) => boolean | string;
-  async?: (value: any) => Promise<boolean | string>;
+  custom?: (value: unknown) => boolean | string;
+  async?: (value: unknown) => Promise<boolean | string>;
 }
 
 export interface FormField {
   name: string;
-  label: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'select' | 'textarea' | 'date' | 'checkbox' | 'barcode' | 'autocomplete' | 'file' | 'currency' | 'percentage';
+  label: string;;
+type: 'text' | 'email' | 'password' | 'number' | 'select' | 'textarea' | 'date' | 'checkbox' | 'barcode' | 'autocomplete' | 'file' | 'currency' | 'percentage';
   required?: boolean;
   placeholder?: string;
   disabled?: boolean;
@@ -73,8 +73,8 @@ export interface FormField {
   icon?: React.ReactNode;
   group?: string;
   dependencies?: string[];
-  conditional?: (values: any) => boolean;
-  metadata?: Record<string, any>;
+  conditional?: (values: unknown) => boolean;
+  metadata?: Record<string, unknown>;
 }
 
 export interface FormConfig {
@@ -82,7 +82,7 @@ export interface FormConfig {
   metadata: FormMetadata;
   fields: FormField[];
   validationSchema: z.ZodSchema<any>;
-  defaultValues: Record<string, any>;
+  defaultValues: Record<string, unknown>;
   layout: 'vertical' | 'horizontal' | 'grid' | 'tabs' | FormLayout;
   size: 'small' | 'medium' | 'large';
   features: FormFeatures;
@@ -379,10 +379,10 @@ export interface FormChangeRequest {
 }
 
 export interface FormChange {
-  field: string;
-  type: 'add' | 'modify' | 'remove';
-  oldValue?: any;
-  newValue?: any;
+  field: string;;
+type: 'add' | 'modify' | 'remove';
+  oldValue?: unknown;
+  newValue?: unknown;
   reason: string;
 }
 
@@ -437,20 +437,20 @@ export const FORM_FEATURES = {
 // TYPE GUARDS UND VALIDIERUNGEN
 // ============================================================================
 
-export const isFormID = (value: any): value is FormID => {
-  return typeof value === 'string' && value.length > 0;
+export const isFormID = (value: unknown): value is FormID => {
+  return typeof value === 'string' && value.length > 0;,
 };
 
-export const isFormVersion = (value: any): value is FormVersion => {
-  return typeof value === 'string' && /^\d+\.\d+\.\d+$/.test(value);
+export const isFormVersion = (value: unknown): value is FormVersion => {
+  return typeof value === 'string' && /^\d+.\d+.\d+$/.test(value);,
 };
 
-export const isFormStatus = (value: any): value is FormStatus => {
-  return Object.values(FORM_STATUSES).includes(value);
+export const isFormStatus = (value: unknown): value is FormStatus => {
+  return Object.values(FORM_STATUSES).includes(value);,
 };
 
-export const isFormPermission = (value: any): value is FormPermission => {
-  return Object.values(FORM_PERMISSIONS).includes(value);
+export const isFormPermission = (value: unknown): value is FormPermission => {
+  return Object.values(FORM_PERMISSIONS).includes(value);,
 };
 
 // ============================================================================
@@ -497,7 +497,7 @@ export interface ArtikelklassifizierungFormData {
   unterkategorie: string;
   produktgruppe: string;
   produktfamilie: string;
-  eigenschaften: Record<string, any>;
+  eigenschaften: Record<string, unknown>;
   tags: string[];
   bewertung: number;
   prioritaet: 'niedrig' | 'mittel' | 'hoch';
@@ -506,10 +506,10 @@ export interface ArtikelklassifizierungFormData {
 
 export interface ArtikelvarianteFormData {
   id?: string;
-  artikelId: string;
-  variantenname: string;
-  variantencode: string;
-  eigenschaften: Record<string, any>;
+  artikelId: string;;
+variantenname: string;;
+variantencode: string;
+  eigenschaften: Record<string, unknown>;
   preisaufschlag?: number;
   gewicht?: number;
   volumen?: number;
@@ -542,8 +542,8 @@ export interface StuecklistenPosition {
 export interface EinlagerungFormData {
   id?: string;
   bewegungsnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   lagerortId: string;
@@ -560,8 +560,8 @@ export interface EinlagerungFormData {
 export interface AuslagerungFormData {
   id?: string;
   bewegungsnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   lagerortId: string;
@@ -581,7 +581,7 @@ export interface LagerplatzOptimierungFormData {
   lagerplatzId: string;
   artikelId: string;
   optimierungsgrund: string;
-  vorgeschlageneAenderungen: Record<string, any>;
+  vorgeschlageneAenderungen: Record<string, unknown>;
   prioritaet: 'niedrig' | 'mittel' | 'hoch';
   status: 'vorgeschlagen' | 'in_bearbeitung' | 'umgesetzt';
   notizen?: string;
@@ -600,8 +600,8 @@ export interface InventurFormData {
 
 export interface InventurPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   lagerplatzId?: string;
   chargeId?: string;
   seriennummer?: string;
@@ -614,8 +614,8 @@ export interface InventurPosition {
 export interface ChargeFormData {
   id?: string;
   chargennummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   herstellungsdatum: Date;
   verfallsdatum?: Date;
   hersteller?: string;
@@ -643,8 +643,8 @@ export interface LieferantenavisierungFormData {
 
 export interface AvisierungPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   erwarteteMenge: number;
   einheit: string;
   lieferantenartikelnummer?: string;
@@ -664,8 +664,8 @@ export interface WareneingangspruefungFormData {
 
 export interface PruefungPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   chargeId?: string;
   seriennummer?: string;
   gepruefteMenge: number;
@@ -686,8 +686,8 @@ export interface WareneingangsbuchungFormData {
 
 export interface BuchungPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   chargeId?: string;
   seriennummer?: string;
   menge: number;
@@ -713,8 +713,8 @@ export interface ReklamationFormData {
 
 export interface ReklamationPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   chargeId?: string;
   seriennummer?: string;
   reklamierteMenge: number;
@@ -727,8 +727,8 @@ export interface ReklamationPosition {
 export interface BedarfsermittlungFormData {
   id?: string;
   ermittlungsnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   periode: string;
   verbrauchsmenge: number;
   einheit: string;
@@ -755,8 +755,8 @@ export interface AnfrageFormData {
 
 export interface AnfragePosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   gewuenschterLiefertermin?: Date;
@@ -780,8 +780,8 @@ export interface BestellungFormData {
 
 export interface BestellPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   einzelpreis: number;
@@ -804,8 +804,8 @@ export interface AuftragsbestaetigungFormData {
 
 export interface BestaetigungPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   bestellteMenge: number;
   bestaetigteMenge: number;
   einheit: string;
@@ -833,8 +833,8 @@ export interface AuftragsbearbeitungFormData {
 
 export interface AuftragsPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   einzelpreis: number;
@@ -861,8 +861,8 @@ export interface PacklisteFormData {
 
 export interface PacklistenPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   packstueck: number;
@@ -881,7 +881,7 @@ export interface VersandetikettierungFormData {
   versandart: string;
   versanddienstleister: string;
   trackingnummer?: string;
-  etikettenDaten: Record<string, any>;
+  etikettenDaten: Record<string, unknown>;
   status: 'erstellt' | 'gedruckt' | 'versendet';
   notizen?: string;
 }
@@ -914,8 +914,8 @@ export interface MaterialbedarfsermittlungFormData {
 
 export interface MaterialbedarfPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   benoetigteMenge: number;
   einheit: string;
   verfuegbareMenge: number;
@@ -928,8 +928,8 @@ export interface MaterialbedarfPosition {
 export interface RueckverfolgungFormData {
   id?: string;
   rueckverfolgungsnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   chargeId?: string;
   seriennummer?: string;
   herstellungsdatum: Date;
@@ -982,8 +982,8 @@ export interface RueckmeldungFormData {
 
 export interface RueckmeldungPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   geplanteMenge: number;
   hergestellteMenge: number;
   einheit: string;
@@ -1030,8 +1030,8 @@ export interface KundenruecklaeuferFormData {
 
 export interface RuecklaeuferPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   chargeId?: string;
   seriennummer?: string;
   ruecklaeuferMenge: number;
@@ -1056,8 +1056,8 @@ export interface GutschriftFormData {
 
 export interface GutschriftPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   menge: number;
   einheit: string;
   einzelpreis: number;
@@ -1083,8 +1083,8 @@ export interface UrsachenanalyseFormData {
 export interface VerpackungsvorschriftenFormData {
   id?: string;
   vorschriftennummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   verpackungsart: string;
   verpackungsmaterial: string[];
   verpackungsgroesse: string;
@@ -1101,10 +1101,10 @@ export interface VerpackungsvorschriftenFormData {
 export interface EtikettenFormData {
   id?: string;
   etikettennummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   etikettentyp: string;
-  etikettendaten: Record<string, any>;
+  etikettendaten: Record<string, unknown>;
   druckformat: string;
   druckerId?: string;
   status: 'entwurf' | 'gedruckt' | 'archiviert';
@@ -1128,8 +1128,8 @@ export interface UNNummernFormData {
 export interface ADRKonformitaetFormData {
   id?: string;
   konformitaetsnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   adrKlasse: string;
   verpackungsgruppe: string;
   unNummer: string;
@@ -1157,8 +1157,8 @@ export interface InventurerfassungFormData {
 
 export interface ErfassungPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   lagerplatzId?: string;
   chargeId?: string;
   seriennummer?: string;
@@ -1181,8 +1181,8 @@ export interface DifferenzkontrolleFormData {
 
 export interface DifferenzPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   lagerplatzId?: string;
   chargeId?: string;
   seriennummer?: string;
@@ -1196,8 +1196,8 @@ export interface DifferenzPosition {
 export interface UmlagerungFormData {
   id?: string;
   umlagerungsnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   chargeId?: string;
   seriennummer?: string;
   menge: number;
@@ -1229,8 +1229,8 @@ export interface PreislistenFormData {
 
 export interface PreislistenPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   einzelpreis: number;
   waehrung: string;
   rabatt?: number;
@@ -1254,8 +1254,8 @@ export interface AktionenFormData {
 
 export interface AktionsPosition {
   id?: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   rabattProzent?: number;
   rabattBetrag?: number;
   gratisMenge?: number;
@@ -1266,8 +1266,8 @@ export interface AktionsPosition {
 export interface StaffelpreiseFormData {
   id?: string;
   staffelpreisnummer: string;
-  artikelId: string;
-  varianteId?: string;
+  artikelId: string;;
+varianteId?: string;
   staffeln: StaffelpreisStaffel[];
   gueltigAb: Date;
   gueltigBis?: Date;
@@ -1348,9 +1348,9 @@ export const ArtikelklassifizierungSchema = z.object({
 });
 
 export const ArtikelvarianteSchema = z.object({
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  variantenname: z.string().min(1, 'Variantenname ist erforderlich'),
-  variantencode: z.string().min(1, 'Variantencode ist erforderlich'),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+variantenname: z.string().min(1, 'Variantenname ist erforderlich'),;
+variantencode: z.string().min(1, 'Variantencode ist erforderlich'),
   preisaufschlag: z.number().min(0).optional(),
   gewicht: z.number().min(0).optional(),
   volumen: z.number().min(0).optional(),
@@ -1370,8 +1370,8 @@ export const StuecklisteSchema = z.object({
 
 export const EinlagerungSchema = z.object({
   bewegungsnummer: z.string().min(1, 'Bewegungsnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   menge: z.number().min(0.001, 'Menge muss größer als 0 sein'),
   einheit: z.string().min(1, 'Einheit ist erforderlich'),
   lagerortId: z.string().min(1, 'Lagerort-ID ist erforderlich'),
@@ -1387,8 +1387,8 @@ export const EinlagerungSchema = z.object({
 
 export const AuslagerungSchema = z.object({
   bewegungsnummer: z.string().min(1, 'Bewegungsnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   menge: z.number().min(0.001, 'Menge muss größer als 0 sein'),
   einheit: z.string().min(1, 'Einheit ist erforderlich'),
   lagerortId: z.string().min(1, 'Lagerort-ID ist erforderlich'),
@@ -1423,8 +1423,8 @@ export const InventurSchema = z.object({
 
 export const ChargeSchema = z.object({
   chargennummer: z.string().min(1, 'Chargennummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   herstellungsdatum: z.date(),
   verfallsdatum: z.date().optional(),
   hersteller: z.string().optional(),
@@ -1537,8 +1537,8 @@ export interface WorkflowStep {
   comments?: string;
 }
 
-export interface FormLayout {
-  type: 'tabs' | 'wizard' | 'accordion' | 'single' | 'standard';
+export interface FormLayout {;
+type: 'tabs' | 'wizard' | 'accordion' | 'single' | 'standard';
   tabs?: FormTab[];
   timeline?: FormTimeline;
   belegfolge?: Belegfolge;
@@ -1570,8 +1570,8 @@ export interface StandardizedFormConfig extends FormConfig {
   title?: string;
   description?: string;
   tabs?: FormTab[];
-  security?: any;
-  mcpSecurity?: any;
+  security?: unknown;
+  mcpSecurity?: unknown;
   workflow?: {
     steps: WorkflowStep[];
     currentStep: number;
@@ -1780,8 +1780,8 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
     id: 'wawi-artikel',
     name: 'Artikelstammdaten',
     module: 'warenwirtschaft',
-    layout: {
-      type: 'tabs',
+    layout: {;
+type: 'tabs',
       tabs: [
         {
           id: 'grunddaten',
@@ -1860,22 +1860,22 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
     defaultFields: [
       {
         name: 'artikelnummer',
-        label: 'Artikelnummer',
-        type: 'text' as const,
+        label: 'Artikelnummer',;
+type: 'text' as const,
         required: true,
         placeholder: 'z.B. ART-001'
       },
       {
         name: 'bezeichnung',
-        label: 'Bezeichnung',
-        type: 'text' as const,
+        label: 'Bezeichnung',;
+type: 'text' as const,
         required: true,
         placeholder: 'Artikelbezeichnung'
       },
       {
         name: 'kategorie',
-        label: 'Kategorie',
-        type: 'select' as const,
+        label: 'Kategorie',;
+type: 'select' as const,
         required: true,
         options: [
           { value: 'rohstoffe', label: 'Rohstoffe' },
@@ -1885,50 +1885,50 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
       },
       {
         name: 'beschreibung',
-        label: 'Beschreibung',
-        type: 'textarea' as const,
+        label: 'Beschreibung',;
+type: 'textarea' as const,
         required: false,
         placeholder: 'Detaillierte Beschreibung'
       },
       {
         name: 'einkaufspreis',
-        label: 'Einkaufspreis',
-        type: 'number' as const,
+        label: 'Einkaufspreis',;
+type: 'number' as const,
         required: true,
         placeholder: '0.00'
       },
       {
         name: 'verkaufspreis',
-        label: 'Verkaufspreis',
-        type: 'number' as const,
+        label: 'Verkaufspreis',;
+type: 'number' as const,
         required: true,
         placeholder: '0.00'
       },
       {
         name: 'rabatt',
-        label: 'Rabatt (%)',
-        type: 'number' as const,
+        label: 'Rabatt (%)',;
+type: 'number' as const,
         required: false,
         placeholder: '0'
       },
       {
         name: 'mindestbestand',
-        label: 'Mindestbestand',
-        type: 'number' as const,
+        label: 'Mindestbestand',;
+type: 'number' as const,
         required: true,
         placeholder: '0'
       },
       {
         name: 'lagerort',
-        label: 'Lagerort',
-        type: 'text' as const,
+        label: 'Lagerort',;
+type: 'text' as const,
         required: true,
         placeholder: 'z.B. A-01-01'
       },
       {
         name: 'einheit',
-        label: 'Einheit',
-        type: 'select' as const,
+        label: 'Einheit',;
+type: 'select' as const,
         required: true,
         options: [
           { value: 'stueck', label: 'Stück' },
@@ -1944,8 +1944,8 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
     id: 'fibu-buchung',
     name: 'FiBu Buchung',
     module: 'fibu',
-    layout: {
-      type: 'tabs',
+    layout: {;
+type: 'tabs',
       tabs: [
         {
           id: 'grunddaten',
@@ -2024,29 +2024,29 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
     defaultFields: [
       {
         name: 'buchungsnummer',
-        label: 'Buchungsnummer',
-        type: 'text' as const,
+        label: 'Buchungsnummer',;
+type: 'text' as const,
         required: true,
         placeholder: 'z.B. BUCH-001'
       },
       {
         name: 'buchungsdatum',
-        label: 'Buchungsdatum',
-        type: 'date' as const,
+        label: 'Buchungsdatum',;
+type: 'date' as const,
         required: true,
         placeholder: 'TT.MM.YYYY'
       },
       {
         name: 'belegnummer',
-        label: 'Belegnummer',
-        type: 'text' as const,
+        label: 'Belegnummer',;
+type: 'text' as const,
         required: true,
         placeholder: 'z.B. BELEG-001'
       },
       {
         name: 'belegtyp',
-        label: 'Belegtyp',
-        type: 'select' as const,
+        label: 'Belegtyp',;
+type: 'select' as const,
         required: true,
         options: [
           { value: 'rechnung', label: 'Rechnung' },
@@ -2056,22 +2056,22 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
       },
       {
         name: 'summe',
-        label: 'Summe',
-        type: 'number' as const,
+        label: 'Summe',;
+type: 'number' as const,
         required: true,
         placeholder: '0.00'
       },
       {
         name: 'steuer',
-        label: 'Steuer',
-        type: 'number' as const,
+        label: 'Steuer',;
+type: 'number' as const,
         required: true,
         placeholder: '0.00'
       },
       {
         name: 'gesamt',
-        label: 'Gesamt',
-        type: 'number' as const,
+        label: 'Gesamt',;
+type: 'number' as const,
         required: true,
         placeholder: '0.00'
       }
@@ -2090,8 +2090,8 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
     id: 'crm-kunde',
     name: 'CRM Kunde',
     module: 'crm',
-    layout: {
-      type: 'tabs',
+    layout: {;
+type: 'tabs',
       tabs: [
         {
           id: 'grunddaten',
@@ -2170,64 +2170,64 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
     defaultFields: [
       {
         name: 'kundennummer',
-        label: 'Kundennummer',
-        type: 'text' as const,
+        label: 'Kundennummer',;
+type: 'text' as const,
         required: true,
         placeholder: 'z.B. KUNDE-001'
       },
       {
         name: 'firmenname',
-        label: 'Firmenname',
-        type: 'text' as const,
+        label: 'Firmenname',;
+type: 'text' as const,
         required: true,
         placeholder: 'Firmenname'
       },
       {
         name: 'ansprechpartner',
-        label: 'Ansprechpartner',
-        type: 'text' as const,
+        label: 'Ansprechpartner',;
+type: 'text' as const,
         required: false,
         placeholder: 'Name des Ansprechpartners'
       },
       {
         name: 'email',
-        label: 'E-Mail',
-        type: 'email' as const,
+        label: 'E-Mail',;
+type: 'email' as const,
         required: false,
         placeholder: 'email@firma.de'
       },
       {
         name: 'telefon',
-        label: 'Telefon',
-        type: 'text' as const,
+        label: 'Telefon',;
+type: 'text' as const,
         required: false,
         placeholder: '+49 123 456789'
       },
       {
         name: 'strasse',
-        label: 'Straße',
-        type: 'text' as const,
+        label: 'Straße',;
+type: 'text' as const,
         required: true,
         placeholder: 'Musterstraße 123'
       },
       {
         name: 'plz',
-        label: 'PLZ',
-        type: 'text' as const,
+        label: 'PLZ',;
+type: 'text' as const,
         required: true,
         placeholder: '12345'
       },
       {
         name: 'ort',
-        label: 'Ort',
-        type: 'text' as const,
+        label: 'Ort',;
+type: 'text' as const,
         required: true,
         placeholder: 'Musterstadt'
       },
       {
         name: 'land',
-        label: 'Land',
-        type: 'select' as const,
+        label: 'Land',;
+type: 'select' as const,
         required: true,
         options: [
           { value: 'DE', label: 'Deutschland' },
@@ -2237,15 +2237,15 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
       },
       {
         name: 'umsatzsteuer_id',
-        label: 'Umsatzsteuer-ID',
-        type: 'text' as const,
+        label: 'Umsatzsteuer-ID',;
+type: 'text' as const,
         required: false,
         placeholder: 'DE123456789'
       },
       {
         name: 'kundengruppe',
-        label: 'Kundengruppe',
-        type: 'select' as const,
+        label: 'Kundengruppe',;
+type: 'select' as const,
         required: false,
         options: [
           { value: 'privat', label: 'Privat' },
@@ -2255,8 +2255,8 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
       },
       {
         name: 'zahlungsbedingungen',
-        label: 'Zahlungsbedingungen',
-        type: 'select' as const,
+        label: 'Zahlungsbedingungen',;
+type: 'select' as const,
         required: false,
         options: [
           { value: 'sofort', label: 'Sofort' },
@@ -2282,8 +2282,8 @@ export const FORM_TEMPLATES: Record<string, FormTemplate> = {
 
 export const BedarfsermittlungSchema = z.object({
   ermittlungsnummer: z.string().min(1, 'Ermittlungsnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   periode: z.string().min(1, 'Periode ist erforderlich'),
   verbrauchsmenge: z.number().min(0, 'Verbrauchsmenge muss positiv sein'),
   einheit: z.string().min(1, 'Einheit ist erforderlich'),
@@ -2391,8 +2391,8 @@ export const MaterialbedarfsermittlungSchema = z.object({
 
 export const RueckverfolgungSchema = z.object({
   rueckverfolgungsnummer: z.string().min(1, 'Rückverfolgungsnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   chargeId: z.string().optional(),
   seriennummer: z.string().optional(),
   herstellungsdatum: z.date(),
@@ -2479,8 +2479,8 @@ export const UrsachenanalyseSchema = z.object({
 
 export const VerpackungsvorschriftenSchema = z.object({
   vorschriftennummer: z.string().min(1, 'Vorschriftennummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   verpackungsart: z.string().min(1, 'Verpackungsart ist erforderlich'),
   verpackungsmaterial: z.array(z.string()),
   verpackungsgroesse: z.string().min(1, 'Verpackungsgröße ist erforderlich'),
@@ -2496,8 +2496,8 @@ export const VerpackungsvorschriftenSchema = z.object({
 
 export const EtikettenSchema = z.object({
   etikettennummer: z.string().min(1, 'Etikettennummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   etikettentyp: z.string().min(1, 'Etikettentyp ist erforderlich'),
   druckformat: z.string().min(1, 'Druckformat ist erforderlich'),
   druckerId: z.string().optional(),
@@ -2520,8 +2520,8 @@ export const UNNummernSchema = z.object({
 
 export const ADRKonformitaetSchema = z.object({
   konformitaetsnummer: z.string().min(1, 'Konformitätsnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   adrKlasse: z.string().min(1, 'ADR-Klasse ist erforderlich'),
   verpackungsgruppe: z.string().min(1, 'Verpackungsgruppe ist erforderlich'),
   unNummer: z.string().min(1, 'UN-Nummer ist erforderlich'),
@@ -2556,8 +2556,8 @@ export const DifferenzkontrolleSchema = z.object({
 
 export const UmlagerungSchema = z.object({
   umlagerungsnummer: z.string().min(1, 'Umlagerungsnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   chargeId: z.string().optional(),
   seriennummer: z.string().optional(),
   menge: z.number().min(0.001, 'Menge muss größer als 0 sein'),
@@ -2598,8 +2598,8 @@ export const AktionenSchema = z.object({
 
 export const StaffelpreiseSchema = z.object({
   staffelpreisnummer: z.string().min(1, 'Staffelpreisnummer ist erforderlich'),
-  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),
-  varianteId: z.string().optional(),
+  artikelId: z.string().min(1, 'Artikel-ID ist erforderlich'),;
+varianteId: z.string().optional(),
   gueltigAb: z.date(),
   gueltigBis: z.date().optional(),
   status: z.enum(['aktiv', 'inaktiv']),

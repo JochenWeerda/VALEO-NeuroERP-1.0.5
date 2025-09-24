@@ -1,120 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import { 
-  Box, 
-  Typography, 
-  Card, 
-  Button, 
-  Alert,
-  CircularProgress,
-  Chip,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
-} from '@mui/material';
+  Box, Typography, Card, Button, Alert, CircularProgress, Chip, List, ListItem, ListItemText, ListItemIcon, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import {
-  CheckCircle as CheckCircleIcon,
-  Refresh as RefreshIcon,
-  Api as ApiIcon,
-  Storage as StorageIcon,
-  Cloud as CloudIcon,
-  Security as SecurityIcon,
-  Speed as SpeedIcon,
-  Add as AddIcon
-} from '@mui/icons-material';
-import { useApi } from '../contexts/ApiContext';
+  CheckCircle as CheckCircleIcon, Refresh as RefreshIcon, Api as ApiIcon, Storage as StorageIcon, Cloud as CloudIcon, Security as SecurityIcon, Speed as SpeedIcon, Add as AddIcon} from '@mui/icons-material';
+import { useApi ,} from '../contexts/ApiContext';
 import {
-  ObjectPageHeader,
-  ActionBar,
-  QuickViewCard,
-  StatusIndicator,
-  MessageStrip
-} from '../components/ui/NeuroFlowComponents';
-
-const ApiCommunicationDemo: React.FC = () => {
-  const {
-    user,
-    isAuthenticated,
-    login,
-    logout,
-    systemStatus,
-    isLoading,
-    error,
-    refreshSystemStatus,
-    transactions,
-    inventory,
-    documents,
-    notifications,
-    getTransactions,
-    createTransaction,
-    getInventory,
-    createInventoryItem,
-    getDocuments,
-    getNotifications,
-    middlewareHealthCheck
-  } = useApi();
-
-  const [showLoginDialog, setShowLoginDialog] = useState(false);
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [createType, setCreateType] = useState<'transaction' | 'inventory'>('transaction');
-  const [loginData, setLoginData] = useState({ username: '', password: '' });
-  const [createData, setCreateData] = useState<any>({});
-  const [middlewareStatus, setMiddlewareStatus] = useState<any>(null);
+  ObjectPageHeader, ActionBar, QuickViewCard, StatusIndicator, MessageStrip} from '../components/ui/NeuroFlowComponents';;
+const ApiCommunicationDemo: React.FC = () => {;
+const {
+    _user, _isAuthenticated, _login, _logout, _systemStatus, _isLoading, _error, _refreshSystemStatus, _transactions, _inventory, _documents, _notifications, _getTransactions, _createTransaction, _getInventory, _createInventoryItem, _getDocuments, _getNotifications, _middlewareHealthCheck,} = useApi();;
+const [showLoginDialog, setShowLoginDialog] = useState(false);;
+const [showCreateDialog, setShowCreateDialog] = useState(false);;
+const [createType, setCreateType] = useState<'transaction' | 'inventory'>('transaction');;
+const [loginData, setLoginData] = useState({ username: '', password: '' });;
+const [createData, setCreateData] = useState<any>({});;
+const [middlewareStatus, setMiddlewareStatus] = useState<any>(null);
 
   useEffect(() => {
     if (isAuthenticated) {
-      loadData();
-      checkMiddleware();
+      loadData();,
+      checkMiddleware();,
     }
-  }, [isAuthenticated]);
-
-  const loadData = async () => {
-    await Promise.all([
-      getTransactions(),
+  }, [isAuthenticated]);;
+const loadData = async () => {
+    await Promise.all([, getTransactions(),
       getInventory(),
       getDocuments(),
-      getNotifications()
-    ]);
-  };
-
-  const checkMiddleware = async () => {
-    try {
-      const response = await middlewareHealthCheck();
-      setMiddlewareStatus(response);
+      getNotifications(),
+    ]);,
+  };;
+const checkMiddleware = async () => {
+    try {;
+const response = await middlewareHealthCheck();,
+      setMiddlewareStatus(response);,
     } catch (err) {
       console.error('Middleware check failed:', err);
     }
-  };
-
-  const handleLogin = async () => {
-    const response = await login({
+  };;
+const handleLogin = async () => {;
+const response = await login({
       email: loginData.username, // Verwende username als email
       password: loginData.password
     });
     if (response.success) {
-      setShowLoginDialog(false);
+      setShowLoginDialog(false);,
       setLoginData({ username: '', password: '' });
     }
-  };
-
-  const handleLogout = async () => {
-    await logout();
-  };
-
-  const handleCreate = async () => {
+  };;
+const handleLogout = async () => {
+    await logout();,
+  };;
+const handleCreate = async () => {
     if (createType === 'transaction') {
-      await createTransaction({
-        type: createData.type || 'income',
-        amount: parseFloat(createData.amount) || 0,
+      await createTransaction({;
+type: createData.type || 'income', amount: parseFloat(createData.amount) || 0,
         date: new Date().toISOString(),
         description: createData.description || '',
         user_id: user?.id || '',
@@ -122,9 +61,7 @@ const ApiCommunicationDemo: React.FC = () => {
       });
     } else if (createType === 'inventory') {
       await createInventoryItem({
-        name: createData.name || '',
-        sku: createData.sku || '',
-        quantity: parseInt(createData.quantity) || 0,
+        name: createData.name || '', sku: createData.sku || '', quantity: parseInt(createData.quantity) || 0,
         price: parseFloat(createData.unit_price) || 0, // Map unit_price to price
         location: createData.location || '',
         category: createData.category || 'general',
@@ -137,8 +74,7 @@ const ApiCommunicationDemo: React.FC = () => {
   };
 
   if (!isAuthenticated) {
-    return (
-      <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    return (<Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Card sx={{ p: 4, maxWidth: 400, width: '100%' }}>
           <Box sx={{ textAlign: 'center', mb: 3 }}>
             <ApiIcon sx={{ fontSize: 64, color: '#0A6ED1', mb: 2 }} />
@@ -150,12 +86,12 @@ const ApiCommunicationDemo: React.FC = () => {
             </Typography>
           </Box>
 
-          <Button
-            variant="contained"
+          <Button;
+variant="contained"
             fullWidth
             size="large"
-            onClick={() => setShowLoginDialog(true)}
-            startIcon={<SecurityIcon />}
+            onClick={() => setShowLoginDialog(true),}
+            startIcon={<SecurityIcon />,}
           >
             Anmelden
           </Button>
@@ -165,92 +101,89 @@ const ApiCommunicationDemo: React.FC = () => {
           </Alert>
         </Card>
 
-        {/* Login Dialog */}
-        <Dialog open={showLoginDialog} onClose={() => setShowLoginDialog(false)} maxWidth="sm" fullWidth>
+        {/* Login Dialog */,}
+        <Dialog open={showLoginDialog,} onClose={() => setShowLoginDialog(false),} maxWidth="sm" fullWidth>
           <DialogTitle>Anmeldung</DialogTitle>
           <DialogContent>
             <TextField
               fullWidth
               label="Benutzername"
-              value={loginData.username}
+              value={loginData.username,}
               onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
               margin="normal"
             />
             <TextField
               fullWidth
-              label="Passwort"
-              type="password"
-              value={loginData.password}
+              label="Passwort";
+type="password"
+              value={loginData.password,}
               onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
               margin="normal"
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setShowLoginDialog(false)}>Abbrechen</Button>
-            <Button onClick={handleLogin} variant="contained">Anmelden</Button>
+            <Button onClick={() => setShowLoginDialog(false),}>Abbrechen</Button>
+            <Button onClick={handleLogin,} variant="contained">Anmelden</Button>
           </DialogActions>
         </Dialog>
       </Box>
     );
   }
 
-  return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
-      {/* Header */}
+  return (<Box sx={{ minHeight: '100vh', bgcolor: '#F5F6F7' }}>
+      {/* Header */, }
       <ObjectPageHeader
         title="API-Kommunikation Demo"
         subtitle="Frontend ↔ Middleware ↔ Backend"
         status="Aktiv"
         actions={
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button variant="outlined" onClick={handleLogout}>
+            <Button variant="outlined" onClick={handleLogout, }>
               Abmelden
             </Button>
-            <Button variant="contained" onClick={() => setShowCreateDialog(true)} startIcon={<AddIcon />}>
+            <Button variant="contained" onClick={() => setShowCreateDialog(true),} startIcon={<AddIcon />,}>
               Neu erstellen
             </Button>
           </Box>
         }
       />
 
-      {/* Error Display */}
-      {error && (
-        <Box sx={{ px: 3 }}>
+      {/* Error Display */,}
+      {error && (<Box sx={{ px: 3 }}>
           <MessageStrip type="error" title="Fehler">
-            {error}
+            {error, }
           </MessageStrip>
-        </Box>
-      )}
+        </Box>)}
 
-      {/* Action Bar */}
+      {/* Action Bar */,}
       <ActionBar
         title="System-Status & Kommunikation"
-        actions={[
+        actions={[,
           {
             label: 'Status aktualisieren',
             icon: <RefreshIcon />,
             onClick: () => {
-              refreshSystemStatus();
-              checkMiddleware();
-              loadData();
-            },
-            variant: 'outlined'
+              refreshSystemStatus();,
+              checkMiddleware();,
+              loadData();,
+            },;
+variant: 'outlined'
           },
           {
             label: 'Middleware prüfen',
             icon: <ApiIcon />,
-            onClick: checkMiddleware,
-            variant: 'outlined'
+            onClick: checkMiddleware,;
+variant: 'outlined'
           }
         ]}
       />
 
       <Box sx={{ p: 3 }}>
-        {/* System Status */}
+        {/* System Status */,}
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mb: 4 }}>
           <QuickViewCard
             title="Backend Status"
-            icon={<StorageIcon />}
+            icon={<StorageIcon />,}
           >
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <StatusIndicator
@@ -266,7 +199,7 @@ const ApiCommunicationDemo: React.FC = () => {
 
           <QuickViewCard
             title="Middleware Status"
-            icon={<CloudIcon />}
+            icon={<CloudIcon />,}
           >
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <StatusIndicator
@@ -281,12 +214,12 @@ const ApiCommunicationDemo: React.FC = () => {
           </QuickViewCard>
         </Box>
 
-        {/* Data Overview */}
+        {/* Data Overview */,}
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' }, gap: 3, mb: 4 }}>
-          <QuickViewCard title="Transaktionen" icon={<SpeedIcon />}>
+          <QuickViewCard title="Transaktionen" icon={<SpeedIcon />,}>
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <Typography variant="h3" sx={{ color: '#0A6ED1', mb: 1 }}>
-                {transactions.length}
+                {transactions.length,}
               </Typography>
               <Typography variant="body2" sx={{ color: '#515559' }}>
                 Gesamt
@@ -294,10 +227,10 @@ const ApiCommunicationDemo: React.FC = () => {
             </Box>
           </QuickViewCard>
 
-          <QuickViewCard title="Inventar" icon={<StorageIcon />}>
+          <QuickViewCard title="Inventar" icon={<StorageIcon />,}>
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <Typography variant="h3" sx={{ color: '#107C41', mb: 1 }}>
-                {inventory.length}
+                {inventory.length,}
               </Typography>
               <Typography variant="body2" sx={{ color: '#515559' }}>
                 Artikel
@@ -305,10 +238,10 @@ const ApiCommunicationDemo: React.FC = () => {
             </Box>
           </QuickViewCard>
 
-          <QuickViewCard title="Dokumente" icon={<ApiIcon />}>
+          <QuickViewCard title="Dokumente" icon={<ApiIcon />,}>
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <Typography variant="h3" sx={{ color: '#E9730C', mb: 1 }}>
-                {documents.length}
+                {documents.length,}
               </Typography>
               <Typography variant="body2" sx={{ color: '#515559' }}>
                 Gespeichert
@@ -316,10 +249,10 @@ const ApiCommunicationDemo: React.FC = () => {
             </Box>
           </QuickViewCard>
 
-          <QuickViewCard title="Benachrichtigungen" icon={<SecurityIcon />}>
+          <QuickViewCard title="Benachrichtigungen" icon={<SecurityIcon />,}>
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <Typography variant="h3" sx={{ color: '#BB0000', mb: 1 }}>
-                {notifications.filter(n => !n.read).length}
+                {notifications.filter(n => !n.read).length,}
               </Typography>
               <Typography variant="body2" sx={{ color: '#515559' }}>
                 Ungelesen
@@ -328,25 +261,23 @@ const ApiCommunicationDemo: React.FC = () => {
           </QuickViewCard>
         </Box>
 
-        {/* Recent Data */}
+        {/* Recent Data */,}
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3 }}>
           <Card>
             <Box sx={{ p: 2, borderBottom: '1px solid #E5E5E5' }}>
               <Typography variant="h6">Letzte Transaktionen</Typography>
             </Box>
             <List>
-              {transactions.slice(0, 5).map((transaction) => (
-                <ListItem key={transaction.id}>
+              {transactions.slice(0, 5).map((transaction) => (<ListItem key={transaction.id, }>
                   <ListItemIcon>
                     <CheckCircleIcon color="primary" />
                   </ListItemIcon>
                   <ListItemText
-                    primary={`${transaction.type || 'unknown'} - ${transaction.amount}€`}
-                    secondary={transaction.description}
+                    primary={`${transaction.type || 'unknown', } - ${transaction.amount, }€`}
+                    secondary={transaction.description, }
                   />
-                  <Chip label={transaction.status || 'pending'} size="small" />
-                </ListItem>
-              ))}
+                  <Chip label={transaction.status || 'pending', } size="small" />
+                </ListItem>))}
             </List>
           </Card>
 
@@ -355,70 +286,61 @@ const ApiCommunicationDemo: React.FC = () => {
               <Typography variant="h6">Inventar-Status</Typography>
             </Box>
             <List>
-              {inventory.slice(0, 5).map((item) => (
-                <ListItem key={item.id}>
+              {inventory.slice(0, 5).map((item) => (<ListItem key={item.id, }>
                   <ListItemIcon>
                     <StorageIcon color="primary" />
                   </ListItemIcon>
                   <ListItemText
-                    primary={item.name}
-                    secondary={`SKU: ${item.sku || 'N/A'} - ${item.quantity} Stück`}
+                    primary={item.name, }
+                    secondary={`SKU: ${item.sku || 'N/A'} - ${item.quantity, } Stück`}
                   />
                   <Chip 
-                    label={item.status || 'unknown'} 
+                    label={item.status || 'unknown', } 
                     size="small" 
                     color={item.status === 'in_stock' ? 'success' : 'warning'}
                   />
-                </ListItem>
-              ))}
+                </ListItem>))}
             </List>
           </Card>
         </Box>
 
-        {/* Loading Indicator */}
-        {isLoading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        {/* Loading Indicator */,}
+        {isLoading && (<Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
             <CircularProgress />
-          </Box>
-        )}
+          </Box>)}
       </Box>
 
-      {/* Create Dialog */}
-      <Dialog open={showCreateDialog} onClose={() => setShowCreateDialog(false)} maxWidth="sm" fullWidth>
+      {/* Create Dialog */,}
+      <Dialog open={showCreateDialog,} onClose={() => setShowCreateDialog(false),} maxWidth="sm" fullWidth>
         <DialogTitle>Neuen Eintrag erstellen</DialogTitle>
         <DialogContent>
           <FormControl fullWidth margin="normal">
             <InputLabel>Typ</InputLabel>
             <Select
-              value={createType}
-              onChange={(e) => setCreateType(e.target.value as 'transaction' | 'inventory')}
+              value={createType,}
+              onChange={(e) => setCreateType(e.target.value as 'transaction' | 'inventory'),}
             >
               <MenuItem value="transaction">Transaktion</MenuItem>
               <MenuItem value="inventory">Inventar-Item</MenuItem>
             </Select>
           </FormControl>
 
-          {createType === 'transaction' ? (
-            <>
-              <TextField
-                fullWidth
-                label="Typ"
-                value={createData.type || ''}
+          {createType === 'transaction' ? (<>, <TextField, fullWidth, label="Typ", value={createData.type || '', }
                 onChange={(e) => setCreateData({ ...createData, type: e.target.value })}
                 margin="normal"
               />
               <TextField
                 fullWidth
-                label="Betrag"
-                type="number"
-                value={createData.amount || ''}
+                label="Betrag";
+type="number"
+                value={createData.amount || '',}
                 onChange={(e) => setCreateData({ ...createData, amount: e.target.value })}
                 margin="normal"
               />
               <TextField
                 fullWidth
                 label="Beschreibung"
-                value={createData.description || ''}
+                value={createData.description || '',}
                 onChange={(e) => setCreateData({ ...createData, description: e.target.value })}
                 margin="normal"
               />
@@ -428,30 +350,30 @@ const ApiCommunicationDemo: React.FC = () => {
               <TextField
                 fullWidth
                 label="Name"
-                value={createData.name || ''}
+                value={createData.name || '', }
                 onChange={(e) => setCreateData({ ...createData, name: e.target.value })}
                 margin="normal"
               />
               <TextField
                 fullWidth
                 label="SKU"
-                value={createData.sku || ''}
+                value={createData.sku || '',}
                 onChange={(e) => setCreateData({ ...createData, sku: e.target.value })}
                 margin="normal"
               />
               <TextField
                 fullWidth
-                label="Menge"
-                type="number"
-                value={createData.quantity || ''}
+                label="Menge";
+type="number"
+                value={createData.quantity || '',}
                 onChange={(e) => setCreateData({ ...createData, quantity: e.target.value })}
                 margin="normal"
               />
               <TextField
                 fullWidth
-                label="Einzelpreis"
-                type="number"
-                value={createData.unit_price || ''}
+                label="Einzelpreis";
+type="number"
+                value={createData.unit_price || '',}
                 onChange={(e) => setCreateData({ ...createData, unit_price: e.target.value })}
                 margin="normal"
               />
@@ -459,8 +381,8 @@ const ApiCommunicationDemo: React.FC = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowCreateDialog(false)}>Abbrechen</Button>
-          <Button onClick={handleCreate} variant="contained">Erstellen</Button>
+          <Button onClick={() => setShowCreateDialog(false),}>Abbrechen</Button>
+          <Button onClick={handleCreate,} variant="contained">Erstellen</Button>
         </DialogActions>
       </Dialog>
     </Box>

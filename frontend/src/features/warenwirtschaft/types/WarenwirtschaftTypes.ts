@@ -1,4 +1,4 @@
-import type { TrustLevel } from '../../../lib/schemas';
+import type { TrustLevel ,} from '../../../lib/schemas';
 
 // Warenwirtschafts-Module
 export interface WarenwirtschaftModule {
@@ -162,8 +162,8 @@ export interface CrmKontakt {
   email: string;
   kundennummer?: string;
   status: 'aktiv' | 'inaktiv' | 'gesperrt';
-  bewertung: number; // 1-5 Sterne
-  letzterKontakt: Date;
+  bewertung: number; // 1-5 Sterne;
+letzterKontakt: Date;
   wiedervorlage?: Date;
   notizen: string[];
   trustLevel: TrustLevel;
@@ -255,8 +255,8 @@ export interface LogistikSchnittstelle {
   typ: 'UPS' | 'DHL' | 'DPD' | 'GLS' | 'custom';
   aktiv: boolean;
   apiKey?: string;
-  endpoint?: string;
-  letzterTest: Date;
+  endpoint?: string;;
+letzterTest: Date;
   status: 'online' | 'offline' | 'fehler';
   trustLevel: TrustLevel;
   confidence?: number;
@@ -268,8 +268,8 @@ export interface Kassensystem {
   kassenId: string;
   name: string;
   status: 'aktiv' | 'inaktiv' | 'wartung';
-  tseAktiv: boolean;
-  letzterTest: Date;
+  tseAktiv: boolean;;
+letzterTest: Date;
   tagesumsatz: number;
   transaktionen: number;
   fehler: number;

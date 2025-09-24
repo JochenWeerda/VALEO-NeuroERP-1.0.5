@@ -1,4 +1,4 @@
-import { api, type ApiResponse } from './api';
+import { api, type ApiResponse} from './api';
 
 // User Management Interfaces
 export interface User {
@@ -53,10 +53,9 @@ export interface UserStatistics {
   inactive_users: number;
   role_distribution: Record<string, number>;
   department_distribution: Record<string, number>;
-}
-
+};
 class UserManagementService {
-  // User CRUD Operations
+  // User CRUD Operations,
   async getUsers(params?: {
     page?: number;
     limit?: number;
@@ -64,50 +63,50 @@ class UserManagementService {
     status_filter?: string;
     department_filter?: string;
   }): Promise<ApiResponse<UserListResponse>> {
-    return api.get<UserListResponse>('/api/users', params);
+    return api.get<UserListResponse>('/api/users', params);,
   }
 
   async getUserById(userId: string): Promise<ApiResponse<User>> {
-    return api.get<User>(`/api/users/${userId}`);
+    return api.get<User>(`/api/users/${userId, }`);
   }
 
   async createUser(userData: UserCreateRequest): Promise<ApiResponse<User>> {
-    return api.post<User>('/api/users', userData);
+    return api.post<User>('/api/users', userData);,
   }
 
   async updateUser(userId: string, userData: UserUpdateRequest): Promise<ApiResponse<User>> {
-    return api.put<User>(`/api/users/${userId}`, userData);
+    return api.put<User>(`/api/users/${userId, }`, userData);
   }
 
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    return api.delete<void>(`/api/users/${userId}`);
+    return api.delete<void>(`/api/users/${userId, }`);
   }
 
   // Profile Management
   async getMyProfile(): Promise<ApiResponse<User>> {
-    return api.get<User>('/api/users/me/profile');
+    return api.get<User>('/api/users/me/profile');,
   }
 
   async updateMyProfile(userData: UserUpdateRequest): Promise<ApiResponse<User>> {
-    return api.put<User>('/api/users/me/profile', userData);
+    return api.put<User>('/api/users/me/profile', userData);,
   }
 
   // Statistics and Analytics
   async getUserStatistics(): Promise<ApiResponse<UserStatistics>> {
-    return api.get<UserStatistics>('/api/users/statistics');
+    return api.get<UserStatistics>('/api/users/statistics');,
   }
 
   async getUsersByRole(role: string): Promise<ApiResponse<User[]>> {
-    return api.get<User[]>(`/api/users/by-role/${role}`);
+    return api.get<User[]>(`/api/users/by-role/${role, }`);
   }
 
   async getUsersByDepartment(department: string): Promise<ApiResponse<User[]>> {
-    return api.get<User[]>(`/api/users/by-department/${department}`);
+    return api.get<User[]>(`/api/users/by-department/${department, }`);
   }
 
   // Helper Methods
-  getRoleDisplayName(role: string): string {
-    const roleNames: Record<string, string> = {
+  getRoleDisplayName(role: string): string {;
+const roleNames: Record<string, string> = {
       admin: 'Administrator',
       manager: 'Manager',
       user: 'Benutzer',
@@ -116,8 +115,8 @@ class UserManagementService {
     return roleNames[role] || role;
   }
 
-  getStatusDisplayName(status: string): string {
-    const statusNames: Record<string, string> = {
+  getStatusDisplayName(status: string): string {;
+const statusNames: Record<string, string> = {
       active: 'Aktiv',
       inactive: 'Inaktiv',
       suspended: 'Gesperrt'
@@ -125,8 +124,8 @@ class UserManagementService {
     return statusNames[status] || status;
   }
 
-  getRoleColor(role: string): string {
-    const roleColors: Record<string, string> = {
+  getRoleColor(role: string): string {;
+const roleColors: Record<string, string> = {
       admin: '#d32f2f',
       manager: '#1976d2',
       user: '#388e3c',
@@ -135,8 +134,8 @@ class UserManagementService {
     return roleColors[role] || '#757575';
   }
 
-  getStatusColor(status: string): string {
-    const statusColors: Record<string, string> = {
+  getStatusColor(status: string): string {;
+const statusColors: Record<string, string> = {
       active: '#388e3c',
       inactive: '#757575',
       suspended: '#d32f2f'
@@ -145,54 +144,54 @@ class UserManagementService {
   }
 
   // Validation
-  validateEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  validateEmail(email: string): boolean {;
+const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;,
+    return emailRegex.test(email);,
   }
 
-  validatePassword(password: string): { isValid: boolean; errors: string[] } {
-    const errors: string[] = [];
+  validatePassword(password: string): { isValid: boolean; errors: string[] } {;
+const errors: string[] = [];
     
     if (password.length < 8) {
-      errors.push('Passwort muss mindestens 8 Zeichen lang sein');
+      errors.push('Passwort muss mindestens 8 Zeichen lang sein');,
     }
     
     if (!/[A-Z]/.test(password)) {
-      errors.push('Passwort muss mindestens einen Großbuchstaben enthalten');
+      errors.push('Passwort muss mindestens einen Großbuchstaben enthalten');,
     }
     
     if (!/[a-z]/.test(password)) {
-      errors.push('Passwort muss mindestens einen Kleinbuchstaben enthalten');
+      errors.push('Passwort muss mindestens einen Kleinbuchstaben enthalten');,
     }
     
     if (!/\d/.test(password)) {
-      errors.push('Passwort muss mindestens eine Zahl enthalten');
+      errors.push('Passwort muss mindestens eine Zahl enthalten');,
     }
     
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
-  validateUsername(username: string): { isValid: boolean; errors: string[] } {
-    const errors: string[] = [];
+  validateUsername(username: string): { isValid: boolean; errors: string[] } {;
+const errors: string[] = [];
     
     if (username.length < 3) {
-      errors.push('Benutzername muss mindestens 3 Zeichen lang sein');
+      errors.push('Benutzername muss mindestens 3 Zeichen lang sein');,
     }
     
     if (username.length > 20) {
-      errors.push('Benutzername darf maximal 20 Zeichen lang sein');
+      errors.push('Benutzername darf maximal 20 Zeichen lang sein');,
     }
     
     if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-      errors.push('Benutzername darf nur Buchstaben, Zahlen, Unterstriche und Bindestriche enthalten');
+      errors.push('Benutzername darf nur Buchstaben, Zahlen, Unterstriche und Bindestriche enthalten');,
     }
     
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 }

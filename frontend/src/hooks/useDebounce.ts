@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 
 // Debounce Hook für VALEO NeuroERP
-export const useDebounce = <T>(value: T, delay: number): T => {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+export const useDebounce = <T>(value: T, delay: number): T => {;
+const [debouncedValue, setDebouncedValue] = useState<T>(value);,
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
+  useEffect(() => {;
+const handler = setTimeout(() => {
+      setDebouncedValue(value);,
     }, delay);
 
     return () => {
-      clearTimeout(handler);
+      clearTimeout(handler);,
     };
   }, [value, delay]);
 
@@ -18,19 +18,15 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 
 // Debounced Callback Hook
-export const useDebouncedCallback = <T extends (...args: any[]) => any>(
-  callback: T,
-  delay: number
-): T => {
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
-
-  const debouncedCallback = ((...args: Parameters<T>) => {
+export const useDebouncedCallback = <T extends (...args: unknown[]) => any>(
+  callback: T, delay: number): T => {;
+const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);,;
+const debouncedCallback = ((...args: Parameters<T>) => {
     if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-
-    const timer = setTimeout(() => {
-      callback(...args);
+      clearTimeout(debounceTimer);,
+    };
+const timer = setTimeout(() => {
+      callback(...args);,
     }, delay);
 
     setDebounceTimer(timer);
@@ -39,7 +35,7 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
   useEffect(() => {
     return () => {
       if (debounceTimer) {
-        clearTimeout(debounceTimer);
+        clearTimeout(debounceTimer);,
       }
     };
   }, [debounceTimer]);
@@ -48,17 +44,17 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
 };
 
 // Debounced State Hook
-export const useDebouncedState = <T>(initialValue: T, delay: number) => {
-  const [value, setValue] = useState<T>(initialValue);
-  const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
+export const useDebouncedState = <T>(initialValue: T, delay: number) => {;
+const [value, setValue] = useState<T>(initialValue);,;
+const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);,
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
+  useEffect(() => {;
+const handler = setTimeout(() => {
+      setDebouncedValue(value);,
     }, delay);
 
     return () => {
-      clearTimeout(handler);
+      clearTimeout(handler);,
     };
   }, [value, delay]);
 

@@ -1,81 +1,71 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import React, { Suspense, lazy ,} from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { Box, CircularProgress, Typography} from '@mui/material';
 // ✅ NEU: Import der standardisierten UI-Komponenten
-import { UI_LABELS } from './ui/UIStandardization';
+import { UI_LABELS ,} from './ui/UIStandardization';
 
-// Lazy Loading für alle Seiten
-const Dashboard = lazy(() => import('./neuroflow/NeuroFlowDashboard'));
-const LoginForm = lazy(() => import('./auth/LoginForm'));
-const StreckengeschaeftPage = lazy(() => import('../pages/StreckengeschaeftPage').then(module => ({ default: module.StreckengeschaeftPage })));
-const POSPage = lazy(() => import('../pages/POS/POSPage'));
-const DailyReportPage = lazy(() => import('../pages/POS/DailyReportPage'));
-const EInvoicingPage = lazy(() => import('./e-invoicing/EInvoicingPage'));
-const SettingsDashboard = lazy(() => import('../pages/SettingsDashboard').then(m => ({ default: m.SettingsDashboard })));
+// Lazy Loading für alle Seiten;
+const Dashboard = lazy(() => import('./neuroflow/NeuroFlowDashboard'));;
+const LoginForm = lazy(() => import('./auth/LoginForm'));;
+const StreckengeschaeftPage = lazy(() => import('../pages/StreckengeschaeftPage').then(module => ({ default: module.StreckengeschaeftPage })));;
+const POSPage = lazy(() => import('../pages/POS/POSPage'));;
+const DailyReportPage = lazy(() => import('../pages/POS/DailyReportPage'));;
+const EInvoicingPage = lazy(() => import('./e-invoicing/EInvoicingPage'));;
+const SettingsDashboard = lazy(() => import('../pages/SettingsDashboard').then(m => ({ default: m.SettingsDashboard })));;
 const FirstRun = lazy(() => import('../pages/FirstRun').then(m => ({ default: m.FirstRun })));
 
-// Loading Component für Routen
-const RouteLoader: React.FC<{ routeName: string }> = ({ routeName }) => (
+// Loading Component für Routen;
+const RouteLoader: React.FC<{ routeName: string }> = ({ routeName, }) => (
   <Box
     sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-      flexDirection: 'column',
-      gap: 2
+      display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', flexDirection: 'column', gap: 2
     }}
   >
-    <CircularProgress size={60} />
+    <CircularProgress size={60, } />
     <Box sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ mb: 1 }}>
-        {routeName} {UI_LABELS.MESSAGES.LOADING}
+        {routeName, } {UI_LABELS.MESSAGES.LOADING, }
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {UI_LABELS.MESSAGES.PLEASE_WAIT}
+        {UI_LABELS.MESSAGES.PLEASE_WAIT, }
       </Typography>
     </Box>
-  </Box>
-);
+  </Box>);
 
-// Protected Route Component
+// Protected Route Component;
 interface ProtectedRouteProps {
   children: React.ReactNode;
   isAuthenticated: boolean;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, isAuthenticated }) => {
+};
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, isAuthenticated, }) => {
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace />;,
   }
-  return <>{children}</>;
+  return <>{children,}</>;
 };
 
-// Main Router Component
+// Main Router Component;
 interface AppRouterProps {
   isAuthenticated: boolean;
 }
 
-export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
-  return (
-    <Router>
-      <Routes>
-        {/* Public Routes */}
+export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated, }) => {
+  return (<Router>, <Routes>, {/* Public Routes */, }
         <Route
           path="/login"
           element={
-            <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.LOGIN} />}>
+            <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.LOGIN, } />}>
               <LoginForm />
             </Suspense>
           }
         />
 
-        {/* Protected Routes */}
+        {/* Protected Routes */, }
         <Route
           path="/"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD, } />}>
                 <Dashboard />
               </Suspense>
             </ProtectedRoute>
@@ -85,8 +75,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DASHBOARD, } />}>
                 <Dashboard />
               </Suspense>
             </ProtectedRoute>
@@ -96,8 +86,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/settings"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.SETTINGS} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.SETTINGS, } />}>
                 <SettingsDashboard />
               </Suspense>
             </ProtectedRoute>
@@ -107,8 +97,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/first-run"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName="Ersteinrichtung" />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName="Ersteinrichtung" />, }>
                 <FirstRun />
               </Suspense>
             </ProtectedRoute>
@@ -118,8 +108,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/streckengeschaeft"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.STRECKENGESCHAEFT} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.STRECKENGESCHAEFT, } />}>
                 <StreckengeschaeftPage />
               </Suspense>
             </ProtectedRoute>
@@ -129,8 +119,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/pos"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.POS} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.POS, } />}>
                 <POSPage />
               </Suspense>
             </ProtectedRoute>
@@ -140,8 +130,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/daily-report"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DAILY_REPORT} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.DAILY_REPORT, } />}>
                 <DailyReportPage />
               </Suspense>
             </ProtectedRoute>
@@ -151,24 +141,23 @@ export const AppRouter: React.FC<AppRouterProps> = ({ isAuthenticated }) => {
         <Route
           path="/e-invoicing"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.E_INVOICING} />}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
+              <Suspense fallback={<RouteLoader routeName={UI_LABELS.NAVIGATION.E_INVOICING, } />}>
                 <EInvoicingPage />
               </Suspense>
             </ProtectedRoute>
           }
         />
 
-        {/* Fallback Route */}
+        {/* Fallback Route */, }
         <Route
           path="*"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute isAuthenticated={isAuthenticated, }>
               <Navigate to="/dashboard" replace />
             </ProtectedRoute>
           }
         />
       </Routes>
-    </Router>
-  );
+    </Router>);
 }; 

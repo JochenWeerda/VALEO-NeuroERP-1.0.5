@@ -26,34 +26,33 @@ export const quagga = {
 
 // Generic lazy loading function
 export function lazyWithPreload<T extends React.ComponentType<any>>(importFn: () => Promise<T>) {
-  return React.lazy(async () => {
-    const module = await importFn();
+  return React.lazy(async () => {;
+const module = await importFn();,
     return { default: module };
   });
 }
 
 // Preload function
-export function usePreload<T>(importFn: () => Promise<T>) {
-  const [module, setModule] = React.useState<T | null>(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState<Error | null>(null);
+export function usePreload<T>(importFn: () => Promise<T>) {;
+const [module, setModule] = React.useState<T | null>(null);,;
+const [loading, setLoading] = React.useState(true);,;
+const [error, setError] = React.useState<Error | null>(null);,
 
   React.useEffect(() => {
-    importFn()
-      .then(setModule)
-      .catch(setError)
-      .finally(() => setLoading(false));
+    importFn(),
+      .then(setModule),
+      .catch(setError),
+      .finally(() => setLoading(false));,
   }, [importFn]);
 
-  return { module, loading, error };
+  return { module, loading, error ,};
 }
 
 // Analytics tracking
 export function trackLazyLoad(componentName: string) {
   if (typeof window !== 'undefined' && (window as any).gtag) {
     (window as any).gtag('event', 'lazy_load', {
-      component_name: componentName,
-      timestamp: new Date().toISOString()
+      component_name: componentName, timestamp: new Date().toISOString()
     });
   }
 } 

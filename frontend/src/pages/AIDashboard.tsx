@@ -1,39 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Container,
-  Typography,
-  Box,
-  Paper,
-  Grid,
-  Card,
-  CardContent,
-  Alert,
-  Snackbar
-} from '@mui/material';
+  Container, Typography, Box, Paper, Grid, Card, CardContent, Alert, Snackbar} from '@mui/material';
 import {
-  AutoAwesome as AutoAwesomeIcon,
-  QrCode as QrCodeIcon,
-  Analytics as AnalyticsIcon,
-  TrendingUp as TrendingUpIcon
-} from '@mui/icons-material';
-import { BarcodeAI } from '../components/ai/BarcodeAI';
+  AutoAwesome as AutoAwesomeIcon, QrCode as QrCodeIcon, Analytics as AnalyticsIcon, TrendingUp as TrendingUpIcon} from '@mui/icons-material';
+import { BarcodeAI ,} from '../components/ai/BarcodeAI';
 
-export const AIDashboard: React.FC = () => {
-  const [selectedBarcode, setSelectedBarcode] = useState<string>('');
-  const [showSnackbar, setShowSnackbar] = useState(false);
-
-  const handleBarcodeSelect = (barcode: string) => {
-    setSelectedBarcode(barcode);
-    setShowSnackbar(true);
-  };
-
-  const handleCloseSnackbar = () => {
-    setShowSnackbar(false);
+export const AIDashboard: React.FC = () => {;
+const [selectedBarcode, setSelectedBarcode] = useState<string>('');,;
+const [showSnackbar, setShowSnackbar] = useState(false);,;
+const handleBarcodeSelect = (barcode: string) => {
+    setSelectedBarcode(barcode);,
+    setShowSnackbar(true);,
+  };;
+const handleCloseSnackbar = () => {
+    setShowSnackbar(false);,
   };
 
   return (
     <Container maxWidth="xl" className="py-8">
-      {/* Header */}
+      {/* Header */, }
       <Box className="mb-8">
         <Box className="flex items-center gap-3 mb-4">
           <AutoAwesomeIcon color="primary" fontSize="large" />
@@ -47,9 +32,9 @@ export const AIDashboard: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* AI-Features Übersicht */}
-      <Grid container spacing={3} className="mb-8">
-        <Grid item xs={12} md={4}>
+      {/* AI-Features Übersicht */, }
+      <Grid container spacing={3, } className="mb-8">
+        <Grid item xs={12, } md={4, }>
           <Card className="h-full hover:shadow-lg transition-shadow">
             <CardContent className="text-center p-6">
               <QrCodeIcon color="primary" fontSize="large" className="mb-3" />
@@ -57,14 +42,13 @@ export const AIDashboard: React.FC = () => {
                 AI-Barcode Generator
               </Typography>
               <Typography variant="body2" className="text-gray-600">
-                Intelligente Barcode-Vorschläge basierend auf Produktanalyse, 
-                Markttrends und Kategorie-Mustern.
+                Intelligente Barcode-Vorschläge basierend auf Produktanalyse, Markttrends und Kategorie-Mustern.
               </Typography>
             </CardContent>
           </Card>
         </Grid>
         
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12, } md={4, }>
           <Card className="h-full hover:shadow-lg transition-shadow">
             <CardContent className="text-center p-6">
               <AnalyticsIcon color="primary" fontSize="large" className="mb-3" />
@@ -79,7 +63,7 @@ export const AIDashboard: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12, } md={4, }>
           <Card className="h-full hover:shadow-lg transition-shadow">
             <CardContent className="text-center p-6">
               <TrendingUpIcon color="primary" fontSize="large" className="mb-3" />
@@ -95,37 +79,25 @@ export const AIDashboard: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* AI-Barcode Generator */}
+      {/* AI-Barcode Generator */, }
       <Box className="mb-8">
         <Paper className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <BarcodeAI onBarcodeSelect={handleBarcodeSelect} />
+          <BarcodeAI onBarcodeSelect={handleBarcodeSelect, } />
         </Paper>
       </Box>
 
-      {/* Ausgewählter Barcode Anzeige */}
-      {selectedBarcode && (
-        <Paper className="p-6 mb-8 bg-green-50 border-l-4 border-green-500">
-          <Typography variant="h6" className="mb-3 text-green-800">
-            ✅ Ausgewählter Barcode
-          </Typography>
-          <Box className="flex items-center gap-3">
-            <Typography
-              variant="h5"
-              className="font-mono bg-white p-3 rounded border"
-              component="code"
-            >
-              {selectedBarcode}
+      {/* Ausgewählter Barcode Anzeige */, }
+      {selectedBarcode && (, <Paper className="p-6 mb-8 bg-green-50 border-l-4 border-green-500">, <Typography variant="h6" className="mb-3 text-green-800">, ✅ Ausgewählter Barcode, </Typography>, <Box className="flex items-center gap-3">, <Typography, variant="h5", className="font-mono bg-white p-3 rounded border", component="code", >, {selectedBarcode, }
             </Typography>
             <Typography variant="body2" className="text-green-700">
               Dieser Barcode kann jetzt in Ihren ERP-Prozessen verwendet werden.
             </Typography>
           </Box>
-        </Paper>
-      )}
+        </Paper>)}
 
-      {/* AI-Status und Informationen */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+      {/* AI-Status und Informationen */,}
+      <Grid container spacing={3,}>
+        <Grid item xs={12,} md={6,}>
           <Paper className="p-6">
             <Typography variant="h6" className="mb-4">
               🤖 AI-Service Status
@@ -162,7 +134,7 @@ export const AIDashboard: React.FC = () => {
           </Paper>
         </Grid>
         
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12,} md={6,}>
           <Paper className="p-6">
             <Typography variant="h6" className="mb-4">
               📊 AI-Features Übersicht
@@ -193,12 +165,12 @@ export const AIDashboard: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Snackbar für Barcode-Auswahl */}
+      {/* Snackbar für Barcode-Auswahl */,}
       <Snackbar
-        open={showSnackbar}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        message={`Barcode "${selectedBarcode}" wurde ausgewählt`}
+        open={showSnackbar,}
+        autoHideDuration={4000,}
+        onClose={handleCloseSnackbar,}
+        message={`Barcode "${selectedBarcode,}" wurde ausgewählt`}
       />
     </Container>
   );

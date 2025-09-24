@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import { Box, AppBar, Toolbar, Typography, IconButton, Avatar, Menu, MenuItem } from '@mui/material';
+import React, { useState ,} from 'react';
+import { Box, AppBar, Toolbar, Typography, IconButton, Avatar, Menu, MenuItem} from '@mui/material';
 import { 
-  Menu as MenuIcon,
-  AccountCircle as AccountCircleIcon,
-  Settings as SettingsIcon,
-  Logout as LogoutIcon
-} from '@mui/icons-material';
+  Menu as MenuIcon, AccountCircle as AccountCircleIcon, Settings as SettingsIcon, Logout as LogoutIcon} from '@mui/icons-material';
 // ✅ NEU: Import der standardisierten UI-Komponenten
-import { UI_LABELS } from './ui/UIStandardization';
-import { Sidebar } from './Sidebar';
-import { NotificationDropdown } from './NotificationDropdown';
-import type { ModuleItem, Module } from './Sidebar';
-import type { Notification } from '../lib/schemas';
-
+import { UI_LABELS ,} from './ui/UIStandardization';
+import { Sidebar ,} from './Sidebar';
+import { NotificationDropdown ,} from './NotificationDropdown';
+import type { ModuleItem, Module ,} from './Sidebar';
+import type { Notification ,} from '../lib/schemas';;
 interface User {
   id: string;
   name: string;
@@ -23,17 +18,16 @@ interface User {
   trustLevel: 'fact' | 'assumption' | 'uncertain';
   confidence: number;
   permissions: string[];
-}
-
+};
 interface TrustAwareLayoutProps {
   children: React.ReactNode;
   modules: ModuleItem[];
   activeModule: Module;
-  onModuleChange: (module: Module) => void;
+  onModuleChange: (module: _Module) => void;
   notifications: Notification[];
   user: User;
-  onNotificationClick: (notification: Notification) => void;
-  onMarkNotificationAsRead: (id: string) => void;
+  onNotificationClick: (notification: _Notification) => void;
+  onMarkNotificationAsRead: (id: _string) => void;
   onMarkAllNotificationsAsRead: () => void;
   onProfileClick: () => void;
   onSettingsClick: () => void;
@@ -41,85 +35,68 @@ interface TrustAwareLayoutProps {
 }
 
 export const TrustAwareLayout: React.FC<TrustAwareLayoutProps> = ({
-  children,
-  modules,
-  activeModule,
-  onModuleChange,
-  notifications,
-  user,
-  onNotificationClick,
-  onMarkNotificationAsRead,
-  onMarkAllNotificationsAsRead,
-  onProfileClick,
-  onSettingsClick,
-  onLogout
-}) => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
-
-  const handleUserMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setUserMenuAnchor(event.currentTarget);
+  children, modules, activeModule, onModuleChange, notifications, user, onNotificationClick, onMarkNotificationAsRead, onMarkAllNotificationsAsRead, onProfileClick, onSettingsClick, onLogout, }) => {;
+const [collapsed, setCollapsed] = useState(false);,;
+const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);,;
+const handleUserMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setUserMenuAnchor(event.currentTarget);,
+  };;
+const handleUserMenuClose = () => {
+    setUserMenuAnchor(null);,
   };
 
-  const handleUserMenuClose = () => {
-    setUserMenuAnchor(null);
-  };
-
-  return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Sidebar */}
+  return (<Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      {/* Sidebar */, }
       <Sidebar
-        activeModule={activeModule}
-        onModuleChange={onModuleChange}
-        collapsed={collapsed}
-        onToggleCollapse={() => setCollapsed(!collapsed)}
+        activeModule={activeModule, }
+        onModuleChange={onModuleChange, }
+        collapsed={collapsed, }
+        onToggleCollapse={() => setCollapsed(!collapsed),}
       />
 
-      {/* Main Content */}
+      {/* Main Content */,}
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Header */}
-        <AppBar position="static" color="default" elevation={1}>
+        {/* Header */,}
+        <AppBar position="static" color="default" elevation={1,}>
           <Toolbar>
             <IconButton
               edge="start"
               color="inherit"
-              onClick={() => setCollapsed(!collapsed)}
+              onClick={() => setCollapsed(!collapsed),}
               sx={{ mr: 2 }}
             >
               <MenuIcon />
             </IconButton>
 
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              {modules.find(m => m.id === activeModule)?.title}
+              {modules.find(m => m.id === activeModule)?.title,}
             </Typography>
 
-            {/* Notifications */}
+            {/* Notifications */,}
             <NotificationDropdown
-              notifications={notifications}
-              onMarkAsRead={onMarkNotificationAsRead}
-              onMarkAllAsRead={onMarkAllNotificationsAsRead}
-              onNotificationClick={onNotificationClick}
+              notifications={notifications,}
+              onMarkAsRead={onMarkNotificationAsRead,}
+              onMarkAllAsRead={onMarkAllNotificationsAsRead,}
+              onNotificationClick={onNotificationClick,}
             />
 
-            {/* User Menu */}
+            {/* User Menu */,}
             <IconButton
               color="inherit"
-              onClick={handleUserMenuClick}
+              onClick={handleUserMenuClick,}
               sx={{ ml: 1 }}
             >
               <Avatar sx={{ width: 32, height: 32 }}>
-                {user.avatar ? (
-                  <img src={user.avatar} alt={user.name} />
-                ) : (
+                {user.avatar ? (<img src={user.avatar, } alt={user.name, } />) : (
                   <AccountCircleIcon />
                 )}
               </Avatar>
             </IconButton>
 
             <Menu
-              anchorEl={userMenuAnchor}
-              open={Boolean(userMenuAnchor)}
-              onClose={handleUserMenuClose}
+              anchorEl={userMenuAnchor,}
+              open={Boolean(userMenuAnchor),}
+              onClose={handleUserMenuClose,}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
@@ -129,25 +106,25 @@ export const TrustAwareLayout: React.FC<TrustAwareLayoutProps> = ({
                 horizontal: 'right',
               }}
             >
-              <MenuItem onClick={() => { onProfileClick(); handleUserMenuClose(); }}>
+              <MenuItem onClick={() => { onProfileClick(); handleUserMenuClose(); ,}}>
                 <AccountCircleIcon sx={{ mr: 1 }} />
-                {UI_LABELS.NAVIGATION.PROFILE}
+                {UI_LABELS.NAVIGATION.PROFILE,}
               </MenuItem>
-              <MenuItem onClick={() => { onSettingsClick(); handleUserMenuClose(); }}>
+              <MenuItem onClick={() => { onSettingsClick(); handleUserMenuClose(); ,}}>
                 <SettingsIcon sx={{ mr: 1 }} />
-                {UI_LABELS.NAVIGATION.SETTINGS}
+                {UI_LABELS.NAVIGATION.SETTINGS,}
               </MenuItem>
-              <MenuItem onClick={() => { onLogout(); handleUserMenuClose(); }}>
+              <MenuItem onClick={() => { onLogout(); handleUserMenuClose(); ,}}>
                 <LogoutIcon sx={{ mr: 1 }} />
-                {UI_LABELS.ACTIONS.LOGOUT}
+                {UI_LABELS.ACTIONS.LOGOUT,}
               </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
 
-        {/* Page Content */}
+        {/* Page Content */,}
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          {children}
+          {children,}
         </Box>
       </Box>
     </Box>

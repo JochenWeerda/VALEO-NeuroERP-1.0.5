@@ -1,6 +1,6 @@
 class KassensystemService {
-  async processPayment(paymentData: any): Promise<any> {
-    // Implementierung für Zahlungsverarbeitung
+  async processPayment(paymentData: unknown): Promise<unknown> {
+    // Implementierung für Zahlungsverarbeitung,
     console.log('Processing payment:', paymentData);
     return { success: true, data: paymentData };
   }

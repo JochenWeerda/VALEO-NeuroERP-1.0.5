@@ -1,33 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState ,} from 'react';
 import {
-  Card,
-  Typography,
-  Grid,
-  Box,
-  Divider,
-  Chip,
-  FormControlLabel,
-  Checkbox
-} from '@mui/material';
-import { DatePicker } from 'antd';
+  Card, Typography, Grid, Box, Divider, Chip, FormControlLabel, Checkbox} from '@mui/material';
+import { DatePicker ,} from 'antd';
 import { 
-  Person as PersonIcon,
-  Business as BusinessIcon,
-  Description as DescriptionIcon
-} from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+  Person as PersonIcon, Business as BusinessIcon, Description as DescriptionIcon} from '@mui/icons-material';
+import { useForm, Controller} from 'react-hook-form';
+import { yupResolver ,} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 // ✅ NEU: Import der standardisierten UI-Komponenten
 import { 
-  StandardTextField, 
-  StandardSelectField, 
-  StandardButton, 
-  FormActions, 
-  FormMessage 
-} from '../forms/FormStandardization';
-import { UI_LABELS, StatusChip } from '../ui/UIStandardization';
+  StandardTextField, StandardSelectField, StandardButton, FormActions, FormMessage} from '../forms/FormStandardization';
+import { UI_LABELS, StatusChip} from '../ui/UIStandardization';
 
 // TypeScript Interfaces
 export interface SupplierOfferData {
@@ -75,12 +59,12 @@ export interface SupplierOfferPosition {
 }
 
 export interface SupplierOfferProps {
-  onOfferCreate: (offer: SupplierOfferData) => void;
-  onOfferUpdate: (id: string, offer: Partial<SupplierOfferData>) => void;
-  onOfferDelete: (id: string) => void;
+  onOfferCreate: (offer: _SupplierOfferData) => void;
+  onOfferUpdate: (id: _string, offer: Partial<SupplierOfferData>) => void;
+  onOfferDelete: (id: _string) => void;
 }
 
-// Validierungsschema
+// Validierungsschema;
 const offerSchema = yup.object({
   creditorAccountNumber: yup.string().required('Kreditor-Kontonummer ist erforderlich'),
   supplier: yup.string().required('Lieferant ist erforderlich'),
@@ -93,18 +77,14 @@ const offerSchema = yup.object({
   supplierOfferNumber: yup.string().required('Lieferanten-Angebotsnummer ist erforderlich')
 });
 
-// Mock-Daten
-const suppliers = ['Dell GmbH', 'HP Deutschland', 'Lenovo Deutschland', 'Apple Deutschland'];
+// Mock-Daten;
+const suppliers = ['Dell GmbH', 'HP Deutschland', 'Lenovo Deutschland', 'Apple Deutschland'];;
 const salutations = ['Herr', 'Frau', 'Divers'];
 
 export const SupplierOffer: React.FC<SupplierOfferProps> = ({
-  onOfferCreate,
-  onOfferUpdate,
-  onOfferDelete
-}) => {
-  const [error, setError] = useState<string | null>(null);
-
-  const {
+  onOfferCreate, onOfferUpdate, onOfferDelete, }) => {;
+const [error, setError] = useState<string | null>(null);,;
+const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -133,11 +113,10 @@ export const SupplierOffer: React.FC<SupplierOfferProps> = ({
       totalGrossAmount: 0,
       status: 'draft'
     }
-  });
-
-  const onSubmit = async (data: any) => {
-    try {
-      const offerData: SupplierOfferData = {
+  });;
+const onSubmit = async (data: unknown) => {
+    try {;
+const offerData: SupplierOfferData = {
         id: Date.now().toString(),
         creditorAccountNumber: data.creditorAccountNumber,
         supplier: data.supplier,
@@ -168,10 +147,9 @@ export const SupplierOffer: React.FC<SupplierOfferProps> = ({
     } catch (error) {
       console.error('Fehler beim Erstellen des Angebots:', error);
     }
-  };
-
-  const handleCancel = () => {
-    reset();
+  };;
+const handleCancel = () => {
+    reset();,
   };
 
   return (
@@ -181,78 +159,74 @@ export const SupplierOffer: React.FC<SupplierOfferProps> = ({
       </Typography>
       
       {/* ✅ REFAKTORIERT: Error-Message mit StandardMessage */}
-      {error && (
-        <FormMessage
-          type="error"
-          message={error}
-        />
-      )}
+      {error && (, <FormMessage, type="error", message={error, }
+        />)}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={3}>
+      <form onSubmit={handleSubmit(onSubmit),}>
+        <Grid container spacing={3,}>
           {/* ✅ REFAKTORIERT: Standardisierte Formularfelder */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardTextField
               name="creditorAccountNumber"
               label="Kreditor-Kontonummer"
-              required={true}
-              helperText={errors.creditorAccountNumber?.message}
+              required={true,}
+              helperText={errors.creditorAccountNumber?.message,}
             />
           </Grid>
           
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardSelectField
               name="supplier"
               label="Lieferant"
               options={suppliers.map(supplier => ({ value: supplier, label: supplier }))}
-              required={true}
-              helperText={errors.supplier?.message}
+              required={true,}
+              helperText={errors.supplier?.message,}
             />
           </Grid>
           
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardTextField
               name="inquiryNumber"
-              label={UI_LABELS.ERP.INQUIRY_NUMBER}
-              required={true}
-              helperText={errors.inquiryNumber?.message}
+              label={UI_LABELS.ERP.INQUIRY_NUMBER,}
+              required={true,}
+              helperText={errors.inquiryNumber?.message,}
             />
           </Grid>
           
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardTextField
               name="operator"
-              label={UI_LABELS.ERP.OPERATOR}
-              required={true}
-              helperText={errors.operator?.message}
+              label={UI_LABELS.ERP.OPERATOR,}
+              required={true,}
+              helperText={errors.operator?.message,}
             />
           </Grid>
           
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardSelectField
               name="contactPerson.salutation"
-              label={UI_LABELS.FORMS.SALUTATION}
+              label={UI_LABELS.FORMS.SALUTATION,}
               options={salutations.map(salutation => ({ value: salutation, label: salutation }))}
-              required={true}
-              helperText={errors.contactPerson?.salutation?.message}
+              required={true,}
+              helperText={errors.contactPerson?.salutation?.message,}
             />
           </Grid>
           
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardTextField
               name="contactPerson.name"
-              label={UI_LABELS.FORMS.NAME}
-              required={true}
-              helperText={errors.contactPerson?.name?.message}
+              label={UI_LABELS.FORMS.NAME,}
+              required={true,}
+              helperText={errors.contactPerson?.name?.message,}
             />
           </Grid>
           
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12,} md={6,}>
             <StandardTextField
               name="supplierOfferNumber"
-              label={UI_LABELS.ERP.SUPPLIER_OFFER_NUMBER}
-              required={true}
-              helperText={errors.supplierOfferNumber?.message}
+              label={UI_LABELS.ERP.SUPPLIER_OFFER_NUMBER,}
+              required={true,}
+              helperText={errors.supplierOfferNumber?.message,}
             />
           </Grid>
         </Grid>
@@ -261,12 +235,12 @@ export const SupplierOffer: React.FC<SupplierOfferProps> = ({
 
         {/* ✅ REFAKTORIERT: FormActions mit standardisierten Labels */}
         <FormActions
-          onSave={handleSubmit(onSubmit)}
-          onCancel={handleCancel}
-          saveText={UI_LABELS.ACTIONS.SAVE}
-          cancelText={UI_LABELS.ACTIONS.CANCEL}
-          loading={isSubmitting}
-          disabled={isSubmitting}
+          onSave={handleSubmit(onSubmit),}
+          onCancel={handleCancel,}
+          saveText={UI_LABELS.ACTIONS.SAVE,}
+          cancelText={UI_LABELS.ACTIONS.CANCEL,}
+          loading={isSubmitting,}
+          disabled={isSubmitting,}
         />
       </form>
     </Card>

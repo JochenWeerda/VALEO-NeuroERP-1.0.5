@@ -1,89 +1,78 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { authService, User, LoginRequest } from '../services/authService';
-
+import React, { createContext, useContext, useState, useEffect, ReactNode ,} from 'react';
+import { authService, User, LoginRequest} from '../services/authService';;
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (credentials: LoginRequest) => Promise<void>;
+  login: (credentials: _LoginRequest) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
-}
-
+};
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
+export const useAuth = () => {;
+const context = useContext(AuthContext);,
   if (!context) {
-    throw new Error('useAuth muss innerhalb eines AuthProviders verwendet werden');
+    throw new Error('useAuth muss innerhalb eines AuthProviders verwendet werden');,
   }
   return context;
-};
-
+};;
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children, }) => {;
+const [user, setUser] = useState<User | null>(null);,;
+const [loading, setLoading] = useState(true);,
 
-  useEffect(() => {
-    const initializeAuth = async () => {
+  useEffect(() => {;
+const initializeAuth = async () => {
       try {
         // E2E-Testmodus: sofort authentifizieren, ohne Backend-Call
-        // Aktiviert durch VITE_E2E=true
+        // Aktiviert durch VITE_E2E=true,
         // Hinweis: Nur für Tests verwenden
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment,
+        // @ts-ignore,
         if (import.meta.env?.VITE_E2E === 'true') {
           setUser({
-            id: 'e2e',
-            username: 'e2e',
-            email: 'e2e@example.com',
-            full_name: 'E2E User',
-            role: 'admin',
-            disabled: false
+            id: 'e2e', username: 'e2e', email: 'e2e@example.com', full_name: 'E2E User', role: 'admin', disabled: false
           });
           setLoading(false);
           return;
         }
 
-        if (authService.isAuthenticated()) {
-          const currentUser = await authService.getCurrentUser();
-          setUser(currentUser);
+        if (authService.isAuthenticated()) {;
+const currentUser = await authService.getCurrentUser();,
+          setUser(currentUser);,
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
-        await authService.logout();
+        await authService.logout();,
       } finally {
-        setLoading(false);
+        setLoading(false);,
       }
     };
 
     initializeAuth();
-  }, []);
-
-  const login = async (credentials: LoginRequest) => {
-    setLoading(true);
-    try {
-      const response = await authService.login(credentials);
+  }, []);;
+const login = async (credentials: LoginRequest) => {
+    setLoading(true);,
+    try {;
+const response = await authService.login(credentials);,
       setUser({ ...response.user, disabled: false });
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const logout = async () => {
-    setLoading(true);
+  };;
+const logout = async () => {
+    setLoading(true);,
     try {
-      await authService.logout();
-      setUser(null);
+      await authService.logout();,
+      setUser(null);,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const value: AuthContextType = {
+  };;
+const value: AuthContextType = {
     user,
     loading,
     login,
@@ -92,8 +81,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+    <AuthContext.Provider value={value, }>
+      {children, }
+    </AuthContext.Provider>);
 }; 

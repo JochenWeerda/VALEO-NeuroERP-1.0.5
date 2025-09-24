@@ -4,139 +4,69 @@
  * Integration mit n8n Workflows für Automatisierung
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  Chip,
-  Divider,
-  Stack,
-  IconButton,
-  Tooltip,
-  Skeleton,
-  CircularProgress,
-  Tabs,
-  Tab,
-  Alert,
-  Switch,
-  FormControlLabel,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@mui/material';
+  Box, Card, CardContent, Typography, TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, FormHelperText, Chip, Divider, Stack, IconButton, Tooltip, Skeleton, CircularProgress, Tabs, Tab, Alert, Switch, FormControlLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Dialog, DialogTitle, DialogContent, DialogActions} from '@mui/material';
 import {
-  Save as SaveIcon,
-  Cancel as CancelIcon,
-  Refresh as RefreshIcon,
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  QrCode as QrCodeIcon,
-  Assessment as AssessmentIcon,
-  Settings as SettingsIcon,
-  LocalShipping as ShippingIcon,
-  Payment as PaymentIcon,
-  Description as DescriptionIcon,
-  Science as ScienceIcon,
-  Security as SecurityIcon,
-  Timeline as TimelineIcon,
-  AutoGraph as AutoGraphIcon,
-  PlayArrow as PlayArrowIcon,
-} from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { styled } from '@mui/material/styles';
+  Save as SaveIcon, Cancel as CancelIcon, Refresh as RefreshIcon, Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, QrCode as QrCodeIcon, Assessment as AssessmentIcon, Settings as SettingsIcon, LocalShipping as ShippingIcon, Payment as PaymentIcon, Description as DescriptionIcon, Science as ScienceIcon, Security as SecurityIcon, Timeline as TimelineIcon, AutoGraph as AutoGraphIcon, PlayArrow as PlayArrowIcon} from '@mui/icons-material';
+import { useForm, Controller} from 'react-hook-form';
+import type { SubmitHandler ,} from 'react-hook-form';
+import { zodResolver ,} from '@hookform/resolvers/zod';
+import { z ,} from 'zod';
+import { styled ,} from '@mui/material/styles';
 import { 
-  NeuroFlowAutocomplete, 
-  ArticleAutocomplete, 
-  SupplierAutocomplete,
-  ChargeAutocomplete 
-} from './NeuroFlowAutocomplete';
+  NeuroFlowAutocomplete, ArticleAutocomplete, SupplierAutocomplete, ChargeAutocomplete} from './NeuroFlowAutocomplete';
 
-// Styled Components
-const NeuroFlowCard = styled(Card)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[1],
-  border: `1px solid ${theme.palette.divider}`,
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
-    boxShadow: theme.shadows[4],
-  },
-}));
-
-const NeuroFlowButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 1.5,
-  textTransform: 'none',
-  fontWeight: 600,
-  padding: '0.75rem 1.5rem',
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
+// Styled Components;
+const NeuroFlowCard = styled(Card)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 2, boxShadow: theme.shadows[1], border: `1px solid ${theme.palette.divider}`, transition: 'all 0.3s ease-in-out', '&:hover': {
+    boxShadow: theme.shadows[4], }, }));;
+const NeuroFlowButton = styled(Button)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 1.5, textTransform: 'none', fontWeight: 600, padding: '0.75rem 1.5rem', transition: 'all 0.3s ease-in-out', '&:hover': {
     transform: 'translateY(-1px)',
     boxShadow: theme.shadows[3],
   },
 }));
 
-// Zod Schema für Chargenverwaltung
+// Zod Schema für Chargenverwaltung;
 const ChargeSchema = z.object({
-  // Grunddaten
-  charge_number: z.string().min(1, 'Chargennummer ist erforderlich'),
+  // Grunddaten, charge_number: z.string().min(1, 'Chargennummer ist erforderlich'),
   article_number: z.string().min(1, 'Artikelnummer ist erforderlich'),
   article_name: z.string().min(2, 'Artikelname muss mindestens 2 Zeichen lang sein'),
   supplier_number: z.string().min(1, 'Lieferantennummer ist erforderlich'),
   supplier_name: z.string().min(2, 'Lieferantenname muss mindestens 2 Zeichen lang sein'),
   
-  // Chargendaten
+  // Chargendaten,
   production_date: z.string().min(1, 'Produktionsdatum ist erforderlich'),
   expiry_date: z.string().min(1, 'Verfallsdatum ist erforderlich'),
   batch_size: z.number().min(0, 'Chargengröße darf nicht negativ sein'),
   unit: z.enum(['kg', 't', 'l', 'stk', 'm³']),
   
-  // Qualitätsdaten
+  // Qualitätsdaten,
   quality_status: z.enum(['pending', 'approved', 'rejected', 'quarantine']),
   qs_milk_relevant: z.boolean(),
   vlog_gmo_status: z.enum(['VLOG', 'GMO', 'unknown']),
   eudr_compliant: z.boolean(),
   sustainability_rapeseed: z.boolean(),
   
-  // Analysedaten
+  // Analysedaten,
   protein_content: z.number().min(0).max(100).optional(),
   fat_content: z.number().min(0).max(100).optional(),
   moisture_content: z.number().min(0).max(100).optional(),
   ash_content: z.number().min(0).max(100).optional(),
   
-  // Preisdaten
+  // Preisdaten,
   purchase_price: z.number().min(0, 'Einkaufspreis darf nicht negativ sein'),
   currency: z.enum(['EUR', 'USD', 'CHF']),
   
-  // Lagerdaten
+  // Lagerdaten,
   warehouse_location: z.string().min(1, 'Lagerort ist erforderlich'),
   storage_conditions: z.enum(['ambient', 'cooled', 'frozen', 'controlled']),
   
-  // Zertifikate
+  // Zertifikate,
   certificates: z.array(z.object({
-    id: z.string(),
-    type: z.string(),
+    id: z.string(),;
+type: z.string(),
     filename: z.string(),
     upload_date: z.string(),
     valid_until: z.string().optional(),
@@ -170,32 +100,28 @@ const ChargeSchema = z.object({
   
   // Notizen
   notes: z.string().optional(),
-});
-
+});;
 type ChargeFormData = z.infer<typeof ChargeSchema>;
 
-// Mock Data
+// Mock Data;
 const mockUnits = [
   { value: 'kg', label: 'Kilogramm (kg)' },
   { value: 't', label: 'Tonne (t)' },
   { value: 'l', label: 'Liter (l)' },
   { value: 'stk', label: 'Stück (stk)' },
   { value: 'm³', label: 'Kubikmeter (m³)' },
-];
-
+];;
 const mockQualityStatuses = [
   { value: 'pending', label: 'Ausstehend', color: 'warning' },
   { value: 'approved', label: 'Genehmigt', color: 'success' },
   { value: 'rejected', label: 'Abgelehnt', color: 'error' },
   { value: 'quarantine', label: 'Quarantäne', color: 'error' },
-];
-
+];;
 const mockVlogGmoStatuses = [
   { value: 'VLOG', label: 'VLOG-konform', color: 'success' },
   { value: 'GMO', label: 'GVO-haltig', color: 'error' },
   { value: 'unknown', label: 'Unbekannt', color: 'warning' },
-];
-
+];;
 const mockStorageConditions = [
   { value: 'ambient', label: 'Umgebungstemperatur' },
   { value: 'cooled', label: 'Gekühlt' },
@@ -203,7 +129,7 @@ const mockStorageConditions = [
   { value: 'controlled', label: 'Klimakontrolliert' },
 ];
 
-// n8n Workflow Integration
+// n8n Workflow Integration;
 interface N8nWorkflow {
   id: string;
   name: string;
@@ -213,7 +139,7 @@ interface N8nWorkflow {
   lastExecution?: string;
 }
 
-// NeuroFlow Chargenverwaltung Component
+// NeuroFlow Chargenverwaltung Component;
 interface NeuroFlowChargenverwaltungProps {
   initialData?: Partial<ChargeFormData>;
   onSubmit?: (data: ChargeFormData) => Promise<void>;
@@ -223,19 +149,13 @@ interface NeuroFlowChargenverwaltungProps {
 }
 
 export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProps> = ({
-  initialData,
-  onSubmit,
-  onCancel,
-  loading = false,
-  mode = 'create',
-}) => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [n8nWorkflows, setN8nWorkflows] = useState<N8nWorkflow[]>([]);
-  const [workflowDialogOpen, setWorkflowDialogOpen] = useState(false);
-  const [selectedWorkflow, setSelectedWorkflow] = useState<N8nWorkflow | null>(null);
-
-  const {
+  initialData, onSubmit, onCancel, loading = false, mode = 'create', }) => {;
+const [activeTab, setActiveTab] = useState(0);,;
+const [submitLoading, setSubmitLoading] = useState(false);,;
+const [n8nWorkflows, setN8nWorkflows] = useState<N8nWorkflow[]>([]);,;
+const [workflowDialogOpen, setWorkflowDialogOpen] = useState(false);,;
+const [selectedWorkflow, setSelectedWorkflow] = useState<N8nWorkflow | null>(null);,;
+const {
     control,
     handleSubmit,
     formState: { errors, isDirty },
@@ -285,66 +205,59 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
 
   // n8n Workflow Integration
   useEffect(() => {
-    fetchN8nWorkflows();
-  }, []);
-
-  const fetchN8nWorkflows = async () => {
-    try {
-      const response = await fetch('http://localhost:5678/api/v1/workflows');
-      if (response.ok) {
-        const workflows = await response.json();
-        setN8nWorkflows(workflows.data || []);
+    fetchN8nWorkflows();,
+  }, []);;
+const fetchN8nWorkflows = async () => {
+    try {;
+const response = await fetch('http://localhost:5678/api/v1/workflows');
+      if (response.ok) {;
+const workflows = await response.json();,
+        setN8nWorkflows(workflows.data || []);,
       }
     } catch (error) {
       console.error('Fehler beim Laden der n8n Workflows:', error);
     }
-  };
-
-  const triggerWorkflow = async (workflowId: string, data: any) => {
-    try {
-      const response = await fetch(`http://localhost:5678/api/v1/workflows/${workflowId}/trigger`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+  };;
+const triggerWorkflow = async (workflowId: string, data: unknown) => {
+    try {;
+const response = await fetch(`http://localhost:5678/api/v1/workflows/${workflowId}/trigger`, {
+        method: 'POST', headers: {
+          'Content-Type': 'application/json', }, body: JSON.stringify(data),
       });
       
       if (response.ok) {
         console.log('Workflow erfolgreich ausgelöst:', workflowId);
-        return true;
+        return true;,
       }
     } catch (error) {
       console.error('Fehler beim Auslösen des Workflows:', error);
     }
     return false;
-  };
-
-  const handleFormSubmit: SubmitHandler<ChargeFormData> = async (data) => {
-    setSubmitLoading(true);
+  };;
+const handleFormSubmit: SubmitHandler<ChargeFormData> = async (data) => {
+    setSubmitLoading(true);,
     try {
-      // KI-Analyse durchführen
-      const kiAnalysis = await performKIAnalysis(data);
-      data.ki_analysis = { ...data.ki_analysis, ...kiAnalysis };
+      // KI-Analyse durchführen,;
+const kiAnalysis = await performKIAnalysis(data);,
+      data.ki_analysis = { ...data.ki_analysis, ...kiAnalysis ,};
       
       // n8n Workflow für Chargenverarbeitung auslösen
       await triggerWorkflow('charge-processing', data);
       
       if (onSubmit) {
-        await onSubmit(data);
+        await onSubmit(data);,
       }
       console.log('Charge saved:', data);
     } catch (error) {
       console.error('Error saving charge:', error);
     } finally {
-      setSubmitLoading(false);
+      setSubmitLoading(false);,
     }
-  };
-
-  const performKIAnalysis = async (data: ChargeFormData): Promise<any> => {
-    // Simulierte KI-Analyse
-    const riskScore = Math.random() * 100;
-    const qualityPrediction = riskScore < 30 ? 'excellent' : 
+  };;
+const performKIAnalysis = async (data: ChargeFormData): Promise<unknown> => {
+    // Simulierte KI-Analyse,;
+const riskScore = Math.random() * 100;,;
+const qualityPrediction = riskScore < 30 ? 'excellent' : 
                              riskScore < 60 ? 'good' : 
                              riskScore < 80 ? 'average' : 'poor';
     
@@ -356,30 +269,27 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
       anomaly_detection: Math.random() > 0.8,
       trend_analysis: 'Stabile Qualität, leichte Preiserhöhung erwartet',
     };
-  };
-
-  const handleCancel = () => {
+  };;
+const handleCancel = () => {
     if (isDirty) {
       if (window.confirm('Änderungen verwerfen?')) {
-        reset();
-        onCancel?.();
+        reset();,
+        onCancel?.();,
       }
     } else {
-      onCancel?.();
+      onCancel?.();,
     }
-  };
-
-  const generateChargeNumber = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    const chargeNumber = `CH${year}${month}${day}-${random}`;
+  };;
+const generateChargeNumber = () => {;
+const date = new Date();,;
+const year = date.getFullYear();,;
+const month = String(date.getMonth() + 1).padStart(2, '0');,;
+const day = String(date.getDate()).padStart(2, '0');,;
+const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');,;
+const chargeNumber = `CH${year,}${month,}${day,}-${random,}`;
     setValue('charge_number', chargeNumber);
-  };
-
-  const tabs = [
+  };;
+const tabs = [
     { label: 'Grunddaten', icon: <DescriptionIcon /> },
     { label: 'Qualität', icon: <ScienceIcon /> },
     { label: 'Analysen', icon: <AssessmentIcon /> },
@@ -392,12 +302,12 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
   return (
     <NeuroFlowCard>
       <CardContent>
-        {/* Header */}
-        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-          <Box display="flex" alignItems="center" gap={2}>
+        {/* Header */, }
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3, }>
+          <Box display="flex" alignItems="center" gap={2, }>
             <ScienceIcon color="primary" sx={{ fontSize: 32 }} />
             <Box>
-              <Typography variant="h5" fontWeight={600} color="text.primary">
+              <Typography variant="h5" fontWeight={600, } color="text.primary">
                 {mode === 'create' ? 'Neue Charge' : mode === 'edit' ? 'Charge bearbeiten' : 'Charge anzeigen'}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -406,74 +316,68 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </Box>
           </Box>
           
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1, }>
             <Tooltip title="Chargennummer generieren">
-              <IconButton onClick={generateChargeNumber} color="primary">
+              <IconButton onClick={generateChargeNumber, } color="primary">
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="n8n Workflows">
-              <IconButton onClick={() => setWorkflowDialogOpen(true)} color="secondary">
+              <IconButton onClick={() => setWorkflowDialogOpen(true),} color="secondary">
                 <TimelineIcon />
               </IconButton>
             </Tooltip>
           </Stack>
         </Box>
 
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          {/* Tabs */}
+        <form onSubmit={handleSubmit(handleFormSubmit),}>
+          {/* Tabs */,}
           <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
-            <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
-              {tabs.map((tab, index) => (
-                <Tab
-                  key={index}
-                  label={tab.label}
-                  icon={tab.icon}
+            <Tabs value={activeTab,} onChange={(e, newValue) => setActiveTab(newValue),}>
+              {tabs.map((tab, index) => (<Tab, key={index, }
+                  label={tab.label, }
+                  icon={tab.icon, }
                   iconPosition="start"
                   sx={{ minHeight: 64 }}
-                />
-              ))}
+                />))}
             </Tabs>
           </Box>
 
-          {/* Tab Content */}
-          {activeTab === 0 && (
-            <Grid container spacing={3}>
-              {/* Chargennummer */}
-              <Grid item xs={12} md={6}>
+          {/* Tab Content */,}
+          {activeTab === 0 && (<Grid container spacing={3, }>
+              {/* Chargennummer */, }
+              <Grid item xs={12, } md={6, }>
                 <Controller
                   name="charge_number"
-                  control={control}
-                  render={({ field }) => (
+                  control={control, }
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
+                      {...field, }
                       label="Chargennummer *"
                       fullWidth
-                      error={!!errors.charge_number}
-                      helperText={errors.charge_number?.message}
+                      error={!!errors.charge_number, }
+                      helperText={errors.charge_number?.message, }
                       InputProps={{
-                        startAdornment: <QrCodeIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                      }}
-                    />
-                  )}
+                        startAdornment: <QrCodeIcon sx={{ mr: 1, color: 'text.secondary' }} />, }}
+                    />)}
                 />
               </Grid>
 
-              {/* Artikelnummer */}
-              <Grid item xs={12} md={6}>
+              {/* Artikelnummer */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="article_number"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <ArticleAutocomplete
                       label="Artikelnummer *"
-                      value={field.value}
-                      onChange={(value) => field.onChange(value)}
-                      error={!!errors.article_number}
-                      helperText={errors.article_number?.message}
+                      value={field.value, }
+                      onChange={(value) => field.onChange(value),}
+                      error={!!errors.article_number,}
+                      helperText={errors.article_number?.message,}
                       onLoadOptions={async (query) => {
-                        // Mock data - in Produktion durch echte API ersetzen
-                        const mockArticles = [
+                        // Mock data - in Produktion durch echte API ersetzen,;
+const mockArticles = [,
                           { id: '1', value: 'ART001', label: 'ART001 - Sojaschrot Premium', type: 'article' as const, metadata: { category: 'Futtermittel' } },
                           { id: '2', value: 'ART002', label: 'ART002 - Weizenkleie', type: 'article' as const, metadata: { category: 'Futtermittel' } },
                           { id: '3', value: 'ART003', label: 'ART003 - Maiskleber', type: 'article' as const, metadata: { category: 'Futtermittel' } },
@@ -488,21 +392,21 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                 />
               </Grid>
 
-              {/* Artikelname */}
-              <Grid item xs={12} md={6}>
+              {/* Artikelname */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="article_name"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <ArticleAutocomplete
                       label="Artikelname *"
-                      value={field.value}
-                      onChange={(value) => field.onChange(value)}
-                      error={!!errors.article_name}
-                      helperText={errors.article_name?.message}
+                      value={field.value, }
+                      onChange={(value) => field.onChange(value),}
+                      error={!!errors.article_name,}
+                      helperText={errors.article_name?.message,}
                       onLoadOptions={async (query) => {
-                        // Mock data - in Produktion durch echte API ersetzen
-                        const mockArticleNames = [
+                        // Mock data - in Produktion durch echte API ersetzen,;
+const mockArticleNames = [,
                           { id: '1', value: 'Sojaschrot Premium', label: 'Sojaschrot Premium', type: 'article' as const, metadata: { category: 'Futtermittel', protein: '45%' } },
                           { id: '2', value: 'Weizenkleie', label: 'Weizenkleie', type: 'article' as const, metadata: { category: 'Futtermittel', protein: '15%' } },
                           { id: '3', value: 'Maiskleber', label: 'Maiskleber', type: 'article' as const, metadata: { category: 'Futtermittel', protein: '60%' } },
@@ -516,21 +420,21 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                 />
               </Grid>
 
-              {/* Lieferantennummer */}
-              <Grid item xs={12} md={6}>
+              {/* Lieferantennummer */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="supplier_number"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <SupplierAutocomplete
                       label="Lieferantennummer *"
-                      value={field.value}
-                      onChange={(value) => field.onChange(value)}
-                      error={!!errors.supplier_number}
-                      helperText={errors.supplier_number?.message}
+                      value={field.value, }
+                      onChange={(value) => field.onChange(value),}
+                      error={!!errors.supplier_number,}
+                      helperText={errors.supplier_number?.message,}
                       onLoadOptions={async (query) => {
-                        // Mock data - in Produktion durch echte API ersetzen
-                        const mockSuppliers = [
+                        // Mock data - in Produktion durch echte API ersetzen,;
+const mockSuppliers = [,
                           { id: '1', value: 'L001', label: 'L001 - Agrarhandel GmbH', type: 'supplier' as const, metadata: { category: 'Landhandel' } },
                           { id: '2', value: 'L002', label: 'L002 - Futtermittel AG', type: 'supplier' as const, metadata: { category: 'Futtermittel' } },
                           { id: '3', value: 'L003', label: 'L003 - Dünger & Co KG', type: 'supplier' as const, metadata: { category: 'Düngemittel' } },
@@ -545,117 +449,110 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                 />
               </Grid>
 
-              {/* Lieferantenname */}
-              <Grid item xs={12} md={6}>
+              {/* Lieferantenname */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="supplier_name"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
+                      {...field, }
                       label="Lieferantenname *"
                       fullWidth
-                      error={!!errors.supplier_name}
-                      helperText={errors.supplier_name?.message}
-                    />
-                  )}
+                      error={!!errors.supplier_name, }
+                      helperText={errors.supplier_name?.message, }
+                    />)}
                 />
               </Grid>
 
-              {/* Produktionsdatum */}
-              <Grid item xs={12} md={6}>
+              {/* Produktionsdatum */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="production_date"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Produktionsdatum *"
-                      type="date"
+                      {...field, }
+                      label="Produktionsdatum *";
+type="date"
                       fullWidth
-                      error={!!errors.production_date}
-                      helperText={errors.production_date?.message}
+                      error={!!errors.production_date, }
+                      helperText={errors.production_date?.message, }
                       InputLabelProps={{ shrink: true }}
-                    />
-                  )}
+                    />)}
                 />
               </Grid>
 
-              {/* Verfallsdatum */}
-              <Grid item xs={12} md={6}>
+              {/* Verfallsdatum */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="expiry_date"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Verfallsdatum *"
-                      type="date"
+                      {...field, }
+                      label="Verfallsdatum *";
+type="date"
                       fullWidth
-                      error={!!errors.expiry_date}
-                      helperText={errors.expiry_date?.message}
+                      error={!!errors.expiry_date, }
+                      helperText={errors.expiry_date?.message, }
                       InputLabelProps={{ shrink: true }}
-                    />
-                  )}
+                    />)}
                 />
               </Grid>
 
-              {/* Chargengröße */}
-              <Grid item xs={12} md={6}>
+              {/* Chargengröße */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="batch_size"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Chargengröße *"
-                      type="number"
+                      {...field, }
+                      label="Chargengröße *";
+type="number"
                       fullWidth
-                      error={!!errors.batch_size}
-                      helperText={errors.batch_size?.message}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      error={!!errors.batch_size, }
+                      helperText={errors.batch_size?.message, }
+                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                     />
                   )}
                 />
               </Grid>
 
-              {/* Einheit */}
-              <Grid item xs={12} md={6}>
+              {/* Einheit */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="unit"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.unit}>
+                  control={control,}
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.unit, }>
                       <InputLabel>Einheit *</InputLabel>
-                      <Select {...field} label="Einheit *">
-                        {mockUnits.map((unit) => (
-                          <MenuItem key={unit.value} value={unit.value}>
-                            {unit.label}
-                          </MenuItem>
-                        ))}
+                      <Select {...field, } label="Einheit *">
+                        {mockUnits.map((unit) => (<MenuItem key={unit.value, } value={unit.value, }>
+                            {unit.label, }
+                          </MenuItem>))}
                       </Select>
-                      {errors.unit && (
-                        <FormHelperText>{errors.unit.message}</FormHelperText>
-                      )}
+                      {errors.unit && (<FormHelperText>{errors.unit.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
               </Grid>
 
-              {/* Einkaufspreis */}
-              <Grid item xs={12} md={6}>
+              {/* Einkaufspreis */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="purchase_price"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Einkaufspreis *"
-                      type="number"
+                      {...field, }
+                      label="Einkaufspreis *";
+type="number"
                       fullWidth
-                      error={!!errors.purchase_price}
-                      helperText={errors.purchase_price?.message}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      error={!!errors.purchase_price, }
+                      helperText={errors.purchase_price?.message, }
+                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                       InputProps={{
                         startAdornment: <PaymentIcon sx={{ mr: 1, color: 'text.secondary' }} />,
                       }}
@@ -664,22 +561,20 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                 />
               </Grid>
 
-              {/* Währung */}
-              <Grid item xs={12} md={6}>
+              {/* Währung */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="currency"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.currency}>
+                  control={control,}
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.currency, }>
                       <InputLabel>Währung *</InputLabel>
-                      <Select {...field} label="Währung *">
+                      <Select {...field, } label="Währung *">
                         <MenuItem value="EUR">EUR (Euro)</MenuItem>
                         <MenuItem value="USD">USD (US-Dollar)</MenuItem>
                         <MenuItem value="CHF">CHF (Schweizer Franken)</MenuItem>
                       </Select>
-                      {errors.currency && (
-                        <FormHelperText>{errors.currency.message}</FormHelperText>
-                      )}
+                      {errors.currency && (<FormHelperText>{errors.currency.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
@@ -687,198 +582,182 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </Grid>
           )}
 
-          {activeTab === 1 && (
-            <Grid container spacing={3}>
-              {/* Qualitätsstatus */}
-              <Grid item xs={12} md={6}>
+          {activeTab === 1 && (<Grid container spacing={3, }>
+              {/* Qualitätsstatus */, }
+              <Grid item xs={12, } md={6, }>
                 <Controller
                   name="quality_status"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.quality_status}>
+                  control={control, }
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.quality_status, }>
                       <InputLabel>Qualitätsstatus *</InputLabel>
-                      <Select {...field} label="Qualitätsstatus *">
-                        {mockQualityStatuses.map((status) => (
-                          <MenuItem key={status.value} value={status.value}>
+                      <Select {...field, } label="Qualitätsstatus *">
+                        {mockQualityStatuses.map((status) => (<MenuItem key={status.value, } value={status.value, }>
                             <Chip
-                              label={status.label}
+                              label={status.label, }
                               size="small"
-                              color={status.color as any}
+                              color={status.color as any, }
                               sx={{ mr: 1 }}
                             />
-                            {status.label}
-                          </MenuItem>
-                        ))}
+                            {status.label, }
+                          </MenuItem>))}
                       </Select>
-                      {errors.quality_status && (
-                        <FormHelperText>{errors.quality_status.message}</FormHelperText>
-                      )}
+                      {errors.quality_status && (<FormHelperText>{errors.quality_status.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
               </Grid>
 
-              {/* VLOG/GMO Status */}
-              <Grid item xs={12} md={6}>
+              {/* VLOG/GMO Status */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="vlog_gmo_status"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.vlog_gmo_status}>
+                  control={control,}
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.vlog_gmo_status, }>
                       <InputLabel>VLOG/GMO Status *</InputLabel>
-                      <Select {...field} label="VLOG/GMO Status *">
-                        {mockVlogGmoStatuses.map((status) => (
-                          <MenuItem key={status.value} value={status.value}>
+                      <Select {...field, } label="VLOG/GMO Status *">
+                        {mockVlogGmoStatuses.map((status) => (<MenuItem key={status.value, } value={status.value, }>
                             <Chip
-                              label={status.label}
+                              label={status.label, }
                               size="small"
-                              color={status.color as any}
+                              color={status.color as any, }
                               sx={{ mr: 1 }}
                             />
-                            {status.label}
-                          </MenuItem>
-                        ))}
+                            {status.label, }
+                          </MenuItem>))}
                       </Select>
-                      {errors.vlog_gmo_status && (
-                        <FormHelperText>{errors.vlog_gmo_status.message}</FormHelperText>
-                      )}
+                      {errors.vlog_gmo_status && (<FormHelperText>{errors.vlog_gmo_status.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
               </Grid>
 
-              {/* Qualitäts-Flags */}
-              <Grid item xs={12}>
-                <Typography variant="h6" fontWeight={600} mb={2}>
+              {/* Qualitäts-Flags */,}
+              <Grid item xs={12,}>
+                <Typography variant="h6" fontWeight={600,} mb={2,}>
                   Qualitäts-Eigenschaften
                 </Typography>
-                <Stack direction="row" spacing={3}>
+                <Stack direction="row" spacing={3,}>
                   <Controller
                     name="qs_milk_relevant"
-                    control={control}
-                    render={({ field }) => (
+                    control={control,}
+                    render={({ field, }) => (
                       <FormControlLabel
                         control={
-                          <Switch
-                            checked={field.value}
-                            onChange={field.onChange}
+                          <Switch, checked={field.value, }
+                            onChange={field.onChange, }
                             color="primary"
                           />
                         }
                         label="QS Milch relevant"
-                      />
-                    )}
+                      />)}
                   />
                   <Controller
                     name="eudr_compliant"
-                    control={control}
-                    render={({ field }) => (
+                    control={control,}
+                    render={({ field, }) => (
                       <FormControlLabel
                         control={
-                          <Switch
-                            checked={field.value}
-                            onChange={field.onChange}
+                          <Switch, checked={field.value, }
+                            onChange={field.onChange, }
                             color="success"
                           />
                         }
                         label="EUDR konform"
-                      />
-                    )}
+                      />)}
                   />
                   <Controller
                     name="sustainability_rapeseed"
-                    control={control}
-                    render={({ field }) => (
+                    control={control,}
+                    render={({ field, }) => (
                       <FormControlLabel
                         control={
-                          <Switch
-                            checked={field.value}
-                            onChange={field.onChange}
+                          <Switch, checked={field.value, }
+                            onChange={field.onChange, }
                             color="info"
                           />
                         }
                         label="Nachhaltiger Raps"
-                      />
-                    )}
+                      />)}
                   />
                 </Stack>
               </Grid>
             </Grid>
           )}
 
-          {activeTab === 2 && (
-            <Grid container spacing={3}>
-              {/* Proteingehalt */}
-              <Grid item xs={12} md={6}>
+          {activeTab === 2 && (<Grid container spacing={3, }>
+              {/* Proteingehalt */, }
+              <Grid item xs={12, } md={6, }>
                 <Controller
                   name="protein_content"
-                  control={control}
-                  render={({ field }) => (
+                  control={control, }
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Proteingehalt (%)"
-                      type="number"
+                      {...field, }
+                      label="Proteingehalt (%)";
+type="number"
                       fullWidth
-                      error={!!errors.protein_content}
-                      helperText={errors.protein_content?.message}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      error={!!errors.protein_content,}
+                      helperText={errors.protein_content?.message,}
+                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                     />
                   )}
                 />
               </Grid>
 
-              {/* Fettgehalt */}
-              <Grid item xs={12} md={6}>
+              {/* Fettgehalt */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="fat_content"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Fettgehalt (%)"
-                      type="number"
+                      {...field, }
+                      label="Fettgehalt (%)";
+type="number"
                       fullWidth
-                      error={!!errors.fat_content}
-                      helperText={errors.fat_content?.message}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      error={!!errors.fat_content,}
+                      helperText={errors.fat_content?.message,}
+                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                     />
                   )}
                 />
               </Grid>
 
-              {/* Feuchtigkeitsgehalt */}
-              <Grid item xs={12} md={6}>
+              {/* Feuchtigkeitsgehalt */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="moisture_content"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Feuchtigkeitsgehalt (%)"
-                      type="number"
+                      {...field, }
+                      label="Feuchtigkeitsgehalt (%)";
+type="number"
                       fullWidth
-                      error={!!errors.moisture_content}
-                      helperText={errors.moisture_content?.message}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      error={!!errors.moisture_content,}
+                      helperText={errors.moisture_content?.message,}
+                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                     />
                   )}
                 />
               </Grid>
 
-              {/* Aschegehalt */}
-              <Grid item xs={12} md={6}>
+              {/* Aschegehalt */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="ash_content"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Aschegehalt (%)"
-                      type="number"
+                      {...field, }
+                      label="Aschegehalt (%)";
+type="number"
                       fullWidth
-                      error={!!errors.ash_content}
-                      helperText={errors.ash_content?.message}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      error={!!errors.ash_content,}
+                      helperText={errors.ash_content?.message,}
+                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0),}
                     />
                   )}
                 />
@@ -886,46 +765,39 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </Grid>
           )}
 
-          {activeTab === 3 && (
-            <Grid container spacing={3}>
-              {/* Lagerort */}
-              <Grid item xs={12} md={6}>
+          {activeTab === 3 && (<Grid container spacing={3, }>
+              {/* Lagerort */, }
+              <Grid item xs={12, } md={6, }>
                 <Controller
                   name="warehouse_location"
-                  control={control}
-                  render={({ field }) => (
+                  control={control, }
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
+                      {...field, }
                       label="Lagerort *"
                       fullWidth
-                      error={!!errors.warehouse_location}
-                      helperText={errors.warehouse_location?.message}
+                      error={!!errors.warehouse_location, }
+                      helperText={errors.warehouse_location?.message, }
                       InputProps={{
-                        startAdornment: <ShippingIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                      }}
-                    />
-                  )}
+                        startAdornment: <ShippingIcon sx={{ mr: 1, color: 'text.secondary' }} />, }}
+                    />)}
                 />
               </Grid>
 
-              {/* Lagerbedingungen */}
-              <Grid item xs={12} md={6}>
+              {/* Lagerbedingungen */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="storage_conditions"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.storage_conditions}>
+                  control={control,}
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.storage_conditions, }>
                       <InputLabel>Lagerbedingungen *</InputLabel>
-                      <Select {...field} label="Lagerbedingungen *">
-                        {mockStorageConditions.map((condition) => (
-                          <MenuItem key={condition.value} value={condition.value}>
-                            {condition.label}
-                          </MenuItem>
-                        ))}
+                      <Select {...field, } label="Lagerbedingungen *">
+                        {mockStorageConditions.map((condition) => (<MenuItem key={condition.value, } value={condition.value, }>
+                            {condition.label, }
+                          </MenuItem>))}
                       </Select>
-                      {errors.storage_conditions && (
-                        <FormHelperText>{errors.storage_conditions.message}</FormHelperText>
-                      )}
+                      {errors.storage_conditions && (<FormHelperText>{errors.storage_conditions.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
@@ -933,16 +805,15 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </Grid>
           )}
 
-          {activeTab === 4 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h6" fontWeight={600} mb={2}>
+          {activeTab === 4 && (<Grid container spacing={3, }>
+              <Grid item xs={12, }>
+                <Typography variant="h6" fontWeight={600, } mb={2, }>
                   Zertifikate und Dokumente
                 </Typography>
                 <Alert severity="info" sx={{ mb: 2 }}>
                   Zertifikate können über das n8n Workflow-System automatisch verarbeitet werden.
                 </Alert>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper, }>
                   <Table>
                     <TableHead>
                       <TableRow>
@@ -954,11 +825,10 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {watch('certificates')?.map((cert, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{cert.type}</TableCell>
-                          <TableCell>{cert.filename}</TableCell>
-                          <TableCell>{new Date(cert.upload_date).toLocaleDateString()}</TableCell>
+                      {watch('certificates')?.map((cert, index) => (<TableRow key={index, }>
+                          <TableCell>{cert.type, }</TableCell>
+                          <TableCell>{cert.filename, }</TableCell>
+                          <TableCell>{new Date(cert.upload_date).toLocaleDateString(),}</TableCell>
                           <TableCell>
                             {cert.valid_until ? new Date(cert.valid_until).toLocaleDateString() : '-'}
                           </TableCell>
@@ -979,10 +849,9 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </Grid>
           )}
 
-          {activeTab === 5 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h6" fontWeight={600} mb={2}>
+          {activeTab === 5 && (<Grid container spacing={3, }>
+              <Grid item xs={12, }>
+                <Typography variant="h6" fontWeight={600, } mb={2, }>
                   KI-Analyse und Vorhersagen
                 </Typography>
                 <Alert severity="info" sx={{ mb: 2 }}>
@@ -990,34 +859,34 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                 </Alert>
               </Grid>
 
-              {/* Risiko-Score */}
-              <Grid item xs={12} md={6}>
+              {/* Risiko-Score */, }
+              <Grid item xs={12, } md={6, }>
                 <Controller
                   name="ki_analysis.risk_score"
-                  control={control}
-                  render={({ field }) => (
+                  control={control, }
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Risiko-Score (0-100)"
-                      type="number"
+                      {...field, }
+                      label="Risiko-Score (0-100)";
+type="number"
                       fullWidth
-                      error={!!errors.ki_analysis?.risk_score}
-                      helperText={errors.ki_analysis?.risk_score?.message}
-                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                      error={!!errors.ki_analysis?.risk_score,}
+                      helperText={errors.ki_analysis?.risk_score?.message,}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0),}
                     />
                   )}
                 />
               </Grid>
 
-              {/* Qualitätsvorhersage */}
-              <Grid item xs={12} md={6}>
+              {/* Qualitätsvorhersage */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="ki_analysis.quality_prediction"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.ki_analysis?.quality_prediction}>
+                  control={control,}
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.ki_analysis?.quality_prediction, }>
                       <InputLabel>Qualitätsvorhersage</InputLabel>
-                      <Select {...field} label="Qualitätsvorhersage">
+                      <Select {...field, } label="Qualitätsvorhersage">
                         <MenuItem value="excellent">
                           <Chip label="Ausgezeichnet" color="success" size="small" sx={{ mr: 1 }} />
                           Ausgezeichnet
@@ -1035,78 +904,72 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                           Schlecht
                         </MenuItem>
                       </Select>
-                      {errors.ki_analysis?.quality_prediction && (
-                        <FormHelperText>{errors.ki_analysis.quality_prediction.message}</FormHelperText>
-                      )}
+                      {errors.ki_analysis?.quality_prediction && (, <FormHelperText>{errors.ki_analysis.quality_prediction.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
               </Grid>
 
-              {/* Haltbarkeitsvorhersage */}
-              <Grid item xs={12} md={6}>
+              {/* Haltbarkeitsvorhersage */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="ki_analysis.shelf_life_prediction"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
-                      label="Haltbarkeitsvorhersage (Tage)"
-                      type="number"
+                      {...field, }
+                      label="Haltbarkeitsvorhersage (Tage)";
+type="number"
                       fullWidth
-                      error={!!errors.ki_analysis?.shelf_life_prediction}
-                      helperText={errors.ki_analysis?.shelf_life_prediction?.message}
-                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                      error={!!errors.ki_analysis?.shelf_life_prediction,}
+                      helperText={errors.ki_analysis?.shelf_life_prediction?.message,}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0),}
                     />
                   )}
                 />
               </Grid>
 
-              {/* Anomalie-Erkennung */}
-              <Grid item xs={12} md={6}>
+              {/* Anomalie-Erkennung */,}
+              <Grid item xs={12,} md={6,}>
                 <Controller
                   name="ki_analysis.anomaly_detection"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <FormControlLabel
                       control={
-                        <Switch
-                          checked={field.value}
-                          onChange={field.onChange}
+                        <Switch, checked={field.value, }
+                          onChange={field.onChange, }
                           color="warning"
                         />
                       }
                       label="Anomalie erkannt"
-                    />
-                  )}
+                    />)}
                 />
               </Grid>
 
-              {/* Trend-Analyse */}
-              <Grid item xs={12}>
+              {/* Trend-Analyse */,}
+              <Grid item xs={12,}>
                 <Controller
                   name="ki_analysis.trend_analysis"
-                  control={control}
-                  render={({ field }) => (
+                  control={control,}
+                  render={({ field, }) => (
                     <TextField
-                      {...field}
+                      {...field, }
                       label="Trend-Analyse"
                       multiline
-                      rows={3}
+                      rows={3, }
                       fullWidth
-                      error={!!errors.ki_analysis?.trend_analysis}
-                      helperText={errors.ki_analysis?.trend_analysis?.message}
-                    />
-                  )}
+                      error={!!errors.ki_analysis?.trend_analysis, }
+                      helperText={errors.ki_analysis?.trend_analysis?.message, }
+                    />)}
                 />
               </Grid>
             </Grid>
           )}
 
-          {activeTab === 6 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h6" fontWeight={600} mb={2}>
+          {activeTab === 6 && (<Grid container spacing={3, }>
+              <Grid item xs={12, }>
+                <Typography variant="h6" fontWeight={600, } mb={2, }>
                   Workflow-Status und Automatisierung
                 </Typography>
                 <Alert severity="info" sx={{ mb: 2 }}>
@@ -1114,15 +977,15 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                 </Alert>
               </Grid>
 
-              {/* Workflow-Status */}
-              <Grid item xs={12} md={6}>
+              {/* Workflow-Status */, }
+              <Grid item xs={12, } md={6, }>
                 <Controller
                   name="workflow_status"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.workflow_status}>
+                  control={control, }
+                  render={({ field, }) => (
+                    <FormControl fullWidth error={!!errors.workflow_status, }>
                       <InputLabel>Workflow-Status *</InputLabel>
-                      <Select {...field} label="Workflow-Status *">
+                      <Select {...field, } label="Workflow-Status *">
                         <MenuItem value="draft">
                           <Chip label="Entwurf" color="default" size="small" sx={{ mr: 1 }} />
                           Entwurf
@@ -1144,20 +1007,18 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                           Archiviert
                         </MenuItem>
                       </Select>
-                      {errors.workflow_status && (
-                        <FormHelperText>{errors.workflow_status.message}</FormHelperText>
-                      )}
+                      {errors.workflow_status && (, <FormHelperText>{errors.workflow_status.message, }</FormHelperText>)}
                     </FormControl>
                   )}
                 />
               </Grid>
 
-              {/* Workflow-Schritte */}
-              <Grid item xs={12}>
-                <Typography variant="subtitle1" fontWeight={600} mb={2}>
+              {/* Workflow-Schritte */,}
+              <Grid item xs={12,}>
+                <Typography variant="subtitle1" fontWeight={600,} mb={2,}>
                   Workflow-Schritte
                 </Typography>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper,}>
                   <Table>
                     <TableHead>
                       <TableRow>
@@ -1169,9 +1030,8 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {watch('workflow_steps')?.map((step, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{step.step}</TableCell>
+                      {watch('workflow_steps')?.map((step, index) => (<TableRow key={index, }>
+                          <TableCell>{step.step, }</TableCell>
                           <TableCell>
                             <Chip
                               label={step.status === 'completed' ? 'Abgeschlossen' : 
@@ -1181,11 +1041,11 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                               size="small"
                             />
                           </TableCell>
-                          <TableCell>{step.completed_by || '-'}</TableCell>
+                          <TableCell>{step.completed_by || '-', }</TableCell>
                           <TableCell>
                             {step.completed_at ? new Date(step.completed_at).toLocaleString() : '-'}
                           </TableCell>
-                          <TableCell>{step.notes || '-'}</TableCell>
+                          <TableCell>{step.notes || '-',}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -1195,42 +1055,42 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </Grid>
           )}
 
-          {/* Form Actions */}
-          <Box display="flex" justifyContent="flex-end" gap={2} mt={4}>
-            <NeuroFlowButton
-              variant="outlined"
-              onClick={handleCancel}
-              disabled={submitLoading}
-              startIcon={<CancelIcon />}
+          {/* Form Actions */,}
+          <Box display="flex" justifyContent="flex-end" gap={2,} mt={4,}>
+            <NeuroFlowButton;
+variant="outlined"
+              onClick={handleCancel,}
+              disabled={submitLoading,}
+              startIcon={<CancelIcon />,}
             >
               Abbrechen
             </NeuroFlowButton>
-            <NeuroFlowButton
-              type="submit"
-              variant="contained"
-              disabled={submitLoading || loading}
-              startIcon={submitLoading ? <CircularProgress size={20} /> : <SaveIcon />}
+            <NeuroFlowButton;
+type="submit";
+variant="contained"
+              disabled={submitLoading || loading,}
+              startIcon={submitLoading ? <CircularProgress size={20,} /> : <SaveIcon />}
             >
               {submitLoading ? 'Speichern...' : 'Charge speichern'}
             </NeuroFlowButton>
           </Box>
         </form>
 
-        {/* n8n Workflow Dialog */}
+        {/* n8n Workflow Dialog */,}
         <Dialog
-          open={workflowDialogOpen}
-          onClose={() => setWorkflowDialogOpen(false)}
+          open={workflowDialogOpen,}
+          onClose={() => setWorkflowDialogOpen(false),}
           maxWidth="md"
           fullWidth
         >
           <DialogTitle>
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center" gap={1,}>
               <TimelineIcon color="primary" />
               n8n Workflows
             </Box>
           </DialogTitle>
           <DialogContent>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper,}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -1243,9 +1103,8 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {n8nWorkflows.map((workflow) => (
-                    <TableRow key={workflow.id}>
-                      <TableCell>{workflow.name}</TableCell>
+                  {n8nWorkflows.map((workflow) => (<TableRow key={workflow.id, }>
+                      <TableCell>{workflow.name, }</TableCell>
                       <TableCell>
                         <Chip
                           label={workflow.status === 'active' ? 'Aktiv' : 'Inaktiv'}
@@ -1253,8 +1112,8 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                           size="small"
                         />
                       </TableCell>
-                      <TableCell>{workflow.trigger}</TableCell>
-                      <TableCell>{workflow.nodes}</TableCell>
+                      <TableCell>{workflow.trigger, }</TableCell>
+                      <TableCell>{workflow.nodes, }</TableCell>
                       <TableCell>
                         {workflow.lastExecution ? new Date(workflow.lastExecution).toLocaleString() : '-'}
                       </TableCell>
@@ -1263,8 +1122,8 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
                             size="small"
                             color="primary"
                             onClick={() => {
-                              setSelectedWorkflow(workflow);
-                              // Hier könnte man den Workflow auslösen
+                              setSelectedWorkflow(workflow);,
+                              // Hier könnte man den Workflow auslösen,
                             }}
                           >
                             <PlayArrowIcon />
@@ -1277,7 +1136,7 @@ export const NeuroFlowChargenverwaltung: React.FC<NeuroFlowChargenverwaltungProp
             </TableContainer>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setWorkflowDialogOpen(false)}>Schließen</Button>
+            <Button onClick={() => setWorkflowDialogOpen(false),}>Schließen</Button>
           </DialogActions>
         </Dialog>
       </CardContent>

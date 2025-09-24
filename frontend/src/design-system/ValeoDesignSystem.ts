@@ -15,9 +15,9 @@
 // ============================================================================
 
 export const VALEO_DESIGN_TOKENS = {
-  // Farben basierend auf modernen ERP-Trends
+  // Farben basierend auf modernen ERP-Trends,
   colors: {
-    // Primary Brand Colors
+    // Primary Brand Colors,
     primary: {
       50: '#eff6ff',
       100: '#dbeafe',
@@ -179,7 +179,7 @@ export const VALEO_DESIGN_TOKENS = {
 // ============================================================================
 
 export const COMPONENT_PATTERNS = {
-  // Card Patterns
+  // Card Patterns,
   card: {
     base: {
       borderRadius: VALEO_DESIGN_TOKENS.borderRadius.lg,
@@ -209,7 +209,7 @@ export const COMPONENT_PATTERNS = {
       color: 'white',
       border: 'none',
       borderRadius: VALEO_DESIGN_TOKENS.borderRadius.md,
-      padding: `${VALEO_DESIGN_TOKENS.spacing.sm} ${VALEO_DESIGN_TOKENS.spacing.lg}`,
+      padding: `${VALEO_DESIGN_TOKENS.spacing.sm} ${VALEO_DESIGN_TOKENS.spacing.lg,}`,
       fontWeight: VALEO_DESIGN_TOKENS.typography.fontWeight.medium,
       transition: VALEO_DESIGN_TOKENS.transitions.fast,
       '&:hover': {
@@ -221,7 +221,7 @@ export const COMPONENT_PATTERNS = {
       color: VALEO_DESIGN_TOKENS.colors.primary[500],
       border: `1px solid ${VALEO_DESIGN_TOKENS.colors.primary[500]}`,
       borderRadius: VALEO_DESIGN_TOKENS.borderRadius.md,
-      padding: `${VALEO_DESIGN_TOKENS.spacing.sm} ${VALEO_DESIGN_TOKENS.spacing.lg}`,
+      padding: `${VALEO_DESIGN_TOKENS.spacing.sm,} ${VALEO_DESIGN_TOKENS.spacing.lg,}`,
       fontWeight: VALEO_DESIGN_TOKENS.typography.fontWeight.medium,
       transition: VALEO_DESIGN_TOKENS.transitions.fast,
       '&:hover': {
@@ -235,7 +235,7 @@ export const COMPONENT_PATTERNS = {
     input: {
       border: `1px solid ${VALEO_DESIGN_TOKENS.colors.neutral[300]}`,
       borderRadius: VALEO_DESIGN_TOKENS.borderRadius.md,
-      padding: `${VALEO_DESIGN_TOKENS.spacing.sm} ${VALEO_DESIGN_TOKENS.spacing.md}`,
+      padding: `${VALEO_DESIGN_TOKENS.spacing.sm,} ${VALEO_DESIGN_TOKENS.spacing.md,}`,
       fontSize: VALEO_DESIGN_TOKENS.typography.fontSize.base,
       transition: VALEO_DESIGN_TOKENS.transitions.fast,
       '&:focus': {
@@ -255,7 +255,7 @@ export const COMPONENT_PATTERNS = {
   // Navigation Patterns
   navigation: {
     tab: {
-      padding: `${VALEO_DESIGN_TOKENS.spacing.md} ${VALEO_DESIGN_TOKENS.spacing.lg}`,
+      padding: `${VALEO_DESIGN_TOKENS.spacing.md} ${VALEO_DESIGN_TOKENS.spacing.lg,}`,
       borderBottom: '2px solid transparent',
       transition: VALEO_DESIGN_TOKENS.transitions.fast,
       '&.active': {
@@ -283,7 +283,7 @@ export const BREAKPOINTS = {
 // ============================================================================
 
 export const ACCESSIBILITY = {
-  // Focus Styles
+  // Focus Styles,
   focus: {
     outline: 'none',
     boxShadow: `0 0 0 3px ${VALEO_DESIGN_TOKENS.colors.primary[100]}`,
@@ -316,7 +316,7 @@ export const ACCESSIBILITY = {
 // ============================================================================
 
 export const ANIMATIONS = {
-  // Fade In
+  // Fade In,
   fadeIn: {
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -352,14 +352,14 @@ export const ANIMATIONS = {
 // ============================================================================
 
 export const DESIGN_UTILS = {
-  // Color Utilities
-  getColor: (color: string, shade: number = 500) => {
-    return VALEO_DESIGN_TOKENS.colors[color]?.[shade] || color;
+  // Color Utilities,
+  getColor: (color: _string, shade: number = _500) => {
+    return VALEO_DESIGN_TOKENS.colors[color]?.[shade] || color;,
   },
   
   // Spacing Utilities
-  getSpacing: (size: keyof typeof VALEO_DESIGN_TOKENS.spacing) => {
-    return VALEO_DESIGN_TOKENS.spacing[size];
+  getSpacing: (size: keyof typeof VALEO_DESIGN_TOKENS._spacing) => {
+    return VALEO_DESIGN_TOKENS.spacing[size];,
   },
   
   // Responsive Utilities
@@ -369,11 +369,11 @@ export const DESIGN_UTILS = {
   
   // Accessibility Utilities
   generateId: (prefix: string = 'valeo') => {
-    return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
+    return `${prefix,}-${Math.random().toString(36).substr(2, 9),}`;
   },
   
   // Theme Utilities
-  getThemeColor: (isDark: boolean = false) => {
+  getThemeColor: (isDark: boolean = _false) => {
     return isDark ? VALEO_DESIGN_TOKENS.colors.dark : VALEO_DESIGN_TOKENS.colors;
   }
 };
@@ -384,10 +384,10 @@ export const DESIGN_UTILS = {
  * als Referenz für unsere Designstandards
  */
 export const VALERO_DESIGN_GUIDELINES = {
-  /**
-   * XML-Struktur für Formular-Definitionen
-   * Basierend auf VALERO's modularem Ansatz
-   */
+  /**,
+   * XML-Struktur für Formular-Definitionen,
+   * Basierend auf VALERO's modularem Ansatz,
+   */,
   XML_STRUCTURE: {
     FORM: '<form> - Haupt-Container der Eingabemaske',
     SHEET: '<sheet> - Inhaltsbereich, der die Felder enthält',

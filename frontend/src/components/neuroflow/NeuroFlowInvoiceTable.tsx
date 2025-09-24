@@ -3,83 +3,24 @@
  * KI-first, responsive-first Rechnungstabelle mit MCP-Integration
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TablePagination,
-  IconButton,
-  Chip,
-  Avatar,
-  Tooltip,
-  TextField,
-  InputAdornment,
-  Button,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Alert,
-  Skeleton,
-  CircularProgress,
-  Stack,
-  FormControl,
-  InputLabel,
-  Select,
-} from '@mui/material';
+  Box, Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, IconButton, Chip, Avatar, Tooltip, TextField, InputAdornment, Button, Menu, MenuItem, ListItemIcon, ListItemText, Divider, Alert, Skeleton, CircularProgress, Stack, FormControl, InputLabel, Select} from '@mui/material';
 import {
-  Search as SearchIcon,
-  FilterList as FilterIcon,
-  MoreVert as MoreIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  Download as DownloadIcon,
-  Receipt as ReceiptIcon,
-  Person as PersonIcon,
-  Euro as EuroIcon,
-  CalendarToday as CalendarIcon,
-  Refresh as RefreshIcon,
-  Add as AddIcon,
-} from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
+  Search as SearchIcon, FilterList as FilterIcon, MoreVert as MoreIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, Download as DownloadIcon, Receipt as ReceiptIcon, Person as PersonIcon, Euro as EuroIcon, CalendarToday as CalendarIcon, Refresh as RefreshIcon, Add as AddIcon} from '@mui/icons-material';
+import { styled ,} from '@mui/material/styles';
 
-// Styled Components
-const NeuroFlowCard = styled(Card)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[1],
-  border: `1px solid ${theme.palette.divider}`,
-  transition: 'all 0.3s ease-in-out',
-  '&:hover': {
-    boxShadow: theme.shadows[4],
-  },
-}));
-
-const NeuroFlowTable = styled(Table)(({ theme }) => ({
+// Styled Components;
+const NeuroFlowCard = styled(Card)(({ theme, }) => ({
+  borderRadius: theme.shape.borderRadius * 2, boxShadow: theme.shadows[1], border: `1px solid ${theme.palette.divider}`, transition: 'all 0.3s ease-in-out', '&:hover': {
+    boxShadow: theme.shadows[4], }, }));;
+const NeuroFlowTable = styled(Table)(({ theme, }) => ({
   '& .MuiTableCell-root': {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    padding: '1rem',
-  },
-  '& .MuiTableHead-root .MuiTableCell-root': {
-    backgroundColor: theme.palette.grey[100],
-    fontWeight: 600,
-    color: theme.palette.text.secondary,
-  },
-  '& .MuiTableRow-root:hover': {
-    backgroundColor: theme.palette.action.hover,
-  },
-}));
+    borderBottom: `1px solid ${theme.palette.divider}`, padding: '1rem', }, '& .MuiTableHead-root .MuiTableCell-root': {
+    backgroundColor: theme.palette.grey[100], fontWeight: 600, color: theme.palette.text.secondary, }, '& .MuiTableRow-root:hover': {
+    backgroundColor: theme.palette.action.hover, }, }));
 
-// Types
+// Types;
 interface Invoice {
   id: string;
   invoice_number: string;
@@ -95,7 +36,7 @@ interface Invoice {
   created_at: string;
 }
 
-// Status Configuration
+// Status Configuration;
 const statusConfig = {
   draft: { label: 'Entwurf', color: 'default' as const, icon: <ReceiptIcon /> },
   sent: { label: 'Versendet', color: 'info' as const, icon: <ReceiptIcon /> },
@@ -104,7 +45,7 @@ const statusConfig = {
   cancelled: { label: 'Storniert', color: 'warning' as const, icon: <ReceiptIcon /> },
 };
 
-// Mock Data
+// Mock Data;
 const mockInvoices: Invoice[] = [
   {
     id: '1',
@@ -150,7 +91,7 @@ const mockInvoices: Invoice[] = [
   },
 ];
 
-// NeuroFlow Invoice Table Component
+// NeuroFlow Invoice Table Component;
 interface NeuroFlowInvoiceTableProps {
   onEdit?: (invoice: Invoice) => void;
   onDelete?: (invoice: Invoice) => void;
@@ -160,53 +101,46 @@ interface NeuroFlowInvoiceTableProps {
 }
 
 export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
-  onEdit,
-  onDelete,
-  onView,
-  onCreate,
-  loading = false,
-}) => {
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [filteredInvoices, setFilteredInvoices] = useState<Invoice[]>([]);
-  const [loadingData, setLoadingData] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  onEdit, onDelete, onView, onCreate, loading = false, }) => {;
+const [invoices, setInvoices] = useState<Invoice[]>([]);,;
+const [filteredInvoices, setFilteredInvoices] = useState<Invoice[]>([]);,;
+const [loadingData, setLoadingData] = useState(true);,;
+const [searchTerm, setSearchTerm] = useState('');,;
+const [statusFilter, setStatusFilter] = useState<string>('all');,;
+const [page, setPage] = useState(0);,;
+const [rowsPerPage, setRowsPerPage] = useState(10);,;
+const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);,;
+const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);,
 
-  // Load data from MCP
-  useEffect(() => {
-    const loadInvoices = async () => {
-      setLoadingData(true);
+  // Load data from MCP,
+  useEffect(() => {;
+const loadInvoices = async () => {
+      setLoadingData(true);,
       try {
-        // Try to load from MCP API first
-        const response = await fetch('/api/mcp/invoices', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        // Try to load from MCP API first,;
+const response = await fetch('/api/mcp/invoices', {
+          method: 'GET', headers: {
+            'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
           }
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          setInvoices(data.invoices || []);
-          setFilteredInvoices(data.invoices || []);
+        if (response.ok) {;
+const data = await response.json();,
+          setInvoices(data.invoices || []);,
+          setFilteredInvoices(data.invoices || []);,
         } else {
-          // Fallback to mock data if MCP API is not available
-          console.warn('MCP API not available, using mock data');
-          setInvoices(mockInvoices);
-          setFilteredInvoices(mockInvoices);
+          // Fallback to mock data if MCP API is not available,
+          console.warn('MCP API not available, using mock data');,
+          setInvoices(mockInvoices);,
+          setFilteredInvoices(mockInvoices);,
         }
       } catch (error) {
         console.error('Error loading invoices:', error);
-        // Fallback to mock data
-        setInvoices(mockInvoices);
-        setFilteredInvoices(mockInvoices);
+        // Fallback to mock data,
+        setInvoices(mockInvoices);,
+        setFilteredInvoices(mockInvoices);,
       } finally {
-        setLoadingData(false);
+        setLoadingData(false);,
       }
     };
 
@@ -214,170 +148,139 @@ export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
   }, []);
 
   // Filter invoices
-  useEffect(() => {
-    let filtered = invoices;
+  useEffect(() => {;
+let filtered = invoices;,
 
-    // Search filter
+    // Search filter,
     if (searchTerm) {
-      filtered = filtered.filter(
-        (invoice) =>
-          invoice.invoice_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          invoice.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          invoice.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      filtered = filtered.filter(,
+        (invoice) =>,
+          invoice.invoice_number.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+          invoice.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||,
+          invoice.description.toLowerCase().includes(searchTerm.toLowerCase()),
+      );,
     }
 
     // Status filter
     if (statusFilter !== 'all') {
-      filtered = filtered.filter((invoice) => invoice.status === statusFilter);
+      filtered = filtered.filter((invoice) => invoice.status === statusFilter);,
     }
 
     setFilteredInvoices(filtered);
     setPage(0);
-  }, [invoices, searchTerm, statusFilter]);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleStatusFilterChange = (event: any) => {
-    setStatusFilter(event.target.value);
-  };
-
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, invoice: Invoice) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedInvoice(invoice);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setSelectedInvoice(null);
-  };
-
-  const handleEdit = () => {
+  }, [invoices, searchTerm, statusFilter]);;
+const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);,
+  };;
+const handleStatusFilterChange = (event: unknown) => {
+    setStatusFilter(event.target.value);,
+  };;
+const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, invoice: Invoice) => {
+    setAnchorEl(event.currentTarget);,
+    setSelectedInvoice(invoice);,
+  };;
+const handleMenuClose = () => {
+    setAnchorEl(null);,
+    setSelectedInvoice(null);,
+  };;
+const handleEdit = () => {
     if (selectedInvoice && onEdit) {
-      onEdit(selectedInvoice);
+      onEdit(selectedInvoice);,
     }
     handleMenuClose();
-  };
-
-  const handleDelete = () => {
+  };;
+const handleDelete = () => {
     if (selectedInvoice && onDelete) {
-      onDelete(selectedInvoice);
+      onDelete(selectedInvoice);,
     }
     handleMenuClose();
-  };
-
-  const handleView = () => {
+  };;
+const handleView = () => {
     if (selectedInvoice && onView) {
-      onView(selectedInvoice);
+      onView(selectedInvoice);,
     }
     handleMenuClose();
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const formatCurrency = (amount: number) => {
+  };;
+const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);,
+  };;
+const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));,
+    setPage(0);,
+  };;
+const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('de-DE');
-  };
-
-  const getStatusChip = (status: Invoice['status']) => {
-    const config = statusConfig[status];
-    return (
-      <Chip
-        icon={config.icon}
-        label={config.label}
-        color={config.color}
-        size="small"
-        variant="filled"
-      />
-    );
-  };
-
-  const paginatedInvoices = filteredInvoices.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+      style: 'currency', currency: 'EUR', }).format(amount);
+  };;
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('de-DE');,
+  };;
+const getStatusChip = (status: Invoice['status']) => {;
+const config = statusConfig[status];,
+    return (<Chip, icon={config.icon, }
+        label={config.label, }
+        color={config.color, }
+        size="small";
+variant="filled"
+      />);
+  };;
+const paginatedInvoices = filteredInvoices.slice(
+    page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   if (loadingData) {
-    return (
-      <NeuroFlowCard>
-        <CardContent>
-          <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-            <Typography variant="h5" fontWeight={600}>
+    return (<NeuroFlowCard>, <CardContent>, <Box display="flex" alignItems="center" justifyContent="space-between" mb={3, }>
+            <Typography variant="h5" fontWeight={600, }>
               Rechnungen
             </Typography>
-            <CircularProgress size={24} />
+            <CircularProgress size={24, } />
           </Box>
-          <Skeleton variant="rectangular" height={400} />
+          <Skeleton variant="rectangular" height={400, } />
         </CardContent>
-      </NeuroFlowCard>
-    );
+      </NeuroFlowCard>);
   }
 
   return (
     <NeuroFlowCard>
       <CardContent>
-        {/* Header */}
-        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-          <Box display="flex" alignItems="center" gap={2}>
+        {/* Header */, }
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3, }>
+          <Box display="flex" alignItems="center" gap={2, }>
             <ReceiptIcon color="primary" sx={{ fontSize: 32 }} />
             <Box>
-              <Typography variant="h5" fontWeight={600} color="text.primary">
+              <Typography variant="h5" fontWeight={600, } color="text.primary">
                 Rechnungen
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {filteredInvoices.length} von {invoices.length} Rechnungen
+                {filteredInvoices.length, } von {invoices.length, } Rechnungen
               </Typography>
             </Box>
           </Box>
           
-          <Stack direction="row" spacing={2}>
-            <Button
-              variant="outlined"
-              startIcon={<RefreshIcon />}
-              onClick={() => window.location.reload()}
+          <Stack direction="row" spacing={2, }>
+            <Button;
+variant="outlined"
+              startIcon={<RefreshIcon />, }
+              onClick={() => window.location.reload(),}
             >
               Aktualisieren
             </Button>
-            {onCreate && (
-              <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={onCreate}
+            {onCreate && (<Button, variant="contained", startIcon={<AddIcon />, }
+                onClick={onCreate, }
               >
                 Neue Rechnung
-              </Button>
-            )}
+              </Button>)}
           </Stack>
         </Box>
 
-        {/* Filters */}
-        <Box display="flex" gap={2} mb={3}>
+        {/* Filters */,}
+        <Box display="flex" gap={2,} mb={3,}>
           <TextField
             placeholder="Rechnungen durchsuchen..."
-            value={searchTerm}
-            onChange={handleSearchChange}
+            value={searchTerm,}
+            onChange={handleSearchChange,}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+                <InputAdornment position="start">, <SearchIcon />, </InputAdornment>),
             }}
             sx={{ minWidth: 300 }}
           />
@@ -385,27 +288,25 @@ export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
           <FormControl sx={{ minWidth: 150 }}>
             <InputLabel>Status</InputLabel>
             <Select
-              value={statusFilter}
+              value={statusFilter,}
               label="Status"
-              onChange={handleStatusFilterChange}
+              onChange={handleStatusFilterChange,}
             >
               <MenuItem value="all">Alle Status</MenuItem>
-              {Object.entries(statusConfig).map(([key, config]) => (
-                <MenuItem key={key} value={key}>
+              {Object.entries(statusConfig).map(([key, config]) => (<MenuItem key={key, } value={key, }>
                   <Chip
-                    label={config.label}
+                    label={config.label, }
                     size="small"
-                    color={config.color}
+                    color={config.color, }
                     sx={{ mr: 1 }}
                   />
-                  {config.label}
-                </MenuItem>
-              ))}
+                  {config.label, }
+                </MenuItem>))}
             </Select>
           </FormControl>
         </Box>
 
-        {/* Table */}
+        {/* Table */,}
         <TableContainer>
           <NeuroFlowTable>
             <TableHead>
@@ -420,61 +321,60 @@ export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {paginatedInvoices.map((invoice) => (
-                <TableRow key={invoice.id} hover>
+              {paginatedInvoices.map((invoice) => (<TableRow key={invoice.id, } hover>
                   <TableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
+                    <Box display="flex" alignItems="center" gap={1, }>
                       <ReceiptIcon color="primary" fontSize="small" />
-                      <Typography variant="body2" fontWeight={500}>
-                        {invoice.invoice_number}
+                      <Typography variant="body2" fontWeight={500, }>
+                        {invoice.invoice_number, }
                       </Typography>
                     </Box>
                   </TableCell>
                   
                   <TableCell>
                     <Box>
-                      <Typography variant="body2" fontWeight={500}>
-                        {invoice.customer_name}
+                      <Typography variant="body2" fontWeight={500, }>
+                        {invoice.customer_name, }
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {invoice.customer_email}
+                        {invoice.customer_email, }
                       </Typography>
                     </Box>
                   </TableCell>
                   
                   <TableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
+                    <Box display="flex" alignItems="center" gap={1, }>
                       <CalendarIcon fontSize="small" color="action" />
                       <Typography variant="body2">
-                        {formatDate(invoice.invoice_date)}
+                        {formatDate(invoice.invoice_date),}
                       </Typography>
                     </Box>
                   </TableCell>
                   
                   <TableCell>
                     <Typography variant="body2">
-                      {formatDate(invoice.due_date)}
+                      {formatDate(invoice.due_date),}
                     </Typography>
                   </TableCell>
                   
                   <TableCell align="right">
-                    <Box display="flex" alignItems="center" justifyContent="flex-end" gap={1}>
+                    <Box display="flex" alignItems="center" justifyContent="flex-end" gap={1,}>
                       <EuroIcon fontSize="small" color="action" />
-                      <Typography variant="body2" fontWeight={600}>
-                        {formatCurrency(invoice.total_amount)}
+                      <Typography variant="body2" fontWeight={600,}>
+                        {formatCurrency(invoice.total_amount),}
                       </Typography>
                     </Box>
                   </TableCell>
                   
                   <TableCell>
-                    {getStatusChip(invoice.status)}
+                    {getStatusChip(invoice.status),}
                   </TableCell>
                   
                   <TableCell align="center">
                     <Tooltip title="Aktionen">
                       <IconButton
                         size="small"
-                        onClick={(e) => handleMenuOpen(e, invoice)}
+                        onClick={(e) => handleMenuOpen(e, invoice),}
                       >
                         <MoreIcon />
                       </IconButton>
@@ -486,42 +386,42 @@ export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
           </NeuroFlowTable>
         </TableContainer>
 
-        {/* Pagination */}
+        {/* Pagination */,}
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50]}
+          rowsPerPageOptions={[5, 10, 25, 50],}
           component="div"
-          count={filteredInvoices.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          count={filteredInvoices.length,}
+          rowsPerPage={rowsPerPage,}
+          page={page,}
+          onPageChange={handleChangePage,}
+          onRowsPerPageChange={handleChangeRowsPerPage,}
           labelRowsPerPage="Zeilen pro Seite:"
-          labelDisplayedRows={({ from, to, count }) =>
-            `${from}-${to} von ${count !== -1 ? count : `mehr als ${to}`}`
+          labelDisplayedRows={({ from, to, count, }) =>
+            `${from,}-${to,} von ${count !== -1 ? count : `mehr als ${to}`}`
           }
         />
 
-        {/* Action Menu */}
+        {/* Action Menu */,}
         <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
+          anchorEl={anchorEl,}
+          open={Boolean(anchorEl),}
+          onClose={handleMenuClose,}
           PaperProps={{
             sx: {
               minWidth: 200,
               borderRadius: 2,
-              boxShadow: (theme) => theme.shadows[3],
+              boxShadow: (_theme) => theme.shadows[3],
             },
           }}
         >
-          <MenuItem onClick={handleView}>
+          <MenuItem onClick={handleView,}>
             <ListItemIcon>
               <ViewIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Anzeigen</ListItemText>
           </MenuItem>
           
-          <MenuItem onClick={handleEdit}>
+          <MenuItem onClick={handleEdit,}>
             <ListItemIcon>
               <EditIcon fontSize="small" />
             </ListItemIcon>
@@ -530,7 +430,7 @@ export const NeuroFlowInvoiceTable: React.FC<NeuroFlowInvoiceTableProps> = ({
           
           <Divider />
           
-          <MenuItem onClick={handleDelete}>
+          <MenuItem onClick={handleDelete,}>
             <ListItemIcon>
               <DeleteIcon fontSize="small" />
             </ListItemIcon>

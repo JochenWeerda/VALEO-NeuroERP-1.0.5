@@ -1,1 +1,1 @@
-export { neuralTheme as theme } from './NeuroFlowTheme';
+export { neuralTheme as theme ,} from './NeuroFlowTheme';

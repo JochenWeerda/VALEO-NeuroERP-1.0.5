@@ -5,7 +5,7 @@
 export enum CRMMainTab {
   GENERAL = 'general',
   CONTACTS = 'contacts',
-  SALES = 'sales', // Neuer Vertriebs-Tab
+  SALES = 'sales', // Neuer Vertriebs-Tab,
   ORDERS = 'orders',
   INVOICES = 'invoices',
   DOCUMENTS = 'documents',
@@ -13,68 +13,68 @@ export enum CRMMainTab {
   DIRECT_BUSINESS = 'direct_business',
   EXTERNAL_STOCKS = 'external_stocks',
   COMMUNICATIONS = 'communications',
-  SUPPLIERS = 'suppliers', // Neuer Lieferanten-Tab
-  WHATSAPP_WEB = 'whatsapp_web'
+  SUPPLIERS = 'suppliers', // Neuer Lieferanten-Tab,
+  WHATSAPP_WEB = 'whatsapp_web',
 }
 
 export enum CRMSubTab {
-  // Allgemein
+  // Allgemein,
   BASIC_INFO = 'basic_info',
   ADDRESS = 'address',
   FINANCIAL = 'financial',
   
-  // Kontakte
+  // Kontakte,
   CONTACT_PERSONS = 'contact_persons',
   CONTACT_HISTORY = 'contact_history',
   CONTACT_SCHEDULE = 'contact_schedule',
   
-  // Vertrieb
+  // Vertrieb,
   DEALS = 'deals',
   OFFERS = 'offers',
   SALES_PIPELINE = 'sales_pipeline',
   SALES_ACTIVITIES = 'sales_activities',
   SALES_ANALYTICS = 'sales_analytics',
   
-  // Aufträge
+  // Aufträge,
   ORDERS = 'orders',
   DELIVERIES = 'deliveries',
   PURCHASE_OFFERS = 'purchase_offers',
   
-  // Rechnungen
+  // Rechnungen,
   INVOICES = 'invoices',
   REMINDERS = 'reminders',
   PAYMENTS = 'payments',
   
-  // Kommunikation
+  // Kommunikation,
   EMAIL = 'email',
   PHONE = 'phone',
   WHATSAPP_HISTORY = 'whatsapp_history',
   MEETINGS = 'meetings',
   
-  // Dokumente
+  // Dokumente,
   CUSTOMER_DOCS = 'customer_docs',
   CONTRACTS = 'contracts',
   CERTIFICATES = 'certificates',
   
-  // Analyse
+  // Analyse,
   REVENUE_ANALYSIS = 'revenue_analysis',
   CREDIT_ANALYSIS = 'credit_analysis',
   ACTIVITY_ANALYSIS = 'activity_analysis',
   
-  // Streckengeschäfte
+  // Streckengeschäfte,
   DIRECT_ORDERS = 'direct_orders',
   DIRECT_INVOICES = 'direct_invoices',
   
-  // Fremdbestände
+  // Fremdbestände,
   EXTERNAL_INVENTORY = 'external_inventory',
   STOCK_MOVEMENTS = 'stock_movements',
   
-  // Lieferanten
+  // Lieferanten,
   SUPPLIER_INQUIRIES = 'supplier_inquiries',
   SUPPLIER_ORDERS = 'supplier_orders',
   SUPPLIER_DELIVERIES = 'supplier_deliveries',
   SUPPLIER_INVOICES = 'supplier_invoices',
-  SUPPLIER_ANALYTICS = 'supplier_analytics'
+  SUPPLIER_ANALYTICS = 'supplier_analytics',
 }
 
 export enum CRMRibbonSection {
@@ -83,47 +83,47 @@ export enum CRMRibbonSection {
   INSERT = 'insert',
   VIEW = 'view',
   TOOLS = 'tools',
-  HELP = 'help'
+  HELP = 'help',
 }
 
 export enum CRMRibbonAction {
-  // File Section
+  // File Section,
   NEW_CUSTOMER = 'new_customer',
   SAVE = 'save',
   PRINT = 'print',
   EXPORT = 'export',
   IMPORT = 'import',
   
-  // Home Section
+  // Home Section,
   EDIT = 'edit',
   DELETE = 'delete',
   DUPLICATE = 'duplicate',
   REFRESH = 'refresh',
   
-  // Insert Section
+  // Insert Section,
   ADD_CONTACT = 'add_contact',
   ADD_DOCUMENT = 'add_document',
   ADD_OFFER = 'add_offer',
   ADD_ORDER = 'add_order',
   SEND_WHATSAPP = 'send_whatsapp',
   
-  // View Section
+  // View Section,
   DETAIL_VIEW = 'detail_view',
   LIST_VIEW = 'list_view',
   CARD_VIEW = 'card_view',
   FILTER = 'filter',
   SORT = 'sort',
   
-  // Tools Section
+  // Tools Section,
   ANALYZE = 'analyze',
   REPORT = 'report',
   SETTINGS = 'settings',
   BACKUP = 'backup',
   
-  // Help Section
+  // Help Section,
   HELP = 'help',
   ABOUT = 'about',
-  SUPPORT = 'support'
+  SUPPORT = 'support',
 }
 
 export interface CRMFunctionalRibbon {
@@ -178,7 +178,7 @@ export enum DocumentCategory {
   CORRESPONDENCE = 'correspondence',
   TECHNICAL_DOC = 'technical_doc',
   FINANCIAL_DOC = 'financial_doc',
-  OTHER = 'other'
+  OTHER = 'other',
 }
 
 export enum DocumentStatus {
@@ -186,7 +186,7 @@ export enum DocumentStatus {
   ACTIVE = 'active',
   EXPIRED = 'expired',
   ARCHIVED = 'archived',
-  DELETED = 'deleted'
+  DELETED = 'deleted',
 }
 
 export interface CustomerDocument {
@@ -221,7 +221,7 @@ export enum DocumentPermission {
   DOWNLOAD = 'download',
   EDIT = 'edit',
   DELETE = 'delete',
-  SHARE = 'share'
+  SHARE = 'share',
 }
 
 // --- Erweiterte Analyse- und Umsatzfelder ---
@@ -230,35 +230,35 @@ export interface CustomerAnalysis {
   year: number;
   month?: number;
   
-  // Umsatzdaten
+  // Umsatzdaten,
   totalRevenue: number;
   totalOrders: number;
   averageOrderValue: number;
   revenueGrowth: number; // Prozentuale Veränderung
   
-  // Offene Posten
+  // Offene Posten,
   openInvoices: number;
   overdueInvoices: number;
   overdueAmount: number;
   averagePaymentTime: number; // in Tagen
   
-  // Kreditdaten
+  // Kreditdaten,
   creditLimit: number;
   creditUsed: number;
   creditUtilization: number; // Prozent
   
-  // Aktivitätsdaten
+  // Aktivitätsdaten,
   lastOrderDate?: string;
   lastContactDate?: string;
   contactFrequency: number; // Kontakte pro Monat
   orderFrequency: number; // Bestellungen pro Monat
   
-  // Kundenwert
+  // Kundenwert,
   customerLifetimeValue: number;
   customerSegment: CustomerSegment;
   riskScore: number; // 1-10
   
-  // Trenddaten
+  // Trenddaten,
   revenueTrend: 'increasing' | 'decreasing' | 'stable';
   orderTrend: 'increasing' | 'decreasing' | 'stable';
   paymentTrend: 'improving' | 'worsening' | 'stable';
@@ -269,7 +269,7 @@ export enum CustomerSegment {
   REGULAR = 'regular',
   BASIC = 'basic',
   PROSPECT = 'prospect',
-  INACTIVE = 'inactive'
+  INACTIVE = 'inactive',
 }
 
 // --- Erweiterte Streckengeschäfte ---
@@ -282,24 +282,24 @@ export interface DirectBusiness {
   amount: number;
   status: DirectBusinessStatus;
   
-  // Erweiterte Felder
-  type: DirectBusinessType;
+  // Erweiterte Felder,;
+type: DirectBusinessType;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   assignedTo?: string;
   dueDate?: string;
   completionDate?: string;
   
-  // Finanzielle Details
+  // Finanzielle Details,
   costPrice?: number;
   profitMargin?: number;
   commission?: number;
   
-  // Dokumentation
+  // Dokumentation,
   notes?: string;
   attachments?: string[];
   tags?: string[];
   
-  // Metadaten
+  // Metadaten,
   createdAt: string;
   updatedAt: string;
   createdBy: string;
@@ -310,7 +310,7 @@ export enum DirectBusinessStatus {
   IN_PROGRESS = 'in_bearbeitung',
   COMPLETED = 'abgeschlossen',
   CANCELLED = 'storniert',
-  ON_HOLD = 'pausiert'
+  ON_HOLD = 'pausiert',
 }
 
 export enum DirectBusinessType {
@@ -318,7 +318,7 @@ export enum DirectBusinessType {
   PURCHASE = 'einkauf',
   EXCHANGE = 'tausch',
   CONSIGNMENT = 'konsignation',
-  LEASING = 'leasing'
+  LEASING = 'leasing',
 }
 
 // --- Erweiterte Fremdbestände ---
@@ -330,29 +330,29 @@ export interface ExternalStock {
   quantity: number;
   location: string;
   
-  // Erweiterte Felder
+  // Erweiterte Felder,
   unitPrice?: number;
   totalValue?: number;
   minStockLevel?: number;
   maxStockLevel?: number;
   reorderPoint?: number;
   
-  // Status und Verfügbarkeit
+  // Status und Verfügbarkeit,
   status: ExternalStockStatus;
   availability: 'available' | 'reserved' | 'damaged' | 'expired';
   expiryDate?: string;
   
-  // Standortdetails
+  // Standortdetails,
   warehouse?: string;
   shelf?: string;
   bin?: string;
   notes?: string;
   
-  // Bewegungen
+  // Bewegungen,
   lastMovementDate?: string;
   movementHistory?: StockMovement[];
   
-  // Metadaten
+  // Metadaten,
   createdAt: string;
   updatedAt: string;
   createdBy: string;
@@ -362,13 +362,13 @@ export enum ExternalStockStatus {
   ACTIVE = 'aktiv',
   INACTIVE = 'inaktiv',
   DISCONTINUED = 'eingestellt',
-  TEMPORARY = 'temporär'
+  TEMPORARY = 'temporär',
 }
 
 export interface StockMovement {
   id: string;
-  stockId: string;
-  type: 'in' | 'out' | 'adjustment' | 'transfer';
+  stockId: string;;
+type: 'in' | 'out' | 'adjustment' | 'transfer';
   quantity: number;
   previousQuantity: number;
   newQuantity: number;
@@ -382,8 +382,8 @@ export interface StockMovement {
 // --- Erweiterte Kommunikationshistorie ---
 export interface CustomerCommunication {
   id: string;
-  customerId: string;
-  type: CommunicationType;
+  customerId: string;;
+type: CommunicationType;
   subject: string;
   content: string;
   date: string;
@@ -391,24 +391,24 @@ export interface CustomerCommunication {
   to: string;
   relatedContactPersonId?: string;
   
-  // Erweiterte Felder
+  // Erweiterte Felder,
   priority: 'low' | 'medium' | 'high' | 'urgent';
   status: CommunicationStatus;
   outcome: CommunicationOutcome;
   
-  // Follow-up
+  // Follow-up,
   followUpDate?: string;
   followUpAction?: string;
   followUpCompleted?: boolean;
   
-  // Anhänge
+  // Anhänge,
   attachments?: CommunicationAttachment[];
   
-  // Tags und Kategorien
+  // Tags und Kategorien,
   tags?: string[];
   category?: string;
   
-  // Metadaten
+  // Metadaten,
   duration?: number; // in Minuten
   cost?: number;
   createdBy: string;
@@ -425,7 +425,7 @@ export enum CommunicationType {
   VISIT = 'visit',
   VIDEO_CALL = 'video_call',
   CHAT = 'chat',
-  OTHER = 'other'
+  OTHER = 'other',
 }
 
 export enum CommunicationStatus {
@@ -434,7 +434,7 @@ export enum CommunicationStatus {
   DELIVERED = 'delivered',
   READ = 'read',
   RESPONDED = 'responded',
-  FAILED = 'failed'
+  FAILED = 'failed',
 }
 
 export enum CommunicationOutcome {
@@ -442,7 +442,7 @@ export enum CommunicationOutcome {
   NEUTRAL = 'neutral',
   NEGATIVE = 'negative',
   FOLLOW_UP_REQUIRED = 'follow_up_required',
-  RESOLVED = 'resolved'
+  RESOLVED = 'resolved',
 }
 
 export interface CommunicationAttachment {
@@ -459,7 +459,7 @@ export interface ContactPerson {
   id: string;
   customerId: string;
   
-  // Persönliche Daten
+  // Persönliche Daten,
   salutation: 'Herr' | 'Frau' | 'Divers';
   firstName: string;
   lastName: string;
@@ -467,7 +467,7 @@ export interface ContactPerson {
   department?: string;
   birthDate?: string;
   
-  // Kontaktdaten (konsistente Property-Namen)
+  // Kontaktdaten (konsistente Property-Namen),
   phone1: string;
   phone2?: string;
   fax?: string;
@@ -475,12 +475,12 @@ export interface ContactPerson {
   mobile?: string;
   whatsapp?: string;
   
-  // Erweiterte Kontaktdaten
+  // Erweiterte Kontaktdaten,
   skype?: string;
   linkedin?: string;
   website?: string;
   
-  // Kontaktzeiten (vereinfachte Struktur)
+  // Kontaktzeiten (vereinfachte Struktur),
   contactSchedule: {
     monday: ContactTime;
     tuesday: ContactTime;
@@ -514,7 +514,7 @@ export enum ContactRole {
   USER = 'anwender',
   TECHNICAL_CONTACT = 'technischer_ansprechpartner',
   BILLING_CONTACT = 'rechnungsansprechpartner',
-  OTHER = 'sonstiger'
+  OTHER = 'sonstiger',
 }
 
 export enum ContactPermission {
@@ -523,7 +523,7 @@ export enum ContactPermission {
   VIEW_INVOICES = 'view_invoices',
   VIEW_DOCUMENTS = 'view_documents',
   RECEIVE_COMMUNICATIONS = 'receive_communications',
-  MANAGE_CONTACTS = 'manage_contacts'
+  MANAGE_CONTACTS = 'manage_contacts',
 }
 
 export interface Customer {
@@ -535,7 +535,7 @@ export interface Customer {
   dispatcher: string;
   creditLimit: number;
   
-  // Allgemeine Informationen
+  // Allgemeine Informationen,
   name: string;
   address: {
     street: string;
@@ -632,16 +632,15 @@ export interface ContactTime {
 export interface ContactHistory {
   id: string;
   customerId: string;
-  contactPersonId?: string;
-  
-  type: 'phone' | 'email' | 'whatsapp' | 'meeting' | 'visit' | 'other';
+  contactPersonId?: string;;
+type: 'phone' | 'email' | 'whatsapp' | 'meeting' | 'visit' | 'other';
   subject: string;
   description: string;
   date: string;
   duration?: number; // in minutes
   outcome: 'positive' | 'neutral' | 'negative' | 'follow_up';
   
-  // Follow-up
+  // Follow-up,
   followUpDate?: string;
   followUpAction?: string;
   
@@ -655,20 +654,20 @@ export interface Offer {
   dealId?: string;
   offerNumber: string;
   
-  // Angebotsdaten
+  // Angebotsdaten,
   title: string;
   description?: string;
   validFrom: string;
   validUntil: string;
   
-  // Vertriebsdaten
+  // Vertriebsdaten,
   salesRep: string;
   assignedTo?: string;
   leadSource?: string;
   
-  // Lieferung & Baustelle
-  plannedDeliveryDate?: string;
-  constructionSite?: string;
+  // Lieferung & Baustelle,
+  plannedDeliveryDate?: string;;
+constructionSite?: string;
   deliveryAddress?: {
     street: string;
     zipCode: string;
@@ -725,16 +724,16 @@ export interface Order {
   offerId?: string;
   orderNumber: string;
   
-  // Auftragsdaten
+  // Auftragsdaten,
   title: string;
   description?: string;
   orderDate: string;
   
-  // Lieferung & Baustelle
+  // Lieferung & Baustelle,
   plannedDeliveryDate?: string;
   requestedDeliveryDate?: string;
-  confirmedDeliveryDate?: string;
-  constructionSite?: string;
+  confirmedDeliveryDate?: string;;
+constructionSite?: string;
   deliveryAddress?: {
     street: string;
     zipCode: string;
@@ -802,19 +801,19 @@ export interface DeliveryNote {
   orderId: string;
   deliveryNumber: string;
   
-  // Lieferschein-Daten
+  // Lieferschein-Daten,
   deliveryDate: string;
   deliveryAddress?: string;
   notes?: string;
   
-  // Status
+  // Status,
   status: 'draft' | 'sent' | 'delivered' | 'confirmed';
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   
-  // Items
+  // Items,
   items: DeliveryItem[];
 }
 
@@ -833,26 +832,26 @@ export interface Invoice {
   orderId?: string;
   invoiceNumber: string;
   
-  // Rechnungsdaten
+  // Rechnungsdaten,
   invoiceDate: string;
   dueDate: string;
   paymentDate?: string;
   
-  // Preise
+  // Preise,
   subtotal: number;
   taxAmount: number;
   totalAmount: number;
   paidAmount: number;
   
-  // Status
+  // Status,
   status: 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled';
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   updatedAt: string;
   
-  // Items
+  // Items,
   items: InvoiceItem[];
 }
 
@@ -873,19 +872,19 @@ export interface Reminder {
   invoiceId: string;
   reminderNumber: string;
   
-  // Mahnungsdaten
+  // Mahnungsdaten,
   reminderDate: string;
   dueDate: string;
   reminderLevel: 1 | 2 | 3; // 1. Mahnung, 2. Mahnung, etc.
   
-  // Kosten
+  // Kosten,
   reminderFee: number;
   totalAmount: number;
   
-  // Status
+  // Status,
   status: 'sent' | 'paid' | 'escalated';
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
 }
@@ -895,24 +894,24 @@ export interface PurchaseOffer {
   customerId: string;
   purchaseOfferNumber: string;
   
-  // Kaufangebots-Daten
+  // Kaufangebots-Daten,
   title: string;
   description?: string;
   validFrom: string;
   validUntil: string;
   
-  // Preise
+  // Preise,
   totalAmount: number;
   
-  // Status
+  // Status,
   status: 'draft' | 'sent' | 'accepted' | 'rejected' | 'expired';
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   updatedAt: string;
   
-  // Items
+  // Items,
   items: PurchaseOfferItem[];
 }
 
@@ -932,12 +931,12 @@ export interface ExternalInventory {
   productId: string;
   productName: string;
   
-  // Fremdbestands-Daten
+  // Fremdbestands-Daten,
   quantity: number;
   location: string;
   notes?: string;
   
-  // Metadaten
+  // Metadaten,
   createdAt: string;
   updatedAt: string;
 }
@@ -1014,8 +1013,8 @@ export interface CRMCustomerViewConfig {
 
 // --- CRM Dashboard Widgets ---
 export interface CRMDashboardWidget {
-  id: string;
-  type: CRMWidgetType;
+  id: string;;
+type: CRMWidgetType;
   title: string;
   position: {
     x: number;
@@ -1036,7 +1035,7 @@ export enum CRMWidgetType {
   ALERTS = 'alerts',
   QUICK_ACTIONS = 'quick_actions',
   CUSTOMER_SEARCH = 'customer_search',
-  ANALYTICS = 'analytics'
+  ANALYTICS = 'analytics',
 }
 
 export interface CRMWidgetConfig {
@@ -1045,8 +1044,8 @@ export interface CRMWidgetConfig {
     start: string;
     end: string;
   };
-  filters?: Record<string, any>;
-  displayOptions?: Record<string, any>;
+  filters?: Record<string, unknown>;
+  displayOptions?: Record<string, unknown>;
 }
 
 // --- CRM Task Management ---
@@ -1055,8 +1054,8 @@ export interface CRMTask {
   customerId?: string;
   contactPersonId?: string;
   title: string;
-  description?: string;
-  type: CRMTaskType;
+  description?: string;;
+type: CRMTaskType;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   status: CRMTaskStatus;
   assignedTo?: string;
@@ -1080,7 +1079,7 @@ export enum CRMTaskType {
   FOLLOW_UP = 'follow_up',
   DOCUMENT_REVIEW = 'document_review',
   OFFER_PREPARATION = 'offer_preparation',
-  OTHER = 'other'
+  OTHER = 'other',
 }
 
 export enum CRMTaskStatus {
@@ -1088,14 +1087,14 @@ export enum CRMTaskStatus {
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
-  ON_HOLD = 'on_hold'
+  ON_HOLD = 'on_hold',
 }
 
 // --- CRM Alert System ---
 export interface CRMAlert {
   id: string;
-  customerId?: string;
-  type: CRMAlertType;
+  customerId?: string;;
+type: CRMAlertType;
   title: string;
   message: string;
   severity: 'info' | 'warning' | 'error' | 'critical';
@@ -1115,7 +1114,7 @@ export enum CRMAlertType {
   TASK_OVERDUE = 'task_overdue',
   CUSTOMER_INACTIVE = 'customer_inactive',
   REVENUE_DECLINE = 'revenue_decline',
-  SYSTEM_NOTIFICATION = 'system_notification'
+  SYSTEM_NOTIFICATION = 'system_notification',
 }
 
 // CRM Filter & Search Types
@@ -1165,8 +1164,8 @@ export interface ContactPersonFilter {
 }
 
 export interface TaskFilter {
-  search?: string;
-  type?: CRMTaskType;
+  search?: string;;
+type?: CRMTaskType;
   status?: CRMTaskStatus;
   priority?: 'low' | 'medium' | 'high' | 'urgent';
   assignedTo?: string;
@@ -1179,8 +1178,8 @@ export interface TaskFilter {
 }
 
 export interface CommunicationFilter {
-  search?: string;
-  type?: CommunicationType;
+  search?: string;;
+type?: CommunicationType;
   status?: CommunicationStatus;
   outcome?: CommunicationOutcome;
   priority?: 'low' | 'medium' | 'high' | 'urgent';
@@ -1208,8 +1207,8 @@ export interface DocumentFilter {
 }
 
 export interface DirectBusinessFilter {
-  search?: string;
-  type?: DirectBusinessType;
+  search?: string;;
+type?: DirectBusinessType;
   status?: DirectBusinessStatus;
   priority?: 'low' | 'medium' | 'high' | 'urgent';
   assignedTo?: string;
@@ -1310,7 +1309,7 @@ export interface CustomerFormData {
   riskScore: number;
   priority: 'low' | 'medium' | 'high' | 'vip';
   
-  // Adressdaten
+  // Adressdaten,
   billingAddress?: {
     street: string;
     zipCode: string;
@@ -1329,160 +1328,33 @@ export interface CustomerFormData {
 
 // --- MAPPING FUNKTIONEN FÜR CUSTOMER ---
 export const mapApiCustomerToFormData = (apiCustomer: Customer): CustomerFormData => ({
-  // Grunddaten
-  customerNumber: apiCustomer.customerNumber,
-  debtorAccount: apiCustomer.debtorAccount,
-  customerGroup: apiCustomer.customerGroup,
-  salesRep: apiCustomer.salesRep,
-  dispatcher: apiCustomer.dispatcher,
-  creditLimit: apiCustomer.creditLimit,
-  name: apiCustomer.name,
+  // Grunddaten, customerNumber: apiCustomer.customerNumber, debtorAccount: apiCustomer.debtorAccount, customerGroup: apiCustomer.customerGroup, salesRep: apiCustomer.salesRep, dispatcher: apiCustomer.dispatcher, creditLimit: apiCustomer.creditLimit, name: apiCustomer.name, // Adressdaten, street: apiCustomer.address.street, zipCode: apiCustomer.address.zipCode, city: apiCustomer.address.city, postBox: apiCustomer.address.postBox, country: apiCustomer.address.country, state: apiCustomer.address.state, // Kontaktdaten, phone: apiCustomer.phone, fax: apiCustomer.fax, email: apiCustomer.email, homepage: apiCustomer.homepage, skype: apiCustomer.skype, linkedin: apiCustomer.linkedin, twitter: apiCustomer.whatsapp, // Mapping von whatsapp zu twitter für Formular
   
-  // Adressdaten
-  street: apiCustomer.address.street,
-  zipCode: apiCustomer.address.zipCode,
-  city: apiCustomer.address.city,
-  postBox: apiCustomer.address.postBox,
-  country: apiCustomer.address.country,
-  state: apiCustomer.address.state,
-  
-  // Kontaktdaten
-  phone: apiCustomer.phone,
-  fax: apiCustomer.fax,
-  email: apiCustomer.email,
-  homepage: apiCustomer.homepage,
-  skype: apiCustomer.skype,
-  linkedin: apiCustomer.linkedin,
-  twitter: apiCustomer.whatsapp, // Mapping von whatsapp zu twitter für Formular
-  
-  // Status und Klassifizierung
-  status: apiCustomer.status,
-  paymentTerms: apiCustomer.paymentTerms,
-  discountGroup: apiCustomer.discountGroup,
-  industry: apiCustomer.industry,
-  companySize: apiCustomer.companySize,
-  annualRevenue: apiCustomer.annualRevenue,
-  employeeCount: apiCustomer.employeeCount,
-  taxNumber: apiCustomer.taxNumber,
-  vatNumber: apiCustomer.vatNumber,
-  customerSegment: apiCustomer.customerSegment,
-  riskScore: apiCustomer.riskScore,
-  priority: apiCustomer.priority,
-  
-  // Erweiterte Adressdaten
-  billingAddress: apiCustomer.billingAddress,
-  shippingAddress: apiCustomer.shippingAddress
+  // Status und Klassifizierung, status: apiCustomer.status, paymentTerms: apiCustomer.paymentTerms, discountGroup: apiCustomer.discountGroup, industry: apiCustomer.industry, companySize: apiCustomer.companySize, annualRevenue: apiCustomer.annualRevenue, employeeCount: apiCustomer.employeeCount, taxNumber: apiCustomer.taxNumber, vatNumber: apiCustomer.vatNumber, customerSegment: apiCustomer.customerSegment, riskScore: apiCustomer.riskScore, priority: apiCustomer.priority, // Erweiterte Adressdaten, billingAddress: apiCustomer.billingAddress, shippingAddress: apiCustomer.shippingAddress
 });
 
 export const mapFormDataToApiCustomer = (formData: CustomerFormData, customerId: string): Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | 'lastContact' | 'totalRevenue' | 'openInvoices' | 'creditUsed' | 'documents' | 'communications' | 'analysis' | 'directBusinesses' | 'externalStocks' | 'contactPersons' | 'deals' | 'offers' | 'orders' | 'invoices' | 'reminders' | 'purchaseOffers' | 'externalInventory' | 'salesHistory'> => ({
-  customerNumber: formData.customerNumber,
-  debtorAccount: formData.debtorAccount,
-  customerGroup: formData.customerGroup,
-  salesRep: formData.salesRep,
-  dispatcher: formData.dispatcher,
-  creditLimit: formData.creditLimit,
-  name: formData.name,
-  
-  // Adressdaten
-  address: {
-    street: formData.street,
-    zipCode: formData.zipCode,
-    city: formData.city,
-    postBox: formData.postBox,
-    country: formData.country,
-    state: formData.state
-  },
-  
-  // Kontaktdaten
-  phone: formData.phone,
-  fax: formData.fax,
-  email: formData.email,
-  homepage: formData.homepage,
-  whatsapp: formData.twitter, // Mapping von twitter zu whatsapp für API
-  skype: formData.skype,
-  linkedin: formData.linkedin,
-  
-  // Status und Klassifizierung
-  status: formData.status,
-  paymentTerms: formData.paymentTerms,
-  discountGroup: formData.discountGroup,
-  industry: formData.industry,
-  companySize: formData.companySize,
-  annualRevenue: formData.annualRevenue,
-  employeeCount: formData.employeeCount,
-  taxNumber: formData.taxNumber,
-  vatNumber: formData.vatNumber,
-  customerSegment: formData.customerSegment,
-  riskScore: formData.riskScore,
-  priority: formData.priority,
-  
-  // Erweiterte Adressdaten
-  billingAddress: formData.billingAddress,
-  shippingAddress: formData.shippingAddress
+  customerNumber: formData.customerNumber, debtorAccount: formData.debtorAccount, customerGroup: formData.customerGroup, salesRep: formData.salesRep, dispatcher: formData.dispatcher, creditLimit: formData.creditLimit, name: formData.name, // Adressdaten, address: {
+    street: formData.street, zipCode: formData.zipCode, city: formData.city, postBox: formData.postBox, country: formData.country, state: formData.state
+  }, // Kontaktdaten
+  phone: formData.phone, fax: formData.fax, email: formData.email, homepage: formData.homepage, whatsapp: formData.twitter, // Mapping von twitter zu whatsapp für API
+  skype: formData.skype, linkedin: formData.linkedin, // Status und Klassifizierung
+  status: formData.status, paymentTerms: formData.paymentTerms, discountGroup: formData.discountGroup, industry: formData.industry, companySize: formData.companySize, annualRevenue: formData.annualRevenue, employeeCount: formData.employeeCount, taxNumber: formData.taxNumber, vatNumber: formData.vatNumber, customerSegment: formData.customerSegment, riskScore: formData.riskScore, priority: formData.priority, // Erweiterte Adressdaten
+  billingAddress: formData.billingAddress, shippingAddress: formData.shippingAddress
 });
 
 // --- INITIALWERTE FÜR CUSTOMER FORM DATA ---
 export const getInitialCustomerFormData = (): CustomerFormData => ({
-  // Grunddaten
-  customerNumber: '',
-  debtorAccount: '',
-  customerGroup: '',
-  salesRep: '',
-  dispatcher: '',
-  creditLimit: 0,
-  name: '',
-  
-  // Adressdaten
-  street: '',
-  zipCode: '',
-  city: '',
-  postBox: '',
-  country: 'Deutschland',
-  state: '',
-  
-  // Kontaktdaten
-  phone: '',
-  fax: '',
-  email: '',
-  homepage: '',
-  skype: '',
-  linkedin: '',
-  twitter: '',
-  
-  // Status und Klassifizierung
-  status: 'active',
-  paymentTerms: '',
-  discountGroup: '',
-  industry: '',
-  companySize: 'medium',
-  annualRevenue: 0,
-  employeeCount: 0,
-  taxNumber: '',
-  vatNumber: '',
-  customerSegment: CustomerSegment.REGULAR,
-  riskScore: 5,
-  priority: 'medium',
-  
-  // Erweiterte Adressdaten
-  billingAddress: {
-    street: '',
-    zipCode: '',
-    city: '',
-    country: 'Deutschland',
-    isSameAsMain: true
-  },
-  shippingAddress: {
-    street: '',
-    zipCode: '',
-    city: '',
-    country: 'Deutschland',
-    isSameAsMain: true
+  // Grunddaten, customerNumber: '', debtorAccount: '', customerGroup: '', salesRep: '', dispatcher: '', creditLimit: 0, name: '', // Adressdaten, street: '', zipCode: '', city: '', postBox: '', country: 'Deutschland', state: '', // Kontaktdaten, phone: '', fax: '', email: '', homepage: '', skype: '', linkedin: '', twitter: '', // Status und Klassifizierung, status: 'active', paymentTerms: '', discountGroup: '', industry: '', companySize: 'medium', annualRevenue: 0, employeeCount: 0, taxNumber: '', vatNumber: '', customerSegment: CustomerSegment.REGULAR, riskScore: 5, priority: 'medium', // Erweiterte Adressdaten, billingAddress: {
+    street: '', zipCode: '', city: '', country: 'Deutschland', isSameAsMain: true
+  }, shippingAddress: {
+    street: '', zipCode: '', city: '', country: 'Deutschland', isSameAsMain: true
   }
 });
 
 // --- EINDEUTIGE FORM-DATEN TYPEN FÜR CONTACT PERSON ---
 export interface ContactPersonFormData {
-  // Persönliche Daten
+  // Persönliche Daten,
   salutation: 'Herr' | 'Frau' | 'Divers';
   firstName: string;
   lastName: string;
@@ -1490,7 +1362,7 @@ export interface ContactPersonFormData {
   department?: string;
   birthDate?: string;
   
-  // Kontaktdaten (explizit, keine Partial<T>)
+  // Kontaktdaten (explizit, keine Partial<T>),
   phone1: string;
   phone2?: string;
   fax?: string;
@@ -1501,17 +1373,17 @@ export interface ContactPersonFormData {
   linkedin?: string;
   website?: string;
   
-  // Status und Rollen
+  // Status und Rollen,
   isMainContact: boolean;
   isActive: boolean;
   role: ContactRole;
   permissions: ContactPermission[];
   
-  // Notizen und Tags
+  // Notizen und Tags,
   notes?: string;
   tags?: string[];
   
-  // Kontaktzeiten (vereinfacht)
+  // Kontaktzeiten (vereinfacht),
   contactSchedule: {
     monday: ContactTime;
     tuesday: ContactTime;
@@ -1525,99 +1397,23 @@ export interface ContactPersonFormData {
 
 // --- MAPPING FUNKTIONEN FÜR CONTACT PERSON ---
 export const mapApiContactToFormData = (apiContact: ContactPerson): ContactPersonFormData => ({
-  salutation: apiContact.salutation,
-  firstName: apiContact.firstName,
-  lastName: apiContact.lastName,
-  position: apiContact.position,
-  department: apiContact.department,
-  birthDate: apiContact.birthDate,
-  phone1: apiContact.phone1,
-  phone2: apiContact.phone2,
-  fax: apiContact.fax,
-  email: apiContact.email,
-  mobile: apiContact.mobile,
-  whatsapp: apiContact.whatsapp,
-  skype: apiContact.skype,
-  linkedin: apiContact.linkedin,
-  website: apiContact.website,
-  isMainContact: apiContact.isMainContact,
-  isActive: apiContact.isActive,
-  role: apiContact.role,
-  permissions: apiContact.permissions,
-  notes: apiContact.notes,
-  tags: apiContact.tags,
-  contactSchedule: apiContact.contactSchedule
+  salutation: apiContact.salutation, firstName: apiContact.firstName, lastName: apiContact.lastName, position: apiContact.position, department: apiContact.department, birthDate: apiContact.birthDate, phone1: apiContact.phone1, phone2: apiContact.phone2, fax: apiContact.fax, email: apiContact.email, mobile: apiContact.mobile, whatsapp: apiContact.whatsapp, skype: apiContact.skype, linkedin: apiContact.linkedin, website: apiContact.website, isMainContact: apiContact.isMainContact, isActive: apiContact.isActive, role: apiContact.role, permissions: apiContact.permissions, notes: apiContact.notes, tags: apiContact.tags, contactSchedule: apiContact.contactSchedule
 });
 
 export const mapFormDataToApiContact = (formData: ContactPersonFormData, customerId: string): Omit<ContactPerson, 'id' | 'createdAt' | 'updatedAt' | 'createdBy'> => ({
-  customerId,
-  salutation: formData.salutation,
-  firstName: formData.firstName,
-  lastName: formData.lastName,
-  position: formData.position,
-  department: formData.department,
-  birthDate: formData.birthDate,
-  phone1: formData.phone1,
-  phone2: formData.phone2,
-  fax: formData.fax,
-  email: formData.email,
-  mobile: formData.mobile,
-  whatsapp: formData.whatsapp,
-  skype: formData.skype,
-  linkedin: formData.linkedin,
-  website: formData.website,
-  isMainContact: formData.isMainContact,
-  isActive: formData.isActive,
-  role: formData.role,
-  permissions: formData.permissions,
-  notes: formData.notes,
-  tags: formData.tags,
-  contactSchedule: formData.contactSchedule
+  customerId, salutation: formData.salutation, firstName: formData.firstName, lastName: formData.lastName, position: formData.position, department: formData.department, birthDate: formData.birthDate, phone1: formData.phone1, phone2: formData.phone2, fax: formData.fax, email: formData.email, mobile: formData.mobile, whatsapp: formData.whatsapp, skype: formData.skype, linkedin: formData.linkedin, website: formData.website, isMainContact: formData.isMainContact, isActive: formData.isActive, role: formData.role, permissions: formData.permissions, notes: formData.notes, tags: formData.tags, contactSchedule: formData.contactSchedule
 });
 
 // --- INITIALWERTE FÜR CONTACT PERSON FORMULAR ---
 export const getInitialContactFormData = (): ContactPersonFormData => ({
-  salutation: 'Herr',
-  firstName: '',
-  lastName: '',
-  position: '',
-  department: '',
-  birthDate: '',
-  phone1: '',
-  phone2: '',
-  fax: '',
-  email: '',
-  mobile: '',
-  whatsapp: '',
-  skype: '',
-  linkedin: '',
-  website: '',
-  isMainContact: false,
-  isActive: true,
-  role: ContactRole.OTHER,
-  permissions: [],
-  notes: '',
-  tags: [],
-  contactSchedule: {
-    monday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' },
-    tuesday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' },
-    wednesday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' },
-    thursday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' },
-    friday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' },
-    saturday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' },
-    sunday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }
+  salutation: 'Herr', firstName: '', lastName: '', position: '', department: '', birthDate: '', phone1: '', phone2: '', fax: '', email: '', mobile: '', whatsapp: '', skype: '', linkedin: '', website: '', isMainContact: false, isActive: true, role: ContactRole.OTHER, permissions: [], notes: '', tags: [], contactSchedule: {
+    monday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }, tuesday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }, wednesday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }, thursday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }, friday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }, saturday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }, sunday: { available: false, startTime: '09:00', endTime: '17:00', notes: '' }
   }
 });
 
 // --- UTILITY FUNKTIONEN ---
 export const getWeekdayLabels = () => ({
-  monday: 'Montag',
-  tuesday: 'Dienstag', 
-  wednesday: 'Mittwoch',
-  thursday: 'Donnerstag',
-  friday: 'Freitag',
-  saturday: 'Samstag',
-  sunday: 'Sonntag'
+  monday: 'Montag', tuesday: 'Dienstag', wednesday: 'Mittwoch', thursday: 'Donnerstag', friday: 'Freitag', saturday: 'Samstag', sunday: 'Sonntag'
 });
 
 export const getWeekdayArray = () => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
@@ -1625,8 +1421,8 @@ export const getWeekdayArray = () => ['monday', 'tuesday', 'wednesday', 'thursda
 // --- Erweiterte Form-Typen ---
 export interface TaskFormData {
   title: string;
-  description?: string;
-  type: CRMTaskType;
+  description?: string;;
+type: CRMTaskType;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   assignedTo?: string;
   dueDate?: string;
@@ -1638,46 +1434,19 @@ export interface TaskFormData {
 
 // Mapping-Funktionen für Task
 export const mapApiTaskToFormData = (apiTask: CRMTask): TaskFormData => ({
-  title: apiTask.title,
-  description: apiTask.description || '',
-  type: apiTask.type,
-  priority: apiTask.priority,
-  assignedTo: apiTask.assignedTo || '',
-  dueDate: apiTask.dueDate || '',
-  estimatedDuration: apiTask.estimatedDuration || 0,
-  tags: apiTask.tags || [],
-  customerId: apiTask.customerId || '',
-  contactPersonId: apiTask.contactPersonId || ''
+  title: apiTask.title, description: apiTask.description || '', type: apiTask.type, priority: apiTask.priority, assignedTo: apiTask.assignedTo || '', dueDate: apiTask.dueDate || '', estimatedDuration: apiTask.estimatedDuration || 0, tags: apiTask.tags || [], customerId: apiTask.customerId || '', contactPersonId: apiTask.contactPersonId || ''
 });
 
 export const mapFormDataToApiTask = (formData: TaskFormData, taskId: string): Omit<CRMTask, 'id' | 'createdAt' | 'updatedAt' | 'createdBy' | 'status' | 'completedDate' | 'actualDuration' | 'attachments'> => ({
-  customerId: formData.customerId || undefined,
-  contactPersonId: formData.contactPersonId || undefined,
-  title: formData.title,
-  description: formData.description || undefined,
-  type: formData.type,
-  priority: formData.priority,
-  assignedTo: formData.assignedTo || undefined,
-  dueDate: formData.dueDate || undefined,
-  estimatedDuration: formData.estimatedDuration || undefined,
-  tags: formData.tags || []
+  customerId: formData.customerId || undefined, contactPersonId: formData.contactPersonId || undefined, title: formData.title, description: formData.description || undefined, type: formData.type, priority: formData.priority, assignedTo: formData.assignedTo || undefined, dueDate: formData.dueDate || undefined, estimatedDuration: formData.estimatedDuration || undefined, tags: formData.tags || []
 });
 
 export const getInitialTaskFormData = (): TaskFormData => ({
-  title: '',
-  description: '',
-  type: CRMTaskType.OTHER,
-  priority: 'medium',
-  assignedTo: '',
-  dueDate: '',
-  estimatedDuration: 0,
-  tags: [],
-  customerId: '',
-  contactPersonId: ''
+  title: '', description: '', type: CRMTaskType.OTHER, priority: 'medium', assignedTo: '', dueDate: '', estimatedDuration: 0, tags: [], customerId: '', contactPersonId: ''
 });
 
-export interface CommunicationFormData {
-  type: CommunicationType;
+export interface CommunicationFormData {;
+type: CommunicationType;
   subject: string;
   content: string;
   from: string;
@@ -1706,8 +1475,8 @@ export interface DirectBusinessFormData {
   description: string;
   orderNumber: string;
   date: string;
-  amount: number;
-  type: DirectBusinessType;
+  amount: number;;
+type: DirectBusinessType;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   assignedTo?: string;
   dueDate?: string;
@@ -1745,7 +1514,7 @@ export enum DealStage {
   CLOSED_WON = 'closed_won',
   CLOSED_LOST = 'closed_lost',
   DELIVERED = 'delivered',
-  PAID = 'paid'
+  PAID = 'paid',
 }
 
 export enum DealType {
@@ -1753,7 +1522,7 @@ export enum DealType {
   EXISTING_BUSINESS = 'existing_business',
   UPSELL = 'upsell',
   CROSS_SELL = 'cross_sell',
-  RENEWAL = 'renewal'
+  RENEWAL = 'renewal',
 }
 
 export interface Deal {
@@ -1763,34 +1532,34 @@ export interface Deal {
   title: string;
   description?: string;
   
-  // Deal-Management
-  stage: DealStage;
-  type: DealType;
+  // Deal-Management,
+  stage: DealStage;;
+type: DealType;
   probability: number; // 0-100%
   expectedCloseDate: string;
   actualCloseDate?: string;
   
-  // Finanzielle Daten
+  // Finanzielle Daten,
   estimatedValue: number;
   actualValue?: number;
   currency: string;
   
-  // Vertriebsdaten
+  // Vertriebsdaten,
   salesRep: string;
   assignedTo?: string;
   leadSource?: string;
   
-  // Workflow & Status
+  // Workflow & Status,
   isActive: boolean;
   lastActivityDate?: string;
   nextFollowUpDate?: string;
   
-  // Verknüpfungen
+  // Verknüpfungen,
   offers: Offer[];
   orders: Order[];
   activities: DealActivity[];
   
-  // Metadaten
+  // Metadaten,
   createdAt: string;
   updatedAt: string;
   createdBy: string;
@@ -1798,19 +1567,19 @@ export interface Deal {
 
 export interface DealActivity {
   id: string;
-  dealId: string;
-  type: DealActivityType;
+  dealId: string;;
+type: DealActivityType;
   subject: string;
   description?: string;
   date: string;
   duration?: number; // in Minuten
   
-  // Ergebnis & Follow-up
+  // Ergebnis & Follow-up,
   outcome: DealActivityOutcome;
   nextAction?: string;
   nextActionDate?: string;
   
-  // Beteiligte
+  // Beteiligte,
   participants: string[];
   createdBy: string;
   createdAt: string;
@@ -1826,7 +1595,7 @@ export enum DealActivityType {
   SITE_VISIT = 'site_visit',
   PROPOSAL_SENT = 'proposal_sent',
   NEGOTIATION = 'negotiation',
-  CLOSING = 'closing'
+  CLOSING = 'closing',
 }
 
 export enum DealActivityOutcome {
@@ -1835,7 +1604,7 @@ export enum DealActivityOutcome {
   NEGATIVE = 'negative',
   SCHEDULED_FOLLOW_UP = 'scheduled_follow_up',
   DEAL_CLOSED = 'deal_closed',
-  DEAL_LOST = 'deal_lost'
+  DEAL_LOST = 'deal_lost',
 }
 
 // --- Erweiterte Angebotsverwaltung (zvoove-Inspiriert) ---
@@ -1845,20 +1614,20 @@ export interface Offer {
   dealId?: string;
   offerNumber: string;
   
-  // Angebotsdaten
+  // Angebotsdaten,
   title: string;
   description?: string;
   validFrom: string;
   validUntil: string;
   
-  // Vertriebsdaten
+  // Vertriebsdaten,
   salesRep: string;
   assignedTo?: string;
   leadSource?: string;
   
-  // Lieferung & Baustelle
-  plannedDeliveryDate?: string;
-  constructionSite?: string;
+  // Lieferung & Baustelle,
+  plannedDeliveryDate?: string;;
+constructionSite?: string;
   deliveryAddress?: {
     street: string;
     zipCode: string;
@@ -1905,7 +1674,7 @@ export enum OfferStatus {
   ACCEPTED = 'accepted',
   REJECTED = 'rejected',
   EXPIRED = 'expired',
-  CONVERTED = 'converted'
+  CONVERTED = 'converted',
 }
 
 export enum OfferStage {
@@ -1914,7 +1683,7 @@ export enum OfferStage {
   FOLLOW_UP = 'follow_up',
   NEGOTIATION = 'negotiation',
   CLOSING = 'closing',
-  CLOSED = 'closed'
+  CLOSED = 'closed',
 }
 
 // --- Erweiterte Auftragsverwaltung (zvoove-Inspiriert) ---
@@ -1925,16 +1694,16 @@ export interface Order {
   offerId?: string;
   orderNumber: string;
   
-  // Auftragsdaten
+  // Auftragsdaten,
   title: string;
   description?: string;
   orderDate: string;
   
-  // Lieferung & Baustelle
+  // Lieferung & Baustelle,
   plannedDeliveryDate?: string;
   requestedDeliveryDate?: string;
-  confirmedDeliveryDate?: string;
-  constructionSite?: string;
+  confirmedDeliveryDate?: string;;
+constructionSite?: string;
   deliveryAddress?: {
     street: string;
     zipCode: string;
@@ -1993,7 +1762,7 @@ export enum SupplierOrderStatus {
   DELIVERED = 'delivered',
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
-  ON_HOLD = 'on_hold'
+  ON_HOLD = 'on_hold',
 }
 
 export enum OrderStage {
@@ -2001,7 +1770,7 @@ export enum OrderStage {
   CONFIRMATION = 'confirmation',
   PRODUCTION = 'production',
   DELIVERY = 'delivery',
-  COMPLETION = 'completion'
+  COMPLETION = 'completion',
 }
 
 export enum InventoryStatus {
@@ -2009,7 +1778,7 @@ export enum InventoryStatus {
   PARTIALLY_AVAILABLE = 'partially_available',
   NOT_AVAILABLE = 'not_available',
   ON_ORDER = 'on_order',
-  BACKORDER = 'backorder'
+  BACKORDER = 'backorder',
 }
 
 // --- Vertriebsakte & Historie ---
@@ -2020,14 +1789,14 @@ export interface SalesHistory {
   orders: Order[];
   activities: DealActivity[];
   
-  // Statistiken
+  // Statistiken,
   totalRevenue: number;
   totalOrders: number;
   totalOffers: number;
   conversionRate: number; // Angebot zu Auftrag
   averageOrderValue: number;
   
-  // Trends
+  // Trends,
   revenueTrend: 'increasing' | 'decreasing' | 'stable';
   orderFrequency: number; // pro Monat
   lastOrderDate?: string;
@@ -2040,15 +1809,15 @@ export interface SalesPipeline {
   name: string;
   description?: string;
   
-  // Funnel-Stufen
+  // Funnel-Stufen,
   stages: PipelineStage[];
   
-  // Statistiken
+  // Statistiken,
   totalDeals: number;
   totalValue: number;
   conversionRates: Record<DealStage, number>;
   
-  // Metadaten
+  // Metadaten,
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -2067,8 +1836,8 @@ export interface PipelineStage {
 
 // --- Vertriebs-Dashboard Widgets ---
 export interface SalesDashboardWidget {
-  id: string;
-  type: SalesWidgetType;
+  id: string;;
+type: SalesWidgetType;
   title: string;
   position: {
     x: number;
@@ -2089,7 +1858,7 @@ export enum SalesWidgetType {
   SALES_ACTIVITIES = 'sales_activities',
   OFFER_CONVERSION = 'offer_conversion',
   ORDER_STATUS = 'order_status',
-  SALES_PERFORMANCE = 'sales_performance'
+  SALES_PERFORMANCE = 'sales_performance',
 }
 
 export interface SalesWidgetConfig {
@@ -2100,15 +1869,15 @@ export interface SalesWidgetConfig {
     end: string;
   };
   pipelineId?: string;
-  filters?: Record<string, any>;
-  displayOptions?: Record<string, any>;
+  filters?: Record<string, unknown>;
+  displayOptions?: Record<string, unknown>;
 }
 
 // --- Vertriebs-Filter & Suche ---
 export interface DealFilter {
   search?: string;
-  stage?: DealStage;
-  type?: DealType;
+  stage?: DealStage;;
+type?: DealType;
   salesRep?: string;
   assignedTo?: string;
   probability?: {
@@ -2176,8 +1945,8 @@ export interface OrderFilter {
 export interface DealFormData {
   title: string;
   description?: string;
-  stage: DealStage;
-  type: DealType;
+  stage: DealStage;;
+type: DealType;
   probability: number;
   expectedCloseDate: string;
   estimatedValue: number;
@@ -2198,8 +1967,8 @@ export interface OfferFormData {
   salesRep: string;
   assignedTo?: string;
   leadSource?: string;
-  plannedDeliveryDate?: string;
-  constructionSite?: string;
+  plannedDeliveryDate?: string;;
+constructionSite?: string;
   deliveryAddress?: {
     street: string;
     zipCode: string;
@@ -2222,8 +1991,8 @@ export interface OrderFormData {
   salesRep: string;
   assignedTo?: string;
   plannedDeliveryDate?: string;
-  requestedDeliveryDate?: string;
-  constructionSite?: string;
+  requestedDeliveryDate?: string;;
+constructionSite?: string;
   deliveryAddress?: {
     street: string;
     zipCode: string;
@@ -2243,7 +2012,7 @@ export interface OrderFormData {
 
 // --- Vertriebs-Analytics ---
 export interface SalesAnalytics {
-  // Pipeline-Metriken
+  // Pipeline-Metriken,
   totalDeals: number;
   activeDeals: number;
   wonDeals: number;
@@ -2251,17 +2020,17 @@ export interface SalesAnalytics {
   totalPipelineValue: number;
   averageDealSize: number;
   
-  // Conversion-Metriken
+  // Conversion-Metriken,
   offerToOrderConversion: number;
   dealToOrderConversion: number;
   averageSalesCycle: number; // in Tagen
   
-  // Umsatz-Metriken
+  // Umsatz-Metriken,
   totalRevenue: number;
   forecastedRevenue: number;
   revenueGrowth: number;
   
-  // Aktivitäts-Metriken
+  // Aktivitäts-Metriken,
   totalActivities: number;
   averageActivitiesPerDeal: number;
   topSalesReps: {
@@ -2291,7 +2060,7 @@ export enum SupplierStatus {
   INACTIVE = 'inaktiv',
   BLOCKED = 'gesperrt',
   PENDING = 'ausstehend',
-  APPROVED = 'genehmigt'
+  APPROVED = 'genehmigt',
 }
 
 export enum SupplierCategory {
@@ -2300,7 +2069,7 @@ export enum SupplierCategory {
   RETAILER = 'einzelhändler',
   SERVICE_PROVIDER = 'dienstleister',
   LOGISTICS = 'logistik',
-  OTHER = 'sonstiger'
+  OTHER = 'sonstiger',
 }
 
 export enum InquiryStatus {
@@ -2310,7 +2079,7 @@ export enum InquiryStatus {
   NEGOTIATING = 'verhandlung',
   ACCEPTED = 'angenommen',
   REJECTED = 'abgelehnt',
-  EXPIRED = 'abgelaufen'
+  EXPIRED = 'abgelaufen',
 }
 
 export enum OrderStatus {
@@ -2323,7 +2092,7 @@ export enum OrderStatus {
   DELIVERED = 'geliefert',
   COMPLETED = 'abgeschlossen',
   CANCELLED = 'storniert',
-  ON_HOLD = 'pausiert'
+  ON_HOLD = 'pausiert',
 }
 
 export enum PaymentStatus {
@@ -2331,7 +2100,7 @@ export enum PaymentStatus {
   PARTIAL = 'teilweise',
   PAID = 'bezahlt',
   OVERDUE = 'überfällig',
-  CANCELLED = 'storniert'
+  CANCELLED = 'storniert',
 }
 
 export interface Supplier {
@@ -2339,14 +2108,14 @@ export interface Supplier {
   supplierNumber: string;
   name: string;
   
-  // Stammdaten
+  // Stammdaten,
   status: SupplierStatus;
   category: SupplierCategory;
   taxNumber?: string;
   vatNumber?: string;
   commercialRegister?: string;
   
-  // Adressdaten
+  // Adressdaten,
   address: {
     street: string;
     zipCode: string;
@@ -2409,14 +2178,14 @@ export interface SupplierContactPerson {
   id: string;
   supplierId: string;
   
-  // Persönliche Daten
+  // Persönliche Daten,
   salutation: 'Herr' | 'Frau' | 'Divers';
   firstName: string;
   lastName: string;
   position: string;
   department?: string;
   
-  // Kontaktdaten
+  // Kontaktdaten,
   phone: string;
   mobile?: string;
   fax?: string;
@@ -2424,16 +2193,16 @@ export interface SupplierContactPerson {
   skype?: string;
   linkedin?: string;
   
-  // Status & Rollen
+  // Status & Rollen,
   isMainContact: boolean;
   isActive: boolean;
   role: 'purchasing' | 'technical' | 'billing' | 'logistics' | 'other';
   
-  // Notizen
+  // Notizen,
   notes?: string;
   tags?: string[];
   
-  // Metadaten
+  // Metadaten,
   createdAt: string;
   updatedAt: string;
   lastContactDate?: string;
@@ -2445,39 +2214,39 @@ export interface SupplierInquiry {
   supplierId: string;
   inquiryNumber: string;
   
-  // Anfragedaten
+  // Anfragedaten,
   title: string;
   description?: string;
   inquiryDate: string;
   plannedDeliveryDate?: string;
   
-  // Bediener & Kommission
+  // Bediener & Kommission,
   operator: string;
   commission?: string;
   
-  // Angebotsdaten
+  // Angebotsdaten,
   offerNumber?: string;
   offerDate?: string;
   netAmount?: number;
   
-  // Status & Workflow
+  // Status & Workflow,
   status: InquiryStatus;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   
-  // Verknüpfungen
+  // Verknüpfungen,
   convertedToOrder?: string; // Order ID
   relatedOrders: SupplierOrder[];
   
-  // Items
+  // Items,
   items: InquiryItem[];
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   updatedAt: string;
   lastModifiedBy?: string;
   
-  // Dokumentation
+  // Dokumentation,
   attachments?: string[];
   notes?: string;
   tags?: string[];
@@ -2501,56 +2270,56 @@ export interface SupplierOrder {
   inquiryId?: string;
   orderNumber: string;
   
-  // Bestelldaten
+  // Bestelldaten,
   title: string;
   description?: string;
   orderDate: string;
   plannedDeliveryDate?: string;
   
-  // Bediener & Kommission
+  // Bediener & Kommission,
   operator: string;
   commission?: string;
   
-  // Lieferung
+  // Lieferung,
   confirmedDeliveryDate?: string;
   requestedDeliveryDate?: string;
   
-  // Preise
+  // Preise,
   netAmount: number;
   grossAmount: number;
   taxAmount: number;
   currency: string;
   
-  // Status & Workflow
+  // Status & Workflow,
   status: SupplierOrderStatus;
   paymentStatus: PaymentStatus;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   
-  // Rechnungsdaten
+  // Rechnungsdaten,
   invoiceNumber?: string;
   invoiceDate?: string;
   
-  // Anwendungsgebiet & Experte
+  // Anwendungsgebiet & Experte,
   applicationArea?: string;
   expert?: string;
   
-  // Info an Lieferant
+  // Info an Lieferant,
   infoToSupplier?: string;
   
-  // Verknüpfungen
+  // Verknüpfungen,
   deliveries: SupplierDelivery[];
   invoices: SupplierInvoice[];
   
-  // Items
+  // Items,
   items: OrderItem[];
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   updatedAt: string;
   lastModifiedBy?: string;
   
-  // Dokumentation
+  // Dokumentation,
   attachments?: string[];
   notes?: string;
   tags?: string[];
@@ -2562,18 +2331,18 @@ export interface SupplierDelivery {
   orderId: string;
   deliveryNumber: string;
   
-  // Lieferschein-Daten
+  // Lieferschein-Daten,
   deliveryDate: string;
   deliveryAddress?: string;
   notes?: string;
   
-  // Status
+  // Status,
   status: 'draft' | 'sent' | 'delivered' | 'confirmed' | 'partially_delivered';
   
-  // Items
+  // Items,
   items: DeliveryItem[];
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   updatedAt: string;
@@ -2585,26 +2354,26 @@ export interface SupplierInvoice {
   orderId?: string;
   invoiceNumber: string;
   
-  // Rechnungsdaten
+  // Rechnungsdaten,
   invoiceDate: string;
   dueDate: string;
   paymentDate?: string;
   
-  // Preise
+  // Preise,
   netAmount: number;
   grossAmount: number;
   taxAmount: number;
   paidAmount: number;
   currency: string;
   
-  // Status
+  // Status,
   status: 'draft' | 'received' | 'approved' | 'paid' | 'overdue' | 'cancelled';
   paymentStatus: PaymentStatus;
   
-  // Items
+  // Items,
   items: InvoiceItem[];
   
-  // Metadaten
+  // Metadaten,
   createdBy: string;
   createdAt: string;
   updatedAt: string;
@@ -2615,29 +2384,29 @@ export interface SupplierAnalytics {
   year: number;
   month?: number;
   
-  // Einkaufsdaten
+  // Einkaufsdaten,
   totalSpent: number;
   totalOrders: number;
   averageOrderValue: number;
   spendingGrowth: number; // Prozentuale Veränderung
   
-  // Offene Posten
+  // Offene Posten,
   openInvoices: number;
   overdueInvoices: number;
   overdueAmount: number;
   averagePaymentTime: number; // in Tagen
   
-  // Lieferantenbewertung
+  // Lieferantenbewertung,
   deliveryPerformance: number; // Prozent pünktlicher Lieferungen
   qualityPerformance: number; // Prozent fehlerfreier Lieferungen
   priceCompetitiveness: number; // 1-10 Bewertung
   
-  // Aktivitätsdaten
+  // Aktivitätsdaten,
   lastOrderDate?: string;
   lastContactDate?: string;
   orderFrequency: number; // Bestellungen pro Monat
   
-  // Trends
+  // Trends,
   spendingTrend: 'increasing' | 'decreasing' | 'stable';
   orderTrend: 'increasing' | 'decreasing' | 'stable';
   performanceTrend: 'improving' | 'worsening' | 'stable';
@@ -2818,8 +2587,8 @@ export interface SupplierOrderFormData {
 
 // --- Dashboard Widgets für Lieferanten ---
 export interface SupplierDashboardWidget {
-  id: string;
-  type: SupplierWidgetType;
+  id: string;;
+type: SupplierWidgetType;
   title: string;
   position: {
     x: number;
@@ -2840,7 +2609,7 @@ export enum SupplierWidgetType {
   DELIVERY_PERFORMANCE = 'delivery_performance',
   QUICK_ACTIONS = 'quick_actions',
   SUPPLIER_SEARCH = 'supplier_search',
-  ANALYTICS = 'analytics'
+  ANALYTICS = 'analytics',
 }
 
 export interface SupplierWidgetConfig {
@@ -2849,8 +2618,8 @@ export interface SupplierWidgetConfig {
     start: string;
     end: string;
   };
-  filters?: Record<string, any>;
-  displayOptions?: Record<string, any>;
+  filters?: Record<string, unknown>;
+  displayOptions?: Record<string, unknown>;
 } 
 
 // --- Fehlende Enums und Types für TypeScript-Fehler ---
@@ -2861,7 +2630,7 @@ export enum ContactWeekdays {
   THURSDAY = 'thursday',
   FRIDAY = 'friday',
   SATURDAY = 'saturday',
-  SUNDAY = 'sunday'
+  SUNDAY = 'sunday',
 }
 
 export interface InvoiceFilter {
@@ -2875,46 +2644,14 @@ export interface InvoiceFilter {
 } 
 
 // Mapping-Funktionen für Communication
-export const mapApiCommunicationToFormData = (apiCommunication: CustomerCommunication): CommunicationFormData => ({
-  type: apiCommunication.type,
-  subject: apiCommunication.subject,
-  content: apiCommunication.content,
-  from: apiCommunication.from,
-  to: apiCommunication.to,
-  priority: apiCommunication.priority,
-  relatedContactPersonId: apiCommunication.relatedContactPersonId || '',
-  followUpDate: apiCommunication.followUpDate || '',
-  followUpAction: apiCommunication.followUpAction || '',
-  tags: apiCommunication.tags || [],
-  category: apiCommunication.category || '',
-  attachments: []
+export const mapApiCommunicationToFormData = (apiCommunication: CustomerCommunication): CommunicationFormData => ({;
+type: apiCommunication.type, subject: apiCommunication.subject, content: apiCommunication.content, from: apiCommunication.from, to: apiCommunication.to, priority: apiCommunication.priority, relatedContactPersonId: apiCommunication.relatedContactPersonId || '', followUpDate: apiCommunication.followUpDate || '', followUpAction: apiCommunication.followUpAction || '', tags: apiCommunication.tags || [], category: apiCommunication.category || '', attachments: []
 });
 
-export const mapFormDataToApiCommunication = (formData: CommunicationFormData, communicationId: string): Omit<CustomerCommunication, 'id' | 'customerId' | 'date' | 'status' | 'outcome' | 'followUpCompleted' | 'duration' | 'cost' | 'createdBy' | 'updatedAt'> => ({
-  type: formData.type,
-  subject: formData.subject,
-  content: formData.content,
-  from: formData.from,
-  to: formData.to,
-  priority: formData.priority,
-  relatedContactPersonId: formData.relatedContactPersonId || undefined,
-  followUpDate: formData.followUpDate || undefined,
-  followUpAction: formData.followUpAction || undefined,
-  tags: formData.tags || [],
-  category: formData.category || undefined
+export const mapFormDataToApiCommunication = (formData: CommunicationFormData, communicationId: string): Omit<CustomerCommunication, 'id' | 'customerId' | 'date' | 'status' | 'outcome' | 'followUpCompleted' | 'duration' | 'cost' | 'createdBy' | 'updatedAt'> => ({;
+type: formData.type, subject: formData.subject, content: formData.content, from: formData.from, to: formData.to, priority: formData.priority, relatedContactPersonId: formData.relatedContactPersonId || undefined, followUpDate: formData.followUpDate || undefined, followUpAction: formData.followUpAction || undefined, tags: formData.tags || [], category: formData.category || undefined
 });
 
-export const getInitialCommunicationFormData = (): CommunicationFormData => ({
-  type: CommunicationType.EMAIL,
-  subject: '',
-  content: '',
-  from: '',
-  to: '',
-  priority: 'medium',
-  relatedContactPersonId: '',
-  followUpDate: '',
-  followUpAction: '',
-  tags: [],
-  category: '',
-  attachments: []
+export const getInitialCommunicationFormData = (): CommunicationFormData => ({;
+type: CommunicationType.EMAIL, subject: '', content: '', from: '', to: '', priority: 'medium', relatedContactPersonId: '', followUpDate: '', followUpAction: '', tags: [], category: '', attachments: []
 });

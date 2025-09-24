@@ -1,85 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Typography,
-  Card,
-  Grid,
-  Button,
-  CircularProgress,
-  Alert,
-  Chip,
-  LinearProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Tooltip
-} from '@mui/material';
+  Box, Typography, Card, Grid, Button, CircularProgress, Alert, Chip, LinearProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Tooltip} from '@mui/material';
 import {
-  TrendingUp as TrendingUpIcon,
-  Psychology as PsychologyIcon,
-  Analytics as AnalyticsIcon,
-  Refresh as RefreshIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Error as ErrorIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import TrustIndicator from '../components/TrustIndicator';
-
+  TrendingUp as TrendingUpIcon, Psychology as PsychologyIcon, Analytics as AnalyticsIcon, Refresh as RefreshIcon, Warning as WarningIcon, CheckCircle as CheckCircleIcon, Error as ErrorIcon, Info as InfoIcon} from '@mui/icons-material';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell} from 'recharts';
+import TrustIndicator from '../components/TrustIndicator';;
 interface AIModelStatus {
   transaction_forecast: string;
   inventory_optimization: string;
   anomaly_detection: string;
   overall_status: string;
   last_update: string;
-}
-
+};
 interface PredictionMetrics {
   transaction_accuracy: number;
   inventory_optimization_score: number;
   anomaly_detection_rate: number;
-}
-
-interface Insight {
-  type: string;
+};
+interface Insight {;
+type: string;
   title: string;
   description: string;
   severity: 'info' | 'warning' | 'error' | 'success';
   timestamp: string;
-}
-
+};
 interface AIHealth {
   status: string;
   models_loaded: number;
   anomaly_detector_ready: boolean;
   last_update: string;
   version: string;
-}
-
-const AIAnalyticsDashboard: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [aiHealth, setAiHealth] = useState<AIHealth | null>(null);
-  const [modelStatus, setModelStatus] = useState<AIModelStatus | null>(null);
-  const [predictions, setPredictions] = useState<PredictionMetrics | null>(null);
-  const [insights, setInsights] = useState<Insight[]>([]);
-  const [transactionForecast, setTransactionForecast] = useState<any[]>([]);
+};
+const AIAnalyticsDashboard: React.FC = () => {;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,;
+const [aiHealth, setAiHealth] = useState<AIHealth | null>(null);,;
+const [modelStatus, setModelStatus] = useState<AIModelStatus | null>(null);,;
+const [predictions, setPredictions] = useState<PredictionMetrics | null>(null);,;
+const [insights, setInsights] = useState<Insight[]>([]);,;
+const [transactionForecast, setTransactionForecast] = useState<any[]>([]);,
 
   useEffect(() => {
-    loadAIDashboard();
-  }, []);
-
-  const loadAIDashboard = async () => {
-    setLoading(true);
+    loadAIDashboard();,
+  }, []);;
+const loadAIDashboard = async () => {
+    setLoading(true);,
     try {
-      // Mock-Daten für Demo
-      const mockData = {
+      // Mock-Daten für Demo,;
+const mockData = {
         ai_health: {
           status: 'healthy',
           models_loaded: 3,
@@ -98,15 +66,15 @@ const AIAnalyticsDashboard: React.FC = () => {
           'anomaly_detection'
         ],
         last_insights: [
-          {
-            type: 'performance',
+          {;
+type: 'performance',
             title: 'System-Optimierung',
             description: 'AI-Modelle zeigen gute Performance',
             severity: 'info' as const,
             timestamp: new Date().toISOString()
           },
-          {
-            type: 'inventory',
+          {;
+type: 'inventory',
             title: 'Lagerbestand-Optimierung',
             description: '3 Artikel benötigen Nachbestellung',
             severity: 'warning' as const,
@@ -119,8 +87,8 @@ const AIAnalyticsDashboard: React.FC = () => {
       setPredictions(mockData.recent_predictions);
       setInsights(mockData.last_insights);
 
-      // Mock Transaktionsvorhersage
-      const forecastData = Array.from({ length: 30 }, (_, i) => ({
+      // Mock Transaktionsvorhersage;
+const forecastData = Array.from({ length: 30 }, (_, i) => ({
         date: new Date(Date.now() + i * 24 * 60 * 60 * 1000).toLocaleDateString(),
         predicted: Math.random() * 2000 + 500,
         actual: i < 7 ? Math.random() * 2000 + 500 : null
@@ -128,39 +96,32 @@ const AIAnalyticsDashboard: React.FC = () => {
       setTransactionForecast(forecastData);
 
       setModelStatus({
-        transaction_forecast: 'ready',
-        inventory_optimization: 'ready',
-        anomaly_detection: 'ready',
-        overall_status: 'healthy',
-        last_update: new Date().toISOString()
+        transaction_forecast: 'ready', inventory_optimization: 'ready', anomaly_detection: 'ready', overall_status: 'healthy', last_update: new Date().toISOString()
       });
 
     } catch (err) {
-      setError('Fehler beim Laden der AI-Analytics');
+      setError('Fehler beim Laden der AI-Analytics');,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const getSeverityIcon = (severity: string) => {
+  };;
+const getSeverityIcon = (severity: string) => {
     switch (severity) {
       case 'success': return <CheckCircleIcon color="success" />;
       case 'warning': return <WarningIcon color="warning" />;
       case 'error': return <ErrorIcon color="error" />;
       default: return <InfoIcon color="info" />;
     }
-  };
-
-  const getSeverityColor = (severity: string) => {
+  };;
+const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'success': return 'success';
       case 'warning': return 'warning';
       case 'error': return 'error';
       default: return 'info';
     }
-  };
-
-  const getModelStatusColor = (status: string) => {
+  };;
+const getModelStatusColor = (status: string) => {
     switch (status) {
       case 'ready': return 'success';
       case 'initializing': return 'warning';
@@ -170,11 +131,9 @@ const AIAnalyticsDashboard: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+    return (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
   }
 
   return (
@@ -184,38 +143,36 @@ const AIAnalyticsDashboard: React.FC = () => {
           <PsychologyIcon sx={{ color: 'primary.main' }} />
           AI Analytics Dashboard
         </Typography>
-        <Button
-          variant="outlined"
-          startIcon={<RefreshIcon />}
-          onClick={loadAIDashboard}
+        <Button;
+variant="outlined"
+          startIcon={<RefreshIcon />, }
+          onClick={loadAIDashboard, }
         >
           Aktualisieren
         </Button>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+      {error && (, <Alert severity="error" sx={{ mb: 3 }}>
+          {error, }
+        </Alert>)}
 
-      {/* AI Health Status */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={6} lg={3}>
+      {/* AI Health Status */,}
+      <Grid container spacing={3,} sx={{ mb: 3 }}>
+        <Grid item xs={12,} md={6,} lg={3,}>
           <TrustIndicator
             title="AI Service Status"
             description="Gesundheitsstatus des KI-Services"
             level={aiHealth?.status === 'healthy' ? 'high' : 'medium'}
-            value={aiHealth?.models_loaded || 0}
+            value={aiHealth?.models_loaded || 0,}
             unit="Modelle geladen"
-            lastUpdated={aiHealth?.last_update}
-            details={[
+            lastUpdated={aiHealth?.last_update,}
+            details={[,
               `Version: ${aiHealth?.version}`,
               `Anomaly Detector: ${aiHealth?.anomaly_detector_ready ? 'Bereit' : 'Nicht bereit'}`
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12,} md={6,} lg={3,}>
           <TrustIndicator
             title="Transaktionsvorhersage"
             description="Genauigkeit der Transaktionsvorhersage"
@@ -225,7 +182,7 @@ const AIAnalyticsDashboard: React.FC = () => {
             trend="up"
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12,} md={6,} lg={3,}>
           <TrustIndicator
             title="Inventar-Optimierung"
             description="Score der Inventar-Optimierung"
@@ -235,7 +192,7 @@ const AIAnalyticsDashboard: React.FC = () => {
             trend="stable"
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12,} md={6,} lg={3,}>
           <TrustIndicator
             title="Anomalie-Erkennung"
             description="Rate der Anomalie-Erkennung"
@@ -247,12 +204,12 @@ const AIAnalyticsDashboard: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Model Status */}
+      {/* Model Status */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           AI-Modell Status
         </Typography>
-        <TableContainer component={Paper} variant="outlined">
+        <TableContainer component={Paper,} variant="outlined">
           <Table>
             <TableHead>
               <TableRow>
@@ -264,21 +221,19 @@ const AIAnalyticsDashboard: React.FC = () => {
             </TableHead>
             <TableBody>
               {modelStatus && Object.entries({
-                'Transaktionsvorhersage': modelStatus.transaction_forecast,
-                'Inventar-Optimierung': modelStatus.inventory_optimization,
-                'Anomalie-Erkennung': modelStatus.anomaly_detection
+                'Transaktionsvorhersage': modelStatus.transaction_forecast, 'Inventar-Optimierung': modelStatus.inventory_optimization, 'Anomalie-Erkennung': modelStatus.anomaly_detection
               }).map(([model, status]) => (
-                <TableRow key={model}>
-                  <TableCell>{model}</TableCell>
+                <TableRow key={model, }>
+                  <TableCell>{model, }</TableCell>
                   <TableCell>
                     <Chip
-                      label={status}
-                      color={getModelStatusColor(status) as any}
+                      label={status, }
+                      color={getModelStatusColor(status) as any,}
                       size="small"
                     />
                   </TableCell>
                   <TableCell>
-                    {new Date(modelStatus.last_update).toLocaleString('de-DE')}
+                    {new Date(modelStatus.last_update).toLocaleString('de-DE'),}
                   </TableCell>
                   <TableCell>
                     <Tooltip title="Modell neu trainieren">
@@ -294,61 +249,60 @@ const AIAnalyticsDashboard: React.FC = () => {
         </TableContainer>
       </Card>
 
-      {/* Transaktionsvorhersage Chart */}
+      {/* Transaktionsvorhersage Chart */,}
       <Card sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Transaktionsvorhersage (30 Tage)
         </Typography>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={transactionForecast}>
+        <ResponsiveContainer width="100%" height={300,}>
+          <LineChart data={transactionForecast,}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis />
             <RechartsTooltip />
-            <Line
-              type="monotone"
+            <Line;
+type="monotone"
               dataKey="predicted"
               stroke="#8884d8"
-              strokeWidth={2}
+              strokeWidth={2,}
               name="Vorhersage"
             />
-            <Line
-              type="monotone"
+            <Line;
+type="monotone"
               dataKey="actual"
               stroke="#82ca9d"
-              strokeWidth={2}
+              strokeWidth={2,}
               name="Tatsächlich"
             />
           </LineChart>
         </ResponsiveContainer>
       </Card>
 
-      {/* AI Insights */}
+      {/* AI Insights */,}
       <Card sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
           KI-Insights
         </Typography>
-        <Grid container spacing={2}>
-          {insights.map((insight, index) => (
-            <Grid item xs={12} md={6} key={index}>
+        <Grid container spacing={2,}>
+          {insights.map((insight, index) => (<Grid item xs={12, } md={6, } key={index, }>
               <Card variant="outlined" sx={{ p: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                  {getSeverityIcon(insight.severity)}
+                  {getSeverityIcon(insight.severity),}
                   <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    {insight.title}
+                    {insight.title,}
                   </Typography>
                   <Chip
-                    label={insight.severity}
-                    color={getSeverityColor(insight.severity) as any}
+                    label={insight.severity,}
+                    color={getSeverityColor(insight.severity) as any,}
                     size="small"
                     sx={{ ml: 'auto' }}
                   />
                 </Box>
                 <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
-                  {insight.description}
+                  {insight.description,}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-                  {new Date(insight.timestamp).toLocaleString('de-DE')}
+                  {new Date(insight.timestamp).toLocaleString('de-DE'),}
                 </Typography>
               </Card>
             </Grid>
@@ -356,9 +310,9 @@ const AIAnalyticsDashboard: React.FC = () => {
         </Grid>
       </Card>
 
-      {/* Performance Metrics */}
-      <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Grid item xs={12} md={6}>
+      {/* Performance Metrics */,}
+      <Grid container spacing={3,} sx={{ mt: 3 }}>
+        <Grid item xs={12,} md={6,}>
           <Card sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Modell-Performance
@@ -367,8 +321,8 @@ const AIAnalyticsDashboard: React.FC = () => {
               <Typography variant="body2" gutterBottom>
                 Transaktionsvorhersage Genauigkeit
               </Typography>
-              <LinearProgress
-                variant="determinate"
+              <LinearProgress;
+variant="determinate"
                 value={predictions?.transaction_accuracy ? predictions.transaction_accuracy * 100 : 0}
                 sx={{ height: 8, borderRadius: 4 }}
               />
@@ -380,8 +334,8 @@ const AIAnalyticsDashboard: React.FC = () => {
               <Typography variant="body2" gutterBottom>
                 Inventar-Optimierung Score
               </Typography>
-              <LinearProgress
-                variant="determinate"
+              <LinearProgress;
+variant="determinate"
                 value={predictions?.inventory_optimization_score ? predictions.inventory_optimization_score * 100 : 0}
                 sx={{ height: 8, borderRadius: 4 }}
               />
@@ -393,8 +347,8 @@ const AIAnalyticsDashboard: React.FC = () => {
               <Typography variant="body2" gutterBottom>
                 Anomalie-Erkennung Rate
               </Typography>
-              <LinearProgress
-                variant="determinate"
+              <LinearProgress;
+variant="determinate"
                 value={predictions?.anomaly_detection_rate ? predictions.anomaly_detection_rate * 100 : 0}
                 sx={{ height: 8, borderRadius: 4 }}
               />
@@ -404,19 +358,17 @@ const AIAnalyticsDashboard: React.FC = () => {
             </Box>
           </Card>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12,} md={6,}>
           <Card sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Aktive Modelle
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {['Transaktionsvorhersage', 'Inventar-Optimierung', 'Anomalie-Erkennung'].map((model) => (
-                <Box key={model} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {['Transaktionsvorhersage', 'Inventar-Optimierung', 'Anomalie-Erkennung'].map((model) => (<Box key={model, } sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <CheckCircleIcon color="success" />
-                  <Typography variant="body2">{model}</Typography>
+                  <Typography variant="body2">{model, }</Typography>
                   <Chip label="Aktiv" color="success" size="small" sx={{ ml: 'auto' }} />
-                </Box>
-              ))}
+                </Box>))}
             </Box>
           </Card>
         </Grid>

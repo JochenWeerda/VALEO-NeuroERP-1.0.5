@@ -4,36 +4,12 @@
  * Serena Quality: Complete AI chat interface with streaming
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect ,} from 'react';
 import {
-  Box,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Chip,
-  CircularProgress,
-  Alert,
-  IconButton,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Card,
-  CardContent
-} from '@mui/material';
+  Box, Paper, TextField, Button, Typography, Chip, CircularProgress, Alert, IconButton, Divider, List, ListItem, ListItemText, Card, CardContent} from '@mui/material';
 import {
-  Send as SendIcon,
-  SmartToy as AIIcon,
-  Person as PersonIcon,
-  Refresh as RefreshIcon,
-  ContentCopy as CopyIcon,
-  Download as DownloadIcon,
-  Mic as MicIcon,
-  MicOff as MicOffIcon
-} from '@mui/icons-material';
-import { useTheme } from '@mui/material/styles';
-
+  Send as SendIcon, SmartToy as AIIcon, Person as PersonIcon, Refresh as RefreshIcon, ContentCopy as CopyIcon, Download as DownloadIcon, Mic as MicIcon, MicOff as MicOffIcon} from '@mui/icons-material';
+import { useTheme ,} from '@mui/material/styles';;
 interface ChatMessage {
   id: string;
   content: string;
@@ -42,82 +18,70 @@ interface ChatMessage {
   model?: string;
   confidence?: number;
   suggestions?: string[];
-}
-
+};
 interface HorizonBetaChatProps {
   module?: string;
   context?: string;
   maxTokens?: number;
   onMessageSend?: (message: string) => void;
-  onResponseReceived?: (response: any) => void;
-}
-
+  onResponseReceived?: (response: unknown) => void;
+};
 const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
-  module = 'valeo_general',
-  context = 'valeo_general',
-  maxTokens = 2000,
-  onMessageSend,
-  onResponseReceived
-}) => {
-  const theme = useTheme();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isStreaming, setIsStreaming] = useState(false);
-  const [streamingMessage, setStreamingMessage] = useState('');
-  const [voiceRunning, setVoiceRunning] = useState<boolean>(false);
-  const apiBase: string = (window as any).__VALEO_API_BASE__ || '';
+  module = 'valeo_general', context = 'valeo_general', maxTokens = 2000, onMessageSend, onResponseReceived, }) => {;
+const theme = useTheme();,;
+const [messages, setMessages] = useState<ChatMessage[]>([]);,;
+const [inputValue, setInputValue] = useState('');,;
+const [isLoading, setIsLoading] = useState(false);,;
+const [error, setError] = useState<string | null>(null);,;
+const [isStreaming, setIsStreaming] = useState(false);,;
+const [streamingMessage, setStreamingMessage] = useState('');,;
+const [voiceRunning, setVoiceRunning] = useState<boolean>(false);,;
+const apiBase: string = (window as any).__VALEO_API_BASE__ || '';;
+const messagesEndRef = useRef<HTMLDivElement>(null);,;
+const inputRef = useRef<HTMLInputElement>(null);,
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  // Auto-scroll to bottom
-  const scrollToBottom = () => {
+  // Auto-scroll to bottom,;
+const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottom();,
   }, [messages, streamingMessage]);
 
   // Focus input on mount
   useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const fetchVoiceStatus = async () => {
-    try {
-      const res = await fetch(`${apiBase}/voice/status`);
-      if (!res.ok) return;
-      const data = await res.json();
+    inputRef.current?.focus();,
+  }, []);;
+const fetchVoiceStatus = async () => {
+    try {;
+const res = await fetch(`${apiBase, }/voice/status`);
+      if (!res.ok) return;;
+const data = await res.json();
       setVoiceRunning(Boolean(data.running));
     } catch {}
   };
 
   useEffect(() => {
-    fetchVoiceStatus();
-    const id = setInterval(fetchVoiceStatus, 5000);
-    return () => clearInterval(id);
-  }, []);
-
-  const handleToggleVoice = async () => {
+    fetchVoiceStatus();,;
+const id = setInterval(fetchVoiceStatus, 5000);,
+    return () => clearInterval(id);,
+  }, []);;
+const handleToggleVoice = async () => {
     try {
       if (voiceRunning) {
-        await fetch(`${apiBase}/voice/stop`, { method: 'POST' });
+        await fetch(`${apiBase, }/voice/stop`, { method: 'POST' });
         setVoiceRunning(false);
       } else {
-        await fetch(`${apiBase}/voice/start`, { method: 'POST' });
+        await fetch(`${apiBase, }/voice/start`, { method: 'POST' });
         // leichte Verzögerung und Status prüfen
         setTimeout(fetchVoiceStatus, 800);
       }
     } catch {}
-  };
-
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
-
-    const userMessage: ChatMessage = {
+  };;
+const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;,;
+const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content: inputValue,
       role: 'user',
@@ -135,27 +99,21 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
     onMessageSend?.(inputValue);
 
     try {
-      // Send to Horizon Beta API
-      const response = await fetch('/api/v1/horizon/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      // Send to Horizon Beta API,;
+const response = await fetch('/api/v1/horizon/chat', {
+        method: 'POST', headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
-          query: inputValue,
-          context: context,
-          max_tokens: maxTokens
+          query: inputValue, context: context, max_tokens: maxTokens
         })
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      
-      const assistantMessage: ChatMessage = {
+        throw new Error(`HTTP ${response.status, }: ${response.statusText, }`);
+      };
+const data = await response.json();;
+const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content: data.response,
         role: 'assistant',
@@ -172,14 +130,12 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
       setError(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten');
       console.error('Horizon Beta chat error:', err);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false);,
     }
-  };
-
-  const handleStreamingChat = async () => {
-    if (!inputValue.trim() || isLoading) return;
-
-    const userMessage: ChatMessage = {
+  };;
+const handleStreamingChat = async () => {
+    if (!inputValue.trim() || isLoading) return;,;
+const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content: inputValue,
       role: 'user',
@@ -193,58 +149,51 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
     setIsStreaming(true);
     setStreamingMessage('');
 
-    try {
-      const response = await fetch('/api/v1/horizon/chat/stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+    try {;
+const response = await fetch('/api/v1/horizon/chat/stream', {
+        method: 'POST', headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
-          query: inputValue,
-          context: context,
-          max_tokens: maxTokens
+          query: inputValue, context: context, max_tokens: maxTokens
         })
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error('Stream reader not available');
-
-      let fullResponse = '';
+        throw new Error(`HTTP ${response.status, }: ${response.statusText, }`);
+      };
+const reader = response.body?.getReader();
+      if (!reader) throw new Error('Stream reader not available');;
+let fullResponse = '';
       
-      // Stream lesen, bis der Reader signalisiert, dass der Stream zu Ende ist
-      let doneReading = false;
-      while (!doneReading) {
-        const { done, value } = await reader.read();
+      // Stream lesen, bis der Reader signalisiert, dass der Stream zu Ende ist;
+let doneReading = false;
+      while (!doneReading) {;
+const { _done, _value,} = await reader.read();
         if (done) {
-          doneReading = true;
-          break;
-        }
-        
-        const chunk = new TextDecoder().decode(value);
-        const lines = chunk.split('\n');
+          doneReading = true;,
+          break;,
+        };
+const chunk = new TextDecoder().decode(value);;
+const lines = chunk.split('\n');
         
         for (const line of lines) {
           if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
+            try {;
+const data = JSON.parse(line.slice(6));,
               if (data.content) {
-                fullResponse += data.content;
-                setStreamingMessage(fullResponse);
+                fullResponse += data.content;,
+                setStreamingMessage(fullResponse);,
               }
             } catch (e) {
-              // Ignore parsing errors for incomplete chunks
+              // Ignore parsing errors for incomplete chunks,
             }
           }
         }
       }
 
-      // Add final message
-      const assistantMessage: ChatMessage = {
+      // Add final message;
+const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content: fullResponse,
         role: 'assistant',
@@ -258,58 +207,48 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
 
       // Call callback if provided
       if (onResponseReceived) {
-        onResponseReceived(assistantMessage);
+        onResponseReceived(assistantMessage);,
       }
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Streaming-Fehler');
       console.error('Horizon Beta streaming error:', err);
     } finally {
-      setIsLoading(false);
-      setIsStreaming(false);
+      setIsLoading(false);,
+      setIsStreaming(false);,
     }
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent) => {
+  };;
+const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      handleSendMessage();
+      event.preventDefault();,
+      handleSendMessage();,
     }
-  };
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
-
-  const downloadChat = () => {
-    const chatText = messages.map(msg => 
-      `${msg.role === 'user' ? 'Sie' : 'Horizon Beta'}: ${msg.content}`
-    ).join('\n\n');
-    
-    const blob = new Blob([chatText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+  };;
+const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);,
+  };;
+const downloadChat = () => {;
+const chatText = messages.map(msg =>, `${msg.role === 'user' ? 'Sie' : 'Horizon Beta'}: ${msg.content, }`).join('\n\n');;
+const blob = new Blob([chatText], { type: 'text/plain' });;
+const url = URL.createObjectURL(blob);;
+const a = document.createElement('a');
     a.href = url;
-    a.download = `valeo-chat-${new Date().toISOString().split('T')[0]}.txt`;
+    a.download = `valeo-chat-${new Date().toISOString().split('T')[0],}.txt`;
     a.click();
     URL.revokeObjectURL(url);
-  };
-
-  const clearChat = () => {
-    setMessages([]);
-    setError(null);
+  };;
+const clearChat = () => {
+    setMessages([]);,
+    setError(null);,
   };
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
+      {/* Header */, }
       <Paper 
-        elevation={1} 
+        elevation={1, } 
         sx={{ 
-          p: 2, 
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          backgroundColor: theme.palette.primary.main,
-          color: 'white'
+          p: 2, borderBottom: `1px solid ${theme.palette.divider}`, backgroundColor: theme.palette.primary.main, color: 'white'
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -321,7 +260,7 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
             <Chip 
               label="VALEO NeuroERP" 
               size="small" 
-              sx={{ backgroundColor: 'rgba(255,255,255,0.2)', color: 'white' }}
+              sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: 'white' }}
             />
           </Box>
           
@@ -329,25 +268,25 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
             <Chip 
               label={voiceRunning ? 'Sprachassistent: AN' : 'Sprachassistent: AUS'}
               size="small"
-              sx={{ backgroundColor: voiceRunning ? 'rgba(76,175,80,0.3)' : 'rgba(255,255,255,0.2)', color: 'white' }}
+              sx={{ backgroundColor: voiceRunning ? 'rgba(76, 175, 80, 0.3)' : 'rgba(255, 255, 255, 0.2)', color: 'white' }}
             />
             <IconButton 
               size="small" 
-              onClick={handleToggleVoice}
+              onClick={handleToggleVoice,}
               sx={{ color: 'white' }}
             >
               {voiceRunning ? <MicOffIcon /> : <MicIcon />}
             </IconButton>
             <IconButton 
               size="small" 
-              onClick={clearChat}
+              onClick={clearChat,}
               sx={{ color: 'white' }}
             >
               <RefreshIcon />
             </IconButton>
             <IconButton 
               size="small" 
-              onClick={downloadChat}
+              onClick={downloadChat,}
               sx={{ color: 'white' }}
             >
               <DownloadIcon />
@@ -360,7 +299,7 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
         </Typography>
       </Paper>
 
-      {/* Messages */}
+      {/* Messages */,}
       <Box 
         sx={{ 
           flex: 1, 
@@ -369,8 +308,7 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
           backgroundColor: theme.palette.grey[50]
         }}
       >
-        {messages.length === 0 && (
-          <Card sx={{ mb: 2, backgroundColor: theme.palette.primary.light, color: 'white' }}>
+        {messages.length === 0 && (<Card sx={{ mb: 2, backgroundColor: theme.palette.primary.light, color: 'white' }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Willkommen bei Horizon Beta!
@@ -405,63 +343,49 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
                 </ListItem>
               </List>
             </CardContent>
-          </Card>
-        )}
+          </Card>)}
 
-        {messages.map((message) => (
-          <Box
-            key={message.id}
+        {messages.map((message) => (<Box, key={message.id, }
             sx={{
-              display: 'flex',
-              justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start',
-              mb: 2
+              display: 'flex', justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start', mb: 2
             }}
           >
             <Paper
-              elevation={1}
+              elevation={1, }
               sx={{
-                p: 2,
-                maxWidth: '70%',
-                backgroundColor: message.role === 'user' 
-                  ? theme.palette.primary.main 
-                  : 'white',
-                color: message.role === 'user' ? 'white' : 'inherit',
-                borderRadius: 2
+                p: 2, maxWidth: '70%', backgroundColor: message.role === 'user' 
+                  ? theme.palette.primary.main, : 'white', color: message.role === 'user' ? 'white' : 'inherit', borderRadius: 2
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
                 {message.role === 'user' ? <PersonIcon /> : <AIIcon />}
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-                    {message.content}
+                    {message.content, }
                   </Typography>
                   
-                  {message.suggestions && message.suggestions.length > 0 && (
-                    <Box sx={{ mt: 2 }}>
+                  {message.suggestions && message.suggestions.length > 0 && (, <Box sx={{ mt: 2 }}>
                       <Typography variant="caption" sx={{ opacity: 0.7 }}>
                         Vorschläge:
                       </Typography>
                       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
-                        {message.suggestions.map((suggestion, index) => (
-                          <Chip
-                            key={index}
-                            label={suggestion}
-                            size="small"
-                            variant="outlined"
+                        {message.suggestions.map((suggestion, index) => (<Chip, key={index, }
+                            label={suggestion, }
+                            size="small";
+variant="outlined"
                             sx={{ fontSize: '0.7rem' }}
-                          />
-                        ))}
+                          />))}
                       </Box>
                     </Box>
                   )}
                   
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
                     <Typography variant="caption" sx={{ opacity: 0.7 }}>
-                      {message.timestamp.toLocaleTimeString()}
+                      {message.timestamp.toLocaleTimeString(),}
                     </Typography>
                     <IconButton
                       size="small"
-                      onClick={() => copyToClipboard(message.content)}
+                      onClick={() => copyToClipboard(message.content),}
                       sx={{ color: 'inherit' }}
                     >
                       <CopyIcon fontSize="small" />
@@ -473,23 +397,19 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
           </Box>
         ))}
 
-        {/* Streaming message */}
-        {isStreaming && streamingMessage && (
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+        {/* Streaming message */,}
+        {isStreaming && streamingMessage && (<Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
             <Paper
-              elevation={1}
+              elevation={1, }
               sx={{
-                p: 2,
-                maxWidth: '70%',
-                backgroundColor: 'white',
-                borderRadius: 2
+                p: 2, maxWidth: '70%', backgroundColor: 'white', borderRadius: 2
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
                 <AIIcon />
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-                    {streamingMessage}
+                    {streamingMessage, }
                     <Box component="span" sx={{ animation: 'blink 1s infinite' }}>
                       |
                     </Box>
@@ -497,43 +417,36 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
                 </Box>
               </Box>
             </Paper>
-          </Box>
-        )}
+          </Box>)}
 
-        {/* Loading indicator */}
-        {isLoading && !isStreaming && (
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+        {/* Loading indicator */,}
+        {isLoading && !isStreaming && (<Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
             <Paper
-              elevation={1}
+              elevation={1, }
               sx={{
-                p: 2,
-                backgroundColor: 'white',
-                borderRadius: 2
+                p: 2, backgroundColor: 'white', borderRadius: 2
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <CircularProgress size={20} />
+                <CircularProgress size={20, } />
                 <Typography variant="body2">
                   Horizon Beta denkt nach...
                 </Typography>
               </Box>
             </Paper>
-          </Box>
-        )}
+          </Box>)}
 
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef,} />
       </Box>
 
-      {/* Error display */}
-      {error && (
-        <Alert severity="error" sx={{ m: 2 }}>
-          {error}
-        </Alert>
-      )}
+      {/* Error display */,}
+      {error && (<Alert severity="error" sx={{ m: 2 }}>
+          {error, }
+        </Alert>)}
 
-      {/* Input */}
+      {/* Input */,}
       <Paper 
-        elevation={2} 
+        elevation={2,} 
         sx={{ 
           p: 2, 
           borderTop: `1px solid ${theme.palette.divider}`,
@@ -542,22 +455,22 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
       >
         <Box sx={{ display: 'flex', gap: 1 }}>
           <TextField
-            ref={inputRef}
+            ref={inputRef,}
             fullWidth
             multiline
-            maxRows={4}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
+            maxRows={4,}
+            value={inputValue,}
+            onChange={(e) => setInputValue(e.target.value),}
+            onKeyPress={handleKeyPress,}
             placeholder="Fragen Sie Horizon Beta... (Enter zum Senden, Shift+Enter für neue Zeile)"
-            disabled={isLoading}
-            variant="outlined"
+            disabled={isLoading,};
+variant="outlined"
             size="small"
           />
-          <Button
-            variant="contained"
-            onClick={handleSendMessage}
-            disabled={!inputValue.trim() || isLoading}
+          <Button;
+variant="contained"
+            onClick={handleSendMessage,}
+            disabled={!inputValue.trim() || isLoading,}
             sx={{ minWidth: 'auto', px: 2 }}
           >
             <SendIcon />
@@ -569,7 +482,7 @@ const HorizonBetaChat: React.FC<HorizonBetaChatProps> = ({
             Horizon Beta • OpenRouter • VALEO NeuroERP 2.0
           </Typography>
           <Typography variant="caption" sx={{ opacity: 0.7 }}>
-            {messages.length} Nachrichten
+            {messages.length,} Nachrichten
           </Typography>
         </Box>
       </Paper>

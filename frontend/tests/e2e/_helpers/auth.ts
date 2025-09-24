@@ -1,3 +1,4 @@
+
 import { Page, expect } from '@playwright/test';
 
 export async function login(page: Page, email: string, password: string) {
@@ -89,7 +90,9 @@ export async function login(page: Page, email: string, password: string) {
     if (!(window as any).Quagga) {
       // @ts-expect-error - Adding Quagga to window object
       (window as any).Quagga = {
-        init: (_cfg: any, cb?: (err?: any) => void) => { cb && cb(); },
+        init: (_cfg: any, cb?: (err?: any) => void) => {
+          if (cb) cb();
+        },
         start: () => {},
         stop: () => {},
         onDetected: (_h: any) => {},

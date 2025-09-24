@@ -54,8 +54,8 @@ export interface UserBehavior {
 }
 
 // Preload-Event
-export interface PreloadEvent {
-  type: 'start' | 'success' | 'error' | 'timeout';
+export interface PreloadEvent {;
+type: 'start' | 'success' | 'error' | 'timeout';
   route: string;
   timestamp: Date;
   duration?: number;
@@ -84,10 +84,10 @@ export interface PreloadStrategy {
 }
 
 // Preload-Bedingung
-export interface PreloadCondition {
-  type: 'route' | 'userBehavior' | 'performance' | 'network';
+export interface PreloadCondition {;
+type: 'route' | 'userBehavior' | 'performance' | 'network';
   condition: string;
-  value: any;
+  value: unknown;
 }
 
 // Netzwerk-Status
@@ -150,7 +150,7 @@ export interface PreloadError {
   route: string;
   timestamp: Date;
   stack?: string;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
 }
 
 // Preload-Success-Event

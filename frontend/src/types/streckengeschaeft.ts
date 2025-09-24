@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z ,} from 'zod';
 
 /**
  * Streckengeschäft - Hauptinterface basierend auf zvoove Handel
@@ -7,27 +7,27 @@ import { z } from 'zod';
  * mit Artikel, Mengen, Preisen und Frachtkosten
  */
 export interface Streckengeschaeft {
-  // Identifikation
+  // Identifikation,
   streckeNr: string;
   vorgangsTyp: VorgangsTyp;
   datum: string;
   vorgangPosition: string;
   positionsNr: string;
   
-  // Artikel-Referenzen
+  // Artikel-Referenzen,
   artikelVon: string;
   artikelBis: string;
   artikelBezeichnung: string;
   artikelNr: string;
   sortenNr?: string;
   
-  // Verträge und Lieferscheine
+  // Verträge und Lieferscheine,
   vertrag: string;
   lieferschein: string;
   kennzeichen: string;
   lkwKennzeichen?: string;
   
-  // Mengen und Preise
+  // Mengen und Preise,
   menge: number;
   einheit: string;
   ekPreis: number; // Einkaufspreis
@@ -35,7 +35,7 @@ export interface Streckengeschaeft {
   frachtkosten: number;
   preisProEinheit: number;
   
-  // EK-Details
+  // EK-Details,
   ekMenge: number;
   ekNetto: number;
   ekLieferkosten: number;
@@ -43,7 +43,7 @@ export interface Streckengeschaeft {
   ekKontakt: string;
   ekKontaktNr: string;
   
-  // VK-Details
+  // VK-Details,
   vkMenge: number;
   vkNetto: number;
   vkLieferkosten: number;
@@ -51,7 +51,7 @@ export interface Streckengeschaeft {
   vkKontakt: string;
   vkKontaktNr: string;
   
-  // Partner
+  // Partner,
   lieferant: string;
   lieferantName: string;
   lieferantNr: string;
@@ -59,21 +59,21 @@ export interface Streckengeschaeft {
   kundeName: string;
   kundeNr: string;
   
-  // Spedition
+  // Spedition,
   spediteurNr: string;
   spediteurName: string;
   frachtart: string;
   
-  // Be-/Entladestelle
+  // Be-/Entladestelle,
   beEntladestelle: string;
   beEntladestellePLZ: string;
   land: string;
   
-  // Partie/NLS
+  // Partie/NLS,
   partienNr?: string;
   nlsNr?: string;
   
-  // Sonstige
+  // Sonstige,
   bereich: string;
   spediteur?: string;
   start?: string;
@@ -83,35 +83,35 @@ export interface Streckengeschaeft {
   kostenstelle?: string;
   bedarfsnummer?: string;
   
-  // Berechnungen
+  // Berechnungen,
   summeVk: number;
   summeEk: number;
   restwert: number;
   geplanteMengeVk: number;
   geplanteMengeEk?: number;
   
-  // Status und Metadaten
+  // Status und Metadaten,
   status: StreckenStatus;
   erstelltAm: string;
   geaendertAm: string;
   erstelltVon: string;
   
-  // Optionale Felder
+  // Optionale Felder,
   bemerkung?: string;
   referenzNr?: string;
   waehrung?: string;
   skonto?: number;
   rabatt?: number;
   
-  // Biomasse-Flag
+  // Biomasse-Flag,
   istBiomasse?: boolean;
   
-  // Rechnungs-Flags
+  // Rechnungs-Flags,
   hatEingangsrechnung?: boolean;
   hatSpeditionsrechnung?: boolean;
   hatFrachtabrechnung?: boolean;
   
-  // Deckungsbeitrag
+  // Deckungsbeitrag,
   deckungsbeitrag?: number;
 }
 
@@ -122,7 +122,7 @@ export enum VorgangsTyp {
   KAUF = 'kauf',
   VERKAUF = 'verkauf',
   UMTASCH = 'umtausch',
-  RÜCKGABE = 'rueckgabe'
+  RÜCKGABE = 'rueckgabe',
 }
 
 /**
@@ -135,7 +135,7 @@ export enum StreckenStatus {
   ABGESCHLOSSEN = 'abgeschlossen',
   STORNIERT = 'storniert',
   ERLEDIGT = 'erledigt',
-  UNERLEDIGT = 'unerledigt'
+  UNERLEDIGT = 'unerledigt',
 }
 
 /**
@@ -143,14 +143,14 @@ export enum StreckenStatus {
  */
 export enum BiomasseOption {
   ALLE = 'alle',
-  NUR_BIOMASSE = 'nur_biomasse'
+  NUR_BIOMASSE = 'nur_biomasse',
 }
 
 /**
  * Erweiterte Filter-Interface für die Streckengeschäft-Suche
  */
 export interface StreckengeschaeftFilter {
-  // STRECKE
+  // STRECKE,
   streckeNrVon?: string;
   streckeNrBis?: string;
   artikelNrVon?: string;
@@ -159,7 +159,7 @@ export interface StreckengeschaeftFilter {
   nurUnerledigte?: boolean;
   vorgaengeGetrennt?: boolean;
   
-  // LIEFERANTEN/KUNDEN
+  // LIEFERANTEN/KUNDEN,
   lieferantNrVon?: string;
   lieferantNrBis?: string;
   kundeNrVon?: string;
@@ -167,14 +167,14 @@ export interface StreckengeschaeftFilter {
   nurOhneLieferant?: boolean;
   nurOhneKunde?: boolean;
   
-  // KONTRAKTE
+  // KONTRAKTE,
   ekKontaktNrVon?: string;
   ekKontaktNrBis?: string;
   vkKontaktNrVon?: string;
   vkKontaktNrBis?: string;
   biomasseOption?: BiomasseOption;
   
-  // LIEFERRECHNUNG
+  // LIEFERRECHNUNG,
   lieferRechnungsdatumVon?: string;
   lieferRechnungsdatumBis?: string;
   lkwKennzeichenVon?: string;
@@ -184,18 +184,18 @@ export interface StreckengeschaeftFilter {
   keineFrachtabrechnung?: boolean;
   deckungsbeitragAusStreckendaten?: boolean;
   
-  // BE-/ENTLADESTELLE
+  // BE-/ENTLADESTELLE,
   land?: string;
   beEntladestellePLZVon?: string;
   beEntladestellePLZBis?: string;
   
-  // PARTIE/NLS
+  // PARTIE/NLS,
   partienNrVon?: string;
   partienNrBis?: string;
   nlsNrVon?: string;
   nlsNrBis?: string;
   
-  // SONSTIGE SELEKTIONEN
+  // SONSTIGE SELEKTIONEN,
   spediteur?: string;
   start?: string;
   ursprung?: string;
@@ -205,7 +205,7 @@ export interface StreckengeschaeftFilter {
   kostenstelle?: string;
   bedarfsnummer?: string;
   
-  // Allgemeine Filter
+  // Allgemeine Filter,
   vorgangsTyp?: VorgangsTyp;
   datumVon?: string;
   datumBis?: string;
@@ -390,8 +390,7 @@ export const StreckengeschaeftSchema = z.object({
  * Zod-Schema für erweiterte Filter
  */
 export const StreckengeschaeftFilterSchema = z.object({
-  // STRECKE
-  streckeNrVon: z.string().optional(),
+  // STRECKE, streckeNrVon: z.string().optional(),
   streckeNrBis: z.string().optional(),
   artikelNrVon: z.string().optional(),
   artikelNrBis: z.string().optional(),
@@ -399,7 +398,7 @@ export const StreckengeschaeftFilterSchema = z.object({
   nurUnerledigte: z.boolean().optional(),
   vorgaengeGetrennt: z.boolean().optional(),
   
-  // LIEFERANTEN/KUNDEN
+  // LIEFERANTEN/KUNDEN,
   lieferantNrVon: z.string().optional(),
   lieferantNrBis: z.string().optional(),
   kundeNrVon: z.string().optional(),
@@ -407,14 +406,14 @@ export const StreckengeschaeftFilterSchema = z.object({
   nurOhneLieferant: z.boolean().optional(),
   nurOhneKunde: z.boolean().optional(),
   
-  // KONTRAKTE
+  // KONTRAKTE,
   ekKontaktNrVon: z.string().optional(),
   ekKontaktNrBis: z.string().optional(),
   vkKontaktNrVon: z.string().optional(),
   vkKontaktNrBis: z.string().optional(),
   biomasseOption: z.nativeEnum(BiomasseOption).optional(),
   
-  // LIEFERRECHNUNG
+  // LIEFERRECHNUNG,
   lieferRechnungsdatumVon: z.string().optional(),
   lieferRechnungsdatumBis: z.string().optional(),
   lkwKennzeichenVon: z.string().optional(),
@@ -424,18 +423,18 @@ export const StreckengeschaeftFilterSchema = z.object({
   keineFrachtabrechnung: z.boolean().optional(),
   deckungsbeitragAusStreckendaten: z.boolean().optional(),
   
-  // BE-/ENTLADESTELLE
+  // BE-/ENTLADESTELLE,
   land: z.string().optional(),
   beEntladestellePLZVon: z.string().optional(),
   beEntladestellePLZBis: z.string().optional(),
   
-  // PARTIE/NLS
+  // PARTIE/NLS,
   partienNrVon: z.string().optional(),
   partienNrBis: z.string().optional(),
   nlsNrVon: z.string().optional(),
   nlsNrBis: z.string().optional(),
   
-  // SONSTIGE SELEKTIONEN
+  // SONSTIGE SELEKTIONEN,
   spediteur: z.string().optional(),
   start: z.string().optional(),
   ursprung: z.string().optional(),
@@ -445,7 +444,7 @@ export const StreckengeschaeftFilterSchema = z.object({
   kostenstelle: z.string().optional(),
   bedarfsnummer: z.string().optional(),
   
-  // Allgemeine Filter
+  // Allgemeine Filter,
   vorgangsTyp: z.nativeEnum(VorgangsTyp).optional(),
   datumVon: z.string().optional(),
   datumBis: z.string().optional(),
@@ -469,7 +468,7 @@ export interface StreckengeschaeftColumn {
   fixed?: 'left' | 'right';
   sorter?: boolean;
   filters?: { text: string; value: string }[];
-  render?: (value: any, record: Streckengeschaeft) => React.ReactNode;
+  render?: (value: unknown, record: Streckengeschaeft) => React.ReactNode;
 }
 
 /**
@@ -481,8 +480,8 @@ export type StreckengeschaeftFilterFromSchema = z.infer<typeof Streckengeschaeft
 /**
  * Utility-Funktionen
  */
-export const getVorgangsTypLabel = (typ: VorgangsTyp): string => {
-  const labels = {
+export const getVorgangsTypLabel = (typ: VorgangsTyp): string => {;
+const labels = {
     [VorgangsTyp.KAUF]: 'Kauf',
     [VorgangsTyp.VERKAUF]: 'Verkauf',
     [VorgangsTyp.UMTASCH]: 'Umtausch',
@@ -491,8 +490,8 @@ export const getVorgangsTypLabel = (typ: VorgangsTyp): string => {
   return labels[typ] || typ;
 };
 
-export const getStatusLabel = (status: StreckenStatus): string => {
-  const labels = {
+export const getStatusLabel = (status: StreckenStatus): string => {;
+const labels = {
     [StreckenStatus.ENTWURF]: 'Entwurf',
     [StreckenStatus.BESTÄTIGT]: 'Bestätigt',
     [StreckenStatus.IN_BEARBEITUNG]: 'In Bearbeitung',
@@ -504,8 +503,8 @@ export const getStatusLabel = (status: StreckenStatus): string => {
   return labels[status] || status;
 };
 
-export const getStatusColor = (status: StreckenStatus): string => {
-  const colors = {
+export const getStatusColor = (status: StreckenStatus): string => {;
+const colors = {
     [StreckenStatus.ENTWURF]: 'default',
     [StreckenStatus.BESTÄTIGT]: 'processing',
     [StreckenStatus.IN_BEARBEITUNG]: 'warning',
@@ -517,8 +516,8 @@ export const getStatusColor = (status: StreckenStatus): string => {
   return colors[status] || 'default';
 };
 
-export const getBiomasseOptionLabel = (option: BiomasseOption): string => {
-  const labels = {
+export const getBiomasseOptionLabel = (option: BiomasseOption): string => {;
+const labels = {
     [BiomasseOption.ALLE]: 'Alle',
     [BiomasseOption.NUR_BIOMASSE]: 'Nur Biomasse'
   };
@@ -529,33 +528,32 @@ export const getBiomasseOptionLabel = (option: BiomasseOption): string => {
  * Berechnungsfunktionen
  */
 export const calculateGewinn = (vkPreis: number, ekPreis: number, menge: number, frachtkosten: number = 0): number => {
-  return (vkPreis - ekPreis) * menge - frachtkosten;
+  return (vkPreis - ekPreis) * menge - frachtkosten;,
 };
 
 export const calculateGewinnmarge = (vkPreis: number, ekPreis: number): number => {
-  if (ekPreis === 0) return 0;
-  return ((vkPreis - ekPreis) / ekPreis) * 100;
+  if (ekPreis === 0) return 0;,
+  return ((vkPreis - ekPreis) / ekPreis) * 100;,
 };
 
 export const calculateDeckungsbeitrag = (vkBetrag: number, ekBetrag: number, frachtkosten: number): number => {
-  return vkBetrag - ekBetrag - frachtkosten;
+  return vkBetrag - ekBetrag - frachtkosten;,
 };
 
 export const calculateMwSt = (betrag: number, mwstSatz: number = 19): number => {
-  return betrag * (mwstSatz / 100);
+  return betrag * (mwstSatz / 100);,
 };
 
 export const formatCurrency = (amount: number, currency: string = 'EUR'): string => {
   return new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: currency
+    style: 'currency', currency: currency
   }).format(amount);
 };
 
 export const formatNumber = (num: number): string => {
-  return new Intl.NumberFormat('de-DE').format(num);
+  return new Intl.NumberFormat('de-DE').format(num);,
 };
 
 export const formatDate = (date: string): string => {
-  return new Date(date).toLocaleDateString('de-DE');
+  return new Date(date).toLocaleDateString('de-DE');,
 }; 

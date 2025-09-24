@@ -1,15 +1,15 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create ,} from 'zustand';
+import { devtools ,} from 'zustand/middleware';
 
-// App State Types für VALEO NeuroERP
+// App State Types für VALEO NeuroERP;
 interface AppState {
-  // UI State
+  // UI State,
   sidebarOpen: boolean;
   mobileMenuOpen: boolean;
   loadingOverlay: boolean;
   currentPage: string;
   
-  // Feature Flags
+  // Feature Flags,
   features: {
     aiAssistant: boolean;
     advancedAnalytics: boolean;
@@ -22,25 +22,24 @@ interface AppState {
   isOnline: boolean;
   lastSync: Date | null;
   maintenanceMode: boolean;
-}
-
+};
 interface AppStore extends AppState {
-  // Actions
+  // Actions,
   toggleSidebar: () => void;
-  setSidebarOpen: (open: boolean) => void;
+  setSidebarOpen: (open: _boolean) => void;
   toggleMobileMenu: () => void;
-  setMobileMenuOpen: (open: boolean) => void;
-  setLoadingOverlay: (loading: boolean) => void;
-  setCurrentPage: (page: string) => void;
+  setMobileMenuOpen: (open: _boolean) => void;
+  setLoadingOverlay: (loading: _boolean) => void;
+  setCurrentPage: (page: _string) => void;
   toggleFeature: (feature: keyof AppState['features']) => void;
-  setFeature: (feature: keyof AppState['features'], enabled: boolean) => void;
-  setOnlineStatus: (online: boolean) => void;
-  setLastSync: (date: Date) => void;
-  setMaintenanceMode: (mode: boolean) => void;
+  setFeature: (feature: keyof AppState['features'], enabled: _boolean) => void;
+  setOnlineStatus: (online: _boolean) => void;
+  setLastSync: (date: _Date) => void;
+  setMaintenanceMode: (mode: _boolean) => void;
   resetAppState: () => void;
 }
 
-// Default App State
+// Default App State;
 const defaultAppState: AppState = {
   sidebarOpen: true,
   mobileMenuOpen: false,
@@ -58,17 +57,13 @@ const defaultAppState: AppState = {
   maintenanceMode: false
 };
 
-export const useAppStore = create<AppStore>()(
-  devtools(
+export const useAppStore = create<AppStore>()(devtools(
     (set, get) => ({
-      ...defaultAppState,
-      
-      // Actions
-      toggleSidebar: () => {
+      ...defaultAppState, // Actions, toggleSidebar: () => {
         set((state) => ({ sidebarOpen: !state.sidebarOpen }));
       },
       
-      setSidebarOpen: (open) => {
+      setSidebarOpen: (_open) => {
         set({ sidebarOpen: open });
       },
       
@@ -76,50 +71,48 @@ export const useAppStore = create<AppStore>()(
         set((state) => ({ mobileMenuOpen: !state.mobileMenuOpen }));
       },
       
-      setMobileMenuOpen: (open) => {
+      setMobileMenuOpen: (_open) => {
         set({ mobileMenuOpen: open });
       },
       
-      setLoadingOverlay: (loading) => {
+      setLoadingOverlay: (_loading) => {
         set({ loadingOverlay: loading });
       },
       
-      setCurrentPage: (page) => {
+      setCurrentPage: (_page) => {
         set({ currentPage: page });
       },
       
-      toggleFeature: (feature) => {
+      toggleFeature: (_feature) => {
         set((state) => ({
           features: {
-            ...state.features,
-            [feature]: !state.features[feature]
+            ...state.features, [feature]: !state.features[feature]
           }
         }));
       },
       
-      setFeature: (feature, enabled) => {
+      setFeature: (_feature, _enabled) => {
         set((state) => ({
           features: {
-            ...state.features,
-            [feature]: enabled
+            ...state.features, [feature]: enabled
           }
         }));
       },
       
-      setOnlineStatus: (online) => {
+      setOnlineStatus: (_online) => {
         set({ isOnline: online });
       },
       
-      setLastSync: (date) => {
+      setLastSync: (_date) => {
         set({ lastSync: date });
       },
       
-      setMaintenanceMode: (mode) => {
+      setMaintenanceMode: (_mode) => {
         set({ maintenanceMode: mode });
       },
       
       resetAppState: () => {
-        set(defaultAppState);
+        set(defaultAppState);,
       }
     }),
     { name: 'app-store' }
@@ -129,10 +122,10 @@ export const useAppStore = create<AppStore>()(
 // Online/Offline Event Listeners
 if (typeof window !== 'undefined') {
   window.addEventListener('online', () => {
-    useAppStore.getState().setOnlineStatus(true);
+    useAppStore.getState().setOnlineStatus(true);,
   });
   
   window.addEventListener('offline', () => {
-    useAppStore.getState().setOnlineStatus(false);
+    useAppStore.getState().setOnlineStatus(false);,
   });
 } 

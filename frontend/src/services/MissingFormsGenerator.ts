@@ -5,22 +5,22 @@
  * basierend auf der Analyse in FEHLENDE_FORMULARE_ANALYSE.md
  */
 
-import { z } from 'zod';
-import { StandardizedFormConfig, FormTab, FormLayout, FORM_TEMPLATES, STANDARD_BELEGFOLGE } from '../types/forms';
+import { z ,} from 'zod';
+import { StandardizedFormConfig, FormTab, FormLayout, FORM_TEMPLATES, STANDARD_BELEGFOLGE} from '../types/forms';
 
 /**
  * Template-basierte Formular-Generierung
  */
 export class MissingFormsGenerator {
   
-  /**
-   * Generiert alle fehlenden WaWi-Formulare
-   */
-  static generateMissingWaWiForms(): StandardizedFormConfig[] {
-    const missingForms: StandardizedFormConfig[] = [];
+  /**,
+   * Generiert alle fehlenden WaWi-Formulare,
+   */,
+  static generateMissingWaWiForms(): StandardizedFormConfig[] {;
+const missingForms: StandardizedFormConfig[] = [];
 
-    // Artikel-Management (8 fehlend)
-    const artikelManagementForms = [
+    // Artikel-Management (8 fehlend),;
+const artikelManagementForms = [,
       {
         id: 'wawi-artikelgruppen',
         title: 'Artikelgruppen verwalten',
@@ -71,8 +71,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Lager-Management (10 fehlend)
-    const lagerManagementForms = [
+    // Lager-Management (10 fehlend);
+const lagerManagementForms = [
       {
         id: 'wawi-lagerzonen',
         title: 'Lagerzonen verwalten',
@@ -135,8 +135,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Bestell-Management (6 fehlend)
-    const bestellManagementForms = [
+    // Bestell-Management (6 fehlend);
+const bestellManagementForms = [
       {
         id: 'wawi-bestellvorschläge',
         title: 'Bestellvorschläge',
@@ -175,8 +175,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Lieferanten-Management (8 fehlend)
-    const lieferantenManagementForms = [
+    // Lieferanten-Management (8 fehlend);
+const lieferantenManagementForms = [
       {
         id: 'wawi-lieferantenkategorien',
         title: 'Lieferantenkategorien',
@@ -227,8 +227,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Qualitäts-Management (6 fehlend)
-    const qualitaetsManagementForms = [
+    // Qualitäts-Management (6 fehlend);
+const qualitaetsManagementForms = [
       {
         id: 'wawi-qualitätsrichtlinien',
         title: 'Qualitätsrichtlinien',
@@ -267,8 +267,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Logistik-Management (7 fehlend)
-    const logistikManagementForms = [
+    // Logistik-Management (7 fehlend);
+const logistikManagementForms = [
       {
         id: 'wawi-transportrouten',
         title: 'Transportrouten',
@@ -313,8 +313,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Alle WaWi-Formulare zusammenfassen
-    const allWaWiForms = [
+    // Alle WaWi-Formulare zusammenfassen;
+const allWaWiForms = [
       ...artikelManagementForms,
       ...lagerManagementForms,
       ...bestellManagementForms,
@@ -325,7 +325,7 @@ export class MissingFormsGenerator {
 
     // Formulare generieren
     allWaWiForms.forEach(form => {
-      missingForms.push(this.generateFormConfig(form, 'warenwirtschaft'));
+      missingForms.push(this.generateFormConfig(form, 'warenwirtschaft'));,
     });
 
     return missingForms;
@@ -334,11 +334,11 @@ export class MissingFormsGenerator {
   /**
    * Generiert alle fehlenden FiBu-Formulare
    */
-  static generateMissingFiBuForms(): StandardizedFormConfig[] {
-    const missingForms: StandardizedFormConfig[] = [];
+  static generateMissingFiBuForms(): StandardizedFormConfig[] {;
+const missingForms: StandardizedFormConfig[] = [];
 
-    // Konten-Management (6 fehlend)
-    const kontenManagementForms = [
+    // Konten-Management (6 fehlend),;
+const kontenManagementForms = [,
       {
         id: 'fibu-kontenrahmen',
         title: 'Kontenrahmen verwalten',
@@ -377,8 +377,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Buchungs-Management (8 fehlend)
-    const buchungsManagementForms = [
+    // Buchungs-Management (8 fehlend);
+const buchungsManagementForms = [
       {
         id: 'fibu-buchungsvorlagen',
         title: 'Buchungsvorlagen',
@@ -429,8 +429,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Rechnungs-Management (8 fehlend)
-    const rechnungsManagementForms = [
+    // Rechnungs-Management (8 fehlend);
+const rechnungsManagementForms = [
       {
         id: 'fibu-rechnungsvorlagen',
         title: 'Rechnungsvorlagen',
@@ -481,8 +481,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Zahlungs-Management (6 fehlend)
-    const zahlungsManagementForms = [
+    // Zahlungs-Management (6 fehlend);
+const zahlungsManagementForms = [
       {
         id: 'fibu-zahlungsarten',
         title: 'Zahlungsarten verwalten',
@@ -521,8 +521,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Kostenstellen (5 fehlend)
-    const kostenstellenForms = [
+    // Kostenstellen (5 fehlend);
+const kostenstellenForms = [
       {
         id: 'fibu-kostenstellenplan',
         title: 'Kostenstellenplan',
@@ -555,8 +555,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Budget-Management (4 fehlend)
-    const budgetManagementForms = [
+    // Budget-Management (4 fehlend);
+const budgetManagementForms = [
       {
         id: 'fibu-budgetplanung',
         title: 'Budgetplanung',
@@ -583,8 +583,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Alle FiBu-Formulare zusammenfassen
-    const allFiBuForms = [
+    // Alle FiBu-Formulare zusammenfassen;
+const allFiBuForms = [
       ...kontenManagementForms,
       ...buchungsManagementForms,
       ...rechnungsManagementForms,
@@ -595,7 +595,7 @@ export class MissingFormsGenerator {
 
     // Formulare generieren
     allFiBuForms.forEach(form => {
-      missingForms.push(this.generateFormConfig(form, 'finanzbuchhaltung'));
+      missingForms.push(this.generateFormConfig(form, 'finanzbuchhaltung'));,
     });
 
     return missingForms;
@@ -604,11 +604,11 @@ export class MissingFormsGenerator {
   /**
    * Generiert alle fehlenden CRM-Formulare
    */
-  static generateMissingCRMForms(): StandardizedFormConfig[] {
-    const missingForms: StandardizedFormConfig[] = [];
+  static generateMissingCRMForms(): StandardizedFormConfig[] {;
+const missingForms: StandardizedFormConfig[] = [];
 
-    // Kunden-Management (8 fehlend)
-    const kundenManagementForms = [
+    // Kunden-Management (8 fehlend),;
+const kundenManagementForms = [,
       {
         id: 'crm-kundenkategorien',
         title: 'Kundenkategorien',
@@ -659,8 +659,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Kontakte (6 fehlend)
-    const kontakteForms = [
+    // Kontakte (6 fehlend);
+const kontakteForms = [
       {
         id: 'crm-kontaktverwaltung',
         title: 'Kontaktverwaltung',
@@ -699,8 +699,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Angebote (6 fehlend)
-    const angeboteForms = [
+    // Angebote (6 fehlend);
+const angeboteForms = [
       {
         id: 'crm-angebotsvorlagen',
         title: 'Angebotsvorlagen',
@@ -739,8 +739,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Aufträge (8 fehlend)
-    const auftraegeForms = [
+    // Aufträge (8 fehlend);
+const auftraegeForms = [
       {
         id: 'crm-auftragsverwaltung',
         title: 'Auftragsverwaltung',
@@ -791,8 +791,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Alle CRM-Formulare zusammenfassen
-    const allCRMForms = [
+    // Alle CRM-Formulare zusammenfassen;
+const allCRMForms = [
       ...kundenManagementForms,
       ...kontakteForms,
       ...angeboteForms,
@@ -801,7 +801,7 @@ export class MissingFormsGenerator {
 
     // Formulare generieren
     allCRMForms.forEach(form => {
-      missingForms.push(this.generateFormConfig(form, 'crm'));
+      missingForms.push(this.generateFormConfig(form, 'crm'));,
     });
 
     return missingForms;
@@ -810,11 +810,11 @@ export class MissingFormsGenerator {
   /**
    * Generiert alle fehlenden Cross-Cutting-Formulare
    */
-  static generateMissingCrossCuttingForms(): StandardizedFormConfig[] {
-    const missingForms: StandardizedFormConfig[] = [];
+  static generateMissingCrossCuttingForms(): StandardizedFormConfig[] {;
+const missingForms: StandardizedFormConfig[] = [];
 
-    // Benutzerverwaltung (8 fehlend)
-    const benutzerverwaltungForms = [
+    // Benutzerverwaltung (8 fehlend),;
+const benutzerverwaltungForms = [,
       {
         id: 'crosscutting-benutzerprofile',
         title: 'Benutzerprofile',
@@ -865,8 +865,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Rollen & Berechtigungen (8 fehlend)
-    const rollenBerechtigungenForms = [
+    // Rollen & Berechtigungen (8 fehlend);
+const rollenBerechtigungenForms = [
       {
         id: 'crosscutting-rollenverwaltung',
         title: 'Rollenverwaltung',
@@ -917,8 +917,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Systemeinstellungen (6 fehlend)
-    const systemeinstellungenForms = [
+    // Systemeinstellungen (6 fehlend);
+const systemeinstellungenForms = [
       {
         id: 'crosscutting-konfiguration',
         title: 'Konfiguration',
@@ -957,8 +957,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Workflow-Engine (8 fehlend)
-    const workflowEngineForms = [
+    // Workflow-Engine (8 fehlend);
+const workflowEngineForms = [
       {
         id: 'crosscutting-workflow-designer',
         title: 'Workflow-Designer',
@@ -1009,8 +1009,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Berichte & Analytics (8 fehlend)
-    const berichteAnalyticsForms = [
+    // Berichte & Analytics (8 fehlend);
+const berichteAnalyticsForms = [
       {
         id: 'crosscutting-berichtsgenerator',
         title: 'Berichtsgenerator',
@@ -1061,8 +1061,8 @@ export class MissingFormsGenerator {
       }
     ];
 
-    // Alle Cross-Cutting-Formulare zusammenfassen
-    const allCrossCuttingForms = [
+    // Alle Cross-Cutting-Formulare zusammenfassen;
+const allCrossCuttingForms = [
       ...benutzerverwaltungForms,
       ...rollenBerechtigungenForms,
       ...systemeinstellungenForms,
@@ -1072,7 +1072,7 @@ export class MissingFormsGenerator {
 
     // Formulare generieren
     allCrossCuttingForms.forEach(form => {
-      missingForms.push(this.generateFormConfig(form, 'crosscutting'));
+      missingForms.push(this.generateFormConfig(form, 'crosscutting'));,
     });
 
     return missingForms;
@@ -1082,21 +1082,19 @@ export class MissingFormsGenerator {
    * Generiert alle fehlenden Formulare
    */
   static generateAllMissingForms(): StandardizedFormConfig[] {
-    return [
+    return [,
       ...this.generateMissingWaWiForms(),
       ...this.generateMissingFiBuForms(),
       ...this.generateMissingCRMForms(),
-      ...this.generateMissingCrossCuttingForms()
-    ];
+      ...this.generateMissingCrossCuttingForms(),
+    ];,
   }
 
   /**
    * Generiert eine Formular-Konfiguration basierend auf Template
    */
   private static generateFormConfig(
-    formData: { id: string; title: string; description: string; category: string },
-    module: string
-  ): StandardizedFormConfig {
+    formData: { id: string; title: string; description: string; category: string }, module: string): StandardizedFormConfig {
     return {
       id: formData.id,
       metadata: {
@@ -1166,11 +1164,11 @@ export class MissingFormsGenerator {
    * Ermittelt das Layout für eine Kategorie
    */
   private static getLayoutForCategory(category: string, module: string): FormLayout {
-    // Standard-Layout basierend auf Modul
-    const templateKey = `${module}-${category.split('-')[0]}`;
+    // Standard-Layout basierend auf Modul,;
+const templateKey = `${module,}-${category.split('-')[0],}`;
     
     if (FORM_TEMPLATES[templateKey]) {
-      return FORM_TEMPLATES[templateKey].layout;
+      return FORM_TEMPLATES[templateKey].layout;,
     }
 
     // Fallback auf Standard-Template
@@ -1180,8 +1178,8 @@ export class MissingFormsGenerator {
   /**
    * Ermittelt Standard-Berechtigungen für ein Modul
    */
-  private static getDefaultPermissions(module: string) {
-    const basePermissions = {
+  private static getDefaultPermissions(module: string) {;
+const basePermissions = {
       create: ['admin'],
       read: ['admin', 'warehouse', 'sales', 'accounting'],
       update: ['admin'],
@@ -1222,7 +1220,7 @@ export class MissingFormsGenerator {
    * Ermittelt Validierungsschema für eine Kategorie
    */
   private static getValidationSchemaForCategory(category: string) {
-    // Standard-Validierungsschema
+    // Standard-Validierungsschema,
     return z.object({
       id: z.string().optional(),
       name: z.string().min(1, 'Name ist erforderlich'),

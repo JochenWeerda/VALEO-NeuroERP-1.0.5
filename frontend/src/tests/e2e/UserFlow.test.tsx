@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import { neuralTheme } from '../../themes/NeuroFlowTheme';
-import { ApiProvider } from '../../contexts/ApiContext';
+import { BrowserRouter ,} from 'react-router-dom';
+import { ThemeProvider ,} from '@mui/material/styles';
+import { neuralTheme ,} from '../../themes/NeuroFlowTheme';
+import { ApiProvider ,} from '../../contexts/ApiContext';
 import App from '../../App';
 
 /**
@@ -25,12 +25,11 @@ import App from '../../App';
  * - Test-Datenbank ist verfügbar
  */
 
-// Echte API-Funktionen für Server-Verbindungen
-const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {
-  const baseUrl = 'http://localhost:8000';
-  const url = `${baseUrl}${endpoint}`;
-  
-  const defaultOptions: RequestInit = {
+// Echte API-Funktionen für Server-Verbindungen;
+const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {;
+const baseUrl = 'http://localhost:8000';;
+const url = `${baseUrl,}${endpoint,}`;;
+const defaultOptions: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -38,26 +37,25 @@ const makeApiRequest = async (endpoint: string, options: RequestInit = {}) => {
     ...options,
   };
 
-  try {
-    const response = await fetch(url, defaultOptions);
-    return response;
+  try {;
+const response = await fetch(url, defaultOptions);,
+    return response;,
   } catch (error) {
     console.error(`API Request failed: ${url}`, error);
     throw error;
   }
-};
-
+};;
 const checkServerAvailability = async (): Promise<boolean> => {
-  try {
-    const response = await makeApiRequest('/health');
-    return response.ok;
+  try {;
+const response = await makeApiRequest('/health');,
+    return response.ok;,
   } catch (error) {
     console.log('Backend-Server nicht erreichbar:', error);
-    return false;
+    return false;,
   }
 };
 
-// Mock für localStorage
+// Mock für localStorage;
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -65,33 +63,27 @@ const localStorageMock = {
   clear: jest.fn(),
 };
 Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-  writable: true,
-});
-
+  value: localStorageMock, writable: true, });;
 const renderWithProviders = (component: React.ReactElement) => {
-  return render(
-    <BrowserRouter>
-      <ThemeProvider theme={neuralTheme}>
+  return render(<BrowserRouter>, <ThemeProvider theme={neuralTheme, }>
         <ApiProvider>
-          {component}
+          {component, }
         </ApiProvider>
       </ThemeProvider>
-    </BrowserRouter>
-  );
+    </BrowserRouter>);
 };
 
-describe('End-to-End User Flows (Echte Server)', () => {
-  let serverAvailable: boolean = false;
+describe('End-to-End User Flows (Echte Server)', () => {;
+let serverAvailable: boolean = false;
   
   beforeAll(async () => {
-    serverAvailable = await checkServerAvailability();
+    serverAvailable = await checkServerAvailability();,
     console.log(`Backend-Server verfügbar für E2E-Tests: ${serverAvailable}`);
   });
 
   beforeEach(() => {
-    localStorageMock.getItem.mockClear();
-    localStorageMock.setItem.mockClear();
+    localStorageMock.getItem.mockClear();,
+    localStorageMock.setItem.mockClear();,
   });
 
   describe('Vollständiger Login-Workflow', () => {
@@ -100,19 +92,18 @@ describe('End-to-End User Flows (Echte Server)', () => {
       // KONTEXT: Dieser Test prüft den vollständigen Login-Workflow mit echten API-Calls
 
       if (!serverAvailable) {
-        console.log('Test übersprungen - Backend-Server nicht verfügbar');
+        console.log('Test übersprungen - Backend-Server nicht verfügbar');,
         console.log('Hinweis: Starte den Backend-Server mit "npm run dev" im backend-Verzeichnis');
-        return; // Graceful Skip statt Failure
-      }
-
-      const user = userEvent.setup();
+        return; // Graceful Skip statt Failure,
+      };
+const user = userEvent.setup();
 
       renderWithProviders(<App />);
 
-      // Login-Formular ausfüllen (mit echten Credentials)
-      const emailInput = screen.getByLabelText(/e-mail/i);
-      const passwordInput = screen.getByLabelText(/passwort/i);
-      const loginButton = screen.getByText(/anmelden/i);
+      // Login-Formular ausfüllen (mit echten Credentials);
+const emailInput = screen.getByLabelText(/e-mail/i);;
+const passwordInput = screen.getByLabelText(/passwort/i);;
+const loginButton = screen.getByText(/anmelden/i);
 
       await user.type(emailInput, 'test@example.com');
       await user.type(passwordInput, 'password123');
@@ -120,7 +111,7 @@ describe('End-to-End User Flows (Echte Server)', () => {
 
       // Warte auf erfolgreiche Anmeldung (echte API-Response)
       await waitFor(() => {
-        expect(screen.getByText(/test user/i)).toBeInTheDocument();
+        expect(screen.getByText(/test user/i)).toBeInTheDocument();,
       }, { timeout: 10000 }); // Längerer Timeout für echte API-Calls
 
       // Prüfe ob Token gespeichert wurde (echter Token)
@@ -128,7 +119,7 @@ describe('End-to-End User Flows (Echte Server)', () => {
 
       // Navigiere zum Dashboard
       await waitFor(() => {
-        expect(screen.getByText(/valeo neuroerp/i)).toBeInTheDocument();
+        expect(screen.getByText(/valeo neuroerp/i)).toBeInTheDocument();,
       });
     });
 
@@ -137,24 +128,22 @@ describe('End-to-End User Flows (Echte Server)', () => {
       // KONTEXT: Dieser Test prüft die Fehlerbehandlung bei ungültigen Credentials
 
       if (!serverAvailable) {
-        console.log('Test übersprungen - Backend-Server nicht verfügbar');
-        return;
-      }
+        console.log('Test übersprungen - Backend-Server nicht verfügbar');,
+        return;,
+      };
+const user = userEvent.setup();
 
-      const user = userEvent.setup();
-
-      renderWithProviders(<App />);
-
-      const emailInput = screen.getByLabelText(/e-mail/i);
-      const passwordInput = screen.getByLabelText(/passwort/i);
-      const loginButton = screen.getByText(/anmelden/i);
+      renderWithProviders(<App />);;
+const emailInput = screen.getByLabelText(/e-mail/i);;
+const passwordInput = screen.getByLabelText(/passwort/i);;
+const loginButton = screen.getByText(/anmelden/i);
 
       await user.type(emailInput, 'invalid@example.com');
       await user.type(passwordInput, 'wrongpassword');
       await user.click(loginButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/anmeldung fehlgeschlagen/i)).toBeInTheDocument();
+        expect(screen.getByText(/anmeldung fehlgeschlagen/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
     });
   });
@@ -165,45 +154,42 @@ describe('End-to-End User Flows (Echte Server)', () => {
       // KONTEXT: Dieser Test prüft die vollständige Transaktions-Erstellung mit echten API-Calls
 
       if (!serverAvailable) {
-        console.log('Test übersprungen - Backend-Server nicht verfügbar');
-        return;
-      }
-
-      const user = userEvent.setup();
+        console.log('Test übersprungen - Backend-Server nicht verfügbar');,
+        return;,
+      };
+const user = userEvent.setup();
 
       renderWithProviders(<App />);
 
-      // Login
-      const emailInput = screen.getByLabelText(/e-mail/i);
-      const passwordInput = screen.getByLabelText(/passwort/i);
-      const loginButton = screen.getByText(/anmelden/i);
+      // Login;
+const emailInput = screen.getByLabelText(/e-mail/i);;
+const passwordInput = screen.getByLabelText(/passwort/i);;
+const loginButton = screen.getByText(/anmelden/i);
 
       await user.type(emailInput, 'test@example.com');
       await user.type(passwordInput, 'password123');
       await user.click(loginButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/test user/i)).toBeInTheDocument();
+        expect(screen.getByText(/test user/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
 
-      // Navigiere zu Transaktionen
-      const menuButton = screen.getByLabelText(/menü/i);
-      await user.click(menuButton);
-
-      const transactionsLink = screen.getByText(/transaktionen/i);
+      // Navigiere zu Transaktionen;
+const menuButton = screen.getByLabelText(/menü/i);
+      await user.click(menuButton);;
+const transactionsLink = screen.getByText(/transaktionen/i);
       await user.click(transactionsLink);
 
       await waitFor(() => {
-        expect(screen.getByText(/transaktionsübersicht/i)).toBeInTheDocument();
+        expect(screen.getByText(/transaktionsübersicht/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
 
-      // Erstelle neue Transaktion (echte API-Call)
-      const addButton = screen.getByText(/neue transaktion/i);
-      await user.click(addButton);
-
-      const amountInput = screen.getByLabelText(/betrag/i);
-      const descriptionInput = screen.getByLabelText(/beschreibung/i);
-      const saveButton = screen.getByText(/speichern/i);
+      // Erstelle neue Transaktion (echte API-Call);
+const addButton = screen.getByText(/neue transaktion/i);
+      await user.click(addButton);;
+const amountInput = screen.getByLabelText(/betrag/i);;
+const descriptionInput = screen.getByLabelText(/beschreibung/i);;
+const saveButton = screen.getByText(/speichern/i);
 
       await user.type(amountInput, '2000');
       await user.type(descriptionInput, 'New Transaction');
@@ -211,7 +197,7 @@ describe('End-to-End User Flows (Echte Server)', () => {
 
       // Warte auf erfolgreiche Transaktions-Erstellung
       await waitFor(() => {
-        expect(screen.getByText(/transaktion erfolgreich erstellt/i)).toBeInTheDocument();
+        expect(screen.getByText(/transaktion erfolgreich erstellt/i)).toBeInTheDocument();,
       }, { timeout: 15000 });
     });
   });
@@ -222,41 +208,40 @@ describe('End-to-End User Flows (Echte Server)', () => {
       // KONTEXT: Dieser Test prüft die Navigation zwischen verschiedenen Dashboard-Bereichen
 
       if (!serverAvailable) {
-        console.log('Test übersprungen - Backend-Server nicht verfügbar');
-        return;
-      }
-
-      const user = userEvent.setup();
+        console.log('Test übersprungen - Backend-Server nicht verfügbar');,
+        return;,
+      };
+const user = userEvent.setup();
 
       renderWithProviders(<App />);
 
-      // Login
-      const emailInput = screen.getByLabelText(/e-mail/i);
-      const passwordInput = screen.getByLabelText(/passwort/i);
-      const loginButton = screen.getByText(/anmelden/i);
+      // Login;
+const emailInput = screen.getByLabelText(/e-mail/i);;
+const passwordInput = screen.getByLabelText(/passwort/i);;
+const loginButton = screen.getByText(/anmelden/i);
 
       await user.type(emailInput, 'test@example.com');
       await user.type(passwordInput, 'password123');
       await user.click(loginButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/test user/i)).toBeInTheDocument();
+        expect(screen.getByText(/test user/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
 
-      // Navigiere zu verschiedenen Dashboard-Bereichen
-      const analyticsLink = screen.getByText(/analytics/i);
+      // Navigiere zu verschiedenen Dashboard-Bereichen;
+const analyticsLink = screen.getByText(/analytics/i);
       await user.click(analyticsLink);
 
       await waitFor(() => {
-        expect(screen.getByText(/analytics dashboard/i)).toBeInTheDocument();
+        expect(screen.getByText(/analytics dashboard/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
 
-      // Navigiere zurück zum Haupt-Dashboard
-      const dashboardLink = screen.getByText(/dashboard/i);
+      // Navigiere zurück zum Haupt-Dashboard;
+const dashboardLink = screen.getByText(/dashboard/i);
       await user.click(dashboardLink);
 
       await waitFor(() => {
-        expect(screen.getByText(/valeo neuroerp dashboard/i)).toBeInTheDocument();
+        expect(screen.getByText(/valeo neuroerp dashboard/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
     });
   });
@@ -267,18 +252,17 @@ describe('End-to-End User Flows (Echte Server)', () => {
       // KONTEXT: Dieser Test prüft die Robustheit der App bei API-Fehlern
 
       if (!serverAvailable) {
-        console.log('Test übersprungen - Backend-Server nicht verfügbar');
-        return;
-      }
-
-      const user = userEvent.setup();
+        console.log('Test übersprungen - Backend-Server nicht verfügbar');,
+        return;,
+      };
+const user = userEvent.setup();
 
       renderWithProviders(<App />);
 
-      // Versuche Login mit ungültigen Credentials
-      const emailInput = screen.getByLabelText(/e-mail/i);
-      const passwordInput = screen.getByLabelText(/passwort/i);
-      const loginButton = screen.getByText(/anmelden/i);
+      // Versuche Login mit ungültigen Credentials;
+const emailInput = screen.getByLabelText(/e-mail/i);;
+const passwordInput = screen.getByLabelText(/passwort/i);;
+const loginButton = screen.getByText(/anmelden/i);
 
       await user.type(emailInput, 'invalid@example.com');
       await user.type(passwordInput, 'wrongpassword');
@@ -286,7 +270,7 @@ describe('End-to-End User Flows (Echte Server)', () => {
 
       // Prüfe Fehlerbehandlung
       await waitFor(() => {
-        expect(screen.getByText(/anmeldung fehlgeschlagen/i)).toBeInTheDocument();
+        expect(screen.getByText(/anmeldung fehlgeschlagen/i)).toBeInTheDocument();,
       }, { timeout: 10000 });
 
       // Prüfe ob Fehlermeldung korrekt angezeigt wird

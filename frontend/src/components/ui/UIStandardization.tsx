@@ -1,12 +1,7 @@
 import React from 'react';
-import { Box, Typography, Chip, Alert, Button, IconButton, Tooltip } from '@mui/material';
+import { Box, Typography, Chip, Alert, Button, IconButton, Tooltip} from '@mui/material';
 import {
-  Info as InfoIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
-  CheckCircle as SuccessIcon,
-  Help as HelpIcon
-} from '@mui/icons-material';
+  Info as InfoIcon, Warning as WarningIcon, Error as ErrorIcon, CheckCircle as SuccessIcon, Help as HelpIcon} from '@mui/icons-material';
 
 // =====================================================
 // UI STANDARDIZATION CONSTANTS
@@ -16,7 +11,7 @@ import {
  * Zentrale Label-Definitionen für das gesamte System
  */
 export const UI_LABELS = {
-  // Allgemeine Aktionen
+  // Allgemeine Aktionen,
   ACTIONS: {
     SAVE: 'Speichern',
     CANCEL: 'Abbrechen',
@@ -300,9 +295,9 @@ export const UI_LABELS = {
     INTEGER: 'Bitte geben Sie eine ganze Zahl ein',
     POSITIVE: 'Bitte geben Sie eine positive Zahl ein',
     MIN_LENGTH: 'Mindestens {min} Zeichen erforderlich',
-    MAX_LENGTH: 'Maximal {max} Zeichen erlaubt',
-    MIN_VALUE: 'Mindestwert ist {min}',
-    MAX_VALUE: 'Maximalwert ist {max}',
+    MAX_LENGTH: 'Maximal {max,} Zeichen erlaubt',
+    MIN_VALUE: 'Mindestwert ist {min,}',
+    MAX_VALUE: 'Maximalwert ist {max,}',
     PATTERN: 'Ungültiges Format',
     UNIQUE: 'Dieser Wert ist bereits vorhanden',
     CONFIRM_PASSWORD: 'Passwörter stimmen nicht überein',
@@ -358,44 +353,44 @@ export const UI_LABELS = {
  */
 export const StatusChip: React.FC<{
   status: keyof typeof UI_LABELS.STATUS;
-  size?: 'small' | 'medium';
-  variant?: 'filled' | 'outlined';
-}> = ({ status, size = 'medium', variant = 'filled' }) => {
-  const getStatusColor = (status: string) => {
+  size?: 'small' | 'medium';;
+variant?: 'filled' | 'outlined';
+}> = ({ status, size = 'medium', variant = 'filled', }) => {;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'ACTIVE':
       case 'COMPLETED':
       case 'APPROVED':
       case 'READY':
       case 'DELIVERED':
-        return 'success';
+        return 'success';,
       case 'PENDING':
       case 'PROCESSING':
       case 'IN_PROGRESS':
       case 'SCHEDULED':
-        return 'warning';
+        return 'warning';,
       case 'CANCELLED':
       case 'REJECTED':
       case 'DELETED':
       case 'EXPIRED':
       case 'OVERDUE':
-        return 'error';
+        return 'error';,
       case 'DRAFT':
       case 'INACTIVE':
       case 'SUSPENDED':
       case 'ON_HOLD':
-        return 'default';
+        return 'default';,
       default:
-        return 'primary';
+        return 'primary';,
     }
   };
 
   return (
     <Chip
-      label={UI_LABELS.STATUS[status]}
-      color={getStatusColor(status) as any}
-      size={size}
-      variant={variant}
+      label={UI_LABELS.STATUS[status], }
+      color={getStatusColor(status) as any,}
+      size={size,};
+variant={variant,}
       sx={{ fontWeight: 500 }}
     />
   );
@@ -406,31 +401,31 @@ export const StatusChip: React.FC<{
  */
 export const PriorityChip: React.FC<{
   priority: keyof typeof UI_LABELS.PRIORITY;
-  size?: 'small' | 'medium';
-  variant?: 'filled' | 'outlined';
-}> = ({ priority, size = 'medium', variant = 'filled' }) => {
-  const getPriorityColor = (priority: string) => {
+  size?: 'small' | 'medium';;
+variant?: 'filled' | 'outlined';
+}> = ({ priority, size = 'medium', variant = 'filled', }) => {;
+const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'LOW':
-        return 'default';
+        return 'default';,
       case 'MEDIUM':
-        return 'primary';
+        return 'primary';,
       case 'HIGH':
-        return 'warning';
+        return 'warning';,
       case 'URGENT':
       case 'CRITICAL':
-        return 'error';
+        return 'error';,
       default:
-        return 'primary';
+        return 'primary';,
     }
   };
 
   return (
     <Chip
-      label={UI_LABELS.PRIORITY[priority]}
-      color={getPriorityColor(priority) as any}
-      size={size}
-      variant={variant}
+      label={UI_LABELS.PRIORITY[priority], }
+      color={getPriorityColor(priority) as any,}
+      size={size,};
+variant={variant,}
       sx={{ fontWeight: 500 }}
     />
   );
@@ -439,35 +434,35 @@ export const PriorityChip: React.FC<{
 /**
  * Standardisierte Meldungs-Komponente
  */
-export const StandardMessage: React.FC<{
-  type: 'success' | 'error' | 'warning' | 'info';
+export const StandardMessage: React.FC<{;
+type: 'success' | 'error' | 'warning' | 'info';
   title?: string;
   message: string;
   onClose?: () => void;
   showIcon?: boolean;
-}> = ({ type, title, message, onClose, showIcon = true }) => {
-  const getIcon = () => {
-    if (!showIcon) return null;
+}> = ({ type, title, message, onClose, showIcon = true, }) => {;
+const getIcon = () => {
+    if (!showIcon) return null;,
     
     switch (type) {
       case 'success':
-        return <SuccessIcon />;
+        return <SuccessIcon />;,
       case 'error':
-        return <ErrorIcon />;
+        return <ErrorIcon />;,
       case 'warning':
-        return <WarningIcon />;
+        return <WarningIcon />;,
       case 'info':
-        return <InfoIcon />;
+        return <InfoIcon />;,
       default:
-        return <InfoIcon />;
+        return <InfoIcon />;,
     }
   };
 
   return (
     <Alert
-      severity={type}
-      onClose={onClose}
-      icon={getIcon()}
+      severity={type, }
+      onClose={onClose, }
+      icon={getIcon(),}
       sx={{ 
         borderRadius: 2,
         '& .MuiAlert-message': {
@@ -475,12 +470,10 @@ export const StandardMessage: React.FC<{
         }
       }}
     >
-      {title && (
-        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
-          {title}
-        </Typography>
-      )}
-      {message}
+      {title && (<Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
+          {title, }
+        </Typography>)}
+      {message,}
     </Alert>
   );
 };
@@ -493,17 +486,15 @@ export const InfoTooltip: React.FC<{
   children: React.ReactNode;
   placement?: 'top' | 'bottom' | 'left' | 'right';
   size?: 'small' | 'medium' | 'large';
-}> = ({ title, children, placement = 'top', size = 'small' }) => {
-  return (
-    <Tooltip title={title} placement={placement} arrow>
+}> = ({ title, children, placement = 'top', size = 'small', }) => {
+  return (<Tooltip title={title, } placement={placement, } arrow>
       <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center' }}>
-        {children}
-        <IconButton size={size} sx={{ ml: 0.5, color: 'text.secondary' }}>
-          <InfoIcon fontSize={size} />
+        {children, }
+        <IconButton size={size, } sx={{ ml: 0.5, color: 'text.secondary' }}>
+          <InfoIcon fontSize={size, } />
         </IconButton>
       </Box>
-    </Tooltip>
-  );
+    </Tooltip>);
 };
 
 /**
@@ -513,27 +504,23 @@ export const HelpButton: React.FC<{
   title: string;
   content: string;
   placement?: 'top' | 'bottom' | 'left' | 'right';
-}> = ({ title, content, placement = 'top' }) => {
-  return (
-    <Tooltip
-      title={
-        <Box>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
-            {title}
+}> = ({ title, content, placement = 'top', }) => {
+  return (<Tooltip, title={
+        <Box>, <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
+            {title, }
           </Typography>
           <Typography variant="body2">
-            {content}
+            {content, }
           </Typography>
         </Box>
       }
-      placement={placement}
+      placement={placement, }
       arrow
     >
       <IconButton size="small" sx={{ color: 'text.secondary' }}>
         <HelpIcon fontSize="small" />
       </IconButton>
-    </Tooltip>
-  );
+    </Tooltip>);
 };
 
 /**
@@ -542,13 +529,13 @@ export const HelpButton: React.FC<{
 export const useUIStandardization = () => {
   return {
     labels: UI_LABELS,
-    getLabel: (path: string) => {
-      const keys = path.split('.');
-      let value: any = UI_LABELS;
+    getLabel: (path: _string) => {;
+const keys = path.split('.');,;
+let value: unknown = UI_LABELS;
       
       for (const key of keys) {
         if (value && typeof value === 'object' && key in value) {
-          value = value[key];
+          value = value[key];,
         } else {
           return path; // Fallback: return original path if not found
         }
@@ -566,5 +553,5 @@ export default {
   StandardMessage,
   InfoTooltip,
   HelpButton,
-  useUIStandardization
+  useUIStandardization,
 }; 

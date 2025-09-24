@@ -1,72 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,} from 'react';
 import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  Tabs,
-  Tab,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-  IconButton,
-  Alert,
-  CircularProgress,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Switch,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  LinearProgress,
-  InputAdornment
-} from '@mui/material';
+  Box, Typography, Card, CardContent, Grid, Tabs, Tab, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, IconButton, Alert, CircularProgress, Divider, List, ListItem, ListItemText, Switch, Accordion, AccordionSummary, AccordionDetails, LinearProgress, InputAdornment} from '@mui/material';
 import {
-  Build as BuildIcon,
-  DirectionsCar as CarIcon,
-  Business as BusinessIcon,
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
-  ExpandMore as ExpandMoreIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Schedule as ScheduleIcon,
-  LocationOn as LocationIcon,
-  Euro as EuroIcon,
-  CalendarToday as CalendarIcon,
-  Speed as SpeedIcon,
-  LocalGasStation as GasIcon,
-  Info as InfoIcon,
-  Save as SaveIcon
-} from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+  Build as BuildIcon, DirectionsCar as CarIcon, Business as BusinessIcon, Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon, ExpandMore as ExpandMoreIcon, Warning as WarningIcon, CheckCircle as CheckCircleIcon, Schedule as ScheduleIcon, LocationOn as LocationIcon, Euro as EuroIcon, CalendarToday as CalendarIcon, Speed as SpeedIcon, LocalGasStation as GasIcon, Info as InfoIcon, Save as SaveIcon} from '@mui/icons-material';
+import { useForm, Controller} from 'react-hook-form';
+import { zodResolver ,} from '@hookform/resolvers/zod';
+import { z ,} from 'zod';
 
 // MCP-basierte Hooks (vereinfacht für Demo)
-import { useMCPTable, useMCPData } from '../hooks/useMCPForm';
+import { useMCPTable, useMCPData} from '../hooks/useMCPForm';
 
-// TypeScript Interfaces basierend auf MCP Schema
+// TypeScript Interfaces basierend auf MCP Schema;
 interface Asset {
   id: string;
   anlagennummer: string;
@@ -82,8 +26,7 @@ interface Asset {
   naechste_wartung: string;
   erstellt_am: string;
   aktualisiert_am: string;
-}
-
+};
 interface Vehicle extends Asset {
   kennzeichen: string;
   marke: string;
@@ -93,11 +36,10 @@ interface Vehicle extends Asset {
   tuev_bis: string;
   versicherung_bis: string;
   steuer_bis: string;
-  hauptfahrer: string;
-  letzter_tank: string;
+  hauptfahrer: string;;
+letzter_tank: string;
   durchschnittsverbrauch: number;
-}
-
+};
 interface Maintenance {
   id: string;
   auftragsnummer: string;
@@ -114,7 +56,7 @@ interface Maintenance {
   erstellt_am: string;
 }
 
-// Zod Schemas für Validierung
+// Zod Schemas für Validierung;
 const AssetSchema = z.object({
   anlagennummer: z.string().min(1, 'Anlagennummer ist erforderlich'),
   bezeichnung: z.string().min(2, 'Bezeichnung muss mindestens 2 Zeichen lang sein'),
@@ -127,8 +69,7 @@ const AssetSchema = z.object({
   verantwortlicher_name: z.string().min(1, 'Verantwortlicher ist erforderlich'),
   anzahl_wartungen: z.number().int().min(0, 'Anzahl Wartungen darf nicht negativ sein'),
   naechste_wartung: z.string().min(1, 'Nächste Wartung ist erforderlich')
-});
-
+});;
 const VehicleSchema = AssetSchema.extend({
   kennzeichen: z.string().min(1, 'Kennzeichen ist erforderlich'),
   marke: z.string().min(1, 'Marke ist erforderlich'),
@@ -138,11 +79,10 @@ const VehicleSchema = AssetSchema.extend({
   tuev_bis: z.string().min(1, 'TÜV-Datum ist erforderlich'),
   versicherung_bis: z.string().min(1, 'Versicherungsdatum ist erforderlich'),
   steuer_bis: z.string().min(1, 'Steuerdatum ist erforderlich'),
-  hauptfahrer: z.string().min(1, 'Hauptfahrer ist erforderlich'),
-  letzter_tank: z.string().min(1, 'Letzter Tank ist erforderlich'),
+  hauptfahrer: z.string().min(1, 'Hauptfahrer ist erforderlich'),;
+letzter_tank: z.string().min(1, 'Letzter Tank ist erforderlich'),
   durchschnittsverbrauch: z.number().min(0, 'Durchschnittsverbrauch darf nicht negativ sein')
-});
-
+});;
 const MaintenanceSchema = z.object({
   auftragsnummer: z.string().min(1, 'Auftragsnummer ist erforderlich'),
   anlagennummer: z.string().min(1, 'Anlagennummer ist erforderlich'),
@@ -155,54 +95,51 @@ const MaintenanceSchema = z.object({
   verantwortlicher: z.string().min(1, 'Verantwortlicher ist erforderlich'),
   kosten: z.number().min(0, 'Kosten dürfen nicht negativ sein'),
   beschreibung: z.string().min(1, 'Beschreibung ist erforderlich')
-});
-
-type AssetFormData = z.infer<typeof AssetSchema>;
-type VehicleFormData = z.infer<typeof VehicleSchema>;
+});;
+type AssetFormData = z.infer<typeof AssetSchema>;;
+type VehicleFormData = z.infer<typeof VehicleSchema>;;
 type MaintenanceFormData = z.infer<typeof MaintenanceSchema>;
 
-// TabPanel-Komponente
+// TabPanel-Komponente;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`asset-tabpanel-${index}`}
-      aria-labelledby={`asset-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`asset-tabpanel-${index, }`}
+      aria-labelledby={`asset-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
+      {value === index && <Box sx={{ p: 3 }}>{children, }</Box>}
+    </div>);
 }
 
 /**
  * MCP-basierte AssetManagement-Komponente
  * Verwendet Schema-Validierung und RLS-Compliance
  */
-export const AssetManagement: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<'asset' | 'vehicle' | 'maintenance'>('asset');
-  const [selectedItem, setSelectedItem] = useState<Asset | Vehicle | Maintenance | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export const AssetManagement: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [openDialog, setOpenDialog] = useState(false);,;
+const [dialogType, setDialogType] = useState<'asset' | 'vehicle' | 'maintenance'>('asset');,;
+const [selectedItem, setSelectedItem] = useState<Asset | Vehicle | Maintenance | null>(null);,;
+const [loading, setLoading] = useState(false);,;
+const [error, setError] = useState<string | null>(null);,
 
-  // MCP Hooks für Daten-Management
-  const assetsHook = useMCPData<Asset[]>('assets');
-  const vehiclesHook = useMCPData<Vehicle[]>('vehicles');
-  const maintenanceHook = useMCPData<Maintenance[]>('maintenance');
+  // MCP Hooks für Daten-Management,;
+const assetsHook = useMCPData<Asset[]>('assets');,;
+const vehiclesHook = useMCPData<Vehicle[]>('vehicles');,;
+const maintenanceHook = useMCPData<Maintenance[]>('maintenance');,
   
-  // Mock-Daten für Demo-Zwecke
-  const assets: Asset[] = [
+  // Mock-Daten für Demo-Zwecke,;
+const assets: Asset[] = [
     {
       id: '1',
       anlagennummer: 'ANL-001',
@@ -219,9 +156,8 @@ export const AssetManagement: React.FC = () => {
       erstellt_am: '2023-01-15T10:00:00Z',
       aktualisiert_am: '2024-01-15T10:00:00Z'
     }
-  ];
-  
-  const vehicles: Vehicle[] = [
+  ];;
+const vehicles: Vehicle[] = [
     {
       id: '1',
       anlagennummer: 'FZ-001',
@@ -245,13 +181,12 @@ export const AssetManagement: React.FC = () => {
       tuev_bis: '2025-03-01',
       versicherung_bis: '2024-12-31',
       steuer_bis: '2024-12-31',
-      hauptfahrer: 'Anna Schmidt',
-      letzter_tank: '2024-01-10',
+      hauptfahrer: 'Anna Schmidt',;
+letzter_tank: '2024-01-10',
       durchschnittsverbrauch: 7.5
     }
-  ];
-  
-  const maintenance: Maintenance[] = [
+  ];;
+const maintenance: Maintenance[] = [
     {
       id: '1',
       auftragsnummer: 'WA-001',
@@ -266,20 +201,19 @@ export const AssetManagement: React.FC = () => {
       beschreibung: 'Regelmäßige Wartung',
       erstellt_am: '2024-01-15T10:00:00Z'
     }
-  ];
-  
-  const assetsLoading = false;
-  const vehiclesLoading = false;
-  const maintenanceLoading = false;
-  const assetsError = null;
-  const vehiclesError = null;
-  const maintenanceError = null;
-  const refetchAssets = () => Promise.resolve();
-  const refetchVehicles = () => Promise.resolve();
-  const refetchMaintenance = () => Promise.resolve();
+  ];;
+const assetsLoading = false;;
+const vehiclesLoading = false;;
+const maintenanceLoading = false;;
+const assetsError = null;;
+const vehiclesError = null;;
+const maintenanceError = null;;
+const refetchAssets = () => Promise.resolve();;
+const refetchVehicles = () => Promise.resolve();;
+const refetchMaintenance = () => Promise.resolve();
 
-  // React Hook Form für Asset
-  const assetForm = useForm<AssetFormData>({
+  // React Hook Form für Asset;
+const assetForm = useForm<AssetFormData>({
     resolver: zodResolver(AssetSchema),
     defaultValues: {
       anlagennummer: '',
@@ -296,8 +230,8 @@ export const AssetManagement: React.FC = () => {
     }
   });
 
-  // React Hook Form für Vehicle
-  const vehicleForm = useForm<VehicleFormData>({
+  // React Hook Form für Vehicle;
+const vehicleForm = useForm<VehicleFormData>({
     resolver: zodResolver(VehicleSchema),
     defaultValues: {
       anlagennummer: '',
@@ -319,14 +253,14 @@ export const AssetManagement: React.FC = () => {
       tuev_bis: '',
       versicherung_bis: '',
       steuer_bis: '',
-      hauptfahrer: '',
-      letzter_tank: '',
+      hauptfahrer: '',;
+letzter_tank: '',
       durchschnittsverbrauch: 0
     }
   });
 
-  // React Hook Form für Maintenance
-  const maintenanceForm = useForm<MaintenanceFormData>({
+  // React Hook Form für Maintenance;
+const maintenanceForm = useForm<MaintenanceFormData>({
     resolver: zodResolver(MaintenanceSchema),
     defaultValues: {
       auftragsnummer: '',
@@ -342,112 +276,106 @@ export const AssetManagement: React.FC = () => {
     }
   });
 
-  // Event Handlers
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
+  // Event Handlers;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleOpenDialog = (type: 'asset' | 'vehicle' | 'maintenance', item?: Asset | Vehicle | Maintenance) => {
+    setDialogType(type);,
+    setSelectedItem(item || null);,
+    setOpenDialog(true);,
+    setError(null);,
 
-  const handleOpenDialog = (type: 'asset' | 'vehicle' | 'maintenance', item?: Asset | Vehicle | Maintenance) => {
-    setDialogType(type);
-    setSelectedItem(item || null);
-    setOpenDialog(true);
-    setError(null);
-
-    // Form mit Daten füllen
+    // Form mit Daten füllen,
     if (item) {
       if (type === 'asset' && 'anlagennummer' in item) {
-        assetForm.reset(item as AssetFormData);
+        assetForm.reset(item as AssetFormData);,
       } else if (type === 'vehicle' && 'kennzeichen' in item) {
-        vehicleForm.reset(item as VehicleFormData);
+        vehicleForm.reset(item as VehicleFormData);,
       } else if (type === 'maintenance' && 'auftragsnummer' in item) {
-        maintenanceForm.reset(item as MaintenanceFormData);
+        maintenanceForm.reset(item as MaintenanceFormData);,
       }
     } else {
-      // Neue Einträge
+      // Neue Einträge,
       if (type === 'asset') {
-        assetForm.reset();
+        assetForm.reset();,
       } else if (type === 'vehicle') {
-        vehicleForm.reset();
+        vehicleForm.reset();,
       } else if (type === 'maintenance') {
-        maintenanceForm.reset();
+        maintenanceForm.reset();,
       }
     }
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setSelectedItem(null);
-    setError(null);
-  };
-
-  const handleSaveAsset = async (data: AssetFormData) => {
+  };;
+const handleCloseDialog = () => {
+    setOpenDialog(false);,
+    setSelectedItem(null);,
+    setError(null);,
+  };;
+const handleSaveAsset = async (data: AssetFormData) => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock API Call (später durch echte MCP-Integration ersetzen)
+      // Mock API Call (später durch echte MCP-Integration ersetzen),
       console.log('Speichere Asset:', data);
       
-      // Erfolg simulieren
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Erfolg simulieren,
+      await new Promise(resolve => setTimeout(resolve, 1000));,
       
-      handleCloseDialog();
-      refetchAssets();
+      handleCloseDialog();,
+      refetchAssets();,
     } catch (err) {
-      setError('Fehler beim Speichern des Assets');
+      setError('Fehler beim Speichern des Assets');,
       console.error('Asset Save Error:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const handleSaveVehicle = async (data: VehicleFormData) => {
+  };;
+const handleSaveVehicle = async (data: VehicleFormData) => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock API Call
+      // Mock API Call,
       console.log('Speichere Fahrzeug:', data);
       
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));,
       
-      handleCloseDialog();
-      refetchVehicles();
+      handleCloseDialog();,
+      refetchVehicles();,
     } catch (err) {
-      setError('Fehler beim Speichern des Fahrzeugs');
+      setError('Fehler beim Speichern des Fahrzeugs');,
       console.error('Vehicle Save Error:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const handleSaveMaintenance = async (data: MaintenanceFormData) => {
+  };;
+const handleSaveMaintenance = async (data: MaintenanceFormData) => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock API Call
+      // Mock API Call,
       console.log('Speichere Wartung:', data);
       
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));,
       
-      handleCloseDialog();
-      refetchMaintenance();
+      handleCloseDialog();,
+      refetchMaintenance();,
     } catch (err) {
-      setError('Fehler beim Speichern der Wartung');
+      setError('Fehler beim Speichern der Wartung');,
       console.error('Maintenance Save Error:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  };
-
-  const handleDeleteItem = async (type: 'asset' | 'vehicle' | 'maintenance', id: string) => {
+  };;
+const handleDeleteItem = async (type: 'asset' | 'vehicle' | 'maintenance', id: string) => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock API Call
-      console.log(`Lösche ${type}:`, id);
+      // Mock API Call,
+      console.log(`Lösche ${type, }:`, id);
       
       await new Promise(resolve => setTimeout(resolve, 500));
       
@@ -456,15 +384,15 @@ export const AssetManagement: React.FC = () => {
       else if (type === 'vehicle') refetchVehicles();
       else if (type === 'maintenance') refetchMaintenance();
     } catch (err) {
-      setError(`Fehler beim Löschen des ${type}`);
+      setError(`Fehler beim Löschen des ${type, }`);
       console.error('Delete Error:', err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
   };
 
-  // Utility Functions
-  const getStatusColor = (status: string) => {
+  // Utility Functions;
+const getStatusColor = (status: string) => {
     switch (status) {
       case 'aktiv': return 'success';
       case 'inaktiv': return 'default';
@@ -473,9 +401,8 @@ export const AssetManagement: React.FC = () => {
       case 'verkauft': return 'info';
       default: return 'default';
     }
-  };
-
-  const getPriorityColor = (priority: string) => {
+  };;
+const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'niedrig': return 'success';
       case 'mittel': return 'warning';
@@ -483,9 +410,8 @@ export const AssetManagement: React.FC = () => {
       case 'kritisch': return 'error';
       default: return 'default';
     }
-  };
-
-  const getMaintenanceStatusColor = (status: string) => {
+  };;
+const getMaintenanceStatusColor = (status: string) => {
     switch (status) {
       case 'geplant': return 'info';
       case 'in_bearbeitung': return 'warning';
@@ -494,33 +420,28 @@ export const AssetManagement: React.FC = () => {
       case 'storniert': return 'error';
       default: return 'default';
     }
-  };
-
-  const isDateExpired = (dateString: string) => {
-    return new Date(dateString) < new Date();
-  };
-
-  const isDateExpiringSoon = (dateString: string, days: number = 30) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = date.getTime() - now.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= days && diffDays >= 0;
-  };
-
-  const formatCurrency = (amount: number) => {
+  };;
+const isDateExpired = (dateString: string) => {
+    return new Date(dateString) < new Date();,
+  };;
+const isDateExpiringSoon = (dateString: string, days: number = 30) => {;
+const date = new Date(dateString);,;
+const now = new Date();,;
+const diffTime = date.getTime() - now.getTime();,;
+const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));,
+    return diffDays <= days && diffDays >= 0;,
+  };;
+const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR'
+      style: 'currency', currency: 'EUR'
     }).format(amount);
+  };;
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('de-DE');,
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('de-DE');
-  };
-
-  // Mock-Daten für Demo
-  const mockAssets: Asset[] = [
+  // Mock-Daten für Demo;
+const mockAssets: Asset[] = [
     {
       id: '1',
       anlagennummer: 'ANL-001',
@@ -537,9 +458,8 @@ export const AssetManagement: React.FC = () => {
       erstellt_am: '2023-01-15T10:00:00Z',
       aktualisiert_am: '2024-01-15T10:00:00Z'
     }
-  ];
-
-  const mockVehicles: Vehicle[] = [
+  ];;
+const mockVehicles: Vehicle[] = [
     {
       id: '1',
       anlagennummer: 'FZG-001',
@@ -561,15 +481,14 @@ export const AssetManagement: React.FC = () => {
       tuev_bis: '2024-12-31',
       versicherung_bis: '2024-12-31',
       steuer_bis: '2024-12-31',
-      hauptfahrer: 'Hans Schmidt',
-      letzter_tank: '2024-01-10',
+      hauptfahrer: 'Hans Schmidt',;
+letzter_tank: '2024-01-10',
       durchschnittsverbrauch: 8.5,
       erstellt_am: '2022-06-01T10:00:00Z',
       aktualisiert_am: '2024-01-15T10:00:00Z'
     }
-  ];
-
-  const mockMaintenance: Maintenance[] = [
+  ];;
+const mockMaintenance: Maintenance[] = [
     {
       id: '1',
       auftragsnummer: 'WART-001',
@@ -586,10 +505,10 @@ export const AssetManagement: React.FC = () => {
     }
   ];
 
-  // Verwende Mock-Daten falls MCP-Daten nicht verfügbar
-  const displayAssets = assets || mockAssets;
-  const displayVehicles = vehicles || mockVehicles;
-  const displayMaintenance = maintenance || mockMaintenance;
+  // Verwende Mock-Daten falls MCP-Daten nicht verfügbar;
+const displayAssets = assets || mockAssets;;
+const displayVehicles = vehicles || mockVehicles;;
+const displayMaintenance = maintenance || mockMaintenance;
 
   return (
     <Box className="p-6">
@@ -598,7 +517,7 @@ export const AssetManagement: React.FC = () => {
         Asset Management
       </Typography>
 
-      {/* RLS-Informationen */}
+      {/* RLS-Informationen */, }
       <Card className="mb-6">
         <CardContent>
           <Typography variant="h6" className="flex items-center mb-2">
@@ -611,36 +530,33 @@ export const AssetManagement: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Fehler-Anzeige */}
-      {error && (
-        <Alert severity="error" className="mb-4">
-          {error}
-        </Alert>
-      )}
+      {/* Fehler-Anzeige */, }
+      {error && (, <Alert severity="error" className="mb-4">, {error, }
+        </Alert>)}
 
-      {/* Tabs */}
+      {/* Tabs */,}
       <Paper className="mb-6">
-        <Tabs value={tabValue} onChange={handleTabChange} aria-label="Asset Management Tabs">
-          <Tab label="Assets" icon={<BusinessIcon />} />
-          <Tab label="Fahrzeuge" icon={<CarIcon />} />
-          <Tab label="Wartung" icon={<ScheduleIcon />} />
+        <Tabs value={tabValue,} onChange={handleTabChange,} aria-label="Asset Management Tabs">
+          <Tab label="Assets" icon={<BusinessIcon />,} />
+          <Tab label="Fahrzeuge" icon={<CarIcon />,} />
+          <Tab label="Wartung" icon={<ScheduleIcon />,} />
         </Tabs>
       </Paper>
 
-      {/* Tab Content */}
-      <TabPanel value={tabValue} index={0}>
+      {/* Tab Content */,}
+      <TabPanel value={tabValue,} index={0,}>
         <Box className="flex justify-between items-center mb-4">
-          <Typography variant="h6">Assets ({displayAssets.length})</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('asset')}
+          <Typography variant="h6">Assets ({displayAssets.length, })</Typography>
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('asset'),}
           >
             Asset hinzufügen
           </Button>
         </Box>
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -655,30 +571,29 @@ export const AssetManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayAssets.map((asset) => (
-                <TableRow key={asset.id}>
-                  <TableCell>{asset.anlagennummer}</TableCell>
-                  <TableCell>{asset.bezeichnung}</TableCell>
-                  <TableCell>{asset.kategoriename}</TableCell>
-                  <TableCell>{asset.standort}</TableCell>
+              {displayAssets.map((asset) => (<TableRow key={asset.id, }>
+                  <TableCell>{asset.anlagennummer, }</TableCell>
+                  <TableCell>{asset.bezeichnung, }</TableCell>
+                  <TableCell>{asset.kategoriename, }</TableCell>
+                  <TableCell>{asset.standort, }</TableCell>
                   <TableCell>
                     <Chip
-                      label={asset.status}
-                      color={getStatusColor(asset.status) as any}
+                      label={asset.status, }
+                      color={getStatusColor(asset.status) as any,}
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{formatCurrency(asset.restbuchwert)}</TableCell>
+                  <TableCell>{formatCurrency(asset.restbuchwert),}</TableCell>
                   <TableCell>
                     <span className={isDateExpired(asset.naechste_wartung) ? 'text-red-600' : ''}>
-                      {formatDate(asset.naechste_wartung)}
+                      {formatDate(asset.naechste_wartung),}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleOpenDialog('asset', asset)}>
+                    <IconButton onClick={() => handleOpenDialog('asset', asset),}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDeleteItem('asset', asset.id)}>
+                    <IconButton onClick={() => handleDeleteItem('asset', asset.id),}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -689,19 +604,19 @@ export const AssetManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={1}>
+      <TabPanel value={tabValue,} index={1,}>
         <Box className="flex justify-between items-center mb-4">
-          <Typography variant="h6">Fahrzeuge ({displayVehicles.length})</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('vehicle')}
+          <Typography variant="h6">Fahrzeuge ({displayVehicles.length, })</Typography>
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('vehicle'),}
           >
             Fahrzeug hinzufügen
           </Button>
         </Box>
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -715,29 +630,28 @@ export const AssetManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayVehicles.map((vehicle) => (
-                <TableRow key={vehicle.id}>
-                  <TableCell>{vehicle.kennzeichen}</TableCell>
-                  <TableCell>{`${vehicle.marke} ${vehicle.modell}`}</TableCell>
-                  <TableCell>{vehicle.baujahr}</TableCell>
-                  <TableCell>{vehicle.kilometerstand.toLocaleString()} km</TableCell>
+              {displayVehicles.map((vehicle) => (<TableRow key={vehicle.id, }>
+                  <TableCell>{vehicle.kennzeichen, }</TableCell>
+                  <TableCell>{`${vehicle.marke, } ${vehicle.modell, }`}</TableCell>
+                  <TableCell>{vehicle.baujahr, }</TableCell>
+                  <TableCell>{vehicle.kilometerstand.toLocaleString(),} km</TableCell>
                   <TableCell>
                     <span className={isDateExpired(vehicle.tuev_bis) ? 'text-red-600' : ''}>
-                      {formatDate(vehicle.tuev_bis)}
+                      {formatDate(vehicle.tuev_bis),}
                     </span>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={vehicle.status}
-                      color={getStatusColor(vehicle.status) as any}
+                      label={vehicle.status,}
+                      color={getStatusColor(vehicle.status) as any,}
                       size="small"
                     />
                   </TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleOpenDialog('vehicle', vehicle)}>
+                    <IconButton onClick={() => handleOpenDialog('vehicle', vehicle),}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDeleteItem('vehicle', vehicle.id)}>
+                    <IconButton onClick={() => handleDeleteItem('vehicle', vehicle.id),}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -748,19 +662,19 @@ export const AssetManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      <TabPanel value={tabValue} index={2}>
+      <TabPanel value={tabValue,} index={2,}>
         <Box className="flex justify-between items-center mb-4">
-          <Typography variant="h6">Wartungen ({displayMaintenance.length})</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog('maintenance')}
+          <Typography variant="h6">Wartungen ({displayMaintenance.length, })</Typography>
+          <Button;
+variant="contained"
+            startIcon={<AddIcon />,}
+            onClick={() => handleOpenDialog('maintenance'),}
           >
             Wartung hinzufügen
           </Button>
         </Box>
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper,}>
           <Table>
             <TableHead>
               <TableRow>
@@ -775,32 +689,31 @@ export const AssetManagement: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayMaintenance.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.auftragsnummer}</TableCell>
-                  <TableCell>{item.anlagenbezeichnung}</TableCell>
-                  <TableCell>{item.wartungstyp}</TableCell>
-                  <TableCell>{formatDate(item.geplantes_datum)}</TableCell>
+              {displayMaintenance.map((item) => (<TableRow key={item.id, }>
+                  <TableCell>{item.auftragsnummer, }</TableCell>
+                  <TableCell>{item.anlagenbezeichnung, }</TableCell>
+                  <TableCell>{item.wartungstyp, }</TableCell>
+                  <TableCell>{formatDate(item.geplantes_datum),}</TableCell>
                   <TableCell>
                     <Chip
-                      label={item.status}
-                      color={getMaintenanceStatusColor(item.status) as any}
+                      label={item.status,}
+                      color={getMaintenanceStatusColor(item.status) as any,}
                       size="small"
                     />
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={item.prioritaet}
-                      color={getPriorityColor(item.prioritaet) as any}
+                      label={item.prioritaet,}
+                      color={getPriorityColor(item.prioritaet) as any,}
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{formatCurrency(item.kosten)}</TableCell>
+                  <TableCell>{formatCurrency(item.kosten),}</TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleOpenDialog('maintenance', item)}>
+                    <IconButton onClick={() => handleOpenDialog('maintenance', item),}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDeleteItem('maintenance', item.id)}>
+                    <IconButton onClick={() => handleDeleteItem('maintenance', item.id),}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -811,8 +724,8 @@ export const AssetManagement: React.FC = () => {
         </TableContainer>
       </TabPanel>
 
-      {/* Dialog für Asset/Vehicle/Maintenance */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+      {/* Dialog für Asset/Vehicle/Maintenance */,}
+      <Dialog open={openDialog,} onClose={handleCloseDialog,} maxWidth="md" fullWidth>
         <DialogTitle>
           {selectedItem ? 'Bearbeiten' : 'Neu'} - {
             dialogType === 'asset' ? 'Asset' :
@@ -820,450 +733,414 @@ export const AssetManagement: React.FC = () => {
           }
         </DialogTitle>
         <DialogContent>
-          {dialogType === 'asset' && (
-            <form onSubmit={assetForm.handleSubmit(handleSaveAsset)} className="space-y-4 mt-4">
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+          {dialogType === 'asset' && (,
+            <form onSubmit={assetForm.handleSubmit(handleSaveAsset),} className="space-y-4 mt-4">
+              <Grid container spacing={2,}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="anlagennummer"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Anlagennummer *"
-                        error={!!assetForm.formState.errors.anlagennummer}
-                        helperText={assetForm.formState.errors.anlagennummer?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.anlagennummer, }
+                        helperText={assetForm.formState.errors.anlagennummer?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="bezeichnung"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Bezeichnung *"
-                        error={!!assetForm.formState.errors.bezeichnung}
-                        helperText={assetForm.formState.errors.bezeichnung?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.bezeichnung, }
+                        helperText={assetForm.formState.errors.bezeichnung?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="kategoriename"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Kategorie *"
-                        error={!!assetForm.formState.errors.kategoriename}
-                        helperText={assetForm.formState.errors.kategoriename?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.kategoriename, }
+                        helperText={assetForm.formState.errors.kategoriename?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="status"
-                    control={assetForm.control}
-                    render={({ field }) => (
-                      <FormControl fullWidth error={!!assetForm.formState.errors.status}>
+                    control={assetForm.control,}
+                    render={({ field, }) => (
+                      <FormControl fullWidth error={!!assetForm.formState.errors.status, }>
                         <InputLabel>Status *</InputLabel>
-                        <Select {...field} label="Status *">
+                        <Select {...field, } label="Status *">
                           <MenuItem value="aktiv">Aktiv</MenuItem>
                           <MenuItem value="inaktiv">Inaktiv</MenuItem>
                           <MenuItem value="wartung">Wartung</MenuItem>
                           <MenuItem value="defekt">Defekt</MenuItem>
                           <MenuItem value="verkauft">Verkauft</MenuItem>
                         </Select>
-                        {assetForm.formState.errors.status && (
-                          <Typography variant="caption" color="error">
-                            {assetForm.formState.errors.status.message}
-                          </Typography>
-                        )}
+                        {assetForm.formState.errors.status && (, <Typography variant="caption" color="error">, {assetForm.formState.errors.status.message, }
+                          </Typography>)}
                       </FormControl>
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="anschaffungswert"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Anschaffungswert *"
-                        type="number"
+                        label="Anschaffungswert *";
+type="number"
                         InputProps={{
-                          startAdornment: <InputAdornment position="start"><EuroIcon /></InputAdornment>,
-                        }}
-                        error={!!assetForm.formState.errors.anschaffungswert}
-                        helperText={assetForm.formState.errors.anschaffungswert?.message}
-                      />
-                    )}
+                          startAdornment: <InputAdornment position="start"><EuroIcon /></InputAdornment>, }}
+                        error={!!assetForm.formState.errors.anschaffungswert, }
+                        helperText={assetForm.formState.errors.anschaffungswert?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="restbuchwert"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Restbuchwert *"
-                        type="number"
+                        label="Restbuchwert *";
+type="number"
                         InputProps={{
-                          startAdornment: <InputAdornment position="start"><EuroIcon /></InputAdornment>,
-                        }}
-                        error={!!assetForm.formState.errors.restbuchwert}
-                        helperText={assetForm.formState.errors.restbuchwert?.message}
-                      />
-                    )}
+                          startAdornment: <InputAdornment position="start"><EuroIcon /></InputAdornment>, }}
+                        error={!!assetForm.formState.errors.restbuchwert, }
+                        helperText={assetForm.formState.errors.restbuchwert?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="standort"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Standort *"
-                        error={!!assetForm.formState.errors.standort}
-                        helperText={assetForm.formState.errors.standort?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.standort, }
+                        helperText={assetForm.formState.errors.standort?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="verantwortlicher_name"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Verantwortlicher *"
-                        error={!!assetForm.formState.errors.verantwortlicher_name}
-                        helperText={assetForm.formState.errors.verantwortlicher_name?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.verantwortlicher_name, }
+                        helperText={assetForm.formState.errors.verantwortlicher_name?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="anschaffungsdatum"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Anschaffungsdatum *"
-                        type="date"
+                        label="Anschaffungsdatum *";
+type="date"
                         InputLabelProps={{ shrink: true }}
-                        error={!!assetForm.formState.errors.anschaffungsdatum}
-                        helperText={assetForm.formState.errors.anschaffungsdatum?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.anschaffungsdatum, }
+                        helperText={assetForm.formState.errors.anschaffungsdatum?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="naechste_wartung"
-                    control={assetForm.control}
-                    render={({ field }) => (
+                    control={assetForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Nächste Wartung *"
-                        type="date"
+                        label="Nächste Wartung *";
+type="date"
                         InputLabelProps={{ shrink: true }}
-                        error={!!assetForm.formState.errors.naechste_wartung}
-                        helperText={assetForm.formState.errors.naechste_wartung?.message}
-                      />
-                    )}
+                        error={!!assetForm.formState.errors.naechste_wartung, }
+                        helperText={assetForm.formState.errors.naechste_wartung?.message, }
+                      />)}
                   />
                 </Grid>
               </Grid>
             </form>
           )}
 
-          {dialogType === 'vehicle' && (
-            <form onSubmit={vehicleForm.handleSubmit(handleSaveVehicle)} className="space-y-4 mt-4">
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+          {dialogType === 'vehicle' && (,
+            <form onSubmit={vehicleForm.handleSubmit(handleSaveVehicle),} className="space-y-4 mt-4">
+              <Grid container spacing={2,}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="kennzeichen"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Kennzeichen *"
-                        error={!!vehicleForm.formState.errors.kennzeichen}
-                        helperText={vehicleForm.formState.errors.kennzeichen?.message}
-                      />
-                    )}
+                        error={!!vehicleForm.formState.errors.kennzeichen, }
+                        helperText={vehicleForm.formState.errors.kennzeichen?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="marke"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Marke *"
-                        error={!!vehicleForm.formState.errors.marke}
-                        helperText={vehicleForm.formState.errors.marke?.message}
-                      />
-                    )}
+                        error={!!vehicleForm.formState.errors.marke, }
+                        helperText={vehicleForm.formState.errors.marke?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="modell"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Modell *"
-                        error={!!vehicleForm.formState.errors.modell}
-                        helperText={vehicleForm.formState.errors.modell?.message}
-                      />
-                    )}
+                        error={!!vehicleForm.formState.errors.modell, }
+                        helperText={vehicleForm.formState.errors.modell?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="baujahr"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Baujahr *"
-                        type="number"
-                        error={!!vehicleForm.formState.errors.baujahr}
-                        helperText={vehicleForm.formState.errors.baujahr?.message}
-                      />
-                    )}
+                        label="Baujahr *";
+type="number"
+                        error={!!vehicleForm.formState.errors.baujahr, }
+                        helperText={vehicleForm.formState.errors.baujahr?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="kilometerstand"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Kilometerstand *"
-                        type="number"
-                        error={!!vehicleForm.formState.errors.kilometerstand}
-                        helperText={vehicleForm.formState.errors.kilometerstand?.message}
-                      />
-                    )}
+                        label="Kilometerstand *";
+type="number"
+                        error={!!vehicleForm.formState.errors.kilometerstand, }
+                        helperText={vehicleForm.formState.errors.kilometerstand?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="hauptfahrer"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Hauptfahrer *"
-                        error={!!vehicleForm.formState.errors.hauptfahrer}
-                        helperText={vehicleForm.formState.errors.hauptfahrer?.message}
-                      />
-                    )}
+                        error={!!vehicleForm.formState.errors.hauptfahrer, }
+                        helperText={vehicleForm.formState.errors.hauptfahrer?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="tuev_bis"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="TÜV bis *"
-                        type="date"
+                        label="TÜV bis *";
+type="date"
                         InputLabelProps={{ shrink: true }}
-                        error={!!vehicleForm.formState.errors.tuev_bis}
-                        helperText={vehicleForm.formState.errors.tuev_bis?.message}
-                      />
-                    )}
+                        error={!!vehicleForm.formState.errors.tuev_bis, }
+                        helperText={vehicleForm.formState.errors.tuev_bis?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="versicherung_bis"
-                    control={vehicleForm.control}
-                    render={({ field }) => (
+                    control={vehicleForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Versicherung bis *"
-                        type="date"
+                        label="Versicherung bis *";
+type="date"
                         InputLabelProps={{ shrink: true }}
-                        error={!!vehicleForm.formState.errors.versicherung_bis}
-                        helperText={vehicleForm.formState.errors.versicherung_bis?.message}
-                      />
-                    )}
+                        error={!!vehicleForm.formState.errors.versicherung_bis, }
+                        helperText={vehicleForm.formState.errors.versicherung_bis?.message, }
+                      />)}
                   />
                 </Grid>
               </Grid>
             </form>
           )}
 
-          {dialogType === 'maintenance' && (
-            <form onSubmit={maintenanceForm.handleSubmit(handleSaveMaintenance)} className="space-y-4 mt-4">
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+          {dialogType === 'maintenance' && (,
+            <form onSubmit={maintenanceForm.handleSubmit(handleSaveMaintenance),} className="space-y-4 mt-4">
+              <Grid container spacing={2,}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="auftragsnummer"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Auftragsnummer *"
-                        error={!!maintenanceForm.formState.errors.auftragsnummer}
-                        helperText={maintenanceForm.formState.errors.auftragsnummer?.message}
-                      />
-                    )}
+                        error={!!maintenanceForm.formState.errors.auftragsnummer, }
+                        helperText={maintenanceForm.formState.errors.auftragsnummer?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="anlagennummer"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Anlagennummer *"
-                        error={!!maintenanceForm.formState.errors.anlagennummer}
-                        helperText={maintenanceForm.formState.errors.anlagennummer?.message}
-                      />
-                    )}
+                        error={!!maintenanceForm.formState.errors.anlagennummer, }
+                        helperText={maintenanceForm.formState.errors.anlagennummer?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="wartungstyp"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
-                      <FormControl fullWidth error={!!maintenanceForm.formState.errors.wartungstyp}>
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
+                      <FormControl fullWidth error={!!maintenanceForm.formState.errors.wartungstyp, }>
                         <InputLabel>Wartungstyp *</InputLabel>
-                        <Select {...field} label="Wartungstyp *">
+                        <Select {...field, } label="Wartungstyp *">
                           <MenuItem value="planmaessig">Planmäßig</MenuItem>
                           <MenuItem value="stoerung">Störung</MenuItem>
                           <MenuItem value="inspektion">Inspektion</MenuItem>
                           <MenuItem value="reparatur">Reparatur</MenuItem>
                         </Select>
-                        {maintenanceForm.formState.errors.wartungstyp && (
-                          <Typography variant="caption" color="error">
-                            {maintenanceForm.formState.errors.wartungstyp.message}
-                          </Typography>
-                        )}
+                        {maintenanceForm.formState.errors.wartungstyp && (, <Typography variant="caption" color="error">, {maintenanceForm.formState.errors.wartungstyp.message, }
+                          </Typography>)}
                       </FormControl>
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="status"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
-                      <FormControl fullWidth error={!!maintenanceForm.formState.errors.status}>
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
+                      <FormControl fullWidth error={!!maintenanceForm.formState.errors.status, }>
                         <InputLabel>Status *</InputLabel>
-                        <Select {...field} label="Status *">
+                        <Select {...field, } label="Status *">
                           <MenuItem value="geplant">Geplant</MenuItem>
                           <MenuItem value="in_bearbeitung">In Bearbeitung</MenuItem>
                           <MenuItem value="abgeschlossen">Abgeschlossen</MenuItem>
                           <MenuItem value="verschoben">Verschoben</MenuItem>
                           <MenuItem value="storniert">Storniert</MenuItem>
                         </Select>
-                        {maintenanceForm.formState.errors.status && (
-                          <Typography variant="caption" color="error">
-                            {maintenanceForm.formState.errors.status.message}
-                          </Typography>
-                        )}
+                        {maintenanceForm.formState.errors.status && (, <Typography variant="caption" color="error">, {maintenanceForm.formState.errors.status.message, }
+                          </Typography>)}
                       </FormControl>
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="prioritaet"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
-                      <FormControl fullWidth error={!!maintenanceForm.formState.errors.prioritaet}>
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
+                      <FormControl fullWidth error={!!maintenanceForm.formState.errors.prioritaet, }>
                         <InputLabel>Priorität *</InputLabel>
-                        <Select {...field} label="Priorität *">
+                        <Select {...field, } label="Priorität *">
                           <MenuItem value="niedrig">Niedrig</MenuItem>
                           <MenuItem value="mittel">Mittel</MenuItem>
                           <MenuItem value="hoch">Hoch</MenuItem>
                           <MenuItem value="kritisch">Kritisch</MenuItem>
                         </Select>
-                        {maintenanceForm.formState.errors.prioritaet && (
-                          <Typography variant="caption" color="error">
-                            {maintenanceForm.formState.errors.prioritaet.message}
-                          </Typography>
-                        )}
+                        {maintenanceForm.formState.errors.prioritaet && (, <Typography variant="caption" color="error">, {maintenanceForm.formState.errors.prioritaet.message, }
+                          </Typography>)}
                       </FormControl>
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12,} sm={6,}>
                   <Controller
                     name="kosten"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
-                        label="Kosten *"
-                        type="number"
+                        label="Kosten *";
+type="number"
                         InputProps={{
-                          startAdornment: <InputAdornment position="start"><EuroIcon /></InputAdornment>,
-                        }}
-                        error={!!maintenanceForm.formState.errors.kosten}
-                        helperText={maintenanceForm.formState.errors.kosten?.message}
-                      />
-                    )}
+                          startAdornment: <InputAdornment position="start"><EuroIcon /></InputAdornment>, }}
+                        error={!!maintenanceForm.formState.errors.kosten, }
+                        helperText={maintenanceForm.formState.errors.kosten?.message, }
+                      />)}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12,}>
                   <Controller
                     name="beschreibung"
-                    control={maintenanceForm.control}
-                    render={({ field }) => (
+                    control={maintenanceForm.control,}
+                    render={({ field, }) => (
                       <TextField
-                        {...field}
+                        {...field, }
                         fullWidth
                         label="Beschreibung *"
                         multiline
-                        rows={3}
-                        error={!!maintenanceForm.formState.errors.beschreibung}
-                        helperText={maintenanceForm.formState.errors.beschreibung?.message}
-                      />
-                    )}
+                        rows={3, }
+                        error={!!maintenanceForm.formState.errors.beschreibung, }
+                        helperText={maintenanceForm.formState.errors.beschreibung?.message, }
+                      />)}
                   />
                 </Grid>
               </Grid>
@@ -1271,25 +1148,25 @@ export const AssetManagement: React.FC = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} disabled={loading}>
+          <Button onClick={handleCloseDialog,} disabled={loading,}>
             Abbrechen
           </Button>
           <Button
             onClick={
               dialogType === 'asset' ? assetForm.handleSubmit(handleSaveAsset) :
               dialogType === 'vehicle' ? vehicleForm.handleSubmit(handleSaveVehicle) :
-              maintenanceForm.handleSubmit(handleSaveMaintenance)
-            }
-            variant="contained"
-            disabled={loading}
-            startIcon={loading ? <CircularProgress size={20} /> : <SaveIcon />}
+              maintenanceForm.handleSubmit(handleSaveMaintenance),
+            };
+variant="contained"
+            disabled={loading,}
+            startIcon={loading ? <CircularProgress size={20,} /> : <SaveIcon />}
           >
             {loading ? 'Speichere...' : 'Speichern'}
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Schema-Informationen */}
+      {/* Schema-Informationen */,}
       <Card className="mt-6">
         <CardContent>
           <Typography variant="caption" className="text-gray-600">

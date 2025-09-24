@@ -1,2 +1,2 @@
 // FiBu Feature Export
-export { default as FibuDashboard } from './FibuDashboard'; 
+export { default as FibuDashboard ,} from './FibuDashboard'; 

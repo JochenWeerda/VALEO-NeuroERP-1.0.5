@@ -3,53 +3,51 @@
  * Kombiniert Schema- und UI-Metadata für optimale Komponenten-Entwicklung
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { useForm, type UseFormReturn } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import dualMCPClient, { 
-  type MCPSchema, 
-  type CompleteMetadata, 
-  type UIFieldMetadata 
+import { useState, useEffect, useCallback} from 'react';
+import { useForm, type UseFormReturn} from 'react-hook-form';
+import { zodResolver ,} from '@hookform/resolvers/zod';
+import { z ,} from 'zod';
+import dualMCPClient, { ;
+type MCPSchema, ;
+type CompleteMetadata, ;
+type UIFieldMetadata ,
 } from '../utils/dualMCPClient';
 
 // Hook für kombinierte Metadaten
 export interface UseDualMCPMetadataReturn {
   schema: MCPSchema | null;
   uiMetadata: CompleteMetadata | null;
-  combined: any;
+  combined: unknown;
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
 }
 
-export const useDualMCPMetadata = (tableName: string): UseDualMCPMetadataReturn => {
-  const [schema, setSchema] = useState<MCPSchema | null>(null);
-  const [uiMetadata, setUIMetadata] = useState<CompleteMetadata | null>(null);
-  const [combined, setCombined] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchMetadata = useCallback(async () => {
+export const useDualMCPMetadata = (tableName: string): UseDualMCPMetadataReturn => {;
+const [schema, setSchema] = useState<MCPSchema | null>(null);,;
+const [uiMetadata, setUIMetadata] = useState<CompleteMetadata | null>(null);,;
+const [combined, setCombined] = useState<any>(null);,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,;
+const fetchMetadata = useCallback(async () => {
     try {
-      setLoading(true);
-      setError(null);
-
-      const result = await dualMCPClient.getCombinedMetadata(tableName);
+      setLoading(true);,
+      setError(null);,;
+const result = await dualMCPClient.getCombinedMetadata(tableName);,
       
-      setSchema(result.schema);
-      setUIMetadata(result.uiMetadata);
-      setCombined(result.combined);
+      setSchema(result.schema);,
+      setUIMetadata(result.uiMetadata);,
+      setCombined(result.combined);,
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unbekannter Fehler');
-      console.error(`Error fetching dual MCP metadata for ${tableName}:`, err);
+      console.error(`Error fetching dual MCP metadata for ${tableName, }:`, err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
   }, [tableName]);
 
   useEffect(() => {
-    fetchMetadata();
+    fetchMetadata();,
   }, [fetchMetadata]);
 
   return {
@@ -73,22 +71,20 @@ export interface UseDualMCPFormReturn<T = any> extends UseFormReturn<T> {
 }
 
 export const useDualMCPForm = <T = any>(
-  tableName: string,
-  defaultValues?: Partial<T>
-): UseDualMCPFormReturn<T> => {
-  const { schema, uiMetadata, combined, loading, error, refetch } = useDualMCPMetadata(tableName);
+  tableName: string, defaultValues?: Partial<T>): UseDualMCPFormReturn<T> => {;
+const { _schema, _uiMetadata, _combined, _loading, _error, _refetch,} = useDualMCPMetadata(tableName);
   
-  // Zod-Schema generieren
-  const zodSchema = combined ? dualMCPClient.generateZodSchema(combined) : z.object({});
+  // Zod-Schema generieren;
+const zodSchema = combined ? dualMCPClient.generateZodSchema(combined) : z.object({});
   
-  // React Hook Form mit Zod-Resolver
-  const form = useForm<T>({
+  // React Hook Form mit Zod-Resolver;
+const form = useForm<T>({
     resolver: zodResolver(zodSchema) as any,
     defaultValues: (defaultValues || {}) as any
   });
 
-  // Erweiterte Felder mit UI-Metadata
-  const enhancedFields = combined?.enhanced_fields || [];
+  // Erweiterte Felder mit UI-Metadata;
+const enhancedFields = combined?.enhanced_fields || [];
 
   return {
     ...form,
@@ -97,7 +93,7 @@ export const useDualMCPForm = <T = any>(
     enhancedFields,
     loading,
     error,
-    refetch
+    refetch,
   };
 };
 
@@ -105,18 +101,17 @@ export const useDualMCPForm = <T = any>(
 export interface UseDualMCPTableReturn {
   schema: MCPSchema | null;
   uiMetadata: CompleteMetadata | null;
-  tableMetadata: any;
+  tableMetadata: unknown;
   enhancedFields: UIFieldMetadata[];
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
 }
 
-export const useDualMCPTable = (tableName: string): UseDualMCPTableReturn => {
-  const { schema, uiMetadata, combined, loading, error, refetch } = useDualMCPMetadata(tableName);
-  
-  const tableMetadata = uiMetadata?.table || null;
-  const enhancedFields = combined?.enhanced_fields || [];
+export const useDualMCPTable = (tableName: string): UseDualMCPTableReturn => {;
+const { _schema, _uiMetadata, _combined, _loading, _error, _refetch,} = useDualMCPMetadata(tableName);;
+const tableMetadata = uiMetadata?.table || null;;
+const enhancedFields = combined?.enhanced_fields || [];
 
   return {
     schema,
@@ -125,7 +120,7 @@ export const useDualMCPTable = (tableName: string): UseDualMCPTableReturn => {
     enhancedFields,
     loading,
     error,
-    refetch
+    refetch,
   };
 };
 
@@ -135,40 +130,38 @@ export interface UseDualMCPDataReturn<T = any> {
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
-  create: (item: Omit<T, 'id'>) => Promise<T>;
-  update: (id: string, item: Partial<T>) => Promise<T>;
-  delete: (id: string) => Promise<void>;
+  create: (item: Omit<_T, 'id'>) => Promise<T>;
+  update: (id: _string, item: Partial<T>) => Promise<T>;
+  delete: (id: _string) => Promise<void>;
 }
 
-export const useDualMCPData = <T = any>(tableName: string): UseDualMCPDataReturn<T> => {
-  const [data, setData] = useState<T[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { schema, uiMetadata } = useDualMCPMetadata(tableName);
-
-  const fetchData = useCallback(async () => {
+export const useDualMCPData = <T = any>(tableName: string): UseDualMCPDataReturn<T> => {;
+const [data, setData] = useState<T[] | null>(null);,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,;
+const { _schema, _uiMetadata,} = useDualMCPMetadata(tableName);;
+const fetchData = useCallback(async () => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock-Daten basierend auf Schema (später durch echte API ersetzen)
-      const mockData = generateMockData<T>(schema, tableName);
-      setData(mockData);
+      // Mock-Daten basierend auf Schema (später durch echte API ersetzen),;
+const mockData = generateMockData<T>(schema, tableName);,
+      setData(mockData);,
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unbekannter Fehler');
-      console.error(`Error fetching data for ${tableName}:`, err);
+      console.error(`Error fetching data for ${tableName, }:`, err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  }, [schema, tableName]);
-
-  const create = useCallback(async (item: Omit<T, 'id'>): Promise<T> => {
+  }, [schema, tableName]);;
+const create = useCallback(async (item: Omit<T, 'id'>): Promise<T> => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock-Create (später durch echte API ersetzen)
-      const newItem = {
+      // Mock-Create (später durch echte API ersetzen),;
+const newItem = {
         ...item,
         id: Math.random().toString(36).substr(2, 9),
         created_at: new Date().toISOString(),
@@ -179,20 +172,19 @@ export const useDualMCPData = <T = any>(tableName: string): UseDualMCPDataReturn
       return newItem;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Fehler beim Erstellen');
-      throw err;
+      throw err;,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  }, []);
-
-  const update = useCallback(async (id: string, item: Partial<T>): Promise<T> => {
+  }, []);;
+const update = useCallback(async (id: string, item: Partial<T>): Promise<T> => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock-Update (später durch echte API ersetzen)
+      // Mock-Update (später durch echte API ersetzen),
       setData(prev => {
-        if (!prev) return null;
+        if (!prev) return null;,
         return prev.map(existingItem => {
           if ((existingItem as any).id === id) {
             return {
@@ -203,37 +195,35 @@ export const useDualMCPData = <T = any>(tableName: string): UseDualMCPDataReturn
           }
           return existingItem;
         });
-      });
-
-      const updatedItem = data?.find(item => (item as any).id === id);
+      });;
+const updatedItem = data?.find(item => (item as any).id === id);
       if (!updatedItem) throw new Error('Item nicht gefunden');
       
       return updatedItem;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Fehler beim Aktualisieren');
-      throw err;
+      throw err;,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
-  }, [data]);
-
-  const deleteItem = useCallback(async (id: string): Promise<void> => {
+  }, [data]);;
+const deleteItem = useCallback(async (id: string): Promise<void> => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      // Mock-Delete (später durch echte API ersetzen)
+      // Mock-Delete (später durch echte API ersetzen),
       setData(prev => prev ? prev.filter(item => (item as any).id !== id) : null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Fehler beim Löschen');
-      throw err;
+      throw err;,
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
   }, []);
 
   useEffect(() => {
-    fetchData();
+    fetchData();,
   }, [fetchData]);
 
   return {
@@ -256,36 +246,35 @@ export interface UseDualMCPComponentReturn {
   regenerate: () => Promise<void>;
 }
 
-export const useDualMCPComponent = (tableName: string): UseDualMCPComponentReturn => {
-  const [formComponent, setFormComponent] = useState<string>('');
-  const [tableComponent, setTableComponent] = useState<string>('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { combined, loading: metadataLoading, error: metadataError } = useDualMCPMetadata(tableName);
-
-  const generateComponents = useCallback(async () => {
+export const useDualMCPComponent = (tableName: string): UseDualMCPComponentReturn => {;
+const [formComponent, setFormComponent] = useState<string>('');,;
+const [tableComponent, setTableComponent] = useState<string>('');,;
+const [loading, setLoading] = useState(true);,;
+const [error, setError] = useState<string | null>(null);,;
+const { _combined, loading: metadataLoading, error: metadataError} = useDualMCPMetadata(tableName);;
+const generateComponents = useCallback(async () => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true);,
+      setError(null);,
 
-      if (combined) {
-        const formCode = dualMCPClient.generateReactComponent(combined, 'form');
-        const tableCode = dualMCPClient.generateReactComponent(combined, 'table');
+      if (combined) {;
+const formCode = dualMCPClient.generateReactComponent(combined, 'form');,;
+const tableCode = dualMCPClient.generateReactComponent(combined, 'table');,
         
-        setFormComponent(formCode);
-        setTableComponent(tableCode);
+        setFormComponent(formCode);,
+        setTableComponent(tableCode);,
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Fehler bei der Komponenten-Generierung');
-      console.error(`Error generating components for ${tableName}:`, err);
+      console.error(`Error generating components for ${tableName, }:`, err);
     } finally {
-      setLoading(false);
+      setLoading(false);,
     }
   }, [combined, tableName]);
 
   useEffect(() => {
     if (!metadataLoading && !metadataError) {
-      generateComponents();
+      generateComponents();,
     }
   }, [metadataLoading, metadataError, generateComponents]);
 
@@ -298,30 +287,29 @@ export const useDualMCPComponent = (tableName: string): UseDualMCPComponentRetur
   };
 };
 
-// Hilfsfunktion für Mock-Daten-Generierung
+// Hilfsfunktion für Mock-Daten-Generierung;
 function generateMockData<T>(schema: MCPSchema | null, tableName: string): T[] {
-  if (!schema) return [];
+  if (!schema) return [];,;
+const mockData: T[] = [];;
+const mockCount = 5; // Anzahl Mock-Einträge,
 
-  const mockData: T[] = [];
-  const mockCount = 5; // Anzahl Mock-Einträge
-
-  for (let i = 1; i <= mockCount; i++) {
-    const item: any = {
-      id: `${tableName}_${i}`,
+  for (let i = 1; i <= mockCount; i++) {;
+const item: unknown = {
+      id: `${tableName}_${i,}`,
       created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
       updated_at: new Date().toISOString()
     };
 
     // Felder basierend auf Schema generieren
     schema.columns.forEach(column => {
-      if (column.name === 'id') return; // Bereits gesetzt
+      if (column.name === 'id') return; // Bereits gesetzt,
 
       switch (column.type.toLowerCase()) {
         case 'uuid':
-          item[column.name] = `uuid-${i}-${Math.random().toString(36).substr(2, 9)}`;
+          item[column.name] = `uuid-${i,}-${Math.random().toString(36).substr(2, 9),}`;
           break;
         case 'email':
-          item[column.name] = `user${i}@example.com`;
+          item[column.name] = `user${i,}@example.com`;
           break;
         case 'int':
         case 'integer':
@@ -345,21 +333,21 @@ function generateMockData<T>(schema: MCPSchema | null, tableName: string): T[] {
           break;
         case 'enum':
           if (column.enum_values && column.enum_values.length > 0) {
-            item[column.name] = column.enum_values[Math.floor(Math.random() * column.enum_values.length)];
+            item[column.name] = column.enum_values[Math.floor(Math.random() * column.enum_values.length)];,
           } else {
-            item[column.name] = 'default';
+            item[column.name] = 'default';,
           }
           break;
         default:
           // Text-basierte Felder
           if (column.name.toLowerCase().includes('name')) {
-            item[column.name] = `Test ${column.name} ${i}`;
+            item[column.name] = `Test ${column.name,} ${i,}`;
           } else if (column.name.toLowerCase().includes('description')) {
-            item[column.name] = `Beschreibung für ${column.name} ${i}`;
+            item[column.name] = `Beschreibung für ${column.name,} ${i,}`;
           } else if (column.name.toLowerCase().includes('status')) {
-            item[column.name] = ['aktiv', 'inaktiv', 'wartung'][Math.floor(Math.random() * 3)];
+            item[column.name] = ['aktiv', 'inaktiv', 'wartung'][Math.floor(Math.random() * 3)];,
           } else {
-            item[column.name] = `Wert ${i}`;
+            item[column.name] = `Wert ${i,}`;
           }
       }
     });

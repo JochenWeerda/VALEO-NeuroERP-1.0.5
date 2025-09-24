@@ -1,52 +1,43 @@
-import React, { useState } from 'react';
-import { Box, Card, CardContent, Typography, Tabs, Tab, Chip, Grid } from '@mui/material';
+import React, { useState ,} from 'react';
+import { Box, Card, CardContent, Typography, Tabs, Tab, Chip, Grid} from '@mui/material';
 import { 
-  Business as BusinessIcon,
-  TrendingUp as TrendingUpIcon,
-  Assessment as AssessmentIcon,
-  Settings as SettingsIcon
-} from '@mui/icons-material';
-import { StreckengeschaeftList } from '../components/streckengeschaeft/StreckengeschaeftList';
-import { Streckengeschaeft, VorgangsTyp, StreckenStatus } from '../types/streckengeschaeft';
-
+  Business as BusinessIcon, TrendingUp as TrendingUpIcon, Assessment as AssessmentIcon, Settings as SettingsIcon} from '@mui/icons-material';
+import { StreckengeschaeftList ,} from '../components/streckengeschaeft/StreckengeschaeftList';
+import { Streckengeschaeft, VorgangsTyp, StreckenStatus} from '../types/streckengeschaeft';;
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+};
+function TabPanel(props: TabPanelProps) {;
+const { _children, _value, _index, _...other,} = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`streckengeschaeft-tabpanel-${index}`}
-      aria-labelledby={`streckengeschaeft-tab-${index}`}
-      {...other}
+      hidden={value !== index, }
+      id={`streckengeschaeft-tabpanel-${index, }`}
+      aria-labelledby={`streckengeschaeft-tab-${index, }`}
+      {...other, }
     >
-      {value === index && <Box className="pt-4">{children}</Box>}
-    </div>
-  );
+      {value === index && <Box className="pt-4">{children, }</Box>}
+    </div>);
 }
 
-export const StreckengeschaeftPage: React.FC = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [selectedStrecke, setSelectedStrecke] = useState<Streckengeschaeft | null>(null);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const handleStreckeClick = (strecke: Streckengeschaeft) => {
-    setSelectedStrecke(strecke);
-    // Hier könnte man zu einer Detail-Ansicht navigieren
+export const StreckengeschaeftPage: React.FC = () => {;
+const [tabValue, setTabValue] = useState(0);,;
+const [selectedStrecke, setSelectedStrecke] = useState<Streckengeschaeft | null>(null);,;
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);,
+  };;
+const handleStreckeClick = (strecke: Streckengeschaeft) => {
+    setSelectedStrecke(strecke);,
+    // Hier könnte man zu einer Detail-Ansicht navigieren,
     console.log('Strecke ausgewählt:', strecke);
   };
 
-  // Mock-Statistiken
-  const stats = {
+  // Mock-Statistiken;
+const stats = {
     totalStrecken: 156,
     activeStrecken: 23,
     completedStrecken: 89,
@@ -57,7 +48,7 @@ export const StreckengeschaeftPage: React.FC = () => {
 
   return (
     <Box className="min-h-screen bg-gray-50">
-      {/* Header */}
+      {/* Header */, }
       <Box className="bg-white shadow-sm border-b">
         <Box className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Box className="flex items-center justify-between h-16">
@@ -69,30 +60,30 @@ export const StreckengeschaeftPage: React.FC = () => {
               <Chip 
                 label="VALEO NeuroERP" 
                 size="small" 
-                color="primary" 
-                variant="outlined"
+                color="primary" ;
+variant="outlined"
               />
             </Box>
             
             <Box className="flex items-center space-x-2">
               <Typography variant="body2" className="text-gray-600">
-                Letzte Aktualisierung: {new Date().toLocaleString('de-DE')}
+                Letzte Aktualisierung: {new Date().toLocaleString('de-DE'),}
               </Typography>
             </Box>
           </Box>
         </Box>
       </Box>
 
-      {/* Statistiken */}
+      {/* Statistiken */,}
       <Box className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <Grid container spacing={3} className="mb-6">
-          <Grid item xs={12} sm={6} md={3}>
+        <Grid container spacing={3,} className="mb-6">
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
               <CardContent>
                 <Box className="flex items-center justify-between">
                   <Box>
                     <Typography variant="h4" className="font-bold">
-                      {stats.totalStrecken}
+                      {stats.totalStrecken,}
                     </Typography>
                     <Typography variant="body2" className="opacity-90">
                       Gesamt Strecken
@@ -104,13 +95,13 @@ export const StreckengeschaeftPage: React.FC = () => {
             </Card>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
               <CardContent>
                 <Box className="flex items-center justify-between">
                   <Box>
                     <Typography variant="h4" className="font-bold">
-                      {stats.activeStrecken}
+                      {stats.activeStrecken,}
                     </Typography>
                     <Typography variant="body2" className="opacity-90">
                       Aktive Strecken
@@ -122,17 +113,14 @@ export const StreckengeschaeftPage: React.FC = () => {
             </Card>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
               <CardContent>
                 <Box className="flex items-center justify-between">
                   <Box>
                     <Typography variant="h4" className="font-bold">
                       {new Intl.NumberFormat('de-DE', { 
-                        style: 'currency', 
-                        currency: 'EUR',
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0
+                        style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0
                       }).format(stats.totalRevenue)}
                     </Typography>
                     <Typography variant="body2" className="opacity-90">
@@ -145,17 +133,14 @@ export const StreckengeschaeftPage: React.FC = () => {
             </Card>
           </Grid>
           
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12,} sm={6,} md={3,}>
             <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
               <CardContent>
                 <Box className="flex items-center justify-between">
                   <Box>
                     <Typography variant="h4" className="font-bold">
                       {new Intl.NumberFormat('de-DE', { 
-                        style: 'currency', 
-                        currency: 'EUR',
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0
+                        style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0
                       }).format(stats.totalProfit)}
                     </Typography>
                     <Typography variant="body2" className="opacity-90">
@@ -169,62 +154,62 @@ export const StreckengeschaeftPage: React.FC = () => {
           </Grid>
         </Grid>
 
-        {/* Tabs */}
+        {/* Tabs */,}
         <Card>
           <CardContent className="p-0">
             <Box className="border-b border-gray-200">
               <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange}
-                variant="scrollable"
-                scrollButtons="auto"
-                className="px-6"
+                value={tabValue,} 
+                onChange={handleTabChange,};
+variant="scrollable"
+                scrollButtons="auto";
+className="px-6"
               >
                 <Tab 
                   label={
-                    <Box className="flex items-center space-x-2">
-                      <BusinessIcon />
-                      <span>Übersicht</span>
-                    </Box>
+                    <Box className="flex items-center space-x-2">,
+                      <BusinessIcon />,
+                      <span>Übersicht</span>,
+                    </Box>,
                   }
                   iconPosition="start"
                 />
                 <Tab 
                   label={
-                    <Box className="flex items-center space-x-2">
-                      <TrendingUpIcon />
-                      <span>Analysen</span>
-                    </Box>
+                    <Box className="flex items-center space-x-2">,
+                      <TrendingUpIcon />,
+                      <span>Analysen</span>,
+                    </Box>,
                   }
                   iconPosition="start"
                 />
                 <Tab 
                   label={
-                    <Box className="flex items-center space-x-2">
-                      <AssessmentIcon />
-                      <span>Berichte</span>
-                    </Box>
+                    <Box className="flex items-center space-x-2">,
+                      <AssessmentIcon />,
+                      <span>Berichte</span>,
+                    </Box>,
                   }
                   iconPosition="start"
                 />
                 <Tab 
                   label={
-                    <Box className="flex items-center space-x-2">
-                      <SettingsIcon />
-                      <span>Einstellungen</span>
-                    </Box>
+                    <Box className="flex items-center space-x-2">,
+                      <SettingsIcon />,
+                      <span>Einstellungen</span>,
+                    </Box>,
                   }
                   iconPosition="start"
                 />
               </Tabs>
             </Box>
 
-            {/* Tab Inhalte */}
-            <TabPanel value={tabValue} index={0}>
+            {/* Tab Inhalte */,}
+            <TabPanel value={tabValue,} index={0,}>
               <StreckengeschaeftList />
             </TabPanel>
 
-            <TabPanel value={tabValue} index={1}>
+            <TabPanel value={tabValue,} index={1,}>
               <Box className="p-6">
                 <Typography variant="h6" className="mb-4">
                   Streckengeschäft-Analysen
@@ -236,7 +221,7 @@ export const StreckengeschaeftPage: React.FC = () => {
               </Box>
             </TabPanel>
 
-            <TabPanel value={tabValue} index={2}>
+            <TabPanel value={tabValue,} index={2,}>
               <Box className="p-6">
                 <Typography variant="h6" className="mb-4">
                   Berichte und Exporte
@@ -251,7 +236,7 @@ export const StreckengeschaeftPage: React.FC = () => {
               </Box>
             </TabPanel>
 
-            <TabPanel value={tabValue} index={3}>
+            <TabPanel value={tabValue,} index={3,}>
               <Box className="p-6">
                 <Typography variant="h6" className="mb-4">
                   Streckengeschäft-Einstellungen

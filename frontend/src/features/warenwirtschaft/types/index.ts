@@ -27,8 +27,8 @@ export interface Kommissionierer {
   id: string;
   name: string;
   status: 'verfuegbar' | 'beschaeftigt' | 'offline';
-  aktuelleTour?: string;
-  letzteAktivitaet: Date;
+  aktuelleTour?: string;;
+letzteAktivitaet: Date;
   performance: number;
 }
 

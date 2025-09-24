@@ -20,12 +20,8 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 
 // Mock für matchMedia
 Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // deprecated
+  writable: true, value: jest.fn().mockImplementation(query => ({
+    matches: false, media: query, onchange: null, addListener: jest.fn(), // deprecated
     removeListener: jest.fn(), // deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
@@ -33,22 +29,20 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock für console.error um React-Warnungen zu unterdrücken
+// Mock für console.error um React-Warnungen zu unterdrücken;
 const originalError = console.error;
 beforeAll(() => {
-  console.error = (...args: any[]) => {
-    if (
-      typeof args[0] === 'string' &&
-      args[0].includes('Warning: ReactDOM.render is no longer supported')
+  console.error = (...args: unknown[]) => {
+    if (typeof args[0] === 'string' &&, args[0].includes('Warning: ReactDOM.render is no longer supported')
     ) {
-      return;
+      return;,
     }
     originalError.call(console, ...args);
   };
 });
 
 afterAll(() => {
-  console.error = originalError;
+  console.error = originalError;,
 });
 
 // Mock für fetch
@@ -158,8 +152,8 @@ Object.defineProperty(navigator, 'geolocation', {
 // Mock für navigator.mediaDevices
 Object.defineProperty(navigator, 'mediaDevices', {
   value: {
-    getUserMedia: jest.fn(),
-    enumerateDevices: jest.fn(),
+    getUserMedia: jest.fn(),;
+enumerateDevices: jest.fn(),
   },
   writable: true,
 });
@@ -176,7 +170,7 @@ Object.defineProperty(window, 'performance', {
   writable: true,
 });
 
-// Mock für WebSocket
+// Mock für WebSocket;
 const WebSocketMock = jest.fn().mockImplementation(() => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
@@ -190,7 +184,7 @@ WebSocketMock.CLOSING = 2;
 WebSocketMock.CLOSED = 3;
 global.WebSocket = WebSocketMock;
 
-// Mock für EventSource
+// Mock für EventSource;
 const EventSourceMock = jest.fn().mockImplementation(() => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
@@ -282,7 +276,7 @@ Object.defineProperty(global, 'queueMicrotask', {
   writable: true,
 });
 
-// Mock für setImmediate
+// Mock für setImmediate;
 const setImmediateMock = jest.fn((callback) => setTimeout(callback, 0)) as any;
 setImmediateMock.__promisify__ = jest.fn();
 global.setImmediate = setImmediateMock;
@@ -292,23 +286,23 @@ global.clearImmediate = jest.fn();
 
 // Mock für process.nextTick
 if (typeof process !== 'undefined') {
-  process.nextTick = jest.fn((callback) => setTimeout(callback, 0));
+  process.nextTick = jest.fn((callback) => setTimeout(callback, 0));,
 }
 
-// Mock für console methods
-const originalConsole = { ...console };
+// Mock für console methods;
+const originalConsole = { ...console ,};
 beforeEach(() => {
-  console.log = jest.fn();
-  console.warn = jest.fn();
-  console.error = jest.fn();
-  console.info = jest.fn();
-  console.debug = jest.fn();
+  console.log = jest.fn();,
+  console.warn = jest.fn();,
+  console.error = jest.fn();,
+  console.info = jest.fn();,
+  console.debug = jest.fn();,
 });
 
 afterEach(() => {
-  console.log = originalConsole.log;
-  console.warn = originalConsole.warn;
-  console.error = originalConsole.error;
-  console.info = originalConsole.info;
-  console.debug = originalConsole.debug;
+  console.log = originalConsole.log;,
+  console.warn = originalConsole.warn;,
+  console.error = originalConsole.error;,
+  console.info = originalConsole.info;,
+  console.debug = originalConsole.debug;,
 }); 

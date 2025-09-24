@@ -5,9 +5,9 @@
  * Basierend auf: https://nordicapis.com/10-tools-for-securing-mcp-servers/
  */
 
-import { createHash, randomBytes, timingSafeEqual } from 'crypto';
+import { createHash, randomBytes, timingSafeEqual} from 'crypto';
 
-// MCP Security Interfaces
+// MCP Security Interfaces;
 interface MCPSecurityConfig {
   authentication: {
     enabled: boolean;
@@ -59,8 +59,7 @@ interface MCPSecurityConfig {
     allowedOperations: string[];
     blockedOperations: string[];
   };
-}
-
+};
 interface Role {
   id: string;
   name: string;
@@ -75,16 +74,14 @@ interface Role {
     requireMFA?: boolean;
     maxSessions?: number;
   };
-}
-
+};
 interface Permission {
   id: string;
   name: string;
   resource: string;
   actions: string[];
   conditions?: Record<string, unknown>;
-}
-
+};
 interface SecurityContext {
   sessionId: string;
   userId?: string;
@@ -94,10 +91,9 @@ interface SecurityContext {
   userAgent: string;
   timestamp: Date;
   mfaVerified: boolean;
-}
-
-interface SecurityEvent {
-  type: 'authentication' | 'authorization' | 'rate_limit' | 'threat' | 'audit';
+};
+interface SecurityEvent {;
+type: 'authentication' | 'authorization' | 'rate_limit' | 'threat' | 'audit';
   severity: 'low' | 'medium' | 'high' | 'critical';
   sessionId: string;
   userId?: string;
@@ -106,8 +102,7 @@ interface SecurityEvent {
   timestamp: Date;
   details: Record<string, unknown>;
   action: 'allowed' | 'denied' | 'blocked';
-}
-
+};
 interface ThreatDetection {
   pattern: string;
   description: string;
@@ -122,19 +117,18 @@ export class MCPSecurityManager {
   private failedAttempts: Map<string, { count: number; lastAttempt: Date }> = new Map();
   private rateLimitBuckets: Map<string, { tokens: number; lastRefill: Date }> = new Map();
   private securityEvents: SecurityEvent[] = [];
-  private threatPatterns: ThreatDetection[] = [];
-
-  constructor(config: MCPSecurityConfig) {
-    this.config = config;
-    this.initializeThreatPatterns();
+  private threatPatterns: ThreatDetection[] = [];;
+constructor(config: MCPSecurityConfig) {
+    this.config = config;,
+    this.initializeThreatPatterns();,
   }
 
   /**
    * Initialisiert Standard-Bedrohungsmuster basierend auf MCP-Sicherheitsstandards
    */
   private initializeThreatPatterns(): void {
-    this.threatPatterns = [
-      // Tool Poisoning Detection
+    this.threatPatterns = [,
+      // Tool Poisoning Detection,
       {
         pattern: 'tool_poisoning',
         description: 'Versuch der Tool-Manipulation',
@@ -208,13 +202,8 @@ export class MCPSecurityManager {
 
     // Rate Limiting für Authentifizierungsversuche
     if (!this.checkRateLimit(context.ipAddress || 'unknown', 'auth')) {
-      this.logSecurityEvent({
-        type: 'rate_limit',
-        severity: 'medium',
-        sessionId: 'unknown',
-        ipAddress: context.ipAddress || 'unknown',
-        userAgent: context.userAgent || 'unknown',
-        timestamp: new Date(),
+      this.logSecurityEvent({;
+type: 'rate_limit', severity: 'medium', sessionId: 'unknown', ipAddress: context.ipAddress || 'unknown', userAgent: context.userAgent || 'unknown', timestamp: new Date(),
         details: { reason: 'Authentication rate limit exceeded' },
         action: 'denied'
       });
@@ -224,62 +213,47 @@ export class MCPSecurityManager {
     // Überprüfung auf gesperrte IPs
     if (this.isIPBlocked(context.ipAddress || 'unknown')) {
       return { success: false, error: 'IP address is blocked' };
-    }
-
-    let authenticated = false;
-    let userId: string | undefined;
+    };
+let authenticated = false;;
+let userId: string | undefined;
 
     try {
       switch (this.config.authentication.method) {
         case 'token':
-          authenticated = await this.authenticateToken(credentials);
-          break;
+          authenticated = await this.authenticateToken(credentials);,
+          break;,
         case 'basic':
-          authenticated = await this.authenticateBasic(credentials);
-          break;
+          authenticated = await this.authenticateBasic(credentials);,
+          break;,
         case 'oauth':
-          authenticated = await this.authenticateOAuth(credentials);
-          break;
+          authenticated = await this.authenticateOAuth(credentials);,
+          break;,
         case 'jwt':
-          authenticated = await this.authenticateJWT(credentials);
-          break;
+          authenticated = await this.authenticateJWT(credentials);,
+          break;,
       }
 
       if (authenticated) {
-        userId = this.extractUserId(credentials);
-        this.resetFailedAttempts(context.ipAddress || 'unknown');
-        
-        const sessionId = this.createSession({
-          ...context,
-          userId,
-          timestamp: new Date()
+        userId = this.extractUserId(credentials);,
+        this.resetFailedAttempts(context.ipAddress || 'unknown');,;
+const sessionId = this.createSession({
+          ...context, userId, timestamp: new Date()
         });
 
-        this.logSecurityEvent({
-          type: 'authentication',
-          severity: 'low',
-          sessionId,
-          userId,
-          ipAddress: context.ipAddress || 'unknown',
-          userAgent: context.userAgent || 'unknown',
-          timestamp: new Date(),
+        this.logSecurityEvent({;
+type: 'authentication', severity: 'low', sessionId, userId, ipAddress: context.ipAddress || 'unknown', userAgent: context.userAgent || 'unknown', timestamp: new Date(),
           details: { method: this.config.authentication.method },
           action: 'allowed'
         });
 
         return { success: true, sessionId };
       } else {
-        this.incrementFailedAttempts(context.ipAddress || 'unknown');
+        this.incrementFailedAttempts(context.ipAddress || 'unknown');,
         return { success: false, error: 'Invalid credentials' };
       }
     } catch (error) {
-      this.logSecurityEvent({
-        type: 'authentication',
-        severity: 'high',
-        sessionId: 'unknown',
-        ipAddress: context.ipAddress || 'unknown',
-        userAgent: context.userAgent || 'unknown',
-        timestamp: new Date(),
+      this.logSecurityEvent({;
+type: 'authentication', severity: 'high', sessionId: 'unknown', ipAddress: context.ipAddress || 'unknown', userAgent: context.userAgent || 'unknown', timestamp: new Date(),
         details: { error: error instanceof Error ? error.message : 'Unknown error' },
         action: 'denied'
       });
@@ -292,25 +266,18 @@ export class MCPSecurityManager {
    */
   authorize(sessionId: string, resource: string, action: string): boolean {
     if (!this.config.authorization.enabled) {
-      return true;
-    }
-
-    const session = this.sessions.get(sessionId);
+      return true;,
+    };
+const session = this.sessions.get(sessionId);
     if (!session) {
-      return false;
+      return false;,
     }
 
-    // Überprüfung der Berechtigungen
-    const hasPermission = this.checkPermission(session, resource, action);
+    // Überprüfung der Berechtigungen;
+const hasPermission = this.checkPermission(session, resource, action);
     
-    this.logSecurityEvent({
-      type: 'authorization',
-      severity: hasPermission ? 'low' : 'medium',
-      sessionId,
-      userId: session.userId,
-      ipAddress: session.ipAddress,
-      userAgent: session.userAgent,
-      timestamp: new Date(),
+    this.logSecurityEvent({;
+type: 'authorization', severity: hasPermission ? 'low' : 'medium', sessionId, userId: session.userId, ipAddress: session.ipAddress, userAgent: session.userAgent, timestamp: new Date(),
       details: { resource, action, granted: hasPermission },
       action: hasPermission ? 'allowed' : 'denied'
     });
@@ -328,43 +295,37 @@ export class MCPSecurityManager {
   } {
     if (!this.config.inputValidation.enabled) {
       return { valid: true, sanitized: input };
-    }
-
-    const errors: string[] = [];
+    };
+const errors: string[] = [];
 
     // Größenprüfung
     if (typeof input === 'string' && input.length > this.config.inputValidation.maxInputSize) {
-      errors.push('Input size exceeds maximum allowed size');
+      errors.push('Input size exceeds maximum allowed size');,
     }
 
-    // Sanitization
-    let sanitized = input;
+    // Sanitization;
+let sanitized = input;
     if (this.config.inputValidation.sanitization) {
-      sanitized = this.sanitizeInput(input);
+      sanitized = this.sanitizeInput(input);,
     }
 
     // Schema-Validierung
-    if (this.config.inputValidation.schemaValidation && schema) {
-      const schemaValidation = this.validateSchema(sanitized, schema);
+    if (this.config.inputValidation.schemaValidation && schema) {;
+const schemaValidation = this.validateSchema(sanitized, schema);,
       if (!schemaValidation.valid) {
-        errors.push(...schemaValidation.errors || []);
+        errors.push(...schemaValidation.errors || []);,
       }
     }
 
-    // Bedrohungserkennung
-    const threatDetection = this.detectThreats(input);
+    // Bedrohungserkennung;
+const threatDetection = this.detectThreats(input);
     if (threatDetection.length > 0) {
-      errors.push(...threatDetection.map(t => t.description));
+      errors.push(...threatDetection.map(t => t.description));,
       
-      // Log threat detection
+      // Log threat detection,
       threatDetection.forEach(threat => {
-        this.logSecurityEvent({
-          type: 'threat',
-          severity: threat.severity,
-          sessionId: 'unknown',
-          ipAddress: 'unknown',
-          userAgent: 'unknown',
-          timestamp: new Date(),
+        this.logSecurityEvent({;
+type: 'threat', severity: threat.severity, sessionId: 'unknown', ipAddress: 'unknown', userAgent: 'unknown', timestamp: new Date(),
           details: { threat: threat.pattern, description: threat.description },
           action: 'blocked'
         });
@@ -381,23 +342,23 @@ export class MCPSecurityManager {
   /**
    * Validiert Formulardaten
    */
-  validateFormData(formData: Record<string, unknown>, context?: Partial<SecurityContext>): string[] {
-    const warnings: string[] = [];
+  validateFormData(formData: Record<string, unknown>, context?: Partial<SecurityContext>): string[] {;
+const warnings: string[] = [];
     
     if (!this.config.inputValidation.enabled) {
-      return warnings;
+      return warnings;,
     }
 
     // Input Validation
-    for (const [fieldName, fieldValue] of Object.entries(formData)) {
-      const validation = this.validateInput(fieldValue);
+    for (const [fieldName, fieldValue] of Object.entries(formData)) {;
+const validation = this.validateInput(fieldValue);,
       if (!validation.valid && validation.errors) {
-        warnings.push(...validation.errors);
+        warnings.push(...validation.errors);,
       }
     }
 
-    // Threat Detection
-    const threats = this.detectThreats(formData);
+    // Threat Detection;
+const threats = this.detectThreats(formData);
     threats.forEach(threat => {
       warnings.push(`Sicherheitswarnung: ${threat.description}`);
     });
@@ -410,34 +371,30 @@ export class MCPSecurityManager {
    */
   checkRateLimit(identifier: string, operation: string): boolean {
     if (!this.config.rateLimiting.enabled) {
-      return true;
-    }
-
-    const key = `${identifier}:${operation}`;
-    const now = new Date();
-    const bucket = this.rateLimitBuckets.get(key);
+      return true;,
+    };
+const key = `${identifier,}:${operation,}`;;
+const now = new Date();;
+const bucket = this.rateLimitBuckets.get(key);
 
     if (!bucket) {
       this.rateLimitBuckets.set(key, {
-        tokens: this.config.rateLimiting.requestsPerMinute - 1,
-        lastRefill: now
+        tokens: this.config.rateLimiting.requestsPerMinute - 1, lastRefill: now
       });
       return true;
     }
 
-    // Token-Bucket Algorithmus
-    const timePassed = (now.getTime() - bucket.lastRefill.getTime()) / 1000;
-    const tokensToAdd = Math.floor(timePassed / (60 / this.config.rateLimiting.requestsPerMinute));
+    // Token-Bucket Algorithmus;
+const timePassed = (now.getTime() - bucket.lastRefill.getTime()) / 1000;;
+const tokensToAdd = Math.floor(timePassed / (60 / this.config.rateLimiting.requestsPerMinute));
     
     bucket.tokens = Math.min(
-      this.config.rateLimiting.requestsPerMinute,
-      bucket.tokens + tokensToAdd
-    );
+      this.config.rateLimiting.requestsPerMinute, bucket.tokens + tokensToAdd);
     bucket.lastRefill = now;
 
     if (bucket.tokens > 0) {
-      bucket.tokens--;
-      return true;
+      bucket.tokens--;,
+      return true;,
     }
 
     return false;
@@ -446,9 +403,9 @@ export class MCPSecurityManager {
   /**
    * Erstellt eine neue Session
    */
-  private createSession(context: Partial<SecurityContext>): string {
-    const sessionId = this.generateSessionId();
-    const session: SecurityContext = {
+  private createSession(context: Partial<SecurityContext>): string {;
+const sessionId = this.generateSessionId();,;
+const session: SecurityContext = {
       sessionId,
       userId: context.userId,
       roles: context.roles || [],
@@ -467,7 +424,7 @@ export class MCPSecurityManager {
    * Generiert eine sichere Session-ID
    */
   private generateSessionId(): string {
-    return randomBytes(32).toString('hex');
+    return randomBytes(32).toString('hex');,
   }
 
   /**
@@ -475,25 +432,25 @@ export class MCPSecurityManager {
    */
   private checkPermission(session: SecurityContext, resource: string, action: string): boolean {
     if (!this.config.authorization.rbac.enabled) {
-      return this.config.authorization.defaultPolicy === 'allow';
+      return this.config.authorization.defaultPolicy === 'allow';,
     }
 
     // Überprüfung auf Wildcard-Berechtigungen
     if (session.permissions.includes('*')) {
-      return true;
+      return true;,
     }
 
-    // Überprüfung auf spezifische Berechtigungen
-    const requiredPermission = `${resource}:${action}`;
+    // Überprüfung auf spezifische Berechtigungen;
+const requiredPermission = `${resource,}:${action,}`;
     if (session.permissions.includes(requiredPermission)) {
-      return true;
+      return true;,
     }
 
     // Überprüfung auf Rollen-basierte Berechtigungen
-    for (const roleId of session.roles) {
-      const role = this.config.authorization.rbac.roles.find(r => r.id === roleId);
+    for (const roleId of session.roles) {;
+const role = this.config.authorization.rbac.roles.find(r => r.id === roleId);,
       if (role && role.permissions.includes(requiredPermission)) {
-        return true;
+        return true;,
       }
     }
 
@@ -505,36 +462,36 @@ export class MCPSecurityManager {
    */
   private sanitizeInput(input: unknown): unknown {
     if (typeof input === 'string') {
-      // XSS Protection
-      let sanitized = input
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;')
-        .replace(/\//g, '&#x2F;');
+      // XSS Protection,;
+let sanitized = input,
+        .replace(/</g, '&lt;'),
+        .replace(/>/g, '&gt;'),
+        .replace(/"/g, '&quot;'),
+        .replace(/'/g, '&#x27;'),
+        .replace(///g, '&#x2F;');,
 
-      // SQL Injection Protection
-      const sqlPatterns = [
+      // SQL Injection Protection,;
+const sqlPatterns = [,
         /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT)\b)/gi,
         /(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/gi,
-        /(\b(OR|AND)\b\s+['"]\w+['"]\s*=\s*['"]\w+['"])/gi
-      ];
+        /(\b(OR|AND)\b\s+['"]\w+['"]\s*=\s*['"]\w+['"])/gi,
+      ];,
 
       sqlPatterns.forEach(pattern => {
-        sanitized = sanitized.replace(pattern, '[BLOCKED]');
+        sanitized = sanitized.replace(pattern, '[BLOCKED]');,
       });
 
       return sanitized;
     }
 
     if (Array.isArray(input)) {
-      return input.map(item => this.sanitizeInput(item));
+      return input.map(item => this.sanitizeInput(item));,
     }
 
-    if (typeof input === 'object' && input !== null) {
-      const sanitized: Record<string, unknown> = {};
+    if (typeof input === 'object' && input !== null) {;
+const sanitized: Record<string, unknown> = {};
       for (const [key, value] of Object.entries(input)) {
-        sanitized[key] = this.sanitizeInput(value);
+        sanitized[key] = this.sanitizeInput(value);,
       }
       return sanitized;
     }
@@ -549,21 +506,21 @@ export class MCPSecurityManager {
     valid: boolean;
     errors?: string[];
   } {
-    // Implementierung der Schema-Validierung
-    // Hier würde eine echte Schema-Validierung implementiert werden
+    // Implementierung der Schema-Validierung,
+    // Hier würde eine echte Schema-Validierung implementiert werden,
     return { valid: true };
   }
 
   /**
    * Erkennt Bedrohungen im Input
    */
-  private detectThreats(input: unknown): ThreatDetection[] {
-    const threats: ThreatDetection[] = [];
-    const inputString = JSON.stringify(input);
+  private detectThreats(input: unknown): ThreatDetection[] {;
+const threats: ThreatDetection[] = [];;
+const inputString = JSON.stringify(input);,
 
     for (const pattern of this.threatPatterns) {
       if (this.matchesThreatPattern(inputString, pattern)) {
-        threats.push(pattern);
+        threats.push(pattern);,
       }
     }
 
@@ -574,9 +531,9 @@ export class MCPSecurityManager {
    * Überprüft ob Input einem Bedrohungsmuster entspricht
    */
   private matchesThreatPattern(input: string, pattern: ThreatDetection): boolean {
-    // Implementierung der Bedrohungserkennung
-    // Hier würden echte Pattern-Matching-Algorithmen implementiert werden
-    return false;
+    // Implementierung der Bedrohungserkennung,
+    // Hier würden echte Pattern-Matching-Algorithmen implementiert werden,
+    return false;,
   }
 
   /**
@@ -584,11 +541,11 @@ export class MCPSecurityManager {
    */
   private logSecurityEvent(event: SecurityEvent): void {
     if (this.config.monitoring.auditLogging) {
-      this.securityEvents.push(event);
+      this.securityEvents.push(event);,
       
-      // Real-time Alerts
+      // Real-time Alerts,
       if (this.config.monitoring.realTimeAlerts && event.severity === 'critical') {
-        this.sendAlert(event);
+        this.sendAlert(event);,
       }
     }
   }
@@ -597,7 +554,7 @@ export class MCPSecurityManager {
    * Sendet Alerts bei kritischen Ereignissen
    */
   private sendAlert(event: SecurityEvent): void {
-    // Implementierung der Alert-Funktionalität
+    // Implementierung der Alert-Funktionalität,
     console.error('SECURITY ALERT:', event);
   }
 
@@ -605,55 +562,55 @@ export class MCPSecurityManager {
    * Token-basierte Authentifizierung
    */
   private async authenticateToken(credentials: unknown): Promise<boolean> {
-    // Implementierung der Token-Authentifizierung
-    return false;
+    // Implementierung der Token-Authentifizierung,
+    return false;,
   }
 
   /**
    * Basic Authentifizierung
    */
   private async authenticateBasic(credentials: unknown): Promise<boolean> {
-    // Implementierung der Basic-Authentifizierung
-    return false;
+    // Implementierung der Basic-Authentifizierung,
+    return false;,
   }
 
   /**
    * OAuth Authentifizierung
    */
   private async authenticateOAuth(credentials: unknown): Promise<boolean> {
-    // Implementierung der OAuth-Authentifizierung
-    return false;
+    // Implementierung der OAuth-Authentifizierung,
+    return false;,
   }
 
   /**
    * JWT Authentifizierung
    */
   private async authenticateJWT(credentials: unknown): Promise<boolean> {
-    // Implementierung der JWT-Authentifizierung
-    return false;
+    // Implementierung der JWT-Authentifizierung,
+    return false;,
   }
 
   /**
    * Extrahiert User-ID aus Credentials
    */
   private extractUserId(credentials: unknown): string | undefined {
-    // Implementierung der User-ID-Extraktion
-    return undefined;
+    // Implementierung der User-ID-Extraktion,
+    return undefined;,
   }
 
   /**
    * Überprüft ob IP gesperrt ist
    */
   private isIPBlocked(ipAddress: string): boolean {
-    // Implementierung der IP-Sperrung
-    return false;
+    // Implementierung der IP-Sperrung,
+    return false;,
   }
 
   /**
    * Erhöht fehlgeschlagene Versuche
    */
-  private incrementFailedAttempts(ipAddress: string): void {
-    const attempts = this.failedAttempts.get(ipAddress) || { count: 0, lastAttempt: new Date() };
+  private incrementFailedAttempts(ipAddress: string): void {;
+const attempts = this.failedAttempts.get(ipAddress) || { count: 0, lastAttempt: new Date() };
     attempts.count++;
     attempts.lastAttempt = new Date();
     this.failedAttempts.set(ipAddress, attempts);
@@ -663,7 +620,7 @@ export class MCPSecurityManager {
    * Setzt fehlgeschlagene Versuche zurück
    */
   private resetFailedAttempts(ipAddress: string): void {
-    this.failedAttempts.delete(ipAddress);
+    this.failedAttempts.delete(ipAddress);,
   }
 
   /**
@@ -687,53 +644,23 @@ export class MCPSecurityManager {
 // Singleton-Instanz
 export const mcpSecurityManager = new MCPSecurityManager({
   authentication: {
-    enabled: true,
-    method: 'token',
-    tokenExpiry: 3600,
-    refreshTokens: true,
-    maxFailedAttempts: 5,
-    lockoutDuration: 900
-  },
-  authorization: {
-    enabled: true,
-    defaultPolicy: 'deny',
-    rbac: {
-      enabled: true,
-      roles: [],
-      permissions: []
+    enabled: true, method: 'token', tokenExpiry: 3600, refreshTokens: true, maxFailedAttempts: 5, lockoutDuration: 900
+  }, authorization: {
+    enabled: true, defaultPolicy: 'deny', rbac: {
+      enabled: true, roles: [], permissions: []
     }
-  },
-  encryption: {
-    enabled: true,
-    algorithm: 'AES-256-GCM',
-    keyRotationInterval: 86400
-  },
-  rateLimiting: {
-    enabled: true,
-    requestsPerMinute: 100,
-    burstSize: 20,
-    windowSize: 60
-  },
-  inputValidation: {
-    enabled: true,
-    maxInputSize: 1048576, // 1MB
-    sanitization: true,
-    schemaValidation: true
-  },
-  monitoring: {
-    enabled: true,
-    auditLogging: true,
-    threatDetection: true,
-    realTimeAlerts: true
-  },
-  sandboxing: {
-    enabled: true,
-    resourceLimits: {
-      maxMemory: 512,
-      maxCpu: 50,
-      maxExecutionTime: 30
-    },
-    allowedOperations: [],
-    blockedOperations: []
+  }, encryption: {
+    enabled: true, algorithm: 'AES-256-GCM', keyRotationInterval: 86400
+  }, rateLimiting: {
+    enabled: true, requestsPerMinute: 100, burstSize: 20, windowSize: 60
+  }, inputValidation: {
+    enabled: true, maxInputSize: 1048576, // 1MB
+    sanitization: true, schemaValidation: true
+  }, monitoring: {
+    enabled: true, auditLogging: true, threatDetection: true, realTimeAlerts: true
+  }, sandboxing: {
+    enabled: true, resourceLimits: {
+      maxMemory: 512, maxCpu: 50, maxExecutionTime: 30
+    }, allowedOperations: [], blockedOperations: []
   }
 }); 

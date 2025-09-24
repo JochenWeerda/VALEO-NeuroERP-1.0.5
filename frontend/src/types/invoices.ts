@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z ,} from 'zod';
 
 // Enum für Invoice-Status
 export const InvoiceStatusEnum = z.enum(['open', 'paid', 'overdue']);
@@ -24,7 +24,7 @@ export interface Invoice {
 export const InvoiceSchema = z.object({
   customer_id: z.string().uuid('Ungültige Customer-ID'),
   amount: z.number()
-    .positive('Betrag muss positiv sein')
+    .positive('Betrag muss positiv sein'),
     .min(0.01, 'Betrag muss mindestens 0.01 sein'),
   status: InvoiceStatusEnum,
 });
@@ -40,7 +40,7 @@ export interface InvoiceFormData {
 export interface InvoiceFormProps {
   initialData?: Partial<Invoice>;
   customers: Customer[];
-  onSubmit: (data: Invoice) => Promise<void>;
+  onSubmit: (data: _Invoice) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
 }
