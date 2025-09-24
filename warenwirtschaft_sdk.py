@@ -454,4 +454,4 @@ async def main():
 if __name__ == "__main__":
     print("🚀 VALEO NeuroERP - Warenwirtschafts-SDK mit APM Framework")
     print("=" * 65)
-    asyncio.run(main()) 
+    asyncio.run(main())

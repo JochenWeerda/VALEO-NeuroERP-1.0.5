@@ -4,7 +4,7 @@ import { sentryUtils } from '../config/sentry';
 /**
  * Hook für einfache Sentry-Nutzung in React-Komponenten
  */
-export const useSentry = (_...args[]) => {
+export const useSentry = () => {
   const captureError = useCallback((error: Error, context?: {
     tags?: Record<string, string>;
     extra?: Record<string, unknown>;

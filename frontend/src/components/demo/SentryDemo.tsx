@@ -5,7 +5,7 @@ import { Card,
   Button, 
   Box, 
   Alert,
-  Chip,, Grid, Paper } from '@mui/material';
+  Chip, Grid, Paper } from '@mui/material';
 import { Api as ApiIcon, BugReport as BugIcon, Person, Speed as SpeedIcon , Bug , Speed , Person , Api  } from '@mui/icons-material';
 import { useSentry } from '../../hooks/useSentry';
 

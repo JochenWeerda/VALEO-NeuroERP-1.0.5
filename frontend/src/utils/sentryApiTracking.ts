@@ -79,7 +79,7 @@ export const apiErrorTracking = {
 /**
  * Axios Interceptor für automatisches Error-Tracking
  */
-export const setupAxiosSentryInterceptor = (...args[]) => {
+export const setupAxiosSentryInterceptor = () => {
   // Request Interceptor
   axiosInstance.interceptors.request.use(
     (config) => {

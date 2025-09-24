@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 
 // Sentry-Konfiguration für VALEO NeuroERP
-export const _initializeSentry = (_...args[]) => {
+export const initializeSentry = () => {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN || 'YOUR_SENTRY_DSN_HERE',
     environment: import.meta.env.MODE || 'development',

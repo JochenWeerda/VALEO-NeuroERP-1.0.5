@@ -1,0 +1,3 @@
+[submodule "GENXAIS-Framework"]
+	path = GENXAIS-Framework
+	url = https://github.com/JochenWeerda/GENXAIS-Framework.git
