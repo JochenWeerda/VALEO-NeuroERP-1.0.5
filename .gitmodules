@@ -1,3 +1,15 @@
 [submodule "GENXAIS-Framework"]
 	path = GENXAIS-Framework
 	url = https://github.com/JochenWeerda/GENXAIS-Framework.git
+
+[submodule "ai-engineering-hub"]
+	path = ai-engineering-hub
+	url = https://github.com/patchy631/ai-engineering-hub.git
+
+[submodule "claude-flow-alpha"]
+	path = claude-flow-alpha
+	url = https://github.com/ruvnet/claude-flow.git
+
+[submodule "serena"]
+	path = serena
+	url = https://github.com/oraios/serena.git
