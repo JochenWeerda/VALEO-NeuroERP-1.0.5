@@ -10,10 +10,6 @@ import {
   TableRow,
   Grid,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Paper,
   Alert,
   CircularProgress,
@@ -43,7 +39,7 @@ const filterSchema: yup.ObjectSchema<OrderSuggestionFilters> = yup.object({
 
 interface OrderSuggestionProps {
   onSuggestionSelect?: (suggestion: OrderSuggestionData) => void;
-  onOrderCreate?: (order: any) => void;
+  onOrderCreate?: (order: OrderSuggestionData) => void;
 }
 
 export const OrderSuggestion: React.FC<OrderSuggestionProps> = ({
@@ -52,7 +48,6 @@ export const OrderSuggestion: React.FC<OrderSuggestionProps> = ({
 }) => {
   const {
     orderSuggestions,
-    orderSuggestionFilters,
     orderSuggestionLoading,
     orderSuggestionError,
     fetchOrderSuggestions,

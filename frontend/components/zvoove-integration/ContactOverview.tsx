@@ -156,7 +156,8 @@ export const ContactOverview: React.FC<ContactOverviewProps> = ({
 
     // Sortierung
     filtered.sort((a, b) => {
-      let aValue: any, bValue: any;
+      let aValue: string | number;
+      let bValue: string | number;
       
       switch (filters.sortBy) {
         case 'contactNumber':
@@ -168,8 +169,8 @@ export const ContactOverview: React.FC<ContactOverviewProps> = ({
           bValue = b.name;
           break;
         case 'date':
-          aValue = a.appointmentDate || dayjs(0);
-          bValue = b.appointmentDate || dayjs(0);
+          aValue = a.appointmentDate ? a.appointmentDate.valueOf() : 0;
+          bValue = b.appointmentDate ? b.appointmentDate.valueOf() : 0;
           break;
         case 'representative':
           aValue = a.representative;
@@ -321,7 +322,7 @@ export const ContactOverview: React.FC<ContactOverviewProps> = ({
       title: 'Aktionen',
       key: 'actions',
       width: 120,
-      render: (_, record: Contact) => (
+      render: (_: unknown, _record: Contact) => (
         <Space>
           <Tooltip title="Anzeigen">
             <Button 
