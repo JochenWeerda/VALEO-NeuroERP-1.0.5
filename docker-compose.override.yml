@@ -1,0 +1,60 @@
+# VALEO NeuroERP - Development Overrides
+# Lokale Entwicklungskonfiguration für Desktop
+
+version: '3.8'
+
+services:
+  # Frontend Development Optimizations
+  frontend:
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_WS_URL=ws://localhost:8000/ws
+      - FAST_REFRESH=true
+      - GENERATE_SOURCEMAP=false
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/build
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
+  # Backend Development Optimizations
+  backend:
+    environment:
+      - DATABASE_URL=postgresql://valeo_user:valeo_password@postgres:5432/valeo_neuroerp
+      - REDIS_URL=redis://redis:6379
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - LOG_LEVEL=debug
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:5173
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+
+  # Database Development Settings
+  postgres:
+    environment:
+      - POSTGRES_DB=valeo_neuroerp
+      - POSTGRES_USER=valeo_user
+      - POSTGRES_PASSWORD=valeo_password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+
+  # Redis Development Settings
+  redis:
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru

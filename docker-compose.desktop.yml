@@ -1,0 +1,116 @@
+# VALEO NeuroERP 2.0 - Desktop Development Setup
+# Optimiert für Notebook-Entwicklung ohne Cloud-Dependencies
+
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Local Development
+  postgres:
+    image: postgres:15-alpine
+    container_name: valeo-postgres
+    environment:
+      POSTGRES_DB: valeo_neuroerp
+      POSTGRES_USER: valeo_user
+      POSTGRES_PASSWORD: valeo_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - valeo-network
+    restart: unless-stopped
+
+  # Redis Cache - Lightweight Caching
+  redis:
+    image: redis:7-alpine
+    container_name: valeo-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - valeo-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+  # Backend API - FastAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.desktop
+    container_name: valeo-backend
+    environment:
+      - DATABASE_URL=postgresql://valeo_user:valeo_password@postgres:5432/valeo_neuroerp
+      - REDIS_URL=redis://redis:6379
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:5173
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - valeo-network
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Frontend Development Server
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.desktop
+    container_name: valeo-frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_ENVIRONMENT=development
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - valeo-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+    command: npm start
+
+  # Development Tools - Optional
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: valeo-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@valeo.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - valeo-network
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  valeo-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

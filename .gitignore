@@ -1,66 +1,146 @@
-# Node
-node_modules/
-frontend/node_modules/
-backend/node_modules/
+# VALEO NeuroERP 2.0 - Git Ignore
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-venv/
-env/
-.venv/
-.env/
+# Large Files & Build Artifacts
+output/ai-workflow/chroma_store/
+neuroflow-next/.next/cache/
+neuroflow-next/.next/server/
+neuroflow-next/.next/types/
+neuroflow-next/.next/diagnostics/
+neuroflow-next/.next/trace
+neuroflow-next/.next/package.json
+neuroflow-next/.next/interception-route-rewrite-manifest.js
+neuroflow-next/.next/server-reference-manifest.js
+neuroflow-next/.next/server-reference-manifest.json
+neuroflow-next/.next/webpack-runtime.js
+neuroflow-next/.next/webpack-runtime.js.map
 
-# Build/Dist
-frontend/dist/
-frontend/build/
-backend/build/
-backend/dist/
+# Database Files
+*.db
+*.sqlite3
+*.sqlite
 
-# Logs/Backups
+# Build Outputs
+dist/
+build/
+.next/
+out/
+
+# Cache Directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# Logs
+*.log
 logs/
-backend/logs/
-frontend/logs/
-backups/
-data/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Env/Secrets
-.env
-.env.*
-.env.local
-.env.development
-.env.production
-.env.prod
-frontend/.env*
-backend/.env*
-*.key
-*.crt
-*.pem
-
-# Docker
+# Runtime data
+pids/
 *.pid
-*.sock
+*.seed
+*.pid.lock
 
-# Sonstiges
-.DS_Store
-Thumbs.db
-.idea/
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
 .vscode/
+.idea/
 *.swp
 *.swo
-*.bak
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
 *.tmp
+*.temp
+temp/
+tmp/
 
-# Test/Reports
-coverage/
-*.log
+# Performance monitoring
+performance_metrics.db
 
-# Ignore example envs NICHT
-!env.prod.example
-*.db
- 
-# Ignore generated outputs
-/output/
+# AI Workflow outputs
+output/ai-workflow/
+output/
 
+# NeuroFlow Next.js build
+neuroflow-next/.next/
+neuroflow-next/out/
+neuroflow-next/build/
+
+# Fix scripts (temporary)
+frontend/fix-*.js
+frontend/fix-*.cjs
+frontend/auto-fix-*.js
+frontend/enterprise-final-fix.cjs
+frontend/ultimate-final-fix.cjs
+frontend/final-warning-cleanup.cjs
+
+# Reports
+frontend/*-report.json
+frontend/lint-output.txt
+frontend/tsc-output.txt
+frontend/eslint-report.json
+frontend/frontend-fix-report.json
+
+# Documentation (keep important ones, remove temporary)
+frontend/COMPLEX_ERRORS_FIXED_SUMMARY.md
+frontend/FINAL_COMPLEX_ERRORS_PROGRESS.md
+frontend/FINAL_LINTER_WARNINGS_PROGRESS.md
+frontend/FINAL_TYPESCRIPT_FIXES_SUMMARY.md
+frontend/LINTER_FIXES_SUMMARY.md
+frontend/TYPESCRIPT_FIXES_SUMMARY.md
+
+# Keep important documentation
+!DESKTOP_DEVELOPMENT_GUIDE.md
+!VALEO_NEUROERP_3.0_MIGRATION_BLUEPRINT.md
+!ARCHITECTURE_ANALYSIS_REPORT.md
+!frontend/docs/SENTRY_INTEGRATION.md
+!frontend/SENTRY_SETUP.md
+!frontend/SENTRY_CONFIG_EXAMPLE.md
+!frontend/SENTRY_IMPLEMENTATION_COMPLETE.md
