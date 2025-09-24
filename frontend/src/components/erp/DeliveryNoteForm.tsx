@@ -3,6 +3,7 @@ import { Box, Card, Typography, TextField, Checkbox, FormControlLabel, Button, C
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import { DeliveryNoteMasterData, DeliveryNotePosition } from '../../types/erp';
 import { Supplier } from '../../types/crm';
+import { neuroFlowColors, neuroFlowTypography } from '../../design-system/NeuroFlowTheme';
 
 /**
  * Props für das Lieferanten-Lieferschein-Formular
@@ -36,6 +37,59 @@ export const DeliveryNoteForm: React.FC<DeliveryNoteFormProps> = ({
   onSubmit,
   onCancel,
 }) => {
+  // NeuroFlow Border Radius Standards
+  const neuroFlowBorderRadius = {
+    small: '4px',
+    medium: '6px', 
+    large: '8px',
+    xlarge: '12px'
+  };
+
+  // NeuroFlow Form Styles
+  const neuroFlowFormStyles = {
+    '& .MuiTextField-root, & .MuiAutocomplete-root': {
+      '& .MuiOutlinedInput-root': {
+        borderRadius: neuroFlowBorderRadius.large,
+        backgroundColor: neuroFlowColors.surface.primary,
+        '&:hover': {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: neuroFlowColors.primary[300]
+          }
+        },
+        '&.Mui-focused': {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: neuroFlowColors.primary[500]
+          }
+        }
+      },
+      '& .MuiInputLabel-root': {
+        color: neuroFlowColors.neutral[600],
+        fontFamily: neuroFlowTypography.fontFamily,
+        fontSize: neuroFlowTypography.body1.fontSize,
+        fontWeight: neuroFlowTypography.body1.fontWeight
+      }
+    },
+    '& .MuiDataGrid-root': {
+      border: `1px solid ${neuroFlowColors.neutral[200]}`,
+      borderRadius: neuroFlowBorderRadius.large,
+      '& .MuiDataGrid-cell': {
+        borderBottom: `1px solid ${neuroFlowColors.neutral[200]}`,
+        fontFamily: neuroFlowTypography.fontFamily,
+        fontSize: neuroFlowTypography.body2.fontSize
+      },
+      '& .MuiDataGrid-columnHeaders': {
+        backgroundColor: neuroFlowColors.neutral[50],
+        borderBottom: `2px solid ${neuroFlowColors.neutral[200]}`,
+        '& .MuiDataGrid-columnHeader': {
+          fontFamily: neuroFlowTypography.fontFamily,
+          fontSize: neuroFlowTypography.body1.fontSize,
+          fontWeight: neuroFlowTypography.body1.fontWeight,
+          color: neuroFlowColors.neutral[800]
+        }
+      }
+    }
+  };
+
   // Spalten für die Positions-Tabelle
   const columns: GridColDef[] = [
     { field: 'posNr', headerName: 'Pos.-Nr.', width: 80, editable: false },
@@ -71,18 +125,57 @@ export const DeliveryNoteForm: React.FC<DeliveryNoteFormProps> = ({
   };
 
   return (
-    <Card className="p-6 max-w-4xl mx-auto mt-6 shadow-md">
-      <Typography variant="h6" className="mb-4 text-gray-800">
+    <Card 
+      sx={{
+        padding: '24px',
+        maxWidth: '1200px',
+        margin: '24px auto',
+        borderRadius: neuroFlowBorderRadius.xlarge,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        border: `1px solid ${neuroFlowColors.neutral[200]}`
+      }}
+    >
+      <Typography 
+        variant="h6" 
+        sx={{
+          marginBottom: '24px',
+          fontFamily: neuroFlowTypography.fontFamily,
+          fontSize: neuroFlowTypography.h6.fontSize,
+          fontWeight: neuroFlowTypography.h6.fontWeight,
+          color: neuroFlowColors.neutral[800],
+          borderBottom: `2px solid ${neuroFlowColors.primary[200]}`,
+          paddingBottom: '12px'
+        }}
+      >
         Lieferanten-Lieferschein
       </Typography>
+      
       {error && (
-        <Box className="mb-4">
-          <Typography color="error">{error}</Typography>
+        <Box sx={{ marginBottom: '16px' }}>
+          <Typography 
+            color="error"
+            sx={{
+              fontFamily: neuroFlowTypography.fontFamily,
+              fontSize: neuroFlowTypography.body2.fontSize,
+              backgroundColor: neuroFlowColors.error[50],
+              padding: '12px',
+              borderRadius: neuroFlowBorderRadius.medium,
+              border: `1px solid ${neuroFlowColors.error[200]}`
+            }}
+          >
+            {error}
+          </Typography>
         </Box>
       )}
+      
       {loading ? (
-        <Box className="flex justify-center items-center h-40">
-          <CircularProgress />
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '160px' 
+        }}>
+          <CircularProgress sx={{ color: neuroFlowColors.primary[500] }} />
         </Box>
       ) : (
         <form
@@ -90,96 +183,147 @@ export const DeliveryNoteForm: React.FC<DeliveryNoteFormProps> = ({
             e.preventDefault();
             onSubmit();
           }}
-          className="space-y-6"
+          style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
         >
           {/* Stammdaten */}
-          <Box className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Box sx={{ 
+            display: 'grid', 
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, 
+            gap: '16px' 
+          }}>
             <Autocomplete
               options={suppliers}
               getOptionLabel={option => option.name}
               value={masterData.lieferant}
-              onChange={(_, value) => handleMasterChange('lieferant', value)}
-              renderInput={params => (
-                <TextField {...params} label="Lieferant" required fullWidth />
+              onChange={(_, newValue) => handleMasterChange('lieferant', newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Lieferant"
+                  required
+                  inputProps={{
+                    ...params.inputProps,
+                    'aria-label': 'Lieferant auswählen',
+                    'aria-describedby': 'lieferant-helper-text'
+                  }}
+                  FormHelperTextProps={{
+                    id: 'lieferant-helper-text'
+                  }}
+                />
               )}
             />
+            
             <TextField
-              label="ZW-Händler"
-              value={masterData.zwHaendler}
-              onChange={e => handleMasterChange('zwHaendler', e.target.value)}
               fullWidth
+              label="Lieferschein-Nummer"
+              value={masterData.lieferscheinNr}
+              onChange={(e) => handleMasterChange('lieferscheinNr', e.target.value)}
+              inputProps={{
+                'aria-label': 'Lieferschein-Nummer eingeben',
+                'aria-describedby': 'lieferschein-nr-helper-text'
+              }}
+              FormHelperTextProps={{
+                id: 'lieferschein-nr-helper-text'
+              }}
+              required
             />
+            
             <TextField
-              label="LS-Referenz-Nr."
-              value={masterData.lsReferenzNr}
-              onChange={e => handleMasterChange('lsReferenzNr', e.target.value)}
               fullWidth
-            />
-            <TextField
-              label="Bearbeiter"
-              value={masterData.bearbeiter}
-              onChange={e => handleMasterChange('bearbeiter', e.target.value)}
-              fullWidth
-            />
-            <TextField
-              label="Datum"
+              label="Lieferdatum"
               type="date"
-              value={masterData.datum}
-              onChange={e => handleMasterChange('datum', e.target.value)}
-              InputLabelProps={{ shrink: true }}
-              fullWidth
+              value={masterData.lieferdatum}
+              onChange={(e) => handleMasterChange('lieferdatum', e.target.value)}
+              inputProps={{
+                'aria-label': 'Lieferdatum eingeben',
+                'aria-describedby': 'lieferdatum-helper-text'
+              }}
+              FormHelperTextProps={{
+                id: 'lieferdatum-helper-text'
+              }}
+              required
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={masterData.erledigt}
-                  onChange={e => handleMasterChange('erledigt', e.target.checked)}
-                />
-              }
-              label="Erledigt"
-            />
+            
             <TextField
-              label="LS-Nr."
-              value={masterData.lsNr}
-              onChange={e => handleMasterChange('lsNr', e.target.value)}
               fullWidth
+              label="Empfänger"
+              value={masterData.empfaenger}
+              onChange={(e) => handleMasterChange('empfaenger', e.target.value)}
+              inputProps={{
+                'aria-label': 'Empfänger eingeben',
+                'aria-describedby': 'empfaenger-helper-text'
+              }}
+              FormHelperTextProps={{
+                id: 'empfaenger-helper-text'
+              }}
             />
           </Box>
 
           {/* Positionen */}
-          <div className="mt-8">
-            <Typography variant="subtitle1" className="mb-2 text-gray-700">
+          <Box sx={{ marginTop: '24px' }}>
+            <Typography 
+              variant="h6"
+              sx={{
+                marginBottom: '16px',
+                fontFamily: neuroFlowTypography.fontFamily,
+                fontSize: neuroFlowTypography.h6.fontSize,
+                fontWeight: neuroFlowTypography.h6.fontWeight,
+                color: neuroFlowColors.neutral[800]
+              }}
+            >
               Positionen
             </Typography>
-            <div className="bg-white rounded shadow border">
+            
+            <Box sx={{ height: 400, width: '100%' }}>
               <DataGrid
-                autoHeight
-                rows={positions as GridRowsProp}
+                rows={positions}
                 columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10, 20]}
-                disableRowSelectionOnClick
-                onRowEditStop={params => handleRowEdit(params)}
-                getRowId={row => row.posNr}
-                className="min-h-[300px]"
+                onRowUpdate={handleRowEdit}
+                sx={neuroFlowFormStyles}
+                aria-label="Lieferschein-Positionen Tabelle"
               />
-            </div>
-          </div>
+            </Box>
+          </Box>
 
           {/* Aktionen */}
-          <Box className="flex space-x-4 mt-6">
-            <Button type="submit" variant="contained" color="primary">
-              Speichern
-            </Button>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: '12px', 
+            justifyContent: 'flex-end',
+            marginTop: '24px',
+            paddingTop: '16px',
+            borderTop: `1px solid ${neuroFlowColors.neutral[200]}`
+          }}>
             {onCancel && (
-              <Button variant="outlined" onClick={onCancel}>
+              <Button
+                variant="outlined"
+                onClick={onCancel}
+                sx={{
+                  borderRadius: neuroFlowBorderRadius.medium,
+                  borderColor: neuroFlowColors.neutral[400],
+                  color: neuroFlowColors.neutral[700],
+                  '&:hover': {
+                    borderColor: neuroFlowColors.neutral[600],
+                    backgroundColor: neuroFlowColors.neutral[50]
+                  }
+                }}
+              >
                 Abbrechen
               </Button>
             )}
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                borderRadius: neuroFlowBorderRadius.medium,
+                backgroundColor: neuroFlowColors.primary[500],
+                '&:hover': {
+                  backgroundColor: neuroFlowColors.primary[600]
+                }
+              }}
+            >
+              Speichern
+            </Button>
           </Box>
         </form>
       )}
